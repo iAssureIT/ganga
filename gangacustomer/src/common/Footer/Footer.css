@@ -1,0 +1,339 @@
+.iogfooter{
+}
+
+.animationoveflow{
+  overflow: hidden;
+  width: 100%;
+  top: 900px;
+}
+
+
+.footer-two{
+ font-size: 16px;
+ color: #fff;
+ /*background-color: #367588;*/
+ /*border-top: 1px solid #eee;*/
+ height: 250px;
+ padding-top: 75px;
+}
+.footer-two a{
+color: #fff;
+
+}
+.footer-end a{
+color: #fff;
+
+}
+.footer-end{
+    height: 65px!important;
+
+}
+.footer-two ul{
+    list-style: none;
+    text-decoration: none;
+
+}
+.footer-two ul li a{
+    line-height: 25px;
+    text-decoration: none;
+    text-align: left;
+
+}
+.footer-two ul li a:hover{
+    color: #42E8E0;
+
+}
+.footer-two p a{
+    line-height: 25px;
+    text-decoration: none;
+    text-align: left;
+    font-style: normal;
+
+}
+.footer-two p a:hover{
+    color: #42E8E0;
+}
+.bb-solid-1{
+    /*border-bottom: 1px solid #eee;*/
+}
+
+.font-montserrat{
+    /*font-family: 'Montserrat', sans-serif;*/
+    font-size: 18px;
+    font-weight: bold;
+}
+ul.no-icon-list {
+    margin: 0;
+    padding: 0;
+}
+.social.social-two a {
+    width: 30px;
+    height: 30px;
+    padding: 5px 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+    float: left;
+    display: block;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+
+
+.footer-two ul{
+    list-style: none;
+    text-decoration: none;
+
+}
+.footer-two ul li a{
+    line-height: 25px;
+    text-decoration: none;
+    text-align: left;
+
+}
+.socialicon li a{
+    line-height: 25px;
+    text-decoration: none;
+    text-align: left;
+    float: left;
+    margin-left: 5px;
+
+}
+.socialicon li a .fa{
+    border: 9px solid #fff;
+    border-radius: 50%;
+    padding: 5px 6px;
+    background-color: #fff;
+    color: #00317F;
+    font-size: 16px;
+}
+.facebook{
+    padding: 5px 9px !important;
+}
+.footer-two ul li a:hover{
+    /*color: #000;*/
+
+}
+.footer-two p a{
+    line-height: 25px;
+    text-decoration: none;
+    text-align: left;
+    /*font-family: 'Open Sans', sans-serif !important;*/
+    font-style: normal;
+
+}
+.footer-two p a:hover{
+    /*color: #000;*/
+}
+.bb-solid-1{
+    /*border-bottom: 1px solid #eee;*/
+}
+
+.font-montserrat{
+    /*font-family: 'Montserrat', sans-serif;*/
+}
+ul.no-icon-list {
+    margin: 0;
+    padding: 0;
+}
+.social.social-two a {
+    width: 30px;
+    height: 30px;
+    padding: 5px 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+    float: left;
+    display: block;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+.connectbtn{
+    background-color: #fff;
+    color: #00317F;
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+
+.footeranimation{
+    position: absolute;
+    z-index: 1;
+    /*top: 0px;*/
+    /*left: 0px;*/
+    /*height: 60px;*/
+}
+
+.footimg1{
+    position: relative;
+    bottom: 59px;
+    left: 39px;
+    height: 60px;
+}
+.footimg7{
+    position: relative;
+    bottom: 97px;
+    left: 985px;
+    height: 100px;
+}
+.footimg5{
+    position: relative;
+    bottom: 106px;
+    left: 619px;
+    height: 109px;
+}
+.footimg4{
+    position: relative;
+    bottom: 49px;
+    left: 485px;
+    height: 50px;
+}
+.footimg3{
+    position: relative;
+    bottom: 49px;
+    left: 330px;
+    height: 50px;
+}
+.footimg2{
+    position: relative;
+    bottom: 40px;
+    left: 141px;
+    height: 43px
+}
+.footeranimationtruck{
+    position: relative;
+    top: 59.5px;
+    left: -100px;
+    z-index: 100;
+    animation: truck1 25s linear infinite;
+}
+
+.foot8wheel1{
+ position: relative;
+    right: 85px;
+    top: 9px;
+  animation:  wheel 0.4s linear  infinite;
+}
+.foot8wheel2{
+  position: relative;
+    right: 42px;
+    top: 9px;
+  animation:  wheel 0.4s linear  infinite;
+}
+
+ .foot6wheel1{
+  position: relative;
+    left: 9px;
+    bottom: 14px;
+  animation:  wheel 0.4s linear  infinite;
+}
+.foot6wheel2{
+  position: relative;
+   left: 13px;
+    bottom: 14px;
+  animation:  wheel 0.4s linear  infinite;
+}
+.foot6wheel3{
+  position: relative;
+   left: 48px;
+    bottom: 14px;
+  animation:  wheel 0.4s linear  infinite;
+}
+
+.footeranimationtruck2{
+    position: relative;
+    top: 17px;
+    left: -650px;
+    z-index: 100;
+    animation:  truck2 30s linear infinite;
+
+}
+
+.viman img{
+    position: relative;
+    top: 11px;
+    left: -200px;
+    z-index: 100;
+    animation: viman 15s linear infinite;
+}
+
+.foot1anim{
+    position: relative;
+   left: 38.5px;
+    bottom: 101px;
+    overflow: hidden;
+
+}
+.foot1anim img{
+  margin-top: -10px;
+  animation:  foot1anim 2s linear  infinite;
+
+}
+
+.foot3anim{
+    position: relative;
+    left: 332px;
+    bottom: 116px;
+}
+.foot3anim img{
+  animation:  foot3anim 4s linear  infinite;
+
+}
+
+@keyframes foot3anim {
+  
+  0% {
+  transform: rotate(0deg);
+  }
+  50% {
+  transform: rotate(8deg);
+  }
+  
+}
+
+@keyframes foot1anim {
+  
+  0% {
+    margin-top:-10px ;
+  }
+  50% {
+   margin-top:0px ;
+  }
+  
+}
+
+
+@keyframes viman {
+  
+  0% {
+    left:-200px ;
+  }
+  100% {
+   left:1500px ;
+  }
+  
+}
+@keyframes truck1 {
+  
+  0% {
+    left:-100px ;
+  }
+  100% {
+   left:1500px ;
+  }
+  
+}
+@keyframes truck2 {
+  
+ 0% {
+    left:-650px ; 
+  }
+  100% {
+   left:1500px ;
+  }
+  
+}
+
+.footoverflow{
+    width: 100%;
+    overflow: hidden;
+}
