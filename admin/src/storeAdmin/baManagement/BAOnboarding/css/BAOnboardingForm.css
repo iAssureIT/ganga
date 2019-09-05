@@ -205,7 +205,7 @@
     left: 14.7em;
 }
 .logoStyle{
-  height: 9.1em;
+    height: auto !important;
     padding: 0;
     width: 100%;
 }
@@ -215,8 +215,8 @@
     background-repeat: no-repeat;
     background: #ebebeb;
     border: 1px dashed #ddd;
-    height: 9.1em;
-    padding: 0px;
+    height: 200px !important;
+    width: 200px !important;
 }
 .camicon{
 text-align: center;
@@ -546,11 +546,14 @@ select{
 
 
 #hide input[type=file] {
-display: block;
+    display: block;
     /* margin: 10px; */
     background: transparent;
     opacity: 0;
     cursor: pointer;
+    height: 200px;
+    position: absolute;
+    top:0px;
 }
 #hide input[type=file] + label {
 display:inline-block;

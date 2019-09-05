@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import ReactTooltip 		from 'react-tooltip';
-import { render } 			from 'react-dom';
-import swal  				from 'sweetalert';
-import $     				from 'jquery';
-import style 				from '../css/BAOnboardingForm.css';
+import ReactTooltip     from 'react-tooltip';
+import { render }       from 'react-dom';
+import swal         from 'sweetalert';
+import $            from 'jquery';
+import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
-import LocationDetails 		from '../locationDetails/locationDetails.js';
+import LocationDetails    from '../locationDetails/locationDetails.js';
+import S3FileUpload           from 'react-s3';
 
 axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -15,8 +16,7 @@ class BasicInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'vendorId'         : '',
-      'typeOptions'      : 'Local',
+      
       'companyname'      : '',
       'emailID'          : '',
       'MobileNo'         : '',
@@ -30,7 +30,7 @@ class BasicInfo extends Component {
       'Evaluation'       : '',
       'score'            : '',
       'attachedDocuments': '',
-      'logo'             : '',
+      'logoUrl'             : '',
       'edit'             : props.routerId ? true : false,
       'basicInfoAdded'   : 0,
       'locationInfoAdded': 0,
@@ -45,10 +45,8 @@ class BasicInfo extends Component {
       this.keyPress = this.keyPress.bind(this);
       this.handleOptionChange = this.handleOptionChange.bind(this);
       this.supplier = this.supplier.bind(this);
-  }	
+  } 
   componentDidMount() {
-    // // console.log('logo',this.state.logo);
-    console.log('param',this.props.match.params);
    
     if(this.props.match.params.BaId){
 
@@ -65,6 +63,7 @@ class BasicInfo extends Component {
                   website     : response.data[0].website,
                   pan         : response.data[0].pan,
                   gstno       : response.data[0].gstno,
+                  logoUrl     : response.data[0].logo,
                   updateBasic : 1 
               })
              
@@ -262,6 +261,7 @@ class BasicInfo extends Component {
                       'website'          : this.state.website,
                       'pan'              : this.state.pan,
                       'gstno'            : this.state.gstno,
+                      'logo'             : this.state.logoUrl,
                       'userID'           : response.data.user._id
                   }
                   axios.post("/api/businessassociates/post",formValues)
@@ -282,9 +282,9 @@ class BasicInfo extends Component {
                 .catch((error)=>{
                     console.log('error', error);
                 })
-          	/*axios.post("/api/businessassociates/post",formValues)
+            /*axios.post("/api/businessassociates/post",formValues)
             .then((response)=>{
-            	this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
+              this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
               swal({
                     title : response.data.message,
                     text  : response.data.message,
@@ -297,7 +297,7 @@ class BasicInfo extends Component {
             })
             .catch((error)=>{
                 console.log('error', error);
-         	  })*/
+            })*/
           
       }else{
         // $('.inputText').addClass('addclas');
@@ -317,6 +317,7 @@ class BasicInfo extends Component {
               'mobileNo'         : this.state.MobileNo,
               'website'          : this.state.website,
               'pan'              : this.state.pan,
+              'logo'             : this.state.logoUrl, 
               'gstno'            : this.state.gstno
           }
           console.log(formValues);
@@ -328,11 +329,16 @@ class BasicInfo extends Component {
                     title : response.data.message,
                     text  : response.data.message,
                   });
-              $("#BasicInfo").validate().reset();
+              
               $('.inputText').removeClass('addclas');
             })
             .catch((error)=>{
+              
                 console.log('error', error);
+                swal({
+                    title : '',
+                    text  : "Change some fields",
+                  });
           })
           
       }else{
@@ -341,25 +347,7 @@ class BasicInfo extends Component {
         $(event.target).parent().parent().find('.inputText.error:first').focus();
       }
   }
-  imgBrowse(e){
-    e.preventDefault();
-    let self=this;      
-      if(e.currentTarget.files){
-      var file=e.currentTarget.files[0];
-      // // console.log('file=: ',file);
-      if(file){
-        var fileExt=e.currentTarget.files[0].name.split('.').pop();
-        if (fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'svg' || fileExt == 'png' ) {
-         
-        }else{
-          swal({
-            title:'abc',
-            text:'Please upload only .jpg/.jpeg/.svg/.png files.'
-          });
-        }
-      }
-    }           
-  }
+  
   docBrowse(e){
     e.preventDefault();
     let self=this;      
@@ -443,14 +431,64 @@ class BasicInfo extends Component {
     event.preventDefault();
     $("#upload-file").click();
   }
-  imgBrowseOne(event){
+  uploadProductImage(event){
     event.preventDefault();
-    $("#LogoImageUp").click();
+    
+    var file = event.currentTarget.files[0]
+    if (file) {
+      var fileName  = file.name; 
+      var ext = fileName.split('.').pop();  
+      if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+      
+      }
+      var objTitle = { fileInfo :file };
+      console.log('objTitle',objTitle);
+      main().then(logoUrl=>{
+          console.log('logo', logoUrl);
+          this.setState({logoUrl : logoUrl})
+          
+      });
+      async function main(){
+        var config = await getConfig();
+        var s3url = await s3upload(objTitle.fileInfo, config, this);
+        //console.log('s3url',s3url);
+        return Promise.resolve(s3url);
+      }
+      function s3upload(image,configuration){
+        return new Promise(function(resolve,reject){
+            S3FileUpload
+               .uploadFile(image,configuration)
+               .then((Data)=>{
+                    resolve(Data.location);
+               })
+               .catch((error)=>{
+                    console.log(error);
+               })
+        })
+      }   
+      function getConfig(){
+        return new Promise(function(resolve,reject){
+            axios
+               .get('/api/projectSettings/get/one/s3')
+               .then((response)=>{
+                    console.log("proj set res = ",response.data);
+                    const config = {
+                        bucketName      : response.data.bucket,
+                        dirName         : 'propertiesImages',
+                        region          : response.data.region,
+                        accessKeyId     : response.data.key,
+                        secretAccessKey : response.data.secret,
+                    }
+                    resolve(config);                           
+                })
+               .catch(function(error){
+                    console.log(error);
+               })
+        })
+      }  
+    }
   }
-  imgBrowseTwo(event){
-    event.preventDefault();
-    $("#LogoImageUp").click();
-  }
+  
   attachfile(event,props){
     // event.preventDefault();
 
@@ -494,8 +532,7 @@ class BasicInfo extends Component {
     if(nextProps.routerId && nextProps.post5){ 
       
       var lengthData = nextProps.post.length;    
-      this.setState({         
-        typeOptions                   : nextProps.post5.typeOptions,         
+      this.setState({          
         companyname                   : nextProps.post5.companyname,         
         pan                           : nextProps.post5.pan,         
         tin                           : nextProps.post5.tin,         
@@ -614,43 +651,31 @@ class BasicInfo extends Component {
                                             <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.website} ref="website" name="website" onChange={this.handleChange}/>
                                           </div>
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 panerror" > 
-	                                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick"></i>
-	                                           <a data-tip data-for='basicInfo2Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
-	                                            <ReactTooltip id='basicInfo2Tooltip' type='error'>
-	                                              <span>Please enter valid PAN number (like this ABCDE1234Z).</span>
-	                                            </ReactTooltip>
-	                                          </label>
-	                                          <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText"  value={this.state.pan} ref="pan" name="pan" onChange={this.handleChange} placeholder="ABCDE1234Z" required/>
-	                                      </div>
-	                                      <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left NOpadding-right"> 
-	                                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick"></i>
-	                                          <a data-tip data-for='basicInfo5Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
-	                                            <ReactTooltip id='basicInfo5Tooltip' type='error'>
-	                                              <span>Please enter valid GST number(like this 29ABCDE1234F1Z5)</span>
-	                                            </ReactTooltip>
-	                                          </label>
-	                                          <input type="text" id="basicInfo5" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.gstno} ref="gstno" name="gstno" onChange={this.handleChange} placeholder="29ABCDE1234F2Z5" required/>
-	                                      </div>
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick"></i>
+                                             <a data-tip data-for='basicInfo2Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
+                                              <ReactTooltip id='basicInfo2Tooltip' type='error'>
+                                                <span>Please enter valid PAN number (like this ABCDE1234Z).</span>
+                                              </ReactTooltip>
+                                            </label>
+                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText"  value={this.state.pan} ref="pan" name="pan" onChange={this.handleChange} placeholder="ABCDE1234Z" required/>
+                                        </div>
+                                        <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left NOpadding-right"> 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick"></i>
+                                            <a data-tip data-for='basicInfo5Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
+                                              <ReactTooltip id='basicInfo5Tooltip' type='error'>
+                                                <span>Please enter valid GST number(like this 29ABCDE1234F1Z5)</span>
+                                              </ReactTooltip>
+                                            </label>
+                                            <input type="text" id="basicInfo5" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.gstno} ref="gstno" name="gstno" onChange={this.handleChange} placeholder="29ABCDE1234F2Z5" required/>
+                                        </div>
                                         </div>
                                         <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addpicmr marginsBottom" id="hide">
-                                          <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">ADD LOGO</label>
+                                          <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12"> {this.state.logoUrl != "" ? "Change Logo" : "ADD LOGO"} </label>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
                                             
-                                            <img src="" className="img-responsive logoStyle" />
-                                            {
-                                              true?
-                                                <div className="addlogoImg" title="Change Logo" onClick={this.imgBrowseOne.bind(this)}><i className="fa fa-camera fa-2x" aria-hidden="true" ></i></div>
-                                                :
-                                                this.state.logo?
-                                                <div className="addlogoImg" title="Change Logo" onClick={this.imgBrowseOne.bind(this)}><i className="fa fa-camera fa-2x" aria-hidden="true" ></i></div>
-                                                :
-                                                <div className="addlogoImg" title="Add Logo" onClick={this.imgBrowseTwo.bind(this)}><i className="fa fa-camera fa-2x" aria-hidden="true" ></i></div>
-
-                                            }
-                                              {/*<img src="/images/addPhptoBtn.png" className="img-responsive addlogoImg" />*/}
-                                              <input onChange={this.imgBrowse.bind(this)} id="LogoImageUp" type="file" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogo" title="" name="LogoImageUp"/>
-                                              
+                                            <img src={this.state.logoUrl} className="img-responsive logoStyle" />
+                                              <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" onChange={this.uploadProductImage.bind(this)} />
                                           </div>
                                         </div>
                                       </div>
@@ -742,9 +767,9 @@ class BasicInfo extends Component {
                </section>
             </div>
         }
-       		{this.state.basicInfoAdded && !this.state.locationInfoAdded ? locationDetailsForm : null}
-       		
-       		
+          {this.state.basicInfoAdded && !this.state.locationInfoAdded ? locationDetailsForm : null}
+          
+          
         </div> 
        
       );  

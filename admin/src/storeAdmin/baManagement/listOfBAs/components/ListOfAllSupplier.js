@@ -285,7 +285,7 @@ class ListOfAllSupplier extends Component {
 		            <div className="row">	                   					  
 					        <div id="supplierprofile" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">					   
 					        	<div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkinp boxshade">
-					        			<img src={'http://qaadminfurnituresite.iassureit.com/images/imgNotFound.jpg'} className="col-lg-2 col-md-2 col-sm-2 col-xs-2 supplierLogoImage"></img>
+					        			<img src={this.state.baInfo[0] && this.state.baInfo[0].logo} className="col-lg-2 col-md-2 col-sm-2 col-xs-2 supplierLogoImage"></img>
 						        		<div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 listprofile">
 						        			<h4 className="titleprofile1 col-lg-6 col-md-6 col-sm-6 col-xs-6">{this.state.baInfo[0] && this.state.baInfo[0].companyName}</h4>
 						        			<div className="dots dropdown1 col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -318,10 +318,11 @@ class ListOfAllSupplier extends Component {
 					        			<i className="fa fa-ellipsis-h" aria-hidden="true"></i>
 					        			</div>	*/}
 					        	</div>
-
+					        	{
+					        	this.state.locations && this.state.locations.length>0 &&
 					        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxshade">
 					        		{
-										this.state.locations && this.state.locations.map((locationArr,index)=>{
+										this.state.locations.map((locationArr,index)=>{
 											return(
 
 												<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 tithead1">
@@ -359,12 +360,14 @@ class ListOfAllSupplier extends Component {
 									}
 									
 					        	</div>
+					        	}	
 					        	
 					        	{ /*contact Details*/ }
-
+					        	{
+					        		this.state.contacts && this.state.contacts.length>0 &&
 					        		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxshade">
 					        		{
-										this.state.contacts && this.state.contacts.map((contactArr,index)=>{
+										this.state.contacts.map((contactArr,index)=>{
 											return(
 
 												<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 tithead1">
@@ -405,6 +408,7 @@ class ListOfAllSupplier extends Component {
 									}
 									
 					        	</div>
+					        }
 					        </div>
 	                  	  </div>
 	            </div>
