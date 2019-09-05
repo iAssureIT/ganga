@@ -1,0 +1,95 @@
+.customPillsEcommerceDescription {
+    margin-left: 28%;
+    margin-top: 45px;
+    font-size: 28px !important;
+  	
+    font-weight: 600;
+    background-color: transparent!important;
+    color: #353535;
+    padding: 0px;
+    text-transform: capitalize;
+    position: relative;
+}
+.customPillsEcommerceDescription>li.active>a, .customPillsEcommerceDescription>li.active>a:focus, .customPillsEcommerceDescription>li.active>a:hover{
+    background-color: transparent!important;
+    color: #25baf2 !important;
+    
+    border-radius:0px !important;
+}
+.customPillsEcommerceDescription>li>a:hover{
+	background-color: transparent !important;
+}
+.customWidthModalEcommerce {
+    width: 700px !important;
+  	font-family: 'PT Sans', sans-serif !important;
+}
+.fnSizeEcommerce>span {
+    font-size: 15px;
+  	font-family: 'PT Sans', sans-serif !important;
+}
+
+ .writeReviewTextEcommerce{
+  	font-family: 'PT Sans', sans-serif !important;    font-size: 13px;
+    color: #666;    
+    margin-bottom: 60px;
+}
+.writeReviewTextEcommerce span{
+    font-size: 13px;
+    color: #666;    
+    cursor: pointer;
+}
+.descriptionDataEcommerce p {
+    color: #999;
+    line-height: 25px;
+	font-family: 'PT Sans', sans-serif !important;     
+	font-size: 13px;
+}
+.tableHeadEcommerce{
+    font-size: 13px;
+    color: #666;
+    margin-top: 20px;
+}
+/*.customTableEcommerce {
+	font-family: 'PT Sans', sans-serif !important;     
+
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 60px;
+  }
+
+.customTableEcommerce tr{
+    background-color: #ebebeb;
+}
+
+.customTableEcommerce th, td {
+  text-align: left;
+  padding: 12px;
+  padding-top: 10px;
+  font-size: 13px;
+  color: #666;    
+
+}
+.customTableEcommerce tr:nth-child(even) {background-color: #f6f6f6;}
+.tableHeadEcommerce{
+    font-size: 13px;
+    color: #666;    
+	font-family: 'PT Sans', sans-serif !important;     
+
+    margin-top: 20px;
+}
+*/.submitButtonEcommerce {
+    background-color: #25baf2;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 15px;
+    height: 37px;
+}
+.cancelButtonEcommerce {
+    background-color: #aaa;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 15px;
+    height: 37px;
+    margin-right: 5px;
+}

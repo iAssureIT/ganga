@@ -1,0 +1,261 @@
+.myDIV{
+ position: relative !important;
+}
+.myDIV>ul{
+  padding-left: 0px !important;
+}
+.sortByCateEcommerce{
+  margin-bottom: 5px;
+  
+
+}
+.propageCategoriesContainerEcommerce{
+  margin-bottom: 20px;
+
+}
+.propageCategoriesContainerEcommerce label{
+  font-size: 15px;
+  
+}
+.categoriesContainerEcommerce label{
+  font-size: 15px;
+  
+}
+.marginBot{
+  border-bottom: 1px #aaa solid !important;
+  padding-bottom: 5px;
+
+}
+.fs13{
+  font-size: 13px !important;
+}
+/* Create a custom checkbox */
+.centreDetailContainerEcommerce{
+  position: relative;
+  padding-top: 5px;
+ 
+  align-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  user-select: none;
+  text-align: center;
+}
+/* Hide the browser's default checkbox */
+.centreDetailContainerEcommerce input {
+     position: relative;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    /* right: 10px; */
+    margin-top: 2px;
+}
+.centreDetailCheckEcommerce {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+.radioCheckEcommerce {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+.plusContainer{
+    
+
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainerEcommerce:hover input ~ .centreDetailCheckEcommerce{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainerEcommerce input:checked ~ .centreDetailCheckEcommerce {
+  background-color: #25baf2;
+  border:2px solid #25baf2;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.centreDetailCheckEcommerce:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainerEcommerce input:checked ~ .centreDetailCheckEcommerce:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainerEcommerce .centreDetailCheckEcommerce:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainerEcommerce:hover input ~ .radioCheckEcommerce{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainerEcommerce input:checked ~ .radioCheckEcommerce {
+  background-color: #25baf2;
+  border:2px solid #25baf2;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.radioCheckEcommerce:after {
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainerEcommerce input:checked ~ .radioCheckEcommerce:after {
+  display: block;
+    background-color: transparent;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainerEcommerce .radioCheckEcommerce:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;   
+
+
+  transform: rotate(45deg);
+}
+.centreDetaillistItemEcommerce{
+  padding-left: 25px;
+  
+
+  padding-top: 5px;
+  font-size: 12px !important;
+}
+.featuredProcPPEcommerce{
+  height: 80px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 13px;  
+  
+}
+.featuredProcPPEcommerce label{
+  padding-top: 5px;
+}
+.priceDivPPEcommerce{
+  color: #F27533;
+  font-size: 18px;
+  
+}
+.backColorPPEcommerce{
+  background-color: #f6f6f6;
+}
+.allProductButtonEcommerce{
+  text-align: center;
+  color: #333;
+  padding:5px;
+  margin-bottom: 20px;
+  border:1px #efefef solid;
+  cursor: pointer;
+  
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover{
+    background-color: #333 !important;
+    border-color:#333 !important;
+    color:#fff !important;
+}
+.pagination li>a{
+    padding: 10px !important;
+  
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span,.pagination>li:first-child>span,.pagination>li:first-child>a
+{    
+    border-radius: 0px !important;
+}
+
+.subcategoriesPicEcommerce{
+     margin-left: 24px;
+    height: 125px;
+    margin-right: 6px;
+    background-color: #333;
+}
+.mr0{
+ margin-right: 0px !important;
+}
+.backImgSub{
+  height: 125px;
+  padding: 0px !important;
+  border: 1px solid #efefef;
+
+}
+.backImgSub img{
+  height: 100%;
+  cursor: pointer;
+  width: 100%;
+
+}
+.backLabelSubEcommerce{
+  text-align: center;
+  padding-top: 2px;
+  
+}
+.headSubEcommerce{
+  margin-left: 24px;
+  color: #000;
+}
+.selectCustomEcommerce1{
+    border-radius: 0px !important;
+    display: block;
+    height: 30px !important;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.sortByEcommerce{
+  padding-top: 5px;
+  margin-right: 5px;
+    
+
+}
+.mt{
+  margin-top: 50px;
+}
+.marginTop180{
+  margin-top: 150px;
+}
+
+.pad10{
+ padding-top: 11px !important;
+    padding-right: 10px;
+}
+.backColo333{
+  background-color: #333;
+}

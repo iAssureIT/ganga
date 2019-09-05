@@ -1,0 +1,15 @@
+.termsAndConditionsContainer{
+	padding: 20px;
+    line-height: 23px;
+    font-family: 'PT Sans',sans-serif;
+}
+.termsAndConditionsContainer label{
+	font-family: 'PT Sans',sans-serif;
+	font-size: 20px;
+	color: #1c3481;
+}
+.ruleHead{
+	font-family: 'PT Sans',sans-serif;
+	font-size: 25px;
+	color: #1c3481;
+}

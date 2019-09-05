@@ -1,0 +1,15 @@
+
+.mt150{
+    margin-top: 150px;
+}
+
+.wishlistheader{
+    background-color: #3f9090;
+    height: 50px;
+    color: #fff;
+    padding-top:10px;
+    font-size: 25px;
+    font-weight:bold; 
+    border-radius: 50px;
+    margin-bottom: 20px;
+}

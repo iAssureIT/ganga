@@ -1,0 +1,40 @@
+.notBlkUplImgList {
+    display: inline-block;
+    background: #dd4b39;
+    padding: 3px 10px;
+    color: #fff;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.notBlkUplImgListOuter {
+    background: #eee;
+    padding: 10px;
+}
+
+.notBlkUplImgListTitle {
+    background: #444;
+    color: #fff;
+    margin-bottom: 5px;
+    padding: 5px;
+    text-align: center;
+    margin-right: 5px;
+}
+.upldImgTextColor{
+    color: #444;
+    margin-bottom: 10px;
+}
+.upldImgTextColor1{
+    color: rgb(212, 40, 40);
+}
+.upldImgTextColor2{
+    color: rgb(212, 40, 40);
+}
+.tableHeadBulkImgUpld {
+    background: #3c8dbc;
+    color: #fff;
+}
+
+.tableHeadBulkImgUpld tr td {
+    border:1px solid #3c8dbc;
+}

@@ -1,0 +1,39 @@
+.productName{
+	
+    background-image: url("/images/breadcumb.jpg");
+    height: 120px;
+    padding-top: 30px;
+    padding-left: 60px !important;
+}
+.nameOfItem{
+	font-size: 28px;
+    
+    color: #fff;
+    font-weight: 600;
+
+}
+.breadCumb a{
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 13px;
+    
+}
+.breadCumb:hover a{
+	text-decoration: none !important;
+/*	color:#5f9c30 !important;*/
+}
+a:visited{
+	text-decoration: none !important;
+
+}
+
+.backColorBread{
+    height: 50px;
+    padding-top: 13px;
+    background-color: #fff;
+}
+.noStylea a{
+    padding-top: 10px;
+    font-family: 'PT Sans',sans-serif;
+    text-decoration: none !important;
+}

@@ -1,0 +1,227 @@
+.productDesContainer{
+	background-color:#f5f5f5;
+	height: auto;
+}
+.customPills{
+	margin-left: 28%;
+    margin-top: 45px;
+    font-size: 24px;
+    font-family: "Domine",sans-serif !important;
+    font-weight: 600;
+    background-color: transparent!important;
+    color: #353535;
+    padding: 0px;
+    text-transform: capitalize;
+    position: relative;
+
+}
+.customPills>li.active>a, .customPills>li.active>a:focus, .customPills>li.active>a:hover{
+    background-color: transparent!important;
+    color: #5f9c30 !important;
+    border-bottom: 3px solid #5f9c30 !important;
+    border-radius:0px !important;
+}
+.customPills>li>a:hover{
+background-color: transparent !important;
+}
+.descriptionData{
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+.descriptionData p{
+	color: #999;
+	line-height: 25px;
+    
+    font-size: 13px;
+}
+.borderBottom{
+	border-bottom: 1px solid rgba(0,0,0,.1); 
+}
+.writeReviewText{
+    
+    font-size: 13px;
+    color: #666;    
+    margin-bottom: 60px;
+}
+.writeReviewText span{
+    
+    font-size: 13px;
+    color: #666;    
+    cursor: pointer;
+}
+.formWrapper{
+    background-color: #fff;
+    height: 500px;
+}
+.modalHeader{
+    border-bottom: 1px #aaa solid;
+    height: auto;
+}
+.modalHeader h4{
+    text-align: center;
+    color: #333;
+    font-size: 25px;
+    text-transform: capitalize;
+       
+}
+.customWidthModal{
+    width: 700px !important;
+}
+.clsBtn i{
+    font-size: 16px !important;
+    color: #f00;
+    margin-right: 10px;
+}
+.displayImageReview img{
+    height:200px ;
+}
+.mt20{
+    margin-top: 20px;
+}
+.fnSize{
+    font-size: 15px;
+}
+.customInputField{
+    border-radius: 0px !important;
+    padding: 0px !important;
+    padding-left: 5px !important;
+    height: 40px;
+
+}
+.descriptionOfProduct{
+    margin-top: 10px;
+}
+.nameOfImage{
+    margin-top: 10px;
+
+}
+.marginBottom{
+    border-bottom: 1px #999 solid !important;
+    margin-bottom: 25px;
+}
+/*other*/
+.ratingReview {
+    float:left;
+    margin-top:-13px;
+}
+
+.ratingReview:not(:checked) > input,
+.ratingReview1:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.ratingReview:not(:checked) > label, .ratingReview1:not(:checked) > label {
+    float:right;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+}
+
+.ratingReview:not(:checked) > label:before,.ratingReview1:not(:checked) > label:before {
+    content: '★ ';
+    font-size:16px;
+}
+
+.ratingReview > input:checked ~ label, .ratingReview1 > input:checked ~ label {
+    color: gold!important;
+}
+
+.ratingReview:not(:checked) > label:hover,
+.ratingReview:not(:checked) > label:hover ~ label{
+  color: #F0c424!important;
+}
+
+
+.ratingReview > input:checked + label:hover,
+.ratingReview > input:checked + label:hover ~ label,
+.ratingReview > input:checked ~ label:hover,
+.ratingReview > input:checked ~ label:hover ~ label,
+.ratingReview > label:hover ~ input:checked ~ label {
+  color: #ea0;
+}
+
+.ratingReview > label:active {
+  position:relative;
+  top:2px;
+  left:2px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.ratingReview > input:checked + label:hover,
+.ratingReview > input:checked + label:hover ~ label,
+.ratingReview > input:checked ~ label:hover,
+.ratingReview > input:checked ~ label:hover ~ label,
+.ratingReview > label:hover ~ input:checked ~ label {
+  color: #ea0;
+}
+.clearfix {
+    *zoom: 1;
+}
+.submitButton{
+   background-color: #5f9c30;
+    color: #fff;
+    font-family: "Domine",sans-serif !important;
+    border-radius: 3px;
+    font-size: 15px;
+    height: 37px;
+}
+.cancelButton{
+      background-color:#aaa ;
+    color: #fff;
+    font-family: "Domine",sans-serif !important;
+    border-radius: 3px;
+    font-size: 15px;
+    height: 37px;
+    margin-right: 5px;
+}
+.borderTop{
+    margin-top:40px;
+    border-top:1px solid #aaa;
+    padding-top:20px;
+}
+.customTable {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 60px;
+
+}
+.customTable tr{
+    background-color: #ebebeb;
+}
+
+.customTable th, td {
+  text-align: left;
+  padding: 12px;
+  padding-top: 10px;
+  
+  font-size: 13px;
+  color: #666;    
+
+}
+.customTable tr:nth-child(even) {background-color: #f6f6f6;}
+.tableHead{
+     
+    font-size: 13px;
+    color: #666;    
+
+    margin-top: 20px;
+}
+.brandImg img{
+    height: 80px;
+    margin-bottom: 20px;
+}

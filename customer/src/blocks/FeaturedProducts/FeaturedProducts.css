@@ -1,0 +1,12 @@
+ .featuredProductHead{
+ 	margin-top: 20px;
+    text-align: center;
+    padding-bottom: 25px;
+ }  
+.featuredProductHead label{
+    
+    font-size: 18px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+
+}	

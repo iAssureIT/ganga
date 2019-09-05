@@ -1,0 +1,59 @@
+.backColorEF{
+	background-color: #eef3f4;
+}
+.contactUsBody{
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.LabelContactUs{
+	font-size: 16px;
+    color: #000;
+    font-family: 'PT Sans',sans-serif;
+}
+.contactUsSpan{    
+	font-family: 'PT Sans',sans-serif;
+	font-size: 14px;
+	color: #666;
+	padding-top: 5px;
+}
+.customInput{
+	font-family: 'PT Sans',sans-serif;
+}
+.customInput:focus{
+	outline: none !important;
+}
+.customInput::placeholder{
+	font-family: 'PT Sans',sans-serif;
+	font-size: 14px;
+	color: #999;
+}
+.customInputArea:focus{
+	outline: none !important;
+}
+.customInputArea::placeholder{
+	font-family: 'PT Sans',sans-serif;
+	font-size: 14px;
+	color: #999;
+}
+.submitBtnContactUs{
+	font-size: 14px;
+    text-align: center;
+	font-family: 'PT Sans',sans-serif;
+    padding: 0px !important;
+    background-color: #00baf2;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    height: 40px;
+}
+.storeInfo{
+	padding: 20px;
+	position: absolute !important;
+	margin-top: 70px;
+	margin-left: 17px;
+
+
+}
+.storeInfo label{
+	font-size: 14px;
+}

@@ -1,0 +1,223 @@
+.borderBottomAllBlog{
+  font-size: 14px;
+    color: #666;
+    line-height: 24px;
+  
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.borderBottomAllBlogGrocery p{
+  font-size: 14px;
+    color: #666;
+    line-height: 24px;
+	
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.redirectSpan a{
+	color: #24baf2 !important;
+}
+.redirectSpanGrocery a{
+	color: #5f9c30 !important;
+
+}
+.imageOfBlog{
+	height: auto;
+}
+.imageOfBlog img{
+	height: 100%;
+	width: 100%;
+}
+.categoriesContainer{
+	border-bottom: 1px solid #aaa;
+	padding-bottom: 20px;
+}
+.categoriesContainer label{
+	font-size: 22px;
+    font-family: "Domine",sans-serif;
+}
+
+/*=======
+.categoriesContainerEcommerce{
+	border-bottom: 1px solid #aaa;
+	padding-bottom: 20px;
+}
+.categoriesContainerEcommerce label{
+	font-size: 15px;
+  
+}
+>>>>>>> Stashed changes*/
+.plusContainer{
+	padding-top: 10px;
+	cursor: pointer;
+	font-size: 13px;
+  text-transform: capitalize !important;
+	
+
+}
+.plusContainerEcommerce{
+	padding-top: 10px;
+	cursor: pointer;
+  text-transform: capitalize !important;
+	font-size: 13px;
+  
+
+}
+#collapseExample {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  display: none;
+  background-color: lightblue;
+  margin-top: 20px;
+
+}
+
+.likeDiv{
+       font-size: 12px;
+    color: #666;
+    /* line-height: 4px; */
+    
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+#myDIV{
+	padding:0px !important;
+	margin-top: 10px;
+	transition: 0.10s;
+}
+#myDIV li{
+	font-size: 13px;
+	padding: 6px;
+	list-style: none;
+	
+}
+#myDivEcommerce{
+	padding:0px !important;
+	margin-top: 10px;
+	transition: 0.10s;
+}
+#myDivEcommerce li{
+	font-size: 13px;
+	padding: 6px;
+	list-style: none;
+  
+}
+.accordion {
+  color: #444;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.10s;
+   transition: .5s ease-in-out;
+
+}
+.panel {
+  display: none;
+  background-color: white;
+  overflow: hidden;
+  transition: 0.10s;
+  transition: .5s ease-in-out;
+
+}
+.blogHeading{
+	font-size:36px;
+  font-family: "Domine",sans-serif;
+  margin-top: 10px;
+}
+.tweeterButton{
+     background: #1b95e0;
+    padding: 1px;
+    font-size: 11px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    color: #fff;
+}
+.likeButton{
+     background: #4267b2;
+    padding: 1px;
+    font-size: 11px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    color: #fff;
+}
+.tag1{
+    background: #666;
+    padding: 10px;
+    font-size: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+    border-radius: 3px;
+    color: #fff;
+}
+.Tags{
+  margin-bottom: 20px;
+}
+
+.commentSection{
+    
+  margin-bottom: 20px;
+}
+.margin1Top10{
+  margin-top: 10px;
+}
+.customInput{
+     border-radius: 0px !important;
+    height: 38px !important;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ebebeb !important;
+}
+.customInput::placeholder{
+  color: #aaa;
+}
+.customInputArea{
+     border-radius: 0px !important;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ebebeb !important;
+}
+.customInputArea::placeholder{
+  color: #aaa;
+}
+.capacha{
+  text-align: center;
+ /* background-image: url("/images/capacha.jpeg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;*/
+}
+.submitBtn{
+    font-size: 15px;
+    text-align: center;
+    padding: 0px !important;
+    border-radius: 3px;
+    background-color: #dddddd;
+    text-transform: uppercase;
+    font-weight: 600;
+    min-width: 136px;
+    height: 42px;
+    line-height: 43px;
+}
+.textStyle{
+  color:#aaa;
+  font-size: 12px;
+}
+.commentLabel label{
+  font-size: 20px;
+      font-family: "Domine",sans-serif;
+}
+.noBlogs{
+  color:#333;
+  height: 300px;
+  font-size: 30px;
+  
+  text-align: center;
+}

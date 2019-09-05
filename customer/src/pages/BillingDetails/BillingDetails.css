@@ -1,0 +1,345 @@
+  .billing-details{
+        padding: 1%;
+        color: #fff;
+        background: #3f9090!important;
+        text-align: center;
+        /**/
+        font-size: 28px;
+    }
+    .billingmargin{
+      margin-top: 2%;
+    }
+    .billingbuttonwrap{
+    margin-top:0.7%;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    padding-top: 2.5%;
+}
+    .ProductHead,
+    .AddressHeader{
+        background: #3f9090!important;
+        color: #fff;
+        font-size: 15px;
+        /**/
+        padding:5px;
+        margin-top: 2%;
+        border:1px solid #b3e5fc;
+        border-radius: 50px;
+    }
+    .AddressDetail{
+        font-size: 13px;
+        
+    }
+    .tableHead{
+        font-size: 13px;
+         
+    }
+    .garmentextraTaxation{
+        font-size: 13px;
+         
+        font-weight: bold;
+    }
+    .grandTotalEcommerce{
+        font-size: 18px;
+         
+        font-weight: bold;
+    }
+    /*other*/
+    /*Confirm Order CSS*/
+.orderplaceFooterBtns {
+    /* margin-top: 10%; */
+    margin-left: 24%;
+    padding: 0%;
+}
+.orderplaceFooter{
+    /*margin-top: 2%;*/
+}
+.prodorderplaceCheckout {
+    background: #777;
+    color: #333!important;
+    padding:10px 15px;
+    /* border-radius: 50px; */
+    cursor: pointer;
+    /* */
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+.prodOrderBackToShopEcommerce    {
+    background: #777;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+
+    text-align: center;
+    margin-bottom: 6%;
+}
+.btn{
+    /*padding-top: 0px !important*/
+}
+.prodOrderBackToShopEcommerce a{
+    /* */
+    text-align: center;
+    font-size: 16px;
+    color: #fff !important;
+}
+.tableHead .table > thead > tr > th{
+    border-bottom: 0px solid #aaa!important;
+}
+.orderwrapper{
+    border-top:1px solid #aaa;
+}
+.totalAmountWrapper {
+    margin-top: -1%;
+    font-family: 'poppins';
+    font-size: 16px;
+    border-left: 1px solid #aaa;
+    padding: 0%;
+}
+.garmentextraTaxation {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    /* border-bottom: 1px solid #ccc; */
+    font-size: 14px;
+    color: #aaa;
+}
+.garmentcartvaluesTitles {
+    font-weight: 900;
+    /* color: #989898; */
+    color: #333;
+    /* font-size: 16px; */
+    /* font-family: "NewGotBd"; */
+}
+#totalAmount{
+    color: #666;
+    /*text-align: center;*/
+}
+.tablesText{
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 13px!important;
+}
+.grandTotalWrapper {
+    border-top: 1px solid #aaa;
+    color: #000;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    font-weight: bold;
+}
+
+#totalAmount, .taxWrapper {
+    color: #333;
+    /*text-align: center;*/
+}
+.paymenth4{
+    margin-left: 30%;
+    /*font-family: 'poppins';*/
+    font-size: 14px!important;
+    font-weight: bold;   
+}
+.weaceept{
+    color: #d58980;
+    text-align: center;
+    padding: 0;
+    font-size: 18px !important;
+}
+.weacceptouter{
+    margin-bottom: 8%;
+}
+/*Homepage Services Block */
+.serviceimgwrap{
+    height: 50px;   
+    max-height: 50px;
+    min-height: 50px;
+    filter: grayscale(100%);
+    overflow: hidden;
+}
+
+.serviceImgPriTitleHome {
+    height: 52px;
+    display: block;
+    overflow: hidden;
+}
+.homeoneservicewrap{
+    margin-bottom: 4%;
+}
+.serviceimgwrap  img{
+    height: 100%;
+}
+
+/*other*/
+.termsandconditionstext{
+    margin-bottom: 4%;
+     
+}
+.termsandconditionstext a{
+    color: #777!important;
+    cursor: pointer;
+    margin-left: 2%;
+}
+/* Create a custom checkbox */
+.centreDetailContainerEcommerce{
+  position: relative;
+  padding-top: 5px;
+ 
+  align-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  user-select: none;
+  text-align: center;
+}
+/* Hide the browser's default checkbox */
+.centreDetailContainerEcommerce input {
+     position: relative;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    /* right: 10px; */
+    margin-top: 2px;
+}
+.centreDetailCheckEcommerce {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+.radioCheckEcommerce {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainerEcommerce:hover input ~ .radioCheckEcommerce{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainerEcommerce input:checked ~ .radioCheckEcommerce {
+  background-color: #3C8DBC;
+  border:2px solid #3C8DBC;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.radioCheckEcommerce:after {
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainerEcommerce input:checked ~ .radioCheckEcommerce:after {
+  display: block;
+    background-color: transparent;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainerEcommerce .radioCheckEcommerce:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;   
+
+
+  transform: rotate(45deg);
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainerEcommerce:hover input ~ .centreDetailCheckEcommerce{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainerEcommerce input:checked ~ .centreDetailCheckEcommerce {
+  background-color: #25baf2;
+  border:2px solid #25baf2;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.centreDetailCheckEcommerce:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainerEcommerce input:checked ~ .centreDetailCheckEcommerce:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainerEcommerce .centreDetailCheckEcommerce:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.centreDetaillistItemEcommerce{
+  padding-left: 25px;
+  
+
+  padding-top: 5px;
+  font-size: 12px !important;
+}
+.paymenth4Ecommerce{
+    /*font-family: 'poppins';*/
+    /*font-size: 18px!important;*/
+    /*margin-top: 3px !important;*/
+}
+.PaymentProcess{
+      
+
+}
+#totalAmount, .taxWrapper {
+    color: #333;
+    text-align: right;
+}
+.ProductTxtdata{
+    
+}
+.ProductImage{
+    height: 100px !important;
+}
+.marginTopOrder{
+    margin-top: 100px;
+}
+.headerbg {
+    background: #fff !important;
+}
+.quotationHeader{
+    color: #333 !important;
+}
+.termsfooter .btn {
+    background: #777 !important;
+    color: #fff!important;
+    font-weight: bold;
+}
+
+.checkboxclick{
+  margin-top: 10px;
+}
+.billingcheckout{
+background: #777;
+    color: #fff;
+    padding: 4% 3%;
+    /* border-radius: 50px; */
+    cursor: pointer;
+    /*  */
+    font-size: 16px!important;
+    text-align: center;
+  }

@@ -1,0 +1,29 @@
+.ht170{
+	height: 200px;
+	padding-top:25px;
+}
+.backColorSkyBlue{
+	background-color: #24baf2;
+
+}
+.miniCarReview{
+	height: 159px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    padding-top: 5px;
+    padding-left: 19px !important;
+    padding-right: 21px !important;
+    padding-bottom: 3px;
+    margin-bottom: 20px;
+}
+.nameOflinkReview{
+	margin-top: 30px;
+	color: #fff;
+}
+.nameOfAuthor{
+	font-weight: bold;
+}
+.descOfBlog{
+	line-height: 20px;
+    font-family: 'PT Sans',sans-serif;
+}
