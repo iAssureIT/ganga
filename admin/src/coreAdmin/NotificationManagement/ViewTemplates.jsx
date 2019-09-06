@@ -339,6 +339,8 @@ class ViewTemplates extends Component{
 					"subject"       : subject,
 					"content"       : cketext,
 					}
+
+					console.log("formValues ",formValues);
 				
 						if(formValid(this.state.formerrors)){
 							axios.post('/api/masternotifications', formValues)

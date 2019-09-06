@@ -324,6 +324,7 @@ class CategoryManagement extends Component{
               "categoryDescription"           : '',
               "editId"                        : '',
               "subcatgArr"                    : [],
+              categoryImage : "",
             });
             this.props.history.push('/category-management');
           })
@@ -349,6 +350,7 @@ class CategoryManagement extends Component{
               "addEditModeSubCategory"    : response.data.subCategory,
               "subcatgArr"                : response.data.subCategory,
               "categoryDescription"       : response.data.categoryDescription,
+              "categoryImage"       : response.data.categoryImage,
             },()=>{
                 var addRowLength = this.state.subcatgArr.length;
 
@@ -408,6 +410,8 @@ class CategoryManagement extends Component{
                   var config = await getConfig();
                   
                   var s3url = await s3upload(categoryImage.fileInfo, config, this);
+
+
                   const formValues = {
                       "categoryImage"      : s3url,
                       "status"            : "New"
@@ -501,7 +505,8 @@ class CategoryManagement extends Component{
         // });
     }
     render(){
-      console.log('categoryImage', this.state.categoryImage);
+       console.log("s3url------------->",this.state.categoryImage);
+      // console.log('categoryImage', this.state.categoryImage);
         return(
             <div className="container-fluid">
               <div className="row">
@@ -567,7 +572,7 @@ class CategoryManagement extends Component{
                                   <div className="divideCatgRows">
                                   <label>Category Image</label>
                                       <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6">
-                                      <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6 categoryImage" style={{"backgroundImage":`url(`+(this.state.profileImage && this.state.profileImage != "" ? this.state.profileImage : "/images/userImage.png")+`)`}}>
+                                      <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6 categoryImage" style={{"backgroundImage":`url(`+(this.state.categoryImage && this.state.categoryImage != "" ? this.state.categoryImage : "/images/notavailable.jpg")+`)`}}>
                                         <div className="row">
                                           {/* <span className="fa fa-camera"> */}
                                             <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="imgUp col-lg-12 col-sm-12 col-xs-12 col-md-12" accept=".jpg,.jpeg,.png" />
