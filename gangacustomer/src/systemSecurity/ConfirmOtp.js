@@ -80,45 +80,43 @@ return(
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
           <div className="row">
-            <h3>Please Sign In</h3>
+            <h3>CONFIRMOTP</h3>
           </div>
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 borderrightlogin"> 
                 <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-                  <h4><b>Registered Customers</b></h4>
-                  <p>If you have an account, sign in with your email address.</p>
+                  <h4><b>Confirm OTP</b></h4>
+                  <p>We have sent you a Verification Code to your registered mobile and Email <br/><br/></p>
                     <form id="OTPMobMail" onSubmit={this.confirmOTP.bind(this)}>
-                      <div className="col-lg-12 col-md-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 veriemail">
-                        <div className="text-left col-lg-12 col-md-12 col-sm-12 col-xs-12 otpHeader">
+                      <div className="">
+                        <div className="">
                           <span>Enter six digit verification code received on <b>Email</b>.<br/></span>
                         </div>
-                        <div className="input-effect input-group veribtm1">
-                          <input type="text" className="effect-21 form-control loginInputs " ref="emailotp" name="emailotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="6" pattern="(0|[0-9]*)" required/>
+                        <div className="input-group">
+                          <input type="text" className="form-control" ref="emailotp" name="emailotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="6" pattern="(0|[0-9]*)" required/>
                           <span className="input-group-addon glyphi-custommm"><i className="fa fa-key" aria-hidden="true"></i></span>
-                          <span className="focus-border">
-                            <i></i>
-                          </span>
                         </div>
-                        <div className="text-left col-lg-12 col-md-12 col-sm-12 col-xs-12 otpHeader">
+                        <div className=" mt30">
                           <span>Enter four digit verification code received on <b>Mobile</b>.<br/></span>
                         </div>
-                        <div className="input-effect input-group veribtm1">
-                          <input type="text" className="effect-21 form-control loginInputs " ref="mobotp" name="mobotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="4" pattern="(0|[0-9]*)" required/>
+                        <div className="input-group">
+                          <input type="text" className="form-control" ref="mobotp" name="mobotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="4" pattern="(0|[0-9]*)" required/>
                           <span className="input-group-addon glyphi-custommm"><i className="fa fa-key" aria-hidden="true"></i></span>
-                          <span className="focus-border">
-                            <i></i>
-                          </span>
                         </div>
                       </div>
-                      <div className="submitButtonWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12 veriemail">
-                        <button type="submit" className="btn btn-info submitBtn col-lg-12 col-md-12 col-sm-12 col-xs-12 UMloginbutton">Submit</button>
+                      <div className="loginforgotpass mt10">
+                        <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   
                       </div>
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pdcls">
-                        <a href='/' className="UMGrey signInbtn veriemailmr veriemail col-lg-12">Sign In</a>  
-                      </div>
-                      <div id="resendOtpBtn" className={"col-lg-4 col-md-4 col-sm-4 col-xs-4 resendOtpColor "+resendOtpWrap}>
-                        {resendOtp}
+                      <div className="mt30 col-lg-12">
+                          <div id="resendOtpBtn" className="col-lg-6">
+                            <div id="resendOtpBtn" className="col-lg-12 btn btn-warning systemsecBtn">
+                              {resendOtp}
+                            </div>
+                          </div>
+                          <div className="col-lg-6">
+                              <button type="submit" className="col-lg-12 btn btn-info systemsecBtn">Submit</button>
+                          </div>
                       </div>
                     </form>
                 </div>

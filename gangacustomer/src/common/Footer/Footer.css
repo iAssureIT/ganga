@@ -1,339 +1,186 @@
-.iogfooter{
+.borderRight{
+      border-right: 1px solid rgba(0,0,0,.1);
 }
-
-.animationoveflow{
-  overflow: hidden;
-  width: 100%;
-  top: 900px;
+.footerLogo{
+  padding-top: 25px;
+  padding-bottom: 100px;
 }
-
-
-.footer-two{
- font-size: 16px;
- color: #fff;
- /*background-color: #367588;*/
- /*border-top: 1px solid #eee;*/
- height: 250px;
- padding-top: 75px;
+.footerLogo img{
+  height: 40px;
 }
-.footer-two a{
-color: #fff;
-
-}
-.footer-end a{
-color: #fff;
-
-}
-.footer-end{
-    height: 65px!important;
-
-}
-.footer-two ul{
-    list-style: none;
-    text-decoration: none;
-
-}
-.footer-two ul li a{
+.footerLogo label{
     line-height: 25px;
-    text-decoration: none;
-    text-align: left;
+    color: #666;
+    padding:20px;
+    padding-left:0px!important;
+    font-family: 'PT Sans',sans-serif;
+    font-size: 14px;
+    font-weight: normal !important;
+}
+.footerContainerEcommerce{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.payMethod{
+  padding: 0px !important;
 
 }
-.footer-two ul li a:hover{
-    color: #42E8E0;
+.payMethod img{
+  height: 25px !important;
+  margin-right: 5px;
+}
+.mr10{
+  margin-right: 15px;
+}
+.backColor333{
+  padding-top: 20px;
 
 }
-.footer-two p a{
-    line-height: 25px;
-    text-decoration: none;
-    text-align: left;
-    font-style: normal;
-
-}
-.footer-two p a:hover{
-    color: #42E8E0;
-}
-.bb-solid-1{
-    /*border-bottom: 1px solid #eee;*/
+.backColor333 label{
+  padding-top: 12px;
+  padding-left: 50px;
+  font-family: 'PT Sans',sans-serif;
+  color: #000;
 }
 
-.font-montserrat{
-    /*font-family: 'Montserrat', sans-serif;*/
+.customInputFooter{
+  width: 92%;
+  border:none !important;
+    padding: 12px
+}
+.customInputFooter::placeholder{
+  color: #aaa;
+  font-size: 11px;
+}
+.customInputFooter:focus{
+  outline: none !important;
+}
+.inputContainer{
+  border: 1px solid #aaa;
+}
+.inputContainer i{
+  padding-left: 10px;
+  font-size: 12px;
+  color:#aaa;
+}
+.onHover{
+  color: #000;
     font-size: 18px;
-    font-weight: bold;
+    font-family: 'PT Sans',sans-serif;
+    letter-spacing: 0;
+    position: relative;
 }
-ul.no-icon-list {
-    margin: 0;
-    padding: 0;
+.footerContent{
+  margin-left: 50px;
 }
-.social.social-two a {
-    width: 30px;
-    height: 30px;
-    padding: 5px 8px;
-    text-align: center;
-    border: 1px solid #ddd;
-    float: left;
-    display: block;
-    margin-right: 5px;
-    border-radius: 2px;
+.footerContent label>span{
+  font-family: 'PT Sans',sans-serif;
+  font-size: 14px;
+  padding-bottom: 5px;
+  border-bottom: 2px #3f9090 solid;
+  margin-bottom: 20px;
+}
+.footerContent label>span:hover{
+  color:#333 !important;
+}
+.productList{
+
+  margin-top: 10px;
+}
+.productList a{
+  text-decoration: none !important;
+}
+.productList li{
+  font-family: 'PT Sans',sans-serif;
+  font-size: 13px;
+  color: #999;
+  list-style: none;
+  padding-top: 5px;
+  padding-bottom:  5px !important;
+}
+.productList{ 
+  padding: 0px !important;
+}
+.productList li:hover{
+  color:#3f9090;
+}
+.productList1 li{
+  font-family: 'PT Sans',sans-serif;
+  font-size: 13px;
+  color: #999;
+  list-style: none;
+  padding-top: 5px;
+  padding-bottom:  5px !important;
+}
+.productList1{  
+  padding: 0px !important;
+}
+.productList1 li:hover{
+  color:#3f9090;
 }
 
-
-.footer-two ul{
-    list-style: none;
-    text-decoration: none;
-
+.productList li:before{
+  content: '';
+  position: absolute;
+  top:0;
+  left: 1;
+  border:none;
+  width: 55%;
+  height: 100%;
+  border-bottom: 2px #3f9090 solid;
+  cursor: pointer;
+  box-sizing: border-box;
+  transform: scaleX(0);
+  transition: 0.5s;
 }
-.footer-two ul li a{
-    line-height: 25px;
-    text-decoration: none;
-    text-align: left;
-
+.productList li:hover:before{
+    transform: scaleX(1);
 }
-.socialicon li a{
-    line-height: 25px;
-    text-decoration: none;
-    text-align: left;
-    float: left;
-    margin-left: 5px;
-
+.socialDivFooter{
+  height: 40px;
+    margin-top: 8px;
 }
-.socialicon li a .fa{
-    border: 9px solid #fff;
+.socialFooter{
+  color: #333;
+  margin-right: 10px;
+    padding: 8px !important;
     border-radius: 50%;
-    padding: 5px 6px;
-    background-color: #fff;
-    color: #00317F;
-    font-size: 16px;
-}
-.facebook{
-    padding: 5px 9px !important;
-}
-.footer-two ul li a:hover{
-    /*color: #000;*/
-
-}
-.footer-two p a{
-    line-height: 25px;
-    text-decoration: none;
-    text-align: left;
-    /*font-family: 'Open Sans', sans-serif !important;*/
-    font-style: normal;
-
-}
-.footer-two p a:hover{
-    /*color: #000;*/
-}
-.bb-solid-1{
-    /*border-bottom: 1px solid #eee;*/
-}
-
-.font-montserrat{
-    /*font-family: 'Montserrat', sans-serif;*/
-}
-ul.no-icon-list {
-    margin: 0;
-    padding: 0;
-}
-.social.social-two a {
-    width: 30px;
-    height: 30px;
-    padding: 5px 8px;
+    padding-top: 3px !important;
     text-align: center;
-    border: 1px solid #ddd;
-    float: left;
-    display: block;
-    margin-right: 5px;
-    border-radius: 2px;
+    height: 25px;
+  transition-duration: 0.5s;
 }
-.connectbtn{
+.mr10Footer{
+  margin-right: 10px !important;
+}
+.socialFooter:hover{
+  background-color: #3f9090;
+  color: #fff;
+  cursor: pointer;
+  transition-duration: 0.5s;
+}
+.followUs label{
+  font-weight: normal !important;
+  font-size: 14px;
+  font-family: 'PT Sans',sans-serif;
+  padding-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left:10px;
+}
+.bottomFooterEcommerce{
+
+    text-align: left;
+    /* margin-top: 20px; */
+    padding-top: 10px;
     background-color: #fff;
-    color: #00317F;
-    margin-top: 15px;
-    width: 100%;
-    border-radius: 20px;
+    font-size: 14px;
+    color: #353535;
+    border-top: 2px solid #eef3f4;
+    padding-bottom: 10px;
 }
-
-
-.footeranimation{
-    position: absolute;
-    z-index: 1;
-    /*top: 0px;*/
-    /*left: 0px;*/
-    /*height: 60px;*/
-}
-
-.footimg1{
-    position: relative;
-    bottom: 59px;
-    left: 39px;
-    height: 60px;
-}
-.footimg7{
-    position: relative;
-    bottom: 97px;
-    left: 985px;
-    height: 100px;
-}
-.footimg5{
-    position: relative;
-    bottom: 106px;
-    left: 619px;
-    height: 109px;
-}
-.footimg4{
-    position: relative;
-    bottom: 49px;
-    left: 485px;
-    height: 50px;
-}
-.footimg3{
-    position: relative;
-    bottom: 49px;
-    left: 330px;
-    height: 50px;
-}
-.footimg2{
-    position: relative;
-    bottom: 40px;
-    left: 141px;
-    height: 43px
-}
-.footeranimationtruck{
-    position: relative;
-    top: 59.5px;
-    left: -100px;
-    z-index: 100;
-    animation: truck1 25s linear infinite;
-}
-
-.foot8wheel1{
- position: relative;
-    right: 85px;
-    top: 9px;
-  animation:  wheel 0.4s linear  infinite;
-}
-.foot8wheel2{
-  position: relative;
-    right: 42px;
-    top: 9px;
-  animation:  wheel 0.4s linear  infinite;
-}
-
- .foot6wheel1{
-  position: relative;
-    left: 9px;
-    bottom: 14px;
-  animation:  wheel 0.4s linear  infinite;
-}
-.foot6wheel2{
-  position: relative;
-   left: 13px;
-    bottom: 14px;
-  animation:  wheel 0.4s linear  infinite;
-}
-.foot6wheel3{
-  position: relative;
-   left: 48px;
-    bottom: 14px;
-  animation:  wheel 0.4s linear  infinite;
-}
-
-.footeranimationtruck2{
-    position: relative;
-    top: 17px;
-    left: -650px;
-    z-index: 100;
-    animation:  truck2 30s linear infinite;
-
-}
-
-.viman img{
-    position: relative;
-    top: 11px;
-    left: -200px;
-    z-index: 100;
-    animation: viman 15s linear infinite;
-}
-
-.foot1anim{
-    position: relative;
-   left: 38.5px;
-    bottom: 101px;
-    overflow: hidden;
-
-}
-.foot1anim img{
-  margin-top: -10px;
-  animation:  foot1anim 2s linear  infinite;
-
-}
-
-.foot3anim{
-    position: relative;
-    left: 332px;
-    bottom: 116px;
-}
-.foot3anim img{
-  animation:  foot3anim 4s linear  infinite;
-
-}
-
-@keyframes foot3anim {
-  
-  0% {
-  transform: rotate(0deg);
-  }
-  50% {
-  transform: rotate(8deg);
-  }
-  
-}
-
-@keyframes foot1anim {
-  
-  0% {
-    margin-top:-10px ;
-  }
-  50% {
-   margin-top:0px ;
-  }
-  
-}
-
-
-@keyframes viman {
-  
-  0% {
-    left:-200px ;
-  }
-  100% {
-   left:1500px ;
-  }
-  
-}
-@keyframes truck1 {
-  
-  0% {
-    left:-100px ;
-  }
-  100% {
-   left:1500px ;
-  }
-  
-}
-@keyframes truck2 {
-  
- 0% {
-    left:-650px ; 
-  }
-  100% {
-   left:1500px ;
-  }
-  
-}
-
-.footoverflow{
-    width: 100%;
-    overflow: hidden;
+.backColorBlue{
+  border-top: 10px solid #F04324 !important;
 }
