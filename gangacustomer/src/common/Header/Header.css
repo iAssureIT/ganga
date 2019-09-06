@@ -1,10 +1,12 @@
 .headerflow{
-    position: fixed;
+  /*position: fixed;*/
   z-index: 10000;
   background-color: transparent;
-  transition-duration: 0.8s;
+  /*transition-duration: 0.8s;*/
+  height: 100px;
+  background-color: #eee;
 }
-.headerflowscroll{
+/*.headerflowscroll{
   position: fixed;
   z-index: 10000;
   background-color: #fff;
@@ -12,7 +14,7 @@
   box-shadow: 0 10px 14px rgba(92,141,255,.2);
   transition-duration: 0.8s;
 }
-
+*/
 #container {
   margin: 0 auto;
   max-width: 890px;

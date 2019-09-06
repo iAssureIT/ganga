@@ -76,63 +76,53 @@ class Login extends Component {
   render(){
     
     return(  
-      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper loginbg">
-        <div className="col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-12 signupPadding loginFormWrap ">
-          <div className="divLoginInWrap">
-              <div className="col-lg-12 text-center marbtm10 ">
-                <img src="/images/Logo.png" height="70px"/>
-              </div>
-            <form id="login" onSubmit={this.userlogin.bind(this)}>
-              <br/>
-              <div className="col-lg-4 col-lg-offset-4 ">
-             {/* <h3> hhhh</h3>*/}
-              {<h4 className="signInNameTitle "><span className="bordbt">SIGN IN</span></h4>
-              }</div>
-              <div className="col-lg-12 col-md-12 col-sm-12 ">
-                <div className="inputContent">
-                  <span className="blocking-span noIb">
-                    <input type="email" className="col-lg-12 col-md-1col-lg-12 col-md-12 col-sm-12 oesSignUpForm tmsLoginTextBox" onChange={this.handleChange} ref="loginusername" id="loginusername" name="loginusername" placeholder="" required/>
-                    <span className="floating-label"><i className="fa fa-envelope signupIconFont" aria-hidden="true"/>Email ID</span>   
-                  </span>
+      <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+          <div className="row">
+            <h3>Please Sign In</h3>
+          </div>
+        </div>
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
+            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 borderrightlogin"> 
+                <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                  <h4><b>Registered Customers</b></h4>
+                  <p>If you have an account, sign in with your email address.</p>
+                    <form id="login" onSubmit={this.userlogin.bind(this)}>
+                          <span className="logininput">
+                            <input type="email" className="mt30 form-control" onChange={this.handleChange} ref="loginusername" id="loginusername" name="loginusername" placeholder="Email" required/>
+                          </span>
+                          <span className="logininput">
+                            <input type="password" className="mt30 form-control" ref="loginpassword" name="loginpassword" placeholder="Password" required/>
+                          </span>
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30">
+                            <div className="row">
+                              <div className="col-lg-6 col-md-6 col-sm-6 mt10">
+                                <div className="row loginforgotpass">
+                                    <a href='' className="">Forgot Your Password?</a>
+                                </div>
+                              </div>
+                              <div className="col-lg-6 col-md-6 col-sm-6">
+                                <input id="logInBtn" type="submit" className="pull-right btn btn-warning" value="Sign In"/>
+                              </div>
+                            </div>
+                          </div>
+                    </form> 
                 </div>
-              </div>
-              <div className="col-lg-12 col-md-12 col-sm-12 marBtm30">
-                <div className="form-group form-group1 fltlft input-group col-lg-12 col-md-12 col-sm-12 inputContent ">     
-                  <span className="blocking-span noIb">
-                    <input type="password" className="form-control border3 pass oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="loginpassword" name="loginpassword" required/>
-                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>                 
-                  </span>
-               
-                <div className="showHideSignDiv">
-                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-                </div> 
-                  <span className="focus-border">
-                    <i></i>
-                  </span>
-                </div>
-              </div>
-              <div className="col-lg-12 col-md-12 col-sm-12">
-                <input id="logInBtn" type="submit" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 UMloginbutton hvr-sweep-to-right" value="Login"/>
-              </div>
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
-               <div className="col-lg-6 col-md-6 col-sm-6 ">
-                  <Link to='/signup' className="UMGreyy UMGreyy_l UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12"> Sign Up</Link>
-                </div>
-{/*                <div className="col-lg-6 col-md-6 col-sm-6 offset-lg-1 customFl">
-                  <Link to='/forgot-pwd' className="UMGreyy UMGreyy_l UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    Forgot Password?
-                  </Link>
-                </div>
-*/}              </div>
-{/*              <div className="col-lg-12 col-md-12 col-sm-12 pdcls">
-                <div className="col-lg-12 col-md-12 col-sm-12 ">
-                  <Link to='/verify-account' className="UMGreyy UMGreyy_l forgotpass emailverify col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    OTP Verification
-                  </Link>
-                </div>
-              </div>
-*/}            </form>
+            </div>
+          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                <h4><b>New Customers</b></h4>
+                <p className="mt10">Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
+                <ul className="loginlistpadd">
+                  <li>Check out faster</li>
+                  <li>Keep more than one address</li>
+                  <li>Track orders</li>
+                  <li>Track wishlist and more</li>
+                </ul>
+               <div className="col-lg-6 col-md-6 col-sm-6 mt30">
+                  <a id="logInBtn" href='/signup' className="btn btn-warning">Create an Account</a>
+               </div>
+            </div>
           </div>
         </div>
       </div>

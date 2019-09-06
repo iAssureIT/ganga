@@ -11,11 +11,26 @@ import '../App.css';
 //-----------Main Menu Rout.................//
 import Header         from '../common/Header/Header.js';
 import Footer         from '../common/Footer/Footer.js';
-import HomePage       from '../allPages/HomePage/HomePage.js';
+import HomePage       from '../pages/HomePage/HomePage.js';
+
+//-----------Syatem Security Rout.................//
+
+import Login            from '../systemSecurity/Login.js';
+import ConfirmOtp       from '../systemSecurity/ConfirmOtp.js'; 
+import ForgotPassword   from '../systemSecurity/ForgotPassword.js';
+import ResetPassword    from '../systemSecurity/ResetPassword.js';
+import SignUp           from '../systemSecurity/SignUp.js';
+import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 
 const WebLayout = () => (
   <div className="skin-blue fixed sidebar-mini">    
     <Route path="/" exact strict component={ HomePage } /> 
+    <Route path="/login"          exact strict component={ Login } />
+    <Route path="/signup"         exact strict component={ SignUp } />
+    <Route path="/forgot-pwd"     exact strict component={ ForgotPassword } />
+    <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
+    <Route path="/verify-account" exact strict component={ VerifyAccount } />
+    <Route path="/confirm-otp/:user_ID"    exact strict component={ ConfirmOtp } />
   </div>
 );
 

@@ -201,137 +201,84 @@ class SignUp extends Component {
 		// var winHeight = window.innerHeight;
   //       var divHeight = winHeight/4.5+'px';
 		
-		return(
+return(
+      <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+          <div className="row">
+            <h3>Create New Customer Account</h3>
+          </div>
+        </div>
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
+	        <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12">
+				<form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
+					   		<div className="logininput">
+					   		<label>First Name</label><label className="astricsign">*</label>
+							   <input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="FirstName" onChange={this.handleChange} data-text="firstNameV" required/>
+							   {this.state.formerrors.firstNameV  && (
+		                        <span className="text-danger">{this.state.formerrors.firstNameV}</span> 
+		                      )}
+							</div>
+							<div className="logininput mt30"> 
+					   		<label>Last Name</label><label className="astricsign">*</label>
+								<input type="text" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="LastName" onChange={this.handleChange} data-text="lastNameV" required/>
+								{this.state.formerrors.lastNameV  && (
+		                        <span className="text-danger">{this.state.formerrors.lastNameV}</span> 
+		                      )}
+							</div>
+							<div className="logininput mt30"> 
+					   		<label>Mobile Number</label><label className="astricsign">*</label>
+							   <input className="form-control" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="MobileNumber" onChange={this.handleChange} data-text="mobileV" required/>
+							   {this.state.formerrors.mobileV  && (
+		                        <span className="text-danger">{this.state.formerrors.mobileV}</span> 
+		                      )}
+						    </div>
+							<div className="logininput mt30">  
+					   		<label>Email ID</label><label className="astricsign">*</label>
+							  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" required/>
+							  {this.state.formerrors.emailIDV  && (
+		                        <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
+		                      )}
+							</div>
+		                    <div className="logininput mt30">
+					   		<label>Password</label><label className="astricsign">*</label>
+			                    <input type="password" className="form-control" ref="signupPassword" placeholder="Password" name="signupPassword" required/>
+			                </div>
+		                    <div className="logininput mt30">
+					   		<label>Confirm Password</label><label className="astricsign">*</label>
+			                    <input type="password" className="form-control" ref="signupConfirmPassword" placeholder="Confirm Password" name="signupConfirmPassword" required/>
+			                </div>
+					    <div className="mt30 loginforgotpass">
+			                <input  id="idacceptcondition" type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
+			            </div>
+					    <div class="modal fade" id="myModal" role="dialog">
+					      <div class="modal-dialog">
+					        <div class="modal-content">
+					          <div class="modal-header">
+					            <button type="button" class="close" data-dismiss="modal">&times;</button>
+					            <h2 className="modaltext">Terms & Conditions</h2>
+					          </div>
+					          <div class="modal-body">
+					            <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p>
+					          </div>
+					          <div class="modal-footer">
+					            <button type="button" class="btn btn-default" data-dismiss="modal">Proceed</button>
+					          </div>
+					        </div>
+					      </div>
+					    </div>
 
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper loginbg">
-        		<div className="col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-12 signupPadding signUpFormWrap">
-					<div className="divLoginInWrap">
-						 <div className="col-lg-12 text-center">
-	              			<img src="/images/Logo.png" height="70px"/>
-	              		 </div>
-						<form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
-	                    	<h3 className="signUpNameTitle2 margintop0"><span className="bordbt">SIGN UP</span></h3>
-							<div className="col-lg-12 col-md-12 signUpInnerWrapperOES signupfrm">
-								<div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd boxMarg">
-							   		<span className="blocking-span noIb">
-									   <input type="text" className="form-control abacusTextbox oesSignUpForm" id="firstname" ref="firstname" name="firstname"  onChange={this.handleChange} data-text="firstNameV" required/>
-									   {this.state.formerrors.firstNameV  && (
-				                        <span className="text-danger">{this.state.formerrors.firstNameV}</span> 
-				                      )}
-							    		<span className="floating-label">
-								    		<i className="fa fa-user-circle-o signupIconFont" aria-hidden="true"/> 
-								    		First Name
-							    		</span>					   			
-									</span>
-								</div>
-							    <div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd1 boxMarg">
-									<span className="blocking-span noIb">   
-										<input type="text" className="form-control abacusTextbox oesSignUpForm" id="lastname" ref="lastname" name="lastname"  onChange={this.handleChange} data-text="lastNameV" required/>
-										{this.state.formerrors.lastNameV  && (
-				                        <span className="text-danger">{this.state.formerrors.lastNameV}</span> 
-				                      )}
-								    	<span className="floating-label1 lbfloatpass">
-								    		<i className="fa fa-user-circle-o signupIconFont" aria-hidden="true"/> 
-								    		Last Name
-								    	</span>					   			
-									</span>
-							    </div>
-							    <div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent boxMarg">
-									<span className="blocking-span noIb">   
-									   <input className="form-control  abacusTextbox oesSignUpForm" ref="mobNumber" name="mobNumber" id="mobNumber" onChange={this.handleChange} data-text="mobileV" required/>
-									   {this.state.formerrors.mobileV  && (
-				                        <span className="text-danger">{this.state.formerrors.mobileV}</span> 
-				                      )}
-									   <span className="floating-label">
-									   <i className="fa fa-mobile signupIconFont" aria-hidden="true"></i>Mobile Number</span>					   			
-								    </span>
-							    </div>
-						   		<div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent boxMarg">
-									<span className="blocking-span noIb">   
-									  <input type="email" className="form-control signupsetting  abacusTextbox oesSignUpForm" ref="signupEmail" name="signupEmail" onChange={this.handleChange} data-text="emailIDV" required/>
-									  {this.state.formerrors.emailIDV  && (
-				                        <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
-				                      )}
-							    		<span className="floating-label"><i className="fa fa-envelope-o signupIconFont" aria-hidden="true"></i>Email ID</span>					   			
-									</span>
-							    </div>
-						   		<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent marBtm">
-								    <div className="form-group form-group1 fltlft input-group col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-							   			{/*<span className="blocking-span noIb">
-											<input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="signupPassword" name="signupPassword" required/>
-											<span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>					   			
-										</span>
-										<span className="input-group-addon eyeicon  glyphi-custommm">
-											<i className="fa fa-eye Pass showPwd" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-											<i className="fa fa-eye-slash Pass hidePwd" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-										</span>
-					                    <span className="focus-border">
-					                    	<i></i>
-					                    </span>*/}
+						<div className=" mt30">
+					    	<input id="signUpBtn" className="col-lg-12 col-md-12 col-sm-12 col-xs-12  btn btn-warning" type="submit" value="Sign Up"/>
+					    </div>		   
 
-					                    <span className="blocking-span noIb">
-						                    <input type="password" className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="signupPassword" name="signupPassword" required/>
-						                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>                 
-						                  </span>
-						                <div className="showHideSignDiv">
-						                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-						                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-						                </div> 
-						                  <span className="focus-border">
-						                    <i></i>
-						                  </span>
-									</div>
-							   		<div className="input-group textpdEye fltlft col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-							   			
-					                     <span className="blocking-span noIb">
-						                    <input type="password" className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="signupConfirmPassword" name="signupConfirmPassword" required/>
-						                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>                 
-						                  </span>
-						                <div className="showHideSignDiv">
-						                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-						                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-						                </div> 
-						                  <span className="focus-border">
-						                    <i></i>
-						                  </span>
-									</div>
-								</div>
-							    <div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent termspad">
-					                <input  id="idacceptcondition" type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><Link data-toggle="modal" data-target="#myModal" className="form-checkbox UMGrey1 modalbutton fontbold terms1" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className="under"> terms & conditions</span><label className="sign">*</label></Link>
-					                <span className="checkmark1"></span>
-					            </div>
-							    <div class="modal fade" id="myModal" role="dialog">
-							      <div class="modal-dialog">
-							        <div class="modal-content">
-							          <div class="modal-header">
-							            <button type="button" class="close" data-dismiss="modal">&times;</button>
-							            <h2 className="modaltext">Terms & Conditions</h2>
-							          </div>
-							          <div class="modal-body">
-							            <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p>
-							          </div>
-							          <div class="modal-footer">
-							            <button type="button" class="btn btn-default" data-dismiss="modal">Proceed</button>
-							          </div>
-							        </div>
-							      </div>
-							    </div>
-
-								<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group1 rrnRegisterBtn">
-							    	<input id="signUpBtn" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 acceptinput UMloginbutton UMloginbutton1 hvr-sweep-to-right" type="submit" value="Sign Up" disabled/>
-							    </div>		   
-
-						    	<div className="col-lg-4 col-lg-offset-4 col-md-4 col-sm-4 col-xs-4 pdcls">
-							    	<a href='/login' className="UMGrey signInbtn1 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Sign In</a> 	
-						    	</div>
-						    </div> 
-					  	</form>
-				  	</div>
-				</div>
-			</div>
-		);
-	}
-
-
+				    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">
+					    	<lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a> 	
+				    	</div>
+			  	</form>
+	        </div>
+        </div>
+      </div>
+	);
+  } 
 }
 export default SignUp;
