@@ -203,7 +203,6 @@ class Edituser extends Component{
                                   {/* </span> */}
                                 </div>
                               </div>
-                              
                             </div> 
                             <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
                               <label className="formLable">First Name <label className="requiredsign">*</label></label>

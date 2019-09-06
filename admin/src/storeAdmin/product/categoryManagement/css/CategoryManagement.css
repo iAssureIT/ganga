@@ -149,3 +149,17 @@
 .deleteSubCategory:hover{
     opacity: 0.89;
 }
+.categoryImage{
+	border-radius: 10px;
+	height: 165px;
+	border: 1px solid #eee;
+    /* background: #aaa; */
+	width: 165px;
+	background-size: 100%;
+}
+.imgUp{
+	cursor: pointer;
+	opacity: 0;
+	height: 163px;
+    background: #333;
+}

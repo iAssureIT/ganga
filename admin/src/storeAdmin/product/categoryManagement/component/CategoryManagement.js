@@ -4,6 +4,7 @@ import axios                  from 'axios';
 import ReactTable             from "react-table";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
+import S3FileUpload           from 'react-s3';
 import validator              from 'validator';
 import IAssureTable           from '../../../../coreAdmin/IAssureTable/IAssureTable.jsx';
 import 'jquery-validation';
@@ -21,16 +22,12 @@ class CategoryManagement extends Component{
             "addEditModeCategory"               : "",
             "addEditModeSubCategory"            : [],
             "addEditMode"                       : "",
-            "categoryImageLink"                 : "",
-            "categoryImageId"                   : "",
-            "categoryIconLink"                  : "",
-            "categoryIconId"                    : "",
+            "categoryImage"                     : "",
             "tableHeading"                      : {
               webCategory                       : "Web Category",
               category                          : "Category Title",
               subCategory                       : "Subcategory Title",
               categoryDescription               : "Category Description",
-              categoryIcon                      : "Category Icon",
               categoryImage                     : "Category Image",
               actions                           : 'Action',
             },
@@ -53,7 +50,6 @@ class CategoryManagement extends Component{
             [name]: event.target.value,
         });
     }
-
     componentWillReceiveProps(nextProps) {
         var editId = nextProps.match.params.categoryID;
         if(nextProps.match.params.categoryID){
@@ -63,8 +59,6 @@ class CategoryManagement extends Component{
           this.edit(editId);
         }
     }
-
-
     componentDidMount(){
       window.scrollTo(0, 0);
       if(this.state.editId){      
@@ -142,59 +136,8 @@ class CategoryManagement extends Component{
         console.log('error', error);
       });
     }
-
     componentWillUnmount() {
       // $("body").find("script[src='/js/adminLte.js']").remove();
-    }
-
-    categoryTableList(){
-     //    var categoryData = Category.find({}).fetch();
-     //    // // console.log('categoryData',categoryData);
-     //    var productKey = Session.get('inputCategorySearch');
-     //    if(categoryData){
-     //        for(var j=0;j<categoryData.length;j++){
-     //            if(!categoryData[j].categoryImage){
-     //                categoryData[j].categoryImage = "/images/no-category-image.jpg";
-     //            }
-     //            if(!categoryData[j].categoryIcon){
-     //                categoryData[j].categoryIcon = "/images/no-category-image.jpg";
-     //            }
-     //        }
-     //    }else{
-     //        return [];
-     //    }
-
-     //    if(productKey){
-     //        productKey = (productKey).toUpperCase();
-     //        var categoryDataSearched = [];
-     //        for(var i=0;i<categoryData.length;i++){
-     //            var searchTextString1 = false;
-     //            // var searchTextStringArrKey = false;
-     //            // var searchTextString3 = false;
-     //            // var searchTextString4 = false;
-
-
-     //            if(((categoryData[i].category.toUpperCase()).indexOf(productKey) != -1)){
-					// searchTextString1 = true;
-     //            }
-                
-                
-     //            if(searchTextString1){
-     //                categoryDataSearched.push(categoryData[i]);
-     //            }
-     //        }
-     //        // // console.log("categoryDataSearched: ",categoryDataSearched);
-     //        if(categoryDataSearched.length > 0){
-     //            return categoryDataSearched;
-     //        } else {
-     //            return [];
-     //        }
-
-
-     //    } else {
-     //        return categoryData;
-     //    }
-     return [];
     }
     categorySearchEvent(event){
         // var inputText = $(event.currentTarget).val();
@@ -273,211 +216,6 @@ class CategoryManagement extends Component{
             // console.log('subcatgArr', this.state.subcatgArr);
         });
     }
-    onSubmitCategory(event){
-        event.preventDefault();
-        // if($('#categoryManagement').valid()){
-           //  let category = (this.refs.categoryName.value).trim();
-           //  let categoryDesc = (this.refs.categoryShortDesc.value).trim();
-            
-           //  var getProductId = FlowRouter.getParam("id");
-           //  let subCatgLength = this.state.subcatgArr;
-
-           //   // To add All Rows in FormValues Object as a Array
-           //   var addRowLength = this.state.subcatgArr.length;
-           //   var categoryDimentionArray = [];
-
-           //   var catCodeLength = Category.find({}).count();
-
-
-           //   if(addRowLength){
-           //       for(var i=0;i<addRowLength;i++){
-           //          var obj = {
-           //               "index"        : i,
-           //               "subCategoryCode":catCodeLength+'|'+i,
-           //               "subCategoryTitle"  : $(".newSubCatg"+i).val(),
-           //          }
-           //          categoryDimentionArray.push(obj);
-           //       }
-           //   }
-           // // console.log('categoryDimentionArray',categoryDimentionArray);
-           //  // Get Category Image
-           //  var categoryImage = TemporaryImages.findOne({"userId":Meteor.userId()},{sort:{"createdAt":-1}});
-           //  // // console.log('categoryImage',categoryImage);
-           //  var imageUrl = "";
-           //  if(categoryImage){
-           //      imageUrl = categoryImage.imageLink;
-           //      imageId  = categoryImage.imgId;
-           //  } else {
-           //      if(getProductId){
-           //          imageUrl  = this.state.categoryImageLink;
-           //          imageId   = this.state.categoryImageId;
-           //      } else{
-           //          imageUrl  = "";
-           //          imageId   = "";
-           //      }
-           //  }
-
-           //  // Get Category Icon
-           //  var categoryIcon = TemporaryIcons.findOne({"userId":Meteor.userId()},{sort:{"createdAt":-1}});
-           //  // // console.log('categoryIcon',categoryIcon);
-           //  var iconUrl = "";
-           //  // var imageUrl = "";
-           //  if(categoryIcon){
-           //      iconUrl = categoryIcon.imageLink;
-           //      iconId  = categoryIcon.imgId;
-           //  } else {
-           //      if(getProductId){
-           //          iconUrl  = this.state.categoryIconLink;
-           //          iconId   = this.state.categoryIconId;
-           //      } else{
-           //          iconUrl  = "";
-           //          iconId   = "";
-           //      }
-           //  }
-             
-           //  var formValues = {
-           //      "category"      : category,
-           //      "categoryUrl"   : this.state.categoryUrl,
-           //      "subCategory"   : categoryDimentionArray,
-           //      "imageUrl"      : imageUrl,
-           //      "iconId"        : iconId,
-           //      "iconUrl"       : iconUrl,
-           //      "categoryDesc"  : categoryDesc,                
-           //  }
-
-           //  if(category && categoryDesc){
-           //      if(getProductId){
-           //          // In Edit Mode
-           //          var addEditModeCategory = this.state.addEditModeCategory;
-           //          var addEditModeSubCategory = this.state.addEditModeSubCategory;
-                    
-           //          let exitOrNotCheck = false;
-                    
-           //          if(category == this.state.addEditModeCategory){
-           //              let exitOrNotCheck = false;
-           //          }else{
-           //              let exitOrNot = Category.find({"category":category}).fetch();
-           //              if(exitOrNot && exitOrNot.length>0){
-           //                  let exitOrNotCheck = true;
-           //              }else{
-           //                  let exitOrNotCheck = false;
-           //              }
-           //          }
-        
-        
-           //          if(exitOrNotCheck && categoryDimentionArray.length == 0){
-           //              swal({
-           //                  position: 'top-right',
-           //                  type: 'error',
-           //                  title: 'Category Already Added, Please Add Different Category',
-           //                  text: 'Category Already Added, Please Add Different Category',
-           //                  showConfirmButton: false,
-           //                  timer: 1500
-           //              });
-           //          } else {
-           //              Meteor.call("editCategoryFromCatgManage",formValues,addEditModeCategory,addEditModeSubCategory,getProductId, (error, result)=>{
-           //                  if(result){
-           //                      swal({
-           //                          position: 'top-right',
-           //                          type: 'success',
-           //                          text: 'Category updated Successfully',
-           //                          title: 'Category updated Successfully',
-           //                          showConfirmButton: false,
-           //                          timer: 1500
-           //                      });
-           //                      FlowRouter.go('/admin/products/categoryManagement');
-           //                      this.setState({
-           //                          "categoryName"              : '',
-           //                          "categoryUrl"               : '',
-           //                          "addEditModeCategory"       : '',
-           //                          "addEditModeSubCategory"    : '',
-           //                          "categoryShortDesc"         : '',
-           //                      });
-           //                      $('.edit-catg-new').val("");
-           //                      $('.imgCatgUpldInp').val("");
-           //                      $('.imgCatgUpldIconInp').val("");
-                                
-           //                      $('.categoryShortDesc').val("");
-           //                      Session.set("uploadCatgImageProgressPercent","");
-           //                      Session.set("uploadCatgIconProgressPercent","");
-                                
-           //                      $(".categoryIcon").css({display:'none'});
-           //                      $(".categoryImage").css({display:'none'});
-           //                      $(".categoryTempIcon").css({display:'none'});
-           //                      $(".categoryTempImage").css({display:'none'});
-           //                      $("#categoryImage").show();
-           //                      $("#categoryIcon").show();
-                            
-           //                      this.setState({
-           //                          "subcatgArr":[],
-           //                      });
-                                
-           //                  }
-           //              });
-           //          }
-        
-           //      }else{
-           //          // In Add Mode
-           //          let exitOrNot = Category.find({"category":category}).fetch();
-           //          var addEditModeCategory = this.state.addEditModeCategory;
-        
-           //          if((exitOrNot && exitOrNot.length>0 && categoryDimentionArray.length == 0)){
-           //              swal({
-           //                  position: 'top-right',
-           //                  type: 'error',
-           //                  text: 'Category Already Added, Please Add Different Category',
-           //                  title: 'Category Already Added, Please Add Different Category',
-           //                  showConfirmButton: false,
-           //                  timer: 1500
-           //              });
-           //          } else {
-           //              Meteor.call("addNewCategoryFromCatgManage",formValues, (error, result)=>{
-           //                  swal({
-           //                      position: 'top-right',
-           //                      type: 'success',
-           //                      text: 'Category Added Successfully',
-           //                      title: 'Category Added Successfully',
-           //                      showConfirmButton: false,
-           //                      timer: 1500
-           //                  });
-           //                  $('.edit-catg-new').val("");
-           //                  $('.imgCatgUpldInp').val("");
-           //                  $('.imgCatgUpldIconInp').val("");
-                            
-           //                  $('.categoryShortDesc').val("");
-           //                  Session.set("uploadCatgImageProgressPercent","");
-           //                  Session.set("uploadCatgIconProgressPercent","");
-
-           //                  $(".categoryTempIcon").css({display:'none'});
-           //                  $(".categoryTempImage").css({display:'none'});
-           //                  $("#categoryImage").show();
-           //                  $("#categoryIcon").show();
-                            
-           //                  this.setState({
-           //                      "categoryName"                  : '',
-           //                      "categoryUrl"                   : '',
-           //                      "addEditModeCategory"           : '',
-           //                      "addEditModeSubCategory"        : '',
-           //                      "categoryShortDesc"             : '',
-           //                      "subcatgArr"                    : [],
-           //                  });
-           //                  FlowRouter.go('/admin/products/categoryManagement');
-           //              });
-           //          } 
-           //      }
-           //  }else{
-           //      swal({
-           //          position: 'top-right',
-           //          type: 'error',
-           //          text: 'Please fill all fields',
-           //          title: 'Please fill all fields',
-           //          showConfirmButton: false,
-           //          timer: 1500
-           //      });
-           //  }
-        // }
-  
-    }
     submitCategory(event){
       event.preventDefault();
       console.log('bjgjbmbmb',$('#categoryManagement').valid());
@@ -507,8 +245,7 @@ class CategoryManagement extends Component{
             "categoryUrl"               : this.refs.categoryUrl.value,
             "subCategory"               : categoryDimentionArray,
             "categoryDescription"       : this.refs.categoryDescription.value,
-            "categoryImage"             : "NA",
-            "categoryIcon"              : "NA",
+            "categoryImage"             : this.state.categoryImage,
           }
 
           axios.post('/api/category/post', formValues)
@@ -554,8 +291,7 @@ class CategoryManagement extends Component{
           "categoryUrl"               : this.refs.categoryUrl.value,
           "subCategory"               : categoryDimentionArray,
           "categoryDescription"       : this.refs.categoryDescription.value,
-          "categoryImage"             : "NA",
-          "categoryIcon"              : "NA",
+          "categoryImage"             : this.state.categoryImage,
         }
 
         axios.get('/api/category/get/count')
@@ -589,10 +325,6 @@ class CategoryManagement extends Component{
               "editId"                        : '',
               "subcatgArr"                    : [],
             });
-            $(".categoryTempIcon").css({display:'none'});
-            $(".categoryTempImage").css({display:'none'});
-            $("#categoryImage").show();
-            $("#categoryIcon").show();
             this.props.history.push('/category-management');
           })
           .catch((error)=>{
@@ -630,23 +362,6 @@ class CategoryManagement extends Component{
                     }
                 }
             });
-            // console.log('image',response.data.categoryImage);
-            if(response.data.categoryImage){
-                // this.setState({
-                //     "categoryImageLink"                 : response.data.categoryImage,
-                //     "categoryIconLink"                  : response.data.categoryIcon,
-                //     "categoryImageId"                   : response.data.categoryImageId,
-                //     "categoryIconId"                    : response.data.categoryIconId,
-                // })
-                // $(".categoryImage").css({display:'block'});
-                // $(".categoryIcon").css({display:'block'});
-                // $("#categoryIcon").hide();
-                // $("#categoryImage").hide();
-            }else{
-
-            }
-                             
-
         } else{
             this.setState ({
 
@@ -657,252 +372,98 @@ class CategoryManagement extends Component{
         console.log('error', error);
       });
     }
-    addCategoryImage(event){
-        event.preventDefault();
-        // let self = this;
-        // Session.set("uploadCatgImageProgressPercent","");
-
-        // if (event.currentTarget.files && event.currentTarget.files[0]) {
-            
-        //     var dataImg =event.currentTarget.files[0];
-        //     if(dataImg.type == "image/jpeg" || dataImg.type == "image/png"){
-                
-        //         var file = event.currentTarget.files[0];
-        //         if (file) {
-        //             addCategoryImgsToS3Function(file,self);
-        //         }
-        //     } else {
-        //         swal({
-        //         position: 'top-right',
-        //         type: 'error',
-        //         title: 'Please select image',
-        //         text: 'Please select image',
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //         });
-        //     }
-
-        //     var tempImageLink = TemporaryImages.findOne({"userId":Meteor.userId()},{sort:{"createdAt":-1}});
-            
-        //     if(tempImageLink){
-        //         this.setState({
-        //             "categoryTempImageLink":tempImageLink.imageLink,
-        //             "categoryTempImageId":tempImageLink.imgId,
-        //         });
-        //         $(".categoryTempImage").css({display:'block'});
-        //         $("#categoryImage").hide();
-        //     }
-        // }
-    }
-
-    addCategoryIcon(event){
-        event.preventDefault();
-        // let self = this;
-        // Session.set("uploadCatgIconProgressPercent","");
-
-        // if (event.currentTarget.files && event.currentTarget.files[0]) {
-        //     var dataImg =event.currentTarget.files[0];
-        //     if(dataImg.type == "image/jpeg" || dataImg.type == "image/png"){
-        
-        //         var file = event.currentTarget.files[0];
-        //         if (file) {
-        //             addCategoryIconsToS3Function(file,self);
-        //         }
-        //     } else {
-        //         swal({
-        //         position: 'top-right',
-        //         type: 'error',
-        //         title: 'Please select image',
-        //         text: 'Please select image',
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //         });
-        //     }
-        // }
-    }
-    getUploadCatgImgPercentage(){
-        // var uploadProgressPercent = Session.get("uploadCatgImageProgressPercent");
-        // if(uploadProgressPercent){
-        //     var percentVal = parseInt(uploadProgressPercent);
-        //     if(percentVal){
-                
-        //         var styleC = {
-        //             width:percentVal + "%",
-        //             display:"block",
-        //         }
-        //         var styleCBar = {
-        //             display:"block",
-        //             marginTop:5,
-        //         }
-        //     }
-        //     if(!percentVal){
-        //         var percentVal = 0;
+    uploadImage(event){
+      event.preventDefault();
+      var categoryImage = "";
+      if (event.currentTarget.files && event.currentTarget.files[0]) {
+          // for(var i=0; i<event.currentTarget.files.length; i++){
+              var file = event.currentTarget.files[0];
+              if (file) {
+                  var fileName  = file.name; 
+                  var ext = fileName.split('.').pop();  
+                  if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+                      if (file) {
+                          var objTitle = { fileInfo :file }
+                          categoryImage = objTitle ;
+                          
+                      }else{          
+                          swal("Images not uploaded","Something went wrong","error");  
+                      }//file
+                  }else{ 
+                      swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                  }//file types
+              }//file
+          // }//for 
+  
+          if(event.currentTarget.files){
+              this.setState({
+                categoryImage : categoryImage
+              });  
+              main().then(formValues=>{
+                  this.setState({
+                    categoryImage : formValues.categoryImage
+                  })
+              });
+              async function main(){
+                  var config = await getConfig();
+                  
+                  var s3url = await s3upload(categoryImage.fileInfo, config, this);
+                  const formValues = {
+                      "categoryImage"      : s3url,
+                      "status"            : "New"
+                  };
     
-        //         var styleC = {
-        //             width:0 + "%",
-        //             display:"none",
-        //         }
-        //         var styleCBar = {
-        //             display:"none",
-        //             marginTop:5,
-        //         }
-        //     }
-        //     if(percentVal == 100){
-        //         return (
-        //             <div>
-                        
-        //             </div>
-        //         );
-        //     }else{
-        //         return (
-        //             <div>
-        //                 <div className="progress"  style= {styleCBar}>
-        //                     <div className="progress-bar progress-bar-striped active" role="progressbar"
-        //                   aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style= {styleC}>
-        //                     {percentVal} %
-        //                     </div>
-        //                 </div>
-        //             </div>        
-        //         );
-        //     }
-        // }
+                  return Promise.resolve(formValues);
+              }
+              function s3upload(image,configuration){
+      
+                  return new Promise(function(resolve,reject){
+                      S3FileUpload
+                          .uploadFile(image,configuration)
+                          .then((Data)=>{
+                              resolve(Data.location);
+                          })
+                          .catch((error)=>{
+                              console.log(error);
+                          })
+                  })
+              }   
+              function getConfig(){
+                  return new Promise(function(resolve,reject){
+                      axios
+                          .get('/api/projectSettings/get/one/s3')
+                          .then((response)=>{
+                              const config = {
+                                  bucketName      : response.data.bucket,
+                                  dirName         : 'propertiesImages',
+                                  region          : response.data.region,
+                                  accessKeyId     : response.data.key,
+                                  secretAccessKey : response.data.secret,
+                              }
+                              resolve(config);                           
+                          })
+                          .catch(function(error){
+                              console.log(error);
+                          })
+      
+                  })
+              }        
+          }
+      }
     }
-    removeIcon(event){
-        var id = event.currentTarget.id;
-        // console.log('removeIcon id',id);
-        // Meteor.call('deleteTempIcon',id,
-        //     (error,result)=>{
-        //         if(error){
-        //             // console.log('error: ',error);
-        //         }else{
-        //             $(".categoryTempIcon").css({display:'none'});
-        //             $("#categoryIcon").show();
-        //             $(".optionALabel").show();
-        //         }
-        //     }
-        // );
-    }
-    removeImage(event){
-        var id = event.currentTarget.id;
-        // Meteor.call('deleteTempImage',id,
-        //     (error,result)=>{
-        //         if(error){
-        //             // console.log('error: ',error);
-        //         }else{
-        //             $(".categoryTempImage").css({display:'none'});
-        //             $("#categoryImage").show();
-        //         }
-        //     }
-        // );
-    }
-    deleteIcon(event){
-        var id = event.currentTarget.id;
-        
-        // Meteor.call('deleteIcon',id,
-        //     (error,result)=>{
-        //         if(error){
-        //             // console.log('error: ',error);
-        //         }else{
-        //             /*// console.log('questionImage deleted');*/
-        //             $(".categoryIcon").css({display:'none'});
-        //             $("#categoryIcon").show();
-        //             $(".optionALabel").show();
-        //             this.setState({
-        //                 categoryIconLink    : '',
-        //                 categoryIconId  : '',
-        //             });
-        //         }
-        //     }
-        // );
-    }
-
     deleteImage(event){
-        var id = event.currentTarget.id;
+        // console.log('delete');
         
-        // Meteor.call('deleteImage',id,
-        //     (error,result)=>{
-        //         if(error){
-        //             // console.log('error: ',error);
-        //         }else{
-        //             /*// console.log('questionImage deleted');*/
-        //             $(".categoryImage").css({display:'none'});
-        //             $("#categoryImage").show();
-        //             $(".optionALabel").show();
-        //             this.setState({
-        //                categoryImageLink    : '',
-        //                 categoryImageId  : '',
-        //             });
-        //         }
-        //     }
-        // );
-    }
-    showTempImage(){
-        // var x = TemporaryImages.findOne({});
-        // console.log('y',x);
-        
-        // if(x){
-        //     $(".categoryTempImage").css({display:'block'});
-        //     $("#categoryImage").hide();
-        //     return x;
-        // }
-        
-    }
-    showTempIcon(){
-        // var x = TemporaryIcons.findOne({});
-        // // console.log('y',x);
-        
-        // if(x){
-        //     $(".categoryTempIcon").css({display:'block'});
-        // $("#categoryIcon").hide();
-        //     return x;
-        // }        
-    }
-    getUploadCatgIconPercentage(){
-        // var uploadProgressPercent = Session.get("uploadCatgIconProgressPercent");
-        // if(uploadProgressPercent){
-        //     var percentVal = parseInt(uploadProgressPercent);
-        //     if(percentVal){
-                
-        //         var styleC = {
-        //             width:percentVal + "%",
-        //             display:"block",
-        //         }
-        //         var styleCBar = {
-        //             display:"block",
-        //             marginTop:5,
-        //         }
-        //     }
-        //     if(!percentVal){
-        //         var percentVal = 0;
-    
-        //         var styleC = {
-        //             width:0 + "%",
-        //             display:"none",
-        //         }
-        //         var styleCBar = {
-        //             display:"none",
-        //             marginTop:5,
-        //         }
-        //     }
-        //     if(percentVal == 100){
-        //         return (
-        //             <div>
-                        
-        //             </div>
-        //         );
-        //     }else{
-        //         return (
-        //             <div>
-        //                 <div className="progress"  style= {styleCBar}>
-        //                     <div className="progress-bar progress-bar-striped active" role="progressbar"
-        //                   aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style= {styleC}>
-        //                     {percentVal} %
-        //                     </div>
-        //                 </div>
-        //             </div>        
-        //         );
-        //     }
-        // }
+        var id = event.target.id;
+        var productImageArray = this.state.productImageArray;
+        // console.log('productImage', productImageArray, id);
+
+        productImageArray.splice(productImageArray.findIndex(v => v === id), 1);
+        this.setState({
+            productImageArray: productImageArray
+        },()=>{
+            // console.log('subcatgArr', this.state.subcatgArr);
+        });
     }
     createCategoryUrl(event){
         const target = event.target;
@@ -940,6 +501,7 @@ class CategoryManagement extends Component{
         // });
     }
     render(){
+      console.log('categoryImage', this.state.categoryImage);
         return(
             <div className="container-fluid">
               <div className="row">
@@ -1003,64 +565,17 @@ class CategoryManagement extends Component{
                                       <input type="text" value={this.state.categoryDescription} onChange={this.handleChange.bind(this)} name="categoryDescription" id="categoryDescription" className="form-control categoryShortDesc" placeholder="Category Short Description" ref="categoryDescription" />
                                   </div>
                                   <div className="divideCatgRows">
-                                      
-                                      <div>Upload Category Icon<span className="imageUploadInstructions">(Upload Maximum 50px X 50px Image)</span></div>
-                                      <div className="">
-                                          <div className="col-lg-12 uploadedImageFromLoclCatg1">
-                                              <input onChange={this.addCategoryIcon.bind(this)} id="categoryIcon" type="file" className="form-control imgCatgUpldIconInp" placeholder="Category Icon" aria-label="Brand" aria-describedby="basic-addon1" />
-                                              <div>{this.getUploadCatgIconPercentage()}</div>
-                                          </div>
-
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding categoryIcon">                                              
-                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17">
-                                                  <i className="fa fa-times deleteImg" id={this.state.categoryIconId} onClick={this.deleteIcon.bind(this)} aria-hidden="true"></i>
-                                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 categoryImg">
-                                                      <img src={this.state.categoryIconLink?this.state.categoryIconLink:null} className="img-responsive"/>
-                                                  </div>
-                                              </div>                                                                                              
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding categoryTempIcon">                                              
-                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17">
-                                                  <i className="fa fa-times deleteImg" id={this.showTempIcon() && this.showTempIcon()._id  ? this.showTempIcon()._id  :null} onClick={this.removeIcon.bind(this)} aria-hidden="true"></i>
-                                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 categoryImg">
-                                                      <img src={this.showTempIcon() && this.showTempIcon().imageLink  ? this.showTempIcon().imageLink  :null} className="img-responsive"/>
-                                                  </div>
-                                              </div>                                                                                              
-                                          </div>
-                                   
+                                  <label>Category Image</label>
+                                      <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6">
+                                      <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6 categoryImage" style={{"backgroundImage":`url(`+(this.state.profileImage && this.state.profileImage != "" ? this.state.profileImage : "/images/userImage.png")+`)`}}>
+                                        <div className="row">
+                                          {/* <span className="fa fa-camera"> */}
+                                            <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="imgUp col-lg-12 col-sm-12 col-xs-12 col-md-12" accept=".jpg,.jpeg,.png" />
+                                          {/* </span> */}
+                                        </div>
                                       </div>
-                                     
-                                  </div>
-
-                                  <div className="divideCatgRows">
-                                      
-                                      <div>Upload Category Image<span className="imageUploadInstructions">(Upload Maximum 674px X 500px Image)</span></div>
-                                      <div className="">
-
-                                          <div className="col-lg-12 uploadedImageFromLoclCatg1">                                                                            
-                                              <input onChange={this.addCategoryImage.bind(this)} id="categoryImage" type="file" className="form-control imgCatgUpldInp" placeholder="Category Image" aria-label="Brand" aria-describedby="basic-addon1" />
-                                              <div>{this.getUploadCatgImgPercentage()}</div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding categoryImage">                                              
-                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17">
-                                                  <i className="fa fa-times deleteImg" id={this.state.categoryImageId} onClick={this.deleteImage.bind(this)} aria-hidden="true"></i>
-                                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 categoryImg">
-                                                      <img src={this.state.categoryImageLink?this.state.categoryImageLink:null} className="img-responsive"/>
-                                                  </div>
-                                              </div>                                                                                              
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding categoryTempImage">                                              
-                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17">
-                                                  <i className="fa fa-times deleteImg" id={this.showTempImage() && this.showTempImage()._id  ? this.showTempImage()._id  :null} onClick={this.removeImage.bind(this)} aria-hidden="true"></i>
-                                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 categoryImg">
-                                                      <img src={this.showTempImage() && this.showTempImage().imageLink  ? this.showTempImage().imageLink  :null} className="img-responsive"/>
-                                                  </div>
-                                              </div>                                                                                              
-                                          </div>
                                       </div>
-                                      
                                   </div>
-
                               </div>
                               <div className="col-lg-12 NOpadding-right">
                                   <div className="addCategoryNewBtn col-lg-12 NOpadding-right">
@@ -1103,24 +618,3 @@ class CategoryManagement extends Component{
         }
     }
 export default CategoryManagement;
-
-// CategoryManagement = withTracker(props => {
-//     var productId           = FlowRouter.getParam('id');
-//     // // console.log('productId',productId);
-//     const categoryHandle    = Meteor.subscribe("category");
-//     const catgData          = Category.findOne({"_id":productId});
-//     const loading           = !categoryHandle.ready();
-
-
-//     const imageHandle    = Meteor.subscribe("temporaryimage");
-//     const loading1       = !imageHandle.ready();
-
-//     const iconHandle    = Meteor.subscribe("temporaryicon");
-//     const loading2       = !iconHandle.ready();
-
-
-//     // // console.log('catgData',catgData);
-//     return {
-//         catgData,
-//     };    
-// })(CategoryManagement);
