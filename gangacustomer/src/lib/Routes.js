@@ -21,7 +21,7 @@ import ForgotPassword   from '../systemSecurity/ForgotPassword.js';
 import ResetPassword    from '../systemSecurity/ResetPassword.js';
 import SignUp           from '../systemSecurity/SignUp.js';
 import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
-
+import Cart             from '../pages/Cart/Cart.js';
 const WebLayout = () => (
   <div className="skin-blue fixed sidebar-mini">    
     <Route path="/" exact strict component={ HomePage } /> 
@@ -31,6 +31,9 @@ const WebLayout = () => (
     <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
     <Route path="/verify-account" exact strict component={ VerifyAccount } />
     <Route path="/confirm-otp/:user_ID"    exact strict component={ ConfirmOtp } />
+
+
+    <Route path="/cart"    exact strict component={ Cart } />
   </div>
 );
 
