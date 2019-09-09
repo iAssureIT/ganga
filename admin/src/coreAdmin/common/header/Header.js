@@ -76,7 +76,7 @@ logout(){
                     </div>*/}
                   </div>
                   </div>
-                  <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right">
+                  <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right usricn">
                     <i className="fa fa-user  headicon "></i>
                   </div>
                   <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right ">

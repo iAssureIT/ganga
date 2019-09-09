@@ -13,7 +13,7 @@ import validator 					from 'validator';
 // import 'jquery-validation';
 import './notification.css';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
