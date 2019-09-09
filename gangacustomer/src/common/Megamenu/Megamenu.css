@@ -86,6 +86,7 @@
   -webkit-transition:width 0.3s;
   -moz-transition:width 0.3s;
   transition:width 0.3s;
+  height: 100px;
 }
 .mega-menu >ul >li:hover .mega-submenu {
   top:0;

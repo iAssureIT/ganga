@@ -55,7 +55,7 @@
     transition: background 0.1s ease-out 0s,box-shadow 0.15s cubic-bezier(0.47,0.03,0.49,1.38) 0s;
     vertical-align: middle;
     white-space: nowrap;
-    width: 350px;
+    width: 340px;
    	border-radius:0px 0px 0px 0px!important;
 	border:1px solid #777!important;
 	border-right: none!important;
@@ -102,4 +102,24 @@
 	cursor: pointer;
 	font-size: 18px;
 	color: #777;
+}
+
+.homecontentwrapper{
+	/*height:1000px;*/
+}
+
+.catogeryvaluebg{
+	background-color: #232f3e;
+}
+
+#menu1{
+	background-color: #232f3e;
+	height: 50px;
+	color: #fff;
+	font-size: 20px;
+	border:none;
+}
+
+.mt20{
+	margin-top:20px;
 }

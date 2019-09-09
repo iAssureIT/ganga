@@ -36,7 +36,7 @@ componentWillMount() {
       { label: '6', value: 6},
     ]; 
     return (
-      <div>
+      <div className="homecontentwrapper"> 
           <header className="col-lg-12 headerflow"> 
             <div className="row"> 
               <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
@@ -48,7 +48,7 @@ componentWillMount() {
                           <ReactMultiSelectCheckboxes options={options} />
                       </div>   
                       <input type="text" className="col-lg-6 headersearch" name="x" placeholder="What are you looking for...."/>
-                      <button className="btn searchbutton" type="button"><span className="glyphicon glyphicon-search"></span></button>
+                      <button className="btn searchbutton" type="button"><i className="fa fa-search" aria-hidden="true"></i></button>
                   </div> 
               </div>
               <div className="col-lg-3 col-md-3 headerpaddingtop text-center">
@@ -60,10 +60,10 @@ componentWillMount() {
             </div>
           </header>
           <nav>
-          <div className="col-lg-12 bw">
+          <div className="col-lg-12 catogeryvaluebg">
             <div className="col-lg-4">
             <div className="dropdown">
-              <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">Dropdown Example</button>
+              <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i className="fa fa-bars" aria-hidden="true"></i>  ALL CATEGORY</button>
               <div className="dropdown-menu" role="menu" aria-labelledby="menu1">
                  <Megamenu />
               </div>
