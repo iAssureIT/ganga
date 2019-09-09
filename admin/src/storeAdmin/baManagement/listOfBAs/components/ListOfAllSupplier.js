@@ -6,8 +6,8 @@ import {Route, withRouter}  from 'react-router-dom';
 import ListOfSupplier       from '../css/ListOfSupplier.css';
 import swal  				from 'sweetalert';
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class ListOfAllSupplier extends Component {
 	

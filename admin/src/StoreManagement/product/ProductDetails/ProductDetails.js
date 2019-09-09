@@ -6,8 +6,8 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import './ProductDetails.css';
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class ProductDetails extends Component{
     constructor(props) {

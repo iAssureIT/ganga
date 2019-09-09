@@ -11,8 +11,8 @@ import 'jquery-validation';
 import 'bootstrap/js/tab.js';
 import '../css/CategoryManagement.css';
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class CategoryManagement extends Component{
     constructor(props) {
