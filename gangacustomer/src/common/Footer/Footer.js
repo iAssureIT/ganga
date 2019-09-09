@@ -15,7 +15,7 @@ export default class Footer extends Component {
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorWhite mt20">
                     <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 footerContainerEcommerce">
                             <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12  footerLogo borderRight ">
-                                <img src="/images/im1.png" /><br/>
+                                <img src="/images/logo1.png" /><br/>
                                 <label className="">Shop at Ganga Express <br/>Patna, India.</label>
                             </div>
                             <div className="col-lg-8 col-md-12 col-sm-12 col-xs-12 ">
