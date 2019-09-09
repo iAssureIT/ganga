@@ -8,7 +8,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import 'bootstrap/js/modal.js';
 import {Route, withRouter} from 'react-router-dom';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 

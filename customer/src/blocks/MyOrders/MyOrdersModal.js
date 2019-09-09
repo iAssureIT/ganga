@@ -8,7 +8,7 @@ import swal                   from 'sweetalert';
 //import EcommerceHeader        from "../../blocks/common/EcommerceHeader/EcommerceHeader.js";
 import './MyOrders.css';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class MyOrders extends Component{

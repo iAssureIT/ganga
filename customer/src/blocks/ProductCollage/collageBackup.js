@@ -7,7 +7,7 @@ import { connect }        from 'react-redux';
 
 
 import "./ProductCollage.css";
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class ProductCollageEcommerce extends Component {

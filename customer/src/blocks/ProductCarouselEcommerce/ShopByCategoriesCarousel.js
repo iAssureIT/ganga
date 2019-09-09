@@ -4,7 +4,7 @@ import OwlCarousel 		 from 'react-owl-carousel';
 import "./ShopByCategoriesCarousel.css";
 import axios                  		from 'axios';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export default class ShopByCategoriesCarousel extends Component {
