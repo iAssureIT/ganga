@@ -349,19 +349,33 @@ class AddNewBulkProduct extends Component{
                                     documentObj.push({[header[k]]:record[k]});
                                 }
                             }else{ 
-                                if (header[k]=='featureList') {
-                                    if (record[k] != undefined) {
-                                        featuresArray = record[k].split(';');
+                                if (header[k].startsWith("featureList")) {
+                                    if (header[k]=='featureList1') {
+                                        if (record[k] != undefined && record[k] != '') {
+                                            //featuresArray ={ feature: record[k], index:0 };
+                                            featuresArray.push({ feature: record[k], index:0 });
+                                        }
                                     }
-                                    
-                                    //featuresArray.push(record[k]);
-                                    documentObj[count][header[k]] = featuresArray; 
-                                } else{
+                                    if (header[k]=='featureList2') {
+                                        if (record[k] != undefined && record[k] != '') {
+                                            featuresArray.push({ feature: record[k], index:1 });
+                                        }
+                                    }
+                                    if (header[k]=='featureList3') {
+                                        if (record[k] != undefined && record[k] != '') {
+                                            featuresArray.push({ feature: record[k], index:2 });
+                                        }
+                                    }
+                                    documentObj[count]['featureList'] = featuresArray;
+                                }
+                                
+                                else{
                                     documentObj[count][header[k]] = record[k];
                                 }
                             }
                         }
                         if (record[header.indexOf('webCategory')] != undefined) {
+                            
                             featuresArray = [];
                             count++;
                         } 
@@ -384,8 +398,9 @@ class AddNewBulkProduct extends Component{
     }
     bulkUpload(){
         
+        console.log(this.state.finalData);
         var formValues = this.state.finalData;
-        axios.post('/api/products/post/bulkUploadProduct', formValues)
+        axios.post('http://localhost:5006/api/products/post/bulkUploadProduct', formValues)
         .then((response)=>{
             console.log('response', response);
             swal({

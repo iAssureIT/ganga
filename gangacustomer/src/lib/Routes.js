@@ -22,18 +22,24 @@ import ResetPassword    from '../systemSecurity/ResetPassword.js';
 import SignUp           from '../systemSecurity/SignUp.js';
 import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 import Cart             from '../pages/Cart/Cart.js';
+import ViewOrder        from '../pages/MyOrders/ViewOrder.js'
+// Order Tracking
+import MyOrders    from '../pages/MyOrders/MyOrders.js';
+import ShipmentTracking    from '../pages/ShipmentTracking/ShipmentTracking.js';
+
 const WebLayout = () => (
   <div className="skin-blue fixed sidebar-mini">    
     <Route path="/" exact strict component={ HomePage } /> 
-    <Route path="/login"          exact strict component={ Login } />
-    <Route path="/signup"         exact strict component={ SignUp } />
-    <Route path="/forgot-pwd"     exact strict component={ ForgotPassword } />
-    <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
-    <Route path="/verify-account" exact strict component={ VerifyAccount } />
-    <Route path="/confirm-otp/:user_ID"    exact strict component={ ConfirmOtp } />
-
-
-    <Route path="/cart"    exact strict component={ Cart } />
+    <Route path="/login"                    exact strict component={ Login } />
+    <Route path="/signup"                   exact strict component={ SignUp } />
+    <Route path="/forgot-pwd"               exact strict component={ ForgotPassword } />
+    <Route path="/reset-pwd"                exact strict component={ ResetPassword } />
+    <Route path="/verify-account"           exact strict component={ VerifyAccount } />
+    <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
+    <Route path="/cart"                     exact strict component={ Cart } />
+    <Route path="/MyOrders"                 exact strict component={ MyOrders } />
+    <Route path="/ViewOrder"                exact strict component={ ViewOrder } />
+    <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
   </div>
 );
 
