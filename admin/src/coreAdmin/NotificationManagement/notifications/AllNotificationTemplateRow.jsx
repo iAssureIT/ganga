@@ -76,14 +76,14 @@ class AllNotificationTemplateRow extends Component{
 							<span className="editTemp">
 								<div className="deleteNotif" data-toggle="modal" onClick={this.editNotificationModal.bind(this)} data-target={"#editNotifyModal-"+this.props.notificationtemplateValues._id} id={this.props.notificationtemplateValues._id}>
 									<i className="fa fa-pencil editPencil"  aria-hidden="true" id={this.props.notificationtemplateValues._id}></i>
-									<span className="">&nbsp;&nbsp;&nbsp; Edit</span>
+									<span className="">&nbsp;Edit</span>
 								</div>
 							</span>
 							
 								<div className="deleteNotif" data-toggle="modal" data-target={`#${this.props.notificationtemplateValues._id}-rm`}>
 									<span>
 									<i className="fa fa-trash deleteEM" aria-hidden="true" id={this.props.notificationtemplateValues._id}></i>
-									<span>&nbsp;&nbsp;&nbsp; Delete</span>
+									<span>&nbsp;Delete</span>
 									</span>
 								</div>
 							

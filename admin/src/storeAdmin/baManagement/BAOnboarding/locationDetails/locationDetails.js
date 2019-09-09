@@ -7,8 +7,8 @@ import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
 import ContactDetails     from '../contactDetails/contactDetails.js';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 export default class LocationDetails extends Component{
   constructor(props) {
       super(props);

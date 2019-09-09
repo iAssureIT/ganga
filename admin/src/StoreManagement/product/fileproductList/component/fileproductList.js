@@ -6,8 +6,8 @@ import IAssureTable           from "../../../../coreAdmin/IAssureTable/IAssureTa
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 class FileWiseProductList extends Component{
     constructor(props) {
       super(props);

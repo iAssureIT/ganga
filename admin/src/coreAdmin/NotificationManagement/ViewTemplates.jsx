@@ -13,8 +13,8 @@ import validator 					from 'validator';
 // import 'jquery-validation';
 import './notification.css';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
   const formValid = formerrors=>{
@@ -532,6 +532,10 @@ class ViewTemplates extends Component{
 													  <option value="Admin New Registration">Admin New Registration</option>
 													  <option value="User Blocked">User Blocked</option>
 													  <option value="User Activated">User Activated</option>
+													  <option value="Order Placed Successfully">Order Placed Successfully</option>
+													  <option value="Order Dispatched">Order Dispatched</option>
+													  <option value="Order Delivered">Order Delivered</option>
+													  <option value="Sign Up">Sign Up</option>
 													</select>
 												</div>	
 											</div>
