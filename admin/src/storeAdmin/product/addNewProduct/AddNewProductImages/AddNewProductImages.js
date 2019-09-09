@@ -8,7 +8,7 @@ import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
 import 'bootstrap/js/tab.js';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class AddNewProductImages extends Component{

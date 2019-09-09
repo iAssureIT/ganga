@@ -9,7 +9,7 @@ import AddNewTableFeature     from '../addNewTableFeature/addNewTableFeature.js'
 import 'bootstrap/js/tab.js';
 import "./AddNewProduct.css";
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 class AddNewShopProduct extends Component{
   constructor(props) {

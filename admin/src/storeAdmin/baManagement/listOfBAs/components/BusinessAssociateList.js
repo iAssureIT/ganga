@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 export default class BusinessAssociateList extends Component {
   

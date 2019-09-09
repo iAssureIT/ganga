@@ -101,13 +101,13 @@ class EmailTemplateRow extends Component{
 						  	<div className="dropdown-content" >
 							    <div  className="deleteNotif"  data-toggle="modal" data-target={"#editNotifyModal-"+this.props.emailtemplateValues._id} id={this.props.emailtemplateValues._id}>
 							    	<i className="fa fa-pencil editPencil" aria-hidden="true"  id={this.props.emailtemplateValues._id}></i> 
-							    	<span className=""  id={this.props.emailtemplateValues._id}>&nbsp;&nbsp;&nbsp; Edit</span>
+							    	<span className=""  id={this.props.emailtemplateValues._id}>&nbsp; Edit</span>
 							    	{console.log("this.props.emailtemplateValues._id",this.props.emailtemplateValues._id)}
 							    </div>
 								<div className="deleteNotif" data-toggle="modal" data-target={`#${this.props.emailtemplateValues._id}-rm`}  id={this.props.emailtemplateValues._id}>
 									<span className="" id={this.props.emailtemplateValues._id}>
 										<i className="fa fa-trash deleteEM" aria-hidden="true" id={this.props.emailtemplateValues._id} ></i>
-										<span id={this.props.emailtemplateValues._id}>&nbsp;&nbsp;&nbsp; Delete</span>
+										<span id={this.props.emailtemplateValues._id}>&nbsp; Delete</span>
 										{console.log("this.props.emailtemplateValues._id for delete",this.props.emailtemplateValues._id)}
 									</span>
 								</div>

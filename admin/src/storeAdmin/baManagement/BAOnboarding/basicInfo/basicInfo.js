@@ -8,7 +8,7 @@ import axios                from 'axios';
 import LocationDetails    from '../locationDetails/locationDetails.js';
 import S3FileUpload           from 'react-s3';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class BasicInfo extends Component {

@@ -76,14 +76,14 @@ export default class AllSMSTemplateRow extends Component{
 								<span className="editTemp">
 									<div className="deleteNotif" data-toggle="modal" onClick={this.editSMSModal.bind(this)} data-target={"#editNotifyModal-"+this.props.smstemplateValues._id} id={this.props.smstemplateValues._id}>
 										<i className="fa fa-pencil editPencil" aria-hidden="true" id={this.props.smstemplateValues._id}></i>
-										<span className="">&nbsp;&nbsp;&nbsp; Edit</span>
+										<span className="">&nbsp;Edit</span>
 									</div>
 								</span>
 								
 									<div className="deleteNotif" data-toggle="modal" data-target={`#${this.props.smstemplateValues._id}-rm`} id={this.props.smstemplateValues._id}>
 										<span>
 											<i className="fa fa-trash deleteEM" aria-hidden="true" id={this.props.smstemplateValues._id}></i>
-											<span>&nbsp;&nbsp;&nbsp; Delete</span>
+											<span>&nbsp;Delete</span>
 										</span>
 									</div>
 							

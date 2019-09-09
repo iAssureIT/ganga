@@ -3,7 +3,7 @@ import InputMask from 'react-input-mask';
 import axios 	 from 'axios';
 import swal      from 'sweetalert';
 import "./userManagement.css";
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class EditUserProfile extends Component{

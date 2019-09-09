@@ -532,6 +532,9 @@ class ViewTemplates extends Component{
 													  <option value="Admin New Registration">Admin New Registration</option>
 													  <option value="User Blocked">User Blocked</option>
 													  <option value="User Activated">User Activated</option>
+													  <option value="Order Placed Successfully">Order Placed Successfully</option>
+													  <option value="Order Dispatched">Order Dispatched</option>
+													  <option value="Order Delivered">Order Delivered</option>
 													</select>
 												</div>	
 											</div>

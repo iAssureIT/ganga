@@ -8,7 +8,7 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import '../css/viewOrder.css';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class viewOrder extends Component{
