@@ -6,8 +6,8 @@ import $            from 'jquery';
 import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class ContactDetails extends Component {
   constructor(props) {
