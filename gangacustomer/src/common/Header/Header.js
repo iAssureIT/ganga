@@ -8,10 +8,16 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/dropdown.js';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Megamenu         from '../Megamenu/Megamenu.js';
-
+import axios                    from 'axios';
 
 export default class Header extends Component {
-  
+constructor(props){
+    super(props);
+    this.state = {
+      options:[],
+      catArray:[]
+    }
+}
 componentWillMount() {
       $(document).ready(function(e){
       
@@ -25,16 +31,60 @@ componentWillMount() {
       });
     });
 }
+componentDidMount(){
+  const options = [];
+  axios.get("/api/category/get/list")
+            .then((response)=>{
 
+              response.data.map((data,index)=>{
+                  options.push({label: data.category, value: data._id}); 
+              });  
+              
+              
+              this.setState({
+                  options : options
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })  
+}
+handleChange(event){
+  var catArray = []
+  event.map((data,index)=>{
+    catArray.push(data.label);
+  })
+
+  this.setState({catArray : catArray});
+}
+
+searchProducts(){
+
+    if ($('.headersearch').val() != '' ) {
+        var formValues =  {
+                        "searchstr" :  $('.headersearch').val(),  
+                        "catArray"  :  this.state.catArray
+                      }
+        axios.post("/api/products/post/searchINCategory",formValues)
+                .then((response)=>{
+
+                 console.log(response)
+                })
+                .catch((error)=>{
+                    console.log('error', error);
+                }) 
+    }
+    
+}
   render() { 
-    const options = [
-      { label: '1', value: 1},
-      { label: '2', value: 2},
-      { label: '3', value: 3},
-      { label: '4', value: 4},
-      { label: '5', value: 5},
-      { label: '6', value: 6},
-    ]; 
+    // const options = [
+    //   { label: '1', value: 1},
+    //   { label: '2', value: 2},
+    //   { label: '3', value: 3},
+    //   { label: '4', value: 4},
+    //   { label: '5', value: 5},
+    //   { label: '6', value: 6},
+    // ]; 
     return (
       <div className="homecontentwrapper"> 
           <header className="col-lg-12 headerflow"> 
@@ -45,10 +95,10 @@ componentWillMount() {
               <div className="col-lg-6 col-md-6 headerpaddingtop">
                   <div className="col-lg-12">
                       <div className="col-lg-3 NOpadding">
-                          <ReactMultiSelectCheckboxes options={options} />
+                          <ReactMultiSelectCheckboxes options={this.state.options} onChange={this.handleChange.bind(this)}/>
                       </div>   
                       <input type="text" className="col-lg-6 headersearch" name="x" placeholder="What are you looking for...."/>
-                      <button className="btn searchbutton" type="button"><i className="fa fa-search" aria-hidden="true"></i></button>
+                      <button className="btn searchbutton" type="button" onClick={this.searchProducts.bind(this)} ><i className="fa fa-search" aria-hidden="true"></i></button>
                   </div> 
               </div>
               <div className="col-lg-3 col-md-3 headerpaddingtop text-center">

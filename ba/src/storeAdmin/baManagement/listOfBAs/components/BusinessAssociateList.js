@@ -3,8 +3,7 @@ import { render }           from 'react-dom';
 import $                    from 'jquery';
 import axios                from 'axios';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 export default class BusinessAssociateList extends Component {
   
   constructor(props) {

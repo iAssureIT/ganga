@@ -4,6 +4,11 @@ import swal   from 'sweetalert';
 import Layout from './coreAdmin/Layout/Layout.js';
 import './App.css';
 
+import axios from 'axios';
+// axios.defaults.baseURL = 'http://localhost:3060/';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 function App() {
   return (
     <div>

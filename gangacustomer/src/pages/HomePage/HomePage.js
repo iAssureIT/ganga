@@ -4,6 +4,7 @@ import EcommerceBanner 				    from "../../blocks/Banner/EcommerceBanner.js";
 import ShopByCategoriesEcommerce  from "../../blocks/ShopByCategories/ShopByCategoriesEcommerce.js";
 import ProductDivider             from "../../blocks/ProductDivider/ProductDivider.js";
 import SaleProductDivider         from "../../blocks/ProductDivider/SaleProductDivider.js"
+import ProductCollageView         from "../../blocks/ProductCollage/ProductCollageView.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
 
@@ -115,6 +116,9 @@ class HomePage extends Component {
               <SaleProductDivider />
             </div>
 
+            <div className="ProductCollageView">
+              <ProductCollageView />
+            </div>
             
         </div>
       </div>

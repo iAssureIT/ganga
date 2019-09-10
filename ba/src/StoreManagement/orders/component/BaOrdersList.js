@@ -9,8 +9,7 @@ import _                      from 'underscore';
 import '../css/AdminOrdersList.css';
 import MUIDataTable from "mui-datatables";
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 class BaOrdersList extends Component{
     constructor(props) {
         super(props);
