@@ -138,7 +138,7 @@ class EcommerceProductCarousel extends Component {
                                     <div className="offerDetails col-lg-6">Offer Price </div><div className="offerDetails col-lg-6 "><span className="pull-right"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span></div>
                                     </div>
                                   }
-                                    <a title="View Product"href={"/ProductDetailsEcommerce/"+data._id}><div className=" flip-box-inner">
+                                    <a title="View Product"href={"/ProductDetails/"+data._id}><div className=" flip-box-inner">
                                       <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} className="flip-box-front img-responsive" alt="blog1"/>       
                                       <img src={data.productImage[1] ? data.productImage[1] : (data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg')} className="flip-box-back img-responsive " alt="blog1"/>
                                     </div></a>
@@ -180,7 +180,7 @@ class EcommerceProductCarousel extends Component {
                                                       </div>
                                                       <div  data-toggle="tooltip" title="View product">
                                                       <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3  mr0 ">
-                                                        <a href={"/ProductDetailsEcommerce/"+data._id}><div className={data.webCategory == "Grocery" ? "iconContainerGrocery  " : "iconContainerEcommerce ht20"}><i className="fa fa-eye "></i></div></a>
+                                                        <a href={"/ProductDetails/"+data._id}><div className={data.webCategory == "Grocery" ? "iconContainerGrocery  " : "iconContainerEcommerce ht20"}><i className="fa fa-eye "></i></div></a>
                                                       </div>
                                                       </div>
                                             </div>
@@ -210,9 +210,9 @@ class EcommerceProductCarousel extends Component {
                                              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 mr0 ">
                                                         {
                                                                   token ?
-                                                          <a href={"/ProductDetailsEcommerce/"+data._id}> <div className={data.webCategory == "Grocery" ? "iconContainerGrocery  col-lg-12" : "iconContainerEcommerce ht20 col-lg-12 "}><i className="fa fa-eye "></i></div></a>
+                                                          <a href={"/ProductDetails/"+data._id}> <div className={data.webCategory == "Grocery" ? "iconContainerGrocery  col-lg-12" : "iconContainerEcommerce ht20 col-lg-12 "}><i className="fa fa-eye "></i></div></a>
                                                                     :
-                                                          <a href={"/ProductDetailsEcommerce/"+data._id}> <span className={data.webCategory == "Grocery" ? "iconContainerGrocery " : "iconContainerEcommerce"}><i className="fa fa-eye "></i></span></a>
+                                                          <a href={"/ProductDetails/"+data._id}> <span className={data.webCategory == "Grocery" ? "iconContainerGrocery " : "iconContainerEcommerce"}><i className="fa fa-eye "></i></span></a>
 
                                                               }
                                                       </div>                                                
