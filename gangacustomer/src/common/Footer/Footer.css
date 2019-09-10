@@ -1,5 +1,5 @@
 
-.footer{
+.footer {
   text-align: center;
 }
 .logo-nb {
@@ -21,4 +21,84 @@
     font-size: 18px;
     margin-right: 25px;
     display: inline-block;
+    color: #fbbb65 ;
+}
+.footer-middle strong{
+  float: left;
+  text-transform: uppercase;
+  padding-bottom: 13px;
+  display: block;
+}
+
+.icondiv{
+  padding: 0;
+}
+.addressDetails{
+  padding: 0;
+  text-align: left;
+}
+
+.addressDetails a{
+  display: block;
+  color: #666666 !important;
+  text-decoration: none;
+}
+
+.socialMedia{
+  padding: 0;
+  text-align: left;
+}
+
+.addressDetails > div i{
+  color: #777;
+}
+
+.socialMedia ul{
+  list-style: none;
+  padding: 0;
+}
+
+.socialMedia li{
+  display: ruby;
+}
+
+.socialMedia .icon-facebook {
+    background: #3b5998 !important;
+    border-color: #3b5998 !important;
+}
+.socialMedia .icon-twitter {
+    background: #1da1f2 !important;
+    border-color: #1da1f2 !important;
+}
+.socialMedia .icon-gplus{
+  background: #db4437 !important;
+  border-color: #db4437 !important;
+}
+.socialMedia .icon-pinterest{
+  background: #d50c22 !important;
+  border-color: #d50c22 !important;
+}
+.socialMedia .icon-linkedin{
+  background: #006fa6 !important;
+  border-color: #006fa6 !important;
+}
+
+.socialMedia i{
+  color: #fff !important;
+  margin-right: 5px !important;
+}
+
+.categoryDiv strong{
+  float: left;
+  text-transform: uppercase;
+  padding-top: 30px;
+  padding-bottom: 13px;
+  display: block;
+}
+.categoryDiv p{
+  text-align: left;
+  color: #999999 !important;
+}
+.NoPadding{
+  padding: 0
 }
