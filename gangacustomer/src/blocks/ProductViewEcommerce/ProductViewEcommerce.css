@@ -8,6 +8,7 @@
     margin-bottom: 20px;
     cursor: pointer;
 }
+
 .miniImagesIn img{
 	height: 100%;
 	width: 100%;
@@ -16,6 +17,10 @@
 	height: 100%;
 	width: 100%; 
 
+
+}
+.imgCont{
+     overflow: hidden;
 }
 .onHoverDivEcommerce{
     position: absolute;
@@ -124,6 +129,7 @@
     color: #777;
     margin-bottom:5px;
 }
+
 .policies{
     height: auto;
     padding:10px;
@@ -150,3 +156,209 @@
 .boldText{
     font-weight: bold;
 }
+
+
+
+
+
+/*---------------------------new product view css-----------------------------*/
+
+.productNameClassNew{
+    font-size: 16px;
+    color: #777;
+    margin-bottom:5px;
+}
+.productNameClassNewBrand{
+    font-size: 18px!important;
+}
+.orangetxt:hover{
+    color:#fbbb65;
+    cursor:pointer;
+   
+}
+.orangetxt{
+     font-weight:900;
+     margin-top:30px;
+     color:#555;
+}
+
+.undrln{
+    height:30px;
+    border-top:1px solid #dadada;
+    padding:0px;
+}
+.paddingleftzero{
+    padding-left: 0px!important;
+}
+.paddingrightzero{
+    padding-right: 0px!important;
+}
+.paddingzero{
+    padding: 0px!important;
+}
+.ttl{
+    font-size: 16px;
+     font-weight:900;
+}
+.priceEcommerceNew{
+     color:#fbbb65;
+         font-size: 3.5rem !important;
+    font-weight: 700;
+    line-height: 25px;
+}
+.ttllist{
+    font-size: 14px;
+    color:#999;
+}
+.listspace{
+    margin-top:10px;
+}
+.tealColorfnt{
+    font-size:8px;
+    font-weight:900;
+}
+.qty{
+   /* height:200px;
+    width:500px;
+    padding:15px;*/
+    padding:15px 25px 21px 15px;
+    border:1px solid #fbbb65;
+    border-radius: 5px;
+    margin-right: 3px;
+}
+.qtycart{
+     padding:15px 25px 21px 10px;
+    border:1px solid #fbbb65;
+    border-radius: 5px;
+    margin-right: 3px;
+}
+
+.qty2{
+    height:25px;
+    width:25px;
+    padding:1px 5px 5px 6px;
+    border:1px solid #fbbb65;
+    border-radius: 5px;
+    margin-right: 3px;
+    margin-top: -14px;
+
+}
+
+.qty3{
+    height:25px;
+    width:25px;
+    padding:1px 5px 5px 6px;
+    border:1px solid #fbbb65;
+    border-radius: 5px;
+    margin-right: 3px;
+     margin-top: 4px;
+
+}
+.clr{
+    color : #fbbb65;
+}
+.spc{
+    margin-top:20px;
+}
+
+.icns{
+    padding:15px 25px 20px 23px;
+     border:1px solid #fbbb65;
+    border-radius: 5px;
+    margin-right: 3px;
+}
+
+.miniImagesInNew{
+    height: auto;
+    font-family: 'PT Sans',sans-serif !important;
+    background-color: #444;
+   
+    border: 1px solid #efefef;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.productView:hover{
+    transform: scale(1.2);
+}
+
+.imgbxborder{
+    border:2px solid #fbbb65;
+}
+
+.sharebx{
+    height:50px;
+    /*border:1px solid black;*/
+    padding-top:15px;
+}
+
+.crcle{
+    height:35px;
+    width:35px;
+    padding-left:12px;
+    padding-top:5px;
+   
+    border-radius:100%;
+    color:white;
+}
+.crcle1{
+    height:35px;
+    width:35px;
+    padding-left:12px;
+    padding-top:5px;   
+    border-radius:100%;
+    margin-left:10px;
+    color:white;
+}
+.fbook{
+    background:#3b5998;
+    border:1px solid #3b5998;
+}
+.fbook:hover{
+    background:#3b5998;
+    border:1px solid #3b5998;
+}
+
+.twtr{
+    background:#50a5e6;
+    border:1px solid #50a5e6;
+}
+.twtr:hover{
+    background:#50a5e6;
+    border:1px solid #50a5e6;
+}
+
+.gplus{
+    background:#e53935;
+    border:1px solid #e53935;
+}
+.gplus:hover{
+    background:#e53935;
+    border:1px solid #e53935;
+}
+
+.linkedin{
+    background:#006fa6;
+    border:1px solid #006fa6;
+}
+.linkedin:hover{
+    background:#006fa6;
+    border:1px solid #006fa6;
+}
+
+.pinterest{
+    background:#b60012;
+    border:1px solid #b60012;
+
+}
+.pinterest:hover{
+    background:#b60012;
+    border:1px solid #b60012;
+}
+
+
+
+
+
+

@@ -18,6 +18,7 @@ class ProductViewEcommerce extends Component {
 	    	"subImgArray":[],
 	    	"totalQuanity":1,
 	    	"quanityLimit":5,
+	    	"imgsrc" : "",
 	    };
     this.changeImage = this.changeImage.bind(this); 
   	}  
@@ -26,6 +27,7 @@ class ProductViewEcommerce extends Component {
   	{
       	axios.get("/api/products/get/one/"+this.props.productID)
             .then((response)=>{
+            	console.log("product info---->",response);
               this.setState({ 
                   productData : response.data,
                   quanityLimit : response.data.availableQuantity
@@ -43,7 +45,16 @@ class ProductViewEcommerce extends Component {
   		]
   	}
   	 changeImage = (event)=>{
+  	 	
         document.getElementById('change-image').src=event.target.src;
+        var index = event.target.getAttribute('data-index');
+        // if(index==event.target.getAttribute('data-index')){
+        // 	$('.imgbx'+index).addClass('imgbxborder');
+        // }
+        this.setState({
+        	imgsrc:event.target.getAttribute('data-index')
+        })
+
   }
 
     addtocart =(event)=>{
@@ -168,23 +179,19 @@ class ProductViewEcommerce extends Component {
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
  
 						<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer">
-								<div className="row">
-									<img src={this.state.productData.productImage && this.state.productData.productImage[0]} id="change-image" alt="default"/>
-									
-								</div>
-							</div>
-						{/*Use Map Here*/}
+							
+						<div className="col-lg-3 col-md-3 col-sm-10 col-xs-10 imageContainer">
 							{
 								this.state.productData.productImage && 
 								this.state.productData.productImage.map((data, index)=>{
 									
-									if(index>0 && !_.isEmpty(data)){
+									if( !_.isEmpty(data)){
+									// if(index>0 && !_.isEmpty(data)){
 										return(
-                       					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 miniImagesIn" onClick={this.changeImage} >
+                       					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" onClick={this.changeImage} >
 											<div className="row">
 											{
-												data &&  <img src={data} alt="default"/>
+												data &&  <img data-index={index} className={index==this.state.imgsrc?"imgbxborder":""} src={data} alt="default"/>
 											}
 											</div>
 										</div>
@@ -194,74 +201,125 @@ class ProductViewEcommerce extends Component {
                        			})	
 							}
 						</div>
+							<div className="col-lg-9 col-md-9 col-sm-10 col-xs-10 imageContainer imgCont">
+								<div className="row">
+									<img className="productView" src={this.state.productData.productImage && this.state.productData.productImage[0]} id="change-image" alt="default"/>
+									
+								</div>
+							</div>
+						</div>
 						<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 ">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
 								<div className="row">
-									<div id="brand"><label> {this.state.productData.brand} </label></div>
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<div className="row productNameClass">{this.state.productData.productName}</div>
-									</div>
+									<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
+									{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div className="row  productNameClassNew">{this.state.productData.productName}</div>
+									</div>*/}
 									
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div className="row">
-										<p className="tealColor boldText">Special price</p>
-										<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}
+										<p className="orangetxt ">Be the first to review this product</p>
+										{/*<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}*/}
 										</div>
+										<div className="undrln row"> </div>
 									</div>
-									<div className="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div className="row">
-				                      	<span className="pull-left pad10">Rating </span>
-				                          <fieldset className="rating stars">
-				                              <input type="radio" id="star5" name="rating" value="5" /><label htmlFor="star5"></label>
-				                              <input type="radio" id="star4" name="rating" value="4" /><label htmlFor="star4"></label>
-				                              <input type="radio" id="star3" name="rating" value="3" /><label htmlFor="star3"></label>
-				                              <input type="radio" id="star2" name="rating" value="2" /><label htmlFor="star2"></label>
-				                              <input type="radio" id="star1" name="rating" value="1"/><label htmlFor="star1"></label>
-				                          </fieldset>
-				                          <div className="clearfix "></div>
+											<span className="col-md-2 paddingleftzero ttl" >
+												Price:
+											</span>
+											<span className="col-md-6">
+												<span className="priceEcommerceNew" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}
+											</span>				                         
+				                          </div>
+				                          <div className="row listspace">
+											<span className="col-md-2 paddingleftzero ttl" >
+												In Stock
+											</span>
+											<span className="col-md-6  ttl" >
+												{this.state.productData.availableQuantity}
+											</span>
+															                         
+				                          </div>
+				                          <div className="row listspace">
+											<span className="col-md-2 paddingleftzero paddingrightzero ttl" >
+												Product Code
+											</span>
+											<span className="col-md-6  ttllist" >
+												{this.state.productData.productCode}
+											</span>
+															                         
+				                          </div>
+				                           <div className="row listspace">
+											<span className="col-md-2 paddingleftzero paddingrightzero ttl" >
+												Features
+											</span>
+											<span className="col-md-6  ttllist" >												
+												{ this.state.productData.featureList &&
+													<div className="">
+														<ul className="paddingleftzero">
+														{ this.state.productData.featureList && 
+															this.state.productData.featureList.map((data,index)=>{
+																return (
+																	<div className="" key={index}>
+																	<div className="">
+																	 <span className="fa fa-circle-o tealColorfnt "></span>
+																	  <span className="blackColor ">&nbsp;&nbsp;{data.feature}</span>
+																	</div>
+																	</div>
+																);
+															})
+															
+														}
+														</ul>
+													</div>
+													}
+												
+											</span>
+															                         
 				                          </div>
 				                    </div>
-									<div>
-										
-									</div>
+									
 
-									{ this.state.productData.featureList &&
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 policies">
-								<ul>
-								{ this.state.productData.featureList && 
-									this.state.productData.featureList.map((data,index)=>{
-										return (
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
-											<div className="row">
-											 <span className="fa fa-tag tealColor col-lg-1 col-md-1 col-sm-1 col-xs-1 row LH tag"></span> <span className="blackColor col-lg-11 col-md-11 col-sm-11 col-xs-11 row LH">{data.feature}</span>
+									
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
+										<div className="row spc">
+											<div className="col-lg-2 paddingleftzero">
+												<div className="col-lg-8">
+													<span className="qty">
+													&nbsp;&nbsp;1
+													</span>
+												</div>
+												<div className="col-lg-2">
+													<span className="qty2 col-lg-12">
+													 <span className="fa fa-plus" aria-hidden="true"></span>
+													</span>
+													<span className="qty3 col-lg-12">
+														 <span className="fa fa-minus" aria-hidden="true"></span>
+													</span>
+												</div>
 											</div>
+											<div className="col-lg-6 paddingleftzero">
+												<div className="col-lg-6">
+													<span className="qtycart clr">
+													 	<i className="fa fa-shopping-cart " aria-hidden="true"></i> Add to Cart
+													</span>
+												</div>
+												<div className="col-lg-3 paddingleftzero">
+													<span className="icns clr">
+													 	<i className="fa fa-heart-o" aria-hidden="true"></i>
+													</span>
+												</div>
+												<div className="col-lg-3 paddingleftzero">
+													<span className="icns clr">
+													 	<i className="fa fa-refresh" aria-hidden="true"></i>
+													</span>
+												</div>
+												
 											</div>
-										);
-									})
-									
-								}
-								</ul>
-							</div>
-							}
-									
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-										<div className="row">
-										<h4>Product Details :</h4>
-										<span className="itemDescEcommerce">
-										{this.state.productData.shortDescription}
-										</span>
-										<br/>
-										<span className="itemDescEcommerce">
-										{this.state.productData.productDetails}
-										</span>
-										</div>
-									</div>
-									
-									
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart">
-										<div className="row">
-										  	<div className="col-lg-3 col-sm-12 col-md-12 col-xs-12 itemCounter ">
+										  	{/*<div className="col-lg-3 col-sm-12 col-md-12 col-xs-12 itemCounter ">
 										  		<div className="row">
 										  			<div className="col-lg-4 col-sm-12 col-md-12 col-xs-12 divContain" id="addQuantity" onClick={this.addQuantity.bind(this)}>
 										  				<i className="fa fa-plus" aria-hidden="true"></i>
@@ -283,14 +341,30 @@ class ProductViewEcommerce extends Component {
 				                            	<div onClick={this.addtowishlist.bind(this)} className="wishListEcommerce" id={this.state.productData._id}>
 									  				<i className="fa fa-heart" id={this.state.productData._id}></i>&nbsp;
 												</div>
-				                            </div>
+				                            </div>*/}
 				                            
 				                        </div>
+				                        <div className="undrln row spc ">
+				                        	<div className="share col-lg-1 spc">
+				                        		Share
+				                        	</div>
+				                        	<div className="share col-lg-11 sharebx">
+				                        		<div className="crcle col-lg-1 fbook"><i className="fa fa-facebook" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 twtr"><i className="fa fa-twitter" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 gplus"><i className="fa fa-google-plus" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 linkedin"><i className="fa fa-linkedin" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 pinterest"><i className="fa fa-pinterest-p" aria-hidden="true"></i></div>
+				                        	</div>
+				                        	
+
+				                         </div>
 									</div>
+
 								</div>
 							</div>
 							
 						</div>
+
 					</div>
                 </div>
 		);

@@ -7,7 +7,7 @@ import SaleProductDivider         from "../../blocks/ProductDivider/SaleProductD
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 var webCategory  = 'Main-Site';
 class HomePage extends Component {
@@ -32,7 +32,9 @@ class HomePage extends Component {
     featuredProductData(){
       var productType1 = 'featured';
       
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType1)
+
+      axios.get("http://gangaapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType1)
+
             .then((response)=>{
               // var featuredProducts = {
               //   products : response.data,
@@ -50,7 +52,9 @@ class HomePage extends Component {
     }
     exclusiveProductsData(){
       var productType2 = 'exclusive';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType2)
+
+      axios.get("http://gangaapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType2)
+
             .then((response)=>{
 
               this.setState({
