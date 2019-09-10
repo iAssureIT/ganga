@@ -30,7 +30,7 @@ class HomePage extends Component {
     featuredProductData(){
       var productType1 = 'featured';
       
-      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType1)
+      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType1)
             .then((response)=>{
               // var featuredProducts = {
               //   products : response.data,
@@ -48,7 +48,7 @@ class HomePage extends Component {
     }
     exclusiveProductsData(){
       var productType2 = 'exclusive';
-      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType2)
+      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType2)
             .then((response)=>{
 
               this.setState({
@@ -61,7 +61,7 @@ class HomePage extends Component {
     }
     newProductsData(){
       var productType3 = 'newProduct';
-      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType3)
+      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType3)
             .then((response)=>{
 
               this.setState({
@@ -74,7 +74,7 @@ class HomePage extends Component {
     }
     bestSellerData(){
       var productType4 = 'bestSeller';
-      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType4)
+      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
             .then((response)=>{
 
               this.setState({
@@ -98,19 +98,6 @@ class HomePage extends Component {
             { /*new product */}
 						<EcommerceProductCarousel title={'New Products'} newProducts = {this.state.newProducts}/>
 						
-            { /*exclusive */}
-            <div className="mt20 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div className="row">
-						 <ShopByCategoriesEcommerce title={'Exclusive Products'} newProducts = {this.state.exclusiveProducts}/>
-             </div>
-             </div>
-						{/*featured  */} 
-						<EcommerceProductCarousel title={'Featured Products'} newProducts = {this.state.featuredProducts}/>
-            <div className="mt20 mb20 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div className="row">
-						<ShopByCategoriesEcommerce title={'Best Seller'} newProducts = {this.state.bestSellerProducts} />
-            </div>
-            </div>
             </div>
         </div>
 		);

@@ -100,11 +100,6 @@ class EcommerceProductCarousel extends Component {
 
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ecommerceProductCarousel mt20">
 						<div className="row">
-  						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorWhite">
-  						    <div className="customPillsEcommerce col-lg-offset-4 col-lg-4">
-                    <h3><b>{this.props.title}</b></h3>
-                  </div>
-  						  </div>
 						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 grayLine"></div>
 						 <div className="tab-content customTabContent">
 						    <div id="home" className="tab-pane fade in active ecommerceTabContent">
