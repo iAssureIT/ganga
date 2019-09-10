@@ -1,0 +1,118 @@
+
+.block{
+	margin-bottom: 30px;
+	position: relative;
+    overflow: hidden;
+    
+}
+
+
+.block img{
+	height: auto;
+	max-width: 100%;
+}
+.block .divImage {
+    max-width: 100%;
+    transition: all 0.5s;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1);
+}
+.block:hover .divImage{
+	transform: scale(1.1);
+	transition-duration: 0.5s;
+	opacity: 0.8;
+
+}
+
+.block:hover .figcaption{
+	opacity: 1;
+	transform: scale(1.1);
+	transition-duration: 0.5s;
+	background-color: rgba(153,153,153,0.2);
+}
+
+
+.block:hover .figcaption::before{
+	opacity: 1;
+	transition-duration: 0.5s;
+	transform: scale3d(1,1,1);
+}
+
+.block:hover .figcaption2{
+	opacity: 1;
+	transform: scale(1.1);
+	transition-duration: 0.5s;
+	background-color: rgba(153,153,153,0.2);
+}
+
+
+.block:hover .figcaption2::before{
+	opacity: 1;
+	transition-duration: 0.5s;
+	transform: scale3d(1,1,1);
+}
+
+.figcaption{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.25em;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: block;
+
+}
+
+.figcaption::before{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	bottom: 20px;
+	left: 20px;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 30px rgba(255,255,255,0.2);
+	content: '';
+	opacity: 1;
+	-webkit-transition: opacity .35s,-webkit-transform .35s;
+	transition: opacity .35s,transform .35s;
+	-webkit-transform: scale3d(1.4,1.4,1);
+	transform: scale3d(1.4,1.4,1);
+}
+.figcaption2{
+	position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2em;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1.25em;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: block;
+
+}
+
+.figcaption2::before{
+	position: absolute;
+	top: 20px;
+	right: 60px;
+	bottom: 20px;
+	left: 60px;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 30px rgba(255,255,255,0.2);
+	content: '';
+	opacity: 1;
+	-webkit-transition: opacity .35s,-webkit-transform .35s;
+	transition: opacity .35s,transform .35s;
+	-webkit-transform: scale3d(1.4,1.4,1);
+	transform: scale3d(1.4,1.4,1);
+}

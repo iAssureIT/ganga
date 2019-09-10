@@ -2,6 +2,8 @@ import React, { Component } 		  from 'react';
 import EcommerceProductCarousel 	from "../../blocks/ProductCarouselEcommerce/EcommerceProductCarousel.js";
 import EcommerceBanner 				    from "../../blocks/Banner/EcommerceBanner.js";
 import ShopByCategoriesEcommerce  from "../../blocks/ShopByCategories/ShopByCategoriesEcommerce.js";
+import ProductDivider             from "../../blocks/ProductDivider/ProductDivider.js";
+import SaleProductDivider         from "../../blocks/ProductDivider/SaleProductDivider.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
 
@@ -89,6 +91,7 @@ class HomePage extends Component {
   render() {
   	
 		return (
+      <div className="container">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorGray">
 					<div className="row">
 					
@@ -99,7 +102,18 @@ class HomePage extends Component {
 						<EcommerceProductCarousel title={'New Products'} newProducts = {this.state.newProducts}/>
 						
             </div>
+
+            <div className="ProductDivider">
+              <ProductDivider />
+            </div>
+
+            <div className="SaleProductDivider">
+              <SaleProductDivider />
+            </div>
+
+            
         </div>
+      </div>
 		);
 	}
 }

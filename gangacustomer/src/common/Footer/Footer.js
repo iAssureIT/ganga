@@ -80,6 +80,37 @@ export default class Footer extends Component {
                             </p>
                         </div>
                     </div>
+                    <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
+                            <strong>TELEVISIONS</strong><br/><br/> 
+                        </div>
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
+                            <p>
+                                Sony TV, LG TV, Toshiba TV, Samsung TV, Panasonic TV, Sharp TV, LCD TV, Samsung LCD TV, LG LCD TV, Sharp LCD TV, LED TV, Sony LED TV, Samsung LED TV...
+                            </p>
+                        </div>
+                    </div>
+                    <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
+                            <strong>HEALTH & BEAUTY</strong><br/><br/> 
+                        </div>
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
+                            <p>
+                                Bourjois, L'oreal, The Body Shop, Maybeline, Shiseido...
+                            </p>
+                        </div>
+                    </div>
+                    <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
+                            <strong>AIR CONDITIONERS</strong><br/><br/> 
+                        </div>
+                        <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
+                            <p>
+                               Daikin, Electrolux, LG, Mitsubishi, Panasonic, Samsung, Sharp, Toshiba, Gree...
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
                 <br />
             </div>
