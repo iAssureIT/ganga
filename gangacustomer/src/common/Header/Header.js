@@ -148,7 +148,7 @@ searchProducts(){
                           <ReactMultiSelectCheckboxes options={this.state.options} onChange={this.handleChange.bind(this)}/>
                       </div>   
                       <input type="text" className="col-lg-6 headersearch" name="x" placeholder="What are you looking for...."/>
-                      <button className="btn searchbutton" type="button" onClick={this.searchProducts.bind(this)} ><i className="fa fa-search" aria-hidden="true"></i></button>
+                      <button className="col-lg-2 btn searchbutton" type="button" onClick={this.searchProducts.bind(this)} ><i className="fa fa-search" aria-hidden="true"></i></button>
                   </div> 
               </div>
               <div className="col-lg-3 col-md-3 headerpaddingtop text-center">
