@@ -9,13 +9,18 @@ import 'bootstrap/js/dropdown.js';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Megamenu         from '../Megamenu/Megamenu.js';
 import axios                    from 'axios';
+import {Route, withRouter} from 'react-router-dom';
+import { connect }        from 'react-redux';
 
-export default class Header extends Component {
+class Header extends Component {
 constructor(props){
     super(props);
     this.state = {
       options:[],
-      catArray:[]
+      catArray:[],
+      searchstr:'',
+      searchResult:[]
+
     }
 }
 componentWillMount() {
@@ -61,18 +66,28 @@ handleChange(event){
 searchProducts(){
 
     if ($('.headersearch').val() != '' ) {
+
+        var searchstr = $('.headersearch').val()
+        
         var formValues =  {
-                        "searchstr" :  $('.headersearch').val(),  
+                        "searchstr" :  searchstr,  
                         "catArray"  :  this.state.catArray
                       }
         axios.post("/api/products/post/searchINCategory",formValues)
                 .then((response)=>{
 
                  console.log(response)
+                 this.setState({searchResult : response.data})
                 })
                 .catch((error)=>{
                     console.log('error', error);
                 }) 
+                console.log('searchstr',searchstr)
+
+
+        this.props.history.push("/searchProducts/"+searchstr);
+        //window.location.reload();
+
     }
     
 }
@@ -126,3 +141,6 @@ searchProducts(){
     );  
   }
 }
+
+
+export default withRouter(Header);

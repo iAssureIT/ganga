@@ -27,6 +27,8 @@ import ViewOrder        from '../pages/MyOrders/ViewOrder.js'
 import MyOrders    from '../pages/MyOrders/MyOrders.js';
 import ShipmentTracking    from '../pages/ShipmentTracking/ShipmentTracking.js';
 import ProductDetailsEcommerce    from '../pages/ProductDetailsEcommerce/ProductDetailsEcommerce.js';
+import SearchProduct    from '../pages/SearchProduct/SearchProduct.js';
+
 
 const WebLayout = () => (
   <div className="skin-blue fixed sidebar-mini">    
@@ -42,6 +44,8 @@ const WebLayout = () => (
     <Route path="/ViewOrder"                exact strict component={ ViewOrder } />
     <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
     <Route path="/ProductDetails/:productID"         exact strict component={ ProductDetailsEcommerce } />
+    <Route path="/searchProducts/:searchstr"         exact strict component={ SearchProduct } />
+    
   </div>
 );
 
