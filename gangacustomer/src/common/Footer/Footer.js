@@ -51,7 +51,7 @@ export default class Footer extends Component {
                             <div className="col-lg-9 addressDetails">  
                             <a>contact@yourdomain.com<br /> Support@yourdomain.com</a>
                             </div>
-                        </div> 
+                        </div>
 
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
                         <strong>FOLLOW US</strong><br/><br/> 
@@ -110,7 +110,6 @@ export default class Footer extends Component {
                             </p>
                         </div>
                     </div>
-
                 </div>
                 <br />
             </div>

@@ -1,9 +1,9 @@
 import React, { Component } 		  from 'react';
-import ProductCollageView from '../../blocks/ProductCollage/ProductCollageView.js';
-import SearchProductPage  from  './SearchProductPage.css';
+import GroceryProductCollageView from '../../blocks/ProductCollage/GroceryProductCollageView.js';
+import  './GroceryProductCollage.css';
 
 
-export default class SearchProduct extends Component {
+export default class GroceryProductCollage extends Component {
 	constructor(props){
     super(props);
 	    this.state = {
@@ -26,7 +26,37 @@ export default class SearchProduct extends Component {
 				  	</ul>
 				</div>		
               <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
- 
+              		<div>
+              			<h5 className="showingbyg">NOW SHOWING BY</h5>
+              			<hr/>
+              			<h6 className="selcategory">CATEGORY: Electronics</h6> 
+              			<span><a href="#" >Remove This Item </a></span><br/>
+              			<span><a href="#" >Clear All </a></span>
+              		</div>
+
+ 					<div className="nb-brand">
+					<div className="Featured-Brands-tittle">Featured Brands</div>
+						<ul className="Featured-Brands">
+																
+							<li className="Featured-Brands-li">
+								<div className="Featured-Brands-li-div">
+									<div className="Featured-Brands-li-div-div">
+									<a className="imgs" href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/view/id/1/">
+									<img className="img_logo_brand" src="http://demo8.cmsmart.net/mag2_amazon_themeforest/pub/media///Shopbybrand//techservice.png" />
+									</a>
+
+									<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/view/id/1/" className="name_brand"> iPhone</a>	
+									</div>
+								</div>	
+							</li>
+	 
+						</ul>
+						<div className="viewallg">
+							<form action="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/index/">
+								<button type="submit" name="viewall">View All</button>
+							</form>
+						</div>
+					</div>
               </div>
               <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 
@@ -54,7 +84,7 @@ export default class SearchProduct extends Component {
 				    		{
 				    			this.state.data && this.state.data.map((value, index) =>{
 				    				return(
-				    					<ProductCollageView key={index}/>
+				    					<GroceryProductCollageView key={index}/>
 				    					);
 				    				
 				    			})
@@ -62,7 +92,7 @@ export default class SearchProduct extends Component {
 				    		}
 				     	</div>
 				    </div>
-				    <div id="categories" class="tab-pane fade">
+				    <div id="categories" className="tab-pane fade">
 				    	Categories 
 				    </div>
 				    
