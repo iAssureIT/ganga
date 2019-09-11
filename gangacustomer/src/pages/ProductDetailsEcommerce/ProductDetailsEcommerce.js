@@ -11,7 +11,6 @@ import ProductViewEcommerceShopingFeature     from "../../blocks/ProductViewEcom
 import ProductViewEcommerceDetailsReviewFAQ 		from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
 // import FeaturedProductsEcommerce 	from "../../blocks/FeaturedProducts/FeaturedProductsEcommerce.js";
 import axios                  		from 'axios';
-
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
