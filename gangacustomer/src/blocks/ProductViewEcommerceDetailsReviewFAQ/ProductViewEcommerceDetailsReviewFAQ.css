@@ -1,0 +1,84 @@
+.topspace{
+	margin-top:50px;
+}
+.topspace15{
+	margin-top:15px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #eee;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: #444;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: 700
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #fbbb65;
+  color:white;
+  cursor:pointer;
+}
+.active {
+  background-color: #4CAF50;
+}
+.rvw{
+	border-right:1px solid #fafafa!important;
+	border-left:1px solid #fafafa!important;
+}
+
+.spcbx{
+	border-top:1px solid #ddd
+}
+.detailtxt{
+	color:#7d7d7d;
+}
+.detailtitle{
+	color:#444;
+	font-weight: 700
+}
+.detailtitle:hover{
+	color: #fbbb65;
+  cursor:pointer;
+}
+.reviewtitle{
+	color:#444;
+	    line-height: 1.2;
+    font-size: 2rem;
+}
+.reviewstr{
+	line-height: 1.2!important;
+    font-size: 2rem!important;
+    margin-left:5px;
+    color: #7d7d7d
+}
+.reviewstr:hover{
+	color:#ff5501;
+}
+.inputbx{
+	height:30px;
+	/*border-radius: 3px;*/
+}
+.Submitreviewbtn{
+	 background-color: #fbbb65;
+	 border-radius:50px;
+	 color:white;
+	 padding-top:10px;
+	 padding-bottom:10px;
+}
+/*.bannerimg:hover{
+	background:rgba(0,0,0,1);
+}*/

@@ -176,10 +176,8 @@ class ProductViewEcommerce extends Component {
   		//console.log(this.state.productData.productImage[1]);
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
- 
-						<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">
-							
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50"> 
+						<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">							
 						<div className="col-lg-3 col-md-3 col-sm-10 col-xs-10 imageContainer">
 							{
 								this.state.productData.productImage && 
@@ -355,8 +353,6 @@ class ProductViewEcommerce extends Component {
 				                        		<div className="crcle1 col-lg-1 linkedin"><i className="fa fa-linkedin" aria-hidden="true"></i></div>
 				                        		<div className="crcle1 col-lg-1 pinterest"><i className="fa fa-pinterest-p" aria-hidden="true"></i></div>
 				                        	</div>
-				                        	
-
 				                         </div>
 									</div>
 
@@ -364,7 +360,6 @@ class ProductViewEcommerce extends Component {
 							</div>
 							
 						</div>
-
 					</div>
                 </div>
 		);

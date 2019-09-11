@@ -4,7 +4,10 @@ import React, { Component } 		from 'react';
 // import FeaturedProducts 			from "../../blocks/FeaturedProducts/FeaturedProducts.js";
 // import EcommerceFooter    			from "../../blocks/common/EcommerceFooter/EcommerceFooter.js";
 // import ProductDescriptionEcommerce 	from "../../blocks/common/ProductDescriptionEcommerce/ProductDescriptionEcommerce.js";
-import ProductViewEcommerce 		from "../../blocks/ProductViewEcommerce/ProductViewEcommerce.js";
+import ProductViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductViewEcommerce.js";
+import ProductViewEcommerceBestSellers     from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
+import ProductViewEcommerceShopingFeature     from "../../blocks/ProductViewEcommerceShopingFeature/ProductViewEcommerceShopingFeature.js";
+import ProductViewEcommerceDetailsReviewFAQ 		from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
 // import FeaturedProductsEcommerce 	from "../../blocks/FeaturedProducts/FeaturedProductsEcommerce.js";
 import axios                  		from 'axios';
 
@@ -36,8 +39,11 @@ export default class ProductDetailsEcommerce extends Component {
   	render() {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
-					<ProductViewEcommerce productID = { this.props.match.params.productID } />
-                </div>
+          <ProductViewEcommerce productID = { this.props.match.params.productID } />
+          <ProductViewEcommerceShopingFeature productID = { this.props.match.params.productID } />
+          <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.match.params.productID } />
+				{/*	<ProductViewEcommerceBestSellers productID = { this.props.match.params.productID } />*/}
+        </div>
 		);
 	}
 }
