@@ -32,7 +32,7 @@
   color:white;
   cursor:pointer;
 }
-.active {
+.faq .active {
   background-color: #4CAF50;
 }
 .rvw{
