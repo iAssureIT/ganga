@@ -42,7 +42,7 @@ export default class ProductDetailsEcommerce extends Component {
           <ProductViewEcommerce productID = { this.props.match.params.productID } />
           <ProductViewEcommerceShopingFeature productID = { this.props.match.params.productID } />
           <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.match.params.productID } />
-				{/*	<ProductViewEcommerceBestSellers productID = { this.props.match.params.productID } />*/}
+					<ProductViewEcommerceBestSellers productID = { this.props.match.params.productID } />
         </div>
 		);
 	}

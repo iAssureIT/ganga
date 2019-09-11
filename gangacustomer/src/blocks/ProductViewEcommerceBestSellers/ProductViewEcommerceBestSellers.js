@@ -23,11 +23,13 @@ export default class ProductViewEcommerceBestSellers extends Component {
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 spc20 ">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div className="bestsellerBx1">
-              <div className="bestsellerpill col-lg-2">
-                a
+              <div className="bestsellerpill col-lg-1">
+                BEST SELLERS
               </div>
             </div>
-            <div className="bestsellerBx2">a</div>
+            <div className="bestsellerBx2">
+
+            </div>
           </div>
         </div>
 		);

@@ -5,7 +5,7 @@
 	margin-top:15px;
 }
 
-ul {
+.faq ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -13,11 +13,11 @@ ul {
   background-color: #eee;
 }
 
-li {
+.faq li {
   float: left;
 }
 
-li a {
+.faq li a {
   display: block;
   color: #444;
   text-align: center;
@@ -27,7 +27,7 @@ li a {
 }
 
 /* Change the link color to #111 (black) on hover */
-li a:hover {
+.faq li a:hover {
   background-color: #fbbb65;
   color:white;
   cursor:pointer;

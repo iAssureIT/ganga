@@ -1,15 +1,26 @@
 .bestsellerBx2{
 	height:450px;
-	background: blue;
+	border-bottom:1px solid #ddd;
+	border-right:1px solid #ddd;
+	border-left:1px solid #ddd;
 }
 .bestsellerBx1{
 	height:50px;
-	background: yellow;
+	/*background: yellow;*/
+	padding-left:20px;
+	border:1px solid #ddd;
 }
 .spc20{
  margin-top:20px;
 }
 .bestsellerpill{
-	
-	background: red;
+	height:100%;
+	width:125px;
+	font-size:16px;
+	font-weight:700;
+	padding-top:10px;
+	color:#fbbb65;
+	border-bottom:2px solid #fbbb65;
+	padding-left:0px!important;
+	padding-right:0px!important;
 }
