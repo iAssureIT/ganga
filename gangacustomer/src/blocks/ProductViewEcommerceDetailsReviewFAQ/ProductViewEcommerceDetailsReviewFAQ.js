@@ -21,7 +21,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
   	render() {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
-          <div className="col-lg-9 faq">
+          <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 faq">
             <ul>
               <li><a >DETAILS</a></li>
               <li className="rvw"><a >REVIEWs</a></li>
@@ -45,40 +45,42 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
             <i className="fa fa-star reviewstr" aria-hidden="true"></i>
             <i className="fa fa-star reviewstr" aria-hidden="true"></i>
             <i className="fa fa-star reviewstr" aria-hidden="true"></i>
-            <div className="row topspace">
-              <div className="col-lg-6">
+           {/* <div className="row topspace">
+              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className=" ">Nickname</div>
               </div>
-               <div className="col-lg-6">
+               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className=" ">Summary</div>
               </div>
+            </div>*/}
+            <div className="row topspace15">
+              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+               <label className=" ">Nickname</label>
+               <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
+              </div>
+               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+               <label className=" ">Summary</label>
+                <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
+              </div>
             </div>
             <div className="row topspace15">
-              <div className="col-lg-6">
-               <input className="col-lg-12 inputbx" type="text"/>
-              </div>
-               <div className="col-lg-6">
-                <input className="col-lg-12 inputbx" type="text"/>
-              </div>
-            </div>
-            <div className="row topspace15">
-              <div className="col-lg-12">
+              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className=" ">Review</div>
               </div>               
             </div>
              <div className="row topspace15">
-              <div className="col-lg-12">
-              <textarea className="col-lg-12" rows="4" cols="50"></textarea>
+              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+              <textarea className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
               </div>
             </div>
             <div className="row topspace15">
-              <div className="col-lg-offset-9 col-lg-3">
+              <div className="col-lg-offset-9 col-lg-3 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
                 <div className="Submitreviewbtn col-lg-12 text-center">Submit Review</div>
               </div>               
             </div>
 
           </div>
-          <div className="col-lg-3 bannerimg" title="banner">
+          <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 bannerimg" title="banner">
             <img className="img-responsive" src="http://demo8.cmsmart.net/mag2_amazon_themeforest/pub/media/multistore/banner/banner-slider-right.png"/>
           </div>
         </div>

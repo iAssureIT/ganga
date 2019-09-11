@@ -79,6 +79,9 @@
 	 padding-top:10px;
 	 padding-bottom:10px;
 }
+.Submitreviewbtn:hover{
+	cursor:pointer;
+}
 /*.bannerimg:hover{
 	background:rgba(0,0,0,1);
 }*/

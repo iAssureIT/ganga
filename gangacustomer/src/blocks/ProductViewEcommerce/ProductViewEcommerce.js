@@ -177,8 +177,8 @@ class ProductViewEcommerce extends Component {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50"> 
-						<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 ">							
-						<div className="col-lg-3 col-md-3 col-sm-10 col-xs-10 imageContainer">
+						<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 ">							
+						<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 imageContainer">
 							{
 								this.state.productData.productImage && 
 								this.state.productData.productImage.map((data, index)=>{
@@ -199,14 +199,14 @@ class ProductViewEcommerce extends Component {
                        			})	
 							}
 						</div>
-							<div className="col-lg-9 col-md-9 col-sm-10 col-xs-10 imageContainer imgCont">
+							<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 imageContainer imgCont">
 								<div className="row">
 									<img className="productView" src={this.state.productData.productImage && this.state.productData.productImage[0]} id="change-image" alt="default"/>
 									
 								</div>
 							</div>
 						</div>
-						<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 ">
+						<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
 								<div className="row">
 									<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
@@ -224,37 +224,37 @@ class ProductViewEcommerce extends Component {
 									</div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div className="row">
-											<span className="col-md-2 paddingleftzero ttl" >
+											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero ttl" >
 												Price:
 											</span>
-											<span className="col-md-6">
+											<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
 												<span className="priceEcommerceNew" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 												{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}
 											</span>				                         
 				                          </div>
 				                          <div className="row listspace">
-											<span className="col-md-2 paddingleftzero ttl" >
+											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero ttl" >
 												In Stock
 											</span>
-											<span className="col-md-6  ttl" >
+											<span className="col-md-6  col-sm-12 col-xs-12 col-lg-6 ttl" >
 												{this.state.productData.availableQuantity}
 											</span>
 															                         
 				                          </div>
 				                          <div className="row listspace">
-											<span className="col-md-2 paddingleftzero paddingrightzero ttl" >
+											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12  paddingleftzero paddingrightzero ttl" >
 												Product Code
 											</span>
-											<span className="col-md-6  ttllist" >
+											<span className="col-md-6  col-sm-12 col-xs-12 col-lg-6 ttllist" >
 												{this.state.productData.productCode}
 											</span>
 															                         
 				                          </div>
 				                           <div className="row listspace">
-											<span className="col-md-2 paddingleftzero paddingrightzero ttl" >
+											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
 												Features
 											</span>
-											<span className="col-md-6  ttllist" >												
+											<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ttllist" >												
 												{ this.state.productData.featureList &&
 													<div className="">
 														<ul className="paddingleftzero">
@@ -284,33 +284,33 @@ class ProductViewEcommerce extends Component {
 									
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
 										<div className="row spc">
-											<div className="col-lg-2 paddingleftzero">
-												<div className="col-lg-8">
+											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 paddingleftzero">
+												<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 													<span className="qty">
 													&nbsp;&nbsp;1
 													</span>
 												</div>
-												<div className="col-lg-2">
-													<span className="qty2 col-lg-12">
+												<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+													<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													 <span className="fa fa-plus" aria-hidden="true"></span>
 													</span>
-													<span className="qty3 col-lg-12">
+													<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 														 <span className="fa fa-minus" aria-hidden="true"></span>
 													</span>
 												</div>
 											</div>
-											<div className="col-lg-6 paddingleftzero">
-												<div className="col-lg-6">
+											<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingleftzero">
+												<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 													<span className="qtycart clr">
 													 	<i className="fa fa-shopping-cart " aria-hidden="true"></i> Add to Cart
 													</span>
 												</div>
-												<div className="col-lg-3 paddingleftzero">
+												<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
 													<span className="icns clr">
 													 	<i className="fa fa-heart-o" aria-hidden="true"></i>
 													</span>
 												</div>
-												<div className="col-lg-3 paddingleftzero">
+												<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
 													<span className="icns clr">
 													 	<i className="fa fa-refresh" aria-hidden="true"></i>
 													</span>
@@ -343,15 +343,15 @@ class ProductViewEcommerce extends Component {
 				                            
 				                        </div>
 				                        <div className="undrln row spc ">
-				                        	<div className="share col-lg-1 spc">
+				                        	<div className="share col-lg-1 col-md-1 col-sm-12 col-xs-12 spc">
 				                        		Share
 				                        	</div>
-				                        	<div className="share col-lg-11 sharebx">
-				                        		<div className="crcle col-lg-1 fbook"><i className="fa fa-facebook" aria-hidden="true"></i></div>
-				                        		<div className="crcle1 col-lg-1 twtr"><i className="fa fa-twitter" aria-hidden="true"></i></div>
-				                        		<div className="crcle1 col-lg-1 gplus"><i className="fa fa-google-plus" aria-hidden="true"></i></div>
-				                        		<div className="crcle1 col-lg-1 linkedin"><i className="fa fa-linkedin" aria-hidden="true"></i></div>
-				                        		<div className="crcle1 col-lg-1 pinterest"><i className="fa fa-pinterest-p" aria-hidden="true"></i></div>
+				                        	<div className="share col-lg-11 col-md-11 col-sm-12 col-xs-12 sharebx">
+				                        		<div className="crcle col-lg-1 col-md-1 col-sm-12 col-xs-12 fbook"><i className="fa fa-facebook" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 col-md-1 col-sm-12 col-xs-12 twtr"><i className="fa fa-twitter" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 col-md-1 col-sm-12 col-xs-12 gplus"><i className="fa fa-google-plus" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 col-md-1 col-sm-12 col-xs-12 linkedin"><i className="fa fa-linkedin" aria-hidden="true"></i></div>
+				                        		<div className="crcle1 col-lg-1 col-md-1 col-sm-12 col-xs-12 pinterest"><i className="fa fa-pinterest-p" aria-hidden="true"></i></div>
 				                        	</div>
 				                         </div>
 									</div>
