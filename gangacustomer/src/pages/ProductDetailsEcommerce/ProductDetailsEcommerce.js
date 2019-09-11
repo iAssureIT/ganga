@@ -5,6 +5,7 @@ import React, { Component } 		from 'react';
 // import EcommerceFooter    			from "../../blocks/common/EcommerceFooter/EcommerceFooter.js";
 // import ProductDescriptionEcommerce 	from "../../blocks/common/ProductDescriptionEcommerce/ProductDescriptionEcommerce.js";
 import ProductViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductViewEcommerce.js";
+import ProductViewEcommerceList     from "../../blocks/ProductViewEcommerceList/ProductViewEcommerceList.js";
 import ProductViewEcommerceBestSellers     from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
 import ProductViewEcommerceShopingFeature     from "../../blocks/ProductViewEcommerceShopingFeature/ProductViewEcommerceShopingFeature.js";
 import ProductViewEcommerceDetailsReviewFAQ 		from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
@@ -42,7 +43,8 @@ export default class ProductDetailsEcommerce extends Component {
           <ProductViewEcommerce productID = { this.props.match.params.productID } />
           <ProductViewEcommerceShopingFeature productID = { this.props.match.params.productID } />
           <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.match.params.productID } />
-					<ProductViewEcommerceBestSellers productID = { this.props.match.params.productID } />
+          <ProductViewEcommerceBestSellers productID = { this.props.match.params.productID } />
+					<ProductViewEcommerceList productID = { this.props.match.params.productID } />
         </div>
 		);
 	}
