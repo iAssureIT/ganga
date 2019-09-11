@@ -59,7 +59,7 @@ class AddNewShopProduct extends Component{
     }, "Please select the sub category");
     $.validator.addMethod("regxWebCat", function(value, element, arg){
       return arg !== value;
-    }, "Please select the web category");
+    }, "Please select the section");
     $.validator.addMethod("regxbrand", function(value, element, regexpr) {          
       return regexpr.test(value);
     }, "Brand should only contain letters & number.");
@@ -100,9 +100,9 @@ class AddNewShopProduct extends Component{
             required: true,
             regxSubCat: "Select Sub-Category"
           },
-          webCategory:{
+          section:{
             required : true,
-            regxWebCat : "Select Web Category"
+            regxWebCat : "Select Section"
           },
           brand: {
             required: true,
@@ -151,8 +151,8 @@ class AddNewShopProduct extends Component{
         if (element.attr("name") == "subCategory"){
           error.insertAfter("#subCategory");
         }
-        if (element.attr("name") == "webCategory"){
-          error.insertAfter("#webCategory");
+        if (element.attr("name") == "section"){
+          error.insertAfter("#section");
         }
         if (element.attr("name") == "brand"){
           error.insertAfter("#brand");
@@ -196,10 +196,10 @@ class AddNewShopProduct extends Component{
     axios.get('/api/category/get/list')
     .then((response)=>{
       console.log('getWebCategories', response)
-      var webCategorys = _.pluck(response.data, "webCategory");
-      var webCategoryArray = _.unique(webCategorys);
+      var sections = _.pluck(response.data, "section");
+      var sectionArray = _.unique(sections);
         this.setState({
-            webCategoryArray : webCategoryArray
+          sectionArray : sectionArray
         })
     })
     .catch((error)=>{
@@ -207,9 +207,9 @@ class AddNewShopProduct extends Component{
     })
   }
   showRelevantCategories(event){
-    var webCategory = event.target.value;
-    console.log('webCategory', webCategory);
-    axios.get('/api/category/get/list/'+webCategory)
+    var section = event.target.value;
+    console.log('section', section);
+    axios.get('/api/category/get/list/'+section)
     .then((response)=>{
         this.setState({
             categoryArray     : response.data,
@@ -400,7 +400,7 @@ class AddNewShopProduct extends Component{
       this.getCategories();
       this.getSubCategories(response.data.category_ID);
       this.setState({
-        webCategory       : response.data.webCategory,
+        section           : response.data.section,
         category          : response.data.category+'|'+response.data.category_ID,
         subCategory       : response.data.subCategory+'|'+response.data.subCategory_ID,
         brand             : response.data.brand,
@@ -455,7 +455,7 @@ class AddNewShopProduct extends Component{
       }
     }
     var formValues = {
-      "webCategory"       :   this.refs.webCategory.value,
+      "section"       :   this.refs.section.value,
       "category_ID"       :   this.refs.category.value.split('|')[1],
       "category"          :   this.refs.category.value.split('|')[0],
       "subCategory_ID"    :   this.refs.subCategory.value.split('|')[1],
@@ -489,7 +489,7 @@ class AddNewShopProduct extends Component{
           text  : response.data.message,
         });
         this.setState({
-          webCategory       : "Select Web Category",
+          section       : "Select Section",
           category          : "Select Category",
           subCategory       : "Select Sub-Category",
           brand             : "",
@@ -542,7 +542,7 @@ class AddNewShopProduct extends Component{
       }
     }
     var formValues = {
-      "webCategory"       :   this.refs.webCategory.value,
+      "section"       :   this.refs.section.value,
       "product_ID"        :   this.state.editId,
       "category_ID"       :   this.refs.category.value.split('|')[1],
       "category"          :   this.refs.category.value.split('|')[0],
@@ -573,7 +573,7 @@ class AddNewShopProduct extends Component{
         text  : response.data.message,
       });
       this.setState({
-        webCategory       : "Select Web Category",
+        section       : "Select Section",
         category          : "Select Category",
         subCategory       : "Select Sub-Category",
         brand             : "",
@@ -593,7 +593,7 @@ class AddNewShopProduct extends Component{
       console.log('error', error);
     })
     this.setState({
-      webCategory       : "Select Web Category",
+      section       : "Select Section",
       category          : "Select Category",
       subCategory       : "Select Sub-Category",
       brand             : "",
@@ -704,11 +704,11 @@ class AddNewShopProduct extends Component{
                               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                                   <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <label>Web Category <i className="redFont">*</i></label>
-                                      <select onChange={this.showRelevantCategories.bind(this)} value={this.state.webCategory}  name="webCategory" className="form-control allProductCategories" aria-describedby="basic-addon1" id="webCategory" ref="webCategory">
-                                        <option disabled selected defaultValue="Select Web Category">Select Category</option>
-                                        { this.state.webCategoryArray && this.state.webCategoryArray.length > 0 ?
-                                          this.state.webCategoryArray.map( (data, index)=>{
+                                    <label>Section <i className="redFont">*</i></label>
+                                      <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
+                                        <option disabled selected defaultValue="Select Section">Select Category</option>
+                                        { this.state.sectionArray && this.state.sectionArray.length > 0 ?
+                                          this.state.sectionArray.map( (data, index)=>{
                                             return (
                                               <option key={index} value={data}>{data}</option>
                                             );

@@ -24,7 +24,7 @@ class CategoryManagement extends Component{
             "addEditMode"                       : "",
             "categoryImage"                     : "",
             "tableHeading"                      : {
-              webCategory                       : "Web Category",
+              section                       : "Section",
               category                          : "Category Title",
               subCategory                       : "Subcategory Title",
               categoryDescription               : "Category Description",
@@ -79,9 +79,9 @@ class CategoryManagement extends Component{
 
       $("#categoryManagement").validate({
         rules: {
-          webCategory: {
+          section: {
             required: true,
-            valueNotEquals: "Select Web Category"
+            valueNotEquals: "Select Section"
           },
           category: {
             required: true,
@@ -93,8 +93,8 @@ class CategoryManagement extends Component{
           },
         },
         errorPlacement: function(error, element) {
-          if (element.attr("name") == "webCategory"){
-            error.insertAfter("#webCategory");
+          if (element.attr("name") == "section"){
+            error.insertAfter("#section");
           }
           if (element.attr("name") == "category"){
             error.insertAfter("#category");
@@ -240,7 +240,7 @@ class CategoryManagement extends Component{
 
 
           var formValues = {
-            "webCategory"               : this.state.webCategory,
+            "section"               : this.state.section,
             "category"                  : this.refs.category.value,
             "categoryUrl"               : this.refs.categoryUrl.value,
             "subCategory"               : categoryDimentionArray,
@@ -257,7 +257,7 @@ class CategoryManagement extends Component{
             });
 
             this.setState({
-              "webCategory"                   : 'Select',
+              "section"                   : 'Select',
               "category"                      : '',
               "categoryUrl"                   : '',
               "addEditModeCategory"           : '',
@@ -286,7 +286,7 @@ class CategoryManagement extends Component{
         
         var formValues = {
           "category_ID"               : this.state.editId,
-          "webCategory"               : this.state.webCategory,
+          "section"               : this.state.section,
           "category"                  : this.refs.category.value,
           "categoryUrl"               : this.refs.categoryUrl.value,
           "subCategory"               : categoryDimentionArray,
@@ -316,7 +316,7 @@ class CategoryManagement extends Component{
             });
             this.getData(this.state.startRange, this.state.limitRange);
             this.setState({
-              "webCategory"                   : 'Select',
+              "section"                   : 'Select',
               "category"                      : '',
               "categoryUrl"                   : '',
               "addEditModeCategory"           : '',
@@ -343,7 +343,7 @@ class CategoryManagement extends Component{
         console.log('edit', response.data);
         if(response.data){
             this.setState({
-              "webCategory"               : response.data.webCategory,
+              "section"               : response.data.section,
               "category"                  : response.data.category,
               "categoryUrl"               : response.data.categoryUrl,
               "addEditModeCategory"       : response.data.category,
@@ -523,9 +523,9 @@ class CategoryManagement extends Component{
                             <form id="categoryManagement" className="">
                               <div className="col-lg-6">
                                   <div className="col-lg-12">
-                                      <label>Web Category <i className="redFont">*</i></label>
-                                      <select onChange={this.handleChange.bind(this)} value={this.state.webCategory}  name="webCategory" className="form-control allProductCategories" aria-describedby="basic-addon1" id="webCategory" ref="webCategory">
-                                        <option disabled selected defaultValue="Select">Select Web Category</option>
+                                      <label>Section <i className="redFont">*</i></label>
+                                      <select onChange={this.handleChange.bind(this)} value={this.state.section}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
+                                        <option disabled selected defaultValue="Select">Select Section</option>
                                         <option value="Main-Site">Main Site</option>
                                         <option value="Grocery">Grocery</option>
                                       </select>
