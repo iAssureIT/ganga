@@ -2,6 +2,10 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+import axios                      from 'axios';
+
 function App() {
   return (
     <div className="App">

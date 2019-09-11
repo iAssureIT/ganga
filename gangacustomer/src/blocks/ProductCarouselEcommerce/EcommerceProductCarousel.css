@@ -318,4 +318,20 @@ background-color: transparent !important;
 }
 .mb20{
     margin-bottom: 20px;
+}   
+
+
+.productcomponentheading{
+    border-bottom: 2px solid #eee;
+    padding:0px!important;
+
 }
+
+.producttextclass{
+    border-bottom: 2px solid red;
+    width: auto;
+    padding:0px!important;
+}
+
+
+

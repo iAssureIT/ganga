@@ -7,8 +7,7 @@ import SaleProductDivider         from "../../blocks/ProductDivider/SaleProductD
 import ProductCollageView         from "../../blocks/ProductCollage/ProductCollageView.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
-
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 var webCategory  = 'Main-Site';
 class HomePage extends Component {
@@ -33,15 +32,9 @@ class HomePage extends Component {
     featuredProductData(){
       var productType1 = 'featured';
       
-
-      axios.get("http://gangaapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType1)
-
+      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/Main-Site/exclusive")
             .then((response)=>{
-              // var featuredProducts = {
-              //   products : response.data,
-              //   title    : "New Products"
-              // }
-              // this.props.setFeaturedProductData(featuredProducts)
+              // console.log('featuredProducts' , response.data)
               this.setState({
                 featuredProducts : response.data
               })
@@ -53,9 +46,7 @@ class HomePage extends Component {
     }
     exclusiveProductsData(){
       var productType2 = 'exclusive';
-
-      axios.get("http://gangaapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType2)
-
+      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType2)
             .then((response)=>{
 
               this.setState({
@@ -68,7 +59,7 @@ class HomePage extends Component {
     }
     newProductsData(){
       var productType3 = 'newProduct';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType3)
+      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType3)
             .then((response)=>{
 
               this.setState({
@@ -81,7 +72,7 @@ class HomePage extends Component {
     }
     bestSellerData(){
       var productType4 = 'bestSeller';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
+      axios.get("http://gangaexpressapi.iassureit.com/api/products/get/listbytype/"+webCategory+"/"+productType4)
             .then((response)=>{
 
               this.setState({
@@ -105,22 +96,8 @@ class HomePage extends Component {
             <div className="homeRow">
             { /*new product */}
 						<EcommerceProductCarousel title={'New Products'} newProducts = {this.state.newProducts}/>
-						
-            </div>
-
-            <div className="ProductDivider">
-              <ProductDivider />
-            </div>
-
-            <div className="SaleProductDivider">
-              <SaleProductDivider />
-            </div>
-
-            <div className="ProductCollageView">
-              <ProductCollageView />
-            </div>
-            
         </div>
+      </div>
       </div>
 		);
 	}

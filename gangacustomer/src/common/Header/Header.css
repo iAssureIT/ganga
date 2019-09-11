@@ -5,7 +5,7 @@
   background-color: #fff;
 }
 .headerpaddingtop{
-	padding-top: 30px;
+	padding-top: 10px;
 }
 
 .headerlogoimg img{
@@ -25,7 +25,7 @@
 	background:transparent!important;
 	text-align: center!important;
 	box-shadow: none!important;
-
+	float: left;
 
 }
 
@@ -55,12 +55,11 @@
     transition: background 0.1s ease-out 0s,box-shadow 0.15s cubic-bezier(0.47,0.03,0.49,1.38) 0s;
     vertical-align: middle;
     white-space: nowrap;
-    width: 340px;
    	border-radius:0px 0px 0px 0px!important;
 	border:1px solid #777!important;
 	border-right: none!important;
 	background:transparent!important;
-
+	float: left;
 }
 
 .searchbutton{
@@ -71,7 +70,6 @@
 	background:transparent!important;
 	outline:0px!important;
 	/*box-shadow: 0 1px 1px 1px rgba(0,0,0,0.08);*/
-	width: 100px;
 }
 .headercarticon{
 	font-size: 35px;
@@ -122,4 +120,58 @@
 
 .mt20{
 	margin-top:20px;
+}
+
+.header1list1 ul li{
+	float: left;
+	text-decoration: none;
+	list-style: none;
+	font-size: 12px;
+	padding-right: 10px;
+	padding-left:10px;
+	border-right:1px solid #777;
+
+}
+.header1list1 ul{
+	padding-inline-start: 0px!important;
+	padding-top: 10px;
+}
+.header1list1 ul li a{
+	text-decoration: none;
+		color: #999;
+
+}
+.header1list2 ul li{
+	float: right;
+	text-decoration: none;
+	list-style: none;
+	font-size: 12px;
+	padding-right: 10px;
+	padding-left:10px;
+	border-left:1px solid #777;
+
+}
+.header1list2 ul{
+	padding-inline-start: 0px!important;
+	padding-top: 10px;
+}
+.header1list2 ul li a{
+	text-decoration: none;
+		color: #999;
+
+}
+
+.header1wrapper{
+	background-color:#F3F3F3;
+	height: 40px;
+}
+.signinmenuul{
+	left:310px!important;
+	top: 38px!important;
+	font-size: 20px!important;
+}
+
+.signinmenuul li a{
+	font-size: 15px;
+	/*border-bottom: 1px solid #aaa;*/
 }

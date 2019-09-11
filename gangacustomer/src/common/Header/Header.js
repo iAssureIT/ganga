@@ -35,6 +35,7 @@ componentWillMount() {
         sp.find('button span.search_by').html(text);
       });
     });
+
 }
 componentDidMount(){
   const options = [];
@@ -101,10 +102,44 @@ searchProducts(){
     //   { label: '6', value: 6},
     // ]; 
     return (
-      <div className="homecontentwrapper"> 
+      <div className="homecontentwrapper">
           <header className="col-lg-12 headerflow"> 
             <div className="row"> 
-              <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
+                  <div className="col-lg-12 header1wrapper">
+                    <div className="row">
+                      <div className="col-lg-10 col-lg-offset-1">
+                        <div className="row">
+                          <div className="col-lg-6 header1list1">
+                            <div className="row">
+                              <ul>
+                                <li><a href="/">Get the app</a></li>
+                                <li><a href="/">Sell on Multistore</a></li>
+                                <li><a href="/">Customer Care</a></li>
+                                <li><a href="/">Track my order</a></li>
+                              </ul>  
+                            </div>
+                          </div>
+                          <div className="col-lg-6 header1list2">
+                            <div className="row">
+                              <ul>
+                                <li><a href="/">Get the app</a></li>
+                                <li><a href="/"  data-toggle="dropdown"><i className="fa fa-pencil" aria-hidden="true"></i> Sign In <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <ul className="dropdown-menu signinmenuul">
+                                      <li className="col-lg-12"><a href="#">Your Account</a></li>
+                                      <li className="col-lg-12"><a href="#">Your Wishlist</a></li>
+                                      <li className="col-lg-12"><a href="#">Your Orders</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/">Customer Care</a></li>
+                                <li><a href="/">Track my order</a></li>
+                                </ul>  
+                            </div>
+                          </div>
+                        </div>
+                      </div> 
+                    </div> 
+                  </div> 
+                  <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
                   <img src="/images/logo1.png"/>
               </div>  
               <div className="col-lg-6 col-md-6 headerpaddingtop">
@@ -118,7 +153,7 @@ searchProducts(){
               </div>
               <div className="col-lg-3 col-md-3 headerpaddingtop text-center">
                   <div className="col-lg-12 headercart">
-                  <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><badge className="cartvalue">0</badge></a>
+                  <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">0</span></a>
                   <a href="/" className="cartitemscss">ITEM (S)</a>
                   </div> 
               </div>

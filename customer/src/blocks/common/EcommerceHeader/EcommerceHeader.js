@@ -251,14 +251,6 @@ constructor(props) {
                 <input type="text" className="customInputEH col-lg-11 col-md-6 col-sm-6 col-xs-6" placeholder="Search .." ref="searchVal" value={this.state.searchVal} onChange={this.handleChange.bind(this)}/>
                 <span className="searchIcon col-lg-1 col-md-3 col-sm-3 col-xs-3 row"><i className="fa fa-search iconS" aria-hidden="true"></i></span>
               </form>
-
-
-
-
-
-
-
-              
                   <div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 iconContainerEH ">
                     {
                       token != "" && token != null ?
