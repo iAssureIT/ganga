@@ -1,5 +1,6 @@
 import React, { Component }       from 'react';
 import $ 				                  from 'jquery';
+import jQuery                     from 'jquery';
 import Loadable                   from 'react-loadable';
 import axios                      from 'axios';
 import swal                       from 'sweetalert';
@@ -34,6 +35,33 @@ class EcommerceProductCarousel extends Component {
 	    	
 	    };
   	} 
+
+    componentDidMount() {
+
+        const second = 1000,
+        minute = second * 60,
+        hour = minute * 60,
+        day = hour * 24;
+
+      let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
+      x = setInterval(function() {
+
+        let now = new Date().getTime(),
+            distance = countDown - now;
+
+          document.getElementById('days').innerText = Math.floor(distance / (day));
+          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
+          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
+          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+        
+        //do something later when date is reached
+        //if (distance < 0) {
+        //  clearInterval(x);
+        //  'IT'S MY BIRTHDAY!;
+        //}
+
+      }, second)
+    }  
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
@@ -102,10 +130,36 @@ class EcommerceProductCarousel extends Component {
 						<div className="row">
   						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
-                  <h1 className="producttextclass  col-lg-3">fdmnvbhvb</h1>
+                    <div className="producttextclass  col-lg-2">
+                      <h3 className="row">
+                       <b>{this.props.title}</b>
+                      </h3>
+                    </div>
+                    <div className="col-lg-4 producttimer">
+                      <ul>
+                        <li><span id="days"></span>days</li>
+                        <li><span id="hours"></span>Hours</li>
+                        <li><span id="minutes"></span>Minutes</li>
+                        <li><span id="seconds"></span>Seconds</li>
+                      </ul>                    
+                    </div>
+                    <div className="col-lg-6 producttimer">
+                  <OwlCarousel
+                      className="owl-theme customnNavButton"
+                      margin={5}
+                      nav={false}
+                      responsive={this.state.responsive} 
+                      autoplay={true}
+                      autoplayHoverPause={true}
+                  >
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 blogs">
+                        
+                    </div>
+                </OwlCarousel>
+                    </div>
     						  </div>
                 </div>
-						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 grayLine"></div>
+						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
 						 <div className="tab-content customTabContent">
 						    <div id="home" className="tab-pane fade in active ecommerceTabContent">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
@@ -116,7 +170,6 @@ class EcommerceProductCarousel extends Component {
 									    responsive={this.state.responsive} 
                       autoplay={true}
                       autoplayHoverPause={true}
-
 									>
 									{
 
