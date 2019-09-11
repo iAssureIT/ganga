@@ -1,5 +1,7 @@
 .card{
 	border: 1px solid #f1f2f2;
+	max-width: 270px;
+	margin: 5px;
 }
 .productDetails{
 	padding-bottom: 15px;

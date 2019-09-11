@@ -8,7 +8,7 @@ export default class ProductCollageView extends Component {
   	}  
   render() {
 		return (
-			<div className="col-lg-3 col-md-3 col-sm-6 col-xs-6 card">
+			<div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 card">
                 <div className="item-top">
                 	<div className="productImg">
                 		<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabindex="-1">

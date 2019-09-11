@@ -1,0 +1,13 @@
+
+.links{
+	padding: 0;
+}
+.links li{
+	display: inline-block;
+	list-style: none;
+	padding: 5px;
+}
+
+.links li a{
+	color:#555;
+}

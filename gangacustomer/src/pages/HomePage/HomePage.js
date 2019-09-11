@@ -90,12 +90,14 @@ class HomePage extends Component {
       <div className="">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorGray">
 					<div className="row">
-					
+					 
 						<EcommerceBanner/>
             </div>
             <div className="homeRow">
             { /*new product */}
 						<EcommerceProductCarousel title={'New Products'} newProducts = {this.state.newProducts}/>
+            <ProductDivider />
+            <SaleProductDivider />
         </div>
       </div>
       </div>

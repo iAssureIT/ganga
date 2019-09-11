@@ -1,8 +1,10 @@
 
-.account-nav{
-	
+.account-nav  li  a{
+	color: #555;
 }
-
+.account-nav li a:hover{
+	color:#fbbb65 !important;
+}
 
 table > tfoot > tr > th{
 	border-top: 0px solid #ddd !important;	

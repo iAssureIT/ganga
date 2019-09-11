@@ -174,6 +174,7 @@ export default class MyOrders extends Component {
     return (
     <div className="container">	
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+        <br/>
       	<div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
       		<Sidebar />
       	</div>
@@ -205,7 +206,7 @@ export default class MyOrders extends Component {
 		                    <td data-th="Status" className="col status">Pending</td>
 		                    <td data-th="Actions" className="col actions">
 		                        <a href="/viewOrder" className="action view">
-		                            <span> "View"</span></a>
+		                            <span> View</span></a>&nbsp;&nbsp;
 		                    <a href="" className="action order">
 		                                <span>Reorder</span></a>
 		                    </td>

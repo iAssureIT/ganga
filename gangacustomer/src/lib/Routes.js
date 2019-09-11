@@ -10,7 +10,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import '../App.css';
 //-----------Main Menu Rout.................//
 import Header         from '../common/Header/Header.js';
-import Footer         from '../common/Footer/Footer.js';
+import Footer         from '../common/Footer/Footer.js'; 
 import HomePage       from '../pages/HomePage/HomePage.js';
 
 //-----------Syatem Security Rout.................//
@@ -28,7 +28,7 @@ import ViewOrder        from '../pages/MyOrders/ViewOrder.js'
 import MyOrders    from '../pages/MyOrders/MyOrders.js';
 import ShipmentTracking    from '../pages/ShipmentTracking/ShipmentTracking.js';
 import ProductDetailsEcommerce    from '../pages/ProductDetailsEcommerce/ProductDetailsEcommerce.js';
-import SearchProduct    from '../pages/SearchProduct/SearchProduct.js';
+import SearchProduct    from '../pages/SearchProduct/SearchProductPage.js';
 
 
 const WebLayout = () => (
@@ -46,7 +46,7 @@ const WebLayout = () => (
     <Route path="/ViewOrder"                exact strict component={ ViewOrder } />
     <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
     <Route path="/ProductDetails/:productID"         exact strict component={ ProductDetailsEcommerce } />
-    <Route path="/searchProducts/:searchstr"         exact strict component={ SearchProduct } />
+    <Route path="/searchProducts/:searchstr/:catArray"         exact strict component={ SearchProduct } />
     
   </div>
 );

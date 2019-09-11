@@ -16,7 +16,7 @@ class Header extends Component {
 constructor(props){
     super(props);
     this.state = {
-      options:[],
+      options:[], 
       catArray:[],
       searchstr:'',
       searchResult:[]
@@ -83,10 +83,10 @@ searchProducts(){
                 .catch((error)=>{
                     console.log('error', error);
                 }) 
-                console.log('searchstr',searchstr)
+                console.log('catArray',this.state.catArray)
 
 
-        this.props.history.push("/searchProducts/"+searchstr);
+        this.props.history.push("/searchProducts/"+searchstr+'/'+this.state.catArray);
         //window.location.reload();
 
     }
@@ -115,7 +115,7 @@ searchProducts(){
                                 <li><a href="/">Get the app</a></li>
                                 <li><a href="/">Sell on Multistore</a></li>
                                 <li><a href="/">Customer Care</a></li>
-                                <li><a href="/">Track my order</a></li>
+                                
                               </ul>  
                             </div>
                           </div>
@@ -127,11 +127,11 @@ searchProducts(){
                                     <ul className="dropdown-menu signinmenuul">
                                       <li className="col-lg-12"><a href="#">Your Account</a></li>
                                       <li className="col-lg-12"><a href="#">Your Wishlist</a></li>
-                                      <li className="col-lg-12"><a href="#">Your Orders</a></li>
-                                    </ul>
+                                      <li className="col-lg-12"><a href="/MyOrders">Your Orders</a></li>
+                                    </ul> 
                                 </li>
                                 <li><a href="/">Customer Care</a></li>
-                                <li><a href="/">Track my order</a></li>
+                                <li><a href="/ShipmentTracking">Track my order</a></li>
                                 </ul>  
                             </div>
                           </div>
