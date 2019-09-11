@@ -22,14 +22,14 @@ export default class ProductViewEcommerceList extends Component {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 spc20 ">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 lstbxouter">
-           <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 lstbx">
+           <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 lstbx selectl">
             <span className="listttl col-lg-12 col-md-12 col-sm-12 col-xs-12">ABOUT MARKET</span>
              <span className="listui col-lg-12 col-md-12 col-sm-12 col-xs-12">
                <ul>
-                  <li>About Us</li>
-                  <li className="">Contact</li>
-                  <li>Privacy Policy</li>
-                   <li>Site Map</li>
+                  <li className="selectlist">About Us</li>
+                  <li className="selectlist">Contact</li>
+                  <li className="selectlist">Privacy Policy</li>
+                   <li className="selectlist">Site Map</li>
                 </ul>
 
              </span>
@@ -38,11 +38,11 @@ export default class ProductViewEcommerceList extends Component {
             <span className="listttl col-lg-12 col-md-12 col-sm-12 col-xs-12">MAKE MONEY WITH US</span>
              <span className="listui col-lg-12 col-md-12 col-sm-12 col-xs-12">
                <ul>
-                  <li>Marketplace</li>
-                  <li className="">Compensation First</li>
-                  <li>My Account</li>
-                   <li>Return Policy</li>
-                   <li>Affiliate</li>
+                  {/*<li>Marketplace</li>
+                  <li className="">Compensation First</li>*/}
+                  <li className="selectlist">My Account</li>
+                   <li className="selectlist">Return Policy</li>
+                  {/* <li>Affiliate</li>*/}
                 </ul>
 
              </span>
@@ -51,11 +51,11 @@ export default class ProductViewEcommerceList extends Component {
             <span className="listttl col-lg-12 col-md-12 col-sm-12 col-xs-12">PAYMENT AND SHIPPING</span>
              <span className="listui col-lg-12 col-md-12 col-sm-12 col-xs-12">
                <ul>
-                  <li>Terms of Use</li>
-                  <li className="">Payment Methods</li>
-                  <li>Shipping Methods</li>
-                  <li>Locations We Ship To</li>
-                   <li>Estimated Delivery Time</li>
+                  <li className="selectlist">Terms of Use</li>
+                  <li className="selectlist">Payment Methods</li>
+                  <li className="selectlist">Shipping Methods</li>
+                  <li className="selectlist">Locations We Ship To</li>
+                   <li className="selectlist">Estimated Delivery Time</li>
                 </ul>
 
              </span>
@@ -64,11 +64,11 @@ export default class ProductViewEcommerceList extends Component {
             <span className="listttl col-lg-12 col-md-12 col-sm-12 col-xs-12">LET US HELP YOU</span>
              <span className="listui col-lg-12 col-md-12 col-sm-12 col-xs-12">
                <ul>
-                  <li>Join Free</li>
-                  <li className="">Blog</li>
-                  <li>Faqs</li>
-                   <li>Store Locations</li>
-                   <li>Shop By Brands</li>
+                  <li className="selectlist">Join Free</li>
+                  <li className="selectlist">Blog</li>
+                  <li className="selectlist">Faqs</li>
+                   <li className="selectlist">Store Locations</li>
+                   <li className="selectlist">Shop By Brands</li>
                 </ul>
 
              </span>

@@ -216,7 +216,7 @@ class ProductViewEcommerce extends Component {
 									
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div className="row">
-										<p className="orangetxt ">Be the first to review this product</p>
+										<p className="orangetxt "><a href="#gotoreview" className="anchorclr">Be the first to review this product</a></p>
 										{/*<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}*/}
 										</div>

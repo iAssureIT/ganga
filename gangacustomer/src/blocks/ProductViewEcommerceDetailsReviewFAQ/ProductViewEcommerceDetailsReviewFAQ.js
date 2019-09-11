@@ -20,7 +20,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
   	  	
   	render() {
 		return (
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
+				<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
           <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 faq">
             <ul>
               <li><a >DETAILS</a></li>
