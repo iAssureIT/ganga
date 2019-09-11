@@ -51,6 +51,7 @@
 	transform: scale(1);
 	-webkit-transition: all .5s ease-out 0s;
 	-moz-transition: all .5s ease-out 0s;
+	height: 263px;
 } 
 
 
@@ -208,6 +209,3 @@
 
 }
 
-.customnNavButton .owl-item{
-	width: 250px!important;
-}

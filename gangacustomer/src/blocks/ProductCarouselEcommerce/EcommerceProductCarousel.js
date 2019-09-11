@@ -195,6 +195,7 @@ class EcommerceProductCarousel extends Component {
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
                         <div className="item-top">
                             <div className="productImg">
+                            <div className="btn-warning discounttag">-93%</div>
                               <a className="product photo product-item-photo" tabindex="-1">
                                 <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                               </a>

@@ -391,3 +391,9 @@ background-color: transparent !important;
     border:1px solid #777;
 }
 
+.discounttag{
+    position: absolute;
+    padding:8px;
+    left: 0px;
+    top:5px;
+}
