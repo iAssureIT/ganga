@@ -124,3 +124,12 @@
     font-size: 18px;
     font-weight: bold;
 }
+.giftBtn{
+    border-radius: 25px;
+}
+.giftWrapPrize{
+    color: #fbbb65 !important;
+}
+.placeOrder{
+    border-radius: 25px;
+}

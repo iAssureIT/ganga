@@ -198,10 +198,8 @@ class Cart extends Component{
                     <GiftOption />
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                            <div className="row">
-                                <Discount />
-                                <EstimateShipping />
-                            </div>
+                            <Discount />
+                            <EstimateShipping />
                         </div>
                     </div>
                     

@@ -15,7 +15,8 @@ class Checkout extends Component{
                 backgroungImage : '/images/checkout.png',
             },
             discountCode: false,
-            comment : false
+            comment : false,
+            giftOption : false
         }
     }
     discountCode(event){
@@ -28,6 +29,12 @@ class Checkout extends Component{
         event.preventDefault();
         this.setState({
             comment: this.state.comment == true ? false : true
+        })
+    }
+    giftOption(event){
+        event.preventDefault();
+        this.setState({
+            giftOption : this.state.giftOption == true ? false : true
         })
     }
     render(){
@@ -218,9 +225,29 @@ class Checkout extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>
                                 <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 orderTotalText">Order Total</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight orderTotalPrize">$1,250.40</span>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
+                                </div>
+                                <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb15 discountCode" onClick={this.giftOption.bind(this)}>Gift Options</span>
+                                { this.state.giftOption == true ?
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15">Gift Message (optional)</label>
+                                        <label className="col-lg-3 col-md-3 col-sm-12 col-xs-12 mb15">To:</label><input className="col-lg-9 col-md-9 col-sm-12 col-xs-12 mb15"/>
+                                        <label className="col-lg-3 col-md-3 col-sm-12 col-xs-12 mb15">From:</label><input className="col-lg-9 col-md-9 col-sm-12 col-xs-12 mb15"/>
+                                        <label className="col-lg-3 col-md-3 col-sm-12 col-xs-12 mb15">Message:</label><textarea rows="4" className="col-lg-9 col-md-9 col-sm-12 col-xs-12 mb15"></textarea>
+                                        <button className="btn btn-warning col-lg-2 col-lg-offset-8 col-md-2 col-md-offset-8 col-sm-6 col-xs-6 giftBtn">Cancel</button><button className="btn btn-warning col-lg-2 col-md-2 col-sm-6 col-xs-6 giftBtn">Update</button>
+                                    </div>
+                                    :
+                                    null
+                                }
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <input type="checkbox" />  &nbsp; <span>Gift wrap</span>&nbsp;<span className="giftWrapPrize">$5.00</span>
+                                    <button className="btn btn-warning col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-12 col-xs-12 placeOrder">Place Order</button>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
