@@ -7,6 +7,30 @@ div, a, p, h1, h2, h3, h4, h5, h6, i, span, label{
   padding-left: 0px;
   padding-right: 0px;
 }
-.vnbvnc{
-  
+.NOpaddingLeft{
+  padding-left: 0px;
+}
+.NOpaddingRight{
+  padding-right: 0px;
+}
+.textAlignRight{
+  text-align: right;
+}
+.textAlignLeft{
+  text-align: left;
+}
+.textAlignCenter{
+  text-align: center;
+}
+.mb15{
+  margin-bottom: 15px !important;
+}
+.mt25{
+  margin-top: 25px;
+}
+.mt15{
+  margin-top: 15px;
+}
+.mb25{
+  margin-bottom: 25px;
 }

@@ -68,8 +68,8 @@ class CartProducts extends Component{
                                     </tr>
                                 </tbody>
                             </table>
-                            <div className="col-lg-3 col-lg-offset-6 col-md-3 col-md-offset-6 col-sm-12 col-xs-12 NOpaddingLeft">
-                            <button className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-warning continueShopping"> <i className="fa fa-angle-left cartLeftAngle"></i> &nbsp; CONTINUE SHOPPING</button>
+                            <div className="col-lg-4 col-lg-offset-5 col-md-4 col-md-offset-5 col-sm-12 col-xs-12 NOpaddingLeft">
+                            <button className="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-12 col-xs-12 btn btn-warning continueShopping"> <i className="fa fa-angle-left cartLeftAngle"></i> &nbsp; CONTINUE SHOPPING</button>
                             </div>
                             <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton"> UPDATE SHOPPING CART</button>
                         </div>

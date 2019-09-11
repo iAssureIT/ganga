@@ -22,6 +22,7 @@ import ResetPassword    from '../systemSecurity/ResetPassword.js';
 import SignUp           from '../systemSecurity/SignUp.js';
 import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 import Cart             from '../pages/Cart/Cart.js';
+import Checkout             from '../pages/Checkout/Checkout.js';
 import ViewOrder        from '../pages/MyOrders/ViewOrder.js'
 // Order Tracking
 import MyOrders    from '../pages/MyOrders/MyOrders.js';
@@ -40,6 +41,7 @@ const WebLayout = () => (
     <Route path="/verify-account"           exact strict component={ VerifyAccount } />
     <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
     <Route path="/cart"                     exact strict component={ Cart } />
+    <Route path="/checkout"                 exact strict component={ Checkout } />
     <Route path="/MyOrders"                 exact strict component={ MyOrders } />
     <Route path="/ViewOrder"                exact strict component={ ViewOrder } />
     <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
