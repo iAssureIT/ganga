@@ -136,8 +136,8 @@ background-color: transparent !important;
     display: block !important;
     background: transparent !important;
     border-radius: 0px !important;
-    margin-top: -592px !important;
-    margin-left: 300px;
+    margin-top: -270px !important;
+    margin-left: -19px;
     width: 25px;
     height: 32px;
     color: #000;
@@ -152,7 +152,7 @@ background-color: transparent !important;
     background: transparent !important;
     border-radius: 0px !important;
     margin-top: -40px;
-    margin-left: 1011px;
+    margin-left: 1280px;
     width: 25px;
     height: 32px;
     color: #000;
@@ -364,4 +364,30 @@ background-color: transparent !important;
     font-size: 15px;
 }
 
+.productcarotext1{
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    text-align: center;
+}
+
+.owl-theme .owl-dots{
+    display: none;
+}
+
+.customnNavButtoncaro1 .owl-nav{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+
+}
+.customnNavButtoncaro1 .owl-nav button.owl-prev{
+    font-size: 25px!important;
+    border:5px solid #777;
+}
+.customnNavButtoncaro1 .owl-nav button.owl-next{
+    font-size: 25px!important;
+    border:1px solid #777;
+}
 

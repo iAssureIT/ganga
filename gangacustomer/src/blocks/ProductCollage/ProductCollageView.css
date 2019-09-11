@@ -2,6 +2,7 @@
 	border: 1px solid #f1f2f2;
 	max-width: 270px;
 	margin: 5px;
+	height: 475px;
 }
 .productDetails{
 	padding-bottom: 15px;
@@ -13,6 +14,7 @@
 
 .productImg{
 	overflow: hidden;
+	height: 263px;
 } 
 .productImg a{
 	display: block;
@@ -34,7 +36,7 @@
 	right: 0;
 	bottom: 0;
 	top: 0;
-	height: 200px;
+	height: 263px;
 	background: rgba(128,125,116,0);
 	text-align: center;
 	visibility: hidden;
@@ -61,6 +63,11 @@
 	color: #555;
 	font-size: 16px;
 	font-weight: bold;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+
 }
 .innerDiv a:hover{
 	color: #fbbb65 !important;
@@ -188,3 +195,19 @@
 	text-transform: uppercase;
 }
 
+
+
+.product-item-link{
+	color: #555;
+	font-size: 16px;
+	font-weight: bold;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+
+}
+
+.customnNavButton .owl-item{
+	width: 250px!important;
+}

@@ -1,5 +1,6 @@
 import React, { Component } 		  from 'react';
 import EcommerceProductCarousel 	from "../../blocks/ProductCarouselEcommerce/EcommerceProductCarousel.js";
+import Ecommercenewproductcaro   from "../../blocks/ProductCarouselEcommerce/Ecommercenewproductcaro.js";
 import EcommerceBanner 				    from "../../blocks/Banner/EcommerceBanner.js";
 import ShopByCategoriesEcommerce  from "../../blocks/ShopByCategories/ShopByCategoriesEcommerce.js";
 import ProductDivider             from "../../blocks/ProductDivider/ProductDivider.js";
@@ -95,8 +96,11 @@ class HomePage extends Component {
             </div>
             <div className="homeRow">
             { /*new product */}
-						<EcommerceProductCarousel title={'New Products'} newProducts = {this.state.newProducts}/>
+						<EcommerceProductCarousel title={'FLASH SALE'} newProducts = {this.state.exclusiveProducts}/>
+            <Ecommercenewproductcaro  title={'BEST SELLERS'} newProducts = {this.state.bestSellerProducts}/>
             <ProductDivider />
+            <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts = {this.state.newProducts}/>
+            <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts = {this.state.featuredProducts}/>
             <SaleProductDivider />
         </div>
       </div>

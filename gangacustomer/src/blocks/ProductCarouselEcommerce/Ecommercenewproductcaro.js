@@ -130,18 +130,12 @@ class EcommerceProductCarousel extends Component {
 						<div className="row">
   						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
-                    <div className="producttextclass  col-lg-2">
+                    <div className="producttextclass  col-lg-3">
                       <h3 className="row">
                        <b>{this.props.title}</b>
                       </h3>
                     </div>
-                    <div className="col-lg-4 producttimer">
-                      <ul>
-                        <li><span id="days"></span>days</li>
-                        <li><span id="hours"></span>Hours</li>
-                        <li><span id="minutes"></span>Minutes</li>
-                        <li><span id="seconds"></span>Seconds</li>
-                      </ul>                    
+                    <div className="col-lg-3 producttimer">
                     </div>
                     <div className="col-lg-6 producttimer">
                         <OwlCarousel
@@ -195,7 +189,7 @@ class EcommerceProductCarousel extends Component {
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
                         <div className="item-top">
                             <div className="productImg">
-                              <a className="product photo product-item-photo" tabindex="-1">
+                              <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabindex="-1">
                                 <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                               </a>
                             <div className="hoveractions">
