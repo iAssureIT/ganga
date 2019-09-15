@@ -31,13 +31,14 @@ componentWillMount() {
         var to = $(this).html();
         var text = $(this).html();
         sp.data('search', to);
-        // console.log(sp.find('.search_by'));
         sp.find('button span.search_by').html(text);
       });
     });
 
 }
 componentDidMount(){
+  this.getCartCount();
+  this.getWishlistCount();
   const options = [];
   axios.get("/api/category/get/list")
             .then((response)=>{
@@ -76,15 +77,11 @@ searchProducts(){
                       }
         axios.post("/api/products/post/searchINCategory",formValues)
                 .then((response)=>{
-
-                 console.log(response)
                  this.setState({searchResult : response.data})
                 })
                 .catch((error)=>{
                     console.log('error', error);
                 }) 
-                console.log('catArray',this.state.catArray)
-
 
         this.props.history.push("/searchProducts/"+searchstr+'/'+this.state.catArray);
         //window.location.reload();
@@ -92,15 +89,38 @@ searchProducts(){
     }
     
 }
+  signOut(event){
+    event.preventDefault();
+    localStorage.setItem("user_ID", "");
+    this.props.history.push('/');
+  }
+  getCartCount(){
+    const userid = localStorage.getItem('admin_ID');
+    axios.get("/api/carts/get/count/"+userid)
+        .then((response)=>{ 
+            this.setState({
+                count : response.data
+            })
+            this.props.initialCart(response.data);
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        }) 
+    
+  }
+  getWishlistCount(){
+    const userid = localStorage.getItem('admin_ID');
+    axios.get("/api/wishlist/get/wishlistcount/"+userid)
+        .then((response)=>{ 
+          this.props.initialWishlist(response.data);
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+  }
   render() { 
-    // const options = [
-    //   { label: '1', value: 1},
-    //   { label: '2', value: 2},
-    //   { label: '3', value: 3},
-    //   { label: '4', value: 4},
-    //   { label: '5', value: 5},
-    //   { label: '6', value: 6},
-    // ]; 
+    const user_ID = localStorage.getItem("user_ID");
+    // console.log('user', user_ID);
     return (
       <div className="homecontentwrapper">
           <header className="col-lg-12 headerflow"> 
@@ -113,25 +133,29 @@ searchProducts(){
                             <div className="row">
                               <ul>
                                 <li><a href="/">Get the app</a></li>
-                                <li><a href="/">Sell on Multistore</a></li>
-                                <li><a href="/">Customer Care</a></li>
-                                <li><a href="/ShipmentTracking">Track my order</a></li>
+                                
+                                <li className="borderLeft"><a href="/">Customer Care</a></li>
+                                <li className="borderLeft"><a href="/ShipmentTracking">Track my order</a></li>
                               </ul>  
                             </div>
                           </div>
                           <div className="col-lg-6 header1list2">
                             <div className="row">
                               <ul>
-                                <li><a href="/">Get the app</a></li>
-                                <li><a href="/"  data-toggle="dropdown"><i className="fa fa-pencil" aria-hidden="true"></i> Sign In <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
+                                {
+                                  user_ID? 
+                                  <li><a href="/"  data-toggle="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
-                                      <li className="col-lg-12"><a href="#">Your Account</a></li>
+                                      <li className="col-lg-12"><a href="/profile">Your Profile</a></li>
                                       <li className="col-lg-12"><a href="#">Your Wishlist</a></li>
                                       <li className="col-lg-12"><a href="/MyOrders">Your Orders</a></li>
+                                      <li className="col-lg-12" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>
                                     </ul> 
-                                </li>
-                                <li><a href="/">Customer Care</a></li>
-                                <li><a href="/ShipmentTracking">Track my order</a></li>
+                                  </li>
+                                  :
+                                  <li><a href="/login"><i className="fa fa-pencil"></i> Sign In <i className="fa fa-angle-down"></i></a></li>
+                                }
                                 </ul>  
                             </div>
                           </div>
@@ -140,7 +164,7 @@ searchProducts(){
                     </div> 
                   </div> 
                   <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
-                  <img src="/images/logo1.png"/>
+                  <a href="/"><img src="/images/logo1.png"/></a>
               </div>  
               <div className="col-lg-6 col-md-6 headerpaddingtop">
                   <div className="col-lg-12">
@@ -153,8 +177,8 @@ searchProducts(){
               </div>
               <div className="col-lg-3 col-md-3 headerpaddingtop text-center">
                   <div className="col-lg-12 headercart">
-                  <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">0</span></a>
-                  <a href="/" className="cartitemscss">ITEM (S)</a>
+                  <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
+                  <a href="/cart" className="cartitemscss">ITEM (S)</a>
                   </div> 
               </div>
             </div>
@@ -176,6 +200,22 @@ searchProducts(){
     );  
   }
 }
-
-
-export default withRouter(Header);
+const mapStateToProps = (state)=>{
+  return {
+    cartCount :  state.cartCount,
+    wishlistCount : state.wishlistCount
+  }
+}
+const mapDispachToProps = (dispach) =>{
+  return {
+    initialCart : (cartCount)=> dispach({
+      type:'CART_COUNT_INITIALLY',
+      cartCount : cartCount
+    }),
+    initialWishlist : (wishlistCount)=> dispach({
+      type:'WISHLIST_COUNT_INITIALLY',
+      wishlistCount : wishlistCount
+    })
+  }
+}
+export default connect(mapStateToProps, mapDispachToProps)(withRouter(Header));

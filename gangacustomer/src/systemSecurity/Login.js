@@ -42,9 +42,9 @@ class Login extends Component {
         console.log("-------userData------>>",response);
 
         localStorage.setItem("token",response.data.token);
-        localStorage.setItem("admin_ID",response.data.user_ID);
+        localStorage.setItem("user_ID",response.data.user_ID);
 
-        console.log("localStorage =",localStorage.getItem('admin_ID'));
+        console.log("localStorage =",localStorage.getItem('user_ID'));
         
         if(localStorage==null){
           swal("Invalid Email or Password","Please Enter valid email and password");

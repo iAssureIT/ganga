@@ -24,12 +24,13 @@ import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 import Cart             from '../pages/Cart/Cart.js';
 import Checkout             from '../pages/Checkout/Checkout.js';
 import ViewOrder        from '../pages/MyOrders/ViewOrder.js'
-// Order Tracking
+import Edituser from '../pages/Edituser/Edituser.js';
 import MyOrders    from '../pages/MyOrders/MyOrders.js';
 import ShipmentTracking    from '../pages/ShipmentTracking/ShipmentTracking.js';
 import ProductDetailsEcommerce    from '../pages/ProductDetailsEcommerce/ProductDetailsEcommerce.js';
 import SearchProduct    from '../pages/ProductCollage/SearchProductPage.js';
 import GroceryProductCollage    from '../pages/ProductCollage/GroceryProductCollage.js';
+import Payment    from '../pages/Payment/Payment.js';
 
 
 const WebLayout = () => (
@@ -51,6 +52,8 @@ const WebLayout = () => (
     <Route path="/ProductCollage/:categoryID"            exact strict component={ SearchProduct } />
     <Route path="/ProductCollage/:categoryID/:subcategoryID"   exact strict component={ SearchProduct } />
     <Route path="/GroceryProductCollage"            exact strict component={ GroceryProductCollage } />
+    <Route path="/profile"            exact strict component={ Edituser } />
+    <Route path="/payment/:order_ID"            exact strict component={ Payment } />
   </div>
 );
 

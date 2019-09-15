@@ -21,7 +21,7 @@ class ShopByCategoriesEcommerce extends Component {
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
       var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
-          const userid = localStorage.getItem('admin_ID');
+          const userid = localStorage.getItem('user_ID');
           
           const formValues = { 
               "user_ID"    : userid,
@@ -60,7 +60,7 @@ class ShopByCategoriesEcommerce extends Component {
     var id = event.target.id;
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
-          const userid = localStorage.getItem('admin_ID');
+          const userid = localStorage.getItem('user_ID');
           
           const formValues = 
           { 
@@ -84,7 +84,7 @@ class ShopByCategoriesEcommerce extends Component {
  
 render() {
 		    
-		  const token = localStorage.getItem("admin_ID");
+		  const token = localStorage.getItem("user_ID");
 		  var plength = this.props.newProducts && this.props.newProducts.length >0 ? this.props.newProducts.length:0;
 		  var productlength = plength % 3;
 		    return (

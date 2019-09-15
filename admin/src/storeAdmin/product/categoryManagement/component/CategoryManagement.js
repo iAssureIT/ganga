@@ -5,7 +5,7 @@ import ReactTable             from "react-table";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
-import validator              from 'validator';
+// import validator              from 'validator';
 import IAssureTable           from '../../../../coreAdmin/IAssureTable/IAssureTable.jsx';
 import 'jquery-validation';
 import 'bootstrap/js/tab.js';
@@ -24,7 +24,7 @@ class CategoryManagement extends Component{
             "addEditMode"                       : "",
             "categoryImage"                     : "",
             "tableHeading"                      : {
-              section                       : "Section",
+              section                           : "Section",
               category                          : "Category Title",
               subCategory                       : "Subcategory Title",
               categoryDescription               : "Category Description",
@@ -34,7 +34,7 @@ class CategoryManagement extends Component{
             "tableObjects"              : {
               deleteMethod              : 'delete',
               apiLink                   : '/api/category/',
-              paginationApply           : true,
+              paginationApply           : false,
               searchApply               : true,
               editUrl                   : '/category-management/'
             },

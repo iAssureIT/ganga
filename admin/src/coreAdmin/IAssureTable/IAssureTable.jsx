@@ -30,8 +30,6 @@ class IAssureTable extends Component {
 		    "pageCount" 				: 0,
 		    "valI" 						: 1		
 		}
-
-		
 	}
 	componentDidMount() {
       $("html,body").scrollTop(0); 
@@ -391,27 +389,35 @@ class IAssureTable extends Component {
 		// var y = 4;
 		// var z = 2;
         return (
-	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
-	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-						<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
-							<option value="Not Selected" disabled>Select Limit</option>
-							<option value={10}>10</option>
-							<option value={25}>25</option>
-							<option value={50}>50</option>
-							<option value={100}>100</option>
-							<option value={500}>500</option>
-						</select>
-					</div>
-				</div>           
-				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
-	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
-	        		<div className="input-group">
-				        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
-				    	<span className="input-group-addon"><i className="fa fa-search"></i></span>
-				    </div>
-	        	</div>		
+	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+				{this.state.tableObjects.paginationApply == true ?
+					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+						<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+							<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
+								<option value="Not Selected" disabled>Select Limit</option>
+								<option value={10}>10</option>
+								<option value={25}>25</option>
+								<option value={50}>50</option>
+								<option value={100}>100</option>
+								<option value={500}>500</option>
+							</select>
+						</div>
+					</div> 
+					:
+					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding"></div>    
+				}	
+	       		{   this.state.tableObjects.searchApply == true ?
+					<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
+						<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
+						<div className="input-group">
+							<input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
+							<span className="input-group-addon"><i className="fa fa-search"></i></span>
+						</div>
+					</div>	
+					:
+					null
+				}	
 	            <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NOpadding marginTop17">			            	        
 	                <div className="table-responsive">
 						<table className="table iAssureITtable-bordered table-striped table-hover">
@@ -483,36 +489,42 @@ class IAssureTable extends Component {
 															}
 														)
 													}
-													<td className="textAlignCenter">
-														<span>
-															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
-															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value.id} id={value.id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal"+value._id}></i>}
-														</span>
-														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal"+value._id} role="dialog">
-	                                                        <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
-	                                                            <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                            <div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
-	                                                              <button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"#showDeleteModal"+value._id}>&times;</button>
-	                                                            </div>
-	                                                           
-	                                                            </div>
-	                                                            <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                              <h4 className="blackLightFont textAlignCenter examDeleteFont col-lg-12 col-md-12 col-sm-12 col-xs-12">Are you sure you want to delete?</h4>
-	                                                            </div>
-	                                                            
-	                                                            <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	                                                                <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
-	                                                              </div>
-	                                                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	                                                                <button onClick={this.delete.bind(this)} id={value._id} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
-	                                                              </div>
-	                                                            </div>
-	                                                          </div>
-	                                                        </div>
-	                                                    </div>
-													</td>
+													{
+														this.state.tableHeading.actions != null && this.state.tableHeading.actions != undefined ?
+													
+														<td className="textAlignCenter">
+															<span>
+																<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
+																{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value.id} id={value.id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal"+value._id}></i>}
+															</span>
+															<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal"+value._id} role="dialog">
+																<div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																<div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+																	<div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																	<div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
+																	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"#showDeleteModal"+value._id}>&times;</button>
+																	</div>
+																
+																	</div>
+																	<div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																	<h4 className="blackLightFont textAlignCenter examDeleteFont col-lg-12 col-md-12 col-sm-12 col-xs-12">Are you sure you want to delete?</h4>
+																	</div>
+																	
+																	<div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+																		<button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+																	</div>
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+																		<button onClick={this.delete.bind(this)} id={value._id} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
+																	</div>
+																	</div>
+																</div>
+																</div>
+															</div>
+														</td>
+														:
+														null
+														}
 												</tr>
 											);										
 										}

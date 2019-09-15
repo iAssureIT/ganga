@@ -33,7 +33,7 @@ class EcommerceProductCarousel extends Component {
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
       var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
-          const userid = localStorage.getItem('admin_ID');
+          const userid = localStorage.getItem('user_ID');
           // console.log("userid",response.data);
           const formValues = { 
               "user_ID"    : userid,
@@ -74,7 +74,7 @@ class EcommerceProductCarousel extends Component {
     var id = event.target.id;
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
-          const userid = localStorage.getItem('admin_ID');
+          const userid = localStorage.getItem('user_ID');
           // console.log("userid",response.data);
           const formValues = 
           { 
@@ -97,8 +97,8 @@ class EcommerceProductCarousel extends Component {
   }
   render() {
     console.log('Product',this.props.newProducts);
-          const token = localStorage.getItem("admin_ID") ;
-          console.log("admin_ID:",localStorage.getItem("admin_ID"))
+          const token = localStorage.getItem("user_ID") ;
+          console.log("user_ID:",localStorage.getItem("user_ID"))
     return (
 
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ecommerceProductCarousel mt20">

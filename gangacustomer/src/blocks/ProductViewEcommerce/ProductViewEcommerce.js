@@ -73,7 +73,7 @@ class ProductViewEcommerce extends Component {
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
       var totalForQantity   =   parseInt(Number(this.state.totalQuanity) * response.data.offeredPrice);
-          const userid = localStorage.getItem('admin_ID');
+          const userid = localStorage.getItem('user_ID');
          
           const formValues = { 
               "user_ID"    : userid,
@@ -109,13 +109,13 @@ class ProductViewEcommerce extends Component {
   }
    addtowishlist(event){
     event.preventDefault();
-    var user_ID = localStorage.getItem('admin_ID'); 
-    console.log('admin_ID ===============>>>>>>>>..', user_ID);
+    var user_ID = localStorage.getItem('user_ID'); 
+    console.log('user_ID ===============>>>>>>>>..', user_ID);
     if(user_ID){
     	var id = event.target.id;
 	    axios.get('/api/products/get/one/'+id)
 	    .then((response)=>{
-	          const userid = localStorage.getItem('admin_ID');
+	          const userid = localStorage.getItem('user_ID');
 	          // console.log("userid",response.data);
 	          const formValues = 
 	          { 

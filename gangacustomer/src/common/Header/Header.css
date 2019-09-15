@@ -129,7 +129,7 @@
 	font-size: 12px;
 	padding-right: 10px;
 	padding-left:10px;
-	border-right:1px solid #777;
+	/* border-right:1px solid #777; */
 
 }
 .header1list1 ul{
@@ -148,8 +148,11 @@
 	font-size: 12px;
 	padding-right: 10px;
 	padding-left:10px;
-	border-left:1px solid #777;
+	/* border-left:1px solid #777; */
 
+}
+.borderLeft{
+	border-left:1px solid #777;
 }
 .header1list2 ul{
 	padding-inline-start: 0px!important;

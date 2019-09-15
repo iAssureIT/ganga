@@ -65,10 +65,11 @@ class EcommerceProductCarousel extends Component {
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
+    console.log('id', id);
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
       var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
-          const userid = localStorage.getItem('admin_ID');
+          const userid = localStorage.getItem('user_ID');
           
           const formValues = { 
               "user_ID"    : userid,
@@ -104,7 +105,7 @@ class EcommerceProductCarousel extends Component {
   addtowishlist(event){
     event.preventDefault();
     var id = event.target.id;
-    const userid = localStorage.getItem('admin_ID');
+    const userid = localStorage.getItem('user_ID');
     const formValues = 
     { 
         "user_ID"    : userid,
@@ -122,8 +123,8 @@ class EcommerceProductCarousel extends Component {
   }
   render() {
   	// console.log('Product', this.props.title,this.props.newProducts);
-  	  	  const token = localStorage.getItem("admin_ID") ;
-          // console.log("admin_ID:",localStorage.getItem("admin_ID"))
+  	  	  const token = localStorage.getItem("user_ID") ;
+          // console.log("user_ID:",localStorage.getItem("user_ID"))
 		return (
 
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
@@ -235,8 +236,8 @@ class EcommerceProductCarousel extends Component {
                                   }
                                 </div>
                                 <div className="actions">
-                                    <button type="submit" title="Add to Cart" className="actiontocart btn-warning ">
-                                      <span><i className="fa fa-shopping-cart"></i>&nbsp;Add to Cart</span>
+                                    <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart btn-warning fa fa-shopping-cart">
+                                      &nbsp;Add to Carts
                                     </button>
                                 </div>
                             </div>
@@ -257,4 +258,22 @@ class EcommerceProductCarousel extends Component {
 		);
 	}
 }
-export default(EcommerceProductCarousel);
+const mapStateToProps = (state)=>{
+  return {
+    
+  }
+}
+const mapDispachToProps = (dispach) =>{
+  return {
+    changeCartCount : (cartCount)=> dispach({
+      type:'CART_COUNT',
+      cartCount : cartCount
+    }),
+    changeWishlistCount : (wishlistCount)=> dispach({
+      type:'WISHLIST_COUNT',
+      wishlistCount : wishlistCount
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispachToProps)(EcommerceProductCarousel);
