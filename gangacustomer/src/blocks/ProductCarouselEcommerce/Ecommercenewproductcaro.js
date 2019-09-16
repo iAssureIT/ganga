@@ -252,6 +252,7 @@ class EcommerceProductCarousel extends Component {
         </div>
     );
   }
+
 }
 const mapStateToProps = (state)=>{
   return {
