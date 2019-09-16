@@ -64,7 +64,7 @@
 }
 .innerDiv a{
 	color: #555;
-	font-size: 16px;
+	font-size: 16px; 
 	font-weight: bold;
 	white-space: nowrap;
     overflow: hidden;
