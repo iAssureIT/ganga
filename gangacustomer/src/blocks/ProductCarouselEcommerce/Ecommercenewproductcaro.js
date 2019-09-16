@@ -111,6 +111,7 @@ class EcommerceProductCarousel extends Component {
         "user_ID"    : userid,
         "product_ID" : id,
     }
+    console.log('formVal', formValues);
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
       
@@ -198,7 +199,7 @@ class EcommerceProductCarousel extends Component {
                                   <div className="hoveractions">
                                       <ul>
                                         <li ><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
-                                        <li><a className="circle spin" href="#"> <i className="fa fa-heart addTOWishList"></i></a></li>
+                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>
                                       </ul>
                                   </div>
                                 </div>
@@ -229,9 +230,9 @@ class EcommerceProductCarousel extends Component {
                                       }
                                     </div>
                                     <div className="actions">
-                                        <button type="submit" title="Add to Cart" className="actiontocart btn-warning ">
-                                          <span><i className="fa fa-shopping-cart"></i>&nbsp;Add to Cart</span>
-                                        </button>
+                                      <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart btn-warning fa fa-shopping-cart">
+                                        &nbsp;Add to Cart
+                                      </button>
                                     </div>
                                 </div>
                               </div>
