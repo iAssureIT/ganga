@@ -19,7 +19,8 @@ constructor(props){
       options:[], 
       catArray:[],
       searchstr:'',
-      searchResult:[]
+      searchResult:[],
+      hotProducts:[]
 
     }
 }
@@ -39,6 +40,7 @@ componentWillMount() {
 componentDidMount(){
   this.getCartCount();
   this.getWishlistCount();
+  this.getHotProduct();
   const options = [];
   axios.get("/api/category/get/list")
             .then((response)=>{
@@ -117,6 +119,18 @@ searchProducts(){
         .catch((error)=>{
               console.log('error', error);
         })
+  }
+  getHotProduct(){
+    axios.get("/api/products/get/hotproduct")
+    .then((response)=>{ 
+      console.log('hotProducts', response.data);
+      this.setState({
+        hotProducts : response.data
+      })
+    })
+    .catch((error)=>{
+          console.log('error', error);
+    })
   }
   render() { 
     const user_ID = localStorage.getItem("user_ID");
@@ -227,8 +241,21 @@ searchProducts(){
                       </div>
                     </div>
                     <div className="col-lg-9">
-                      <ul>
-                        <li>njn</li>
+                      <ul className="box-static-link">
+                        {this.state.hotProducts && this.state.hotProducts.length > 0?
+                          this.state.hotProducts.map((data, index)=>{
+                            if(index < 6){
+                              return(
+                                <li key={index}>
+                                  <span>HOT</span>
+                                  <a href={"/ProductDetails/"+data._id}>{data.productName}</a>
+                                </li>
+                              );
+                            }
+                          })
+                          :
+                          null
+                        }
                       </ul>
                     </div>
                   </div>
