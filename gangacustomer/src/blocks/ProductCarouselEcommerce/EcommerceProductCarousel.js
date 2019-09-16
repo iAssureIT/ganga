@@ -236,9 +236,9 @@ class EcommerceProductCarousel extends Component {
                                       }
                                     </div>
                                     <div className="actions">
-                                        <button type="submit" title="Add to Cart" className="actiontocart btn-warning ">
-                                          <span><i className="fa fa-shopping-cart"></i>&nbsp;Add to Cart</span>
-                                        </button>
+                                      <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart btn-warning fa fa-shopping-cart">
+                                        &nbsp;Add to Cart
+                                      </button>
                                     </div>
                                 </div>
                               </div>
