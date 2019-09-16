@@ -2,7 +2,7 @@
 	border: 1px solid #f1f2f2;
 	max-width: 270px;
 	margin: 5px;
-	height: 475px;
+	height: 385px;
 }
 .productDetails{
 	padding-bottom: 15px;
@@ -14,12 +14,12 @@
 
 .productImg{
 	overflow: hidden;
-	height: 263px;
+	height: 185px;
 } 
 .productImg a{
 	display: block;
 	text-align: center;
-	padding-top: 20px;
+	/*padding-top: 20px;*/
 }
 
 .hoveractions a{
@@ -51,8 +51,10 @@
 	transform: scale(1);
 	-webkit-transition: all .5s ease-out 0s;
 	-moz-transition: all .5s ease-out 0s;
-	height: 263px;
-} 
+	width: 84%;
+    left: 20px;
+    height: 187px;
+    top: 5px;} 
 
 
 .innerDiv{
@@ -124,7 +126,7 @@
 
 .ratingReview:not(:checked) > label:before,.ratingReview1:not(:checked) > label:before {
     content: '★ ';
-    font-size:21px;
+    font-size:18px!important;
 }
 
 .ratingReview > input:checked ~ label, .ratingReview1 > input:checked ~ label {
@@ -200,7 +202,7 @@
 
 .product-item-link{
 	color: #555;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: bold;
 	white-space: nowrap;
     overflow: hidden;

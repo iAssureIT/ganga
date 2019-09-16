@@ -18,23 +18,23 @@ const OwlCarousel = Loadable({
 
 
 class EcommerceProductCarousel extends Component {
-	constructor(props){
+  constructor(props){
     super(props);
-	    this.state = {
-	    	 responsive:{
-				        0:{
-				            items:1
-				        },
-				        600:{
-				            items:2
-				        },
-				        1000:{
-				            items:5 
-				        }
-   					 }
-	    	
-	    };
-  	} 
+      this.state = {
+         responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:2
+                },
+                1000:{
+                    items:5 
+                }
+             }
+        
+      };
+    } 
 
     componentDidMount() {
 
@@ -122,14 +122,13 @@ class EcommerceProductCarousel extends Component {
     })
   }
   render() {
-  	// console.log('Product', this.props.title,this.props.newProducts);
-  	  	  const token = localStorage.getItem("user_ID") ;
-          // console.log("user_ID:",localStorage.getItem("user_ID"))
-		return (
-
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
-						<div className="row">
-  						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    // console.log('Product', this.props.title,this.props.newProducts);
+          const token = localStorage.getItem("admin_ID") ;
+          // console.log("admin_ID:",localStorage.getItem("admin_ID"))
+    return (
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
+            <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
                     <div className="producttextclass  col-lg-3">
                       <h3 className="row">
@@ -167,90 +166,92 @@ class EcommerceProductCarousel extends Component {
                            </div>
                       </OwlCarousel>
                     </div>
-    						  </div>
+                  </div>
                 </div>
-						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
-						 <div className="tab-content customTabContent">
-						    <div id="home" className="tab-pane fade in active ecommerceTabContent">
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
-									<OwlCarousel
-									    className="owl-theme customnNavButton"
-									    margin={8}
-									    nav={true}
-									    responsive={this.state.responsive} 
-                      autoplay={true}
-                      autoplayHoverPause={true}
-									>
-									{
-                  this.props.newProducts && this.props.newProducts.length > 0 ?
-                  this.props.newProducts.map((data, index)=>{
-                     // console.log('ididid ',data._id);
-                  return (
-                    <div className="item " key={index}>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 card">
-                        <div className="item-top">
-                            <div className="productImg">
-                            <div className="btn-warning discounttag">-93%</div>
-                              <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabindex="-1">
-                                <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
-                              </a>
-                            <div className="hoveractions">
-                              <div className="col-lg-12">  
-                                <ul>
-                                  <li ><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
-                                  <li><a className="circle spin" href="#"> <i className="fa fa-heart addTOWishList"></i></a></li>
-                                </ul>
-                              </div>
-                              </div>
-                            </div>
-                          <div className="productDetails">
-                            <div className="innerDiv">
-                                <p className="product-item-link" title={data.productName}>{data.productName}</p>
-                                <div className="product-reviews-summary">
-                                  <div className="rating-summary">
-                                    <fieldset className="ratingReview stars ">
-                                      <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
-                                      <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
-                                      <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                      <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
-                                      <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
-                                    </fieldset>
-                                  <div className="clearfix "></div>
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+             <div className="tab-content customTabContent">
+                <div id="home" className="tab-pane fade in active ecommerceTabContent">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <OwlCarousel
+                        className="owl-theme customnNavButton"
+                        margin={0}
+                        nav={true}
+                        responsive={this.state.responsive} 
+                        autoplay={false}
+                        autoplayHoverPause={true}
+                    >
+                    {
+                    this.props.newProducts && this.props.newProducts.length > 0 ?
+                    this.props.newProducts.map((data, index)=>{
+                       // console.log('ididid ',data._id);
+                    return (
+                      <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
+                        <div className="">
+                          <div className="card">
+                            <div className="item-top">
+                                <div className="productImg">
+                               {/* <div className="btn-warning discounttag">-93%</div>*/}
+                                  <a className="product photo product-item-photo" tabindex="-1">
+                                    <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
+                                  </a>
+                                  <div className="hoveractions">
+                                      <ul>
+                                        <li ><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
+                                        <li><a className="circle spin" href="#"> <i className="fa fa-heart addTOWishList"></i></a></li>
+                                      </ul>
                                   </div>
                                 </div>
-                                <div > 
-                                  {
-                                    data.offered == true ?
-                                      <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
-                                      :
-                                      <div>
-                                          <span className="oldprice"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
-                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
+                              <div className="productDetails">
+                                <div className="innerDiv">
+                                    <p className="product-item-link" title={data.productName}>{data.productName}</p>
+                                    <div className="product-reviews-summary">
+                                      <div className="rating-summary">
+                                        <fieldset className="ratingReview stars ">
+                                          <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
+                                          <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
+                                          <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
+                                          <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
+                                          <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
+                                        </fieldset>
+                                      <div className="clearfix "></div>
                                       </div>
-                                  }
+                                    </div>
+                                    <div > 
+                                      {
+                                        data.offered == true ?
+                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
+                                          :
+                                          <div>
+                                              <span className="oldprice"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
+                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
+                                          </div>
+                                      }
+                                    </div>
+                                    <div className="actions">
+                                        <button type="submit" title="Add to Cart" className="actiontocart btn-warning ">
+                                          <span><i className="fa fa-shopping-cart"></i>&nbsp;Add to Cart</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="actions">
-                                    <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart btn-warning fa fa-shopping-cart">
-                                      &nbsp;Add to Cart
-                                    </button>
-                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>    
-                    </div>
-                  );
-                  })
-                  : ''  
-              }  
-								</OwlCarousel>
-								</div>						    
-							</div>
-						</div>
-					</div>
-				</div>
-		);
-	}
+                          </div>    
+                        </div>    
+                      </div>
+                    );
+                    })
+                    : ''  
+                }  
+                  </OwlCarousel>
+                  </div>                
+                </div>                
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  }
 }
 const mapStateToProps = (state)=>{
   return {

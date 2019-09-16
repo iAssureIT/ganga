@@ -185,14 +185,18 @@ searchProducts(){
           </header>
           <nav>
           <div className="col-lg-12 catogeryvaluebg">
-            <div className="col-lg-4">
-            <div className="dropdown">
-              <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i className="fa fa-bars" aria-hidden="true"></i>  ALL CATEGORY</button>
-              <div className="dropdown-menu" role="menu" aria-labelledby="menu1">
-                 <Megamenu />
+            <div className="col-lg-3">
+              <div className="dropdown">
+                <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i className="fa fa-bars" aria-hidden="true"></i>  ALL CATEGORY</button>
+                <div className="dropdown-menu" role="menu" aria-labelledby="menu1">
+                   <Megamenu />
+                </div>
               </div>
             </div>
-
+            <div className="col-lg-9">
+              <ul>
+                <li></li>
+              </ul>
             </div>
           </div>
           </nav>
