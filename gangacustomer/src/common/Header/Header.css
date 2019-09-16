@@ -1,15 +1,16 @@
 .headerflow{
-  z-index: 10000;
+  /*z-index: 10000;*/
   background-color: transparent;
   height: 100px;
   background-color: #fff;
 }
 .headerpaddingtop{
-	padding-top: 10px;
+	padding-top: 22px;
 }
 
 .headerlogoimg img{
-	height: 40px;
+	width: 100%;
+	padding-top: 8px;
 }
 
 .css-1jllj6i-control{
@@ -18,9 +19,9 @@
 
 .css-1r4vtzz ,.css-48ayfv{
 	width: 100%!important;
-	padding: 8px 8px 8px 8px!important;
+	padding: 8px 8px 6px 8px!important;
 	border-radius:50px 0px 0px 50px!important;
-	border:1px solid #777!important;
+	border:1px solid #ccc!important;
 	border-right: none!important;
 	background:transparent!important;
 	text-align: center!important;
@@ -30,7 +31,7 @@
 }
 
 .headersearch{
-	padding: 8px 8px 12.5px 8px!important;
+	padding: 8px 8px 10.5px 8px!important;
     background-color: #FFF;
     border-radius: 2px;
     border-width: 0;
@@ -56,23 +57,25 @@
     vertical-align: middle;
     white-space: nowrap;
    	border-radius:0px 0px 0px 0px!important;
-	border:1px solid #777!important;
+	border:1px solid #ccc!important;
 	border-right: none!important;
 	background:transparent!important;
 	float: left;
 }
 
 .searchbutton{
-	padding: 10px 13px 10px 10px!important;
+	padding: 6px 13px 4px 10px!important;
 	border-radius:0px 50px 50px 0px!important;
-	border:1px solid #777!important;
+	border:1px solid #ccc!important;
 	border-right: none!important;
 	background:transparent!important;
 	outline:0px!important;
 	/*box-shadow: 0 1px 1px 1px rgba(0,0,0,0.08);*/
+	font-size: 20px;
+
 }
 .headercarticon{
-	font-size: 35px;
+	font-size: 28px;
 	cursor:pointer;
 	color: #FBBD65;
 }
@@ -92,14 +95,15 @@
 .cartvalue{
 	padding-left: 5px;
 	cursor: pointer;
-	font-size: 20px;
-	color: #777;
+	font-size: 14px;
+	color: #aaa;
 }
 .cartitemscss{
 	padding-left: 5px;
 	cursor: pointer;
-	font-size: 18px;
-	color: #777;
+	font-size: 15px;
+	font-weight: bold;
+	color: #aaa;
 }
 
 .homecontentwrapper{
@@ -108,13 +112,14 @@
 
 .catogeryvaluebg{
 	background-color: #232f3e;
+	margin-top: 25px;
 }
 
 #menu1{
 	background-color: #232f3e;
 	height: 50px;
 	color: #fff;
-	font-size: 20px;
+	font-size: 15px;
 	border:none;
 }
 
@@ -152,7 +157,7 @@
 
 }
 .borderLeft{
-	border-left:1px solid #777;
+	border-left:1px solid #ccc;
 }
 .header1list2 ul{
 	padding-inline-start: 0px!important;
@@ -177,4 +182,9 @@
 .signinmenuul li a{
 	font-size: 15px;
 	/*border-bottom: 1px solid #aaa;*/
+}
+
+.megabars{
+	font-size: 25px;
+
 }

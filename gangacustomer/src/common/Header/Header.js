@@ -163,42 +163,78 @@ searchProducts(){
                       </div> 
                     </div> 
                   </div> 
-                  <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
-                  <a href="/"><img src="/images/logo1.png"/></a>
-              </div>  
-              <div className="col-lg-6 col-md-6 headerpaddingtop">
-                  <div className="col-lg-12">
-                      <div className="col-lg-3 NOpadding">
-                          <ReactMultiSelectCheckboxes options={this.state.options} onChange={this.handleChange.bind(this)}/>
-                      </div>   
-                      <input type="text" className="col-lg-6 headersearch" name="x" placeholder="What are you looking for...."/>
-                      <button className="col-lg-2 btn searchbutton" type="button" onClick={this.searchProducts.bind(this)} ><i className="fa fa-search" aria-hidden="true"></i></button>
-                  </div> 
-              </div>
-              <div className="col-lg-3 col-md-3 headerpaddingtop text-center">
-                  <div className="col-lg-12 headercart">
-                  <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
-                  <a href="/cart" className="cartitemscss">ITEM (S)</a>
-                  </div> 
+                  <div className="col-lg-10 col-lg-offset-1">
+                   <div className="row">
+                      <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
+                        <div className="row">
+                          <div className="col-lg-8">
+                            <div className="row">
+                              <a href="/"><img src="/images/logo1.png"/></a>
+                            </div>  
+                          </div>  
+                        </div>  
+                      </div>  
+                      <div className="col-lg-7 col-md-7 headerpaddingtop">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <div className="row">
+                                <div className="col-lg-3">
+                                  <div className="row">
+                                      <ReactMultiSelectCheckboxes options={this.state.options} onChange={this.handleChange.bind(this)}/>
+                                  </div>   
+                                </div>   
+                                <div className="col-lg-7">
+                                  <div className="row">
+                                      <input type="text" className="col-lg-12 headersearch" name="x" placeholder="What are you looking for...."/>
+                                  </div>   
+                                </div>   
+                                <div className="col-lg-2">
+                                  <div className="row">
+                                      <button className="col-lg-8 btn searchbutton" type="button" onClick={this.searchProducts.bind(this)} ><i className="fa fa-search" aria-hidden="true"></i></button>
+                                  </div>   
+                                </div>   
+                            </div> 
+                          </div> 
+                        </div>
+                      </div>
+                      <div className="col-lg-2 col-md-2 headerpaddingtop text-center">
+                          <div className="col-lg-12 headercart">
+                            <div className="row">
+                            <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
+                            <a href="/cart" className="cartitemscss">ITEM (S)</a>
+                            </div> 
+                          </div> 
+                      </div>
+                </div>
               </div>
             </div>
           </header>
           <nav>
-          <div className="col-lg-12 catogeryvaluebg">
-            <div className="col-lg-3">
-              <div className="dropdown">
-                <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown"><i className="fa fa-bars" aria-hidden="true"></i>  ALL CATEGORY</button>
-                <div className="dropdown-menu" role="menu" aria-labelledby="menu1">
-                   <Megamenu />
+            <div className="col-lg-12 catogeryvaluebg">
+              <div className="row">
+                <div className="col-lg-10 col-lg-offset-1">
+                  <div className="row">
+                    <div className="col-lg-3">
+                      <div className="row">
+                        <div className="dropdown">
+                          <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
+                          <i className="fa fa-bars megabars col-lg-3" aria-hidden="true"></i>
+                            &nbsp;&nbsp;ALL CATEGORY</button>
+                          <div className="dropdown-menu" role="menu" aria-labelledby="menu1">
+                             <Megamenu />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-9">
+                      <ul>
+                        <li></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-9">
-              <ul>
-                <li></li>
-              </ul>
-            </div>
-          </div>
           </nav>
     </div>
     );  
