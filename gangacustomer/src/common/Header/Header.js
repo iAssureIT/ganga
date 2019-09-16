@@ -228,7 +228,7 @@ searchProducts(){
                     </div>
                     <div className="col-lg-9">
                       <ul>
-                        <li></li>
+                        <li>njn</li>
                       </ul>
                     </div>
                   </div>
