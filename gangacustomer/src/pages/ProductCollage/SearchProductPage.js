@@ -19,15 +19,10 @@ export default class SearchProduct extends Component {
   	componentDidMount() {
   		console.log('match',this.props.match.params);
 
-  		$('button[data-toggle="collapse"]').click(function () {
-  			//$(this).next().find('i').removeClass();
-  			$(this).next().find('i').toggleClass('fa fa-minus fa fa-plus');
+  		$('div[data-toggle="collapse"]').click(function () {
+  			
+  			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
 
-  			if ($(this).css('display') == 'inline-block') {
-  				//$(this).next().find('i').addClass('fa fa-minus')
-  			}else{
-  				//$(this).next().find('i').addClass('fa fa-plus')
-  			}
   		});
   	}
 
@@ -70,8 +65,8 @@ export default class SearchProduct extends Component {
 						<div className="accordion" id="accordionExample">
 						  
 						    <div className="card-header" id="headingOne">
-						    <div className="pagefilter">	
-						        <button className="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">	
+						        <button className="btn btn-link" type="button" >
 						          CATEGORY 
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>
@@ -85,8 +80,8 @@ export default class SearchProduct extends Component {
 						    </div>
 						 
 						    <div className="card-header" id="headingTwo">
-						      <div className="pagefilter">	
-						        <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">	
+						        <button className="btn btn-link collapsed" type="button" >
 						          COLOR
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>
@@ -107,8 +102,8 @@ export default class SearchProduct extends Component {
 						    </div>
 
 						    <div className="card-header" id="headingTwo">
-						      <div className="pagefilter">	
-						        <button className="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">	
+						        <button className="btn btn-link collapsed" type="button">
 						          PRICE
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>

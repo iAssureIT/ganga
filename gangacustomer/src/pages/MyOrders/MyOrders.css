@@ -36,8 +36,32 @@ table > tfoot > tr > td:last-of-type {
 	color:#fbbb65 !important;
 	text-decoration: none;
 }
+
+
+.actions a {
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    width: 35px;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 20px;
+    font-size: 14px;
+    padding: 5px 0 5px;
+    border: 1px solid #fbbb65 !important;
+    background: #fff;
+    color: #fbbb65;
+    text-transform: uppercase;
+}
+.actions a:hover {
+	color: #fbbb65;
+}
 .actbtns button{
-	width: 45px !important;
+	width: 35px !important;
+	padding: 5px 0 5px;
+}
+.actbtns button:hover{
+	padding: 5px 0 5px;
 }
 #returnProductModal{
 	margin-top: 10%;
