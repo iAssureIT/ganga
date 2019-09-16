@@ -63,11 +63,12 @@ class dispatchModal extends Component{
                         text: response.data.message,
                         showConfirmButton: false
                     });
-                    this.getOrders();
+                    // this.getOrders();
                     var modal = document.getElementById('dispatchModal');
                     modal.style.display = "none";
                     $('#businessAssociate').val('');
                     $('.expDeliveryDate').val('');
+                    window.loaction.reload();
                 }
           })
           .catch((error)=>{

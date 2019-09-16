@@ -36,7 +36,7 @@
 	right: 0;
 	bottom: 0;
 	top: 0;
-	height: 263px;
+	height: 200px;
 	background: rgba(128,125,116,0);
 	text-align: center;
 	visibility: hidden;
@@ -55,7 +55,7 @@
     left: 20px;
     height: 187px;
     top: 5px;} 
-
+} 
 
 .innerDiv{
 	padding: 30px 10px 20px 10px;

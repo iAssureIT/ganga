@@ -19,3 +19,78 @@
 .selcategory{
 	font-weight: 700;
 }
+.forSearchDiv{
+	display: none;
+}
+#accordionExample{
+	padding: 5px 15px 20px;
+}
+
+.pagefilter{
+	padding: 5px 0;
+	border-bottom: 1px solid #ddd;
+}
+.nb-brand .btn-link{
+	color: #555;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 6px 0px;
+}
+.expand{
+	float: right;
+	color: #999;
+}
+
+.form {
+  margin: 0 auto;
+  padding: 100px 30px 0;
+}
+@media (min-width: 800px) {
+  .form {
+    max-width: 60%;
+  }
+}
+
+.input-range {
+  margin-bottom: 160px;
+}
+#collapseThree{
+	padding-top: 20px;
+}
+.input-range{
+	margin-bottom: 30px !important;
+}
+.input-range__track{
+	height: 0.19rem !important;
+	width: 100% !important;
+	right:0% !important;
+	left: 0% !important;
+
+}
+.input-range__track--active{
+	background:#555 !important;
+}
+.input-range__slider{
+	height: 15px !important;
+	width: 15px !important;
+	background:#555 !important;
+	border:1px solid #555 !important;
+	margin-top: -0.85rem !important;
+}
+#slider_min{
+	width: 33%;
+}
+
+#slider_max{
+	width: 33%;
+}
+.color-option{
+	height: 27px;
+    width: 27px;
+    background: #555;
+}
+.card-body a{
+	display: inline-block;
+	margin: 10px;
+}	
+

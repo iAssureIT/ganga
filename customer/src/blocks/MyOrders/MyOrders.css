@@ -290,3 +290,8 @@
     margin-bottom: 30px;
     margin-top: 30px;
 }
+
+.actbtns > button{
+ width: 45px !important; 
+}
+
