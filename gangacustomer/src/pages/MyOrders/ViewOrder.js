@@ -3,10 +3,11 @@ import axios                  from 'axios';
 import $                  from 'jquery';
 import swal                   from 'sweetalert';
 import './MyOrders.css';
+import {Route, withRouter} from 'react-router-dom';
+import Sidebar from '../../common/Sidebar/Sidebar.js';
 
-
-export default class ViewOrder extends Component {
-	constructor(props) {
+class ViewOrder extends Component {
+  constructor(props) {
         super(props);
 
         if(!this.props.loading){
@@ -24,54 +25,33 @@ export default class ViewOrder extends Component {
 
     componentDidMount() {
         //this.getMyOrders();
+        console.log(this.props.match.params.order_ID)
+
+        axios.get("/api/orders/get/one/"+this.props.match.params.order_ID)
+            .then((response)=>{
+              this.setState({ 
+                  orderData : response.data
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+
     }
 
   render() {  
     return (
-    <div className="container">	
+    <div className="container"> 
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-      	<div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
-      		<div className="sidebar">
-      			<nav className="account-nav">
-		            <ul className="nav items">
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/"><i className="fa fa-user" aria-hidden="true"></i>Account Dashboard</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/edit/">Account Information</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/address/">Address Book</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="/MyOrders">My Orders </a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/downloadable/customer/products/">My Downloadable Products</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/vault/cards/listaction/">My Credit Cards</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/newsletter/manage/">Newsletter Subscriptions</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/paypal/billing_agreement/">Billing Agreements</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/review/customer/">My Product Reviews</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/wishlist/"> Wishlist</a>
-		                </li>          
-		            </ul>
-		        </nav>
-      		</div>
-      	</div>
+        <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
+          <div className="sidebar">
+            <Sidebar />
+          </div>
+        </div>
 
-      	<div className="col-lg-9 col-md-9 col-sm-6 col-xs-6">
-      	<h4 className="table-caption">Items Ordered</h4>
-      		<table className="data table table-order-items history" id="my-orders-table">
+        <div className="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+        <h4 className="table-caption">Items Ordered</h4>
+          <table className="data table table-order-items history" id="my-orders-table">
             
             <thead>
                 <tr>
@@ -82,53 +62,56 @@ export default class ViewOrder extends Component {
                 </tr>
             </thead>
             <tbody>
-            	{
-            	/*this.state.orderData && this.state.orderData.length > 0 ?
-	                this.state.orderData.map((data, index)=>{
-	                	return(*/
-		                <tr>
-		                    <td data-th="Order #" className="col id">2.56ctw Altai Aquamarine(Tm) With</td>
-		                    <td data-th="Date" className="col date">$20.00</td>
-							          <td data-th="Ship To" className="col shipping">Ordered: 1</td>
-		                    <td data-th="Order Total" className="col total"><span className="price">$25.00</span></td>
-		                </tr>
-		            /*    );
-	            	})
-	            	: ""*/
-            	}
-           	</tbody>
+              {
+              this.state.orderData.products && this.state.orderData.products.length > 0 ?
+                  this.state.orderData.products.map((data, index)=>{
+                    return(
+                    <tr>
+                        <td data-th="Order #" className="col id">{data.productName}</td>
+                        <td data-th="Date" className="col date"><i className={"fa fa-"+data.currency}>{data.total}</i></td>
+                        <td data-th="Ship To" className="col shipping">Ordered: {data.quantity}</td>
+                        <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}>{data.total}</i></span></td>
+                    </tr>
+                    );
+                })
+                : ""
+              }
+            </tbody>
 
-            <tfoot> col-md-
+            <tfoot>
               <tr className="subtotal">
                   <th colspan="3" className="mark" scope="row">Subtotal</th>
-                  <td className="amount" data-th="Subtotal"><span className="price">$20.00</span>                    </td>
+                  <td className="amount" data-th="Subtotal"><span><i className={"fa fa-"+this.state.orderData.currency}>{this.state.orderData.totalAmount}</i></span>                    </td>
               </tr>
               <tr className="shipping">
                   <th colspan="3" className="mark" scope="row">Shipping &amp; Handling</th>
                   <td className="amount" data-th="Shipping &amp; Handling">
-                    <span className="price">$5.00</span> 
+                    <span><i className={"fa fa-"+this.state.orderData.currency}>5.00</i></span> 
                   </td>
               </tr>
               <tr className="grand_total">
+
                   <th colspan="3" className="mark" scope="row"><strong> "Estimated Total"</strong></th>
                   <td className="amount" data-th=" &quot;Estimated Total&quot;">
-                      <strong><span className="price">$25.00</span></strong>
+                      <strong><span><i className={"fa fa-"+this.state.orderData.currency}>25.00</i></span></strong>
                   </td>
               </tr>
             </tfoot>
-        	</table>
-
+          </table>
+          <div className="backtoMyOrdersDiv">
+            <a href="/MyOrders" className="backtoMyOrders"> Back to My Orders</a>
+          </div>
+          <hr/>
           <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <strong class="box-title">
                 <span>Shipping Address</span>
             </strong>
             <div className="box-content">
-              amitraje shinde
-              iassureit
-              tupe corner
-              pune, 4121454
-              India
-              T: 8888069628
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.name } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine2 } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.city + ' ' + this.state.orderData.deliveryAddress.pincode + ' ' +  this.state.orderData.deliveryAddress.state } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.mobileNumber } <br/>
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -144,12 +127,12 @@ export default class ViewOrder extends Component {
                 <span>Billing Address</span>
             </strong>
             <div className="box-content">
-              amitraje shinde
-              iassureit
-              tupe corner
-              pune, 4121454
-              India
-              T: 8888069628
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.name } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine2 } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.city + ' ' + this.state.orderData.deliveryAddress.pincode + ' ' +  this.state.orderData.deliveryAddress.state } <br/>
+             { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.mobileNumber } <br/>
+            
             </div>
           </div>
           <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -160,7 +143,7 @@ export default class ViewOrder extends Component {
               Credit Card Direct Post (Authorize.net)
             </div>
           </div>
-      	</div>
+        </div>
 
       </div>
     </div>  
@@ -168,3 +151,5 @@ export default class ViewOrder extends Component {
   }
 }
 
+
+export default withRouter(ViewOrder);

@@ -45,7 +45,7 @@ const WebLayout = () => (
     <Route path="/cart"                     exact strict component={ Cart } />
     <Route path="/checkout"                 exact strict component={ Checkout } />
     <Route path="/MyOrders"                 exact strict component={ MyOrders } />
-    <Route path="/ViewOrder"                exact strict component={ ViewOrder } />
+    <Route path="/ViewOrder/:order_ID"                exact strict component={ ViewOrder } />
     <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
     <Route path="/ProductDetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
     <Route path="/searchProducts/:searchstr/:catArray"   exact strict component={ SearchProduct } />

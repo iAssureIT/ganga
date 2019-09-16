@@ -128,7 +128,7 @@ class ShipmentTracking extends Component{
                                 </div>
                                <div  className="col-lg-4 text-center">
                                <div className="row">
-                               <div className="col-lg-5 col-lg-offset-3">
+                               <div className="col-lg-10">
                                 {data.deliveryStatus ?
                                  data.deliveryStatus.map((delivery, index)=>{
                                   return(

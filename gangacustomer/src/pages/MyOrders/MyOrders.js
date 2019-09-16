@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import axios                  from 'axios';
 import $                  from 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
 import swal                   from 'sweetalert';
 import './MyOrders.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
+import moment                 from "moment";
 
 export default class MyOrders extends Component {
 	constructor(props) {
@@ -41,37 +45,46 @@ export default class MyOrders extends Component {
       $('#feedbackFormDiv').show();
     }
     returnProduct(event){
-     // $('#ReturnModal').show();
-      console.log($(event.target));
+      $('#returnProductModal').show();
+      
       var status = $(event.target).data('status');
       var id = $(event.target).data('id');
+
       
+      var str= '';
+
       if(status=="Delivered & Paid" || status=="Delivery Initiated") {
+        str = 'Do you want to return order?';
+        $('#returnProductBtn').attr('data-id', id);
+        $('.cantreturn').hide();
+        $('.canreturn').show();
+      } else{
+        str = "This order is not delivered yet. You cannot return this order.";
+
+        $('.cantreturn').show();
+        $('.canreturn').hide();
+      }
+      console.log('str',str);
+      $('.modaltext').html('');
+      $('.modaltext').append(str); 
+    }
+
+    returnProductAction(event){
+      event.preventDefault();
+        console.log(event.target)
+        var id = $(event.target).data('id');
 
         var formValues = {
                           "orderID" :  id,  
                           "userid"  :  localStorage.getItem('user_ID')
                         }
 
-        swal({
-                title   : 'Return Order',
-                text    :  'Do you want to return order?',
-                icon    : "info",
-                buttons : ["Yes","No"],
-                confirmButtonText: "Yes, delete it!",
-                cancelButtonText: "No, cancel plx!",
-              })
-              .then(returnedValue => {
-                console.log(returnedValue);
-                if (returnedValue) {
-
-                }else{
-                    axios.patch('/api/orders/get/returnOrder', formValues)
+       axios.patch('/api/orders/get/returnOrder', formValues)
                         .then((response)=>{
                            this.getMyOrders();
                             swal({
                                     title: "Order is returned",
-                                    icon: "info", /* type: "info", */
+                                    icon: "info", 
                                     buttons: ["View Return Policy","Close"],
                                     focusConfirm: false,
                                     showCloseButton: true
@@ -86,37 +99,17 @@ export default class MyOrders extends Component {
                           console.log('error', error);
                         })
                       })
-              }
-              })             
-          }
-    
-      else{
 
-
-        swal({
-          title: "Return Order",
-          text: "This order is not delivered yet. You cannot return this order.",
-          icon: "info", /* type: "info", */
-          buttons: ["View Return Policy","Close"],
-          focusConfirm: false,
-          showCloseButton: true
-        })
-        .then((inputValue) => {
-          if (inputValue != true) {
-            window.location = '/ReturnPolicy';
-          }
-          
-        })
-
-      }      
     }
-
     cancelProduct(event){
       
+      $('#cancelProductModal').show();
       var status = $(event.target).data('status');
       var id = $(event.target).data('id');
 
-      if(status=="New Order" || status=="Verified" || status=="Packed") {
+
+
+      /*if(status=="New Order" || status=="Verified" || status=="Packed") {
           swal({
                     title   : 'Cancel Order',
                     text    :  'Do you want to cancel order?',
@@ -146,7 +139,7 @@ export default class MyOrders extends Component {
                             html:true,
                             text: "Your order is cancelled. Refund will be made as per Cancellation Policy.",
                             content: el,
-                            icon: "info", /* type: "info", */
+                            icon: "info",
                             button: "Close",
                             focusConfirm: false,
                             showCloseButton: true
@@ -162,12 +155,12 @@ export default class MyOrders extends Component {
         swal({
           title: "Cancel Order",
           text: status=="Delivery Initiated" || status=="Delivered & Paid" ? "This order is delivered. You cannot cancel this order." : "This order is being dispatched. You cannot cancel this order.",
-          icon: "info", /* type: "info", */
+          icon: "info", 
           button: "Close",
           focusConfirm: false,
           showCloseButton: true
         });
-      }      
+      }*/      
      
     }
   render() {  
@@ -195,30 +188,104 @@ export default class MyOrders extends Component {
             </thead>
             <tbody>
             	{
-            	/*this.state.orderData && this.state.orderData.length > 0 ?
+            	this.state.orderData && this.state.orderData.length > 0 ?
 	                this.state.orderData.map((data, index)=>{
-	                	return(*/
+	                	return(
 		                <tr>
-		                    <td data-th="Order #" className="col id">000000100</td>
-		                    <td data-th="Date" className="col date">9/4/19</td>
-							<td data-th="Ship To" className="col shipping">amitraje shinde</td>
-		                    <td data-th="Order Total" className="col total"><span className="price">$25.00</span></td>
-		                    <td data-th="Status" className="col status">Pending</td>
+		                    <td data-th="Order #" className="col id">{data.orderID}</td>
+		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</td>
+							           <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
+		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
+		                    <td data-th="Status" className="col status">{data.deliveryStatus[0].status}</td>
 		                    <td data-th="Actions" className="col actions">
-		                        <a href="/viewOrder" className="action view">
+
+		                    <a href={"/viewOrder/"+data._id} className="action view">
 		                            <span> View</span></a>&nbsp;&nbsp;
 		                    <a href="" className="action order">
-		                                <span>Reorder</span></a>
+		                      <span>Reorder</span></a>
+                        {
+                              data.deliveryStatus ?
+                              data.deliveryStatus.map((delivery, index)=>{ 
+                                return(
+                                  <div className="actbtns">
+                                  {
+                                    delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
+                                    <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
+                                    onClick={this.returnProduct.bind(this)} data-status={delivery.status} data-id={data._id}>
+                                    <i className="fa"  data-status={delivery.status} data-id={data._id}>&#xf0e2;</i></button>
+                                  }
+                                  {
+                                     delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
+                                    <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
+                                    data-status={delivery.status} data-id={data._id}>X</button>
+                                  }
+                                  </div>
+                                );
+                               
+                              }) 
+                              : ''
+                        }
 		                    </td>
 		                </tr>
-		            /*    );
+		              );
 	            	})
-	            	: ""*/
+	            	: ""
             	}
            	</tbody>
         	</table>
-      	</div>
 
+           {/* returnProductModal */ }
+          <div className="modal fade" id="returnProductModal" role="dialog">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                  <h3 className="modalTitle">Return Order</h3>
+                </div>
+                <div className="modal-body">
+                  <h4 className="modaltext"></h4>
+                </div>
+                <div className="modal-footer">
+                  <div className="cantreturn">
+                    <a className="btn btn-default"  href="/ReturnPolicy">View Return Policy</a>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                  <div className="canreturn">
+                    <button className="btn btn-default" onClick={this.returnProductAction.bind(this)} id="returnProductBtn"  >Yesr</button>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* cancelProductModal */ }
+          <div className="modal fade" id="cancelProductModal" role="dialog">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                  <h3 className="modalTitle">Cancel Order</h3>
+                </div>
+                <div className="modal-body">
+                  <h4 className="modaltext"></h4>
+                </div>
+                <div className="modal-footer">
+                  <div className="cantreturn">
+                    <a className="btn btn-default"  href="/ReturnPolicy">View Return Policy</a>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                  <div className="canreturn">
+                    <button className="btn btn-default" onClick={this.returnProductAction.bind(this)} id="returnProductBtn"  >Yesr</button>
+                    <button type="button" className="btn btn-default" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      	</div>
+         
       </div>
     </div>  
     );  
