@@ -198,7 +198,7 @@ class EcommerceProductCarousel extends Component {
                                   <div className="hoveractions">
                                       <ul>
                                         <li ><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
-                                        <li><a className="circle spin" href="#"> <i className="fa fa-heart addTOWishList"></i></a></li>
+                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>
                                       </ul>
                                   </div>
                                 </div>
