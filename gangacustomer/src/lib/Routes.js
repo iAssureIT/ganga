@@ -31,6 +31,7 @@ import ProductDetailsEcommerce    from '../pages/ProductDetailsEcommerce/Product
 import SearchProduct    from '../pages/ProductCollage/SearchProductPage.js';
 import GroceryProductCollage    from '../pages/ProductCollage/GroceryProductCollage.js';
 import Payment    from '../pages/Payment/Payment.js';
+import Wishlist    from '../pages/Wishlist/Wishlist';
 
 
 const WebLayout = () => (
@@ -47,13 +48,14 @@ const WebLayout = () => (
     <Route path="/MyOrders"                 exact strict component={ MyOrders } />
     <Route path="/ViewOrder"                exact strict component={ ViewOrder } />
     <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
-    <Route path="/ProductDetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
-    <Route path="/searchProducts/:searchstr/:catArray"   exact strict component={ SearchProduct } />
-    <Route path="/ProductCollage/:categoryID"            exact strict component={ SearchProduct } />
-    <Route path="/ProductCollage/:categoryID/:subcategoryID"   exact strict component={ SearchProduct } />
-    <Route path="/GroceryProductCollage"            exact strict component={ GroceryProductCollage } />
-    <Route path="/profile"            exact strict component={ Edituser } />
-    <Route path="/payment/:order_ID"            exact strict component={ Payment } />
+    <Route path="/ProductDetails/:productID"                    exact strict component={ ProductDetailsEcommerce } />
+    <Route path="/searchProducts/:searchstr/:catArray"          exact strict component={ SearchProduct } />
+    <Route path="/ProductCollage/:categoryID"                   exact strict component={ SearchProduct } />
+    <Route path="/ProductCollage/:categoryID/:subcategoryID"    exact strict component={ SearchProduct } />
+    <Route path="/GroceryProductCollage"    exact strict component={ GroceryProductCollage } />
+    <Route path="/profile"                  exact strict component={ Edituser } />
+    <Route path="/payment/:order_ID"        exact strict component={ Payment } />
+    <Route path="/wishlist"        exact strict component={ Wishlist } />
   </div>
 );
 
