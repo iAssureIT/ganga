@@ -180,7 +180,7 @@ searchProducts(){
                             <div className="row">
                                 <div className="col-lg-3">
                                   <div className="row">
-                                      <ReactMultiSelectCheckboxes options={this.state.options} onChange={this.handleChange.bind(this)}/>
+                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" options={this.state.options} onChange={this.handleChange.bind(this)}/>
                                   </div>   
                                 </div>   
                                 <div className="col-lg-7">

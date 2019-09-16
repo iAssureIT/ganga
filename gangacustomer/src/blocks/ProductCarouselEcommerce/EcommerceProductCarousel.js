@@ -230,7 +230,7 @@ class EcommerceProductCarousel extends Component {
                                           <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
                                           :
                                           <div>
-                                              <span className="oldprice"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
                                               <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
                                           </div>
                                       }
