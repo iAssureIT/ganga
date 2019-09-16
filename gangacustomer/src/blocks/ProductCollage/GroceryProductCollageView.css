@@ -82,13 +82,11 @@
 	height: 40px;
 	text-align: center;
 	line-height: 40px;
-	border: 1px solid #fff;
-    color: #fff;
+	border: 1px solid;
 	border-radius: 50%;
 	font-size: 18px;
 	margin: 0 10px;
 	display: inline-block;
-	cursor: pointer;
 }
 
 .icon-view{

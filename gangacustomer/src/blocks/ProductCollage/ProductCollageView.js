@@ -11,7 +11,7 @@ export default class ProductCollageView extends Component {
 			<div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 card">
                 <div className="item-top">
                 	<div className="productImg">
-                		<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabIndex="-1">
+                		<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabindex="-1">
 							<img src="http://demo8.cmsmart.net/mag2_amazon_themeforest/pub/media/catalog/product/cache/2/small_image/160x/925f46717e92fbc24a8e2d03b22927e1/i/p/ip2.jpg" />
 						</a>
 						<div className="hoveractions">

@@ -36,7 +36,7 @@
 	right: 0;
 	bottom: 0;
 	top: 0;
-	height: 200px;
+	height: 263px;
 	background: rgba(128,125,116,0);
 	text-align: center;
 	visibility: hidden;
@@ -54,8 +54,8 @@
 	width: 84%;
     left: 20px;
     height: 187px;
-    top: 5px;
-} 
+    top: 5px;} 
+
 
 .innerDiv{
 	padding: 30px 10px 20px 10px;
@@ -92,13 +92,11 @@
 	height: 40px;
 	text-align: center;
 	line-height: 40px;
-	border: 1px solid #fff;
-    color: #fff;
+	border: 1px solid;
 	border-radius: 50%;
 	font-size: 18px;
 	margin: 0 10px;
 	display: inline-block;
-	cursor: pointer;
 }
 
 .icon-view{
@@ -199,6 +197,8 @@
 	color: #fbbb65;
 	text-transform: uppercase;
 }
+
+
 
 .product-item-link{
 	color: #555;

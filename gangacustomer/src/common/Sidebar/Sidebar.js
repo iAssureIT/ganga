@@ -36,7 +36,7 @@ export default class Header extends Component {
 		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/review/customer/"><i className="fa fa-eye"></i> &nbsp;My Product Reviews</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="/wishlist"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/wishlist/"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
 		                </li>          
 		            </ul>
 		        </nav>
