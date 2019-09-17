@@ -43,7 +43,6 @@ class ProductCollage extends Component {
   	getCategoryDetails(categoryID){
 		axios.get("/api/category/get/one/"+categoryID)
 	      .then((response)=>{ 
-	      	
 	          this.setState({
 	              categoryDetails : response.data
 	          })
@@ -192,39 +191,7 @@ class ProductCollage extends Component {
 	      	}); 
 	      } 
 	}
-	sortProducts(event){
-		event.preventDefault();
-
-		var sortBy = event.target.value;
-		console.log('sortBy',sortBy);
-		//console.log('products1',this.state.products);
-		if(sortBy == "alphabeticallyAsc"){
-			let field='productName';
-			this.setState({
-				products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
-			});
-		}
-		if(sortBy == "alphabeticallyDsc"){
-			let field='productName';
-			this.setState({
-				products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
-			});
-			
-		}
-		if(sortBy == "priceAsc"){
-			let field='offeredPrice';
-			this.setState({
-				products: this.state.products.sort((a, b) => a[field] - b[field])
-			});
-		}
-		if(sortBy == "priceDsc"){
-			let field='offeredPrice';
-			this.setState({
-				products: this.state.products.sort((a, b) => b[field] - a[field])
-			});
-		}
-
-	}
+	
   	render() {
   		console.log('products',this.state.products);
 		//console.log('pricemin,',this.state.price.min);
@@ -289,13 +256,13 @@ class ProductCollage extends Component {
 						    </div>
 						    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						      <div className="card-body">
-						      	<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/computers/accessories.phtml?color=49&amp;price=83-361" className="swatch-option-link-layered">
+						      	<a href="#" className="swatch-option-link-layered">
                                     <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
                             	</a>
-                            	<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/computers/accessories.phtml?color=49&amp;price=83-361" className="swatch-option-link-layered">
+                            	<a href="#" className="swatch-option-link-layered">
                                     <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
                             	</a>
-                            	<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/computers/accessories.phtml?color=49&amp;price=83-361" className="swatch-option-link-layered">
+                            	<a href="#" className="swatch-option-link-layered">
                                     <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
                             	</a>
 						      </div>
@@ -367,25 +334,11 @@ class ProductCollage extends Component {
 				<br/>
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
-				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NoPadding">
-				    		<div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
-				    	</div>
-
 				    	
-				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
-				    		
-				    		<select className="form-control sortProducts col-lg-3" onChange={this.sortProducts.bind(this)}>
-								<option  className="hidden" >Relevence</option>
-								<option value="alphabeticallyAsc">Name A-Z</option>
-								<option value="alphabeticallyDsc">Name Z-A</option>
-								<option value="priceAsc">Price Low to High</option>
-								<option value="priceDsc">Price High to Low </option>
-							</select>
-				    	</div>
 				    	<br />
 				    	<br />
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		<ProductCollageView products={this.state.products}/>
+				    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails}/>
 				     	</div>
 				    </div>
 				    <div id="categories" className="tab-pane fade">

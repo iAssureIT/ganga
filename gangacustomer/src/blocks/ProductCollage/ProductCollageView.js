@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import "./ProductCollageView.css";
 import axios                      from 'axios';
+import { connect }                from 'react-redux';
 import swal                       from 'sweetalert';
 
 class ProductCollageView extends Component {
 	constructor(props){
     super(props);
 	   this.state = {
-	   		products:[]
+         products:[],
+         categoryDetails:[]
 	   }
   	}  
   	componentDidMount() {
@@ -19,7 +21,8 @@ class ProductCollageView extends Component {
     componentWillReceiveProps(nextProps){
   		//console.log('nextProps11',nextProps.products); 
 	    this.setState({
-	      products : nextProps.products
+        products : nextProps.products,
+        categoryDetails : nextProps.categoryDetails
 	    });
   	}
   	addtocart(event){
@@ -81,10 +84,61 @@ class ProductCollageView extends Component {
         console.log('error', error);
       })
     }
+    sortProducts(event){
+      event.preventDefault();
+  
+      var sortBy = event.target.value;
+      console.log('sortBy',sortBy);
+      //console.log('products1',this.state.products);
+      if(sortBy == "alphabeticallyAsc"){
+        let field='productName';
+        this.setState({
+          products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        });
+      }
+      if(sortBy == "alphabeticallyDsc"){
+        let field='productName';
+        this.setState({
+          products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        });
+        
+      }
+      if(sortBy == "priceAsc"){
+        let field='offeredPrice';
+        this.setState({
+          products: this.state.products.sort((a, b) => a[field] - b[field])
+        });
+      }
+      if(sortBy == "priceDsc"){
+        let field='offeredPrice';
+        this.setState({
+          products: this.state.products.sort((a, b) => b[field] - a[field])
+        });
+      }
+  
+    }
   render() {
   	//console.log('products',this.state.product);
     return(
-      <div className="row">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb25">
+          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NoPadding">
+            <div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
+          </div>
+
+          
+          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
+            
+            <select className="sortProducts" onChange={this.sortProducts.bind(this)}>
+            <option  className="hidden" >Relevence</option>
+            <option value="alphabeticallyAsc">Name A-Z</option>
+            <option value="alphabeticallyDsc">Name Z-A</option>
+            <option value="priceAsc">Price Low to High</option>
+            <option value="priceDsc">Price High to Low </option>
+          </select>
+          </div>
+        </div>
+        <div className="row">
         {
             this.state.products && this.state.products.map((value, index) =>{
               console.log('product',value);   
@@ -92,7 +146,7 @@ class ProductCollageView extends Component {
               <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 card" key={index}>
                 <div className="item-top">
                   <div className="productImg">
-                  <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabIndex="-1">
+                  <a href="#" className="product photo product-item-photo" tabIndex="-1">
                     <img className="productImage" src={value.productImage && value.productImage[0] ? value.productImage[0] : '/images/notavailable.jpg'} />
                   </a>
                   <div className="hoveractions">
@@ -144,9 +198,28 @@ class ProductCollageView extends Component {
             })
         }
       </div>
+      </div>
       
     );
     
 	}
 }
-export default ProductCollageView;
+const mapStateToProps = (state)=>{
+  return {
+    
+  }
+}
+const mapDispachToProps = (dispach) =>{
+  return {
+    changeCartCount : (cartCount)=> dispach({
+      type:'CART_COUNT',
+      cartCount : cartCount
+    }),
+    changeWishlistCount : (wishlistCount)=> dispach({
+      type:'WISHLIST_COUNT',
+      wishlistCount : wishlistCount
+    })
+  }
+}
+
+export default connect(mapStateToProps, mapDispachToProps)(ProductCollageView);

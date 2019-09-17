@@ -157,7 +157,7 @@ searchProducts(){
     this.props.history.push('/');
   }
   getCartCount(){
-    const userid = localStorage.getItem('admin_ID');
+    const userid = localStorage.getItem('user_ID');
     axios.get("/api/carts/get/count/"+userid)
         .then((response)=>{ 
             this.setState({
@@ -171,7 +171,7 @@ searchProducts(){
     
   }
   getWishlistCount(){
-    const userid = localStorage.getItem('admin_ID');
+    const userid = localStorage.getItem('user_ID');
     axios.get("/api/wishlist/get/wishlistcount/"+userid)
         .then((response)=>{ 
           this.props.initialWishlist(response.data);

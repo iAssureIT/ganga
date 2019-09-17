@@ -238,7 +238,9 @@ class CartProducts extends Component{
                                             );
                                         })
                                         :
-                                        null
+                                        <tr>
+                                            <td colSpan={5}><p className="mt15 mb15 col-lg-12 col-md-12 col-sm-12 col-xs-12">You have no items in your shopping cart.</p></td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
@@ -247,38 +249,44 @@ class CartProducts extends Component{
                             </div>
                             <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton"> UPDATE SHOPPING CART</button>
                         </div>
-                        <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartSummary">
-                                <strong className="cartSummaryTitle">Summary</strong>
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div className="row">
-                                        <table className="table table-responsive summaryTable">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Subtotal</td>
-                                                    <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 ? (parseInt(this.state.productData.cartTotal)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Shipping Charges</td>
-                                                    <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.shippingCharges > 0 ?(this.state.shippingCharges).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>GST ({this.state.vatPercent > 0 ? this.state.vatPercent : 0}%)</td>
-                                                    <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 && this.state.vatPercent ?(this.state.productData.cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Order Total</td>
-                                                    <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.state.productData.cartTotal))+(parseInt(this.state.productData.cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                        {
+                            this.state.productCartData && this.state.productCartData.length > 0?
+                            <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartSummary">
+                                    <strong className="cartSummaryTitle">Summary</strong>
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div className="row">
+                                            <table className="table table-responsive summaryTable">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Subtotal</td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 ? (parseInt(this.state.productData.cartTotal)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Shipping Charges</td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.shippingCharges > 0 ?(this.state.shippingCharges).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GST ({this.state.vatPercent > 0 ? this.state.vatPercent : 0}%)</td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 && this.state.vatPercent ?(this.state.productData.cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Order Total</td>
+                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.state.productData.cartTotal))+(parseInt(this.state.productData.cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
+                                    <button onClick={this.proceedToCheckout.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-warning cartCheckout">
+                                        PROCEED TO CHECKOUT
+                                    </button>
                                 </div>
-                                <button onClick={this.proceedToCheckout.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-warning cartCheckout">
-                                    PROCEED TO CHECKOUT
-                                </button>
                             </div>
-                        </div>
+                            :
+                            null
+                        }
+                        
                     </div>
                 </div>
             </div>
