@@ -36,7 +36,7 @@ componentWillMount() {}
                 {
                   this.state.categoryData && this.state.categoryData.map((data,index)=>{
                     
-                    return (
+                    return ( 
                         <li className="menu-item menu-1">
                           <a href={"/ProductCollage/"+data._id}>{data.category}</a>
                           <div className="mega-submenu">

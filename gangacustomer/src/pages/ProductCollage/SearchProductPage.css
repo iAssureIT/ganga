@@ -93,3 +93,139 @@
 	display: inline-block;
 	margin: 10px;
 }	
+.subcategory{
+	color: #333;
+	text-decoration: none;
+}
+.subcategory:hover, .subcategory:active, .subcategory:focus  {
+	color: #fbbb65;
+	text-decoration: none;
+  font-weight: normal !important;
+}
+.subcategory:visited  {
+  color: #333;
+  text-decoration: none;
+  font-weight: normal !important;
+}
+/* Create a custom checkbox */
+.centreDetailContainerEcommerce{
+  position: relative;
+  padding-top: 5px;
+ 
+  align-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  user-select: none;
+  text-align: center;
+}
+/* Hide the browser's default checkbox */
+.centreDetailContainerEcommerce input {
+     position: relative;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    /* right: 10px; */
+    margin-top: 2px;
+}
+.centreDetailCheckEcommerce {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+.radioCheckEcommerce {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainerEcommerce:hover input ~ .centreDetailCheckEcommerce{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainerEcommerce input:checked ~ .centreDetailCheckEcommerce {
+  background-color: #fbbb65;
+  border:2px solid #fbbb65;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.centreDetailCheckEcommerce:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainerEcommerce input:checked ~ .centreDetailCheckEcommerce:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainerEcommerce .centreDetailCheckEcommerce:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainerEcommerce:hover input ~ .radioCheckEcommerce{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainerEcommerce input:checked ~ .radioCheckEcommerce {
+  background-color: #fbbb65;
+  border:2px solid #fbbb65;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.radioCheckEcommerce:after {
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainerEcommerce input:checked ~ .radioCheckEcommerce:after {
+  display: block;
+    background-color: transparent;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainerEcommerce .radioCheckEcommerce:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;   
+
+
+  transform: rotate(45deg);
+}
+.centreDetaillistItemEcommerce{
+  padding-left: 25px;
+  padding-top: 5px;
+  font-size: 12px !important;
+}
+.categoryName{
+  color: #555;
+  font-weight: 700;
+  text-decoration: none;
+}

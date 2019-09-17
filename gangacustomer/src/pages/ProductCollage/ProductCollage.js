@@ -394,15 +394,17 @@ export default class SearchProduct extends Component {
               </div>
               <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 
-              	<ul className="nav nav-tabs">
-				    <li className="active"><a data-toggle="tab" href="#products">Products</a></li>
-				    <li><a data-toggle="tab" href="#categories">Categories</a></li>
-				</ul>
 				<br/>
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
-				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		<select className="sortProducts col-lg-3 pull-right">
+				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NoPadding">
+				    		<div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
+				    	</div>
+
+				    	
+				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
+				    		
+				    		<select className="form-control sortProducts col-lg-3 ">
 								<option  className="hidden" >Relevence</option>
 								<option value="price">Price</option>
 								<option value="newProduct">New Product</option>

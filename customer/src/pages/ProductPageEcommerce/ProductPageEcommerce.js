@@ -234,7 +234,6 @@ class ProductPageEcommerce extends Component {
 		}else{
 
 		}
-		
 	}
 	
 	getBrands(){
@@ -264,25 +263,25 @@ class ProductPageEcommerce extends Component {
 											<div className="plusContainer accordion marginBot sortByCateEcommerce fs14">Subcategory<i className="fa fa-plus-circle pull-right"></i></div>
 												<div className="panel myDIV">
 												{
-										this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
-										this.state.categoryDetails.subCategory.map((data,index)=>{
-											
-											return(
-													
-												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
-													<div className="row">
-													<div className="plusContainer accordion fs13" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')}>{data.subCategoryTitle}</div>
+													this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
+													this.state.categoryDetails.subCategory.map((data,index)=>{
+														
+														return(
+																
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
+																<div className="row">
+																<div className="plusContainer accordion fs13" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')}>{data.subCategoryTitle}</div>
+																</div>
+															</div>
+
+														);
+
+													})
+													:
+													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
+													<h5>No DbackColorWhiteata Found</h5>
 													</div>
-												</div>
-
-											);
-
-										})
-										:
-										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-										<h5>No DbackColorWhiteata Found</h5>
-										</div>
-									}
+												}
 												</div>	
 										</div>
 									</div>
