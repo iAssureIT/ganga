@@ -4,7 +4,10 @@ const initialState = {
 	featuredProductData : {},
 	exclusiveProductsData : [],
 	newProductsData : [],
-	bestSellerData : []
+	bestSellerData : [],
+	searchResult:[],
+	searchCriteria: [],
+	categoryDetails:[]
 }
 
 const reducer = (state = initialState,action) => {
@@ -24,6 +27,14 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "FEATURED_PRODUCT_DATA"){
 		newState.featuredProductData 		= action.featuredProductData;
 	}
+	if(action.type === "SEARCH_PRODUCT"){
+		newState.searchResult 		= action.searchResult;
+		newState.searchCriteria 	= action.searchCriteria;
+	}
+	if(action.type === "GET_CATEGORY_DETAILS"){
+		newState.categoryDetails 		= action.categoryDetails;
+	}
+	
 	return newState;
 }
 

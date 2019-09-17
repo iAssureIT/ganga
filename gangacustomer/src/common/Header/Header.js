@@ -19,8 +19,10 @@ constructor(props){
       options:[], 
       catArray:[],
       searchstr:'',
+      searchCriteria:[],
       searchResult:[],
-      hotProducts:[]
+      hotProducts:[],
+      categoryDetails: []
 
     }
 }
@@ -58,6 +60,63 @@ componentDidMount(){
                 console.log('error', error);
             })  
 }
+componentWillReceiveProps(nextProps){
+      var categoryArray = [];
+      var categoryDetails = [];
+      this.setState({
+        searchCriteria  : nextProps.searchCriteria
+      },()=>{
+        $('.headersearch').val(this.state.searchCriteria.searchstr)
+
+        {
+          this.state.searchCriteria.catArray && this.state.searchCriteria.catArray.map((data,index)=>{
+            $('option[value="'+data+'"]').attr('selected', 'selected');
+          }); 
+        }
+      })
+
+      this.setState({
+        searchResult  : nextProps.searchResult
+      },()=>{
+        {
+          categoryArray = this.unique(this.state.searchResult,'category_ID');
+          console.log('categoryArray',categoryArray);
+          categoryArray.map((data,index)=>{
+            this.getCategoryDetails(data, categoryDetails); 
+          });
+          
+
+        }
+      })
+            
+      
+}
+
+unique(arr, prop) {
+    return arr.map(function(e) { return e[prop]; }).filter(function(e,i,a){
+        return i === a.indexOf(e);
+    });
+}
+
+
+getCategoryDetails(category_ID, categoryDetails){
+    axios.get("/api/category/get/one/"+category_ID)
+        .then((response)=>{ 
+            console.log('response',response.data);
+            categoryDetails.push(response.data);
+
+            this.setState({categoryDetails: categoryDetails}, () =>{
+               this.props.getCategoryDetails(categoryDetails); 
+            });
+            
+            
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+
+        
+}
 handleChange(event){
   var catArray = []
   event.map((data,index)=>{
@@ -79,15 +138,16 @@ searchProducts(){
                       }
         axios.post("/api/products/post/searchINCategory",formValues)
                 .then((response)=>{
-                 this.setState({searchResult : response.data})
+                  this.setState({searchResult : response.data},()=>{
+                    this.props.searchProduct(formValues,this.state.searchResult);  
+                  });
                 })
                 .catch((error)=>{
                     console.log('error', error);
                 }) 
 
-        this.props.history.push("/searchProducts/"+searchstr+'/'+this.state.catArray);
+        this.props.history.push("/searchProducts");
         //window.location.reload();
-
     }
     
 }
@@ -134,7 +194,6 @@ searchProducts(){
   }
   render() { 
     const user_ID = localStorage.getItem("user_ID");
-    // console.log('user', user_ID);
     return (
       <div className="homecontentwrapper">
           <header className="col-lg-12 headerflow"> 
@@ -199,7 +258,7 @@ searchProducts(){
                                 </div>   
                                 <div className="col-lg-7">
                                   <div className="row">
-                                      <input type="text" className="col-lg-12 headersearch" name="x" placeholder="What are you looking for...."/>
+                                      <input type="text" className="col-lg-12 headersearch" name="x" placeholder="What are you looking for...." />
                                   </div>   
                                 </div>   
                                 <div className="col-lg-2">
@@ -270,7 +329,9 @@ searchProducts(){
 const mapStateToProps = (state)=>{
   return {
     cartCount :  state.cartCount,
-    wishlistCount : state.wishlistCount
+    wishlistCount : state.wishlistCount,
+    searchResult : state.searchResult,
+    searchCriteria : state.searchCriteria
   }
 }
 const mapDispachToProps = (dispach) =>{
@@ -282,6 +343,15 @@ const mapDispachToProps = (dispach) =>{
     initialWishlist : (wishlistCount)=> dispach({
       type:'WISHLIST_COUNT_INITIALLY',
       wishlistCount : wishlistCount
+    }),
+    searchProduct : (searchCriteria, searchResult)=> dispach({
+      type:'SEARCH_PRODUCT',
+      searchCriteria : searchCriteria,
+      searchResult : searchResult
+    }),
+    getCategoryDetails : (categoryDetails)=> dispach({
+      type:'GET_CATEGORY_DETAILS',
+      categoryDetails : categoryDetails
     })
   }
 }

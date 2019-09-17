@@ -46,7 +46,7 @@ export default class Footer extends Component {
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
                         <br/><br/> 
                             <div className="col-lg-3 icondiv">
-                                <i class="fa fa-envelope"></i>
+                                <i className="fa fa-envelope"></i>
                             </div>
                             <div className="col-lg-9 addressDetails">  
                             <a>contact@yourdomain.com<br /> Support@yourdomain.com</a>

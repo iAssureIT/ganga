@@ -37,7 +37,7 @@ componentWillMount() {}
                   this.state.categoryData && this.state.categoryData.map((data,index)=>{
                     
                     return ( 
-                        <li className="menu-item menu-1">
+                        <li className="menu-item menu-1" key={index}>
                           <a href={"/product-collage/"+data._id}>{data.category}</a>
                           <div className="mega-submenu">
                             <h2>{data.category}</h2>
@@ -46,7 +46,7 @@ componentWillMount() {}
                                 <ul>
                                   {
                                     data.subCategory && data.subCategory.map((subcat,ind)=>{
-                                      return(<li><a href={"/product-collage/"+data._id+'/'+subcat._id}>{subcat.subCategoryTitle}</a></li>);
+                                      return(<li key={ind}><a href={"/product-collage/"+data._id+'/'+subcat._id}>{subcat.subCategoryTitle}</a></li>);
                                     })
                                   }
                                   

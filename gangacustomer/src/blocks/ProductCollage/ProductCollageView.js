@@ -11,13 +11,13 @@ class ProductCollageView extends Component {
 	   }
   	}  
   	componentDidMount() {
-      console.log('nextProps',this.props);
+      //console.log('nextProps',this.props);
   		this.setState({
 	      products : this.props.products
 	    });
   	}
     componentWillReceiveProps(nextProps){
-  		console.log('nextProps11',nextProps.products); 
+  		//console.log('nextProps11',nextProps.products); 
 	    this.setState({
 	      products : nextProps.products
 	    });
@@ -89,7 +89,7 @@ class ProductCollageView extends Component {
             this.state.products && this.state.products.map((value, index) =>{
               console.log('product',value);   
             return (
-              <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 card">
+              <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 card" key={index}>
                 <div className="item-top">
                   <div className="productImg">
                   <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/iphone-7.html" className="product photo product-item-photo" tabIndex="-1">

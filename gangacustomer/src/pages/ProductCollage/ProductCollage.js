@@ -18,7 +18,6 @@ class ProductCollage extends Component {
 	    	masterproducts:[],
 	    	products:[],
 	    	categoryID:'',
-			categoryDetails:[],
 			subcategoryID:'',
       		activePage: 1,
       		selectedbrands:[],
