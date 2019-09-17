@@ -360,9 +360,6 @@ class Edituser extends Component{
                   
             </div>
           );
-          
-        
-
   } 
 
 }

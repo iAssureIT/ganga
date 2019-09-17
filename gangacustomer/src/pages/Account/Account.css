@@ -1,0 +1,13 @@
+.accountTitle{
+    font-weight: 600;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #aaa; 
+}
+.accountBox{
+    border: 1px solid #dedede;
+}
+.accountDivHeader{
+    font-weight: 600;
+    padding: 10px;
+    background: #f8f8f8;
+}

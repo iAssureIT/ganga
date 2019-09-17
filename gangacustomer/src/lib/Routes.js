@@ -33,6 +33,9 @@ import ProductCollage    from '../pages/ProductCollage/ProductCollage.js';
 import GroceryProductCollage    from '../pages/ProductCollage/GroceryProductCollage.js';
 import Payment    from '../pages/Payment/Payment.js';
 import Wishlist    from '../pages/Wishlist/Wishlist.js';
+import Account    from '../pages/Account/Account.js';
+import EditAccount    from '../pages/EditAccount/EditAccount.js';
+import Address    from '../pages/Address/Address.js';
 
 
 const WebLayout = () => (
@@ -57,6 +60,9 @@ const WebLayout = () => (
     <Route path="/profile"            exact strict component={ Edituser } />
     <Route path="/payment/:order_ID"            exact strict component={ Payment } />
     <Route path="/wishlist"            exact strict component={ Wishlist } />
+    <Route path="/account"            exact strict component={ Account } />
+    <Route path="/edit"            exact strict component={ EditAccount } />
+    <Route path="/address"            exact strict component={ Address } />
   </div>
 );
 
