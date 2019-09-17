@@ -399,10 +399,18 @@ background-color: transparent !important;
     border-radius: 100%;
     font-size: 13px!important;
 }
+.customnNavButtoncaro1 .owl-nav button.owl-prev:focus{
+    outline: 0px!important;
+
+}
+.customnNavButtoncaro1 .owl-nav button.owl-next:focus{
+    outline: 0px!important;
+
+}
 
 .discounttag{
     position: absolute;
-    padding: 2px;
+    padding: 3px 6px 3px 5px;
     left: 20px;
     top: 13px;
     font-size: 13px;

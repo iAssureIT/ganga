@@ -13,6 +13,7 @@ import ProductViewEcommerceDetailsReviewFAQ 		from "../../blocks/ProductViewEcom
 import axios                  		from 'axios';
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+var webCategory  = 'Main-Site';
 
 export default class ProductDetailsEcommerce extends Component {
 	constructor(props){
@@ -20,6 +21,7 @@ export default class ProductDetailsEcommerce extends Component {
 	    this.state = {
 	    	 bestSellerProducts:[]
 	    };
+        this.bestSellerData();
   	} 
   	componentDidMount(){
   		var productType4 = 'bestSeller';
@@ -34,15 +36,32 @@ export default class ProductDetailsEcommerce extends Component {
             .catch((error)=>{
                 console.log('error', error);
             }) 
+
+          this.bestSellerData();
+
   	} 
+
+    bestSellerData(){
+      var productType4 = 'bestSeller';
+      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
+            .then((response)=>{
+
+              this.setState({
+                  bestSellerProducts : response.data
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })    
+    }
+
   	  	
   	render() {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
           <ProductViewEcommerce productID = { this.props.match.params.productID } />
-          <ProductViewEcommerceShopingFeature productID = { this.props.match.params.productID } />
           <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.match.params.productID } />
-          <ProductViewEcommerceBestSellers productID = { this.props.match.params.productID } />
+          <ProductViewEcommerceBestSellers title={'RELATED PRODUCTS'} newProducts = {this.state.bestSellerProducts}/>
 					<ProductViewEcommerceList productID = { this.props.match.params.productID } />
         </div>
 		);

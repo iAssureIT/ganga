@@ -366,7 +366,9 @@
     border:1px solid #b60012;
 }
 
-
+.cursorpointer{
+    cursor: pointer;
+}
 
 
 

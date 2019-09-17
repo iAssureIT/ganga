@@ -286,36 +286,36 @@ class ProductViewEcommerce extends Component {
 										<div className="row spc">
 											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 paddingleftzero">
 												<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-													<span className="qty">
+													<span className="qty" id="totalQuanity">
 													&nbsp;&nbsp;1
 													</span>
 												</div>
 												<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-													<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer" id="addQuantity" onClick={this.addQuantity.bind(this)}>
 													 <span className="fa fa-plus" aria-hidden="true"></span>
 													</span>
-													<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
 														 <span className="fa fa-minus" aria-hidden="true"></span>
 													</span>
 												</div>
 											</div>
 											<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingleftzero">
 												<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-													<span className="qtycart clr">
-													 	<i className="fa fa-shopping-cart " aria-hidden="true"></i> Add to Cart
+													<span onClick={this.addtocart.bind(this)} id={this.state.productData._id} className="qtycart clr cursorpointer">
+													 	<i className="fa fa-shopping-cart " aria-hidden="true" id={this.state.productData._id}></i> Add to Cart
 													</span>
 												</div>
 												<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
-													<span className="icns clr">
-													 	<i className="fa fa-heart-o" aria-hidden="true"></i>
+													<span onClick={this.addtowishlist.bind(this)}  id={this.state.productData._id} className="icns clr cursorpointer">
+													 	<i className="fa fa-heart-o" aria-hidden="true"  id={this.state.productData._id}></i>
 													</span>
 												</div>
-												<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
+{/*												<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
 													<span className="icns clr">
 													 	<i className="fa fa-refresh" aria-hidden="true"></i>
 													</span>
 												</div>
-												
+*/}												
 											</div>
 										  	{/*<div className="col-lg-3 col-sm-12 col-md-12 col-xs-12 itemCounter ">
 										  		<div className="row">
@@ -342,7 +342,7 @@ class ProductViewEcommerce extends Component {
 				                            </div>*/}
 				                            
 				                        </div>
-				                        <div className="undrln row spc ">
+{/*				                        <div className="undrln row spc ">
 				                        	<div className="share col-lg-1 col-md-1 col-sm-12 col-xs-12 spc">
 				                        		Share
 				                        	</div>
@@ -354,7 +354,7 @@ class ProductViewEcommerce extends Component {
 				                        		<div className="crcle1 col-lg-1 col-md-1 col-sm-12 col-xs-12 pinterest"><i className="fa fa-pinterest-p" aria-hidden="true"></i></div>
 				                        	</div>
 				                         </div>
-									</div>
+*/}									</div>
 
 								</div>
 							</div>

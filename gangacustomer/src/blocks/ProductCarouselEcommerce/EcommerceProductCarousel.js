@@ -222,7 +222,7 @@ class EcommerceProductCarousel extends Component {
                                 </div>
                               <div className="productDetails">
                                 <div className="innerDiv">
-                                    <a href={"/ProductDetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
+                                    <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
                                     <div className="product-reviews-summary">
                                       <div className="rating-summary">
                                         <fieldset className="ratingReview stars ">
