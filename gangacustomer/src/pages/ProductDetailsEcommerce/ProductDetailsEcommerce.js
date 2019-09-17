@@ -61,8 +61,7 @@ export default class ProductDetailsEcommerce extends Component {
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
           <ProductViewEcommerce productID = { this.props.match.params.productID } />
           <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.match.params.productID } />
-          <ProductViewEcommerceBestSellers title={'RELATED PRODUCTS'} newProducts = {this.state.bestSellerProducts}/>
-					<ProductViewEcommerceList productID = { this.props.match.params.productID } />
+          <ProductViewEcommerceBestSellers title={'RELATED PRODUCTS'} productID = { this.props.match.params.productID } />
         </div>
 		);
 	}

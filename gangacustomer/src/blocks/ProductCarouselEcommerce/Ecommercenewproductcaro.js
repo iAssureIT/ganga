@@ -8,6 +8,10 @@ import { connect }                from 'react-redux';
 import "./EcommerceProductCarousel.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';	
+import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
 
 const OwlCarousel = Loadable({
   loader: () => import('react-owl-carousel'),
@@ -17,22 +21,24 @@ const OwlCarousel = Loadable({
 });
 
 
-class EcommerceProductCarousel extends Component {
+class Ecommercenewproductcaro extends Component {
   constructor(props){
     super(props);
       this.state = {
-         responsive:{
-          0:{
-              items:1
+          responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:2
+            },
+            1000:{
+                items:5 
+            }
           },
-          600:{
-              items:2
-          },
-          1000:{
-              items:5 
-          }
-        },
-        newProducts : props.newProducts
+          type : props.type,
+          newProducts: [],
+          modalIDNew : ""
       };
     } 
     componentWillReceiveProps(nextProps){
@@ -43,30 +49,31 @@ class EcommerceProductCarousel extends Component {
     }
     componentDidMount() {
       
-        const second = 1000,
-        minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
 
-      let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
-      x = setInterval(function() {
+      const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
 
-        let now = new Date().getTime(),
-            distance = countDown - now;
+    let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
+    x = setInterval(function() {
 
-          document.getElementById('days').innerText = Math.floor(distance / (day));
-          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
-          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
-          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-        
-        //do something later when date is reached
-        //if (distance < 0) {
-        //  clearInterval(x);
-        //  'IT'S MY BIRTHDAY!;
-        //}
+      let now = new Date().getTime(),
+          distance = countDown - now;
 
-      }, second)
-    }  
+        document.getElementById('days').innerText = Math.floor(distance / (day));
+        document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
+        document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
+        document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+      
+      //do something later when date is reached
+      //if (distance < 0) {
+      //  clearInterval(x);
+      //  'IT'S MY BIRTHDAY!;
+      //}
+
+    }, second)
+  }  
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
@@ -75,7 +82,6 @@ class EcommerceProductCarousel extends Component {
     .then((response)=>{
       var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
           const userid = localStorage.getItem('user_ID');
-          // console.log('userid', userid);
           const formValues = { 
               "user_ID"    : userid,
               "product_ID" : response.data._id,
@@ -105,7 +111,13 @@ class EcommerceProductCarousel extends Component {
       console.log('error', error);
     })
   }
-
+  componentWillReceiveProps(nextProps){
+    // console.log('newProducts componentWillReceiveProps', nextProps.newProducts);
+    this.setState({
+      newProducts : nextProps.newProducts,
+      type : nextProps.type
+    })
+  }
 
   addtowishlist(event){
     event.preventDefault();
@@ -130,10 +142,22 @@ class EcommerceProductCarousel extends Component {
     event.preventDefault();
     var id  = event.target.id;
     this.props.changeProductCateWise(id , this.state.type);
+    console.log('id', id);
+  }
+  openModal(event){
+    event.preventDefault();
+    var modalID = event.target.id;
+    console.log('modalID', modalID);
+    this.setState({
+      modalIDNew : modalID
+    })
   }
   render() {
-    const token = localStorage.getItem("admin_ID") ;
+    // console.log('newProducts Product', this.state.newProducts);
+          const token = localStorage.getItem("user_ID") ;
+          // console.log("user_ID:",localStorage.getItem("user_ID"))
     return (
+
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
             <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -144,6 +168,12 @@ class EcommerceProductCarousel extends Component {
                       </h3>
                     </div>
                     <div className="col-lg-3 producttimer">
+                      <ul>
+{/*                        <li><span id="days"></span>days</li>
+                        <li><span id="hours"></span>Hours</li>
+                        <li><span id="minutes"></span>Minutes</li>
+                        <li><span id="seconds"></span>Seconds</li>
+*/}                      </ul>                    
                     </div>
                     <div className="col-lg-6 producttimer">
                         <OwlCarousel
@@ -159,7 +189,7 @@ class EcommerceProductCarousel extends Component {
                               this.props.categories.map((data, index)=>{
                                 return(
                                   <div className="item">
-                                    <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category} //</span>
+                                    <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category}</span>//
                                   </div>
                                 );
                               })
@@ -180,32 +210,33 @@ class EcommerceProductCarousel extends Component {
                         margin={0}
                         nav={true}
                         responsive={this.state.responsive} 
-                        autoplay={false}
+                        autoplay={true}
                         autoplayHoverPause={true}
                     >
                     {
                     this.state.newProducts && this.state.newProducts.length > 0 ?
                     this.state.newProducts.map((data, index)=>{
+                      //  console.log('map ',data._id, data.productName);
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">
                           <div className="card">
                             <div className="item-top">
                                 <div className="productImg">
-                                <div className="btn-warning discounttag">-93%</div>
+                               { <div className="btn-warning discounttag">-93%</div>}
                                   <a className="product photo product-item-photo" tabindex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
                                   <div className="hoveractions">
                                       <ul>
-                                        <li ><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
-                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>
+                                        <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
+                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
                                       </ul>
                                   </div>
                                 </div>
                               <div className="productDetails">
                                 <div className="innerDiv">
-                                    <a href={"/ProductDetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
+                                    <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
                                     <div className="product-reviews-summary">
                                       <div className="rating-summary">
                                         <fieldset className="ratingReview stars ">
@@ -224,7 +255,7 @@ class EcommerceProductCarousel extends Component {
                                           <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
                                           :
                                           <div>
-                                              <span className="oldprice"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
                                               <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
                                           </div>
                                       }
@@ -238,14 +269,26 @@ class EcommerceProductCarousel extends Component {
                               </div>
                             </div>
                           </div>    
-                        </div>    
+                        </div> 
+                          
                       </div>
                     );
                     })
                     : ''  
                 }  
                   </OwlCarousel>
-                  </div>                
+                  </div>      
+                  <div className="modal " id="productviewmodal" role="dialog">
+                    <div className="modal-dialog modal-lg dialog">
+                      <div className="modal-content">  
+                        <div className="modal-body">
+                          <ProductDetailsEcommerceView productID={this.state.modalIDNew} type={this.state.type}/>
+                        </div>  
+                         <div className="modal-footer">                     
+                        </div>                  
+                      </div>
+                    </div>
+                  </div>          
                 </div>                
               </div>
             </div>
@@ -253,7 +296,6 @@ class EcommerceProductCarousel extends Component {
         </div>
     );
   }
-
 }
 const mapStateToProps = (state)=>{
   return {
@@ -273,4 +315,4 @@ const mapDispachToProps = (dispach) =>{
   }
 }
 
-export default connect(mapStateToProps, mapDispachToProps)(EcommerceProductCarousel);
+export default connect(mapStateToProps, mapDispachToProps)(Ecommercenewproductcaro);

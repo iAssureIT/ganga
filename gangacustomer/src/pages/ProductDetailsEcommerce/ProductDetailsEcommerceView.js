@@ -5,6 +5,7 @@ import React, { Component } 		from 'react';
 // import EcommerceFooter    			from "../../blocks/common/EcommerceFooter/EcommerceFooter.js";
 // import ProductDescriptionEcommerce 	from "../../blocks/common/ProductDescriptionEcommerce/ProductDescriptionEcommerce.js";
 import ProductViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductViewEcommerce.js";
+import ProductModalViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductModalViewEcommerce.js";
 import ProductViewEcommerceList     from "../../blocks/ProductViewEcommerceList/ProductViewEcommerceList.js";
 import ProductViewEcommerceBestSellers     from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
 import ProductViewEcommerceShopingFeature     from "../../blocks/ProductViewEcommerceShopingFeature/ProductViewEcommerceShopingFeature.js";
@@ -38,13 +39,11 @@ export default class ProductDetailsEcommerceView extends Component {
   	} 
   	  	
   	render() {
+      
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
-          <ProductViewEcommerce productID = { this.props.productID } />
-          <ProductViewEcommerceShopingFeature productID ={ this.props.productID } />
+          <ProductModalViewEcommerce productID = { this.props.productID } />
           <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.productID } />
-          <ProductViewEcommerceBestSellers productID = { this.props.productID } />
-					<ProductViewEcommerceList productID = { this.props.productID } />
         </div>
 		);
 	}

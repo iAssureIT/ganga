@@ -34,40 +34,51 @@ class ProductViewEcommerceBestSellers extends Component {
                 600:{
                     items:2
                 },
+                800:{
+                    items:2 
+                },
                 1000:{
                     items:5 
                 }
-             }
+             },
+             newProducts:[],
+             Products:[]
         
       };
+            this.product();
     } 
 
     componentDidMount() {
-
-        const second = 1000,
-        minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
-
-      let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
-      x = setInterval(function() {
-
-        let now = new Date().getTime(),
-            distance = countDown - now;
-
-          document.getElementById('days').innerText = Math.floor(distance / (day));
-          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
-          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
-          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-        
-        //do something later when date is reached
-        //if (distance < 0) {
-        //  clearInterval(x);
-        //  'IT'S MY BIRTHDAY!;
-        //}
-
-      }, second)
+      this.product();
     }  
+
+    product(event){
+      axios.get("/api/products/get/one/"+this.props.productID)
+      .then((response)=>{
+        this.setState({
+            newProducts:response.data
+        })
+          var category_ID = this.state.newProducts.category_ID;
+          // console.log("category_ID====================",category_ID);
+          axios.get("/api/products/get/list/"+category_ID)
+            .then((result)=>{
+                      this.setState({
+                         Products:result.data
+            },(()=>{
+              // console.log("Products",this.state.Products);
+            })
+            )
+          })
+          .catch((error)=>{
+            console.log('error', error);
+          })
+      })
+      .catch((error)=>{
+            console.log('error', error);
+      })
+        
+    }
+
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
@@ -137,47 +148,10 @@ class ProductViewEcommerceBestSellers extends Component {
             <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
-                    <div className="producttextclass  col-lg-2">
+                    <div className="producttextclass  col-lg-3">
                       <h3 className="row">
                        <b>{this.props.title}</b>
                       </h3>
-                    </div>
-                    <div className="col-lg-4 producttimer">
-                      <ul>
-                        <li><span id="days"></span>days</li>
-                        <li><span id="hours"></span>Hours</li>
-                        <li><span id="minutes"></span>Minutes</li>
-                        <li><span id="seconds"></span>Seconds</li>
-                      </ul>                    
-                    </div>
-                    <div className="col-lg-6 producttimer">
-                        <OwlCarousel
-                            className="owl-theme customnNavButtoncaro1"
-                            margin={0}
-                            nav={true}
-                            responsive={this.state.responsive} 
-                            autoplay={true}
-                            autoplayHoverPause={true}
-                        >
-                           <div className="item">
-                              <span className="col-lg-12 row productcarotext1">Jewelry</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row productcarotext1">Sports</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Smartphone</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Computers</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Beauty & health</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">food</span>
-                           </div>
-                      </OwlCarousel>
                     </div>
                   </div>
                 </div>
@@ -195,9 +169,9 @@ class ProductViewEcommerceBestSellers extends Component {
                         autoplayHoverPause={true}
                     >
                     {
-                    this.props.newProducts && this.props.newProducts.length > 0 ?
-                    this.props.newProducts.map((data, index)=>{
-                       // console.log('ididid ',data._id);
+                    this.state.Products && this.state.Products.length > 0 ?
+                    this.state.Products.map((data, index)=>{
+                        // console.log('ididid ',data._id);
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">

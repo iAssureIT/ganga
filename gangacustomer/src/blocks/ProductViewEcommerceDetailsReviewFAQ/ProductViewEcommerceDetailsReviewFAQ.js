@@ -73,7 +73,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
               </div>
             </div>
             <div className="row topspace15">
-              <div className="col-lg-offset-9 col-lg-3 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
+              <div className="col-lg-offset-8 col-lg-4 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
                 <div className="Submitreviewbtn col-lg-12 text-center">Submit Review</div>
               </div>               
             </div>

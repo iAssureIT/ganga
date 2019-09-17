@@ -37,7 +37,8 @@ class EcommerceProductCarousel extends Component {
             }
           },
           type : props.type,
-          newProducts: []
+          newProducts: [],
+          modalID : ""
 	    };
   } 
 
@@ -136,8 +137,18 @@ class EcommerceProductCarousel extends Component {
     var id  = event.target.id;
     this.props.changeProductCateWise(id , this.state.type);
   }
+  openModal(event){
+    event.preventDefault();
+    var modalID = event.target.id;
+    console.log('modalID', modalID);
+    this.setState({
+      modalID : modalID
+    })
+  }
   render() {
-  	const token = localStorage.getItem("user_ID") ;
+  	// console.log('newProducts Product', this.state.newProducts);
+  	  	  const token = localStorage.getItem("user_ID") ;
+          // console.log("user_ID:",localStorage.getItem("user_ID"))
 		return (
 
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
@@ -171,7 +182,7 @@ class EcommerceProductCarousel extends Component {
                               this.props.categories.map((data, index)=>{
                                 return(
                                   <div className="item">
-                                    <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category}//</span>
+                                    <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category}</span>//
                                   </div>
                                 );
                               })
@@ -211,8 +222,8 @@ class EcommerceProductCarousel extends Component {
                                   </a>
                                   <div className="hoveractions">
                                       <ul>
-                                        <li  data-toggle="modal" data-target="#productviewmodal"><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
-                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>
+                                        <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
+                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
                                       </ul>
                                   </div>
                                 </div>
@@ -251,30 +262,30 @@ class EcommerceProductCarousel extends Component {
                               </div>
                             </div>
                           </div>    
-                        </div>    
+                        </div> 
+                          
                       </div>
                     );
                     })
                     : ''  
                 }  
   								</OwlCarousel>
-  								</div>						    
+  								</div>			
+                  <div className="modal " id="productviewmodal" role="dialog">
+                    <div className="modal-dialog modal-lg dialog">
+                      <div className="modal-content">  
+                        <div className="modal-body">
+                          <ProductDetailsEcommerceView productID={this.state.modalID} type={this.state.type}/>
+                        </div>  
+                         <div className="modal-footer">                     
+                        </div>                  
+                      </div>
+                    </div>
+                  </div>			    
                 </div>                
 							</div>
 						</div>
 					</div>
-          <div className="modal " id="productviewmodal" role="dialog">
-              <div className="modal-dialog modal-lg dialog">
-                <div className="modal-content">  
-                <div className="modal-header"></div>                  
-                  <div className="modal-body">
-                    <ProductDetailsEcommerceView productID="5d660c31804d8daec92da7d3"/>
-                  </div>  
-                   <div className="modal-footer">                     
-                  </div>                  
-                </div>
-              </div>
-            </div>
 				</div>
 		);
 	}
