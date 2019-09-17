@@ -168,7 +168,7 @@ class ProductCollageEcommerce extends Component {
           <div className="row">
           {
             this.state.products.map((data,index)=>{
-              
+               
               if(productlength == 2){
                 if(plength === index+2){
                   var classes = "mt20 col-lg-4  col-lg-offset-2";

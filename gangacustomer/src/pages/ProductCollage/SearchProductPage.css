@@ -19,9 +19,7 @@
 .selcategory{
 	font-weight: 700;
 }
-.forSearchDiv{
-	display: none;
-}
+
 #accordionExample{
 	padding: 5px 15px 20px;
 }
@@ -228,4 +226,13 @@
   color: #555;
   font-weight: 700;
   text-decoration: none;
+}
+.form-control{
+  width: 80%;
+}
+.sortIcon{
+  color: #999;
+  font-size: 20px;
+  margin: 5px;
+  cursor: pointer;
 }

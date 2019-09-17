@@ -176,7 +176,7 @@
 	font-weight: bold;
 	color: #fbbb65 !important;
 }
-.oldprice{
+.oldprice i{
 	font-size: 14px;
 	color: #555 !important;
 	text-decoration: line-through;

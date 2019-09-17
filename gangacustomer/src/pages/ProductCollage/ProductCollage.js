@@ -7,13 +7,13 @@ import  'react-input-range/lib/css/index.css';
 import axios 						from 'axios';
 import swal                       from 'sweetalert';
 
-export default class SearchProduct extends Component {
+class ProductCollage extends Component {
 	constructor(props){
     super(props);
 	    this.state = {
 	    	searchResult : [],
 	    	data:[1, 2, 3, 4, 5, 6],
-	    	price: { min: 8999, max: 12999 },
+	    	price: { min: 10, max: 1299999 },
 	    	categoryDetails:[],
 	    	masterproducts:[],
 	    	products:[],
@@ -55,7 +55,7 @@ export default class SearchProduct extends Component {
 	      })
 	}
 	getPriceLimits(){
-		axios.get("http://localhost:5006/api/products/get/minmaxprice")
+		axios.get("/api/products/get/minmaxprice")
 	      .then((response)=>{ 
 	      		
 
@@ -77,18 +77,20 @@ export default class SearchProduct extends Component {
 	              masterproducts : response.data
 	          })
 	          
+	          
 	      })
 	      .catch((error)=>{
 	            console.log('error', error);
 	      })
 	}
 	onSelectedItemsChange(filterType, selecteditems){
-		
+		console.log('selecteditems',selecteditems);
+		//price => this.setState({ price  })
 		if (filterType == 'subcategory') {
 			$('.plusContainer').css('font-weight','normal');
 			$(selecteditems.target).css('font-weight','bold');
 			this.setState({subcategoryID : $(selecteditems.target).data().id},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.minPrice,this.state.maxPrice);
+				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
 			});
 			
 		}
@@ -103,117 +105,62 @@ export default class SearchProduct extends Component {
 			    }
 			}
 			this.setState({selectedbrands : brands},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.minPrice,this.state.maxPrice);
+				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
 			});
 		}
-		if (filterType == 'minPrice') {
-			var minPrice = $(selecteditems.target).val();
-			this.setState({minPrice : minPrice},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.minPrice,this.state.maxPrice);
+		if (filterType == 'price') {
+			var minPrice = selecteditems.min;
+			var maxPrice = selecteditems.max;
+			this.setState({price: {min: minPrice, max: maxPrice } }, ()=>{
+				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
 			});
 		}
-		if (filterType == 'maxPrice') {
-			var maxPrice = $(selecteditems.target).val();
-			this.setState({maxPrice : maxPrice},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.minPrice,this.state.maxPrice);
-			});
-		}	
+			
 	}
-	filterProducts(subcategoryID,selectedbrands,minPrice,maxPrice){
+	filterProducts(subcategoryID,selectedbrands,price){
+		console.log('masterproducts',this.state.masterproducts);
 		console.log('subcategoryID',subcategoryID);
 		console.log('selectedbrands',selectedbrands);
-		console.log('minPrice',minPrice);
-		console.log('maxPrice',maxPrice);
+		
 		if (subcategoryID != '') {
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return subcategoryID == array_el.subCategory_ID;
-        	});
-
-        	console.log();
-        	this.setState({products :products});
-		}
-		else if(selectedbrands.length > 0 && subcategoryID != ''){
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-				return selectedbrands.filter( (selectedItems_el) => {
-                  return selectedItems_el == array_el.brand && subcategoryID == array_el.subCategory_ID;
-                }).length != 0
-              //return subcategoryID == array_el.subCategory_ID;
-        	});
-        	this.setState({products :products})
-		}
-		else if(selectedbrands.length > 0 && subcategoryID == ''){
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-				return selectedbrands.filter( (selectedItems_el) => {
-                  return selectedItems_el == array_el.brand;
-                }).length != 0
-              //return subcategoryID == array_el.subCategory_ID;
-        	});
-        	this.setState({products :products})
-		}
-		else if (minPrice > 0) {
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return Number(array_el.offeredPrice) > Number(minPrice);
-        	});
-        	this.setState({products :products});
-		}
-		else if (minPrice > 0 && subcategoryID != '') {
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return subcategoryID == array_el.subCategory_ID && Number(array_el.offeredPrice) > Number(minPrice);
-        	});
-        	this.setState({products :products});
-		}
-		else if (minPrice > 0 && selectedbrands.length >0) {
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-				return selectedbrands.filter( (selectedItems_el) => {
-                	return 	selectedItems_el == array_el.brand && 
-                  			Number(array_el.offeredPrice) > Number(minPrice);
-                }).length != 0
-              //return subcategoryID == array_el.subCategory_ID;
-        	});
-
-        	this.setState({products :products});
-		}
-		else if (minPrice > 0 && subcategoryID != '' && selectedbrands.length >0) {
-
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-				return selectedbrands.filter( (selectedItems_el) => {
-                	return 	selectedItems_el == array_el.brand && 
-                  			subcategoryID == array_el.subCategory_ID && 
-                  			Number(array_el.offeredPrice) > Number(minPrice);
-                }).length != 0
-              //return subcategoryID == array_el.subCategory_ID;
-        	});
-
-        	this.setState({products :products});
-		}
-		else if (maxPrice > 0) {
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return Number(array_el.offeredPrice) < Number(maxPrice);
-        	});
-        	this.setState({products :products});
-		}	
-		else if (minPrice > 0 && maxPrice > 0) {
-			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return Number(array_el.offeredPrice) > Number(minPrice) && Number(array_el.offeredPrice) < Number(maxPrice);
-        	});
-        	this.setState({products :products});
-		}
-		else if (minPrice > 0 && maxPrice > 0 && subcategoryID != '') {
 
 			var products = this.state.masterproducts.filter( (array_el)=>  {
               return subcategoryID == array_el.subCategory_ID 
-              		&& Number(array_el.offeredPrice) > Number(minPrice)
-              		&& Number(array_el.offeredPrice) < Number(maxPrice);
+              && Number(array_el.offeredPrice) > Number(this.state.price.min) 
+              && Number(array_el.offeredPrice) < Number(this.state.price.max);
         	});
         	this.setState({products :products});
 		}
-		else if (maxPrice > 0 && subcategoryID != '') {
+		if(selectedbrands.length > 0 && subcategoryID != ''){
 			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return subcategoryID == array_el.subCategory_ID 
-              		&& Number(array_el.offeredPrice) < Number(maxPrice);
+				return selectedbrands.filter( (selectedItems_el) => {
+                  return selectedItems_el == array_el.brand 
+                  	&& subcategoryID == array_el.subCategory_ID
+                  	&& Number(array_el.offeredPrice) > Number(this.state.price.min) 
+              		&& Number(array_el.offeredPrice) < Number(this.state.price.max);
+                }).length != 0
+        	});
+        	this.setState({products :products})
+		}
+		if (subcategoryID == '') {
+			
+			var products = this.state.masterproducts.filter( (array_el)=>  {
+              return Number(array_el.offeredPrice) > Number(this.state.price.min) 
+              && Number(array_el.offeredPrice) < Number(this.state.price.max);
+        	});
+         	this.setState({products :products});
+		}
+		if (subcategoryID == '' && selectedbrands.length > 0) {
+			var products = this.state.masterproducts.filter( (array_el)=>  {
+				return selectedbrands.filter( (selectedItems_el) => {
+                  return selectedItems_el == array_el.brand
+                  	&& Number(array_el.offeredPrice) > Number(this.state.price.min) 
+              		&& Number(array_el.offeredPrice) < Number(this.state.price.max);
+                }).length != 0
         	});
         	this.setState({products :products});
-		}else{
+		}
+		else{
 
 		}
 	}
@@ -234,7 +181,6 @@ export default class SearchProduct extends Component {
 	      event.preventDefault();
 	      const target = event.target;
 	      const name = target.name;
-	     
 
 	      if (name == 'slider_min') {
 	      	this.setState({
@@ -247,27 +193,56 @@ export default class SearchProduct extends Component {
 	      	}); 
 	      } 
 	}
-	
+	sortProducts(event){
+		event.preventDefault();
+
+		var sortBy = event.target.value;
+		console.log('sortBy',sortBy);
+		//console.log('products1',this.state.products);
+		if(sortBy == "alphabeticallyAsc"){
+			let field='productName';
+			this.setState({
+				products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
+			});
+		}
+		if(sortBy == "alphabeticallyDsc"){
+			let field='productName';
+			this.setState({
+				products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
+			});
+			
+		}
+		if(sortBy == "priceAsc"){
+			let field='offeredPrice';
+			this.setState({
+				products: this.state.products.sort((a, b) => a[field] - b[field])
+			});
+		}
+		if(sortBy == "priceDsc"){
+			let field='offeredPrice';
+			this.setState({
+				products: this.state.products.sort((a, b) => b[field] - a[field])
+			});
+		}
+
+	}
   	render() {
-		console.log('pricemin,',this.state.price.min);
-		console.log('pricemax,',this.state.price.max);
+  		console.log('products',this.state.products);
+		//console.log('pricemin,',this.state.price.min);
+		//console.log('pricemax,',this.state.price.max);
+		let minPrice = this.state.price.min;
+		let maxPrice = this.state.price.max;
 		return (
 	      	<div className="container" id="containerDiv">
 	     	<div className="row"> 
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
-				    	<li><a href="#categories">Categories</a></li>
+				    	<li><a href={"/product-collage/"+this.state.categoryDetails._id}>{this.state.categoryDetails && this.state.categoryDetails.category}</a></li>
 				  	</ul>
 				</div>		
               <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-              		<div className="forSearchDiv">
-              			<h5 className="showingby">NOW SHOWING BY</h5>
-              			<hr/>
-              			<h6 className="selcategory">CATEGORY: Electronics</h6> 
-              			<span><a href="#" >Remove This Item </a></span><br/>
-              			<span><a href="#" >Clear All </a></span>
-              		</div>
+              		
               		<div className="nb-brand">
 						<div className="accordion" id="accordionExample">
 						  
@@ -338,10 +313,10 @@ export default class SearchProduct extends Component {
 						    <div id="collapseThree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						      <div className="card-body">
 						      	<InputRange
-							        maxValue={Number(this.state.price.max)}
-							        minValue={Number(this.state.price.min)}
+							        maxValue={1299999}
+							        minValue={10}
 							        value={this.state.price}
-							        onChange={price => this.setState({ price  })} />
+							        onChange={ this.onSelectedItemsChange.bind(this,"price")} />
 							        <input className="input-field min-value" type="text" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
 							        <input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
 						      </div> 
@@ -400,29 +375,18 @@ export default class SearchProduct extends Component {
 				    	
 				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
 				    		
-				    		<select className="form-control sortProducts col-lg-3 ">
+				    		<select className="form-control sortProducts col-lg-3" onChange={this.sortProducts.bind(this)}>
 								<option  className="hidden" >Relevence</option>
-								<option value="price">Price</option>
-								<option value="newProduct">New Product</option>
-								<option value="bestSeller">Best Seller</option>
-								<option value="promotionProduct">Promotion Product </option>
-								<option value="rating">Rating</option>
-								<option value="review">Review </option>
+								<option value="alphabeticallyAsc">Name A-Z</option>
+								<option value="alphabeticallyDsc">Name Z-A</option>
+								<option value="priceAsc">Price Low to High</option>
+								<option value="priceDsc">Price High to Low </option>
 							</select>
 				    	</div>
 				    	<br />
 				    	<br />
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		{
-				    			this.state.products && this.state.products.map((value, index) =>{
-
-				    				return(
-				    					<ProductCollageView key={index}  product={value}/>
-				    					);
-				    				
-				    			})
-				     		
-				    		}
+				    		<ProductCollageView products={this.state.products}/>
 				     	</div>
 				    </div>
 				    <div id="categories" className="tab-pane fade">
@@ -437,3 +401,4 @@ export default class SearchProduct extends Component {
 	    )
 	}
 }  	
+export default ProductCollage;

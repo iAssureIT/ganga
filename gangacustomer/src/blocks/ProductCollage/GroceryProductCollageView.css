@@ -1,4 +1,4 @@
-.card{
+/*.card{
 	border: 1px solid #f1f2f2;
 	max-width: 270px;
 	margin: 5px;
@@ -17,7 +17,6 @@
 .productImg a{
 	display: block;
 	text-align: center;
-	/*padding-top: 20px;*/
 }
 
 .hoveractions a{
@@ -141,8 +140,8 @@
 
 .clearfix:before,
 .clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+    content: " ";
+    display: table; 
 }
 
 .clearfix:after {
@@ -189,3 +188,4 @@
 	text-transform: uppercase;
 }
 
+*/

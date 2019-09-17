@@ -247,7 +247,36 @@ export default class SearchProduct extends Component {
 	      	}); 
 	      } 
 	}
-	
+	sortProducts(event){
+		event.preventDefault();
+		var sortBy = event.target.value;
+		
+		if(sortBy == "alphabeticallyAsc"){
+			let field='productName';
+			this.setState({
+				products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
+			});
+		}
+		if(sortBy == "alphabeticallyDsc"){
+			let field='productName';
+			this.setState({
+				products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
+			});
+		}
+		if(sortBy == "priceAsc"){
+			let field='offeredPrice';
+			this.setState({
+				products: this.state.products.sort((a, b) => a[field] - b[field])
+			});
+		}
+		if(sortBy == "priceDsc"){
+			let field='offeredPrice';
+			this.setState({
+				products: this.state.products.sort((a, b) => b[field] - a[field])
+			});
+		}
+		
+	}
   	render() {
 		console.log('pricemin,',this.state.price.min);
 		console.log('pricemax,',this.state.price.max);
@@ -268,88 +297,9 @@ export default class SearchProduct extends Component {
               			<span><a href="#" >Remove This Item </a></span><br/>
               			<span><a href="#" >Clear All </a></span>
               		</div>
-              		<div className="nb-brand">
-						<div className="accordion" id="accordionExample">
-						  
-						    <div className="card-header" id="headingOne">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">	
-						        <button className="btn btn-link" type="button" >
-						          CATEGORY 
-						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
-						    </div>
-						    </div>
-
-						    <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-						      <div className="card-body">
-						      	{
-									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
-									this.state.categoryDetails.subCategory.map((data,index)=>{
-										
-										return(
-												
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
-												<div className="row">
-													<a href="#" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')}>{data.subCategoryTitle}</a>
-												
-												</div>
-											</div>
-										);
-
-									})
-									:
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-									<h5>No data Found</h5>
-									</div>
-								}
-						      </div>
-						    </div>
-						 
-						    <div className="card-header" id="headingTwo">
-						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">	
-						        <button className="btn btn-link collapsed" type="button" >
-						          COLOR
-						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
-						      </div>
-						    </div>
-						    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-						      <div className="card-body">
-						      	<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/computers/accessories.phtml?color=49&amp;price=83-361" className="swatch-option-link-layered">
-                                    <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
-                            	</a>
-                            	<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/computers/accessories.phtml?color=49&amp;price=83-361" className="swatch-option-link-layered">
-                                    <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
-                            	</a>
-                            	<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/computers/accessories.phtml?color=49&amp;price=83-361" className="swatch-option-link-layered">
-                                    <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
-                            	</a>
-						      </div>
-						    </div>
-
-						    <div className="card-header" id="headingTwo">
-						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">	
-						        <button className="btn btn-link collapsed" type="button">
-						          PRICE
-						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
-						      </div>
-						    </div>
-						    <div id="collapseThree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-						      <div className="card-body">
-						      	<InputRange
-							        maxValue={Number(this.state.price.max)}
-							        minValue={Number(this.state.price.min)}
-							        value={this.state.price}
-							        onChange={price => this.setState({ price  })} />
-							        <input className="input-field min-value" type="text" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
-							        <input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
-						      </div> 
-						    </div>
-						 </div>
-              		</div>
+              		
               		<br/>
- 					<div className="nb-brand">
+ 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nb-brand">
 					<div className="Featured-Brands-tittle">Featured Brands</div>
 						
 						{/*<ul className="Featured-Brands">
@@ -385,11 +335,7 @@ export default class SearchProduct extends Component {
 										: ''
 
 									}
-						<div className="viewall">
-							<form action="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/index/">
-								<button type="submit" name="viewall">View All</button>
-							</form>
-						</div>
+						
 					</div>
               </div>
               <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9">
@@ -401,8 +347,9 @@ export default class SearchProduct extends Component {
 				<br/>
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
-				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		<select className="sortProducts col-lg-3 pull-right">
+				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
+				    		
+				    		<select className="form-control sortProducts col-lg-3" onChange={this.sortProducts.bind(this)}>
 								<option  className="hidden" >Relevence</option>
 								<option value="price">Price</option>
 								<option value="newProduct">New Product</option>

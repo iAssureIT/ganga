@@ -105,7 +105,6 @@ export default class MyOrders extends Component {
       $('#cancelProductModal').show();
       var status = $(event.target).data('status');
       var id = $(event.target).data('id');
-
       var str= '';
 
       if(status=="New Order" || status=="Verified" || status=="Packed") {
@@ -123,6 +122,7 @@ export default class MyOrders extends Component {
       }
       $('#cancelProductModal .modaltext').html('');
       $('#cancelProductModal .modaltext').append(str);
+
 
       /*if(status=="New Order" || status=="Verified" || status=="Packed") {
           swal({
@@ -320,19 +320,18 @@ export default class MyOrders extends Component {
                   <h4 className="modaltext"></h4>
                 </div>
                 <div className="modal-footer">
-                  <div className="cantcancel">
+                  <div className="cantreturn">
                     <a className="btn btn-default"  href="/ReturnPolicy">View Return Policy</a>
                     <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
-                  <div className="cancancel">
-                    <button className="btn btn-default" onClick={this.cancelProductAction.bind(this)} id="cancelProductBtn" data-dismiss="modal"  >Yes</button>
+                  <div className="canreturn">
+                    <button className="btn btn-default" onClick={this.returnProductAction.bind(this)} id="returnProductBtn"  >Yesr</button>
                     <button type="button" className="btn btn-default" data-dismiss="modal">No</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          
       	</div>
          
       </div>
