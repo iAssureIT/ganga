@@ -349,7 +349,7 @@ export default class SearchProduct extends Component {
 						 </div>
               		</div>
               		<br/>
- 					<div className="nb-brand">
+ 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nb-brand">
 					<div className="Featured-Brands-tittle">Featured Brands</div>
 						
 						{/*<ul className="Featured-Brands">
