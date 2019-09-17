@@ -36,7 +36,6 @@ class EcommerceProductCarousel extends Component {
       };
     } 
     componentWillReceiveProps(nextProps){
-      console.log('newProducts componentWillReceiveProps', nextProps.newProducts);
       this.setState({
         newProducts : nextProps.newProducts,
         type : nextProps.type
@@ -71,12 +70,12 @@ class EcommerceProductCarousel extends Component {
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
-    console.log('id', id);
+    // console.log('id', id);
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
       var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
           const userid = localStorage.getItem('user_ID');
-          console.log('userid', userid);
+          // console.log('userid', userid);
           const formValues = { 
               "user_ID"    : userid,
               "product_ID" : response.data._id,
@@ -130,9 +129,7 @@ class EcommerceProductCarousel extends Component {
   getCategoryID(event){
     event.preventDefault();
     var id  = event.target.id;
-    console.log('id', id);
-    this.props.changeProductCateWise(id , 'featured')
-    
+    this.props.changeProductCateWise(id , this.state.type);
   }
   render() {
     const token = localStorage.getItem("admin_ID") ;
@@ -157,8 +154,6 @@ class EcommerceProductCarousel extends Component {
                             autoplay={true}
                             autoplayHoverPause={true}
                         >
-                           
-                           
                            {
                              this.props.categories && this.props.categories.length>0?
                               this.props.categories.map((data, index)=>{
