@@ -22,22 +22,28 @@ class EcommerceProductCarousel extends Component {
     super(props);
       this.state = {
          responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:2
-                },
-                1000:{
-                    items:5 
-                }
-             }
-        
+          0:{
+              items:1
+          },
+          600:{
+              items:2
+          },
+          1000:{
+              items:5 
+          }
+        },
+        newProducts : props.newProducts
       };
     } 
-
+    componentWillReceiveProps(nextProps){
+      console.log('newProducts componentWillReceiveProps', nextProps.newProducts);
+      this.setState({
+        newProducts : nextProps.newProducts,
+        type : nextProps.type
+      })
+    }
     componentDidMount() {
-
+      
         const second = 1000,
         minute = second * 60,
         hour = minute * 60,
@@ -121,10 +127,15 @@ class EcommerceProductCarousel extends Component {
       console.log('error', error);
     })
   }
+  getCategoryID(event){
+    event.preventDefault();
+    var id  = event.target.id;
+    console.log('id', id);
+    this.props.changeProductCateWise(id , 'featured')
+    
+  }
   render() {
-    // console.log('Product', this.props.title,this.props.newProducts);
-          const token = localStorage.getItem("admin_ID") ;
-          // console.log("admin_ID:",localStorage.getItem("admin_ID"))
+    const token = localStorage.getItem("admin_ID") ;
     return (
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
             <div className="row">
@@ -146,24 +157,20 @@ class EcommerceProductCarousel extends Component {
                             autoplay={true}
                             autoplayHoverPause={true}
                         >
-                           <div className="item">
-                              <span className="col-lg-12 row productcarotext1">Jewelry</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row productcarotext1">Sports</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Smartphone</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Computers</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Beauty & health</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">food</span>
-                           </div>
+                           
+                           
+                           {
+                             this.props.categories && this.props.categories.length>0?
+                              this.props.categories.map((data, index)=>{
+                                return(
+                                  <div className="item">
+                                    <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category} //</span>
+                                  </div>
+                                );
+                              })
+                             :
+                             null
+                           }
                       </OwlCarousel>
                     </div>
                   </div>
@@ -182,9 +189,8 @@ class EcommerceProductCarousel extends Component {
                         autoplayHoverPause={true}
                     >
                     {
-                    this.props.newProducts && this.props.newProducts.length > 0 ?
-                    this.props.newProducts.map((data, index)=>{
-                       console.log('ididid ',data._id);
+                    this.state.newProducts && this.state.newProducts.length > 0 ?
+                    this.state.newProducts.map((data, index)=>{
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">

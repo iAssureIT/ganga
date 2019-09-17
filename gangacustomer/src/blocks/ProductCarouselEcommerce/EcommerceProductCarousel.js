@@ -25,47 +25,48 @@ class EcommerceProductCarousel extends Component {
 	constructor(props){
     super(props);
 	    this.state = {
-	    	 responsive:{
-				        0:{
-				            items:1
-				        },
-				        600:{
-				            items:2
-				        },
-				        1000:{
-				            items:5 
-				        }
-   					 }
-	    	
+	    	  responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:2
+            },
+            1000:{
+                items:5 
+            }
+          },
+          type : props.type,
+          newProducts: []
 	    };
-  	} 
+  } 
 
-    componentDidMount() {
+  componentDidMount() {
 
-        const second = 1000,
-        minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
+      const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
 
-      let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
-      x = setInterval(function() {
+    let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
+    x = setInterval(function() {
 
-        let now = new Date().getTime(),
-            distance = countDown - now;
+      let now = new Date().getTime(),
+          distance = countDown - now;
 
-          document.getElementById('days').innerText = Math.floor(distance / (day));
-          document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
-          document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
-          document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-        
-        //do something later when date is reached
-        //if (distance < 0) {
-        //  clearInterval(x);
-        //  'IT'S MY BIRTHDAY!;
-        //}
+        document.getElementById('days').innerText = Math.floor(distance / (day));
+        document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
+        document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
+        document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
+      
+      //do something later when date is reached
+      //if (distance < 0) {
+      //  clearInterval(x);
+      //  'IT'S MY BIRTHDAY!;
+      //}
 
-      }, second)
-    }  
+    }, second)
+  }  
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
@@ -104,7 +105,13 @@ class EcommerceProductCarousel extends Component {
       console.log('error', error);
     })
   }
-
+  componentWillReceiveProps(nextProps){
+    console.log('newProducts componentWillReceiveProps', nextProps.newProducts);
+    this.setState({
+      newProducts : nextProps.newProducts,
+      type : nextProps.type
+    })
+  }
 
   addtowishlist(event){
     event.preventDefault();
@@ -125,8 +132,14 @@ class EcommerceProductCarousel extends Component {
       console.log('error', error);
     })
   }
+  getCategoryID(event){
+    event.preventDefault();
+    var id  = event.target.id;
+    console.log('id', id);
+    this.props.changeProductCateWise(id , this.state.type);
+  }
   render() {
-  	// console.log('Product', this.props.title,this.props.newProducts);
+  	console.log('newProducts Product', this.state.newProducts);
   	  	  const token = localStorage.getItem("user_ID") ;
           // console.log("user_ID:",localStorage.getItem("user_ID"))
 		return (
@@ -157,24 +170,18 @@ class EcommerceProductCarousel extends Component {
                             autoplay={true}
                             autoplayHoverPause={true}
                         >
-                           <div className="item">
-                              <span className="col-lg-12 row productcarotext1">Jewelry</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row productcarotext1">Sports</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Smartphone</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Computers</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">Beauty & health</span>//
-                           </div>
-                           <div className="item">
-                              <span className="col-lg-12 row  productcarotext1">food</span>
-                           </div>
+                           {
+                             this.props.categories && this.props.categories.length>0?
+                              this.props.categories.map((data, index)=>{
+                                return(
+                                  <div className="item">
+                                    <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category}//</span>
+                                  </div>
+                                );
+                              })
+                             :
+                             null
+                           }
                       </OwlCarousel>
                     </div>
     						  </div>
@@ -193,9 +200,9 @@ class EcommerceProductCarousel extends Component {
                         autoplayHoverPause={true}
   									>
   									{
-                    this.props.newProducts && this.props.newProducts.length > 0 ?
-                    this.props.newProducts.map((data, index)=>{
-                       // console.log('ididid ',data._id);
+                    this.state.newProducts && this.state.newProducts.length > 0 ?
+                    this.state.newProducts.map((data, index)=>{
+                      //  console.log('map ',data._id, data.productName);
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">

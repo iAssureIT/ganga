@@ -31,6 +31,7 @@ import ProductDetailsEcommerce    from '../pages/ProductDetailsEcommerce/Product
 import SearchProduct    from '../pages/ProductCollage/SearchProductPage.js';
 import GroceryProductCollage    from '../pages/ProductCollage/GroceryProductCollage.js';
 import Payment    from '../pages/Payment/Payment.js';
+import Wishlist    from '../pages/Wishlist/Wishlist.js';
 
 
 const WebLayout = () => (
@@ -54,6 +55,7 @@ const WebLayout = () => (
     <Route path="/GroceryProductCollage"            exact strict component={ GroceryProductCollage } />
     <Route path="/profile"            exact strict component={ Edituser } />
     <Route path="/payment/:order_ID"            exact strict component={ Payment } />
+    <Route path="/wishlist"            exact strict component={ Wishlist } />
   </div>
 );
 
