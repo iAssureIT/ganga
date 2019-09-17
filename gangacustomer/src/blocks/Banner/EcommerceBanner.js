@@ -16,7 +16,7 @@ export default class EcommerceBanner extends Component {
 
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bannerContainerEcomm">
 							<div className="row">
-						  		<div id="customCarousel" className="carousel " data-ride="carousel">
+						  		<div id="customCarousel" className="carousel slide" data-ride="carousel">
 								    <ol className="carousel-indicators squareIndicator">
 								      <li data-target="#customCarousel" data-slide-to="0" className="active"></li>
 								      <li data-target="#customCarousel" data-slide-to="1"></li>
@@ -25,33 +25,27 @@ export default class EcommerceBanner extends Component {
 								     
 								    </ol>
 								    <div className="carousel-inner height350">
-								      <div className="item fadding">
-								        <img src="/images/eCommerce-Banners_1.png"  />
-								    
+								      <div className="item active ">
+								        <img src="/images/eCommerce-Banners_1.jpg"  />
 								      </div>
 
-								      <div className="item fadding">
-								        <img src="/images/eCommerce-Banners_2.png"  />
-									      <div className="caption col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							        </div>
+								      <div className="item">
+								        <img src="/images/eCommerce-Banners_2.jpg"  />
 								      </div>
 								    
-								      <div className="item fadding">
-								        <img src="/images/eCommerce-Banners_3.png"  />
-									      <div className="caption col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							          </div>
+								      <div className="item">
+								        <img src="/images/eCommerce-Banners_3.jpg"  />
 								      </div>
 								      
-							    	<div className="item active fadding">
+							    	  <div className="item">
 							        	<img src="/images/eCommerce-Banners_4.png"  />
-								    
-							   		 </div>
+							   		  </div>
 								</div>
-							    <a className="left carousel-control customControl" href="#customCarousel" data-slide="next">
+							    <a className="left carousel-control customControl" href="#customCarousel" data-slide="prev">
 							      <span className="glyphicon glyphicon-chevron-left backDivEcommerce"></span>
 							      <span className="sr-only">Previous</span>
 							    </a>
-							    <a className="right carousel-control" href="#customCarousel" data-slide="prev">
+							    <a className="right carousel-control" href="#customCarousel" data-slide="next">
 							      <span className="glyphicon glyphicon-chevron-right backDivEcommerce"></span>
 							      <span className="sr-only">Next</span>
 							    </a>

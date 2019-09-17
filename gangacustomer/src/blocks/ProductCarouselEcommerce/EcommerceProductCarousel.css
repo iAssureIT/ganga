@@ -402,9 +402,11 @@ background-color: transparent !important;
 
 .discounttag{
     position: absolute;
-    padding:8px;
-    left: 0px;
-    top:5px;
+    padding: 2px;
+    left: 20px;
+    top: 13px;
+    font-size: 13px;
+    font-weight: 700;
 }
 
 .customnNavButtoncaro1{

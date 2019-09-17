@@ -8,6 +8,10 @@ import { connect }                from 'react-redux';
 import "./EcommerceProductCarousel.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';	
+import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
 
 const OwlCarousel = Loadable({
   loader: () => import('react-owl-carousel'),
@@ -198,20 +202,20 @@ class EcommerceProductCarousel extends Component {
                           <div className="card">
                             <div className="item-top">
                                 <div className="productImg">
-                               {/* <div className="btn-warning discounttag">-93%</div>*/}
+                               { <div className="btn-warning discounttag">-93%</div>}
                                   <a className="product photo product-item-photo" tabindex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
                                   <div className="hoveractions">
                                       <ul>
-                                        <li ><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
+                                        <li  data-toggle="modal" data-target="#productviewmodal"><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
                                         <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>
                                       </ul>
                                   </div>
                                 </div>
                               <div className="productDetails">
                                 <div className="innerDiv">
-                                    <p className="product-item-link" title={data.productName}>{data.productName}</p>
+                                    <a href={"/ProductDetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
                                     <div className="product-reviews-summary">
                                       <div className="rating-summary">
                                         <fieldset className="ratingReview stars ">
@@ -256,6 +260,18 @@ class EcommerceProductCarousel extends Component {
 							</div>
 						</div>
 					</div>
+          <div className="modal " id="productviewmodal" role="dialog">
+              <div className="modal-dialog modal-lg dialog">
+                <div className="modal-content">  
+                <div className="modal-header"></div>                  
+                  <div className="modal-body">
+                    <ProductDetailsEcommerceView productID="5d660c31804d8daec92da7d3"/>
+                  </div>  
+                   <div className="modal-footer">                     
+                  </div>                  
+                </div>
+              </div>
+            </div>
 				</div>
 		);
 	}
