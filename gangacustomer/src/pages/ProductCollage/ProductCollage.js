@@ -59,9 +59,9 @@ export default class SearchProduct extends Component {
 	      .then((response)=>{ 
 	      		
 
-		      	this.setState({
+		      	/*this.setState({
 		          price: { min : Number(response.data.min),  max : Number(response.data.max)}
-		      	});
+		      	});*/
 	         	
 	          
 	      })
@@ -385,11 +385,7 @@ export default class SearchProduct extends Component {
 										: ''
 
 									}
-						<div className="viewall">
-							<form action="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/index/">
-								<button type="submit" name="viewall">View All</button>
-							</form>
-						</div>
+						
 					</div>
               </div>
               <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9">

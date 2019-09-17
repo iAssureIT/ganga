@@ -46,13 +46,13 @@ const WebLayout = () => (
     <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
     <Route path="/cart"                     exact strict component={ Cart } />
     <Route path="/checkout"                 exact strict component={ Checkout } />
-    <Route path="/MyOrders"                 exact strict component={ MyOrders } />
-    <Route path="/ViewOrder/:order_ID"                exact strict component={ ViewOrder } />
-    <Route path="/ShipmentTracking"         exact strict component={ ShipmentTracking } />
+    <Route path="/my-orders"                 exact strict component={ MyOrders } />
+    <Route path="/view-order/:order_ID"                exact strict component={ ViewOrder } />
+    <Route path="/shipment-tracking"         exact strict component={ ShipmentTracking } />
     <Route path="/productdetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
     <Route path="/searchProducts/:searchstr/:catArray"   exact strict component={ SearchProduct } />
-    <Route path="/ProductCollage/:categoryID"            exact strict component={ ProductCollage } />
-    <Route path="/ProductCollage/:categoryID/:subcategoryID"   exact strict component={ ProductCollage } />
+    <Route path="/product-collage/:categoryID"            exact strict component={ ProductCollage } />
+    <Route path="/product-collage/:categoryID/:subcategoryID"   exact strict component={ ProductCollage } />
     <Route path="/GroceryProductCollage"            exact strict component={ GroceryProductCollage } />
     <Route path="/profile"            exact strict component={ Edituser } />
     <Route path="/payment/:order_ID"            exact strict component={ Payment } />

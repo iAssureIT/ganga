@@ -99,7 +99,7 @@ class ViewOrder extends Component {
             </tfoot>
           </table>
           <div className="backtoMyOrdersDiv">
-            <a href="/MyOrders" className="backtoMyOrders"> Back to My Orders</a>
+            <a href="/my-orders" className="backtoMyOrders"> Back to My Orders</a>
           </div>
           <hr/>
           <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">

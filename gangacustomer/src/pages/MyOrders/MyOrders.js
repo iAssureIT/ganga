@@ -252,7 +252,7 @@ export default class MyOrders extends Component {
                                 return(
                                   <div className="actbtns">
 
-                                  <a className="btn alphab filterallalphab" href={"/viewOrder/"+data._id} title="View Order">
+                                  <a className="btn alphab filterallalphab" href={"/view-order/"+data._id} title="View Order">
                                   <span> <i className="fa fa-eye"></i></span></a>&nbsp;&nbsp;
 
                                   {

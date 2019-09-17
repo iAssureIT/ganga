@@ -149,7 +149,7 @@ searchProducts(){
                                 <li><a href="/">Get the app</a></li>
                                 
                                 <li className="borderLeft"><a href="/">Customer Care</a></li>
-                                <li className="borderLeft"><a href="/ShipmentTracking">Track my order</a></li>
+                                <li className="borderLeft"><a href="/shipment-tracking">Track my order</a></li>
                               </ul>  
                             </div>
                           </div>
@@ -163,7 +163,7 @@ searchProducts(){
                                     <ul className="dropdown-menu signinmenuul">
                                       <li className="col-lg-12"><a href="/profile">Your Profile</a></li>
                                       <li className="col-lg-12"><a href="/wishlist">Your Wishlist</a></li>
-                                      <li className="col-lg-12"><a href="/MyOrders">Your Orders</a></li>
+                                      <li className="col-lg-12"><a href="/my-orders">Your Orders</a></li>
                                       <li className="col-lg-12" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>
                                     </ul> 
                                   </li>
