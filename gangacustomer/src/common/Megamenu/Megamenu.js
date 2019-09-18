@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import $                  from 'jquery';
+import swal                       from 'sweetalert';
 import './Megamenu.css';
 
 import $ from "jquery";
@@ -16,7 +16,7 @@ constructor(props) {
     }
 
 componentDidMount(){
-  axios.get("/api/category/get/list")
+  axios.get("/api/products/get/getmegamenulist")
             .then((response)=>{
               this.setState({ 
                   categoryData : response.data
@@ -26,6 +26,44 @@ componentDidMount(){
                 console.log('error', error);
             })
 }  
+addtocart(event){
+      event.preventDefault();
+      var id = event.target.id;
+      console.log('id', id);
+      axios.get('/api/products/get/one/'+id)
+      .then((response)=>{
+        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+            const userid = localStorage.getItem('user_ID');
+            
+            const formValues = { 
+                "user_ID"    : userid,
+                "product_ID" : response.data._id,
+                "currency" : response.data.currency,
+                "productCode" : response.data.productCode,
+                "productName" : response.data.productName,
+                "category" : response.data.category,
+                "subCategory" : response.data.subCategory,
+                "productImage" : response.data.productImage,
+                "quantity" : 1  ,
+                "offeredPrice" : parseInt(response.data.offeredPrice),
+                "actualPrice" : parseInt(response.data.actualPrice),
+                "totalForQantity" : totalForQantity,
+                
+            }
+            axios.post('/api/carts/post', formValues)
+            .then((response)=>{
+              
+            swal(response.data.message);
+            this.props.changeCartCount(response.data.cartCount);
+            })
+            .catch((error)=>{
+              console.log('error', error);
+            })
+      })
+      .catch((error)=>{
+        console.log('error', error);
+      })
+}
 componentWillMount() {}
   
   render() {  
@@ -52,23 +90,23 @@ componentWillMount() {}
                                   
                                 </ul>
                               </div>
+                              
                               <div className="section featured-product">
                                 <div className="product-detail">
                                   <div className="badge">Featured</div>
-                                  <img src="https://lab.devaradise.com/codepen-assets/featured-product.jpg" className="thumb"/>
+                                  <div className="productImg">
+                                  <img src={data.orderdetails[0].productImage[0]} className="productImage"/>
+                                  </div>
                                   <div className="product-desc">
-                                    <a className="title" href="#">Wellness Echinaciae + Vit C isi 30</a>
-                                    <div className="price">Rp. 170.000</div>
-                                    <a href="#" className="btn-atc">Add to Cart</a>
+                                    <a className="title" href="">{data.orderdetails[0].productName}</a>
+                                    <div className="price"><i className={ "fa fa-"+data.orderdetails[0].currency}>{data.orderdetails[0].offeredPrice}</i></div>
+                                    <a href="#" className="btn-atc" onClick={this.addtocart.bind(this)} id={data.orderdetails[0]._id}>Add to Cart</a>
                                   </div>
                                 </div>
                               </div>
                               <div className="section promotions">
                                 <a href="#" className="promo promo 1">
-                                  <img src="https://lab.devaradise.com/codepen-assets/promo-1.jpg" className="thumb"/>
-                                </a>
-                                <a href="#" className="promo promo 2">
-                                  <img src="https://lab.devaradise.com/codepen-assets/promo-2.jpg" className="thumb"/>
+                                  <img src={data.categoryImage} className="thumb"/>
                                 </a>
                               </div>
                             </div>

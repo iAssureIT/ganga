@@ -154,8 +154,8 @@
       font-size: 13px;
       padding:5px 15px;
       position: absolute;
-      right: 15px;
-      top:15px;
+      right: 0px;
+      top:0px;
     }
     .menu-item .featured-product .product-detail .product-desc {
       padding:10px 20px 30px 20px;

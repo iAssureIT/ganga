@@ -40,29 +40,7 @@ export default class Header extends Component {
 		                </li>          
 		            </ul>
 		        </nav>
-		        <div class="nb-brand">
-					<div class="Featured-Brands-tittle">Featured Brands</div>
-						<ul class="Featured-Brands">
-																
-							<li class="Featured-Brands-li">
-								<div class="Featured-Brands-li-div">
-									<div class="Featured-Brands-li-div-div">
-									<a class="imgs" href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/view/id/1/">
-									<img class="img_logo_brand" src="http://demo8.cmsmart.net/mag2_amazon_themeforest/pub/media///Shopbybrand//techservice.png" />
-									</a>
-
-									<a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/view/id/1/" class="name_brand"> iPhone</a>	
-									</div>
-								</div>	
-							</li>
-	 
-						</ul>
-				<div class="viewall">
-					<form action="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/shopbybrand/index/index/">
-						<button type="submit" name="viewall">View All</button>
-					</form>
-				</div>
-				</div>
+		       
       		</div>
       		);
 	}

@@ -335,8 +335,6 @@ class ProductCollage extends Component {
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
 				    	
-				    	<br />
-				    	<br />
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
 				    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails}/>
 				     	</div>

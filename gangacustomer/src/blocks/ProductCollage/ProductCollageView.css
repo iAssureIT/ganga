@@ -15,6 +15,7 @@
 .productImg{
 	overflow: hidden;
 	height: 185px;
+	width: 100%;
 } 
 .productImg a{
 	display: block;
