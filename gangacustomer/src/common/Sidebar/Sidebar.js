@@ -1,11 +1,45 @@
 import React, {Component} from 'react';
 import './Sidebar.css';
+import $ from 'jquery';
 
-
-export default class Header extends Component {
+export default class Sidebar extends Component {
+	constructor(props){
+    super(props);
+        
+    }
+    componentDidMount(){
+    	let links = document.getElementsByClassName('nav item');
+    	//console.log(links);
+    	
+    	for (var i = 0; i <= links.length; i++) {
+    		console.log(window.location.pathname);
+    		console.log($(links[i]).find('a').attr('href'));
+    		if (window.location.pathname == $(links[i]).find('a').attr('href')) {
+    			
+    			$(links[i]).addClass('current');
+    		}
+    		
+    	}
+    }
   	render() {  
     return (
 		<div className="sidebar">
+			<div className="mp-title">
+		        <strong>Marketplace</strong>
+		    </div>
+		    <div className="mp-subtitle">
+		        <strong>Marketplace</strong>
+		    </div>
+		    <nav className="account-nav">
+		            <ul className="nav items">
+		                <li className="nav item col-lg-12">
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/">
+		                <i className="fa fa-user" aria-hidden="true"></i>&nbsp; Become a Seller</a>
+		                </li>
+		            </ul>
+		    </nav>    
+		    <br/>
+		    <br/>        
       			<nav className="account-nav">
 		            <ul className="nav items">
 		                <li className="nav item col-lg-12">
@@ -18,7 +52,7 @@ export default class Header extends Component {
 		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/address/"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/edit/"><i className="fa fa-download"></i>&nbsp; My Orders </a>
+		                <a href="/my-orders"><i className="fa fa-download"></i>&nbsp; My Orders </a>
 		                </li>
 		                <li className="nav item col-lg-12">
 		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/downloadable/customer/products/"><i className="fa fa-edit"></i>&nbsp; My Downloadable Products</a>
@@ -40,7 +74,14 @@ export default class Header extends Component {
 		                </li>          
 		            </ul>
 		        </nav>
-		       
+		        <br/>
+		       	<div className="block block-compare" >
+				    <div className="block-title">
+				        <strong id="block-compare-heading" role="heading" aria-level="2">Compare Products</strong>
+				    </div>
+				    <hr/>
+				    <div className="empty">You have no items to compare.</div>
+				</div>
       		</div>
       		);
 	}

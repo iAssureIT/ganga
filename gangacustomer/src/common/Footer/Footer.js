@@ -30,6 +30,7 @@ export default class Footer extends Component {
     render(){
        return(
         <div>
+        <br/>
         <div className="col-lg-12 footer1">
             <div className="container">
             <div className="col-sm-12 col-sm-3">
@@ -168,7 +169,7 @@ export default class Footer extends Component {
                             }
                               
                             return(
-                                <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6  catdiv">
+                                <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6  catdiv" key={index}>
                                     <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
                                         <strong><a href={"/product-collage/"+data._id}>{data.category}</a></strong><br/><br/> 
                                     </div>

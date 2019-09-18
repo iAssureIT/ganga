@@ -64,3 +64,6 @@ table > tfoot > tr > td:last-of-type {
 #returnProductModal{
 	margin-top: 10%;
 }
+#feedbackProductModal .modal-body{
+	height: 220px;
+}
