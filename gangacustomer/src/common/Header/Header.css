@@ -238,3 +238,10 @@ ul.box-static-link li span {
     font-size: 10px;
     text-transform: uppercase;
 }
+
+.cartdropmenu{
+	width: 400px!important;
+    position: absolute;
+    left: -200px;
+    border-radius: 0px;
+}

@@ -253,7 +253,7 @@ searchProducts(){
                             <div className="row">
                                 <div className="col-lg-3">
                                   <div className="row">
-                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" options={this.state.options} onChange={this.handleChange.bind(this)}/>
+                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" margin-top={"40px"} options={this.state.options} onChange={this.handleChange.bind(this)}/>
                                   </div>   
                                 </div>   
                                 <div className="col-lg-7">
@@ -272,9 +272,15 @@ searchProducts(){
                       </div>
                       <div className="col-lg-2 col-md-2 headerpaddingtop text-center">
                           <div className="col-lg-12 headercart">
-                            <div className="row">
-                            <a href="/"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
-                            <a href="/cart" className="cartitemscss">ITEM (S)</a>
+                            <div className="row dropdown">
+                                <a href="/" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
+                                  <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
+                                    <li className="col-lg-12 bw">hii</li>
+                                    <li className="col-lg-12">CSS</li>
+                                    <li className="col-lg-12">JavaScript</li>
+                                    <li className="col-lg-12">djbzb</li>    
+                                  </ul>
+                                <a href="/cart" className="cartitemscss">ITEM (S)</a>
                             </div> 
                           </div> 
                       </div>
