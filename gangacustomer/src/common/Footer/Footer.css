@@ -102,3 +102,15 @@
 .NoPadding{
   padding: 0
 }
+.footer3{
+  background: #232f3e;
+  color: #fff;
+  padding:18px;
+}
+
+.footer_bottom p{
+  margin:0 !important;
+}
+.footer_bottom a{
+  float: right;
+}
