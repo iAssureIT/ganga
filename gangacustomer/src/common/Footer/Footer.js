@@ -42,7 +42,7 @@ export default class Footer extends Component {
                 <ul>
                     <li><a href="/about-us">About Us</a></li>
                     <li><a href="/contact-us">Contact</a></li>
-                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="/privacypolicy">Privacy Policy</a></li>
                     <li><a href="#">Site Map</a></li>
                 </ul>
                 </div>
