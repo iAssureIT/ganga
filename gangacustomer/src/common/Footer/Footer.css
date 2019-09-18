@@ -162,6 +162,6 @@
   visibility: hidden;
 }
 .catdiv{
-  min-height: 200px;
-  height: auto;
+  height: 200px;
+  max-height: 300px;
 }
