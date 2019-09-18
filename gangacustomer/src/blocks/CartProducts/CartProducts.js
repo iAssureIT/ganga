@@ -39,7 +39,7 @@ class CartProducts extends Component{
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-          	console.log('cartProduct', response.data)
+          	// console.log('cartProduct', response.data)
               this.setState({
                 cartProduct : response.data[0]
               });

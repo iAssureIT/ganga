@@ -245,3 +245,69 @@ ul.box-static-link li span {
     left: -200px;
     border-radius: 0px;
 }
+.cartdropborder{
+	border-top:1px solid #aaa;
+
+}
+
+.cartdropbtn{
+	border-radius: 20px;
+	font-size: 18px;
+	margin-bottom: 10px;
+	padding: 8px;
+	cursor: pointer;
+}
+.cartdropbtn2{
+	border-radius: 20px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #FBBB65;
+	border:1px solid #FBBB65;
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+.cartdropbtn2:hover{
+	color:#fff;
+	background-color: #FBBB65; 
+}
+.cartdropimg img{
+	height: 80px;
+}
+.cartdropimg{
+	margin:10px 0px;
+}
+.cartdroptext{
+	font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #1979c3;
+    cursor: pointer;
+}
+.cartdroptext:hover{
+    color: #FBBB65;
+}
+
+.cartmodquntityborder{
+	border:1px solid #aaa;
+	padding: 10px;
+	border-radius: 10px;
+}
+.cartdropheight{
+	height: 180px;
+}
+.cartdropaction{
+	font-size:18px;
+	color: #aaa;
+	cursor: pointer;
+	margin-top: 20px;
+
+}
+.cartdropaction:hover{
+	color: #FBBB65;
+
+}

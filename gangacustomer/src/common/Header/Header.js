@@ -11,6 +11,7 @@ import Megamenu         from '../Megamenu/Megamenu.js';
 import axios                    from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import { connect }        from 'react-redux';
+import swal from 'sweetalert';
 
 class Header extends Component {
 constructor(props){
@@ -22,9 +23,14 @@ constructor(props){
       searchCriteria:[],
       searchResult:[],
       hotProducts:[],
-      categoryDetails: []
+      categoryDetails: [],
+      productCartData:[],
+      cartProduct:[]
+
 
     }
+    this.getCartData();   
+
 }
 componentWillMount() {
       $(document).ready(function(e){
@@ -39,10 +45,28 @@ componentWillMount() {
     });
 
 }
+
+    getCartData(){
+        // const userid = '5d5bfb3154b8276f2a4d22bf';
+        const userid = localStorage.getItem('user_ID');
+        axios.get("/api/carts/get/list/"+userid)
+          .then((response)=>{ 
+           console.log('cartProduct=======================', response.data[0].cartItems)
+              this.setState({
+                cartProduct : response.data[0].cartItems
+
+              });
+          })
+          .catch((error)=>{
+                console.log('error', error);
+          })
+    }
+
 componentDidMount(){
   this.getCartCount();
   this.getWishlistCount();
   this.getHotProduct();
+  this.getCartData();   
   const options = [];
   axios.get("/api/category/get/list")
             .then((response)=>{
@@ -180,6 +204,36 @@ searchProducts(){
               console.log('error', error);
         })
   }
+ Removefromcart(event){
+        event.preventDefault();
+        const userid = localStorage.getItem('user_ID');
+        // console.log("userid",userid);
+        const cartitemid = event.target.getAttribute('id');
+        // console.log("cartitemid",cartitemid);
+
+        const formValues = { 
+              "user_ID"    : userid,
+              "cartItem_ID" : cartitemid,
+          }
+
+        axios.patch("/api/carts/remove" ,formValues)
+          .then((response)=>{
+            console.log('removed');
+            swal(response.data.message)           
+             .then((obj)=>{
+                  window.location.reload();
+             });
+
+            this.getCartData();   
+            this.getCompanyDetails();
+
+          })
+          .catch((error)=>{
+                console.log('error', error);
+          })
+
+
+    }
   getHotProduct(){
     axios.get("/api/products/get/hotproduct")
     .then((response)=>{ 
@@ -275,10 +329,63 @@ searchProducts(){
                             <div className="row dropdown">
                                 <a href="/" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
-                                    <li className="col-lg-12 bw">hii</li>
-                                    <li className="col-lg-12">CSS</li>
-                                    <li className="col-lg-12">JavaScript</li>
-                                    <li className="col-lg-12">djbzb</li>    
+                                    <li className="col-lg-12">
+                                      <div>
+                                        <p className="col-lg-12"><b>{this.props.cartCount}</b> items</p>
+                                        <p className="col-lg-12 text-right">Cart Subtotal :</p>
+                                        <p className="col-lg-12 text-right"><i className="fa fa-inr"></i>{this.state.cartProduct && this.state.cartProduct.length>0 ? this.state.cartProduct[0].totalForQantity : ""}</p>
+                                        <a href="/cart"><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
+                                      </div>
+                                    </li>
+                                  {
+                                      this.state.cartProduct && this.state.cartProduct.length > 0?
+                                      this.state.cartProduct.map((data, index)=>{
+                                          return(
+                                                  <li className="col-lg-12 cartdropheight ">
+                                                    <div className="cartdropborder">
+                                                      <div className="col-lg-3 cartdropimg">
+                                                        <div className="row">
+                                                          <img src={data.productImage[0]}/>
+                                                        </div>
+                                                      </div>
+                                                      <div className="col-lg-7 cartdropimg">
+                                                        <div className="row">
+                                                          <a href={"/productdetails/"+data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
+                                                          <p className="cursorpointer col-lg-12">
+                                                            <div className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></div>
+                                                          </p>
+                                                          <div className="col-lg-12">
+                                                            <div className="row">
+                                                              <div className="col-lg-6">
+                                                                <div className="row">
+                                                                  <p className="col-md-6">Qty:</p>
+                                                                  <div className="col-md-6 cartmodquntityborder text-center">{data.quantity}</div>
+                                                                </div>
+                                                              </div>
+                                                              <div className="col-lg-6">
+                                                                <div className="row">
+                                                                  <p className="col-md-1 col-lg-1 pull-right"><div className="row"><i className="fa fa-cog cartdropaction" aria-hidden="true"></i></div></p>
+                                                                  <div className="col-md-1 col-lg-1 pull-right"><div className="row"><a href={"/productdetails/"+data.product_ID}><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcart.bind(this)}></i></a></div></div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </li>
+                                                  );
+                                        })
+                                        :
+                                        <div>
+                                            <div><p className="mt15 mb15 col-lg-12 col-md-12 col-sm-12 col-xs-12">You have no items in your shopping cart.</p></div>
+                                        </div>
+                                    }
+                                    <li className="col-lg-12 ">
+                                      <div className="cartdropborder">
+                                        <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW AND EDIT CART">VIEW AND EDIT CART</div></a>
+                                      </div>
+                                    </li>
                                   </ul>
                                 <a href="/cart" className="cartitemscss">ITEM (S)</a>
                             </div> 
