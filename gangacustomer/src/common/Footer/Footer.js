@@ -29,7 +29,69 @@ export default class Footer extends Component {
     }
     render(){
        return(
-        <div >
+        <div>
+        <div className="col-lg-12 footer1">
+            <div className="container">
+            <div className="col-sm-12 col-sm-3">
+                <div className="footer-top">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 
+                     <strong>About Market</strong>
+                </div>   
+               
+                <ul>
+                    <li><a href="/about-us">About Us</a></li>
+                    <li><a href="/contact-us">Contact</a></li>
+                    <li><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="#">Site Map</a></li>
+                </ul>
+                </div>
+            </div>
+            <div className="col-sm-12 col-sm-3">
+                <div className="footer-top">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 
+                     <strong>MAKE MONEY WITH US</strong>
+                </div>   
+               
+                <ul>
+                    <li><a href="/about-us">Martketplace</a></li>
+                    <li><a href="/contact-us">Compensation First</a></li>
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Affiliate</a></li>
+                </ul>
+                </div>
+            </div>
+            <div className="col-sm-12 col-sm-3">
+                <div className="footer-top">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 
+                     <strong>PAYMENT & SHIPPING</strong>
+                </div>   
+               
+                <ul>
+                    <li><a href="/about-us">Terms of Use</a></li>
+                    <li><a href="/contact-us">Payment Methods</a></li>
+                    <li><a href="#">Shipping Methods</a></li>
+                    <li><a href="#">Locations We Ship To</a></li>
+                    <li><a href="#">Estimated Delivery Time</a></li>
+                </ul>
+                </div>
+            </div>
+            <div className="col-sm-12 col-sm-3">
+                <div className="footer-top">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 
+                     <strong>LET US HELP YOU</strong>
+                </div>   
+                <ul>
+                    <li><a href="/about-us">Join Free</a></li>
+                    <li><a href="/contact-us">Blog</a></li>
+                    <li><a href="#">Faqs</a></li>
+                    <li><a href="#">Store Location</a></li>
+                    <li><a href="#">Shop By Brands</a></li>
+                </ul>
+                </div>
+            </div>
+            </div>
+        </div>
         <div className="container">
             <div className="footer col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="footer-middle">
@@ -41,7 +103,9 @@ export default class Footer extends Component {
                         </div>
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6"> 
                             <div className="footer-middle-contact">
-                                <strong>CONTACTS</strong><br/><br/>
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 
+                                <strong>CONTACTS</strong>
+                            </div>    
                                 <div className="col-lg-3 icondiv">
                                     <i className="fa fa-map-marker"></i>
                                 </div>
@@ -52,7 +116,9 @@ export default class Footer extends Component {
                         </div> 
 
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
-                        <br/><br/> 
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
+                        <strong className="hidelabel">phone</strong>
+                        </div>
                             <div className="col-lg-3 icondiv">
                                 <i className="fa fa-phone"></i>
                             </div>
@@ -62,7 +128,9 @@ export default class Footer extends Component {
                         </div> 
 
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
-                        <br/><br/> 
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
+                        <strong className="hidelabel">contact</strong>
+                        </div>
                             <div className="col-lg-3 icondiv">
                                 <i className="fa fa-envelope"></i>
                             </div>
@@ -72,7 +140,9 @@ export default class Footer extends Component {
                         </div>
 
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
-                        <strong>FOLLOW US</strong><br/><br/> 
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">    
+                            <strong>FOLLOW US</strong>
+                        </div>    
                             <div className="col-lg-12 socialMedia">  
                                 <ul>
                                     <li><a className="circle spin" href="https://www.facebook.com/"> <i className="fa fa-facebook-f icon-facebook"></i></a></li>
@@ -85,8 +155,7 @@ export default class Footer extends Component {
                         </div> 
                     </div>
                 </div>
-                <br />
-                <br />
+                
                 <div className="categoryDiv row">
                     {
                        
@@ -99,9 +168,9 @@ export default class Footer extends Component {
                             }
                               
                             return(
-                                <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
+                                <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6  catdiv">
                                     <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
-                                        <strong>{data.category}</strong><br/><br/> 
+                                        <strong><a href={"/product-collage/"+data._id}>{data.category}</a></strong><br/><br/> 
                                     </div>
                                     <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
                                         <p>
@@ -132,7 +201,7 @@ export default class Footer extends Component {
             </div>
             </div>
         </div>
-        </div>   
+        </div>  
         );
   } 
 

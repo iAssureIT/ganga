@@ -23,13 +23,21 @@
     display: inline-block;
     color: #fbbb65 ;
 }
+.footer-top strong{
+  float: left;
+  text-transform: uppercase;
+  margin-top: 30px;
+  margin-bottom: 23px;
+  display: block;
+  font-size: 16px;
+}
 .footer-middle strong{
   float: left;
   text-transform: uppercase;
-  padding-bottom: 13px;
+  padding-bottom: 27px;
   display: block;
+  font-size: 16px;
 }
-
 .icondiv{
   padding: 0;
 }
@@ -94,7 +102,16 @@
   padding-top: 30px;
   padding-bottom: 13px;
   display: block;
+  font-size: 16px;
 }
+.categoryDiv strong a{
+  color: #666;
+  text-decoration: none;
+}
+.categoryDiv strong a:hover{
+  color: #fbbb65 !important;
+}
+
 .categoryDiv p{
   text-align: left;
   color: #999999 !important;
@@ -113,4 +130,38 @@
 }
 .footer_bottom a{
   float: right;
+}
+.footer1{
+  background: #f3f3f3 !important;
+  padding: 30px 0;
+}
+.footer-top ul{
+  list-style: none;
+  display: inline-block;
+  padding:0;
+} 
+
+.footer-top li{
+  
+  margin-bottom: 7px;
+} 
+
+.footer-top li a{
+  color: #999999 !important;
+  font-size: 14px;
+  text-decoration: none;
+}
+.footer-top li a:hover{
+  color: #fbbb65 !important;
+}
+.footer-middle{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.hidelabel{
+  visibility: hidden;
+}
+.catdiv{
+  min-height: 200px;
+  height: auto;
 }
