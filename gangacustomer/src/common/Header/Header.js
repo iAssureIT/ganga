@@ -350,7 +350,7 @@ searchProducts(){
                                                       </div>
                                                       <div className="col-lg-7 cartdropimg">
                                                         <div className="row">
-                                                          <a href={"/productdetails/"+data._id}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
+                                                          <a href={"/productdetails/"+data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
                                                           <p className="cursorpointer col-lg-12">
                                                             <div className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></div>
                                                           </p>
