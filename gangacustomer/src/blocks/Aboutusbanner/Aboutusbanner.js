@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./Aboutusbanner.css";
 
-export default class EcommerceBanner extends Component {
+export default class Aboutusbanner extends Component {
 	constructor(props){
     super(props);
 	    this.state = {

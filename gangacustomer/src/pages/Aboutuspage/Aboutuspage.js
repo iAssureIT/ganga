@@ -1,6 +1,7 @@
 import React, { Component }       from 'react';
 import Aboutusbanner              from "../../blocks/Aboutusbanner/Aboutusbanner.js";
 import Aboutusmultistore          from "../../blocks/Aboutusmultistore/Aboutusmultistore.js";
+import Aboutusteam                from "../../blocks/Aboutusteam/Aboutusteam.js";
 // import { connect }                from 'react-redux';
 class Aboutuspage extends Component {
     constructor(props){
@@ -17,6 +18,7 @@ class Aboutuspage extends Component {
           <div className="row">
           <Aboutusbanner />
           <Aboutusmultistore />
+          <Aboutusteam />
           </div>
         </div>
     );
