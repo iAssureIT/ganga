@@ -93,7 +93,7 @@ class ProductCollageView extends Component {
           title: "Need to Sign In",
           text: "Please Sign In First",
           icon: "warning",
-          buttons: true,
+          buttons: ["No Thanks", "Sign In"],
           dangerMode: true,
         })
         .then((willDelete) => {
@@ -139,7 +139,7 @@ class ProductCollageView extends Component {
           title: "Need to Sign In",
           text: "Please Sign In First",
           icon: "warning",
-          buttons: true,
+          buttons: ["No Thanks", "Sign In"],
           dangerMode: true,
         })
         .then((willDelete) => {

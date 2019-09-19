@@ -48,7 +48,7 @@ componentWillMount() {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           console.log('cartProduct=======================', response.data[0].cartItems)
+           // console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
@@ -329,9 +329,9 @@ searchProducts(){
                       <div className="col-lg-2 col-md-2 headerpaddingtop text-center">
                           <div className="col-lg-12 headercart">
                             <div className="row dropdown">
-                                <a href="#" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.cartCount}</span></a>
+                                <a href="#" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{ user_ID ? this.props.cartCount:0}</span></a>
+                                { user_ID ? 
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
-                                    
                                     <li className="col-lg-12">
                                       <div>
                                         <p className="col-lg-12"><b>{this.props.cartCount}</b> items</p>
@@ -341,7 +341,7 @@ searchProducts(){
                                         <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
-                                    {
+                                    { 
                                       this.state.cartProduct && this.state.cartProduct.length > 0 ?
                                       this.state.cartProduct.map((data, index)=>{
                                           return(
@@ -387,12 +387,22 @@ searchProducts(){
                                       }
                                       <li className="col-lg-12 ">
                                         <div className="cartdropborder">
-                                          <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn2 col-lg-12" title="VIEW AND EDIT CART">VIEW AND EDIT CART</div></a>
+                                          <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW AND EDIT CART">VIEW AND EDIT CART</div></a>
                                         </div>
                                       </li>
-                                      
-
                                   </ul>
+                                  :
+                                  <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
+                                    <li className="col-lg-12 text-center">
+                                    <h3>Please Sign In First</h3>
+                                    </li>
+                                      <li className="col-lg-12 ">
+                                        <div className="cartdropborder">
+                                          <a href="/login"><div className="btn cartdropbtn2 col-lg-12" title="Sign In">Sign In</div></a>
+                                        </div>
+                                      </li>
+                                  </ul>                                
+                                }
                                 <a href={user_ID ? "/cart" : "/login"} className="cartitemscss">ITEM (S)</a>
                             </div> 
                           </div> 
