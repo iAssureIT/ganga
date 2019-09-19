@@ -56,3 +56,7 @@
     color: #333;
     text-decoration: none;
 }
+
+.colageimg img{
+    height: 200px;
+}
