@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import $ from 'jquery';
+const user_ID = localStorage.getItem("user_ID");
 class ProductCollageView extends Component {
 	constructor(props){
     super(props);
@@ -51,6 +52,7 @@ class ProductCollageView extends Component {
     }
 
   	addtocart(event){
+      if(user_ID){
       event.preventDefault();
       var id = event.target.id;
       axios.get('/api/products/get/one/'+id)
@@ -86,7 +88,21 @@ class ProductCollageView extends Component {
       .catch((error)=>{
         console.log('error', error);
       })
+        }else{
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
     }
+      }
 
 
     addtowishlist(event){
@@ -119,7 +135,18 @@ class ProductCollageView extends Component {
         console.log('error', error);
       })
     }else{
-      this.props.history.push('/login');
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
     }
     
   

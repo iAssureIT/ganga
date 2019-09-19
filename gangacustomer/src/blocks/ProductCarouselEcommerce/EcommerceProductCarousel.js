@@ -20,7 +20,7 @@ const OwlCarousel = Loadable({
   }
 });
 
-
+const user_ID = localStorage.getItem("user_ID");
 class EcommerceProductCarousel extends Component {
 	constructor(props){
     super(props);
@@ -84,42 +84,58 @@ class EcommerceProductCarousel extends Component {
           })
     }
   addtocart(event){
-    event.preventDefault();
-    var id = event.target.id;
-    // console.log('id', id);
-    axios.get('/api/products/get/one/'+id)
-    .then((response)=>{
-      var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
-          const userid = localStorage.getItem('user_ID');
-          
-          const formValues = { 
-              "user_ID"    : userid,
-              "product_ID" : response.data._id,
-              "currency" : response.data.currency,
-              "productCode" : response.data.productCode,
-              "productName" : response.data.productName,
-              "category" : response.data.category,
-              "subCategory" : response.data.subCategory,
-              "productImage" : response.data.productImage,
-              "quantity" : 1  ,
-              "offeredPrice" : parseInt(response.data.offeredPrice),
-              "actualPrice" : parseInt(response.data.actualPrice),
-              "totalForQantity" : totalForQantity,
-              
-          }
-          axios.post('/api/carts/post', formValues)
-          .then((response)=>{
-          this.getCartData();  
-          swal(response.data.message);
-          this.props.changeCartCount(response.data.cartCount);
-          })
-          .catch((error)=>{
-            console.log('error', error);
-          })
-    })
-    .catch((error)=>{
-      console.log('error', error);
-    })
+    if(user_ID){     
+      event.preventDefault();
+      var id = event.target.id;
+      // console.log('id', id);
+      axios.get('/api/products/get/one/'+id)
+      .then((response)=>{
+        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+            const userid = localStorage.getItem('user_ID');
+            
+            const formValues = { 
+                "user_ID"    : userid,
+                "product_ID" : response.data._id,
+                "currency" : response.data.currency,
+                "productCode" : response.data.productCode,
+                "productName" : response.data.productName,
+                "category" : response.data.category,
+                "subCategory" : response.data.subCategory,
+                "productImage" : response.data.productImage,
+                "quantity" : 1  ,
+                "offeredPrice" : parseInt(response.data.offeredPrice),
+                "actualPrice" : parseInt(response.data.actualPrice),
+                "totalForQantity" : totalForQantity,
+                
+            }
+            axios.post('/api/carts/post', formValues)
+            .then((response)=>{
+            this.getCartData();  
+            swal(response.data.message);
+            this.props.changeCartCount(response.data.cartCount);
+            })
+            .catch((error)=>{
+              console.log('error', error);
+            })
+      })
+      .catch((error)=>{
+        console.log('error', error);
+      })
+    }
+    else{
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
+    }
   }
   componentWillReceiveProps(nextProps){
     this.setState({
@@ -129,6 +145,7 @@ class EcommerceProductCarousel extends Component {
   }
 
   addtowishlist(event){
+  if(user_ID){     
     event.preventDefault();
     var id = event.target.id;
     const userid = localStorage.getItem('user_ID');
@@ -146,6 +163,21 @@ class EcommerceProductCarousel extends Component {
     .catch((error)=>{
       console.log('error', error);
     })
+     }
+      else{
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
+    }
   }
   getCategoryID(event){
     event.preventDefault();
@@ -159,6 +191,7 @@ class EcommerceProductCarousel extends Component {
     this.setState({
       modalID : modalID
     })
+
   }
   render() {
   	// console.log('newProducts Product', this.state.newProducts);

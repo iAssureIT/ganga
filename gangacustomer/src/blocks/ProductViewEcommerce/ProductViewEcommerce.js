@@ -11,7 +11,7 @@ import { connect }                from 'react-redux';
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-
+const user_ID = localStorage.getItem("user_ID");
 class ProductViewEcommerce extends Component {
 	constructor(props){
     super(props);
@@ -84,6 +84,8 @@ class ProductViewEcommerce extends Component {
     // else{
     // 	  this.props.history.push("/login");
     // }
+    if(user_ID){
+
     event.preventDefault();
     var id = event.target.id;
     
@@ -121,6 +123,20 @@ class ProductViewEcommerce extends Component {
     .catch((error)=>{
       console.log('error', error);
     })
+	}else{
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
+    }
   }
    addtowishlist(event){
     event.preventDefault();
@@ -150,7 +166,18 @@ class ProductViewEcommerce extends Component {
 	      console.log('error', error);
 	    })
     }else{
-    	this.props.history.push('/login');
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
     }
     
   }

@@ -20,7 +20,7 @@ const OwlCarousel = Loadable({
   }
 });
 
-
+const user_ID = localStorage.getItem("user_ID");
 class Ecommercenewproductcaro extends Component {
   constructor(props){
     super(props);
@@ -91,6 +91,7 @@ class Ecommercenewproductcaro extends Component {
     }
 
   addtocart(event){
+    if(user_ID){     
     event.preventDefault();
     var id = event.target.id;
     // console.log('id', id);
@@ -126,6 +127,21 @@ class Ecommercenewproductcaro extends Component {
     .catch((error)=>{
       console.log('error', error);
     })
+    }
+    else{
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
+    }
   }
   componentWillReceiveProps(nextProps){
     // console.log('newProducts componentWillReceiveProps', nextProps.newProducts);
@@ -136,6 +152,7 @@ class Ecommercenewproductcaro extends Component {
   }
 
   addtowishlist(event){
+    if(user_ID){     
     event.preventDefault();
     var id = event.target.id;
     const userid = localStorage.getItem('user_ID');
@@ -153,6 +170,21 @@ class Ecommercenewproductcaro extends Component {
     .catch((error)=>{
       console.log('error', error);
     })
+    }
+    else{
+      swal({
+          title: "Need to Sign In",
+          text: "Please Sign In First",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            window.location = "/login";
+          } 
+      });
+    }
   }
   getCategoryID(event){
     event.preventDefault();
