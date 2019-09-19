@@ -43,34 +43,34 @@ export default class Sidebar extends Component {
       			<nav className="account-nav">
 		            <ul className="nav items">
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/" id="atag"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/edit/"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/edit/" id="atag"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/address/"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/address/" id="atag"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="/my-orders"><i className="fa fa-download"></i>&nbsp; My Orders </a>
+		                <a href="/my-orders" id="atag"><i className="fa fa-download"></i>&nbsp; My Orders </a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/downloadable/customer/products/"><i className="fa fa-edit"></i>&nbsp; My Downloadable Products</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/downloadable/customer/products/" id="atag"><i className="fa fa-edit"></i>&nbsp; My Downloadable Products</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/vault/cards/listaction/"><i className="fa fa-credit-card"></i>&nbsp; My Credit Cards</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/vault/cards/listaction/" id="atag"><i className="fa fa-credit-card"></i>&nbsp; My Credit Cards</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/newsletter/manage/"><i className="fa fa-envelope"></i> &nbsp; Newsletter Subscriptions</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/newsletter/manage/" id="atag"><i className="fa fa-envelope"></i> &nbsp; Newsletter Subscriptions</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/paypal/billing_agreement/"><i className="fa fa-pencil"></i> &nbsp;Billing Agreements</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/paypal/billing_agreement/" id="atag"><i className="fa fa-pencil"></i> &nbsp;Billing Agreements</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/review/customer/"><i className="fa fa-eye"></i> &nbsp;My Product Reviews</a>
+		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/review/customer/" id="atag"><i className="fa fa-eye"></i> &nbsp;My Product Reviews</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/wishlist/"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
+		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
 		                </li>          
 		            </ul>
 		        </nav>

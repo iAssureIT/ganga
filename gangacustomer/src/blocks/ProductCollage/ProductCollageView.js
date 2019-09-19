@@ -3,32 +3,40 @@ import "./ProductCollageView.css";
 import axios                      from 'axios';
 import { connect }                from 'react-redux';
 import swal                       from 'sweetalert';
-
+import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
+import $ from 'jquery';
 class ProductCollageView extends Component {
 	constructor(props){
     super(props);
 	   this.state = {
          products:[],
-         categoryDetails:[]
+         masterLimitProducts:[],
+         categoryDetails:[],
+         modalIDNew : ""
 	   }
   	}  
   	componentDidMount() {
       //console.log('nextProps',this.props);
   		this.setState({
-	      products : this.props.products
+	      products : this.props.products,
+        masterLimitProducts : this.props.products
 	    });
+
   	}
     componentWillReceiveProps(nextProps){
   		//console.log('nextProps11',nextProps.products); 
 	    this.setState({
         products : nextProps.products,
+        masterLimitProducts : nextProps.products,
         categoryDetails : nextProps.categoryDetails
 	    });
   	}
   	addtocart(event){
       event.preventDefault();
       var id = event.target.id;
-      console.log('id', id);
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
         var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
@@ -115,33 +123,58 @@ class ProductCollageView extends Component {
           products: this.state.products.sort((a, b) => b[field] - a[field])
         });
       }
-  
+    }
+    limitProducts(event){
+      event.preventDefault();
+      var limit = $(event.target).val();
+      
+      var products = this.state.masterLimitProducts.filter( (array_el, index)=>  {
+          console.log('index',index);
+          return index < limit ;
+      });
+      
+      this.setState({products : products});
+    }
+    openModal(event){
+      event.preventDefault();
+      var modalID = event.target.id;
+      this.setState({
+        modalIDNew : modalID
+      })
     }
   render() {
   	//console.log('products',this.state.product);
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb25">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb20">
           <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NoPadding">
             <div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
           </div>
-
-          
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
-            
-            <select className="sortProducts" onChange={this.sortProducts.bind(this)}>
-            <option  className="hidden" >Relevence</option>
-            <option value="alphabeticallyAsc">Name A-Z</option>
-            <option value="alphabeticallyDsc">Name Z-A</option>
-            <option value="priceAsc">Price Low to High</option>
-            <option value="priceDsc">Price High to Low </option>
+          <div className="col-lg-offset-2 col-md-offset-2 col-lg-4 col-md-4 col-sm-4 col-xs-4 NoPadding">
+            <label className="col-lg-3 col-md-3 col-sm-3 col-xs-3 NoPadding labeldiv">Sort By</label>
+            <select className="sortProducts col-lg-8 col-sm-8 col-md-8 col-xs-8 NoPadding" onChange={this.sortProducts.bind(this)}>
+              <option  className="hidden" >Relevence</option>
+              <option value="alphabeticallyAsc">Name A-Z</option>
+              <option value="alphabeticallyDsc">Name Z-A</option>
+              <option value="priceAsc">Price Low to High</option>
+              <option value="priceDsc">Price High to Low </option>
+          </select>
+          </div>
+         
+          <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 pull-right NoPadding">
+            <label className="col-lg-5 col-md-5 col-sm-5 col-xs-5 NoPadding labeldiv">Show</label>
+            <select className="limitProducts col-lg-6 col-md-6 col-sm-6 col-xs-6 NoPadding" onChange={this.limitProducts.bind(this)}>
+              <option  className="10" >10</option>
+              <option value="1">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
           </select>
           </div>
         </div>
         <div className="row">
         {
             this.state.products && this.state.products.map((value, index) =>{
-              console.log('product',value);   
+             
             return (
               <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 card" key={index}>
                 <div className="item-top">
@@ -152,7 +185,7 @@ class ProductCollageView extends Component {
                   <div className="hoveractions">
                     <div className="col-lg-12">  
                         <ul>
-                            <li ><a className="circle spin" href={"/productdetails/"+ value._id }> <i className="fa fa-info viewDetail"></i></a></li>
+                            <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={value._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
                             
                             <li><a className="circle spin" href="#" onClick={this.addtowishlist.bind(this)} id={value._id}> <i className="fa fa-heart addTOWishList"></i></a></li>
                         </ul>
@@ -190,13 +223,29 @@ class ProductCollageView extends Component {
                         </button>
                       </div>
                     </div>
-                  
                   </div>
-                      </div>
+                </div>
               </div>
             );
             })
         }
+       
+        <div id="productviewmodal" className="modal" role="dialog">
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                <h4 className="modal-title"></h4>
+              </div>
+              <div className="modal-body">
+                <ProductDetailsEcommerceView productID={this.state.modalIDNew} />
+              </div>
+              <div className="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
       </div>
       

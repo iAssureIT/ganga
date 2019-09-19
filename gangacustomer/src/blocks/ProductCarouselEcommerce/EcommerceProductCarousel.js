@@ -273,7 +273,11 @@ class EcommerceProductCarousel extends Component {
   								</div>			
                   <div className="modal " id="productviewmodal" role="dialog">
                     <div className="modal-dialog modal-lg dialog">
-                      <div className="modal-content">  
+                      <div className="modal-content"> 
+                        <div className="modal-header">
+                          <button type="button" className="close" data-dismiss="modal">&times;</button>
+                          <h4 className="modal-title"></h4>
+                        </div> 
                         <div className="modal-body">
                           <ProductDetailsEcommerceView productID={this.state.modalID} type={this.state.type}/>
                         </div>  

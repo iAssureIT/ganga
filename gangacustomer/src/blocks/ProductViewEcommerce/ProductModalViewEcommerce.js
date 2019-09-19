@@ -190,149 +190,147 @@ class ProductModalViewEcommerce extends Component {
 		return (
 				
 			this.state.productData?
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50"> 
-						<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 ">							
-						<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 imageContainer">
-							{
-								this.state.productData.productImage && this.state.productData.productImage.length>0? 
-								this.state.productData.productImage.map((data, index)=>{
-									
-									if( !_.isEmpty(data)){
-									// if(index>0 && !_.isEmpty(data)){
-										return(
-                       					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" key={index+this.props.type} onClick={this.changeImage} >
-											<div className="row">
-											{
-												data &&  <img data-index={index} className={index==this.state.imgsrc?"imgbxborder":""} src={data} alt="default"/>
-											}
-											</div>
-										</div>
-                       					);
-									}
-                       				
-                       			})	
-                       			:
-                       			null
-							}
-						</div>
-							<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 imageContainer imgCont">
-								<div className="row">
-									<img className="productView" src={this.state.productData.productImage && this.state.productData.productImage[0]} id="change-image" alt="default"/>
-									
-								</div>
-							</div>
-						</div>
-						<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
-								<div className="row">
-									<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
-									{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<div className="row  productNameClassNew">{this.state.productData.productName}</div>
-									</div>*/}
-									
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div className="row">
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 mb20 NoPadding">
+					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 NoPadding">							
+					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 imageContainer NoPadding">
+						{
+							this.state.productData.productImage && this.state.productData.productImage.length>0? 
+							this.state.productData.productImage.map((data, index)=>{
+								
+								if( !_.isEmpty(data)){
+								// if(index>0 && !_.isEmpty(data)){
+									return(
+                   					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" key={index+this.props.type} onClick={this.changeImage} >
 										<div className="row">
-										<p className="orangetxt "><a href="#gotoreview" className="anchorclr">Be the first to review this product</a></p>
-										{/*<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}*/}
-										</div>
-										<div className="undrln row"> </div>
-									</div>
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										<div className="row">
-											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero ttl" >
-												Price:
-											</span>
-											<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
-												<span className="priceEcommerceNew" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}
-											</span>				                         
-				                          </div>
-				                          <div className="row listspace">
-											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero ttl" >
-												In Stock
-											</span>
-											<span className="col-md-6  col-sm-12 col-xs-12 col-lg-6 ttl" >
-												{this.state.productData.availableQuantity}
-											</span>
-															                         
-				                          </div>
-				                          <div className="row listspace">
-											<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12  paddingleftzero paddingrightzero ttl" >
-												Product Code
-											</span>
-											<span className="col-md-6  col-sm-12 col-xs-12 col-lg-6 ttllist" >
-												{this.state.productData.productCode}
-											</span>
-															                         
-				                          </div>
-				                    </div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="col-lg-12 listspace">
-						<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
-								Features
-							</span>
-							<span className="col-md-10 col-sm-12 col-xs-12 col-lg-10 ttllist" >												
-								{ this.state.productData.featureList &&
-									<div className="">
-										<ul className="paddingleftzero">
-										{ this.state.productData.featureList && 
-											this.state.productData.featureList.map((data,index)=>{
-												return (
-													<div className="" key={index+this.props.type}>
-													<div className="">
-													 <span className="fa fa-circle-o tealColorfnt "></span>
-													  <span className="blackColor ">&nbsp;&nbsp;{data.feature}</span>
-													</div>
-													</div>
-												);
-											})
-											
+										{
+											data &&  <img data-index={index} className={index==this.state.imgsrc?"imgbxborder":""} src={data} alt="default"/>
 										}
-										</ul>
+										</div>
 									</div>
+                   					);
 								}
-						</span>				                         
-	                </div>
-					<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 adCart ">
-						<div className="row spc">
-							<div className="col-lg-4 col-md-2 col-sm-2 col-xs-2 paddingleftzero">
-								<div className="col-lg-6 col-md-8 col-sm-8 col-xs-8">
-									<span className="qty" id="totalQuanity">
-									&nbsp;&nbsp;1
-									</span>
-								</div>
-								<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-									<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer" id="addQuantity" onClick={this.addQuantity.bind(this)}>
-									 <span className="fa fa-plus" aria-hidden="true"></span>
-									</span>
-									<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
-										 <span className="fa fa-minus" aria-hidden="true"></span>
-									</span>
-								</div>
-							</div>
-							<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 paddingleftzero">
-								<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-									<span onClick={this.addtocart.bind(this)} id={this.state.productData._id} className="qtycart clr cursorpointer">
-									 	<i className="fa fa-shopping-cart " aria-hidden="true" id={this.state.productData._id}></i> Add to Cart
-									</span>
-								</div>
-								<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
-									<span onClick={this.addtowishlist.bind(this)}  id={this.state.productData._id} className="icns clr cursorpointer">
-									 	<i className="fa fa-heart-o" aria-hidden="true"  id={this.state.productData._id}></i>
-									</span>
-								</div>				
-							</div>   
-	                    </div>
+                   				
+                   			})	
+                   			:
+                   			null
+						}
 					</div>
+					<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 imageContainer imgCont">
+						<div className="row">
+							<img className="productView" src={this.state.productData.productImage && this.state.productData.productImage[0]} id="change-image" alt="default"/>
+							
+						</div>
+					</div>
+					</div>
+					<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 ">
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
+							<div className="row">
+								<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
+								<br/>
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div className="row">
+									<p className="orangetxt "><a href="#gotoreview" className="anchorclr">Be the first to review this product</a></p>
+									{/*<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}*/}
+									</div>
+									<div className="undrln row"> </div>
+								</div>
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div className="row">
+										<span className="col-md-3 col-lg-3 col-sm-3 col-xs-3 paddingleftzero ttl" >
+											Price:
+										</span>
+										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
+											<span className="priceEcommerceNew" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}
+										</span>				                         
+			                        </div>
+			                        <div className="row listspace">
+										<span className="col-md-3 col-lg-3 col-sm-3 col-xs-3 paddingleftzero ttl" >
+											In Stock
+										</span>
+										<span className="col-md-6  col-sm-12 col-xs-12 col-lg-6 ttl" >
+											{this.state.productData.availableQuantity}
+										</span>
+			                        </div>
+			                        <div className="row listspace">
+										<span className="col-md-3 col-lg-3 col-sm-3 col-xs-3  paddingleftzero paddingrightzero ttl" >
+											Product Code
+										</span>
+										<span className="col-md-6  col-sm-12 col-xs-12 col-lg-6 ttllist" >
+											{this.state.productData.productCode}
+										</span>
+			                        </div>
+			                        <div className="row listspace">
+										<span className="col-md-3 col-lg-3 col-sm-3 col-xs-3 paddingleftzero ttl" >
+											Features:
+										</span>
+										<div className="col-md-9 col-sm-9 col-xs-12 col-lg-9 ttllist" >												
+											{ this.state.productData.featureList &&
+												<ul className="paddingleftzero">
+												{ this.state.productData.featureList && 
+													this.state.productData.featureList.map((data,index)=>{
+														return (
+
+															<div className="singlefeature" key={index+this.props.type}>
+															<div className="">
+															 <span className="fa fa-circle-o tealColorfnt "></span>
+															  <span className="blackColor ">&nbsp;&nbsp;{data.feature}</span>
+															</div>
+															</div>
+														);
+													})
+													
+												}
+												</ul>
+											}
+										</div>			                         
+			                        </div>
+			                    </div>
+							</div>
+						</div>
+						<br/>
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
+							<div className="row spc">
+								<div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 paddingrightzero">
+									<div className="col-lg-2 col-md-3 col-sm-3 col-xs-3 NoPadding">
+										<span className="qty" id="totalQuanity">
+										&nbsp;&nbsp;1
+										</span>
+									</div>
+									<div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NoPadding">
+										<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer" id="addQuantity" onClick={this.addQuantity.bind(this)}>
+										 <span >+</span>
+										</span>
+										<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
+											 <span >-</span>
+										</span>
+									</div>
+									<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 NoPadding">
+										<span onClick={this.addtocart.bind(this)} id={this.state.productData._id} className="qtycart clr cursorpointer">
+										 	<i className="fa fa-shopping-cart " aria-hidden="true" id={this.state.productData._id}></i> Add to Cart
+										</span>
+									</div>
+									<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
+										<span onClick={this.addtowishlist.bind(this)}  id={this.state.productData._id} className="icns clr cursorpointer">
+										 	<i className="fa fa-heart-o" aria-hidden="true"  id={this.state.productData._id}></i>
+										</span>
+									</div>	
+								</div>
+								<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 paddingleftzero">
+												
+								</div>   
+		                    </div>
+						</div>
+					</div>
+					
                 </div>
+                
+		</div>			
 			:
 			null
-				
+		
 		);
 	}
 }

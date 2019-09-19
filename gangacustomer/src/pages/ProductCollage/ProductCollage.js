@@ -193,7 +193,6 @@ class ProductCollage extends Component {
 	}
 	
   	render() {
-  		console.log('products',this.state.products);
 		//console.log('pricemin,',this.state.price.min);
 		//console.log('pricemax,',this.state.price.max);
 		let minPrice = this.state.price.min;

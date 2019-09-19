@@ -10,6 +10,10 @@
 	font-weight: 100;
 }
 
+.current #atag:hover{
+    background-color:#fbbb65 !important;
+    color: #fff !important;
+}
 .account-nav .item{
 	margin:3px 0 0;
 	background-color:#eee;
