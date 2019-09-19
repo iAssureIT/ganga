@@ -49,7 +49,7 @@ export default class Aboutusmultistore extends Component {
 						<h5 className="mt50 textparaabout">In February 2010, Kunal Bahl along with Rohit Bansal, started Multistore.com - India's largest online marketplace, with the widest assortment of 30 million plus products across 800 plus <br/>diverse categories from over 125,000 regional, national, and international brands and retailers. With millions of users and more than 300,000 sellers, Multistore is the shopping<br/>destination for Internet users across the country, delivering to 6000+ cities and towns in India. In its journey till now, Multistore has partnered with several global marquee investors and <br/>individuals such as SoftBank, BlackRock, Temasek, Foxconn, Alibaba, eBay Inc., Premji Invest, Intel Capital, Bessemer Venture Partners, Mr. Ratan Tata, among others.</h5>
 					</div>
 					<div className="col-lg-10 col-lg-offset-1 mt50">
-						<div className="row">
+						<div className="">
 							<div className="col-lg-6">
 								<div className="col-lg-12 multistorebgimg">
 									<div className="col-lg-12 text-left multistorebgimgtext">
