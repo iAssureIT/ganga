@@ -26,10 +26,7 @@ constructor(props){
       categoryDetails: [],
       productCartData:[],
       cartProduct:[]
-
-
-    }
-    this.getCartData();   
+    }  
 
 }
 componentWillMount() {
@@ -51,11 +48,11 @@ componentWillMount() {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           // console.log('cartProduct=======================', response.data[0].cartItems)
+           console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
-
               });
+                this.props.initialCartData(response.data[0].cartItems);
           })
           .catch((error)=>{
                 console.log('error', error);
@@ -247,6 +244,7 @@ searchProducts(){
     })
   }
   render() { 
+    console.log("this.props.cartData",this.props.cartData)
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
@@ -333,13 +331,13 @@ searchProducts(){
                                       <div>
                                         <p className="col-lg-12"><b>{this.props.cartCount}</b> items</p>
                                         <p className="col-lg-12 text-right">Cart Subtotal :</p>
-                                        <p className="col-lg-12 text-right"><i className="fa fa-inr"></i>{this.state.cartProduct && this.state.cartProduct.length>0 ? this.state.cartProduct[0].totalForQantity : ""}</p>
+                                        <p className="col-lg-12 text-right"><i className="fa fa-inr"></i>{this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</p>
                                         <a href="/cart"><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
                                   {
-                                      this.state.cartProduct && this.state.cartProduct.length > 0?
-                                      this.state.cartProduct.map((data, index)=>{
+                                      this.props.cartData && this.props.cartData.length > 0?
+                                      this.props.cartData.map((data, index)=>{
                                           return(
                                                   <li className="col-lg-12 cartdropheight ">
                                                     <div className="cartdropborder">
@@ -442,6 +440,7 @@ searchProducts(){
 const mapStateToProps = (state)=>{
   return {
     cartCount :  state.cartCount,
+    cartData :  state.cartData,
     wishlistCount : state.wishlistCount,
     searchResult : state.searchResult,
     searchCriteria : state.searchCriteria
@@ -452,6 +451,10 @@ const mapDispachToProps = (dispach) =>{
     initialCart : (cartCount)=> dispach({
       type:'CART_COUNT_INITIALLY',
       cartCount : cartCount
+    }),
+    initialCartData : (cartData)=> dispach({
+      type:'CART_DATA',
+      cartData : cartData
     }),
     initialWishlist : (wishlistCount)=> dispach({
       type:'WISHLIST_COUNT_INITIALLY',

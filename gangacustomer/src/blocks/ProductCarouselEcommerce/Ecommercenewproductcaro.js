@@ -74,6 +74,22 @@ class Ecommercenewproductcaro extends Component {
 
     }, second)
   }  
+    getCartData(){
+        // const userid = '5d5bfb3154b8276f2a4d22bf';
+        const userid = localStorage.getItem('user_ID');
+        axios.get("/api/carts/get/list/"+userid)
+          .then((response)=>{ 
+           console.log('cartProduct=======================', response.data[0].cartItems)
+              this.setState({
+                cartProduct : response.data[0].cartItems
+              });
+                this.props.initialCartData(response.data[0].cartItems);
+          })
+          .catch((error)=>{
+                console.log('error', error);
+          })
+    }
+
   addtocart(event){
     event.preventDefault();
     var id = event.target.id;
@@ -99,7 +115,7 @@ class Ecommercenewproductcaro extends Component {
           }
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
-            
+          this.getCartData();  
           swal(response.data.message);
           this.props.changeCartCount(response.data.cartCount);
           })
@@ -303,7 +319,7 @@ class Ecommercenewproductcaro extends Component {
 }
 const mapStateToProps = (state)=>{
   return {
-    
+    cartData :  state.cartData
   }
 }
 const mapDispachToProps = (dispach) =>{
@@ -315,8 +331,11 @@ const mapDispachToProps = (dispach) =>{
     changeWishlistCount : (wishlistCount)=> dispach({
       type:'WISHLIST_COUNT',
       wishlistCount : wishlistCount
-    })
+    }),
+    initialCartData : (cartData)=> dispach({
+      type:'CART_DATA',
+      cartData : cartData
+    }),
   }
 }
-
 export default connect(mapStateToProps, mapDispachToProps)(Ecommercenewproductcaro);

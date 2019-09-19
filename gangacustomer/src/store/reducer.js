@@ -1,5 +1,6 @@
 const initialState = {
 	cartCount	 	: 0,
+	cartData	 	: [],
 	wishlistCount 	: 0,
 	featuredProductData : {},
 	exclusiveProductsData : [],
@@ -11,9 +12,13 @@ const initialState = {
 }
 
 const reducer = (state = initialState,action) => {
-	const newState = {...state};
+	const newState = {...state}; 
 	if(action.type === "CART_COUNT_INITIALLY"){
 		newState.cartCount 		= action.cartCount;
+	}
+	if(action.type === "CART_DATA"){
+		console.log("reducer cartData",action.cartData);
+		newState.cartData 		= action.cartData;
 	}
 	if(action.type === "CART_COUNT"){
 		newState.cartCount 		= action.cartCount;

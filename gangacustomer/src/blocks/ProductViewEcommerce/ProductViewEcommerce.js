@@ -5,6 +5,8 @@ import axios                  from 'axios';
 import swal from 'sweetalert';
 import "./ProductViewEcommerce.css";
 import _                      from 'underscore';
+import { connect }                from 'react-redux';
+
 
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -56,6 +58,21 @@ class ProductViewEcommerce extends Component {
         })
 
   }
+    getCartData(){
+        // const userid = '5d5bfb3154b8276f2a4d22bf';
+        const userid = localStorage.getItem('user_ID');
+        axios.get("/api/carts/get/list/"+userid)
+          .then((response)=>{ 
+           console.log('cartProduct=======================', response.data[0].cartItems)
+              this.setState({
+                cartProduct : response.data[0].cartItems
+              });
+                this.props.initialCartData(response.data[0].cartItems);
+          })
+          .catch((error)=>{
+                console.log('error', error);
+          })
+    }
 
     addtocart =(event)=>{
     // const token = localStorage.getItem("token");
@@ -93,11 +110,9 @@ class ProductViewEcommerce extends Component {
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
             // console.log('response', response);
+          this.getCartData();  
           swal(response.data.message)
-            .then((obj)=>{
-                  window.location.reload();
-            });
-
+          this.props.changeCartCount(response.data.cartCount);
           })
           .catch((error)=>{
             console.log('error', error);
@@ -364,5 +379,26 @@ class ProductViewEcommerce extends Component {
 		);
 	}
 }
-export default withRouter(ProductViewEcommerce);
+const mapStateToProps = (state)=>{
+  return {
+    cartData :  state.cartData
+  }
+}
+const mapDispachToProps = (dispach) =>{
+  return {
+    changeCartCount : (cartCount)=> dispach({
+      type:'CART_COUNT',
+      cartCount : cartCount
+    }),
+    changeWishlistCount : (wishlistCount)=> dispach({
+      type:'WISHLIST_COUNT',
+      wishlistCount : wishlistCount
+    }),
+    initialCartData : (cartData)=> dispach({
+      type:'CART_DATA',
+      cartData : cartData
+    }),
+  }
+}
+export default connect(mapStateToProps, mapDispachToProps)(ProductViewEcommerce);
 
