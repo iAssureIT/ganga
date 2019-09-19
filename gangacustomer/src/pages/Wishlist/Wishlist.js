@@ -42,7 +42,7 @@ class Wishlist extends Component {
      }
 
     getData(){
-        var user_ID = localStorage.getItem('admin_ID');
+        var user_ID = localStorage.getItem('user_ID');
         console.log('user_ID', user_ID);
 
         axios.get('/api/wishlist/get/userwishlist/'+user_ID)

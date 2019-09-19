@@ -74,23 +74,39 @@ class ProductCollageView extends Component {
 
 
     addtowishlist(event){
-      event.preventDefault();
-      var id = event.target.id;
-      const userid = localStorage.getItem('user_ID');
-      const formValues = 
-      { 
-          "user_ID"    : userid,
-          "product_ID" : id,
-      }
-      axios.post('/api/wishlist/post', formValues)
+
+    event.preventDefault();
+    var user_ID = localStorage.getItem('user_ID'); 
+    if(user_ID){
+      var id = event.currentTarget.id;
+
+      axios.get('/api/products/get/one/'+id)
       .then((response)=>{
-        
-        swal(response.data.message);
-        this.props.changeWishlistCount(response.data.wishlistCount);
+            const userid = localStorage.getItem('user_ID');
+            // console.log("userid",response.data);
+            const formValues = 
+            { 
+                "user_ID"    : userid,
+                "product_ID" : response.data._id,
+            }
+            axios.post('/api/wishlist/post', formValues)
+            .then((response)=>{
+              // console.log('response', response);
+              swal(response.data.message)
+              
+            })
+            .catch((error)=>{
+              console.log('error', error);
+            })
       })
       .catch((error)=>{
         console.log('error', error);
       })
+    }else{
+      this.props.history.push('/login');
+    }
+    
+  
     }
     sortProducts(event){
       event.preventDefault();

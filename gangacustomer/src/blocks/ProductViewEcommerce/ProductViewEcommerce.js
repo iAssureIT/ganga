@@ -110,7 +110,6 @@ class ProductViewEcommerce extends Component {
    addtowishlist(event){
     event.preventDefault();
     var user_ID = localStorage.getItem('user_ID'); 
-    console.log('user_ID ===============>>>>>>>>..', user_ID);
     if(user_ID){
     	var id = event.target.id;
 	    axios.get('/api/products/get/one/'+id)
