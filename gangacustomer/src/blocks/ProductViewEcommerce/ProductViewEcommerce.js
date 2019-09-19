@@ -283,7 +283,7 @@ class ProductViewEcommerce extends Component {
 									
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
 										<div className="row spc">
-											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 paddingleftzero">
+											<div className="col-lg-2 col-md-3 col-sm-4 col-xs-4 paddingleftzero">
 												<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 													<span className="qty" id="totalQuanity">
 													&nbsp;&nbsp;1
@@ -293,13 +293,13 @@ class ProductViewEcommerce extends Component {
 													<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer" id="addQuantity" onClick={this.addQuantity.bind(this)}>
 													 <span className="fa fa-plus" aria-hidden="true"></span>
 													</span>
-													<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
+													<span className="qty4 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
 														 <span className="fa fa-minus" aria-hidden="true"></span>
 													</span>
 												</div>
-											</div>
-											<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 paddingleftzero">
-												<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+											</div> 
+											<div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 paddingleftzero">
+												<div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 NoPadding">
 													<span onClick={this.addtocart.bind(this)} id={this.state.productData._id} className="qtycart clr cursorpointer">
 													 	<i className="fa fa-shopping-cart " aria-hidden="true" id={this.state.productData._id}></i> Add to Cart
 													</span>
