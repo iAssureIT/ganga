@@ -266,7 +266,7 @@ class EcommerceProductCarousel extends Component {
                                   <a className="product photo product-item-photo" tabIndex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
-                                  <div className="hoveractions">
+                                  <div className="hoveractions1">
                                       <ul>
                                         <li  data-toggle="modal" className="circle spin" data-target={"#productviewmodal"+this.state.productType}><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
                                         <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>

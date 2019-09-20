@@ -241,7 +241,7 @@ class ProductCollageView extends Component {
                   <a href="#" className="product photo product-item-photo" tabIndex="-1">
                     <img className="productImage" src={value.productImage && value.productImage[0] ? value.productImage[0] : '/images/notavailable.jpg'} />
                   </a>
-                  <div className="collagehoveractions">
+                  <div className="hoveractions">
                     <div className="col-lg-12">  
                         <ul>
                             <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={value._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>

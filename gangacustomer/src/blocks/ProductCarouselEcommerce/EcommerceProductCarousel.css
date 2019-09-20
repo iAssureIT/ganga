@@ -446,13 +446,13 @@ background-color: transparent !important;
     /*padding-top: 20px;*/
 }
 
-.hoveractions a{
+.hoveractions1 a{
     display: block;
     text-align: center;
     padding-top: 20px;
     color: #fff;
 }
-.productImg .hoveractions{
+.productImg .hoveractions1{
     z-index: 9999;
     margin: 0;
     position: absolute;
@@ -469,7 +469,7 @@ background-color: transparent !important;
     -moz-transition: all .5s ease-out 0s;
 }
 
-.productImg:hover .hoveractions{
+.productImg:hover .hoveractions1{
     background: rgba(0,0,0,0.5);
     visibility: visible;
     transform: scale(1);
@@ -501,17 +501,17 @@ background-color: transparent !important;
     text-decoration: none;
 }
 
-.hoveractions ul{
+.hoveractions1 ul{
   list-style: none;
   padding: 0;
   margin-top: 25%;
 }
 
-.hoveractions li{
+.hoveractions1 li{
   display: inline-block;
 }
 
-.hoveractions i{
+.hoveractions1 i{
     width: 40px;
     height: 40px;
     text-align: center;
@@ -521,6 +521,7 @@ background-color: transparent !important;
     font-size: 18px;
     margin: 0 10px;
     display: inline-block;
+    color: #fff;
 }
 
 .icon-view{
