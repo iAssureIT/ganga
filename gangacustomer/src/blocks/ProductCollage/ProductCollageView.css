@@ -25,13 +25,13 @@
 .productImage{
 	width: 100%;
 }
-.collagehoveractions a{
+.hoveractions a{
 	display: block;
 	text-align: center;
 	padding-top: 20px;
 	color: #fff;
 }
-.productImg .collagehoveractions{
+.productImg .hoveractions{
 	z-index: 9999;
 	margin: 0;
 	position: absolute;
@@ -48,13 +48,16 @@
 	-moz-transition: all .5s ease-out 0s;
 }
 
-.productImg:hover .collagehoveractions{
+.productImg:hover .hoveractions{
 	background: rgba(0,0,0,0.5);
 	visibility: visible;
 	transform: scale(1);
 	-webkit-transition: all .5s ease-out 0s;
 	-moz-transition: all .5s ease-out 0s;
-    height: 186px;
+	width: 84%;
+    left: 20px;
+    height: 187px;
+    top: 5px;
 } 
 
 
@@ -78,17 +81,17 @@
 	text-decoration: none;
 }
 
-.collagehoveractions ul{
+.hoveractions ul{
   list-style: none;
   padding: 0;
   margin-top: 25%;
 }
 
-.collagehoveractions li{
+.hoveractions li{
   display: inline-block;
 }
 
-.collagehoveractions i{
+.hoveractions i{
 	width: 40px;
 	height: 40px;
 	text-align: center;
@@ -120,6 +123,7 @@
 .ratingReview:not(:checked) > label, .ratingReview1:not(:checked) > label {
     overflow:hidden;
     white-space:nowrap;
+    cursor:pointer;
     font-size:200%;
     line-height:1.2;
     color:#c7c7c7;
