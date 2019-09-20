@@ -268,7 +268,7 @@ class EcommerceProductCarousel extends Component {
                                   </a>
                                   <div className="hoveractions">
                                       <ul>
-                                        <li  data-toggle="modal" className="circle spin" data-target="#viewmodal"><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
+                                        <li  data-toggle="modal" className="circle spin" data-target={"#productviewmodal"+this.state.productType}><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
                                         <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
                                       </ul>
                                   </div>
@@ -317,7 +317,7 @@ class EcommerceProductCarousel extends Component {
                 }  
   								</OwlCarousel>
   								</div>			
-                  <div className="modal " id="viewmodal" role="dialog">
+                  <div className="modal " id={"productviewmodal"+this.state.productType} role="dialog">
                     <div className="modal-dialog modal-lg dialog">
                       <div className="modal-content"> 
                         <div className="modal-header">

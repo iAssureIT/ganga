@@ -48,7 +48,7 @@ export default class ProductDetailsHomeView extends Component {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
           <ProductModalViewEcommerce productInfo = { this.props.productInfo } />
-          <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.productID } />
+          <ProductViewEcommerceDetailsReviewFAQ productInfo = { this.props.productID } />
         </div>
 		);
 	}
