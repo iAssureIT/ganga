@@ -368,8 +368,8 @@ searchProducts(){
                                                               </div>
                                                               <div className="col-lg-6">
                                                                 <div className="row">
-                                                                  <div className="col-md-1 col-lg-1 pull-right"><p className="row"><i className="fa fa-cog cartdropaction" aria-hidden="true"></i></p></div>
-                                                                  <div className="col-md-1 col-lg-1 pull-right"><div className="row"><a href={"/productdetails/"+data.product_ID}><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcart.bind(this)}></i></a></div></div>
+                                                                  <div className="col-md-1 col-lg-1 pull-right"><div className="row"><a href={"/productdetails/"+data.product_ID}><i className="fa fa-cog cartdropaction" aria-hidden="true"></i></a></div></div>
+                                                                  <div className="col-md-1 col-lg-1 pull-right"><div className="row"><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcart.bind(this)}></i></div></div>
                                                                 </div>
                                                               </div>
                                                             </div>
