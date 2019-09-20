@@ -6,6 +6,9 @@ import InputRange 					from 'react-input-range';
 import  'react-input-range/lib/css/index.css';
 import axios 						from 'axios';
 import swal                       from 'sweetalert';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/js/collapse.js';
 
 class ProductCollage extends Component {
 	constructor(props){
@@ -210,9 +213,8 @@ class ProductCollage extends Component {
               		
               		<div className="nb-brand">
 						<div className="accordion" id="accordionExample">
-						  
 						    <div className="card-header" id="headingOne">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">	
+						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" >	
 						        <button className="btn btn-link" type="button" >
 						          CATEGORY 
 						        </button>
@@ -220,7 +222,7 @@ class ProductCollage extends Component {
 						    </div>
 						    </div>
 
-						    <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+						    <div id="collapseOne" className="collapse">
 						      <div className="card-body">
 						      	{
 									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
@@ -244,7 +246,9 @@ class ProductCollage extends Component {
 								}
 						      </div>
 						    </div>
-						 
+						{
+						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
+						    <div>
 						    <div className="card-header" id="headingTwo">
 						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">	
 						        <button className="btn btn-link collapsed" type="button" >
@@ -259,14 +263,15 @@ class ProductCollage extends Component {
                                     <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
                             	</a>
                             	<a href="#" className="swatch-option-link-layered">
-                                    <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
+                                    <div className="color-option" option-type="1" option-id="49" option-label="White" option-tooltip-thumb="" option-tooltip-value="#ffffff" ></div>
                             	</a>
                             	<a href="#" className="swatch-option-link-layered">
                                     <div className="color-option" option-type="1" option-id="49" option-label="Black" option-tooltip-thumb="" option-tooltip-value="#000000" ></div>
                             	</a>
 						      </div>
 						    </div>
-
+						    </div>  : ''
+						}
 						    <div className="card-header" id="headingTwo">
 						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">	
 						        <button className="btn btn-link collapsed" type="button">
@@ -287,6 +292,8 @@ class ProductCollage extends Component {
 						      </div> 
 						    </div>
 						 </div>
+						
+
               		</div>
               		<br/>
  					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nb-brand">

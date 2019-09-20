@@ -337,15 +337,15 @@ searchProducts(){
                                         <p className="col-lg-12"><b>{this.props.cartCount}</b> items</p>
                                         <p className="col-lg-12 text-right">Cart Subtotal :</p>
 
-                                        <p className="col-lg-12 text-right"><i className="fa fa-inr"></i>{this.state.cartProduct && this.state.cartProduct.length>0 ? this.state.cartProduct[0].totalForQantity : ""}</p>
+                                        <p className="col-lg-12 text-right"><i className="fa fa-inr"></i>{this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</p>
                                         <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
                                     { 
-                                      this.state.cartProduct && this.state.cartProduct.length > 0 ?
-                                      this.state.cartProduct.map((data, index)=>{
+                                      this.props.cartData && this.props.cartData.length > 0 ?
+                                      this.props.cartData.map((data, index)=>{
                                           return(
-                                                  <li className="col-lg-12 cartdropheight ">
+                                                  <li className="col-lg-12 cartdropheight " key={index}>
                                                     <div className="cartdropborder">
                                                       <div className="col-lg-3 cartdropimg">
                                                         <div className="row">
@@ -355,20 +355,20 @@ searchProducts(){
                                                       <div className="col-lg-7 cartdropimg">
                                                         <div className="row">
                                                           <a href={"/productdetails/"+data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
-                                                          <p className="cursorpointer col-lg-12">
-                                                            <div className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></div>
-                                                          </p>
+                                                          <div className="cursorpointer col-lg-12">
+                                                            <p className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></p>
+                                                          </div>
                                                           <div className="col-lg-12">
                                                             <div className="row">
                                                               <div className="col-lg-6">
                                                                 <div className="row">
                                                                   <p className="col-md-6">Qty:</p>
-                                                                  <div className="col-md-6 cartmodquntityborder text-center">{data.quantity}</div>
+                                                                  <p className="col-md-6 cartmodquntityborder text-center">{data.quantity}</p>
                                                                 </div>
                                                               </div>
                                                               <div className="col-lg-6">
                                                                 <div className="row">
-                                                                  <p className="col-md-1 col-lg-1 pull-right"><div className="row"><i className="fa fa-cog cartdropaction" aria-hidden="true"></i></div></p>
+                                                                  <div className="col-md-1 col-lg-1 pull-right"><p className="row"><i className="fa fa-cog cartdropaction" aria-hidden="true"></i></p></div>
                                                                   <div className="col-md-1 col-lg-1 pull-right"><div className="row"><a href={"/productdetails/"+data.product_ID}><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcart.bind(this)}></i></a></div></div>
                                                                 </div>
                                                               </div>
@@ -472,7 +472,7 @@ const mapDispachToProps = (dispach) =>{
     }),
     initialCartData : (cartData)=> dispach({
       type:'CART_DATA',
-      cartData : cartData
+      cartData : cartData 
     }),
     initialWishlist : (wishlistCount)=> dispach({
       type:'WISHLIST_COUNT_INITIALLY',
