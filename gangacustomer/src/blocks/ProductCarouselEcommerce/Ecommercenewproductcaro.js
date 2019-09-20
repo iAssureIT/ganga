@@ -200,7 +200,7 @@ class Ecommercenewproductcaro extends Component {
     })
   }
   render() {
-    console.log('modalIDNew Product', this.state.modalIDNew);
+    // console.log('modalIDNew Product', this.state.modalIDNew);
           const token = localStorage.getItem("user_ID") ;
           
     return (

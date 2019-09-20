@@ -26,8 +26,7 @@ class ProductModalViewEcommerce extends Component {
   	}  
 
   	componentDidMount(){
-      	this.getData(this.props.productID);
-
+      	
   		var imageArray=[
 			{"image":"/images/45-home_default.jpg"},
 			{"image":"/images/41-home_default.jpg"},
@@ -38,24 +37,17 @@ class ProductModalViewEcommerce extends Component {
   	componentWillReceiveProps(nextProps){
       
       if (nextProps.productInfo) {
-        console.log('nextProps',nextProps.productInfo);
+        // console.log('nextProps',nextProps.productInfo);
         if (nextProps.productInfo.productID) {
           this.getData(nextProps.productInfo.productID);
         }
         
       }
   	}
-  	// componentDidUpdate(prevProps,prevState){
-  	// 	console.log('prevProps.productID!=this.props.productID',prevProps.productID,this.props.productID)
-  	// 	if(prevProps.productID!=this.props.productID){
-  	// 	this.getData(this.props.productID);
-  	// 	}
-  	// }
-
   	getData(productID){
   		axios.get("/api/products/get/one/"+productID)
             .then((response)=>{
-            	console.log("product info---->",response);
+            	// console.log("product info---->",response);
               this.setState({ 
                   productData : response.data,
                   quanityLimit : response.data.availableQuantity
@@ -67,7 +59,13 @@ class ProductModalViewEcommerce extends Component {
   	}
   	 changeImage = (event)=>{
   	 	
-        document.getElementById('change-image').src=event.target.src;
+        // console.log('parent',this.props.productInfo.productType);
+
+        // console.log('parent',$('#productviewmodal'+this.props.productInfo.productType).find('#change-image'));
+
+
+        $('#productviewmodal'+this.props.productInfo.productType).find('#change-image').attr('src',event.target.src) 
+        //document.getElementById('change-image').src=event.target.src;
         var index = event.target.getAttribute('data-index');
         // if(index==event.target.getAttribute('data-index')){
         // 	$('.imgbx'+index).addClass('imgbxborder');
@@ -203,35 +201,43 @@ class ProductModalViewEcommerce extends Component {
     
   }
   addQuantity(){
+    console.log("#addQuantity",$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity'));
   	var totalQuanity = this.state.totalQuanity
   	totalQuanity++;
-  	$('#addQuantity').addClass('auto');
-  	$('#addQuantity').css('background-color','#fff');
-  	$('#decreaseQuantity').addClass('auto');
-  	$('#decreaseQuantity').css('background-color','#fff');
-  	if(Number(totalQuanity) > Number(this.state.quanityLimit)){
-  	 	$('#addQuantity').css('background-color','#ccc');
-  	 	$('#addQuantity').addClass('no-drop');
+    console.log("#totalQuanity122",totalQuanity);
+    console.log("#quanityLimit",this.state.quanityLimit);
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity').addClass('auto');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity').css('background-color','#fff');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#decreaseQuantity').addClass('auto');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#decreaseQuantity').css('background-color','#fff');
+
+
+    if(Number(totalQuanity) > Number(this.state.quanityLimit) ){
+
+  	 	$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity').css('background-color','#ccc');
+  	 	$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity').addClass('no-drop');
   	}else{
+      console.log("#totalQuanity",$('#productviewmodal'+this.props.productInfo.productType).find('#totalQuanity'));
+
   		this.setState({totalQuanity : totalQuanity});
-  		document.getElementById('totalQuanity').innerHTML = totalQuanity;
+  		$('#productviewmodal'+this.props.productInfo.productType).find('#totalQuanity').html(totalQuanity) ;
   	}
   }
   decreaseQuantity(){
   	var totalQuanity = this.state.totalQuanity
   	totalQuanity--;
-  	$('#addQuantity').addClass('auto');
-  	$('#addQuantity').css('background-color','#fff');
-  	$('#decreaseQuantity').addClass('auto');
-  	$('#decreaseQuantity').css('background-color','#fff');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity').addClass('auto');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity').css('background-color','#fff');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#decreaseQuantity').addClass('auto');
+  	$('#productviewmodal'+this.props.productInfo.productType).find('#decreaseQuantity').css('background-color','#fff');
   	if(Number(totalQuanity) == 1 || Number(totalQuanity) > 1){
   		this.setState({totalQuanity : totalQuanity},() =>{
-  			document.getElementById('totalQuanity').innerHTML = this.state.totalQuanity;
+  			$('#productviewmodal'+this.props.productInfo.productType).find('#totalQuanity').html(totalQuanity);
   		});
   		
   	}else{
-  		$('#decreaseQuantity').addClass('no-drop');
-  		$('#decreaseQuantity').css('background-color','#ccc');	
+  		$('#productviewmodal'+this.props.productInfo.productType).find('#decreaseQuantity').addClass('no-drop');
+  		$('#productviewmodal'+this.props.productInfo.productType).find('#decreaseQuantity').css('background-color','#ccc');	
   	}
   }
   render() {
@@ -241,7 +247,7 @@ class ProductModalViewEcommerce extends Component {
 			this.state.productData?
 			<div className="row">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 mb20 NoPadding">
-					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 NoPadding">							
+					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 NoPadding" id="parentDiv">							
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 imageContainer NoPadding">
 						{
 							this.state.productData.productImage && this.state.productData.productImage.length>0? 
