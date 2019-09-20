@@ -55,8 +55,10 @@
 	-webkit-transition: all .5s ease-out 0s;
 	-moz-transition: all .5s ease-out 0s;
 
-    height: 186px;
-
+	width: 84%;
+    left: 20px;
+    height: 187px;
+    top: 5px;
 } 
 
 
