@@ -256,7 +256,7 @@ class ProductModalViewEcommerce extends Component {
 								if( !_.isEmpty(data)){
 								// if(index>0 && !_.isEmpty(data)){
 									return(
-                   					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" key={index+this.props.productInfo.productType} onClick={this.changeImage} >
+                   					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" key={this.props.productInfo.productType ? index+this.props.productInfo.productType : index} onClick={this.changeImage} >
 										<div className="row">
 										{
 											data &&  <img data-index={index} className={index==this.state.imgsrc?"imgbxborder":""} src={data} alt="default"/>
@@ -328,7 +328,7 @@ class ProductModalViewEcommerce extends Component {
 													this.state.productData.featureList.map((data,index)=>{
 														return (
 
-															<div className="singlefeature" key={index+this.props.productInfo.productType}>
+															<div className="singlefeature" key={this.props.productInfo.productType ? index+this.props.productInfo.productType : index}>
 															<div className="">
 															 <span className="fa fa-circle-o tealColorfnt "></span>
 															  <span className="blackColor ">&nbsp;&nbsp;{data.feature}</span>

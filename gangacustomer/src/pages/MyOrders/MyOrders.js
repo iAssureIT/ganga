@@ -296,12 +296,12 @@ export default class MyOrders extends Component {
                   <form className="feedbackForm" id="">
                       
                       <div className="col-lg-6 col-sm-12 col-xs-12 row">
-                          <fieldset className="ratingReview stars ">
-                              <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
-                              <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
-                              <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
+                          <fieldset className="ratingReview stars givefeedback ">
+                              <input type="radio" id="star1" name="ratingReview" value="1" /><label htmlFor="star1"></label>
                               <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
-                              <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
+                              <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
+                              <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
+                              <input type="radio" id="star5" name="ratingReview" value="5"/><label htmlFor="star5"></label>
                           </fieldset>
                           <div className="clearfix "></div>
                       </div>

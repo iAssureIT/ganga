@@ -25,13 +25,13 @@
 .productImage{
 	width: 100%;
 }
-.hoveractions a{
+.collagehoveractions a{
 	display: block;
 	text-align: center;
 	padding-top: 20px;
 	color: #fff;
 }
-.productImg .hoveractions{
+.productImg .collagehoveractions{
 	z-index: 9999;
 	margin: 0;
 	position: absolute;
@@ -48,17 +48,13 @@
 	-moz-transition: all .5s ease-out 0s;
 }
 
-.productImg:hover .hoveractions{
+.productImg:hover .collagehoveractions{
 	background: rgba(0,0,0,0.5);
 	visibility: visible;
 	transform: scale(1);
 	-webkit-transition: all .5s ease-out 0s;
 	-moz-transition: all .5s ease-out 0s;
-
-	width: 84%;
-    left: 20px;
-    height: 187px;
-    top: 5px;
+    height: 186px;
 } 
 
 
@@ -82,17 +78,17 @@
 	text-decoration: none;
 }
 
-.hoveractions ul{
+.collagehoveractions ul{
   list-style: none;
   padding: 0;
   margin-top: 25%;
 }
 
-.hoveractions li{
+.collagehoveractions li{
   display: inline-block;
 }
 
-.hoveractions i{
+.collagehoveractions i{
 	width: 40px;
 	height: 40px;
 	text-align: center;
@@ -124,7 +120,6 @@
 .ratingReview:not(:checked) > label, .ratingReview1:not(:checked) > label {
     overflow:hidden;
     white-space:nowrap;
-    cursor:pointer;
     font-size:200%;
     line-height:1.2;
     color:#c7c7c7;

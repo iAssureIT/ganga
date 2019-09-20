@@ -16,7 +16,7 @@ class ProductCollageView extends Component {
          products:[],
          masterLimitProducts:[],
          categoryDetails:[],
-         modalIDNew : ""
+         modalIDNew : []
 	   }
   	}  
   	componentDidMount() {
@@ -198,7 +198,7 @@ class ProductCollageView extends Component {
       event.preventDefault();
       var modalID = event.target.id;
       this.setState({
-        modalIDNew : modalID
+        modalIDNew : {productID:modalID}
       })
     }
   render() {
@@ -241,7 +241,7 @@ class ProductCollageView extends Component {
                   <a href="#" className="product photo product-item-photo" tabIndex="-1">
                     <img className="productImage" src={value.productImage && value.productImage[0] ? value.productImage[0] : '/images/notavailable.jpg'} />
                   </a>
-                  <div className="hoveractions">
+                  <div className="collagehoveractions">
                     <div className="col-lg-12">  
                         <ul>
                             <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={value._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
@@ -262,13 +262,13 @@ class ProductCollageView extends Component {
 
                       <div className="product-reviews-summary">
                           <div className="rating-summary">
-                              <fieldset className="ratingReview stars ">
-                                <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
-                                <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
-                                <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
-                                <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
-                              </fieldset>
+                              <div className="ratingReview stars ">
+                                <label htmlFor="star5"></label>
+                                <label htmlFor="star4"></label>
+                                <label htmlFor="star3"></label>
+                                <label htmlFor="star2"></label>
+                                <label htmlFor="star1"></label>
+                              </div>
                             <div className="clearfix "></div>
                           </div>
                       </div>
@@ -287,7 +287,7 @@ class ProductCollageView extends Component {
               </div>
             );
             })
-        }
+        } 
        
         <div id="productviewmodal" className="modal" role="dialog">
           <div className="modal-dialog modal-lg">
@@ -297,7 +297,7 @@ class ProductCollageView extends Component {
                 <h4 className="modal-title"></h4>
               </div>
               <div className="modal-body">
-                <ProductDetailsHomeView productID={this.state.modalIDNew} />
+                <ProductDetailsHomeView productInfo={this.state.modalIDNew} />
               </div>
               <div className="modal-footer">
               </div>
