@@ -235,7 +235,7 @@ class ProductModalViewEcommerce extends Component {
   	}
   }
   render() {
-  	        console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
+  	        // console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
 		return (
 				
 			this.state.productData?
