@@ -54,10 +54,9 @@
 	transform: scale(1);
 	-webkit-transition: all .5s ease-out 0s;
 	-moz-transition: all .5s ease-out 0s;
-	width: 84%;
-    left: 20px;
-    height: 187px;
-    top: 5px;
+
+    height: 186px;
+
 } 
 
 

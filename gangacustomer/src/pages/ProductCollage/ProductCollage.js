@@ -182,7 +182,7 @@ class ProductCollage extends Component {
 	      event.preventDefault();
 	      const target = event.target;
 	      const name = target.name;
-
+	      
 	      if (name == 'slider_min') {
 	      	this.setState({
 	          price: { min : Number(target.value),  max : Number(this.state.price.max)}
@@ -193,6 +193,8 @@ class ProductCollage extends Component {
 	          price: { min : Number(this.state.price.min),  max : Number(target.value)}
 	      	}); 
 	      } 
+
+	      this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
 	}
 	
   	render() {
