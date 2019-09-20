@@ -94,16 +94,17 @@
 .subcategory{
 	color: #333;
 	text-decoration: none;
+
 }
 .subcategory:hover, .subcategory:active, .subcategory:focus  {
 	color: #fbbb65;
 	text-decoration: none;
-  font-weight: normal !important;
+  font-weight: 100 !important;
 }
 .subcategory:visited  {
   color: #333;
   text-decoration: none;
-  font-weight: normal !important;
+  font-weight: 100 !important;
 }
 /* Create a custom checkbox */
 .centreDetailContainerEcommerce{

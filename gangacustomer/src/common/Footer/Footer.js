@@ -54,13 +54,10 @@ export default class Footer extends Component {
                 </div>   
                
                 <ul>
-                    <li><a href="/about-us">Martketplace</a></li>
-                    <li><a href="/contact-us">Compensation First</a></li>
-                    <li><a href="#">My Account</a></li>
-                    <li><a href="#">Return Policy</a></li>
-                    <li><a href="#">Affiliate</a></li>
+                    <li><a href="/profile">My Account</a></li>
+                    <li><a href="returnpolicy">Return Policy</a></li>
                 </ul>
-                </div>
+                </div> 
             </div>
             <div className="col-sm-12 col-sm-3">
                 <div className="footer-top">
@@ -70,10 +67,7 @@ export default class Footer extends Component {
                
                 <ul>
                     <li><a href="/about-us">Terms of Use</a></li>
-                    <li><a href="/contact-us">Payment Methods</a></li>
-                    <li><a href="#">Shipping Methods</a></li>
-                    <li><a href="#">Locations We Ship To</a></li>
-                    <li><a href="#">Estimated Delivery Time</a></li>
+                    <li><a href="#">Payment Methods</a></li>
                 </ul>
                 </div>
             </div>
@@ -83,8 +77,8 @@ export default class Footer extends Component {
                      <strong>LET US HELP YOU</strong>
                 </div>   
                 <ul>
-                    <li><a href="/about-us">Join Free</a></li>
-                    <li><a href="/contact-us">Blog</a></li>
+                    <li><a href="/signup">Join Free</a></li>
+                    <li><a href="/blogs">Blog</a></li>
                     <li><a href="#">Faqs</a></li>
                     <li><a href="#">Store Location</a></li>
                     <li><a href="#">Shop By Brands</a></li>
@@ -111,7 +105,7 @@ export default class Footer extends Component {
                                     <i className="fa fa-map-marker"></i>
                                 </div>
                                 <div className="col-lg-9 addressDetails">  
-                                <a>PO Box CT16122 Collins Street<br /> West,  Victoria 8007, Australia.</a>
+                                <a>Shop at Ganga Express<br /> Patna, India.</a>
                                 </div>
                             </div>
                         </div> 
@@ -136,7 +130,7 @@ export default class Footer extends Component {
                                 <i className="fa fa-envelope"></i>
                             </div>
                             <div className="col-lg-9 addressDetails">  
-                            <a>contact@yourdomain.com<br /> Support@yourdomain.com</a>
+                            <a>contact@GangaExpress.com<br /> Support@GangaExpress.com</a>
                             </div>
                         </div>
 

@@ -166,7 +166,7 @@ class ProductCollage extends Component {
 		}
 	}
 	getBrands(){
-		axios.get("/api/products/get/listBrand")
+		axios.get("/api/products/get/listBrand/"+this.props.match.params.categoryID)
 
 	      	.then((response)=>{ 
 	      	
@@ -234,7 +234,7 @@ class ProductCollage extends Component {
 												
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
 												<div className="row">
-													<a href="#" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')}>{data.subCategoryTitle}</a>
+													<p href="#" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{data.subCategoryTitle}</p>
 												
 												</div>
 											</div>

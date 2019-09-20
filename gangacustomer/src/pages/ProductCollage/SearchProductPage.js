@@ -31,7 +31,7 @@ class SearchProduct extends Component {
   		$('div[data-toggle="collapse"]').click(function () {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
-  		this.getBrands();
+  		
   	}
   	componentWillReceiveProps(nextProps){
   		
@@ -41,7 +41,14 @@ class SearchProduct extends Component {
 	        searchCriteria  : nextProps.searchCriteria,
 	        categoryDetails : nextProps.categoryDetails 
 
+  		},()=>{
+  			console.log('categoryDetails',this.state.categoryDetails);
+	  		if (this.state.categoryDetails[0]) {
+	  			this.getBrands(this.state.categoryDetails[0]._id);
+	  		}
+	  		
   		})
+  		
   	}
   	
 	onSelectedItemsChange(filterType, selecteditems){
@@ -77,19 +84,22 @@ class SearchProduct extends Component {
 			this.setState({products :this.state.masterproducts})
 		}
 	}
-	getBrands(){
-		axios.get("/api/products/get/listBrand")
+	getBrands(categoryID){
+		
 
-	      	.then((response)=>{ 
-	      	
-	          this.setState({
-	              brands : response.data
-	          })
-	      	})
-	      	.catch((error)=>{
-	            console.log('error', error);
-	      	})
+		axios.get("/api/products/get/listBrand/"+categoryID)
+
+	  	.then((response)=>{ 
+	  	
+	      this.setState({
+	          brands : response.data
+	      })
+	  	})
+	  	.catch((error)=>{
+	        console.log('error', error);
+	  	})
 	}
+	
 	handlePriceChange(event) {
 	      event.preventDefault();
 	      const target = event.target;
@@ -136,7 +146,7 @@ class SearchProduct extends Component {
 		}
 	}
   	render() {
-  		console.log('categoryDetails',this.state.categoryDetails);
+  		
 		return (
 	      	<div className="container" id="containerDiv">
 	     	<div className="row"> 
@@ -150,7 +160,7 @@ class SearchProduct extends Component {
               		<div className="forSearchDiv">
               			<h5 className="showingby">NOW SHOWING BY</h5>
               			<hr/>
-              			<h6 className="selcategory">CATEGORY: Electronics</h6> 
+              			<h6 className="selcategory">CATEGORY: {this.state.categoryDetails[0] && this.state.categoryDetails[0].category}</h6> 
               			<span><a href="#" >Remove This Item </a></span><br/>
               			<span><a href="#" >Clear All </a></span>
               		</div>
@@ -190,7 +200,8 @@ class SearchProduct extends Component {
 				<br/>
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
-				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
+				    	{
+				    	/*<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
 				    		
 				    		<select className="form-control sortProducts col-lg-3" onChange={this.sortProducts.bind(this)}>
 								<option  className="hidden" >Relevence</option>
@@ -199,7 +210,8 @@ class SearchProduct extends Component {
 								<option value="priceAsc">Price Low to High</option>
 								<option value="priceDsc">Price High to Low </option>
 							</select>
-				    	</div>
+				    	</div>*/
+				    	}
 				    	<br />
 				    	<br />
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
