@@ -379,7 +379,7 @@ searchProducts(){
                                                     </div>
                                                   </li>
                                                   );
-                                        })
+                                            })
                                         :
                                         <div>
                                             <div><p className="mt15 mb15 col-lg-12 col-md-12 col-sm-12 col-xs-12">You have no items in your shopping cart.</p></div>

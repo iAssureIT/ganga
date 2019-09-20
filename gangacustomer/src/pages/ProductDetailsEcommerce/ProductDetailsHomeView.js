@@ -16,7 +16,7 @@ import axios                  		from 'axios';
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-export default class ProductDetailsEcommerceView extends Component {
+export default class ProductDetailsHomeView extends Component {
 	constructor(props){
     super(props);
 	    this.state = {
@@ -24,6 +24,7 @@ export default class ProductDetailsEcommerceView extends Component {
 	    };
   	} 
   	componentDidMount(){
+      console.log('props',this.props)
   		var productType4 = 'bestSeller';
   		var webCategory = 'Main-Site'
   		axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
@@ -37,12 +38,16 @@ export default class ProductDetailsEcommerceView extends Component {
                 console.log('error', error);
             }) 
   	} 
-  	  	
+  	componentWillReceiveProps(nextProps){
+      //console.log('nextProps',nextProps)
+      
+    }  
+    
   	render() {
       
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
-          <ProductModalViewEcommerce productID = { this.props.productID } />
+          <ProductModalViewEcommerce productInfo = { this.props.productInfo } />
           <ProductViewEcommerceDetailsReviewFAQ productID = { this.props.productID } />
         </div>
 		);

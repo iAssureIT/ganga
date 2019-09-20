@@ -3,7 +3,7 @@ import "./ProductCollageView.css";
 import axios                      from 'axios';
 import { connect }                from 'react-redux';
 import swal                       from 'sweetalert';
-import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
+import ProductDetailsHomeView from "../../pages/ProductDetailsEcommerce/ProductDetailsHomeView.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
@@ -297,7 +297,7 @@ class ProductCollageView extends Component {
                 <h4 className="modal-title"></h4>
               </div>
               <div className="modal-body">
-                <ProductDetailsEcommerceView productID={this.state.modalIDNew} />
+                <ProductDetailsHomeView productID={this.state.modalIDNew} />
               </div>
               <div className="modal-footer">
               </div>

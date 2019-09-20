@@ -8,7 +8,7 @@ import { connect }                from 'react-redux';
 import "./EcommerceProductCarousel.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';	
-import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
+import ProductDetailsHomeView from "../../pages/ProductDetailsEcommerce/ProductDetailsHomeView.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
@@ -36,9 +36,9 @@ class EcommerceProductCarousel extends Component {
                 items:5 
             }
           },
-          type : props.type,
+          productType : props.type,
           newProducts: [],
-          modalID : ""
+          modalIDNew : []
 	    };
   } 
 
@@ -187,11 +187,9 @@ class EcommerceProductCarousel extends Component {
   openModal(event){
     event.preventDefault();
     var modalID = event.target.id;
-    console.log('modalID', modalID);
     this.setState({
-      modalID : modalID
+      modalIDNew : {productID:modalID, productType: this.state.productType}
     })
-
   }
   render() {
   	// console.log('newProducts Product', this.state.newProducts);
@@ -229,7 +227,7 @@ class EcommerceProductCarousel extends Component {
                              this.props.categories && this.props.categories.length>0?
                               this.props.categories.map((data, index)=>{
                                 return(
-                                  <div className="item">
+                                  <div className="item" key={index}>
                                     <span className="col-lg-12 row  productcarotext1" id={data._id} onClick={this.getCategoryID.bind(this)}>{data.category}</span>//
                                   </div>
                                 );
@@ -265,12 +263,12 @@ class EcommerceProductCarousel extends Component {
                             <div className="item-top">
                                 <div className="productImg">
                                { <div className="btn-warning discounttag">-93%</div>}
-                                  <a className="product photo product-item-photo" tabindex="-1">
+                                  <a className="product photo product-item-photo" tabIndex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
                                   <div className="hoveractions">
                                       <ul>
-                                        <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
+                                        <li  data-toggle="modal" className="circle spin" data-target="#viewmodal"><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
                                         <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
                                       </ul>
                                   </div>
@@ -319,7 +317,7 @@ class EcommerceProductCarousel extends Component {
                 }  
   								</OwlCarousel>
   								</div>			
-                  <div className="modal " id="productviewmodal" role="dialog">
+                  <div className="modal " id="viewmodal" role="dialog">
                     <div className="modal-dialog modal-lg dialog">
                       <div className="modal-content"> 
                         <div className="modal-header">
@@ -327,7 +325,7 @@ class EcommerceProductCarousel extends Component {
                           <h4 className="modal-title"></h4>
                         </div> 
                         <div className="modal-body">
-                          <ProductDetailsEcommerceView productID={this.state.modalID} type={this.state.type}/>
+                          <ProductDetailsHomeView productInfo={this.state.modalIDNew} />
                         </div>  
                          <div className="modal-footer">                     
                         </div>                  

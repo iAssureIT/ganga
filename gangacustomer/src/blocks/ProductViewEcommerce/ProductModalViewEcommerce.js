@@ -26,7 +26,7 @@ class ProductModalViewEcommerce extends Component {
   	}  
 
   	componentDidMount(){
-      	// this.getData(this.props.productID);
+      	this.getData(this.props.productID);
 
   		var imageArray=[
 			{"image":"/images/45-home_default.jpg"},
@@ -36,7 +36,14 @@ class ProductModalViewEcommerce extends Component {
   		]
   	}
   	componentWillReceiveProps(nextProps){
-  		// this.getData(nextProps.productID);
+      
+      if (nextProps.productInfo) {
+        console.log('nextProps',nextProps.productInfo);
+        if (nextProps.productInfo.productID) {
+          this.getData(nextProps.productInfo.productID);
+        }
+        
+      }
   	}
   	// componentDidUpdate(prevProps,prevState){
   	// 	console.log('prevProps.productID!=this.props.productID',prevProps.productID,this.props.productID)
@@ -45,19 +52,19 @@ class ProductModalViewEcommerce extends Component {
   	// 	}
   	// }
 
-  	// getData(productID){
-  	// 	axios.get("/api/products/get/one/"+productID)
-   //          .then((response)=>{
-   //          	console.log("product info---->",response);
-   //            this.setState({ 
-   //                productData : response.data,
-   //                quanityLimit : response.data.availableQuantity
-   //            })
-   //          })
-   //          .catch((error)=>{
-   //              console.log('error', error);
-   //          })
-  	// }
+  	getData(productID){
+  		axios.get("/api/products/get/one/"+productID)
+            .then((response)=>{
+            	console.log("product info---->",response);
+              this.setState({ 
+                  productData : response.data,
+                  quanityLimit : response.data.availableQuantity
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+  	}
   	 changeImage = (event)=>{
   	 	
         document.getElementById('change-image').src=event.target.src;
@@ -228,7 +235,7 @@ class ProductModalViewEcommerce extends Component {
   	}
   }
   render() {
-  		 console.log('this.props.productID', this.props.productID);
+  	        console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
 		return (
 				
 			this.state.productData?
@@ -243,7 +250,7 @@ class ProductModalViewEcommerce extends Component {
 								if( !_.isEmpty(data)){
 								// if(index>0 && !_.isEmpty(data)){
 									return(
-                   					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" key={index+this.props.type} onClick={this.changeImage} >
+                   					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew" key={index+this.props.productInfo.productType} onClick={this.changeImage} >
 										<div className="row">
 										{
 											data &&  <img data-index={index} className={index==this.state.imgsrc?"imgbxborder":""} src={data} alt="default"/>
@@ -315,7 +322,7 @@ class ProductModalViewEcommerce extends Component {
 													this.state.productData.featureList.map((data,index)=>{
 														return (
 
-															<div className="singlefeature" key={index+this.props.type}>
+															<div className="singlefeature" key={index+this.props.productInfo.productType}>
 															<div className="">
 															 <span className="fa fa-circle-o tealColorfnt "></span>
 															  <span className="blackColor ">&nbsp;&nbsp;{data.feature}</span>
