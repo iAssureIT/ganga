@@ -26,7 +26,7 @@ class ProductModalViewEcommerce extends Component {
   	}  
 
   	componentDidMount(){
-      	this.getData(this.props.productID);
+      	// this.getData(this.props.productID);
 
   		var imageArray=[
 			{"image":"/images/45-home_default.jpg"},
@@ -36,7 +36,7 @@ class ProductModalViewEcommerce extends Component {
   		]
   	}
   	componentWillReceiveProps(nextProps){
-  		this.getData(nextProps.productID);
+  		// this.getData(nextProps.productID);
   	}
   	// componentDidUpdate(prevProps,prevState){
   	// 	console.log('prevProps.productID!=this.props.productID',prevProps.productID,this.props.productID)
@@ -45,19 +45,19 @@ class ProductModalViewEcommerce extends Component {
   	// 	}
   	// }
 
-  	getData(productID){
-  		axios.get("/api/products/get/one/"+productID)
-            .then((response)=>{
-            	console.log("product info---->",response);
-              this.setState({ 
-                  productData : response.data,
-                  quanityLimit : response.data.availableQuantity
-              })
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            })
-  	}
+  	// getData(productID){
+  	// 	axios.get("/api/products/get/one/"+productID)
+   //          .then((response)=>{
+   //          	console.log("product info---->",response);
+   //            this.setState({ 
+   //                productData : response.data,
+   //                quanityLimit : response.data.availableQuantity
+   //            })
+   //          })
+   //          .catch((error)=>{
+   //              console.log('error', error);
+   //          })
+  	// }
   	 changeImage = (event)=>{
   	 	
         document.getElementById('change-image').src=event.target.src;
