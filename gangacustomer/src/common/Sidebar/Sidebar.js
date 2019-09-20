@@ -43,13 +43,15 @@ export default class Sidebar extends Component {
       			<nav className="account-nav">
 		            <ul className="nav items">
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/" id="atag"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
+
+		                <a href="/account"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/account/edit/" id="atag"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
+		                <a href="/edit"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/customer/address/" id="atag"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
+		                <a href="/address"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
+
 		                </li>
 		                <li className="nav item col-lg-12">
 		                <a href="/my-orders" id="atag"><i className="fa fa-download"></i>&nbsp; My Orders </a>
