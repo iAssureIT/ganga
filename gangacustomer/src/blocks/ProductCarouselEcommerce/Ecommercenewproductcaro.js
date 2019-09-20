@@ -209,12 +209,12 @@ class Ecommercenewproductcaro extends Component {
             <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
-                    <div className="producttextclass  col-lg-3">
+                    <div className="producttextclass  col-lg-2">
                       <h3 className="row">
                        <b>{this.props.title}</b>
                       </h3>
                     </div>
-                    <div className="col-lg-3 producttimer">
+                    <div className="col-lg-4 producttimer">
                       <ul>
 {/*                        <li><span id="days"></span>days</li>
                         <li><span id="hours"></span>Hours</li>
