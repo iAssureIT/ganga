@@ -36,6 +36,7 @@ import Wishlist                                  from '../pages/Wishlist/Wishlis
 import Account                                   from '../pages/Account/Account.js';
 import EditAccount                               from '../pages/EditAccount/EditAccount.js';
 import Address                                   from '../pages/Address/Address.js';
+import AddressBook                                   from '../pages/AddressBook/AddressBook.js';
 import PrivacyPolicy                             from "../pages/PrivacyPolicy/PrivacyPolicy.js";
 import Aboutuspage                               from "../pages/Aboutuspage/Aboutuspage.js";
 import ReturnPolicy                              from '../pages/ReturnPolicy/ReturnPolicy.js';
@@ -66,6 +67,8 @@ const WebLayout = () => (
     <Route path="/wishlist"            exact strict component={ Wishlist } />
     <Route path="/account"            exact strict component={ Account } />
     <Route path="/edit"            exact strict component={ EditAccount } />
+    <Route path="/address-book"            exact strict component={ AddressBook } />
+    <Route path="/address/:deliveryAddressID"            exact strict component={ Address } />
     <Route path="/address"            exact strict component={ Address } />
     <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
     <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />

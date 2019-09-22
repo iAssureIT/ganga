@@ -27,7 +27,7 @@ export default class Sidebar extends Component {
 			<div className="mp-title">
 		        <strong>Marketplace</strong>
 		    </div>
-		    <div className="mp-subtitle">
+		    {/* <div className="mp-subtitle">
 		        <strong>Marketplace</strong>
 		    </div>
 		    <nav className="account-nav">
@@ -37,7 +37,7 @@ export default class Sidebar extends Component {
 		                <i className="fa fa-user" aria-hidden="true"></i>&nbsp; Become a Seller</a>
 		                </li>
 		            </ul>
-		    </nav>    
+		    </nav>     */}
 		    <br/>
 		    <br/>        
       			<nav className="account-nav">
@@ -50,26 +50,19 @@ export default class Sidebar extends Component {
 		                <a href="/edit"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="/address"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
+		                <a href="/address-book"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
 
 		                </li>
 		                <li className="nav item col-lg-12">
 		                <a href="/my-orders" id="atag"><i className="fa fa-download"></i>&nbsp; My Orders </a>
 		                </li>
+		                
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/downloadable/customer/products/" id="atag"><i className="fa fa-edit"></i>&nbsp; My Downloadable Products</a>
+		                <a href="/" id="atag"><i className="fa fa-credit-card"></i>&nbsp; My Credit Cards</a>
 		                </li>
+		               
 		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/vault/cards/listaction/" id="atag"><i className="fa fa-credit-card"></i>&nbsp; My Credit Cards</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/newsletter/manage/" id="atag"><i className="fa fa-envelope"></i> &nbsp; Newsletter Subscriptions</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/paypal/billing_agreement/" id="atag"><i className="fa fa-pencil"></i> &nbsp;Billing Agreements</a>
-		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="http://demo8.cmsmart.net/mag2_amazon_themeforest/france/review/customer/" id="atag"><i className="fa fa-eye"></i> &nbsp;My Product Reviews</a>
+		                <a href="/" id="atag"><i className="fa fa-eye"></i> &nbsp;My Product Reviews</a>
 		                </li>
 		                <li className="nav item col-lg-12">
 		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
