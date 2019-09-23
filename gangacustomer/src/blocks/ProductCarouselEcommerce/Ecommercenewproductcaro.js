@@ -263,7 +263,7 @@ class Ecommercenewproductcaro extends Component {
                     {
                     this.state.newProducts && this.state.newProducts.length > 0 ?
                     this.state.newProducts.map((data, index)=>{
-                      //  console.log('map ',data._id, data.productName);
+                       console.log('map ',data._id, data.productName);
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">
