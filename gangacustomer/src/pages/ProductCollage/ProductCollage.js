@@ -122,6 +122,7 @@ class ProductCollage extends Component {
 		console.log('masterproducts',this.state.masterproducts);
 		console.log('subcategoryID',subcategoryID);
 		console.log('selectedbrands',selectedbrands);
+		console.log('price',this.state.price);
 		
 		if (subcategoryID != '') {
 
@@ -186,15 +187,17 @@ class ProductCollage extends Component {
 	      if (name == 'slider_min') {
 	      	this.setState({
 	          price: { min : Number(target.value),  max : Number(this.state.price.max)}
+	      	},()=>{
+	      		this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
 	      	}); 
 	      }
 	      if (name == 'slider_max') {
 	      	this.setState({
 	          price: { min : Number(this.state.price.min),  max : Number(target.value)}
+	      	},()=>{
+	      		this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
 	      	}); 
-	      } 
-
-	      this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
+	      }
 	}
 	
   	render() {
