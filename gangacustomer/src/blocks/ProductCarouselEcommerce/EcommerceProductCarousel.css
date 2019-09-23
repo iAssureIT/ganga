@@ -662,3 +662,12 @@ background-color: transparent !important;
 .producttimerposition1{
     top: 12px;
 }
+
+.addtocartbtn:before {
+   font-family: "Font Awesome 5 Free";
+   content: "\f07a";
+   display: inline-block;
+   padding-right: 3px;
+   vertical-align: middle;
+   font-weight: 900;
+}

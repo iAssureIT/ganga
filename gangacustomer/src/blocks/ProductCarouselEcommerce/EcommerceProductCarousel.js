@@ -60,7 +60,7 @@ class EcommerceProductCarousel extends Component {
       hour = minute * 60,
       day = hour * 24;
 
-    /*let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
+    let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
     x = setInterval(function() {
 
       let now = new Date().getTime(),
@@ -77,7 +77,7 @@ class EcommerceProductCarousel extends Component {
       //  'IT'S MY BIRTHDAY!;
       //}
 
-    }, second)*/
+    }, second)
   }  
   getCartData(){
         // const userid = '5d5bfb3154b8276f2a4d22bf';
@@ -311,8 +311,8 @@ class EcommerceProductCarousel extends Component {
                                       }
                                     </div>
                                     <div className="actions">
-                                      <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart btn-warning fa fa-shopping-cart">
-                                        &nbsp;Add to Cart
+                                      <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart addtocartbtn btn-warning ">
+                                        {/*<i className="fa fa-shopping-cart"></i>*/}&nbsp;Add to Cart
                                       </button>
                                     </div>
                                 </div>
