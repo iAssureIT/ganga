@@ -6,8 +6,12 @@ import jQuery               from 'jquery';
 import moment               from 'moment';
 import _                    from 'underscore';
 import SmallBanner          from '../../blocks/SmallBanner/SmallBanner.js';
+
 import 'jquery-validation';
 import "./Checkout.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
 
 class Checkout extends Component{
     constructor(props){
@@ -30,7 +34,8 @@ class Checkout extends Component{
             },
             discountCode: false,
             comment : false,
-            giftOption : false
+            giftOption : false,
+            deliveryAddress : []
         }
         this.getCartData();   
         this.getCompanyDetails();
@@ -41,6 +46,7 @@ class Checkout extends Component{
         this.getCompanyDetails();
         this.getUserAddress();
         this.validation();
+        this.modalvalidation();
     }
     validation(){
           
@@ -167,6 +173,118 @@ class Checkout extends Component{
             }
           });
     }
+    modalvalidation(){
+        $.validator.addMethod("modalregxname", function(value, element, regexpr) {          
+          return regexpr.test(value);
+        }, "Name should only contain letters & number.");
+        $.validator.addMethod("modalregxmobileNumber", function(value, element, regexpr) {          
+          return regexpr.test(value);
+        }, "Please enter valid mobile number.");
+        $.validator.addMethod("modalregxemail", function(value, element, regexpr) {          
+          return regexpr.test(value);
+        }, "Please enter valid email address.");
+        $.validator.addMethod("modalregxpincode", function(value, element, regexpr) {          
+          return regexpr.test(value);
+        }, "Please enter valid pincode");
+        $.validator.addMethod("modalregxblock", function(value, element, regexpr) {          
+          return regexpr.test(value);
+        }, "Please enter valid block");
+        $.validator.addMethod("modalregxcity", function(value, element, regexpr) {          
+          return regexpr.test(value);
+        }, "Please enter valid city");
+        $.validator.addMethod("modalregxstate", function(value, element, arg){
+          return arg !== value;
+        }, "Please select the state");
+        $.validator.addMethod("modalregxcountry", function(value, element, arg){
+          return arg !== value;
+        }, "Please select the country");
+        $.validator.addMethod("modalregxaddType", function(value, element, arg){
+          return arg !== value;
+        }, "Please select the address type");
+      
+          jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+          });
+    
+          $("#modalAddressForm").validate({
+            rules: {
+                modalname: {
+                required: true,
+              },
+              modalmobileNumber: {
+                required: true,
+                modalregxmobileNumber : /^\d{10}$/
+              },
+              modalemail: {
+                required: true,
+                modalregxemail : /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+              },
+              modaladdressLine1: {
+                required: true,
+              },
+              modaladdressLine2: {
+                required: true,
+              },
+              modalpincode: {
+                required: true,
+              },
+              modalblock : {
+                required: true,
+              },
+              modalcity :{
+                  required : true,
+              },
+              modalstate: {
+                  required: true,
+                  regxstate: "Select State"
+              },
+              modalcountry: {
+                  required: true,
+                  regxcountry: "Select Country"
+              },
+              modaladdType:{
+                  required : true,
+                  regxaddType : "Select Type"
+              },
+            },
+          errorPlacement: function(error, element) {
+            if (element.attr("name") == "modalname"){
+              error.insertAfter("#modalname");
+            }
+            if (element.attr("name") == "modalmobileNumber"){
+              error.insertAfter("#modalmobileNumber");
+            }
+            if (element.attr("name") == "modalemail"){
+              error.insertAfter("#modalemail");
+            }
+            if (element.attr("name") == "modaladdressLine1"){
+              error.insertAfter("#modaladdressLine1");
+            }         
+            if (element.attr("name") == "modaladdressLine2"){
+              error.insertAfter("#modaladdressLine2");
+            }         
+            if (element.attr("name") == "modalpincode"){
+              error.insertAfter("#modalpincode");
+            }         
+            if (element.attr("name") == "modalblock"){
+              error.insertAfter("#modalblock");
+            }         
+            if (element.attr("name") == "modalcity"){
+              error.insertAfter("#modalcity");
+            } 
+            if (element.attr("name") == "modalstate"){
+              error.insertAfter("#modalstate");
+            }         
+            if (element.attr("name") == "modalcountry"){
+              error.insertAfter("#modalcountry");
+            }         
+            if (element.attr("name") == "modaladdType"){
+              error.insertAfter("#modaladdType");
+            }        
+          }
+        });
+  }
     getCartData(){
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
@@ -225,17 +343,7 @@ class Checkout extends Component{
         axios.get("/api/users/"+user_ID)
         .then((response)=>{
             this.setState({
-                "name"          : response.data.profile.deliveryAdd[0].name,
-                "email"         : response.data.profile.deliveryAdd[0].email,
-                "addressLine1"  : response.data.profile.deliveryAdd[0].addressLine1,
-                "addressLine2"  : response.data.profile.deliveryAdd[0].addressLine2,
-                "pincode"       : response.data.profile.deliveryAdd[0].pincode,
-                "block"         : response.data.profile.deliveryAdd[0].block,
-                "city"          : response.data.profile.deliveryAdd[0].city,
-                "state"         : response.data.profile.deliveryAdd[0].state,
-                "country"       : response.data.profile.deliveryAdd[0].country,
-                "mobileNumber"  : response.data.profile.deliveryAdd[0].mobileNumber,
-                "addType"       : response.data.profile.deliveryAdd[0].addType
+                "deliveryAddress" : response.data.deliveryAddress,
             });
         })
         .catch((error)=>{
@@ -313,11 +421,11 @@ class Checkout extends Component{
 		var taxTotal        = 0;
 		var totalTaxApplied = 0;
         var cartElem        = cartItemsMoveMain;
-        console.log('cartElem',cartElem);
+        // console.log('cartElem',cartElem);
 		if(cartElem){
 				
 			var noOfProducts = cartElem.cartItems.length;
-			console.log('noOfProducts', noOfProducts);
+			// console.log('noOfProducts', noOfProducts);
 			var totalAmount  = 0;
 			for(var i=0;i < noOfProducts;i++){
 				var productId    = cartElem.cartItems[i].productId;
@@ -327,14 +435,14 @@ class Checkout extends Component{
 				totalAmount     += finalPrice;
 				
 			} // end of i loop
-			console.log(totalAmount);
+			// console.log(totalAmount);
 			if(totalAmount > 0){
 				var themeSettings = this.state.companyInfo;
-				console.log("themeSettings",themeSettings);
+				// console.log("themeSettings",themeSettings);
 				
 					if(themeSettings){
 						var taxCount  = themeSettings.taxSettings.length;
-						console.log(taxCount);
+						// console.log(taxCount);
 						if(taxCount > 0){
 							for(var j=0;j < taxCount;j++){
 								var taxName          = themeSettings.taxSettings[j].taxType;
@@ -343,7 +451,7 @@ class Checkout extends Component{
 								var taxeffectiveFrom = themeSettings.taxSettings[j].effectiveFrom;
 								var taxeffectiveTo   = themeSettings.taxSettings[j].effectiveTo ? themeSettings.taxSettings[j].effectiveTo : new Date();
 		
-								console.log('taxeffectiveTo',taxeffectiveTo);
+								// console.log('taxeffectiveTo',taxeffectiveTo);
 		
 								var from = taxeffectiveFrom; 
 								var effectiveDateFrom = new Date(from[0], from[1] - 1, from[2]);
@@ -489,7 +597,7 @@ class Checkout extends Component{
 	
 	
 		} //end of if cartElem
-		console.log("taxCalc",taxCalc);
+		// console.log("taxCalc",taxCalc);
 		
 		return taxCalc;
 	}
@@ -543,171 +651,221 @@ class Checkout extends Component{
     }
     placeOrder(event){
         event.preventDefault();		
+        var addressValues ={};
         var payMethod = $("input[name='payMethod']:checked").val();
         var checkedBox = $("input[name='termsNconditions']:checked").val();
-        
+        var checkoutAddess = $("input[name='checkoutAddess']:checked").val();
 		var formValues ={
 			"payMethod" : payMethod,
 			"user_ID" : localStorage.getItem('user_ID')
-         }
-         var addressValues ={
-            "user_ID" : localStorage.getItem('user_ID'),
-            "name"          : this.state.name,
-            "email"         : this.state.email,
-            "addressLine1"  : this.state.addressLine1,
-            "addressLine2"  : this.state.addressLine2,
-            "pincode"       : this.state.pincode,
-            "block"         : this.state.block,
-            "city"          : this.state.city,
-            "state"         : this.state.state,
-            "country"       : this.state.country,
-            "mobileNumber"  : this.state.mobileNumber,
-            "addType"       : this.state.addType
-         }
-		 console.log('formValues', formValues);
-		if($('#checkout').valid()){
-			
-                console.log(payMethod, this.state.cartProduct);
-                axios.patch('/api/carts/address', addressValues)
-                .then((response)=>{
-                    console.log('addressValues', response);
-                    
-                })
-                .catch((error)=>{
-                    console.log('error', error);
-                })
+        }
         
-				axios.patch('/api/carts/payment', formValues)
-				.then((response)=>{
-					console.log('response', response);
-				})
-				.catch((error)=>{
-					console.log('error', error);
-				})
-                
-				var cartItemsMoveMain  = this.state.cartProduct;
-				console.log('cartItemsMoveMain', cartItemsMoveMain);
-	
-				var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
-				
-				console.log("grandTotalArray=-+-=-=-=->: ", grandTotalArray);
-				
-				if(grandTotalArray){
-					var totalAmount       = grandTotalArray.finalTotal;
-					// var totalAmount       = 100;
-					var selectedPayMethod = payMethod;
-					// var userId            = Meteor.userId();
-					if(payMethod == "Cash On Delivery"|| payMethod == 'Cash Payment' || payMethod == 'cheque payment'){
-	
-						var userId      = localStorage.getItem('user_ID');
-						var i           = 0;
-						var productIds  = [];
-						var prices      = [];
-						var qtys        = [];
-						var totals      = [];
-						var index       = [];
-						var discountedProdPrice = [];
-						var totalAmount   = 0;
-						var discountAvail = 0;
-						var cartItemsMove  = cartItemsMoveMain;
-						
-						if(cartItemsMove){		
-							var noOfItems = cartItemsMove.cartItems.length;
-							for(i=0;i<noOfItems;i++){
-								var discountPrice = 0;
-								var cartProduct    = cartItemsMove.cartItems[i];
-								var productId      = cartProduct.productId;
-								var productIndex   = cartProduct.indexInproducts;
-								var qty            = cartProduct.quantity;
-	
-								if(cartProduct.deductedAmtAftrCoupon){ 
-									discountPrice  = cartProduct.deductedAmtAftrCoupon;
-								}
-			
-								productIds[i]   = productId;
-								prices[i]       = (cartProduct.offeredPrice);
-								qtys[i]         = qty;
-								totals[i]       = (cartProduct.totalForQantity); ;
-								totalAmount     = totalAmount + totals[i];
-								index[i]        = productIndex;
-								discountedProdPrice[i] = discountPrice;
-							}
-						
-							// if(grandtotalValue){
-								var inputObject = {
-									"user_ID"             : userId,
-									"productIds"          : productIds,
-									"productName"         : cartItemsMove.productName,
-									"prices"              : prices,
-									"qtys"                : qtys,
-									"totals"              : totals,
-									"discountedProdPrice" : discountedProdPrice,
-									"totalAmount"         : (grandTotalArray.finalTotal),
-									"index"               : index,
-									"totalForQantity"     : cartItemsMove.totalForQantity,
-									"productImage"        : cartItemsMove.productImage,
-									// "couponUsed"          : cartItemsMove.couponUsed,
-								}
-	
-								axios.post('/api/orders/post', inputObject)
-								.then((result)=>{
-									if(result){
-										console.log('result', result.data);
-										axios.get('/api/orders/get/one/'+result.data.order_ID)
-										.then((orderStatus)=>{
-											if(orderStatus){
-												var userId  = orderStatus.userId;
-												var orderNo = orderStatus.OrderId;
-												var orderDbDate =  orderStatus.createdAt;
-												var orderDate   =  moment(orderDbDate).format('DD/MM/YYYY');
-												var totalAmount = orderStatus.totalAmount;
-												
-												
-															
-												var userId  = localStorage.getItem('user_ID');
-												console.log('order_ID', result.data.order_ID);
-												
-												// this.props.history.push("/PaymentResponse/"+result.data.order_ID); 
-												this.props.history.push('/payment/'+result.data.order_ID);
-												swal('Order Placed Successfully');    	
-												
-											}
-										})
-										.catch((error)=>{
-											console.log('error', error)
-										})
-									}
-								})
-								.catch((error)=>{
-									console.log(error)
-								})
-									
-						}else{
-							if(selectedPayMethod == "Online Payment"){
-								//console.log("in payment gateway meteor call");
-								// Meteor.call('paymentGateway',totalAmount,  (error, result)=> { 
-								// 	if (error) {
-								// 	} 
-								// 	else {
-								// 		if(result){
-								// 			window.location = result;
-								// 		}else{                              
-								// 			this.props.history.push('/payment-error');
-								// 		}
-	
-								// 	}//the _id of new object if successful
-								// });
-							}
-						}
-					}//End of grandtotal array
-				}
-			
-		}
-    }
-    placeOrders(event){
-        event.preventDefault();
+        if(this.state.deliveryAddress && this.state.deliveryAddress.length > 0){
+            var deliveryAddress = this.state.deliveryAddress.filter((a, i)=>{
+                return a._id == checkoutAddess
+            })
+            // console.log('deliveryAddress if',deliveryAddress);
+            addressValues ={
+                "user_ID"       : localStorage.getItem('user_ID'),
+                "name"          : deliveryAddress[0].name,
+                "email"         : deliveryAddress[0].email,
+                "addressLine1"  : deliveryAddress[0].addressLine1,
+                "addressLine2"  : deliveryAddress[0].addressLine2,
+                "pincode"       : deliveryAddress[0].pincode,
+                "block"         : deliveryAddress[0].block,
+                "city"          : deliveryAddress[0].city,
+                "state"         : deliveryAddress[0].state,
+                "country"       : deliveryAddress[0].country,
+                "mobileNumber"  : deliveryAddress[0].mobileNumber,
+                "addType"       : deliveryAddress[0].addType
+            }
+        }else{
+            // console.log('else');
+            addressValues ={
+                "user_ID"       : localStorage.getItem('user_ID'),
+                "name"          : this.state.name,
+                "email"         : this.state.email,
+                "addressLine1"  : this.state.addressLine1,
+                "addressLine2"  : this.state.addressLine2,
+                "pincode"       : this.state.pincode,
+                "block"         : this.state.block,
+                "city"          : this.state.city,
+                "state"         : this.state.state,
+                "country"       : this.state.country,
+                "mobileNumber"  : this.state.mobileNumber,
+                "addType"       : this.state.addType
+            }
+        }
+		// console.log('formValues', formValues);
         if($('#checkout').valid()){
-            console.log('com');
+            // console.log(payMethod, this.state.cartProduct);
+            axios.patch('/api/carts/address', addressValues)
+            .then((response)=>{
+                // console.log('addressValues', response);
+                
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    
+            axios.patch('/api/carts/payment', formValues)
+            .then((response)=>{
+                // console.log('response', response);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+            
+            var cartItemsMoveMain  = this.state.cartProduct;
+            // console.log('cartItemsMoveMain', cartItemsMoveMain);
+
+            var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
+            
+            // console.log("grandTotalArray=-+-=-=-=->: ", grandTotalArray);
+            
+            if(grandTotalArray){
+                var totalAmount       = grandTotalArray.finalTotal;
+                // var totalAmount       = 100;
+                var selectedPayMethod = payMethod;
+                // var userId            = Meteor.userId();
+                if(payMethod == "Cash On Delivery"|| payMethod == 'Cash Payment' || payMethod == 'cheque payment'){
+
+                    var userId      = localStorage.getItem('user_ID');
+                    var i           = 0;
+                    var productIds  = [];
+                    var prices      = [];
+                    var qtys        = [];
+                    var totals      = [];
+                    var index       = [];
+                    var discountedProdPrice = [];
+                    var totalAmount   = 0;
+                    var discountAvail = 0;
+                    var cartItemsMove  = cartItemsMoveMain;
+                    
+                    if(cartItemsMove){		
+                        var noOfItems = cartItemsMove.cartItems.length;
+                        for(i=0;i<noOfItems;i++){
+                            var discountPrice = 0;
+                            var cartProduct    = cartItemsMove.cartItems[i];
+                            var productId      = cartProduct.productId;
+                            var productIndex   = cartProduct.indexInproducts;
+                            var qty            = cartProduct.quantity;
+
+                            if(cartProduct.deductedAmtAftrCoupon){ 
+                                discountPrice  = cartProduct.deductedAmtAftrCoupon;
+                            }
+        
+                            productIds[i]   = productId;
+                            prices[i]       = (cartProduct.offeredPrice);
+                            qtys[i]         = qty;
+                            totals[i]       = (cartProduct.totalForQantity); ;
+                            totalAmount     = totalAmount + totals[i];
+                            index[i]        = productIndex;
+                            discountedProdPrice[i] = discountPrice;
+                        }
+                    
+                        // if(grandtotalValue){
+                            var inputObject = {
+                                "user_ID"             : userId,
+                                "productIds"          : productIds,
+                                "productName"         : cartItemsMove.productName,
+                                "prices"              : prices,
+                                "qtys"                : qtys,
+                                "totals"              : totals,
+                                "discountedProdPrice" : discountedProdPrice,
+                                "totalAmount"         : (grandTotalArray.finalTotal),
+                                "index"               : index,
+                                "totalForQantity"     : cartItemsMove.totalForQantity,
+                                "productImage"        : cartItemsMove.productImage,
+                                // "couponUsed"          : cartItemsMove.couponUsed,
+                            }
+
+                            axios.post('/api/orders/post', inputObject)
+                            .then((result)=>{
+                                if(result){
+                                    // console.log('result', result.data);
+                                    axios.get('/api/orders/get/one/'+result.data.order_ID)
+                                    .then((orderStatus)=>{
+                                        if(orderStatus){
+                                            var userId  = orderStatus.userId;
+                                            var orderNo = orderStatus.OrderId;
+                                            var orderDbDate =  orderStatus.createdAt;
+                                            var orderDate   =  moment(orderDbDate).format('DD/MM/YYYY');
+                                            var totalAmount = orderStatus.totalAmount;
+                                            
+                                            
+                                                        
+                                            var userId  = localStorage.getItem('user_ID');
+                                            console.log('order_ID', result.data.order_ID);
+                                            swal('Order Placed Successfully');   
+                                            // this.props.history.push("/PaymentResponse/"+result.data.order_ID); 
+                                            this.props.history.push('/payment/'+result.data.order_ID);
+                                             	
+                                            
+                                        }
+                                    })
+                                    .catch((error)=>{
+                                        console.log('error', error)
+                                    })
+                                }
+                            })
+                            .catch((error)=>{
+                                console.log(error)
+                            })
+                                
+                    }else{
+                        if(selectedPayMethod == "Online Payment"){
+                            //console.log("in payment gateway meteor call");
+                            // Meteor.call('paymentGateway',totalAmount,  (error, result)=> { 
+                            // 	if (error) {
+                            // 	} 
+                            // 	else {
+                            // 		if(result){
+                            // 			window.location = result;
+                            // 		}else{                              
+                            // 			this.props.history.push('/payment-error');
+                            // 		}
+
+                            // 	}//the _id of new object if successful
+                            // });
+                        }
+                    }
+                }//End of grandtotal array
+            }
+        }
+    }
+    
+    saveModalAddress(event){
+        event.preventDefault();
+        this.modalvalidation();
+        var addressValues ={
+            "user_ID"       : localStorage.getItem('user_ID'),
+            "name"          : this.refs.modalname.value,
+            "email"         : this.refs.modalemail.value,
+            "addressLine1"  : this.refs.modaladdressLine1.value,
+            "addressLine2"  : this.refs.modaladdressLine2.value,
+            "pincode"       : this.refs.modalpincode.value,
+            "block"         : this.refs.modalblock.value,
+            "city"          : this.refs.modalcity.value,
+            "state"         : this.refs.modalstate.value,
+            "country"       : this.refs.modalcountry.value,
+            "mobileNumber"  : this.refs.modalmobileNumber.value,
+            "addType"       : this.refs.modaladdType.value
+        }
+        // console.log('saveModalAddress');
+        if($('#modalAddressForm').valid()){
+            // console.log('saveModalAddress valid');
+            axios.patch('/api/users/patch/address', addressValues)
+            .then((response)=>{
+                swal(response.data.message);
+                this.getUserAddress();
+                $(".checkoutAddressModal").hide();
+                $(".modal-backdrop").hide();
+
+            })
+            .catch((error)=>{
+                console.log('error', error)
+            });
         }
     }
     render(){
@@ -718,67 +876,170 @@ class Checkout extends Component{
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <form id="checkout">
                             <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">1 SHIPPING ADDRESS</div>
-                                    
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
-                                        <input type="text" ref="name" name="name" id="name" value={this.state.name} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                { 
+                                    this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">1 SHIPPING ADDRESS</div>
+                                        {
+                                            this.state.deliveryAddress.map((data, index)=>{
+                                                return(
+                                                    <div key={'check'+index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                                        <input type="radio" value={data._id} name="checkoutAddess"/> &nbsp;
+                                                        <span>{data.name} {data.addressLine1} {data.addressLine2} {data.block} {data.city} {data.state} {data.country} {data.pincode}</span>
+                                                    </div>
+                                                );
+                                            })
+                                        }
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                            <button className="btn btn-warning" data-toggle="modal" data-target="#checkoutAddressModal">Add New Address</button>
+                                            <div className="modal fade col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 checkoutAddressModal" id="checkoutAddressModal" role="dialog">
+                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                        <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                                            <h4 className="modal-title">Netbaseteam Shipping Address</h4>
+                                                        </div>
+                                                        <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutAddressModal">
+                                                            <form id="modalAddressForm">
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
+                                                                    <input type="text" ref="modalname" name="modalname" id="modalname"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
+                                                                    <input type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                    {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
+                                                                    <input type="modalemail" ref="modalemail" name="modalemail" id="modalemail"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
+                                                                    <input type="text" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 <span className="required">*</span></label>
+                                                                    <input type="text" ref="modaladdressLine2" name="modaladdressLine2" id="modaladdressLine2"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
+                                                                    <select ref="modalcountry" name="modalcountry" id="modalcountry"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <option value="Select Country">Select Country</option>
+                                                                        <option value="India">India</option>
+                                                                        <option value="USA">USA</option>
+                                                                        <option value="Chaina">Chaina</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
+                                                                    <select ref="modalstate" name="modalstate" id="modalstate"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <option value="Select State">Select State</option>
+                                                                        <option value="Maharashtra">Maharashtra</option>
+                                                                        <option value="Goa">Goa</option>
+                                                                        <option value="Gujarat">Gujarat</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block <span className="required">*</span></label>
+                                                                    <input type="text" ref="modalblock" name="modalblock" id="modalblock"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
+                                                                    <input type="text" ref="modalcity" name="modalcity" id="modalcity"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
+                                                                    <input type="text" ref="modalpincode" name="modalpincode" id="modalpincode"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                                </div>
+                                                                
+                                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
+                                                                    <select id="modaladdType" name="modaladdType" ref="modaladdType"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                        <option value="Home">Home (All day delivery) </option>
+                                                                        <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>  
+                                                                    </select>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div className="modal-footer checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <button type="button" className="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                                            <button type="button" className="btn btn-warning" onClick={this.saveModalAddress.bind(this)}>Save Address</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                        <input type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                        {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
+                                    :
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">1 SHIPPING ADDRESS</div>
+                                        
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
+                                            <input type="text" ref="name" name="name" id="name" value={this.state.name} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
+                                            <input type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                            {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
+                                            <input type="email" ref="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
+                                            <input type="text" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 <span className="required">*</span></label>
+                                            <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
+                                            <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <option value="Select Country">Select Country</option>
+                                                <option value="India">India</option>
+                                                <option value="USA">USA</option>
+                                                <option value="Chaina">Chaina</option>
+                                            </select>
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
+                                            <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <option value="Select State">Select State</option>
+                                                <option value="Maharashtra">Maharashtra</option>
+                                                <option value="Goa">Goa</option>
+                                                <option value="Gujarat">Gujarat</option>
+                                            </select>
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block <span className="required">*</span></label>
+                                            <input type="text" ref="block" name="block" id="block" value={this.state.block} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
+                                            <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
+                                            <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        </div>
+                                        
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
+                                            <select id="addType" name="addType" ref="addType" value={this.state.addType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <option value="Home">Home (All day delivery) </option>
+                                                <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>  
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
-                                        <input type="email" ref="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
-                                        <input type="text" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 <span className="required">*</span></label>
-                                        <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                        <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <option value="Select Country">Select Country</option>
-                                            <option value="India">India</option>
-                                            <option value="USA">USA</option>
-                                            <option value="Chaina">Chaina</option>
-                                        </select>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                        <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <option value="Select State">Select State</option>
-                                            <option value="Maharashtra">Maharashtra</option>
-                                            <option value="Goa">Goa</option>
-                                            <option value="Gujarat">Gujarat</option>
-                                        </select>
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
-                                        <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                    </div>
-                                    
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                        <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                    </div>
-                                    
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
-                                        <select id="addType" name="addType" ref="addType" value={this.state.addType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <option value="Home">Home (All day delivery) </option>
-                                            <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>  
-                                        </select>
-                                    </div>
-                                    
-                                </div>
+                                }
+                                
+                               
                             </div>
                             <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingLeft">
@@ -837,8 +1098,6 @@ class Checkout extends Component{
                                                 :
                                                 null
                                         }
-                                        
-                                        
                                     </tbody>
                                 </table>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">

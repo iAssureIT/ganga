@@ -137,3 +137,6 @@
 .required{
     color: red !important;
 }
+.checkoutAddressModal{
+    /* overflow: hidden; */
+}
