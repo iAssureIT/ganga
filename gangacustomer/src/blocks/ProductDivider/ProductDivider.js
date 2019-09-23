@@ -19,7 +19,8 @@ export default class ProductDivider extends Component {
   render() {
   	
 		return (
-			<div className="row">
+		<div className="col-lg-12 col-md-12 col-ms-12 col-xs-12">	
+			<div className="col-lg-12 col-md-12 col-ms-12 col-xs-12">
 				{
 					this.state.categoriesImg && this.state.categoriesImg.map((data,index)=>{
 						if (index < 8 ) {
@@ -39,7 +40,8 @@ export default class ProductDivider extends Component {
 						}
 					})
 				}
-         	</div>   	
+         	</div>  
+        </div> 	
 		);
 	}
 }

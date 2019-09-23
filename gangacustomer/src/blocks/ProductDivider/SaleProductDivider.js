@@ -8,7 +8,7 @@ export default class SaleProductDivider extends Component {
   	}  
   render() {
 		return (
-			<div className="row">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                <div className="block">
 	                    <a className="image" href="#" target="_blank"> 
@@ -16,7 +16,7 @@ export default class SaleProductDivider extends Component {
 	                	<div className="figcaption2"></div>
 	                </div>
             	</div>
-         	</div>   	
+         	</div>  	
 		);
 	}
 }
