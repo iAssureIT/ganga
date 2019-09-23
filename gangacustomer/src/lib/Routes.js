@@ -36,7 +36,7 @@ import Wishlist                                  from '../pages/Wishlist/Wishlis
 import Account                                   from '../pages/Account/Account.js';
 import EditAccount                               from '../pages/EditAccount/EditAccount.js';
 import Address                                   from '../pages/Address/Address.js';
-import AddressBook                                   from '../pages/AddressBook/AddressBook.js';
+import AddressBook                               from '../pages/AddressBook/AddressBook.js';
 import PrivacyPolicy                             from "../pages/PrivacyPolicy/PrivacyPolicy.js";
 import Aboutuspage                               from "../pages/Aboutuspage/Aboutuspage.js";
 import ReturnPolicy                              from '../pages/ReturnPolicy/ReturnPolicy.js';

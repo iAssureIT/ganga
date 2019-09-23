@@ -11,19 +11,19 @@ class Address extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            stateArray:[]
         }
+        this.camelCase = this.camelCase.bind(this)
     }
     componentDidMount(){
+
         var user_ID = localStorage.getItem("user_ID");
         var deliveryAddressID = this.props.match.params.deliveryAddressID;
         console.log('deliveryAddressID', deliveryAddressID);
         axios.get('/api/users/'+user_ID)
         .then((response)=>{
-            console.log('use', response.data);
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
-
-            console.log('deliveryAddress add', deliveryAddress);
+            this.getStates(deliveryAddress[0].country);
             this.setState({
                 "name"            : deliveryAddress[0].name,
                 "email"           : deliveryAddress[0].email,
@@ -49,6 +49,26 @@ class Address extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+    }
+    handleChangeCountry(event){
+      const target = event.target;
+      this.setState({
+        [event.target.name] : event.target.value
+      })
+      this.getStates($(target).val())
+    }
+    getStates(countryCode){
+      axios.get("http://locationapi.iassureit.com/api/states/get/list/"+countryCode)
+            .then((response)=>{
+          
+              this.setState({
+                  stateArray : response.data
+              })
+              $('#Statedata').val(this.state.states);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
     }
     saveAddress(event){
         event.preventDefault();
@@ -89,7 +109,13 @@ class Address extends Component {
         }
         this.props.history.push('/address-book');
     }
-
+    camelCase(str){
+      return str
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    }
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -125,20 +151,25 @@ class Address extends Component {
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChangeCountry.bind(this)}  className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <option value="Select Country">Select Country</option>
-                                    <option value="India">India</option>
-                                    <option value="USA">USA</option>
-                                    <option value="Chaina">Chaina</option>
+                                    <option value="IN">India</option>
+                                    
                                 </select>
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
                                 <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <option value="Select State">Select State</option>
-                                    <option value="Maharashtra">Maharashtra</option>
-                                    <option value="Goa">Goa</option>
-                                    <option value="Gujarat">Gujarat</option>
+                                     {
+                                      this.state.stateArray && this.state.stateArray.length > 0 ?
+                                      this.state.stateArray.map((stateData, index)=>{
+                                        return(      
+                                            <option key={index} value={this.camelCase(stateData.stateName)}>{this.camelCase(stateData.stateName)}</option>
+                                          );
+                                        }
+                                      ) : ''
+                                    }
                                 </select>
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
