@@ -155,6 +155,8 @@ export default class Footer extends Component {
                     {
                        
                         this.state.categoryDetails && this.state.categoryDetails.map((data,index)=>{
+
+                            if (index<9) {
                             var subCategoryStr = '';
                             if (data.subCategory) {
                                 subCategoryStr = data.subCategory.map( (subcat) =>{
@@ -175,6 +177,7 @@ export default class Footer extends Component {
                                 </div>
                                 );
                             
+                            }
                         })
                     }
                     
