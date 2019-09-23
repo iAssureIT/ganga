@@ -36,6 +36,18 @@ class Ecommercenewproductcaro extends Component {
                 items:5 
             }
           },
+          responsive2:{
+            0:{
+                items:1
+            },
+            600:{
+                items:2
+            },
+            1000:{
+                items:4 
+            }
+          },
+
           productType : props.type,
           newProducts: [],
           modalIDNew : []
@@ -79,7 +91,7 @@ class Ecommercenewproductcaro extends Component {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           console.log('cartProduct=======================', response.data[0].cartItems)
+           // console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
@@ -208,13 +220,13 @@ class Ecommercenewproductcaro extends Component {
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
             <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading text-center">
                     <div className="producttextclass  col-lg-2">
                       <h3 className="row">
                        <b>{this.props.title}</b>
                       </h3>
                     </div>
-                    <div className="col-lg-4 producttimer">
+                    <div className="col-lg-5 producttimer">
                       <ul>
 {/*                        <li><span id="days"></span>days</li>
                         <li><span id="hours"></span>Hours</li>
@@ -222,12 +234,12 @@ class Ecommercenewproductcaro extends Component {
                         <li><span id="seconds"></span>Seconds</li>
 */}                      </ul>                    
                     </div>
-                    <div className="col-lg-6 producttimer">
+                    <div className="col-lg-5 producttimer producttimerposition">
                         <OwlCarousel
                             className="owl-theme customnNavButtoncaro1"
                             margin={0}
                             nav={true}
-                            responsive={this.state.responsive} 
+                            responsive={this.state.responsive2} 
                             autoplay={true}
                             autoplayHoverPause={true}
                         >
@@ -263,7 +275,7 @@ class Ecommercenewproductcaro extends Component {
                     {
                     this.state.newProducts && this.state.newProducts.length > 0 ?
                     this.state.newProducts.map((data, index)=>{
-                       console.log('map ',data._id, data.productName);
+                       // console.log('map ',data._id, data.productName);
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">

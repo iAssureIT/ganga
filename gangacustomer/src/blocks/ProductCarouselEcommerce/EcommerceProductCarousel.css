@@ -339,30 +339,35 @@ background-color: transparent !important;
     border-bottom: 2px solid #fbbb65;
     margin:0px!important;
     color: #fbbb65;
+    text-align: left;
     width: auto;
 }
 
 
-
 .producttimer li {
   display: inline-block;
-  /*font-size: 1.5em;*/
   list-style-type: none;
-  padding-left:1em;
+  /*padding-left:1em;*/
+  padding-right:1em;
   text-transform: uppercase;
+  color: #777;
+  font-weight: 700; 
 }
 
 .producttimer li span {
-  display: block;
   /*font-size: 4.5rem;*/
-  text-align: center;
+}
+.producttimerdiv{
+    background-color: #F7F7F7;
+    padding: 5px 10px;
+    border-radius:5px;
 }
 
 .producttimer ul{
     margin-bottom: 0px;
     padding-bottom: 0px;
     text-align: center;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .productcarotext1{
@@ -380,8 +385,9 @@ background-color: transparent !important;
 .customnNavButtoncaro1 .owl-nav{
     position: absolute;
     right: 0px;
-    left: 10px;
-    margin-top:0px!important;
+    left: 522px;
+    margin-top: 0px!important;
+    bottom: -5px;
 
 }
 .customnNavButtoncaro1 .owl-nav button.owl-prev{
@@ -399,6 +405,9 @@ background-color: transparent !important;
     background-color: #777!important;
     border-radius: 100%;
     font-size: 13px!important;
+    position: absolute;
+    left: 30px;
+    bottom: 0px;
 }
 .customnNavButtoncaro1 .owl-nav button.owl-prev:focus{
     outline: 0px!important;
@@ -639,4 +648,17 @@ background-color: transparent !important;
 
 .producttextclass h3{
     font-size: 18px!important;
+}
+
+.producttimer{
+
+}
+
+.producttimerposition{
+    position: absolute;
+    top: 18px;
+    left: 684px;
+}
+.producttimerposition1{
+    top: 12px;
 }

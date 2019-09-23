@@ -182,7 +182,7 @@ export default class Footer extends Component {
                 <br />
             </div>
         </div> 
-        <div className="row footer3">
+        <div className="footer3">
             <div className="container">
             <div className="footer_bottom">
                 <div className="col-sm-9 col-md-7 col-lg-6">
