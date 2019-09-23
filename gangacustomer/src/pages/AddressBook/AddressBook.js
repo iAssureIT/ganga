@@ -12,6 +12,8 @@ class AddressBook extends Component{
         this.state={
             deliveryAddresses : []
         }
+        this.getUserData();
+        this.getUserAddresses();
     }
     componentDidMount(){
         this.getUserData();
@@ -56,6 +58,24 @@ class AddressBook extends Component{
           // alert("Something went wrong! Please check Get URL.");
         });   
     }
+    deleteAddress(event){
+        event.preventDefault();
+        var user_ID = localStorage.getItem("user_ID");
+        var deliveryAddressID = event.target.id; 
+        var formValues = {
+            user_ID : user_ID,
+            deliveryAddressID : deliveryAddressID
+        }
+        axios.patch('/api/users/delete/address', formValues)
+        .then((response)=>{
+            console.log('response', response);
+            this.getUserAddresses();
+            swal(response.data.message);
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
 
 
     render(){
@@ -70,39 +90,59 @@ class AddressBook extends Component{
                         <h4 className="addTitle">Default Addresses</h4>
                         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div className="row">
-                                    <label>Default Billing Address</label>
-                                    <p>
-                                        {this.state.name} <br />
-                                        {this.state.addressLine1} <br />
-                                        {this.state.addressLine2} <br />
-                                        {this.state.block}, {this.state.city},<br />
-                                        {this.state.state}, {this.state.country} - {this.state.pincode}<br />
-                                        T: {this.state.mobileNumber}
-                                    </p>
-                                    <a href={'/address/'+this.state.deliveryAddressID} className="btn btn-warning mt15">Change Billing Address</a>
-                                </div>
+                                {
+                                    this.state.addressLine1 ? 
+                                    <div className="row">
+                                        <label>Default Billing Address</label>
+                                        <p>
+                                            {this.state.name} <br />
+                                            {this.state.addressLine1} <br />
+                                            {this.state.addressLine2} <br />
+                                            {this.state.block}, {this.state.city},<br />
+                                            {this.state.state}, {this.state.country} - {this.state.pincode}<br />
+                                            T: {this.state.mobileNumber}
+                                        </p>
+                                        <a href={'/address/'+this.state.deliveryAddressID} className="btn btn-warning mt15">Change Billing Address</a>
+                                    </div>
+                                    :
+                                    <div className="row">
+                                        <label>Default Billing Address</label>
+                                        <p>You have not set a default billing address.</p>
+                                        <a href={'/address'} className="btn btn-warning mt15">Add Billing Address</a>
+                                    </div>
+                                }
+                                
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb25 NOpaddingRight">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div className="row">
-                                    <label>Default Shipping Address</label>
-                                    <p>
-                                        {this.state.name} <br />
-                                        {this.state.addressLine1} <br />
-                                        {this.state.addressLine2} <br />
-                                        {this.state.block}, {this.state.city},<br />
-                                        {this.state.state}, {this.state.country} - {this.state.pincode}<br />
-                                        T: {this.state.mobileNumber}
-                                    </p>
-                                    <a href={'/address/'+this.state.deliveryAddressID} className="btn btn-warning mt15">Change Shipping Address</a>
-                                </div>
+                                {this.state.addressLine1 ?
+                                    <div className="row">
+                                        <label>Default Shipping Address</label>
+                                        
+                                        <p>
+                                            {this.state.name} <br />
+                                            {this.state.addressLine1} <br />
+                                            {this.state.addressLine2} <br />
+                                            {this.state.block}, {this.state.city},<br />
+                                            {this.state.state}, {this.state.country} - {this.state.pincode}<br />
+                                            T: {this.state.mobileNumber}
+                                        </p>
+                                        <a href={'/address/'+this.state.deliveryAddressID} className="btn btn-warning mt15">Change Shipping Address</a>
+                                    </div>
+                                    :
+                                    <div className="row">
+                                        <label>Default Shipping Address</label>
+                                        <p>You have not set a default shipping address.</p>
+                                        <a href={'/address'} className="btn btn-warning mt15">Add Shipping Address</a>
+                                    </div>
+                                }
+                                
                             </div>
                         </div>
                         <h4 className="addTitle mt25">Additional Address Entries</h4>
                         {
-                            this.state.deliveryAddresses && this.state.deliveryAddresses.length > 0 ?
+                            this.state.deliveryAddresses && this.state.deliveryAddresses.length > 1 ?
                             this.state.deliveryAddresses.map((address , index)=>{
                                 if(index != 0){
                                     return(
@@ -117,7 +157,8 @@ class AddressBook extends Component{
                                                         {address.state}, {address.country} - {address.pincode}<br />
                                                         T: {address.mobileNumber}
                                                     </p>
-                                                    <a href={'/address/'+address._id} className="btn btn-warning mt15">Edit Address</a>
+                                                    <a href={'/address/'+address._id} className="btn btn-warning ">Edit Address</a> &nbsp;
+                                                    <i id={address._id} onClick={this.deleteAddress.bind(this)} className="fa fa-trash btn btn-warning deleteAdd"></i>
                                                 </div>
                                             </div>
                                         </div>

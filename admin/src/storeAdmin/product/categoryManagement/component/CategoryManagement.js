@@ -34,7 +34,7 @@ class CategoryManagement extends Component{
             "tableObjects"              : {
               deleteMethod              : 'delete',
               apiLink                   : '/api/category/',
-              paginationApply           : false,
+              paginationApply           : true,
               searchApply               : true,
               editUrl                   : '/category-management/'
             },
