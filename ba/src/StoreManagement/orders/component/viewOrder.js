@@ -73,7 +73,7 @@ class viewOrder extends Component{
                               <div className="row">
                                 <div className="col-lg-4">
                                 <div className="">
-                                  <div  className=" col-lg-12 orderButton">{"OrderId-"+(this.state.orderData._id)}</div>
+                                  <div  className=" col-lg-12 orderButton">{"OrderId-"+(this.state.orderData.orderID)}</div>
                                   </div>
                                 </div>
                                <div  className="col-lg-4 text-center">

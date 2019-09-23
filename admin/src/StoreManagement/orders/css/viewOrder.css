@@ -279,6 +279,5 @@
   margin-top: 10px
 }
 .parentDiv{
-  height: 600px;
-  overflow-y: scroll;
+  height: auto;
 }

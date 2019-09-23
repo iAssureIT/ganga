@@ -29,7 +29,7 @@ class BasicInfo extends Component {
       'mfg'              : '',
       'Evaluation'       : '',
       'score'            : '',
-      'attachedDocuments': '',
+      'attachedDocuments': [],
       'logoUrl'             : '',
       'edit'             : props.routerId ? true : false,
       'basicInfoAdded'   : 0,
@@ -350,7 +350,7 @@ class BasicInfo extends Component {
   
   docBrowse(e){
     e.preventDefault();
-    let self=this;      
+      var fileObj = this.state.attachedDocuments;
       for (var i = 0; i < e.currentTarget.files.length; i++) {
         if(e.currentTarget.files){
         var file=e.currentTarget.files[i];
@@ -359,18 +359,16 @@ class BasicInfo extends Component {
         var fileExt=e.currentTarget.files[i].name.split('.').pop();
         // // console.log('file=: ',fileExt);
         var allowedExtensions = /(\.jpg)$/i;
-          if (fileExt == 'flv' || fileExt == 'avi' || fileExt == 'mov' || fileExt == 'mp4' || fileExt == 'mpg' ||  fileExt == 'wmv' || fileExt == '3gp' || fileExt == 'asf' || fileExt == 'rm' || fileExt == 'swf' ) {
+          fileObj.push(file);
+          console.log('fileObj',fileObj);
 
-             swal({
-              title:'abc',
-              text:'Video file are not allowed.'});
-             // // console.log('hi')
-          }else{
-            
-          }
+          this.setState({attachedDocuments : fileObj })
+
         }
       }           
     }
+ 
+      
   }
 
   keyPressWeb = (e) => {
@@ -440,7 +438,7 @@ class BasicInfo extends Component {
       var ext = fileName.split('.').pop();  
       if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
       
-      }
+      } 
       var objTitle = { fileInfo :file };
       console.log('objTitle',objTitle);
       main().then(logoUrl=>{
@@ -564,7 +562,7 @@ class BasicInfo extends Component {
                   <div className="row">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                       <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                        <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12" style={{height:"710px"}}>
+                        <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
                             <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Onboarding Form</h4>
                             <div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
@@ -700,6 +698,19 @@ class BasicInfo extends Component {
                                       </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
+                                    {
+                                      this.state.attachedDocuments.map((data,index)=>{
+                                        console.log(data);
+                                        return(
+                                            <div className="row">
+                                              <span>{data.name}</span>
+                                              <i className="fa fa-times pull-right crossbtn" aria-hidden="true" id={index} onClick={this.removeAttachment.bind(this)}></i>
+                                            </div>
+                                          );
+                                      })
+                                    }
+
+
                                       {
 
                                         this.attachfile().map((data,index)=>{
