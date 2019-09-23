@@ -16,7 +16,7 @@
     transition: all 0.5s;
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     transform: scale(1);
 }
 .block:hover .divImage{
@@ -67,9 +67,19 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     display: block;
-
+    text-align: center;
+    opacity: 0;
 }
-
+.figcaption span{
+	color: #777;
+    background: #fff;
+    padding: 4px;
+    font-size: 0.6em;
+    position: absolute;
+    left: 33%;
+    bottom: 10%;
+    font-weight: bold;
+}
 .figcaption::before{
 	position: absolute;
 	top: 20px;

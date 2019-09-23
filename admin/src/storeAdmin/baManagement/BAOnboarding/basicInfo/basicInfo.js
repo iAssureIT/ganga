@@ -513,7 +513,12 @@ class BasicInfo extends Component {
   removeAttachment(event){
     event.preventDefault();
     var id = $(event.currentTarget).attr('id')
-    // // console.log(id);
+    console.log(id);
+
+    var arr = this.state.attachedDocuments.filter((item,index)  =>{
+      console.log('index',index);
+      return item !== 0 
+    });
     /*Meteor.call('removeAttachment',id,
         function(error,result){
           if(error){
@@ -697,76 +702,31 @@ class BasicInfo extends Component {
                                         </div>
                                       </div>
                                     </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
-                                    {
-                                      this.state.attachedDocuments.map((data,index)=>{
-                                        console.log(data);
-                                        return(
-                                            <div className="row">
-                                              <span>{data.name}</span>
-                                              <i className="fa fa-times pull-right crossbtn" aria-hidden="true" id={index} onClick={this.removeAttachment.bind(this)}></i>
-                                            </div>
-                                          );
-                                      })
-                                    }
-
-
+                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                                       {
-
-                                        this.attachfile().map((data,index)=>{
-                                            return(
-                                                <div className="col-lg-2 col-md-2 col-sm-2 col-xs-4" key={index} id={data.id}>
-                                                  <i className="fa fa-times pull-right crossbtn" aria-hidden="true" id={data.id} onClick={this.removeAttachment.bind(this)}></i>
-                                                  { data.extension == "xlsx" || data.extension == "xls" ?
-                                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachfiles">
-                                                        <img src="/images/exel.png" className="img-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZero" download/>
-                                                      </div>
-                                                      :
-                                                      data.extension == "pptx" || data.extension == "ppt" ?
-                                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachfiles">
-                                                          <img src="/images/ppt.png" className="img-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZero" download/>
-                                                        </div>
-                                                        :
-                                                        data.extension == "docx" || data.extension == "doc" ?
-                                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachfiles">
-                                                            <img src="/images/doc.png" className="img-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZero" download/>
-                                                          </div>
-                                                          :
-                                                          data.extension == "pdfx" || data.extension == "pdf" ?
-                                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachfiles">
-                                                              <img src="/images/pdf.png" className="img-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZero" download/>
-                                                            </div>
-                                                            :
-                                                             data.extension == "gif" || data.extension == "ico" || data.extension == "jpeg" || data.extension == "jpg" || data.extension == "png" || data.extension == "ps" || data.extension == "psd" || data.extension == "svg" || data.extension == "tif" || data.extension == "tiff"? 
-                                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachfiles">
-                                                                <img src={data.location.logo} className="img-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZero" download/>
-                                                              </div>
-                                                              :
-                                                            data.extension != "pdfx" || data.extension != "pdf" ||  data.extension != "docx" || data.extension != "doc"  ||  data.extension != "pptx" || data.extension != "ppt"  ||  data.extension != "xlsx" || data.extension != "xls" ?
-                                                           
-                                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachfiles">
-                                                                <img src="/images/imgNotFound.jpg" className="img-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZero" download/>
-                                                              </div>
-                                                              :
-                                                              null
-
-                                                  }
-                                                    <a href={data.path} download={'file.'+data.extension} className="" title={"Click to download "+data.name}>
-                                                      <i className="fa fa-download"></i>
-                                                    </a>
+                                        this.state.attachedDocuments.map((data,index)=>{
+                                          console.log(data);
+                                          return(
+                                              <div className="panel-group">
+                                                <div className="panel panel-default">
+                                                  <div className="panel-heading">
+                                                    <h4 className="panel-title">
+                                                      <a href="#">  <span>{data.name}</span></a>
+                                                      <i className="fa fa-times pull-right crossbtn" aria-hidden="true" id={index} onClick={this.removeAttachment.bind(this)}></i>
+                                                    </h4>
+                                                  </div>
                                                 </div>
+                                              </div>  
+                                           
                                             );
                                         })
-                                      }
-                                      
-                                    </div>
+                                      } 
+                                      </div>
                                     </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                      
                                         <button className="btn button3 pull-right" onClick={this.state.updateBasic ? this.updateBA.bind(this): this.supplier.bind(this)} > {this.state.updateBasic ? 'Update' : 'Save & Next'}  &nbsp;<i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                                      
-                                  </div> 
+                                    </div> 
                                 </form>
                               </div>
                             </div>

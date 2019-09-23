@@ -693,10 +693,6 @@ display: block;
     border-top-color: #2189d1 !important;
 }
 
-.box{
-    padding-bottom: 2%;
-}
-
 .notifyHeader{
     padding-top: 15px;
     padding-right: 26px;
@@ -812,9 +808,7 @@ display: block;
 .tab-content {
   padding: 10px 15px;
 }
-.box{
-    height: 650px;
-}
+
 .nav-pillss>li>a {
     color: #333;
     white-space: nowrap;

@@ -237,9 +237,7 @@ text-align: center;
 .nav-pills {
     text-align:center;
 }
-.box{
-  height: 1000px
-}
+
 .boxhr{
   border-bottom: 1px solid #66666659;
   margin-top: 2%;
@@ -306,7 +304,6 @@ text-align: center;
   left: 4px;
   z-index: 200;
   position: relative;
-  top: 9px;
   font-size: 13px;
   color: #fff;
   background: #e60004;
@@ -366,6 +363,7 @@ text-align: center;
   box-shadow: 3px 5px 3px #ddd;
   font-weight: 700;
   margin-top: 2%;
+  margin-bottom: 2%;
   background-color: #666;
 
   border: none;

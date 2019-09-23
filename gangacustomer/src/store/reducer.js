@@ -17,7 +17,6 @@ const reducer = (state = initialState,action) => {
 		newState.cartCount 		= action.cartCount;
 	}
 	if(action.type === "CART_DATA"){
-		console.log("reducer cartData",action.cartData);
 		newState.cartData 		= action.cartData;
 	}
 	if(action.type === "CART_COUNT"){

@@ -127,7 +127,7 @@ class HomePage extends Component {
             { /*new product */}
 						<EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <Ecommercenewproductcaro  title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <ProductDivider />
+            <ProductDivider categories={this.state.categories} />
             <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <SaleProductDivider />
