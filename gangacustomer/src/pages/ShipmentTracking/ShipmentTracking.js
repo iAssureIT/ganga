@@ -145,7 +145,7 @@ class ShipmentTracking extends Component{
                                            delivery.status == "Delivered & Paid"   ? "fa fa-thumbs-up admin-orders-stat-Deliveredpaidicon" : ""
                               }
                                  aria-hidden="true"></i> {delivery.status=="New Order"  ? "Order Placed" 
-                                                : delivery.status=="Dispatch"   ? "Out for Delivery" 
+                                                : delivery.status=="Dispatch"  || delivery.status == "Delivery Initiated"  ? "Out for Delivery" 
                                                 : delivery.status }</button>
                                   
                                   </div>
@@ -201,6 +201,7 @@ class ShipmentTracking extends Component{
                             
                           </div>
                         </div>
+                        <br/>
                     </div>
                   );
                       })

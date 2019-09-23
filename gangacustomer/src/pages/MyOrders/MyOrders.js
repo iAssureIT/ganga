@@ -190,7 +190,7 @@ export default class MyOrders extends Component {
 		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</td>
 							          <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
 		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
-		                    <td data-th="Status" className="col status">{data.deliveryStatus[0].status}</td>
+		                    <td data-th="Status" className="col status">{ data.deliveryStatus[0].status=="Dispatch" || data.deliveryStatus[0].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[0].status }</td>
 		                    <td data-th="Actions" className="col actions">
 
 		                  
