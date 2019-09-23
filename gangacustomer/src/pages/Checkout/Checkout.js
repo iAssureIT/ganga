@@ -892,7 +892,7 @@ class Checkout extends Component{
                                         }
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                             <button className="btn btn-warning" data-toggle="modal" data-target="#checkoutAddressModal">Add New Address</button>
-                                            <div className="modal fade col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 checkoutAddressModal" id="checkoutAddressModal" role="dialog">
+                                            <div className="modal fade col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal" id="checkoutAddressModal" role="dialog">
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                         <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
