@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
 import "./Banner.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/carousel.js';
+import Loadable                   from 'react-loadable';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';	
 
 export default class EcommerceBanner extends Component {
 	constructor(props){
     super(props);
 	    this.state = {
+	      responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:2
+            },
+            1000:{
+                items:1 
+            }
+          },
+
 	    	
 	    };
   	}  
@@ -16,41 +34,20 @@ export default class EcommerceBanner extends Component {
 
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bannerContainerEcomm">
 							<div className="row">
-						  		<div id="customCarousel" className="carousel slide" data-ride="carousel">
-								    <ol className="carousel-indicators squareIndicator">
-								      <li data-target="#customCarousel" data-slide-to="0" className="active"></li>
-								      <li data-target="#customCarousel" data-slide-to="1"></li>
-								      <li data-target="#customCarousel" data-slide-to="2"></li>
-								      <li data-target="#customCarousel" data-slide-to="3"></li>
-								     
-								    </ol>
-								    <div className="carousel-inner height350">
-								      <div className="item active ">
-								        <img src="/images/eCommerce-Banners_1.jpg"  />
-								      </div>
+						 		<OwlCarousel
+									    className="owl-theme bannercaro"
+									    loop
+                            			responsive={this.state.responsive} 
+			                            autoplay={true}
+			                            autoplayHoverPause={true}
+			                            dots={true}
+			                            dotData={true}
+									>
+									    <div class="item"><img src="/images/eCommerce-Banners_1.jpg"  /></div>
+									    <div class="item"><img src="/images/eCommerce-Banners_2.jpg"  /></div>
+									    <div class="item"><img src="/images/eCommerce-Banners_3.jpg"  /></div>
+									</OwlCarousel>
 
-								      <div className="item">
-								        <img src="/images/eCommerce-Banners_2.jpg"  />
-								      </div>
-								    
-								      <div className="item">
-								        <img src="/images/eCommerce-Banners_3.jpg"  />
-								      </div>
-								      
-							    	  <div className="item">
-							        	<img src="/images/eCommerce-Banners_4.png"  />
-							   		  </div>
-								</div>
-							    <a className="left carousel-control customControl" href="#customCarousel" data-slide="prev">
-							      <span className="glyphicon glyphicon-chevron-left backDivEcommerce"></span>
-							      <span className="sr-only">Previous</span>
-							    </a>
-							    <a className="right carousel-control" href="#customCarousel" data-slide="next">
-							      <span className="glyphicon glyphicon-chevron-right backDivEcommerce"></span>
-							      <span className="sr-only">Next</span>
-							    </a>
-
-						 		</div>
 							</div>
 						</div>
 					</div>	
