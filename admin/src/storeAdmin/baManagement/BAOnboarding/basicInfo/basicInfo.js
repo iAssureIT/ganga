@@ -31,6 +31,7 @@ class BasicInfo extends Component {
       'score'            : '',
       'attachedDocuments': [],
       'logoUrl'             : '',
+      'docsUrl'          : [],
       'edit'             : props.routerId ? true : false,
       'basicInfoAdded'   : 0,
       'locationInfoAdded': 0,
@@ -251,61 +252,116 @@ class BasicInfo extends Component {
             'status'           : 'Active',
             'roles'            : ['ba']
           }
-          axios.post("/api/users/ba",userForm)
-                .then((response)=>{
-                  console.log(response.data.user._id);
-                  var formValues = {
-                      'companyName'      : this.state.companyname,
-                      'emailID'          : this.state.emailID,
-                      'mobileNo'         : this.state.MobileNo,
-                      'website'          : this.state.website,
-                      'pan'              : this.state.pan,
-                      'gstno'            : this.state.gstno,
-                      'logo'             : this.state.logoUrl,
-                      'userID'           : response.data.user._id
-                  }
-                  axios.post("/api/businessassociates/post",formValues)
-                        .then((response)=>{
-                          this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
-                          swal({
-                                title : response.data.message,
-                                text  : response.data.message,
-                              });
-
-                          // $("#BasicInfo").validate().reset();
-                          // $('.inputText').removeClass('addclas');   
-                        })
-                        .catch((error)=>{
-                            console.log('error', error);
-                        })
-                })
-                .catch((error)=>{
-                    console.log('error', error);
-                })
-            /*axios.post("/api/businessassociates/post",formValues)
-            .then((response)=>{
-              this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
-              swal({
-                    title : response.data.message,
-                    text  : response.data.message,
-                  });
-
-              // $("#BasicInfo").validate().reset();
-              // $('.inputText').removeClass('addclas');
-              this.insertBAInUser(userForm);
-                  
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            })*/
           
-      }else{
+
+          var attachedDocuments = this.state.attachedDocuments;
+          // if documents attached
+          if (attachedDocuments.length>0) {
+              main().then(docsUrl=>{
+              this.setState({docsUrl : docsUrl});
+              var formValues = {
+                        'companyName'      : this.state.companyname,
+                        'emailID'          : this.state.emailID,
+                        'mobileNo'         : this.state.MobileNo,
+                        'website'          : this.state.website,
+                        'pan'              : this.state.pan,
+                        'gstno'            : this.state.gstno,
+                        'logo'             : this.state.logoUrl,
+                        'documents'        : docsUrl
+                    }
+              this.insertBA(userForm, formValues);
+                
+              });
+
+            async function main(){
+              var config = await getConfig();
+              var s3urlArray = [];
+
+              for (var i = 0; i < attachedDocuments.length; i++) {
+                  var s3url = await s3upload(attachedDocuments[i], config, this);
+                  s3urlArray.push(s3url);
+              }
+              return Promise.resolve(s3urlArray);
+            }
+            function s3upload(image,configuration){
+              return new Promise(function(resolve,reject){
+                  S3FileUpload
+                     .uploadFile(image,configuration)
+                     .then((Data)=>{
+                          resolve(Data.location);
+                     })
+                     .catch((error)=>{
+                          console.log(error);
+                     })
+              })
+            }   
+            function getConfig(){
+              return new Promise(function(resolve,reject){
+                  axios
+                     .get('/api/projectSettings/get/one/s3')
+                     .then((response)=>{
+                          console.log("proj set res = ",response.data);
+                          const config = {
+                              bucketName      : response.data.bucket,
+                              dirName         : 'propertiesImages',
+                              region          : response.data.region,
+                              accessKeyId     : response.data.key,
+                              secretAccessKey : response.data.secret,
+                          }
+                          resolve(config);                           
+                      })
+                     .catch(function(error){
+                          console.log(error);
+                     })
+              })
+            }
+          } // if documents present ends
+
+          else{
+            var formValues = {
+                        'companyName'      : this.state.companyname,
+                        'emailID'          : this.state.emailID,
+                        'mobileNo'         : this.state.MobileNo,
+                        'website'          : this.state.website,
+                        'pan'              : this.state.pan,
+                        'gstno'            : this.state.gstno,
+                        'logo'             : this.state.logoUrl
+                    }
+              this.insertBA(userForm, formValues);
+          } 
+      }
+      else{
         // $('.inputText').addClass('addclas');
         // $('inputText.error:fir').first().focus();
         $(event.target).parent().parent().find('.inputText.error:first').focus();
       }   
   }
- 
+  insertBA(userForm,formValues){
+    axios.post("/api/users/ba",userForm)
+        .then((response)=>{
+          console.log(response.data.user._id);
+          
+          formValues.userID =response.data.user._id;
+
+          axios.post("/api/businessassociates/post",formValues)
+                .then((response)=>{
+                  this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
+                  swal({
+                        title : response.data.message,
+                        text  : response.data.message,
+                      });
+
+                  // $("#BasicInfo").validate().reset();
+                  // $('.inputText').removeClass('addclas');   
+                })
+                .catch((error)=>{
+                    console.log('error', error);
+                })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+  }
   updateBA(event){
      event.preventDefault();
      if($('#BasicInfo').valid()){
@@ -429,7 +485,7 @@ class BasicInfo extends Component {
     event.preventDefault();
     $("#upload-file").click();
   }
-  uploadProductImage(event){
+  uploadLogo(event){
     event.preventDefault();
     
     var file = event.currentTarget.files[0]
@@ -440,7 +496,7 @@ class BasicInfo extends Component {
       
       } 
       var objTitle = { fileInfo :file };
-      console.log('objTitle',objTitle);
+
       main().then(logoUrl=>{
           console.log('logo', logoUrl);
           this.setState({logoUrl : logoUrl})
@@ -516,20 +572,10 @@ class BasicInfo extends Component {
     console.log(id);
 
     var arr = this.state.attachedDocuments.filter((item,index)  =>{
-      console.log('index',index);
-      return item !== 0 
+      return Number(index) != Number(id);
     });
-    /*Meteor.call('removeAttachment',id,
-        function(error,result){
-          if(error){
-            // console.log(error.reason);
-          }else{
-            swal({
-              title:'abc',
-              text:'Attached file removed successfully.'
-            });
-          }
-      });*/
+
+    this.setState({attachedDocuments : arr});
   }
   componentWillReceiveProps(nextProps) { 
     if(nextProps.routerId && nextProps.post5){ 
@@ -678,7 +724,7 @@ class BasicInfo extends Component {
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
                                             
                                             <img src={this.state.logoUrl} className="img-responsive logoStyle" />
-                                              <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" onChange={this.uploadProductImage.bind(this)} />
+                                              <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" onChange={this.uploadLogo.bind(this)}  name="upload-logo"/>
                                           </div>
                                         </div>
                                       </div>
@@ -705,7 +751,6 @@ class BasicInfo extends Component {
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                                       {
                                         this.state.attachedDocuments.map((data,index)=>{
-                                          console.log(data);
                                           return(
                                               <div className="panel-group">
                                                 <div className="panel panel-default">

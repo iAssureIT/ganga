@@ -48,7 +48,6 @@ componentWillMount() {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
@@ -148,27 +147,42 @@ handleChange(event){
 }
 
 searchProducts(){
+    console.log('catArray',this.state.catArray);
+    if (this.state.catArray.length > 0 && $('.headersearch').val() != '' ) {
+      
+      var searchstr = $('.headersearch').val()
+      var formValues =  {
+                      "searchstr" :  searchstr,  
+                      "catArray"  :  this.state.catArray
+                    }
+      axios.post("/api/products/post/searchINCategory",formValues)
+              .then((response)=>{
+                this.setState({searchResult : response.data},()=>{
+                  this.props.searchProduct(formValues,this.state.searchResult);  
+                });
+              })
+              .catch((error)=>{
+                  console.log('error', error);
+              }) 
 
-    if ($('.headersearch').val() != '' ) {
+      this.props.history.push("/searchProducts");
+    }
+    if (this.state.catArray.length ==0 && $('.headersearch').val() != '' ) {
+      var searchstr = $('.headersearch').val()
+      var formValues =  {
+                      "searchstr" :  searchstr
+                    }
+      axios.get("/api/products/get/search/"+searchstr)
+        .then((response)=>{ 
+            this.setState({searchResult : response.data},()=>{
+                this.props.searchProduct(formValues,this.state.searchResult);  
+            });
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
 
-        var searchstr = $('.headersearch').val()
-        
-        var formValues =  {
-                        "searchstr" :  searchstr,  
-                        "catArray"  :  this.state.catArray
-                      }
-        axios.post("/api/products/post/searchINCategory",formValues)
-                .then((response)=>{
-                  this.setState({searchResult : response.data},()=>{
-                    this.props.searchProduct(formValues,this.state.searchResult);  
-                  });
-                })
-                .catch((error)=>{
-                    console.log('error', error);
-                }) 
-
-        this.props.history.push("/searchProducts");
-        //window.location.reload();
+      this.props.history.push("/searchProducts");        
     }
     
 }
@@ -244,7 +258,6 @@ searchProducts(){
     })
   }
   render() { 
-    console.log("this.props.cartData",this.props.cartData)
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">

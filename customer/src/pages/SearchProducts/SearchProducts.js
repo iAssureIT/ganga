@@ -50,8 +50,7 @@ export default class SearchProducts extends Component {
 	      })
 
 		$.getScript('/js/carousel.js',function(){});
-					var x = document.getElementsByClassName("add");
-  	  	console.log("x=",x);
+		var x = document.getElementsByClassName("add");
   		var acc = document.getElementsByClassName("accordion");
   		  	  	console.log("x=",acc);
 
@@ -69,73 +68,9 @@ export default class SearchProducts extends Component {
 		    }
 		  });
 		}
-
-
-  		
 	}
 	
 	
-	/*getCategories(){
-		axios.get("/api/category/get/list")
-            .then((response)=>{
-            	var data = [];
-             response.data.filter((n,i)=>{
-              	if(n.webCategory !== undefined){
-              		if (n.webCategory=="Main-Site") {
-              			data.push(n);
-              		}
-              	}
-              });
-             console.log(data);
-              this.setState({
-                  categories : data
-              })
-
-              	var acc = document.getElementsByClassName("plusContainer");
-				var i;
-				var categories = this.state.categories;
-				var subcategories = [];
-
-				for (i = 0; i < acc.length; i++) {
-					
-					this.setState({
-						categoryID    : this.state.categories[0]._id,
-	              		subcategories : subcategories.length > 0 ? subcategories : this.state.categories[0].subCategory
-	              	});	
-				  acc[i].addEventListener("click", (event)=> {
-				  	
-				    event.target.classList.toggle("active");
-
-				    var panel = event.target.nextElementSibling;
-				    
-				    subcategories = categories.filter((n,i)=>{
-				    	
-						if(n._id == $(event.target).data('id')){
-							
-							return n;
-						}  
-					})
-					subcategories = subcategories[0].subCategory;
-					
-					this.setState({
-						categoryID    : $(event.target).data('id'),
-	              		subcategories : subcategories.length > 0 ? subcategories : this.state.categories[0].subCategory
-	              	});
-					
-				    if (panel.style.display === "block") {
-				      panel.style.display = "none";
-				    } else {	
-				      this.getProductsByCategory(this.state.categoryID);
-				      panel.style.display = "block";
-				    }
-				  });
-				}
-
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            })  
-	}*/
 	getCategoryDetails(categoryID){
 		axios.get("/api/category/get/one/"+categoryID)
 	      .then((response)=>{ 
@@ -432,7 +367,6 @@ export default class SearchProducts extends Component {
 	
 	}
 	render() {
-		console.log('products', this.state.products)
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 mb50 ">
 					<div className="row">
@@ -444,23 +378,23 @@ export default class SearchProducts extends Component {
 											<div className="plusContainer accordion marginBot sortByCateEcommerce fs14">Subcategory<i className="fa fa-plus-circle pull-right"></i></div>
 												<div className="panel myDIV">
 												{
-										this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
-										this.state.categoryDetails.subCategory.map((data,index)=>{
-											
-											return(
-													
-												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
-													<div className="row">
-													<div className="plusContainer accordion fs13" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')}>{data.subCategoryTitle}</div>
-													</div>
-												</div>
+													this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
+													this.state.categoryDetails.subCategory.map((data,index)=>{
+														
+														return(
+																
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
+																<div className="row">
+																<div className="plusContainer accordion fs13" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')}>{data.subCategoryTitle}</div>
+																</div>
+															</div>
 
-											);
+														);
 
 										})
 										:
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-										<h5>No DbackColorWhiteata Found</h5>
+										<h5>No data Found</h5>
 										</div>
 									}
 												</div>	
@@ -471,24 +405,24 @@ export default class SearchProducts extends Component {
 											<div className="plusContainer accordion marginBot sortByCateEcommerce fs14">Brand<i className="fa fa-plus-circle pull-right"></i></div>
 												<div className="panel myDIV">
 												{
-										this.state.brands && this.state.brands.length > 0 ? 
-										this.state.brands.map((data,index)=>{
-											
-											return(
-											<div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
-												<div className="row">
-														<div className="centreDetailContainerEcommerce col-lg-1 row">
-														<input type="checkbox" name="brands[]" onChange={this.onSelectedItemsChange.bind(this,"brands")} value={data}/>
-														<span className="centreDetailCheckEcommerce"></span>
+													this.state.brands && this.state.brands.length > 0 ? 
+													this.state.brands.map((data,index)=>{
+														
+														return(
+														<div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
+															<div className="row">
+																	<div className="centreDetailContainerEcommerce col-lg-1 row">
+																	<input type="checkbox" name="brands[]" onChange={this.onSelectedItemsChange.bind(this,"brands")} value={data}/>
+																	<span className="centreDetailCheckEcommerce"></span>
+																	</div>
+																<span className="centreDetaillistItemEcommerce">{data}</span>
+															</div>
 														</div>
-													<span className="centreDetaillistItemEcommerce">{data}</span>
-												</div>
-											</div>
-											);
-										})
-										: ''
+														);
+													})
+													: ''
 
-									}
+												}
 												</div>	
 										</div>
 									</div>

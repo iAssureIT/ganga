@@ -164,7 +164,6 @@ export default class LocationDetails extends Component{
     handleChangeCountry(event){
       const target = event.target;
       this.getStates($(target).val())
-      
     }
     getStates(StateCode){
       axios.get("http://locationapi.iassureit.com/api/states/get/list/"+StateCode)

@@ -12,7 +12,7 @@ export default class ProductDivider extends Component {
   	componentWillReceiveProps(nextProps){
   		
   		this.setState({categoriesImg:nextProps.categories},()=>{
-  			console.log('categoriesImg',this.state.categoriesImg);
+  			
   		});
       // this.changeProductCateWise(categoryID, type);
     } 
