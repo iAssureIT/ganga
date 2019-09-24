@@ -270,7 +270,7 @@ searchProducts(){
       "query"        : this.refs.mobNumber.value
     }
 
-    axios.post("http://localhost:5006/api/customerQuery/post",formValues)
+    axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
       swal(response.data.message)     
       $('#customercareModal').modal('hide');
