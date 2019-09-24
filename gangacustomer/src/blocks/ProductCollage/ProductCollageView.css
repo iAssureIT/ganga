@@ -216,6 +216,10 @@
 .actiontocart:focus{
 	outline: 0px!important;
 }
+.actiontocart:hover{
+	background-color: #fbbb65;
+	color: #ffffff;
+}
 .sortProducts{
 	display: block;
     width: 65%;

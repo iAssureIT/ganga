@@ -92,7 +92,7 @@ class SignUp extends Component {
                 	axios.post('/api/users',auth)
 			            .then((response)=> {
 			                console.log("-------userData------>>",response.data.user_id);
-		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email ID and Mobile no");
+		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
 			                this.props.history.push("/confirm-otp/"+response.data.user_id);
 			                
 			            })
@@ -269,7 +269,7 @@ return(
 					    </div>
 
 						<div className=" mt30">
-					    	<input id="signUpBtn" className="col-lg-12 col-md-12 col-sm-12 col-xs-12  btn btn-warning" type="submit" value="Sign Up"/>
+					    	<input id="signUpBtn" className="col-lg-10 col-md-10 col-sm-10 col-xs-10  btn btn-warning" type="submit" value="Create an Account"/>
 					    </div>		   
 
 				    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">

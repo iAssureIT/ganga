@@ -24,7 +24,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
           <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 faq">
             <ul>
               <li><a >DETAILS</a></li>
-              <li className="rvw"><a >REVIEWs</a></li>
+              <li className="rvw"><a >REVIEWS</a></li>
             </ul>
 
             <div className="topspace detailtitle">DETAILS</div>

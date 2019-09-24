@@ -1077,7 +1077,7 @@ class Checkout extends Component{
                                             <th></th>
                                             <th></th>
                                             <th>Products Name</th>
-                                            <th>Quanlity</th>
+                                            <th>Quantity</th>
                                             <th>SubTotal</th>
                                         </tr>
                                     </thead>
