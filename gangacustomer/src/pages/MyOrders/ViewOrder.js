@@ -114,14 +114,7 @@ class ViewOrder extends Component {
              { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.mobileNumber } <br/>
             </div>
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <strong class="box-title">
-                <span>Shipping Method</span>
-            </strong>
-            <div className="box-content">
-              Flat Rate - Fixed
-            </div>
-          </div>
+          
           <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <strong class="box-title">
                 <span>Billing Address</span>
@@ -140,7 +133,9 @@ class ViewOrder extends Component {
                 <span>Payment Method</span>
             </strong>
             <div className="box-content">
-              Credit Card Direct Post (Authorize.net)
+            {
+              this.state.orderData.paymentMethod
+            }
             </div>
           </div>
         </div>
