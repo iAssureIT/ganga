@@ -1,152 +1,85 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import InputMask from 'react-input-mask';
 import swal from 'sweetalert';
-import $ from "jquery";
-
-import 'font-awesome/css/font-awesome.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import './SignUp.css';
-
+import $ from 'jquery';
+import jQuery from 'jquery';
+import axios from 'axios';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 class ForgotPassword extends Component {
-    constructor(){
-      super();
-      this.state ={
-        email  : '',
-        mobile  : '',
-        // subscription    : {
-        //   user: Meteor.subscribe("userfunction"), 
-        // }
-      }
+    constructor(props) {
+        super(props);
+        this.state = {
+            bannerData: {
+                title: "MY SHOPPING CART",
+                breadcrumb: 'My Shopping Cart',
+                backgroungImage: '/images/cartBanner.png',
+            }
+        }
     }
     componentDidMount(){
-      var x = this.props.match.params;
-      console.log('x',x);
+        this.validation();
     }
-    forgotpassword(event){
-      console.log('forgotpassword');
-      event.preventDefault();
-      var email = this.refs.enterEmail.value;
-      var mobile = this.refs.enterMobNo.value;
-      // console.log("email: ",email);
-     this.setState({
-      email : email,
-      mobile : mobile,
-     });
-      var userOtp = 1 /*Meteor.users.findOne({"username":email})*/;
-      // console.log("userOtp: ",userOtp);
-     
-     if(userOtp==1){
-      var mobileotp = Math.floor(1000 + Math.random() * 9000);
-      var emailotp = Math.floor(100000 + Math.random() * 900000);
-  //       // Session.set('mobotp',mobileotp);
-  ///////////////
-  //       // Session.set('mailotp',emailotp);
-        
-  //       var newID = userOtp._id;
-
-  ///////////////
-
-  //       // Session.set('newID',newID);
-
-  //       Meteor.call('addOTP', newID , emailotp, function(error,result){
-  //         if(error){
-  //           Bert.alert(error);
-  //         }else{
-
-  //         }
-  //       });
-      
-  //       // //Send OTP    
-  //       // Meteor.call('sendOtp',mobile,mobileotp,
-  //       // function(error,result){
-  //       //   if(error){
-  //       //     console.log(error.reason);
-  //       //   }else{
-  //       //     swal('Successfully sent the OTP to your mobile number');
-  //       //   }
-  //       // });
-                             
-        // // SEND EMAIL VERIFICATION LINK
-        // Meteor.call('sendVerificationLinkToUser', email, function(error,result){
-        //   if(error){
-        //     Bert.alert(error);
-        //   }else{ 
-        //     swal({text:'Successfully sent the OTP to your Email Address.', showConfirmButton: true,type     : 'success'});                  
-        //   } //end else
-        // }); // send verification mail ends
-        //    FlowRouter.go('/forgotOTPVarification/'+newID);
-        // // $('.confirnModalWrap').addClass('newPassword');
-        // // $('.NewForgotPasswordWrap').css('display','none');
-
-      }else{
-        swal('Email Address not found',"Please enter valid Email Id","warning");                  
-      }
+    sendLink(event) {
+        event.preventDefault();
+        var email = this.refs.emailLink.value;
+        var formValues = {
+            username : email
+        }
+        if($('#resetPass').valid()){
+            axios.post('/api/users/sendlink', formValues)
+            .then((response)=>{
+                console.log('res', response);
+                swal(response.data.message);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
+    validation() {
+        $.validator.addMethod("regxemail", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid email address.");
 
-    inputEffect(event){
-      event.preventDefault();
-      if($(event.target).val() != ""){
-        $(event.target).addClass("has-content");
-      }else{
-        $(event.target).removeClass("has-content");
-      }
+
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+
+        $("#resetPass").validate({
+            rules: {
+                emailLink: {
+                    required: true,
+                    regxemail: /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+                },
+            },
+            errorPlacement: function (error, element) {
+
+                if (element.attr("name") == "emailLink") {
+                    error.insertAfter("#emailLink");
+                }
+            }
+        });
     }
-
-  render(){
-    var winHeight = window.innerHeight;
-    var divHeight = winHeight/4.5+'px';
-
-    return(
-      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper loginbg">
-        <div className="col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-12 signupPadding loginFormWrap">
-          <div className="divForgotPasswordWrap">
-              <div className="col-lg-12 text-center">
-                <img src="/images/Logo.png" height="70px"/>
-              </div>
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 verifypd">
-              <h3 className="signInNameTitle"><span className="bordbt">VERIFY EMAIL</span> </h3>
-              <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12 forPassWrap">
-                <form id="forgotPassword" onSubmit={this.forgotpassword.bind(this)}>
-                  <div className="text-left col-lg-12 col-md-12 col-sm-12 col-xs-12 otpHeader">
-                    <span>Enter registerd Email Id </span>
-                  </div>
-                  <div className="form-group col-lg-12 col-md-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 pdleftclr veribtm">
-                    <div className="input-effect input-group col-lg-12">
-                      <input type="email" className="effect-21  form-control loginInputs" ref="enterEmail" name="enterEmail" onBlur={this.inputEffect.bind(this)} aria-label="Email Id" aria-describedby="basic-addon1" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Please add '.' and enter only 2 or 3 characters following '.'!" required/>
-                      <span className="input-group-addon glyphi-custommm"><i className="fa fa-envelope" aria-hidden="true"></i></span>
-                      <span className="focus-border">
-                        <i></i>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="text-left col-lg-12 col-md-12 col-sm-12 col-xs-12 otpHeader">
-                    <span>Enter registerd Mobile Number </span>
-                  </div>
-                  <div className="form-group col-lg-12 col-md-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 pdleftclr veribtm">
-                    <div className="input-effect input-group">
-                      <InputMask mask="9999-999-999" maskChar=" " name="enterMobNo" ref="enterMobNo" onChange={this.handleChange} className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText"  pattern="^(0|[0-9-+]*)$" title="Enter Mobile Number!" autoComplete="off" required/>
-                      <span className="input-group-addon glyphi-custommm"><i className="fa fa-phone-square" aria-hidden="true"></i></span>
-                      <span className="focus-border">
-                        <i></i>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="submitButtonWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12 pdleftclr">
-                    <Link to='/confirm-otp'>
-                      <button type="submit" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 submitBtn UMloginbutton">Send Verification Code</button>
-                    </Link>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pdcls">
-                    <Link to='/' className="UMGrey UMcreateacc col-lg-12 col-md-12 col-sm-12 col-xs-12">Sign In</Link>   
-                  </div>
-                </form>
-              </div>
+    render() {
+        return (
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
+                    <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>
+                    <form id="resetPass">
+                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Email <i className="error">*</i></label>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="emailLink">
+                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="emailLink" name="emailLink" type="text" />
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                            <button className="btn btn-warning resetBtn" onClick={this.sendLink.bind(this)}>Reset My Password</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+        )
+    }
 }
+
 export default ForgotPassword;

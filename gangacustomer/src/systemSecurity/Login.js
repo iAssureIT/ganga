@@ -98,7 +98,7 @@ class Login extends Component {
                             <div className="row">
                               <div className="col-lg-6 col-md-6 col-sm-6 mt10">
                                 <div className="row loginforgotpass">
-                                    <a href='' className="">Forgot Your Password?</a>
+                                    <a href='/forgotpassword' className="">Forgot Your Password?</a>
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6 col-sm-6">

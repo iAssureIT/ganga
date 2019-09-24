@@ -37,10 +37,6 @@ div, a, p, h1, h2, h3, h4, h5, h6, i, span, label{
 .nowrap{
   white-space: nowrap;
 }
-.hgh{
-
-
-}
 .error{
   color: red !important;
   font-weight: 100;
