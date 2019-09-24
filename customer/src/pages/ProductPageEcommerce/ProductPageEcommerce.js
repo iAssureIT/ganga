@@ -26,7 +26,7 @@ class ProductPageEcommerce extends Component {
 			categoryDetails:[],
 			subcategoryID:'',
 			dupliImage:[],
-      		activePage: 1,
+      		// activePage: 1,
       		selectedbrands:[],
       		minPrice: 0,
       		maxPrice: 0,
@@ -428,10 +428,8 @@ class ProductPageEcommerce extends Component {
 						                                            <input type="radio" name="price"disabled/>
 						                                            <span className="radioCheckEcommerce"></span>
 					                                         	 </div>
-					                                         	<span className="centreDetaillistItemEcommerce">2 <i class="fa fa-star"></i> & above</span>
-					                                         	
+					                                         	<span className="centreDetaillistItemEcommerce">2 <i class="fa fa-star"></i> & above</span>	
 															</div>
-															
 														</div>
 														<div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 ">
 															<div className="row">
@@ -441,9 +439,7 @@ class ProductPageEcommerce extends Component {
 						                                            <span className="radioCheckEcommerce"></span>
 					                                         	 </div>
 					                                         	<span className="centreDetaillistItemEcommerce">1 <i class="fa fa-star"></i> & above</span>
-					                                         	
 															</div>
-															
 														</div>
 													</div>
 												</div>

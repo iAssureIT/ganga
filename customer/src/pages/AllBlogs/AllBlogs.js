@@ -97,7 +97,7 @@ export default class AllBlogs extends Component {
 									}
 
 									</div>
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorWhite">
+									{<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorWhite">
 										<Pagination
 										          activePage={this.state.activePage}
 										          itemsCountPerPage={10}
@@ -107,7 +107,7 @@ export default class AllBlogs extends Component {
 										          pageRangeDisplayed={2}
 										          onChange={this.handlePageChange.bind(this)}
 										        />
-									</div>		
+									</div>}		
 								</div>
 						
 						   	);
