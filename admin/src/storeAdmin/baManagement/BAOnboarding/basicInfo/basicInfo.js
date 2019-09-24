@@ -56,6 +56,16 @@ class BasicInfo extends Component {
 
       axios.get("/api/businessassociates/get/one/"+this.props.match.params.BaId)
             .then((response)=>{
+              var attachedDocuments = [];
+              if (response.data[0].documents.length>0 ) {
+
+                
+                for (var i = 0; i < response.data[0].documents.length; i++) {
+                   attachedDocuments.push({name : response.data[0].documents[i]  })
+                }
+                this.setState({attachedDocuments : attachedDocuments});
+                
+              }
               this.setState({
                   baInfo      : response.data,
                   companyname : response.data[0].companyName,
@@ -214,13 +224,11 @@ class BasicInfo extends Component {
 
   }
 
-
   componentWillUnmount(){
       $("script[src='/js/adminLte.js']").remove();
       $("link[href='/css/dashboard.css']").remove();
   }
 
-  
   handleChange(event) {
       event.preventDefault();
       const target = event.target;
@@ -376,27 +384,62 @@ class BasicInfo extends Component {
               'logo'             : this.state.logoUrl, 
               'gstno'            : this.state.gstno
           }
-          console.log(formValues);
-            axios.patch("/api/businessassociates/patch",formValues)
-            .then((response)=>{
-              console.log(response);
-              this.setState({'basicInfoAdded':1, 'baId' : this.state.baId, 'BAInfo':formValues});
-              swal({
-                    title : response.data.message,
-                    text  : response.data.message,
-                  });
-              
-              $('.inputText').removeClass('addclas');
-            })
-            .catch((error)=>{
-              
-                console.log('error', error);
-                swal({
-                    title : '',
-                    text  : "Change some fields",
-                  });
-          })
           
+          var attachedDocuments = this.state.attachedDocuments;
+          // if documents attached
+          if (attachedDocuments.length>0) {
+              main().then(docsUrl=>{
+              this.setState({docsUrl : docsUrl});
+              formValues.documents  = docsUrl;
+              this.updateBAFunct(formValues);
+              });
+
+            async function main(){
+              var config = await getConfig();
+              var s3urlArray = [];
+
+              for (var i = 0; i < attachedDocuments.length; i++) {
+                  var s3url = await s3upload(attachedDocuments[i], config, this);
+                  s3urlArray.push(s3url);
+              }
+              return Promise.resolve(s3urlArray);
+            }
+            function s3upload(image,configuration){
+              return new Promise(function(resolve,reject){
+                  S3FileUpload
+                     .uploadFile(image,configuration)
+                     .then((Data)=>{
+                          resolve(Data.location);
+                     })
+                     .catch((error)=>{
+                          console.log(error);
+                     })
+              })
+            }   
+            function getConfig(){
+              return new Promise(function(resolve,reject){
+                  axios
+                     .get('/api/projectSettings/get/one/s3')
+                     .then((response)=>{
+                          console.log("proj set res = ",response.data);
+                          const config = {
+                              bucketName      : response.data.bucket,
+                              dirName         : 'propertiesImages',
+                              region          : response.data.region,
+                              accessKeyId     : response.data.key,
+                              secretAccessKey : response.data.secret,
+                          }
+                          resolve(config);                           
+                      })
+                     .catch(function(error){
+                          console.log(error);
+                     })
+              })
+            }
+          } // if documents present ends
+          else{
+            this.updateBAFunct(formValues);
+          }
       }else{
         // $('.inputText').addClass('addclas');
         // $('inputText.error:fir').first().focus();
@@ -404,6 +447,26 @@ class BasicInfo extends Component {
       }
   }
   
+  updateBAFunct(formValues){
+     axios.patch("/api/businessassociates/patch",formValues)
+          .then((response)=>{
+            this.setState({'basicInfoAdded':1, 'baId' : this.state.baId, 'BAInfo':formValues});
+            swal({
+                  title : response.data.message,
+                  text  : response.data.message,
+                });
+            
+            $('.inputText').removeClass('addclas');
+          })
+          .catch((error)=>{
+            
+              console.log('error', error);
+              swal({
+                  title : '',
+                  text  : "Change some fields",
+                });
+        })
+  }
   docBrowse(e){
     e.preventDefault();
       var fileObj = this.state.attachedDocuments;
@@ -752,7 +815,7 @@ class BasicInfo extends Component {
                                       {
                                         this.state.attachedDocuments.map((data,index)=>{
                                           return(
-                                              <div className="panel-group">
+                                              <div className="panel-group" key={index}>
                                                 <div className="panel panel-default">
                                                   <div className="panel-heading">
                                                     <h4 className="panel-title">

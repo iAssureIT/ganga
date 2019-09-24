@@ -1,6 +1,9 @@
+import axios from 'axios';
+
 const initialState = {
 	cartCount	 	: 0,
 	cartData	 	: [],
+	recentCartData  : [],
 	wishlistCount 	: 0,
 	featuredProductData : {},
 	exclusiveProductsData : [],
@@ -18,6 +21,9 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === "CART_DATA"){
 		newState.cartData 		= action.cartData;
+	}
+	if(action.type === "FETCH_CART_DATA"){
+		newState.recentCartData 		= action.cartData;
 	}
 	if(action.type === "CART_COUNT"){
 		newState.cartCount 		= action.cartCount;

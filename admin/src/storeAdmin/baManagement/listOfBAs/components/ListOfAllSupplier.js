@@ -257,11 +257,12 @@ class ListOfAllSupplier extends Component {
                     title : response.data.message,
                     text  : response.data.message,
                   });
+              window.location.reload();   
             })
             .catch((error)=>{
                 console.log('error', error);
             })
-        window.location.reload();   
+        
         
     }
 

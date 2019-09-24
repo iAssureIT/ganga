@@ -4,6 +4,10 @@ import $                    from 'jquery';
 import axios                from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import "./CartProducts.css";
+import { connect }        from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getCartCata } from '../../actions/index';
+
 
 class CartProducts extends Component{
     constructor(props) {
@@ -25,15 +29,17 @@ class CartProducts extends Component{
                 backgroungImage : '/images/cartBanner.png',
             }
         }
-        this.getCartData();   
         this.getCompanyDetails();
     }
 
-    componentDidMount(){
-    	this.getCartData();   
+    async componentDidMount(){
+    	await this.props.fetchCartData();
+        
         this.getCompanyDetails();
     }
-
+    componentWillReceiveProps(nextProps) { 
+       
+    }
     getCartData(){
         // const userid = '5d5bfb3154b8276f2a4d22bf';
         const userid = localStorage.getItem('user_ID');
@@ -63,28 +69,22 @@ class CartProducts extends Component{
           })
     }
     getCartTotal(){
-        var cartData = this.state.cartProduct;
+        //var cartData = this.props.recentCartData[0].cartItems;
         var companyData = this.state.companyInfo;
+        if (this.props.recentCartData.length>0  && companyData) {
 
-        if(cartData && companyData){
+            if(this.props.recentCartData[0].cartItems.length>0){
+                this.setState({"shippingCharges":100.00});
+                    this.setState({
+                    "productCartData": this.props.recentCartData[0].cartItems,
+                    "productData":this.props.recentCartData[0],
+                    "vatPercent":companyData.taxSettings ? companyData.taxSettings[0].taxRating : 0,
+                });
 
-            if(cartData.cartItems.length>0){
-                this.setState({
-                    "shippingCharges":100.00,
-                });
-            } else{
-                this.setState({
-                    "shippingCharges":0.00,
-                });
+            }else{
+                this.setState({"shippingCharges":0.00});
             }
-            
-            
-            this.setState({
-                "productCartData": cartData.cartItems,
-                "productData":cartData,
-                "vatPercent":companyData.taxSettings ? companyData.taxSettings[0].taxRating : 0,
-            });
-        } else{
+        }else{
             this.setState({
                 "shippingCharges":0.00,
             });
@@ -108,10 +108,10 @@ class CartProducts extends Component{
             console.log('removed');
             swal(response.data.message)           
              .then((obj)=>{
-                  window.location.reload();
+                this.props.fetchCartData();
              });
 
-            this.getCartData();   
+
             this.getCompanyDetails();
 
           })
@@ -141,16 +141,15 @@ class CartProducts extends Component{
 			"quantityAdded" : quantityAdded,
 			"totalIndPrice"	: totalIndPrice
 		}
-        // console.log('formValues',formValues);
         axios.patch("/api/carts/quantity" ,formValues)
           .then((response)=>{
-            window.location.reload();
+            this.props.fetchCartData();
+            
           })
           .catch((error)=>{
                 console.log('error', error);
           })
-        this.getCartData();   
-        this.getCompanyDetails();
+        
     }
 
     cartquantitydecrease(event){
@@ -175,13 +174,12 @@ class CartProducts extends Component{
         // console.log('formValues',formValues);
         axios.patch("/api/carts/quantity" ,formValues)
 		.then((response)=>{
-            window.location.reload();
+             this.props.fetchCartData();
 		})
 		.catch((error)=>{
 		    console.log('error', error);
 		})
-		this.getCartData();   
-        this.getCompanyDetails();
+        // this.getCompanyDetails();
     }
     proceedToCheckout(event){
         event.preventDefault();
@@ -190,6 +188,9 @@ class CartProducts extends Component{
     continueShopping(event){
         event.preventDefault();
         this.props.history.push('/');
+    }
+    updateShoppingCart(){
+        window.location.reload();
     }
     render(){
         return(
@@ -209,10 +210,10 @@ class CartProducts extends Component{
                                 </thead>
                                 <tbody>
                                     {
-                                        this.state.productCartData && this.state.productCartData.length > 0?
-                                        this.state.productCartData.map((data, index)=>{
+                                        this.props.recentCartData && this.props.recentCartData.length > 0?
+                                        this.props.recentCartData[0].cartItems.map((data, index)=>{
                                             return(
-                                                <tr>
+                                                <tr key={index}>
                                                     <td>
                                                         <tr>
                                                             <td>
@@ -247,10 +248,10 @@ class CartProducts extends Component{
                             <div className="col-lg-4 col-lg-offset-5 col-md-4 col-md-offset-5 col-sm-12 col-xs-12 NOpaddingLeft">
                             <button onClick={this.continueShopping.bind(this)} className="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-12 col-xs-12 btn btn-warning continueShopping"> <i className="fa fa-angle-left cartLeftAngle" area-hidden="true"></i> &nbsp; CONTINUE SHOPPING</button>
                             </div>
-                            <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton"> UPDATE SHOPPING CART</button>
+                            <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton" onClick={this.updateShoppingCart.bind(this)}> UPDATE SHOPPING CART</button>
                         </div>
                         {
-                            this.state.productCartData && this.state.productCartData.length > 0?
+                            this.props.recentCartData && this.props.recentCartData.length > 0?
                             <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartSummary">
                                     <strong className="cartSummaryTitle">Summary</strong>
@@ -260,7 +261,7 @@ class CartProducts extends Component{
                                                 <tbody>
                                                     <tr>
                                                         <td>Subtotal</td>
-                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 ? (parseInt(this.state.productData.cartTotal)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].cartTotal > 0 ? (parseInt(this.props.recentCartData[0].cartTotal)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Shipping Charges</td>
@@ -268,11 +269,11 @@ class CartProducts extends Component{
                                                     </tr>
                                                     <tr>
                                                         <td>GST ({this.state.vatPercent > 0 ? this.state.vatPercent : 0}%)</td>
-                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 && this.state.vatPercent ?(this.state.productData.cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].cartTotal > 0 && this.state.vatPercent ?(this.props.recentCartData[0].cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Order Total</td>
-                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.state.productData.cartTotal))+(parseInt(this.state.productData.cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  </td>
+                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.props.recentCartData[0].cartTotal))+(parseInt(this.props.recentCartData[0].cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -293,4 +294,12 @@ class CartProducts extends Component{
         );
     }
 }
-export default withRouter(CartProducts);
+const mapStateToProps = (state)=>{
+  return {
+    recentCartData :  state.recentCartData
+  }
+}
+const mapDispachToProps = (dispatch) =>{
+    return bindActionCreators({ fetchCartData: getCartCata }, dispatch);  
+}  
+export default connect(mapStateToProps, mapDispachToProps)(withRouter(CartProducts));

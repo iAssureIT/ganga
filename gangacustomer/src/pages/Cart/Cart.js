@@ -19,7 +19,7 @@ class Cart extends Component{
                 backgroungImage : '/images/cartBanner.png',
             }
         }
-    }
+    } 
 
 
     render(){

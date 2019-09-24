@@ -100,7 +100,7 @@ componentWillReceiveProps(nextProps){
       },()=>{
         {
           categoryArray = this.unique(this.state.searchResult,'category_ID');
-          console.log('categoryArray',categoryArray);
+         
           categoryArray.map((data,index)=>{
             this.getCategoryDetails(data, categoryDetails); 
           });
@@ -147,7 +147,6 @@ handleChange(event){
 }
 
 searchProducts(){
-    console.log('catArray',this.state.catArray);
     if (this.state.catArray.length > 0 && $('.headersearch').val() != '' ) {
       
       var searchstr = $('.headersearch').val()

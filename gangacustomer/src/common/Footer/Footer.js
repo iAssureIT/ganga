@@ -54,7 +54,7 @@ export default class Footer extends Component {
                 </div>   
                
                 <ul>
-                    <li><a href="/profile">My Account</a></li>
+                    <li><a href="/account">My Account</a></li>
                     <li><a href="returnpolicy">Return Policy</a></li>
                 </ul>
                 </div> 
