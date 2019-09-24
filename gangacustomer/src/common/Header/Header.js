@@ -62,7 +62,8 @@ componentDidMount(){
   this.getCartCount();
   this.getWishlistCount();
   this.getHotProduct();
-  this.getCartData();   
+  this.getCartData(); 
+  this.getUserData();  
   const options = [];
   axios.get("/api/category/get/list")
             .then((response)=>{
@@ -80,6 +81,8 @@ componentDidMount(){
                 console.log('error', error);
             })  
 }
+
+
 componentWillReceiveProps(nextProps){
       var categoryArray = [];
       var categoryDetails = [];
@@ -203,6 +206,24 @@ searchProducts(){
               console.log('error', error);
         }) 
     
+  } 
+  getUserData(){
+    const userid = localStorage.getItem('user_ID');
+    console.log("userid-----------------------------------------",userid);
+     axios.get('/api/users/'+ userid)
+        .then( (res)=>{
+          var FName = res.data.profile.fullName;
+          var Mnob  = res.data.mobileNumber;
+
+        this.refs.firstName.value = FName 
+        this.refs.mobNumber.value = Mnob
+
+     
+        })
+        .catch((error)=>{
+          console.log("error = ",error);
+          // alert("Something went wrong! Please check Get URL.");
+        });
   }
   getWishlistCount(){
     const userid = localStorage.getItem('user_ID');
@@ -285,11 +306,11 @@ searchProducts(){
                                               <div className="row">
                                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                  <label className=" ">Name</label>
-                                                 <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
+                                                 <input disabled ref="firstName" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
                                                 </div>
                                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                  <label className=" ">MobileNumber</label>
-                                                  <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
+                                                  <input  disabled ref="mobNumber" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
                                                 </div>
                                               </div>
                                               <div className="row topspace15">
@@ -299,7 +320,7 @@ searchProducts(){
                                               </div>
                                                <div className="row topspace15">
                                                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                <textarea className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
+                                                <textarea id="message"className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
                                                 </div>
                                               </div>
                                               <div className="row topspace15">
