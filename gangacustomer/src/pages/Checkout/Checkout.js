@@ -667,17 +667,17 @@ class Checkout extends Component{
             // console.log('deliveryAddress if',deliveryAddress);
             addressValues ={
                 "user_ID"       : localStorage.getItem('user_ID'),
-                "name"          : deliveryAddress[0].name,
-                "email"         : deliveryAddress[0].email,
-                "addressLine1"  : deliveryAddress[0].addressLine1,
-                "addressLine2"  : deliveryAddress[0].addressLine2,
-                "pincode"       : deliveryAddress[0].pincode,
-                "block"         : deliveryAddress[0].block,
-                "city"          : deliveryAddress[0].city,
-                "state"         : deliveryAddress[0].state,
-                "country"       : deliveryAddress[0].country,
-                "mobileNumber"  : deliveryAddress[0].mobileNumber,
-                "addType"       : deliveryAddress[0].addType
+                "name"          : deliveryAddress.length> 0?  deliveryAddress[0].name : "",
+                "email"         : deliveryAddress.length> 0? deliveryAddress[0].email : "",
+                "addressLine1"  : deliveryAddress.length> 0? deliveryAddress[0].addressLine1 : "",
+                "addressLine2"  : deliveryAddress.length> 0? deliveryAddress[0].addressLine2 : "",
+                "pincode"       : deliveryAddress.length> 0? deliveryAddress[0].pincode : "",
+                "block"         : deliveryAddress.length> 0? deliveryAddress[0].block : "",
+                "city"          : deliveryAddress.length> 0? deliveryAddress[0].city : "",
+                "state"         : deliveryAddress.length> 0? deliveryAddress[0].state : "",
+                "country"       : deliveryAddress.length> 0? deliveryAddress[0].country : "",
+                "mobileNumber"  : deliveryAddress.length> 0? deliveryAddress[0].mobileNumber : "",
+                "addType"       : deliveryAddress.length> 0? deliveryAddress[0].addType : "",
             }
         }else{
             // console.log('else');
