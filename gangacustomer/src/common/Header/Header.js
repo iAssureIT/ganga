@@ -272,8 +272,50 @@ searchProducts(){
                               <ul>
                                 <li><a href="/">Get the app</a></li>
                                 
-                                <li className="borderLeft"><a href="/">Customer Care</a></li>
-
+                                <li className="borderLeft cursorpointer" data-toggle="modal" data-target="#productviewmodal"><a>Customer Care</a></li>
+                                <div className="modal " id="productviewmodal" role="dialog">
+                                  <div className="modal-dialog modal-lg dialog">
+                                    <div className="modal-content"> 
+                                      <div className="modal-header">
+                                        <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                        <h4 className="modal-title">CUSTOMER REVIEWS</h4>
+                                      </div> 
+                                      <div className="modal-body">
+                                          <div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                              <div className="row">
+                                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                 <label className=" ">Name</label>
+                                                 <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
+                                                </div>
+                                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                 <label className=" ">MobileNumber</label>
+                                                  <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
+                                                </div>
+                                              </div>
+                                              <div className="row topspace15">
+                                                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                                  <label className=" ">Review</label>
+                                                </div>               
+                                              </div>
+                                               <div className="row topspace15">
+                                                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                                <textarea className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
+                                                </div>
+                                              </div>
+                                              <div className="row topspace15">
+                                                <div className="col-lg-offset-8 col-lg-4 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
+                                                  <div className="col-lg-12 text-center btn btn-warning">Submit Review</div>
+                                                </div>               
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>  
+                                       <div className="modal-footer">                     
+                                      </div>                  
+                                    </div>
+                                  </div>
+                                </div>          
                                 {
                                    <li className="borderLeft"><a href={user_ID ? "/shipment-tracking" : "/login"}>Track my order</a></li> 
                                 }

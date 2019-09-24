@@ -100,7 +100,7 @@ componentWillMount() {}
                                   <div className="product-desc">
                                     <a className="title" href="">{data.orderdetails[0].productName}</a>
                                     <div className="price"><i className={ "fa fa-"+data.orderdetails[0].currency}>{data.orderdetails[0].offeredPrice}</i></div>
-                                    <a href="#" className="btn-atc" onClick={this.addtocart.bind(this)} id={data.orderdetails[0]._id}>Add to Cart</a>
+                                    <a href={"/productdetails/"+data.orderdetails[0]._id} className="btn-atc" id={data.orderdetails[0]._id}>View Details</a>
                                   </div>
                                 </div>
                               </div>

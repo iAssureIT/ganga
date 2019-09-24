@@ -75,10 +75,9 @@
     background: #fff;
     padding: 4px;
     font-size: 0.6em;
-    position: absolute;
-    left: 33%;
-    bottom: 10%;
+    position: relative;
     font-weight: bold;
+    top: 155px;
 }
 .figcaption::before{
 	position: absolute;
