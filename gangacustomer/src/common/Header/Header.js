@@ -262,9 +262,23 @@ searchProducts(){
           .catch((error)=>{
                 console.log('error', error);
           })
-
-
     }
+  submitQuery(){
+    var formValues = {
+      "customerName" : this.refs.firstName.value,
+      "customerMobile" : this.refs.mobNumber.value,
+      "query"        : this.refs.mobNumber.value
+    }
+
+    axios.post("http://localhost:5006/api/customerQuery/post",formValues)
+    .then((response)=>{ 
+      swal(response.data.message)     
+      $('#customercareModal').modal('hide');
+    })
+    .catch((error)=>{
+          console.log('error', error);
+    })
+  }
   getHotProduct(){
     axios.get("/api/products/get/hotproduct")
     .then((response)=>{ 
@@ -292,8 +306,8 @@ searchProducts(){
                               <ul>
                                 <li><a href="/">Get the app</a></li>
                                 
-                                <li className="borderLeft cursorpointer" data-toggle="modal" data-target="#productviewmodal"><a>Customer Care</a></li>
-                                <div className="modal " id="productviewmodal" role="dialog">
+                                <li className="borderLeft cursorpointer" data-toggle="modal" data-target="#customercareModal"><a>Customer Care</a></li>
+                                <div className="modal " id="customercareModal" role="dialog">
                                   <div className="modal-dialog modal-lg dialog">
                                     <div className="modal-content"> 
                                       <div className="modal-header">
@@ -320,12 +334,12 @@ searchProducts(){
                                               </div>
                                                <div className="row topspace15">
                                                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                <textarea id="message"className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
+                                                <textarea id="message" ref="query" className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
                                                 </div>
                                               </div>
                                               <div className="row topspace15">
                                                 <div className="col-lg-offset-8 col-lg-4 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
-                                                  <div className="col-lg-12 text-center btn btn-warning">Submit Review</div>
+                                                  <div className="col-lg-12 text-center btn btn-warning" onClick={this.submitQuery.bind(this)}>Submit Review</div>
                                                 </div>               
                                               </div>
                                             </div>
