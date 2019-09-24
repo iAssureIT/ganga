@@ -43,9 +43,9 @@ export default class EcommerceBanner extends Component {
 			                            dots={true}
 			                            dotData={true}
 									>
-									    <div class="item"><img src="/images/eCommerce-Banners_1.jpg"  /></div>
-									    <div class="item"><img src="/images/eCommerce-Banners_2.jpg"  /></div>
-									    <div class="item"><img src="/images/eCommerce-Banners_3.jpg"  /></div>
+									    <div className="item"><img src="/images/eCommerce-Banners_1.jpg"  /></div>
+									    <div className="item"><img src="/images/eCommerce-Banners_2.jpg"  /></div>
+									    <div className="item"><img src="/images/eCommerce-Banners_3.jpg"  /></div>
 									</OwlCarousel>
 
 							</div>

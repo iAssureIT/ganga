@@ -20,9 +20,9 @@
 /* End css default */
 .mega-menu {
   float: left;
-  width: 30%;
+  width: 22%;
   position: relative;
-  margin:30px auto;
+  /*margin:30px auto;*/
 }
 .mega-menu >ul {
   position: relative;
@@ -43,7 +43,8 @@
   display: block;
   overflow: hidden;
   position: relative;
-  border-bottom:1px solid #ccc;
+  /*border-bottom:1px solid #ccc;*/
+  background: #fff;
 }
 .mega-menu >ul >li:last-child >a {
   border-bottom: 0;
@@ -73,7 +74,7 @@
   content: "";
 }
 .mega-menu >ul >li:hover a:before {
-  background-color:#1E9ECF;
+  background-color:#fbbd65;
 }
 .mega-menu >ul >li:hover a:after {
   border-left-color:#fff;
@@ -96,14 +97,14 @@
   padding:20px 30px;
   background-color: #fff;
   color:#fff;
-  border:3px solid #1E9ECF;
+  /*border:3px solid #1E9ECF;*/
   overflow: hidden;
   visibility: visible;
   width:800px;
   height: 100%;
 }
 .mega-submenu h2 {
-  color: #1E9ECF;
+  color: #fbbd65;
   line-height: 1;
   margin:0;
   padding-bottom: 10px;
@@ -182,7 +183,7 @@
     .menu-item .featured-product .product-detail .btn-atc {
       color: #fff;
       display: inline-block;
-      background-color:#1E9ECF;
+      background-color:#fbbd65;
       padding:8px 15px;
       -webkit-border-radius:5px;
       -moz-border-radius:5px;

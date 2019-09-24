@@ -289,10 +289,10 @@ searchProducts(){
                                   user_ID? 
                                   <li><a href="/"  data-toggle="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
-                                      <li className="col-lg-12"><a href="/account">Your Profile</a></li>
-                                      <li className="col-lg-12"><a href="/wishlist">Your Wishlist</a></li>
-                                      <li className="col-lg-12"><a href="/my-orders">Your Orders</a></li>
-                                      <li className="col-lg-12" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/profile">Your Profile</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/wishlist">Your Wishlist</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/my-orders">Your Orders</a></li>
+                                      <li className="col-lg-12 NOpadding" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>
                                     </ul> 
                                   </li>
                                   :
@@ -435,7 +435,7 @@ searchProducts(){
                           <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
                           <i className="fa fa-bars megabars col-lg-3" aria-hidden="true"></i>
                             &nbsp;&nbsp;ALL CATEGORY</button>
-                          <div className="dropdown-menu" role="menu" aria-labelledby="menu1">
+                          <div className="dropdown-menu megamenudrop" role="menu" aria-labelledby="menu1">
                              <Megamenu />
                           </div>
                         </div>
