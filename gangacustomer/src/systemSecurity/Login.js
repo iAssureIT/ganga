@@ -41,7 +41,7 @@ class Login extends Component {
       .then((response)=> {
         console.log("-------userData------>>",response);
 
-        if (response.data.profile.status=="Active") {
+        if (response.data.status=="Active") {
         localStorage.setItem("token",response.data.token);
         localStorage.setItem("user_ID",response.data.user_ID);
 
@@ -77,7 +77,7 @@ class Login extends Component {
       .catch((error)=> {
           console.log('error==========  ', error);
         if(localStorage!==null){
-          swal("Invalid Email or Password","Please Enter valid email and password");
+          swal(error.message);
         }
         
       });
