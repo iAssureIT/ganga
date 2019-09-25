@@ -12,11 +12,15 @@ export default class Footer extends Component {
     constructor(props){
     super(props);
         this.state = {
-          categoryDetails:[]
+          categoryDetails:[],
+           companyInfo   :"",
+           Locationdata  :[],
         }
     }
     componentDidMount(){
      
+      this.getCompanyDetails();
+
       axios.get("/api/category/get/list")
                 .then((response)=>{
                   this.setState({
@@ -27,6 +31,24 @@ export default class Footer extends Component {
                     console.log('error', error);
                 })  
     }
+
+    getCompanyDetails(){
+        axios.get("/api/companysettings/list")
+          .then((response)=>{ 
+            console.log("companysettings response",response);
+              this.setState({
+                companyInfo   : response.data[0],
+                locationdata  : response.data[0].companyLocationsInfo,
+             
+            },
+                ()=>{
+              })
+          })
+          .catch((error)=>{
+                console.log('error', error);
+          })
+    }
+
     render(){
        return(
         <div>
@@ -104,9 +126,17 @@ export default class Footer extends Component {
                                 <div className="col-lg-3 icondiv">
                                     <i className="fa fa-map-marker"></i>
                                 </div>
-                                <div className="col-lg-9 addressDetails">  
-                                <a>Shop at Ganga Express<br /> Patna, India.</a>
-                                </div>
+                                {   this.state.locationdata && this.state.locationdata.length > 0 ?
+                                        this.state.locationdata.map((data, index)=>{
+                                           return(
+                                                 <div key={index} className="col-lg-9 addressDetails">  
+                                                    <a>{data.location},{data.landmark}<br />{data.companytaluka},{data.companyCity},
+                                                    {data.companyState}-{this.state.companyInfo.pincode}</a>
+                                                </div>
+                                            );
+                                        })
+                                    : null
+                                }
                             </div>
                         </div> 
 
@@ -118,7 +148,7 @@ export default class Footer extends Component {
                                 <i className="fa fa-phone"></i>
                             </div>
                             <div className="col-lg-9 addressDetails">  
-                            <a>Phone: +1 (2) 345 6789<br /> Fax: +1 (2) 345 6789</a>
+                            <a>Phone:+91{this.state.companyInfo.companyContactNumber}<br />Mob:+91{this.state.companyInfo.companyMobileNumber}</a>
                             </div>
                         </div> 
 
@@ -130,7 +160,7 @@ export default class Footer extends Component {
                                 <i className="fa fa-envelope"></i>
                             </div>
                             <div className="col-lg-9 addressDetails">  
-                            <a>contact@GangaExpress.com<br /> Support@GangaExpress.com</a>
+                            <a>{this.state.companyInfo.companyEmail}<br />{this.state.companyInfo.companyAltEmail}</a>
                             </div>
                         </div>
 
