@@ -41,6 +41,7 @@ class Login extends Component {
       .then((response)=> {
         console.log("-------userData------>>",response);
 
+        if (response.data.profile.status=="Active") {
         localStorage.setItem("token",response.data.token);
         localStorage.setItem("user_ID",response.data.user_ID);
 
@@ -57,6 +58,21 @@ class Login extends Component {
         this.props.history.push('/');
         window.location.reload("/");
 
+      }else{
+
+            swal({
+                title: "Need to Verify OTP",
+                text: "Please Verify Your OPT First",
+                icon: "warning",
+                buttons: ["No Thanks", "Verfy OTP"],
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                  window.location = "/confirm-otp/"+response.data.user_ID;
+                } 
+            });
+          }
       })
       .catch((error)=> {
           console.log('error==========  ', error);

@@ -68,7 +68,7 @@ class SignUp extends Component {
 	                pwd        		: this.refs.signupPassword.value,
 	                signupPassword  : this.refs.signupConfirmPassword.value,
 	                roles 			: 'users',
-	                status 			: 'Active'
+	                status 			: 'Blocked'
 	            }
 	            
  			// console.log("-------auth------>>",auth);

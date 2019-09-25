@@ -23,7 +23,8 @@ import './SignUp.css';
       var formValues ={
         "user_ID" :  this.props.match.params.user_ID,
         "mobOTP"  :  parseInt(this.refs.mobotp.value),
-        "emailOTP":  parseInt(this.refs.emailotp.value)
+        "emailOTP":  parseInt(this.refs.emailotp.value),
+        "status"  :  "Active"
       }
       console.log('formValues', formValues);
       axios.put('/api/users/otpverification', formValues)
