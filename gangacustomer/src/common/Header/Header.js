@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import './Header.css';
 
 import $ from "jquery";
+import jQuery from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/dropdown.js';
@@ -267,14 +268,15 @@ searchProducts(){
     var formValues = {
       "customerName" : this.refs.firstName.value,
       "customerMobile" : this.refs.mobNumber.value,
-      "query"        : this.refs.mobNumber.value
+      "query"        : this.refs.query.value
     }
 
     axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
-      swal(response.data.message)     
-      $('#customercareModal').modal('hide');
-    })
+      swal(response.data.message) 
+      jQuery("#customercareModal").modal("hide");
+
+      })
     .catch((error)=>{
           console.log('error', error);
     })
