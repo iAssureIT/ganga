@@ -41,11 +41,9 @@ class CartProducts extends Component{
        
     }
     getCartData(){
-        // const userid = '5d5bfb3154b8276f2a4d22bf';
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-          	// console.log('cartProduct', response.data)
               this.setState({
                 cartProduct : response.data[0]
               });
@@ -60,7 +58,6 @@ class CartProducts extends Component{
               this.setState({
                 companyInfo : response.data[0]
               },()=>{
-                  console.log('companyInfo', this.state.companyInfo);
                   this.getCartTotal();
               })
           })
@@ -69,7 +66,6 @@ class CartProducts extends Component{
           })
     }
     getCartTotal(){
-        //var cartData = this.props.recentCartData[0].cartItems;
         var companyData = this.state.companyInfo;
         if (this.props.recentCartData.length>0  && companyData) {
 
@@ -94,9 +90,7 @@ class CartProducts extends Component{
     Removefromcart(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
-        // console.log("userid",userid);
         const cartitemid = event.target.getAttribute('id');
-        // console.log("cartitemid",cartitemid);
 
         const formValues = { 
               "user_ID"    : userid,
@@ -105,7 +99,6 @@ class CartProducts extends Component{
 
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
-            console.log('removed');
             swal(response.data.message)           
              .then((obj)=>{
                 this.props.fetchCartData();
@@ -130,7 +123,6 @@ class CartProducts extends Component{
 
         const quantityAdded = parseInt(quantity+1);
         const proprice = event.target.getAttribute('dataprice');
-        // console.log('proprice', proprice);
         if(quantity>0){
            var totalIndPrice   = quantityAdded * proprice;      
         }
@@ -157,7 +149,6 @@ class CartProducts extends Component{
         const userid = localStorage.getItem('user_ID');
         const cartitemid = event.target.getAttribute('id');
         const quantity = parseInt(event.target.getAttribute('dataquntity'));
-        // console.log('quantity', quantity);
 
         const quantityAdded = parseInt(quantity-1) <= 0 ? 1 : parseInt(quantity-1);
         const proprice = event.target.getAttribute('dataprice');
@@ -171,7 +162,6 @@ class CartProducts extends Component{
 			"quantityAdded" : quantityAdded,
 			"totalIndPrice"	: totalIndPrice
 		}
-        // console.log('formValues',formValues);
         axios.patch("/api/carts/quantity" ,formValues)
 		.then((response)=>{
              this.props.fetchCartData();
@@ -179,7 +169,6 @@ class CartProducts extends Component{
 		.catch((error)=>{
 		    console.log('error', error);
 		})
-        // this.getCompanyDetails();
     }
     proceedToCheckout(event){
         event.preventDefault();
@@ -210,7 +199,7 @@ class CartProducts extends Component{
                                 </thead>
                                 <tbody>
                                     {
-                                        this.props.recentCartData && this.props.recentCartData.length > 0?
+                                        this.props.recentCartData &&  this.props.recentCartData.length &&  this.props.recentCartData[0].cartItems.length > 0?
                                         this.props.recentCartData[0].cartItems.map((data, index)=>{
                                             return(
                                                 <tr key={index}>

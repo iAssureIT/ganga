@@ -277,9 +277,9 @@ class ProductCollageView extends Component {
                         <span className="oldprice"><i className={"fa fa-"+value.currency}>{ value.actualPrice}</i></span> 
                       </div>
                       <div className="actions">
-                        <button type="submit" title="Add to Cart" className="actiontocart primary" onClick={this.addtocart.bind(this)} id={value._id}>
-                          <span onClick={this.addtocart.bind(this)} id={value._id}><i className="fa fa-shopping-cart" ></i>&nbsp;Add to Cart</span>
-                        </button>
+                      <button type="submit" id={value._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart addtocartbtn btn-warning ">
+                                        {/*<i className="fa fa-shopping-cart"></i>*/}&nbsp;Add to Cart
+                                      </button>
                       </div>
                     </div>
                   </div>
