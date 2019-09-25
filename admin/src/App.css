@@ -74,6 +74,10 @@ body {
   font-family:'Montserrat-Regular';
   src: url("/fonts/Montserrat/Montserrat-Regular.ttf");
 }
+
+.form-control{
+font-size:12px; 
+}
 .main-container{
   width: 100%;
 }
@@ -103,7 +107,8 @@ input, select{
   font-family:'Montserrat',sans-serif !important;
   font-size: 20px !important;
   color: #333333 !important;
-  font-weight: bold;
+  /*font-weight: bold;*/
+  padding:10px;
 }
 
 .pageSubHeader{
@@ -119,8 +124,9 @@ input, select{
   font-size: 12px !important;
   color: #333333;
   font-weight: normal;
-  
-
+}
+.paddingZeroo{
+  padding: 0 !important;
 }
 
 /*add this class next to form-control*/

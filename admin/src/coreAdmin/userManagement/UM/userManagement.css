@@ -3980,7 +3980,7 @@ right: 15px;
 }
 .box-header.with-border {
   border-bottom: 1px solid #f4f4f4;
-  margin-top: 50px;
+  /*margin-top: 50px;*/
 }
 
 .cursorpointer{

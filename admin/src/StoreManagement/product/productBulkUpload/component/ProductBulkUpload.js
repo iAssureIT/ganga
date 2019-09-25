@@ -421,12 +421,12 @@ class AddNewBulkProduct extends Component{
         return(
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
-                <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
                     <div className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                    <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="box-header with-border">
+                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <div className="">
                     <h4 className="weighttitle">Product Bulk Upload</h4>
                     </div>
 

@@ -29,16 +29,16 @@ class AddNewProductImages extends Component{
         this.getData(this.props.match.params.productID);
     }
     getData(id){
-        console.log('id',id);
+        // console.log('id',id);
         axios.get('/api/products/get/one/'+id)
         .then((response)=>{
-            console.log('reas', response.data);
+            // console.log('reas', response.data);
             this.setState({
                 productImage : response.data.productImage && response.data.productImage.length>0 ? response.data.productImage : [],
                 productImageArray : response.data.productImage && response.data.productImage.length>0 ? response.data.productImage : [],
                 productTitle : response.data.productName
             },()=>{
-                console.log('productImage', this.state.productImage);
+                // console.log('productImage', this.state.productImage);
             })
         })
         .catch((error)=>{
@@ -72,16 +72,16 @@ class AddNewProductImages extends Component{
                 this.setState({
                     productImage : productImage
                 },()=>{
-                    console.log('productImage', this.state.productImage)
+                    // console.log('productImage', this.state.productImage)
                 });  
                 main().then(formValues=>{
-                    console.log('formValues.productImage', formValues.productImage);
+                    // console.log('formValues.productImage', formValues.productImage);
                     var newImages = this.state.productImageArray;
                     newImages.push(formValues.productImage);
                     this.setState({
                         productImageArray : _.flatten(newImages)
                     },()=>{
-                        console.log('form', this.state.productImageArray);
+                        // console.log('form', this.state.productImageArray);
                     })
                 });
                 async function main(){
@@ -92,7 +92,7 @@ class AddNewProductImages extends Component{
                         var s3url = await s3upload(productImage[i].fileInfo, config, this);
                         s3urlArray.push(s3url);
                     }
-                    console.log('s3urlArray',s3urlArray);
+                    // console.log('s3urlArray',s3urlArray);
                     
                     
                     const formValues = {
@@ -101,7 +101,7 @@ class AddNewProductImages extends Component{
                         "status"            : "New"
                     };
         
-                    console.log("1 formValues = ",formValues);
+                    // console.log("1 formValues = ",formValues);
                     return Promise.resolve(formValues);
                 }
                 function s3upload(image,configuration){
@@ -110,7 +110,7 @@ class AddNewProductImages extends Component{
                         S3FileUpload
                            .uploadFile(image,configuration)
                            .then((Data)=>{
-                                console.log("Data = ",Data);
+                                // console.log("Data = ",Data);
                                 resolve(Data.location);
                            })
                            .catch((error)=>{
@@ -123,7 +123,7 @@ class AddNewProductImages extends Component{
                         axios
                            .get('/api/projectSettings/get/one/s3')
                            .then((response)=>{
-                                console.log("proj set res = ",response.data);
+                                // console.log("proj set res = ",response.data);
                                 const config = {
                                     bucketName      : response.data.bucket,
                                     dirName         : 'propertiesImages',
@@ -151,7 +151,7 @@ class AddNewProductImages extends Component{
             "productImage"      : this.state.productImageArray,
             "status"            : "New"
         };
-        console.log('formValues', formValues);
+        // console.log('formValues', formValues);
         axios.patch('/api/products/patch/gallery',formValues)
             .then( (res) =>{
                 // console.log('res', res);
@@ -166,7 +166,7 @@ class AddNewProductImages extends Component{
                 axios
                    .get('/api/projectSettings/get/one/s3')
                    .then((response)=>{
-                        console.log("proj set res = ",response.data);
+                        // console.log("proj set res = ",response.data);
                         const config = {
                             bucketName      : response.data.bucket,
                             dirName         : 'propertiesImages',
@@ -199,11 +199,11 @@ class AddNewProductImages extends Component{
     }
     
     render(){
-        console.log('this', this.state.s3urlArray);
+        // console.log('this', this.state.s3urlArray);
         return(
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
               <div className="row">
-                <div className="formWrapper col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <div className="formWrapper col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
                     <section className="content">
                       <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                         <div className="row">

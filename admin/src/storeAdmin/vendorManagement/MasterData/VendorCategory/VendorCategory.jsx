@@ -76,10 +76,10 @@ class VendorCategory extends Component {
                     <section className="content">
                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                             <div className="row">
-                                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
-                                    <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <div className="">
+                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
                                         <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                                            <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Vendor Category</h4>
+                                            <h4 className="">Vendor Category</h4>
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                             <br/>
@@ -91,7 +91,7 @@ class VendorCategory extends Component {
                                                 </div>
                                                 <br/>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <button onClick={this.submitCategory.bind(this)} className="btn button3 pull-right">Submit</button>
+                                                    <button onClick={this.submitCategory.bind(this)} className="btn button3 btn-primary pull-right">Submit</button>
                                                 </div> 
                                             </form>
                                         </div>
