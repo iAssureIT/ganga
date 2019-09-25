@@ -53,8 +53,10 @@ class Login extends Component {
               loggedIn  :   true
           })
         }
+        
         this.props.history.push('/');
         window.location.reload("/");
+
       })
       .catch((error)=> {
           console.log('error==========  ', error);

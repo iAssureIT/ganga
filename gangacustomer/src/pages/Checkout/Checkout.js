@@ -358,32 +358,24 @@ class Checkout extends Component{
     Removefromcart(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
-        
-        const cartitemid = event.target.getAttribute('id');
+        const cartitemid = event.target.id;
 
         const formValues = { 
-              "user_ID"    : userid,
-              "cartItem_ID" : cartitemid,
-          }
-
+            "user_ID"    : userid,
+            "cartItem_ID" : cartitemid,
+        }
         axios.patch("/api/carts/remove" ,formValues)
-          .then((response)=>{
-            swal(response.data.message)           
-             .then((obj)=>{
-                  window.location.reload();
-             });
-
+        .then((response)=>{
+            swal(response.data.message);
             this.getCartData();   
             this.getCompanyDetails();
-
-          })
-          .catch((error)=>{
-                console.log('error', error);
-          })
-
-
+            this.getCartTotal();
+        })
+        .catch((error)=>{
+        console.log('error', error);
+        })
     }
-
+    
     cartquantityincrease(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
@@ -892,7 +884,7 @@ class Checkout extends Component{
                                         }
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                             <button className="btn btn-warning" data-toggle="modal" data-target="#checkoutAddressModal">Add New Address</button>
-                                            <div className="modal fade col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal" id="checkoutAddressModal" role="dialog">
+                                            <div className="modal col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal" id="checkoutAddressModal" role="dialog">
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                         <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -1087,7 +1079,7 @@ class Checkout extends Component{
                                             this.state.productCartData.map((data, index)=>{
                                                 return(
                                                     <tr>
-                                                        <td><span className="fa fa-times-circle-o crossOrder"></span></td>
+                                                        <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td>
                                                         <td><img className="img img-responsive orderImg" src={data.productImage[0]} /></td>
                                                         <td><span className="productName">{data.productName}</span></td>
                                                         <td><span className="quantityInput textAlignRight">{data.quantity}</span></td>

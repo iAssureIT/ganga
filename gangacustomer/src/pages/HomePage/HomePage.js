@@ -24,7 +24,6 @@ class HomePage extends Component {
       this.exclusiveProductsData();
       this.newProductsData();
       this.bestSellerData();
-
   	}  
   	componentDidMount() {
       this.featuredProductData();
