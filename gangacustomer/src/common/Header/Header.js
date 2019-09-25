@@ -374,7 +374,7 @@ searchProducts(){
                                     </ul> 
                                   </li>
                                   :
-                                  <li><a href="/login"><i className="fa fa-pencil"></i> Sign In <i className="fa fa-angle-down"></i></a></li>
+                                  <li><a href="/login"><i className="fa fa-pencil"></i> Sign In</a></li>
                                 }
                                 </ul>  
                             </div>
