@@ -1,4 +1,5 @@
 import React, { Component } 		  from 'react';
+import $                          from 'jquery';
 import EcommerceProductCarousel 	from "../../blocks/ProductCarouselEcommerce/EcommerceProductCarousel.js";
 import Ecommercenewproductcaro   from "../../blocks/ProductCarouselEcommerce/Ecommercenewproductcaro.js";
 import EcommerceBanner 				    from "../../blocks/Banner/EcommerceBanner.js";
@@ -31,6 +32,13 @@ class HomePage extends Component {
       this.newProductsData();
       this.bestSellerData();
       this.getCategories();
+        var refresh = window.localStorage.getItem('refresh');
+        console.log(refresh);
+        if (refresh===null){
+            window.location.reload();
+            window.localStorage.setItem('refresh', "1");
+      }
+
     }  
     componentWillReceiveProps(nextProps){
       // this.changeProductCateWise(categoryID, type);
