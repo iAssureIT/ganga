@@ -39,7 +39,9 @@ class BaOrdersList extends Component{
 
               var finaldata = $(response.data).filter(function (i,n){
                   return (n.deliveryStatus[0].status == 'Dispatch'
-                     || n.deliveryStatus[0].status == 'Delivery Initiated' || n.deliveryStatus[0].status == 'Delivered & Paid'); 
+                     || n.deliveryStatus[0].status == 'Delivery Initiated' 
+                     || n.deliveryStatus[0].status == 'Delivered & Paid' || n.deliveryStatus[0].status == 'Returned' 
+                     || n.deliveryStatus[0].status == 'Cancelled' ); 
               });
               console.log(finaldata);
 
