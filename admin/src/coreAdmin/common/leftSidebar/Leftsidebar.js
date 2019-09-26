@@ -33,7 +33,7 @@ export default class Leftsidebar extends Component{
             <nav id="sidebar">
               <div className="sidebar-header">
                 <h4 className="text-center"><b><img className="slidlogo1" src="/images/im1.png"/></b></h4>
-                <strong><img className="slidlogo" src="images/Logo.png"/></strong>
+                <strong><img className="slidlogo" src="/images/Logo.png"/></strong>
               </div>
               <ul className="list-unstyled components">
                 <li className="active sidebarMenuText">
@@ -47,6 +47,7 @@ export default class Leftsidebar extends Component{
                   <a href="#Plan" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-pie-chart" />
                     Product Management
+                    <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Plan">
                       <li>
@@ -85,6 +86,7 @@ export default class Leftsidebar extends Component{
                   <a href="#Shipment" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-map-marker" />
                     Shipment Tracking
+                     <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Shipment">
                     <li>
@@ -99,6 +101,7 @@ export default class Leftsidebar extends Component{
                   <a href="#baData" data-toggle="collapse" aria-expanded="false">
                     <i className="glyphicon glyphicon-briefcase" />
                     Business Associates
+                     <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="baData">
                     <li>
@@ -119,6 +122,7 @@ export default class Leftsidebar extends Component{
                   <a href="#vendor" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-industry" />
                     Vendor Management
+                     <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="vendor">
                     <li>

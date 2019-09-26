@@ -1,3 +1,7 @@
+.formheight{
+    height: 75px;
+}
+
 .addNewProductWrapper {
     height: auto;
     border-radius: 3px;

@@ -1045,7 +1045,7 @@ class Checkout extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <input type="checkbox" name="giftWrap" />  &nbsp; <span>Gift wrap</span>&nbsp;<span className="giftWrapPrize">$5.00</span>
+                                    <input type="checkbox" name="giftWrap" />  &nbsp; <span>Gift wrap</span>&nbsp;<span className="giftWrapPrize"><i class="fas fa-rupee-sign"></i>5.00</span>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>

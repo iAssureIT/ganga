@@ -434,9 +434,15 @@ export default class BusinessAssociateList extends Component {
                               return(
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 borderlist selected" key={index} 
                                    onClick={this.ShowForm.bind(this)} name={index}  data-child={data._id+'-'+index} id={data._id}>
+                                   { data.logo=="" ?
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 baLogoDiv">
-                                      <img src={data.logo} className="supplierLogoImage"></img>
+                                      <img src="images/defaultimg.jpg" className="supplierLogoImage"></img>
                                     </div>
+                                    :
+                                    <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 baLogoDiv">
+                                     <img src={data.logo} className="supplierLogoImage"></img>
+                                    </div> 
+                                  }
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 listprofile">
                                       <h5 className="titleprofile">{data.companyName}</h5>
                                       <ul className="col-lg-9 col-md-9 col-sm-9 col-xs-9 listfont">

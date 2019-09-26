@@ -549,10 +549,10 @@ searchProducts(){
 }
 const mapStateToProps = (state)=>{
   return {
-    cartCount :  state.cartCount,
-    cartData :  state.cartData,
-    wishlistCount : state.wishlistCount,
-    searchResult : state.searchResult,
+    cartCount      :  state.cartCount,
+    cartData       :  state.cartData,
+    wishlistCount  : state.wishlistCount,
+    searchResult   : state.searchResult,
     searchCriteria : state.searchCriteria
   }
 }

@@ -582,7 +582,7 @@ class AddNewShopProduct extends Component{
                             <form className="newTemplateForm" id="addNewShopProduct">
                               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Section <i className="redFont">*</i></label>
                                       <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
                                         <option disabled selected defaultValue="Select Section">Select Category</option>
@@ -598,7 +598,7 @@ class AddNewShopProduct extends Component{
                                       </select>
                                       
                                   </div>
-                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Category <i className="redFont">*</i></label>
                                     {/*<div className="input-group" id="category">*/}
                                       <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category}  name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
@@ -615,7 +615,7 @@ class AddNewShopProduct extends Component{
                                       </select>
                                       
                                   </div>
-                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Sub Category <i className="redFont">*</i></label>
                                     {/*<div className="input-group" id="subCategory">*/}
                                       <select className="form-control allProductSubCategories" aria-describedby="basic-addon1" name="subCategory" id="subCategory"  ref="subCategory" value={this.state.subCategory} onChange={this.handleChange.bind(this)}>
@@ -637,7 +637,7 @@ class AddNewShopProduct extends Component{
                                 </div>
 
                                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Brand Name <i className="redFont">*</i></label>
                                     <input value={this.state.brand} name="brand" id="brand"  type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
                                   </div>
@@ -651,11 +651,11 @@ class AddNewShopProduct extends Component{
                                   </div>
                                 </div>
                                   <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                  <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <label>Product URL <i className="redFont">*</i></label>                                                                    
                                     <input value={this.state.productUrl} onChange={this.handleChange.bind(this)} id="productUrl" name="productUrl" type="text" className="form-control link-subcategory newProductName productUrl" placeholder="Product URL" aria-describedby="basic-addon1" ref="productUrl"  />
                                   </div>
-                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                  <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <label>Unit <i className="redFont">*</i></label>
                                     <select className="form-control" ref="unit" id="unit" name="unit" value={this.state.unit} onChange={this.handleChange.bind(this)}>
                                       <option value="Single">Single</option>
@@ -666,13 +666,13 @@ class AddNewShopProduct extends Component{
                                       <option value="Mililiters">Mililiters</option>
                                     </select>
                                   </div>
-                                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                  <div className="formheightcol-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                                     <label>Available Quantity <i className="redFont">*</i></label>
                                     <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="text" className="form-control availableQuantityNew" placeholder="Available Quantity" aria-describedby="basic-addon1" ref="availableQuantity"  />
                                   </div>
                                   </div>
                                   <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                    <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                                       <label>Product Currency <i className="redFont">*</i></label>
                                       <select className="form-control" ref="currency" id="currency" name="currency" value={this.state.currency} onChange={this.handleChange.bind(this)}>
                                         <option value="inr">INR</option>
@@ -681,11 +681,11 @@ class AddNewShopProduct extends Component{
                                         <option value="gbp">GBP</option>
                                       </select>
                                     </div>
-                                    <div className=" col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                    <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                                       <label>Product Actual Price <i className="redFont">*</i></label>
                                       <input onChange={this.handleChange.bind(this)} value={this.state.actualPrice} id="actualPrice" name="actualPrice" type="text" className="form-control actualPrice" placeholder="Price" aria-describedby="basic-addon1" ref="actualPrice"  />
                                     </div>
-                                    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                    <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                                       <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                         <label>Offered</label>
                                         <input type="checkBox" id="offered" checked={this.state.offered}  onChange={this.makeProductOffered.bind(this)}/>
