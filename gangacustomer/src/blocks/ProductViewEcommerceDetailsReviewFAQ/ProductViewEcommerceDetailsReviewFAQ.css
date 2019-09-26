@@ -4,6 +4,9 @@
 .topspace15{
 	margin-top:15px;
 }
+.topspace8{
+	margin-top:8px;
+}
 
 .faq ul {
   list-style-type: none;
@@ -85,3 +88,13 @@
 /*.bannerimg:hover{
 	background:rgba(0,0,0,1);
 }*/
+
+.reviewborder{
+	border:1px solid #aaa;
+	border-radius: 8px;
+}
+
+.reviewuserimg img{
+	height: 30px;
+	border-radius: 50%;
+}

@@ -14,73 +14,77 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
 	constructor(props){
     super(props);
-	    
+      this.state = {
+      "product_id" : this.props.productID,
+      };
+	     this.getMyReview()
   	} 
-  	componentDidMount(){  	} 
-  	  	
+  	componentDidMount(){  
+    this.getMyReview()
+
+    	} 
+  	 
+    getMyReview(){
+      axios.get("/api/customerReview/get/list/"+this.state.product_id)
+            .then((response)=>{
+              this.setState({ 
+                  reviewData : response.data
+              },()=>{
+                console.log("reviewData",this.state.reviewData);
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+ 	  
+
+
   	render() {
 		return (
 				<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
-          <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 faq">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
             <ul>
-              <li><a >DETAILS</a></li>
-              <li className="rvw"><a >REVIEWS</a></li>
-            </ul>
-
-            <div className="topspace detailtitle">DETAILS</div>
-            <div className="spcbx topspace15"></div>
-             <div className="detailtxt topspace15">
-              1.6 GHz Intel Core i5 (Broadwell) 4GB of 1600 MHz LPDDR3 RAM 256GB PCIe-Based Flash Storage Integrated Intel HD Graphics 6000 13.3" LED-Backlit Glossy Display
-
-             </div>
-
-            <div className="topspace detailtitle">REVIEWS</div>
-            <div className="spcbx topspace15"></div>
-
-            <div className="topspace15 reviewtitle ">You're reviewing</div>
-            &nbsp;&nbsp;
-            <i className="fa fa-star reviewstr" aria-hidden="true"></i>
-            <i className="fa fa-star reviewstr" aria-hidden="true"></i>
-            <i className="fa fa-star reviewstr" aria-hidden="true"></i>
-            <i className="fa fa-star reviewstr" aria-hidden="true"></i>
-            <i className="fa fa-star reviewstr" aria-hidden="true"></i>
-           {/* <div className="row topspace">
-              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div className=" ">Nickname</div>
-              </div>
-               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div className=" ">Summary</div>
-              </div>
-            </div>*/}
-            <div className="row topspace15">
-              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-               <label className=" ">Nickname</label>
-               <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
-              </div>
-               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-               <label className=" ">Summary</label>
-                <input className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
-              </div>
-            </div>
-            <div className="row topspace15">
-              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <div className=" ">Review</div>
-              </div>               
-            </div>
-             <div className="row topspace15">
-              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-              <textarea className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
-              </div>
-            </div>
-            <div className="row topspace15">
-              <div className="col-lg-offset-8 col-lg-4 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
-                <div className="Submitreviewbtn col-lg-12 text-center">Submit Review</div>
-              </div>               
+              <li className="rvw"><a>REVIEWS</a></li>
+            </ul> 
+            <div className="topspace15"></div>
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewborder">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 topspace15">
+                <div className="col-lg-4 col-md-3 col-sm-3 col-xs-3 reviewuserimg text-center">
+                  <div className="row">
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
+                          <fieldset className="ratingReview stars givefeedback ">
+                              <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
+                              <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
+                              <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
+                              <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
+                              <input type="radio" id="star5" name="ratingReview" value="1"/><label htmlFor="star5"></label>
+                          </fieldset>
+                    </div>    
+                    <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <img src="/images/userImage.png"/>
+                        <p>by Amitraje Shinde</p>
+                        <p>date</p>
+                    </div>    
+                  </div>    
+                </div>    
+                <div className="col-lg-8 col-md-9 col-sm-9 col-xs-9 reviewuserimg">
+                  <div className="row">
+                    <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                      <div className="row">
+                        <h5>Review :</h5>
+                      </div>    
+                    </div>    
+                    <div className="col-lg-11 col-md-11 col-sm-10 col-xs-10 topspace8">
+                      <div className="row">
+                        <p>vary low camera quality, ram showing 8gb but working as 4gb phone, screen resolution is vary low. also disappointing by Amazon because of when i want to return and apply for refund they giving a childish reason no refund no on the spot help just harassment. so please request u all don't purchase this model and also don't purchase online phone from amazon.</p>
+                      </div>    
+                    </div>    
+                  </div>    
+                </div>    
+              </div>    
             </div>
 
-          </div>
-          <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 bannerimg" title="banner">
-            <img className="img-responsive" src="http://demo8.cmsmart.net/mag2_amazon_themeforest/pub/media/multistore/banner/banner-slider-right.png"/>
           </div>
         </div>
 		);

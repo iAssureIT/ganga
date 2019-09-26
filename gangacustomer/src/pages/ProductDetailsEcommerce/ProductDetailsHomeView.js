@@ -9,7 +9,7 @@ import ProductModalViewEcommerce     from "../../blocks/ProductViewEcommerce/Pro
 import ProductViewEcommerceList     from "../../blocks/ProductViewEcommerceList/ProductViewEcommerceList.js";
 import ProductViewEcommerceBestSellers     from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
 import ProductViewEcommerceShopingFeature     from "../../blocks/ProductViewEcommerceShopingFeature/ProductViewEcommerceShopingFeature.js";
-import ProductViewEcommerceDetailsReviewFAQ 		from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
+import ProducthomeDetailsReviewFAQ 		from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProducthomeDetailsReviewFAQ.js";
 // import FeaturedProductsEcommerce 	from "../../blocks/FeaturedProducts/FeaturedProductsEcommerce.js";
 import axios                  		from 'axios';
 
@@ -48,7 +48,7 @@ export default class ProductDetailsHomeView extends Component {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
           <ProductModalViewEcommerce productInfo = { this.props.productInfo } />
-          <ProductViewEcommerceDetailsReviewFAQ productInfo = { this.props.productID } />
+          <ProducthomeDetailsReviewFAQ productInfo = { this.props.productID } />
         </div>
 		);
 	}

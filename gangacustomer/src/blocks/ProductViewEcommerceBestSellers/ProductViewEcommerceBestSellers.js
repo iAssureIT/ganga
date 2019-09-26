@@ -182,7 +182,7 @@ class ProductViewEcommerceBestSellers extends Component {
                                   <a className="product photo product-item-photo" tabindex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
-                                  <div className="hoveractions">
+                                  <div className="hoveractions1">
                                       <ul>
                                         <li  data-toggle="modal" data-target="#productviewmodal"><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
                                         <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>

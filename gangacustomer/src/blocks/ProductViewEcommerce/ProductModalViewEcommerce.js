@@ -241,7 +241,7 @@ class ProductModalViewEcommerce extends Component {
   	}
   }
   render() {
-  	        // console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
+  	       console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
 		return (
 				
 			this.state.productData?
@@ -381,7 +381,16 @@ class ProductModalViewEcommerce extends Component {
 					</div>
 					
                 </div>
-                
+
+        <div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
+              <div className="col-lg-12 topspace detailtitle">DETAILS</div>
+              <div className="spcbx topspace15"></div>
+               <div className="col-lg-12 detailtxt topspace15">{this.state.productData.productDetails}</div>
+            </div>
+          </div>               
+        </div>               
 		</div>			
 			:
 			null

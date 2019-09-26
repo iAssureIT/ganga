@@ -63,7 +63,7 @@ class ProductViewEcommerce extends Component {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           console.log('cartProduct=======================', response.data[0].cartItems)
+           // console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
@@ -402,6 +402,15 @@ class ProductViewEcommerce extends Component {
 							
 						</div>
 					</div>
+			        <div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
+			            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
+			              <div className="col-lg-12 topspace detailtitle">DETAILS</div>
+			              <div className="spcbx topspace15"></div>
+			               <div className="col-lg-12 detailtxt topspace15">{this.state.productData.productDetails}</div>
+			            </div>
+			          </div>               
+			        </div>               
                 </div>
 		);
 	}

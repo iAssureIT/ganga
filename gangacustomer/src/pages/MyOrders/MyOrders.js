@@ -64,7 +64,7 @@ export default class MyOrders extends Component {
 
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
-              
+               swal(response.data.message);    
             })
             .catch((error)=>{
             })
@@ -197,9 +197,7 @@ export default class MyOrders extends Component {
                           console.log('error', error);
                         })                
     }
-  render() { 
-                  console.log("oneproductdetails===================>",this.state.oneproductdetails);
- 
+  render() {  
     return (
     <div className="container">	
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
