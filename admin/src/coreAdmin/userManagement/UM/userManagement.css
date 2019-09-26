@@ -3791,7 +3791,7 @@ right: 15px;
 }
 .box {
   position: relative;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
   background: #ffffff;
   /*border-top: 2px solid #e60004;*/
   margin-bottom: 20px;

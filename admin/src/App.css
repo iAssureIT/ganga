@@ -65,18 +65,18 @@
 
 /*.....................Main.css........................*/
 body {
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   background-color:#eeeeee !important;
-  font-size: 12px !important;
+  font-size: 14px !important;
 }
 
 @font-face{
-  font-family:'Montserrat-Regular';
-  src: url("/fonts/Montserrat/Montserrat-Regular.ttf");
+  font-family:'Relay-Regular';
+  src: url("/fonts/Relay-Regular.ttf");
 }
 
 .form-control{
-font-size:12px; 
+font-size:14px; 
 }
 .main-container{
   width: 100%;
@@ -99,12 +99,12 @@ input::placeholder{
   color: #cacaca;
 }
 input, select{
-  font-family:'Montserrat',sans-serif !important;
+  font-family:'Relay-Regular' !important;
 
   color: #333 !important;
 }
 .pageHeader{
-  font-family:'Montserrat',sans-serif !important;
+  font-family:'Relay-Regular' !important;
   font-size: 20px !important;
   color: #333333 !important;
   /*font-weight: bold;*/
@@ -112,7 +112,7 @@ input, select{
 }
 
 .pageSubHeader{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 16px;
   color: #333333;
   font-weight: bold;
@@ -120,7 +120,7 @@ input, select{
 }
 /*Form input lable*/
 .formLable{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 12px !important;
   color: #333333;
   font-weight: normal;
@@ -131,7 +131,7 @@ input, select{
 
 /*add this class next to form-control*/
 .inputBox{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   height: 30px !important;
   border: none !important;
   font-size: 12px !important;
@@ -179,7 +179,7 @@ input, select{
 /*Close and clear*/
 .inputBox::placeholder
 {
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 12px !important;
   color: #cacaca;
 }
@@ -188,7 +188,7 @@ input, select{
   height: 40px;
   background: none;
   border: 1px solid #039BE5 !important;
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 12px;
   color: #039BE5;
 }
@@ -203,7 +203,7 @@ input, select{
   background-color: #039BE5;
   color: #fff;
   font-weight: 600 !important;
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 14px !important;
   border-radius: 5px;
   border: none;
@@ -211,7 +211,7 @@ input, select{
 
 .submit:hover{
   color: #ffffff !important;
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
 }
 
 /*Breadcrumb Start*/
@@ -221,13 +221,13 @@ input, select{
   color : #2E3951;
   font-size: 12px;
   margin-top: 17px;
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   background-color: #F8F8F8 !important;
   padding: 6px 20px;
 }
 .breadcrumbCustom li a{
   text-decoration: none;
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 12px;
   color: #2E3951;
 }
@@ -238,7 +238,7 @@ input, select{
   color: #666666;
 }
 .breadcrumbCustom li{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 12px;
   color: #666666;
 }
@@ -256,7 +256,7 @@ input, select{
   height: 30px;
 }
 .search[placeholder]{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   font-size: 12px;
   color: #cacaca;
   padding-left: 35px;
@@ -266,7 +266,7 @@ input, select{
 
 /*React table css for all react tables*/
 .ReactTable .rt-thead.-header {
-  font-family:'Montserrat',sans-serif !important;
+  font-family:'Relay-Regular' !important;
   background-color: #039BE5 !important;
   color      :#f2f2f2 !important;
   font-size  : 14px !important;
@@ -276,7 +276,7 @@ input, select{
     text-align:left;
 }
 .ReactTable .rt .td{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular';
   padding: 10px;
 }
 /*React Table End*/
@@ -360,7 +360,7 @@ input, select{
 }
 
 .fontF{
-  font-family:'Montserrat',sans-serif;
+  font-family:'Relay-Regular;'
 }
 
 .br3{
@@ -680,7 +680,7 @@ margin-right: 12px;
     background-color: #2189d2;
     margin-bottom: 30px;
     box-shadow: 2px 2px 2px #2189d2;
-    font-family:'Raleway-Regular';
+    font-family:'Relay-Regular';
 }
 .btnSubmit:hover{
   background-color: #2189d1;

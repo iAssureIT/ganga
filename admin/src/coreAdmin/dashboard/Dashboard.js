@@ -31,12 +31,14 @@ export default class Dashboard extends Component{
   render(){
     return(
       <div className="">
-        <div className="col-lg-12">
-            <div className="log-lg-12 pull-left ">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-left ">
               <h3>Dashboard</h3>
             </div>
           </div>
           <ChartComponent /> 
+        </div>
           
       </div>     
     );

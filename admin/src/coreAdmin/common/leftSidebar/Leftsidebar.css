@@ -68,7 +68,7 @@ i, span {
 }
 
 #sidebar.active {
-    min-width: 80px;
+    min-width: 85px;
     max-width: 80px;
     text-align: center;
 }
@@ -135,6 +135,7 @@ i, span {
 #sidebar ul li a:hover {
     color: #555;
     background: #fff;
+    border-left: 3px solid #CC0000;
 }
 #sidebar ul li a i {
     margin-right: 10px;
@@ -303,11 +304,7 @@ a.article, a.article:hover {
 
 
 
-@font-face{
-    font-family:'MYRIADPROREGULAR';
-    src: url("/fonts/MYRIADPROREGULAR.ttf");
-  }
-  
+
   
   html,
   body {
@@ -485,7 +482,7 @@ a.article, a.article:hover {
   .h4,
   .h5,
   .h6 {
-    font-family:'Montserrat', sans-serif;
+    font-family:'Relay-Regular';
   }
   /* General Links */
   /*a {
@@ -609,7 +606,7 @@ a.article, a.article:hover {
     line-height: 50px;
     text-align: center;
     width: 230px;
-    font-family:'Montserrat', sans-serif;
+   font-family:'Relay-Regular';
     padding: 0 15px;
     font-weight: 300;
     overflow: hidden;
@@ -821,7 +818,7 @@ a.article, a.article:hover {
     list-style: none;
     margin: 0;
     padding: 0;
-    font-family:'Montserrat', sans-serif;
+    font-family:'Relay-Regular';
     margin-top: 1px!important;
     
   }
@@ -1565,7 +1562,7 @@ a.article, a.article:hover {
     border-radius: 0;
     box-shadow: none;
     border-color: #ccc;
-    font-family: 'MontserratLight';
+   font-family:'Relay-Regular';
   }
   /*
    * Component: Form
