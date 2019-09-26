@@ -57,6 +57,7 @@ table > tfoot > tr > td:last-of-type {
 .actbtns button{
 	width: 35px !important;
 	padding: 5px 0 5px;
+	margin-left: 5px;
 }
 .actbtns button:hover{
 	padding: 5px 0 5px;
@@ -72,4 +73,18 @@ table > tfoot > tr > td:last-of-type {
 }
 .givefeedback:not(:checked) > label, .ratingReview1:not(:checked) > label {
    float: right !important;
+}
+
+.orderimgsize img{
+	height: 70px;
+}
+.orderbodyborder{
+	border:2px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.modalfooterborder{
+	border:none;
 }

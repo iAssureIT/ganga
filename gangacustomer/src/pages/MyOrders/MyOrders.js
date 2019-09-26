@@ -19,11 +19,13 @@ export default class MyOrders extends Component {
         if(!this.props.loading){
             this.state = {
                 "orderData":[],
+                "orderID"  :"",
                 // "notificationData" :Meteor.subscribe("notificationTemplate"),
             };
         } else{
             this.state = {
                 "orderData":[],
+                "orderID"  :"",
             };
         }
         window.scrollTo(0, 0);
@@ -38,6 +40,8 @@ export default class MyOrders extends Component {
             .then((response)=>{
               this.setState({ 
                   orderData : response.data
+              },()=>{
+                console.log("orderData",this.state.orderData);
               })
             })
             .catch((error)=>{
@@ -46,6 +50,26 @@ export default class MyOrders extends Component {
     }
     showFeedbackForm(){
       $('#feedbackFormDiv').show();
+    }
+    submitReview(event){
+      event.preventDefault();
+      var rating = $('input[name="ratingReview"]:checked', '.feedbackForm').val();
+      var formValues={
+        "customerID"                : localStorage.getItem('user_ID'),
+        "orderID"                   : this.state.orderID,
+        "productID"                 : $(event.currentTarget).data('productid'),
+        "rating"                    : rating,
+        "customerReview"            : $('.feedbackForm textarea').val()
+      }
+
+      axios.post("/api/customerReview/post",formValues)
+            .then((response)=>{
+              
+            })
+            .catch((error)=>{
+            })
+      
+      console.log(formValues);
     }
     returnProduct(event){
       $('#returnProductModal').show();
@@ -70,6 +94,22 @@ export default class MyOrders extends Component {
 
       $('.modaltext').html('');
       $('.modaltext').append(str); 
+    }
+    getoneproductdetails(event){      
+      var id = event.target.id;
+      this.setState({orderID:id});
+      // console.log("oneproductdetails==>",id);
+      axios.get("/api/products/get/one/"+id)
+            .then((response)=>{
+              this.setState({ 
+                oneproductdetails : response.data
+              },()=>{
+                console.log("oneproductdetails",this.state.oneproductdetails);
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
     }
 
     returnProductAction(event){
@@ -157,7 +197,9 @@ export default class MyOrders extends Component {
                           console.log('error', error);
                         })                
     }
-  render() {  
+  render() { 
+                  console.log("oneproductdetails===================>",this.state.oneproductdetails);
+ 
     return (
     <div className="container">	
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -168,69 +210,99 @@ export default class MyOrders extends Component {
 
       	<div className="col-lg-9 col-md-9 col-sm-6 col-xs-6">
       	<h4 className="table-caption">My Orders</h4>
-      		<table className="data table table-order-items history" id="my-orders-table">
-            
-            <thead>
-                <tr>
-                    <th scope="col" className="col id">Order #</th>
-                    <th scope="col" className="col date">Date</th>
-                    <th scope="col" className="col shipping">Ship To</th>
-                    <th scope="col" className="col total">Order Total</th>
-                    <th scope="col" className="col status">Status</th>
-                    <th scope="col" className="col actions">&nbsp;</th>
-                </tr>
-            </thead>
-            <tbody>
-            	{
-            	this.state.orderData && this.state.orderData.length > 0 ?
-	                this.state.orderData.map((data, index)=>{
-	                	return(
-		                <tr key={index}>
-		                    <td data-th="Order #" className="col id">{data.orderID}</td>
-		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</td>
-							          <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
-		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
-		                    <td data-th="Status" className="col status">{ data.deliveryStatus[0].status=="Dispatch" || data.deliveryStatus[0].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[0].status }</td>
-		                    <td data-th="Actions" className="col actions">
+        {
+        this.state.orderData && this.state.orderData.length > 0 ?
+            this.state.orderData.map((data, index)=>{
+              return(
+                <div className="orderbodyborder">
+            		<table className="data table table-order-items history" id="my-orders-table">
+                  <thead>
+                      <tr>
+                          <th scope="col" className="col id">Order #</th>
+                          <th scope="col" className="col date">Date</th>
+                          <th scope="col" className="col shipping">Ship To</th>
+                          <th scope="col" className="col total">Order Total</th>
+                          <th scope="col" className="col status">Status</th>
+                          <th scope="col" className="col actions">&nbsp;</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+      		                <tr key={index}>
+      		                    <td data-th="Order #" className="col id">{data.orderID}</td>
+      		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</td>
+      							          <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
+      		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
+      		                    <td data-th="Status" className="col status">{ data.deliveryStatus[0].status=="Dispatch" || data.deliveryStatus[0].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[0].status }</td>
+      		                    <td data-th="Actions" className="col actions">
 
-		                  
-                        {
-                              data.deliveryStatus ?
-                              data.deliveryStatus.map((delivery, index)=>{ 
-                                return(
-                                  <div className="actbtns">
+      		                  
+                              {
+                                    data.deliveryStatus ?
+                                    data.deliveryStatus.map((delivery, index)=>{ 
+                                      return(
+                                        <div className="actbtns">
 
-                                  <a className="btn alphab filterallalphab" href={"/view-order/"+data._id} title="View Order">
-                                  <span> <i className="fa fa-eye"></i></span></a>&nbsp;&nbsp;
+                                        <a className="btn alphab filterallalphab" href={"/view-order/"+data._id} title="View Order">
+                                        <span> <i className="fa fa-eye"></i></span></a>
 
-                                  {
-                                    delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
-                                    <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
-                                    onClick={this.returnProduct.bind(this)} data-status={delivery.status} data-id={data._id}>
-                                    <i className="fa"  data-status={delivery.status} data-id={data._id}>&#xf0e2;</i></button>
-                                  }
-                                  {
-                                     delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
-                                    <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
-                                    data-status={delivery.status} data-id={data._id}>X</button>
-                                  }
-                                   <button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" 
-                                   title="Give Feedback" data-id={data._id}> <i className="fa fa-pencil"></i></button>
+                                        {
+                                          delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
+                                          <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
+                                          onClick={this.returnProduct.bind(this)} data-status={delivery.status} data-id={data._id}>
+                                          <i className="fa"  data-status={delivery.status} data-id={data._id}>&#xf0e2;</i></button>
+                                        }
+                                        {
+                                           delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
+                                          <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
+                                          data-status={delivery.status} data-id={data._id}>X</button>
+                                        }
+                                        </div>
+                                      );
+                                     
+                                    }) 
+                                    : ''
+                              }
+      		                    </td>
+      		                </tr>
+                 	</tbody>
+              	</table>
+                <table className="data table table-order-items history" id="my-orders-table">
+                  <thead>
+                      <tr>
+                          <th scope="col" className="col id">Product Image</th>
+                          <th scope="col" className="col id">Product Name</th>
+                          <th scope="col" className="col date">Price</th>
+                          <th scope="col" className="col shipping">Qty</th>
+                          <th scope="col" className="col total">Subtotal</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {
+                    data.products && data.products.length > 0 ?
+                        data.products.map((productData, index)=>{
+                          return(
+                          <tr key={'id'+index}>
+                              <td data-th="Order #" className="col id orderimgsize"><img src={productData.productImage[0]}/></td>
+                              <td data-th="Order #" className="col id">{productData.productName}</td>
+                              <td data-th="Date" className="col date"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
+                              <td data-th="Ship To" className="col shipping">Ordered: {productData.quantity}</td>
+                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
+                              <td data-th="Order Total" className="col total actbtns">
+                                  <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i className="fa fa-pencil"></i></button></a>
+                              </td>
+                          </tr>
+                          );
+                      })
+                      : ""
+                    }
+                  </tbody>
+                </table>
+          </div>
+            );
+          })
+          : ""
+        }
 
-                                  </div>
-                                );
-                               
-                              }) 
-                              : ''
-                        }
-		                    </td>
-		                </tr>
-		              );
-	            	})
-	            	: ""
-            	}
-           	</tbody>
-        	</table>
 
            {/* returnProductModal */ }
 
@@ -289,38 +361,56 @@ export default class MyOrders extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <button type="button" className="close" data-dismiss="modal">&times;</button>
-                  <h3 className="modalTitle">Give Feedback</h3>
+                  <h3 className="modalTitle">Create Review</h3>
                 </div>
                 <div className="modal-body">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <table className="data table table-order-items history" id="my-orders-table">
+                  <thead>
+                      <tr>
+                          <th scope="col" className="col id">Product Image</th>
+                          <th scope="col" className="col id">Product Name</th>
+                          <th scope="col" className="col date">Price</th>
+                      </tr>
+                  </thead>
+                  <tbody>{
+                            this.state.oneproductdetails  ?
+                          <tr>
+                              <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
+                              <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
+                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                          </tr>
+                          :
+                         null
+                        }
+                  </tbody>
+                </table>
                   <form className="feedbackForm" id="">
                       
                       <div className="col-lg-6 col-sm-12 col-xs-12 row">
                           <fieldset className="ratingReview stars givefeedback ">
-                              <input type="radio" id="star1" name="ratingReview" value="1" /><label htmlFor="star1"></label>
-                              <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
+                              <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
+                              <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
                               <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                              <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
-                              <input type="radio" id="star5" name="ratingReview" value="5"/><label htmlFor="star5"></label>
+                              <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
+                              <input type="radio" id="star5" name="ratingReview" value="1"/><label htmlFor="star5"></label>
                           </fieldset>
                           <div className="clearfix "></div>
                       </div>
                         <div className="row inputrow">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                          <textarea rows="5" cols="50"></textarea>
+                          <textarea rows="5" cols="65"></textarea>
                         </div>
                         <div className="row inputrow">
                         
-                          <button className="btn btn-warning" data-dismiss="modal"  >Submit</button>
                         </div>
                   </form>      
                 </div>
                     
                 </div>
-                <div className="modal-footer">
-                  
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-                  
+                <div className="modal-footer modalfooterborder ">
+                     <button className="btn btn-warning" onClick={this.submitReview.bind(this)} data-productid={this.state.oneproductdetails && this.state.oneproductdetails._id}
+                     >Submit</button>
                 </div>
               </div>
             </div>
