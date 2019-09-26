@@ -814,9 +814,9 @@ class ContactDetails extends Component {
 															<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 contactSubmit">
 																{	
 																	this.state.updateButton ?
-																		<button className="button3 button6 pull-right" onClick={this.updatecontactdetailAddBtn.bind(this)} data-id={this.state.contactValue}>Update Contact</button>
+																		<button className="button3 btn-primary pull-right" onClick={this.updatecontactdetailAddBtn.bind(this)} data-id={this.state.contactValue}>Update Contact</button>
 																			:
-																		<button className="button3 button6 pull-right" onClick={this.contactdetailAddBtn.bind(this)}>Submit</button>
+																		<button className="button3 btn-primary pull-right" onClick={this.contactdetailAddBtn.bind(this)}>Submit</button>
 																}
 															</div>
 														</form>

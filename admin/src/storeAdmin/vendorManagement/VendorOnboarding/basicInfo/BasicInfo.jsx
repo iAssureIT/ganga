@@ -543,9 +543,9 @@ class BasicInfo extends Component {
                   <section className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                       <div className="row">
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
+                        <div className="">
 
-                        <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div className="">
                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
                             <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Vendor Management</h4>
                             <div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
@@ -660,7 +660,7 @@ class BasicInfo extends Component {
                                         </div>
                                         <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addpicmr marginsBottom" id="hide">
-                                          <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">ADD LOGO</label>
+                                          <label className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZeroo">Add Logo</label>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
                                             {/* {this.props.post2.image?
                                               <p className="ADDLogo"></p>
@@ -825,7 +825,7 @@ class BasicInfo extends Component {
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                       
-                                        <button className="btn button3 pull-right" onClick={this.supplier.bind(this)} >Save & Next&nbsp;<i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                        <button className="btn button3 btn-primary pull-right" onClick={this.supplier.bind(this)} >Save & Next&nbsp;<i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                       
                                   </div> 
                                 </form>

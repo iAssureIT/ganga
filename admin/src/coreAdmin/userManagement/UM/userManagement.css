@@ -1,7 +1,4 @@
-@font-face{
-  font-family:'Roboto', sans-serif !important;
-  src: url("/fonts/MYRIADPROREGULAR.ttf");
-}
+
 /*.modal-backdrop.in {
     filter: alpha(opacity=50);
     opacity: 0 !important;
@@ -46,7 +43,7 @@
   margin-top: 0px;
 }
 .numfont{
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .examPageWrap{
  
@@ -73,7 +70,7 @@ background-size:16px 16px;
   padding: 0px!important;
 }
 .addCategoryBtn,.studRegister{
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .studRegister{
   background: #1a87c1;
@@ -108,15 +105,15 @@ background-size:16px 16px;
 .tableHeaderrr{
   background: #2189d1;
   color: #fff;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .tableHeaderrr tr th, .myAllTablee tr td{
   text-align: center;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   vertical-align: middle !important;
 }
 #ExamListTable tr td , .myAllTabler tr td{
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   vertical-align: middle !important;
 }
 .addRolWrap{
@@ -127,12 +124,12 @@ background-size:16px 16px;
 }
 .addrolesBtn{
   /*padding: 0px;*/
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   border-radius: 0px !important;
 }
 .addrolesBtn1{
   padding-right: 0px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .tableHeader tr th{
   background: #337ab7 !important;
@@ -149,7 +146,7 @@ background-size:16px 16px;
 }
 .tableHeader tr th, .myAllTable tr td{
   text-align: left;
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
   white-space: pre-line;
@@ -161,7 +158,7 @@ background-size:16px 16px;
 }
 .myTable tr td, .csvuploadTab tr td{
   text-align: left;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   vertical-align: middle !important;
 }
 .csvuploadTab tr td, .csvuploadTab tr th{
@@ -208,7 +205,7 @@ background-size:16px 16px;
 
 .inputText{
 
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .questionFormWrap{
   margin-top: 4%;
@@ -251,10 +248,10 @@ background-size:16px 16px;
   text-align: center;
   border: 1px solid #eee;
   background: #efefef;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .uploadQuesinst{
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   font-size: 14px;
 }
 .paddingright{
@@ -318,7 +315,7 @@ ul {
     font-size: 12px;
     letter-spacing: 0.5px;
     color: #333;
-    font-family: 'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
 
 }
   .examDateWrap{
@@ -460,7 +457,7 @@ ul {
   height: 86px;
   opacity: 0;
   margin-top: -22px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   cursor: pointer;
 }
 .ClientImgWrap1{
@@ -485,7 +482,7 @@ ul {
   color: #1a87c1;
   font-size: 20px;
   /*font-weight: bold;*/
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .profileSection1{
   border-right: 1px solid #ddd;
@@ -504,14 +501,14 @@ ul {
 }
 .studName{
   text-align: center;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   color: #1d109d;
   font-weight: bold;
   margin-bottom: 0px;
 }
 .studemail{
   text-align: center;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .profileDivider{
   border-bottom: 1px solid #ddd;
@@ -522,7 +519,7 @@ ul {
   margin-bottom: 15px;
   text-align: center;
   /*font-weight: bold;*/
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .studProfileTit1{
   font-size: 18px;
@@ -530,7 +527,7 @@ ul {
   margin-top:54px;
   text-align: center;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .studProfileTit2{
   font-size: 20px;
@@ -538,7 +535,7 @@ ul {
   margin-top: 31%;
   text-align: center;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .studProfileTit21{
   font-size: 20px;
@@ -546,7 +543,7 @@ ul {
   margin-top: 10px;
   text-align: left;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   color:#333;
 }
 .studProfileTit3{
@@ -695,7 +692,7 @@ ul {
     line-height: 18px;
     margin-bottom: 2px;
     font-size: 9px;
-    font-family:'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
 }
 
 .oesCarouselIndicator .active{
@@ -778,7 +775,7 @@ ul {
 }
 .examDetailsWrap4{
   color: white;
-  font-family:'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
   padding-top: 5px;
   text-align: right;
   /*margin-right: 40px;*/
@@ -819,7 +816,7 @@ ul {
   color: #2E86C1;
   text-align: center;
   font-size: 16px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .congratsImg{
   width: 100%;
@@ -836,13 +833,13 @@ ul {
    margin-bottom: 2%;
   font-size: 66px;
   margin-top: -16px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   color: #2E86C1;
 }
 .totalScore{
   padding-top: 6%;
   font-size: 22px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .marksNameSec{
   color: #ff8102;
@@ -863,7 +860,7 @@ ul {
   color: #2E86C1;
   font-size: 22px;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .marksSec2{
   border: 1px solid #fff;
@@ -883,7 +880,7 @@ ul {
     border: 1px solid #2E86C1 !important;
     padding: 2px 0px !important;
     font-size: 14px !important;
-    font-family: 'Roboto', sans-serif !important;
+   font-family:'Relay-Regular';
     margin-top: 2px;
 }
 .oesCarouselIndicator .examFinishBtnnn, .examFinishBtnnn .active{
@@ -904,7 +901,7 @@ ul {
   color: #1d109d;
   font-size: 22px;
   margin-top: 2%;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   font-weight: 600;
 }
 .instructionList{
@@ -925,7 +922,7 @@ ul {
   background:#1d109d;
   padding-left: 30px;
   padding-right: 30px;
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 .inactiveStat{
     width: 10px;
@@ -950,7 +947,7 @@ ul {
 
 .inputTextt{
   /*margin-bottom: 14px;*/
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 .questionCatTab{
   margin-top: 30px;
@@ -1017,7 +1014,7 @@ ul {
   background-image: radial-gradient( circle closest-side, #fff, #c7bcb3 );
   color: #171616;
   background: radial-gradient(gray white gray);
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
 }
 .countdownWrapDiv{
   margin-top: 0px;
@@ -1115,7 +1112,7 @@ ul {
     border-top: 1px solid #d2d6de;
 }
 .main-footer,.craeteExamBtn{
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 .inputText title{
   text-transform: capitalize !important;
@@ -1179,7 +1176,7 @@ ul {
 .answerBottom .ABCD{
   padding: 0px;
     padding-top: 2px;
-    font-family:'Roboto', sans-serif !important;
+   font-family:'Relay-Regular';
 }
 
 /* Hide the browser's default checkbox */
@@ -1247,12 +1244,12 @@ ul {
 }*/
 .instructionSubBtn{
   margin-top: 15px;
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 .instructionWrap{
   white-space: pre-line;
   white-space: pre-line;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   color: #333333;
   font-size: 16px;
 }
@@ -1261,7 +1258,7 @@ ul {
 }
 .OESDataNotAvailable tr td{
   font-size: 18px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   text-align: center;
   color: #333333;
 }
@@ -1304,12 +1301,12 @@ ul {
   font-size: 18px;
     padding: 0px;
     margin-bottom: 5px;
-    font-family: 'Roboto', sans-serif !important;
+   font-family:'Relay-Regular';
     margin-top: 11px;
     margin-left: 0px;
 }
 .studFrancName, .studTecherName{
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 /*------------ Sweet Alert Css ----------------*/
   .sweet-alert h2{
@@ -1404,7 +1401,7 @@ input:checked + .slider:before {
   top: 50%;
   left: 50%;
   font-size: 12px;
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 
 input:checked+ .slider .on
@@ -1571,7 +1568,7 @@ right: 15px;
 }
 .franchName{
     font-size: 11px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
     margin-top: 5px;
 }
 
@@ -1635,12 +1632,12 @@ right: 15px;
   text-align: center;
   font-size: 15px;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .totalScore {
   font-size: 44px;
   font-weight: bolder;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   text-align: center;
   color: #f18a1a;
 
@@ -1861,12 +1858,6 @@ right: 15px;
 
 /*+================================================================== From cahors ==============================================*/
 
-
-
-@font-face{
-  font-family:'MYRIADPROREGULAR';
-  src: url("/fonts/MYRIADPROREGULAR.ttf");
-}
 /*====Anuja====*/
 .formcntrl{
   background: #eee;
@@ -1967,7 +1958,7 @@ background-size:16px 16px;
   padding: 0px!important;
 }
 .addCategoryBtn,.studRegister{
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .studRegister{
   background: #1a87c1;
@@ -2002,15 +1993,15 @@ background-size:16px 16px;
 .tableHeaderrr{
   background: #3c8dbc;
   color: #fff;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .tableHeaderrr tr th, .myAllTablee tr td{
   text-align: center;
-  font-family:'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
   vertical-align: middle !important;
 }
 #ExamListTable tr td , .myAllTabler tr td{
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   vertical-align: middle !important;
 }
 .addRolWrap{
@@ -2021,12 +2012,12 @@ background-size:16px 16px;
 }
 .addrolesBtn{
   /*padding: 0px;*/
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   border-radius: 0px !important;
 }
 .addrolesBtn1{
   padding-right: 0px;
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 .tableHeader tr th{
   background: #337ab7 !important;
@@ -2043,7 +2034,7 @@ background-size:16px 16px;
 }
 .tableHeader tr th, .myAllTable tr td{
   text-align: left;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
   white-space: pre-line;
@@ -2055,7 +2046,7 @@ background-size:16px 16px;
 }
 .myTable tr td, .csvuploadTab tr td{
   text-align: left;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   vertical-align: middle !important;
 }
 .csvuploadTab tr td, .csvuploadTab tr th{
@@ -2102,7 +2093,7 @@ background-size:16px 16px;
 
 .inputText{
 
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
 }
 .questionFormWrap{
   margin-top: 4%;
@@ -2145,10 +2136,10 @@ background-size:16px 16px;
   text-align: center;
   border: 1px solid #eee;
   background: #efefef;
-  font-family: 'MYRIADPROREGULAR';
+  font-family:'Relay-Regular';
 }
 .uploadQuesinst{
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
   font-size: 14px;
 }
 
@@ -2171,7 +2162,7 @@ background-size:16px 16px;
     /*box-shadow: 0 8px 8px rgba(31, 31, 31, 0.1);*/
     /*transition: width 0.4s ease-in-out;*/
     border: 1px solid #eee;
-    font-family: Raleway-Regular'';
+    font-family:'Relay-Regular';
     letter-spacing: 1px;
     /*text-transform: uppercase;*/
     font-size: 12px;
@@ -2212,7 +2203,7 @@ background-size:16px 16px;
     color: #333;
     font-family: 'MYRIADPROREGULAR';*/
         /* color: #333; */
-    font-family: 'Raleway-Regular';
+    font-family:'Relay-Regular';
     font-weight: 100;
     font-size: 13px;
 }
@@ -2371,7 +2362,7 @@ background-size:16px 16px;
   color: #1a87c1;
   font-size: 20px;
   /*font-weight: bold;*/
-  font-family: 'MYRIADPROREGULAR';
+  font-family:'Relay-Regular';
 }
 .profileSection1{
   border-right: 1px solid #ddd;
@@ -2390,14 +2381,14 @@ background-size:16px 16px;
 }
 .studName{
   text-align: center;
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
   color: #1d109d;
   font-weight: bold;
   margin-bottom: 0px;
 }
 .studemail{
   text-align: center;
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
 }
 .profileDivider{
   border-bottom: 1px solid #ddd;
@@ -2408,7 +2399,7 @@ background-size:16px 16px;
   margin-bottom: 15px;
   text-align: center;
   /*font-weight: bold;*/
-  font-family: 'MYRIADPROREGULAR';
+  font-family:'Relay-Regular';
 }
 .studProfileTit1{
   font-size: 18px;
@@ -2416,7 +2407,7 @@ background-size:16px 16px;
   margin-top:54px;
   text-align: center;
   font-weight: bold;
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
 }
 .studProfileTit2{
   font-size: 20px;
@@ -2424,7 +2415,7 @@ background-size:16px 16px;
   margin-top: 31%;
   text-align: center;
   font-weight: bold;
-  font-family: 'MYRIADPROREGULAR';
+  font-family:'Relay-Regular';
 }
 .studProfileTit21{
   font-size: 20px;
@@ -2432,7 +2423,7 @@ background-size:16px 16px;
   margin-top: 10px;
   text-align: left;
   font-weight: bold;
-  font-family: 'MYRIADPROREGULAR';
+  font-family:'Relay-Regular';
   color:#333;
 }
 .studProfileTit3{
@@ -2442,7 +2433,7 @@ background-size:16px 16px;
   margin-top: 19%;
   text-align: center;
   font-weight: bold;
-  font-family: 'MYRIADPROREGULAR';
+ font-family:'Relay-Regular';
 }
 .studProfSubTit{
   font-weight: bold;
@@ -2455,7 +2446,7 @@ background-size:16px 16px;
 .studContentWrap{
   padding-right: 0px;
   margin-bottom: 13px;
-  font-family: 'MYRIADPROREGULAR';
+  font-family:'Relay-Regular';
 }
 .profileSection3 {
   margin-top: -11%;
@@ -2516,7 +2507,7 @@ background-size:16px 16px;
 .questionTitsubWrap{
   padding-left: 0px;
   font-size: 28px;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   color:white;
   /*margin-top: 2%;*/
   min-height: 140px;
@@ -2543,7 +2534,7 @@ background-size:16px 16px;
   margin-left: 14px;
     font-size: 14px;
     margin-top: 0px;
-    font-family: 'Raleway-Regular';
+   font-family:'Relay-Regular';
     position: absolute;
 }
 .oesCarouselIndicator{
@@ -2581,7 +2572,7 @@ background-size:16px 16px;
     line-height: 18px;
     margin-bottom: 2px;
     font-size: 9px;
-    font-family: 'Raleway-Regular';
+    font-family:'Relay-Regular';
 }
 
 .oesCarouselIndicator .active{
@@ -2664,7 +2655,7 @@ background-size:16px 16px;
 }
 .examDetailsWrap4{
   color: white;
-  font-family: 'Raleway-Regular';
+ font-family:'Relay-Regular';
   padding-top: 5px;
   text-align: right;
   /*margin-right: 40px;*/
@@ -2705,7 +2696,7 @@ background-size:16px 16px;
   color: #2E86C1;
   text-align: center;
   font-size: 16px;
-  font-family: 'Raleway-Regular';
+font-family:'Relay-Regular';
 }
 .congratsImg{
   width: 100%;
@@ -2722,13 +2713,13 @@ background-size:16px 16px;
    margin-bottom: 2%;
   font-size: 66px;
   margin-top: -16px;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   color: #2E86C1;
 }
 .totalScore{
   padding-top: 6%;
   font-size: 22px;
-  font-family: 'Raleway-Regular';
+ font-family:'Relay-Regular';
 }
 .marksNameSec{
   color: #ff8102;
@@ -2749,7 +2740,7 @@ background-size:16px 16px;
   color: #2E86C1;
   font-size: 22px;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+font-family:'Relay-Regular';
 }
 .marksSec2{
   border: 1px solid #fff;
@@ -2769,7 +2760,7 @@ background-size:16px 16px;
     border: 1px solid #2E86C1 !important;
     padding: 2px 0px !important;
     font-size: 14px !important;
-    font-family: 'Raleway-Regular';
+font-family:'Relay-Regular';
     margin-top: 2px;
 }
 .oesCarouselIndicator .examFinishBtnnn, .examFinishBtnnn .active{
@@ -2790,7 +2781,7 @@ background-size:16px 16px;
   color: #1d109d;
   font-size: 22px;
   margin-top: 2%;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   font-weight: 600;
 }
 .instructionList{
@@ -2811,7 +2802,7 @@ background-size:16px 16px;
   background:#1d109d;
   padding-left: 30px;
   padding-right: 30px;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 .inactiveStat{
     width: 12px;
@@ -2836,7 +2827,7 @@ background-size:16px 16px;
 
 .inputTextt{
   /*margin-bottom: 14px;*/
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 .questionCatTab{
   margin-top: 30px;
@@ -2903,7 +2894,7 @@ background-size:16px 16px;
   background-image: radial-gradient( circle closest-side, #fff, #c7bcb3 );
   color: #171616;
   background: radial-gradient(gray white gray);
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 .countdownWrapDiv{
   margin-top: 0px;
@@ -2995,7 +2986,7 @@ background-size:16px 16px;
     border-top: 1px solid #d2d6de;
 }
 .main-footer,.craeteExamBtn{
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 .inputText title{
   text-transform: capitalize !important;
@@ -3060,7 +3051,7 @@ background-size:16px 16px;
 .answerBottom .ABCD{
   padding: 0px;
     padding-top: 2px;
-    font-family: 'Raleway-Regular';
+    font-family:'Relay-Regular';
 }
 
 /* Hide the browser's default checkbox */
@@ -3128,12 +3119,12 @@ background-size:16px 16px;
 }*/
 .instructionSubBtn{
   margin-top: 15px;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 .instructionWrap{
   white-space: pre-line;
   white-space: pre-line;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   color: #333333;
   font-size: 16px;
 }
@@ -3142,7 +3133,7 @@ background-size:16px 16px;
 }
 .OESDataNotAvailable tr td{
   font-size: 18px;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   text-align: center;
   color: #333333;
 }
@@ -3185,12 +3176,12 @@ background-size:16px 16px;
   font-size: 18px;
     padding: 0px;
     margin-bottom: 5px;
-    font-family: 'Raleway-Regular';
+    font-family:'Relay-Regular';
     margin-top: 11px;
     margin-left: 0px;
 }
 .studFrancName, .studTecherName{
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 /*------------ Sweet Alert Css ----------------*/
   .sweet-alert h2{
@@ -3285,7 +3276,7 @@ input:checked + .slider:before {
   top: 50%;
   left: 50%;
   font-size: 12px;
-  font-family: 'Raleway-Regular';
+ font-family:'Relay-Regular';
 }
 
 input:checked+ .slider .on
@@ -3313,7 +3304,7 @@ input:checked + .slider .off
 
 .yesContinueBtn, .notContinueBtn{
   margin-right: 20px;
-  font-family: "'Raleway-Regular'";
+font-family:'Relay-Regular';
 
   margin-top: 15px;
 }
@@ -3470,7 +3461,7 @@ right: 15px;
 }
 .franchName{
     font-size: 11px;
-    font-family: 'Raleway-Regular';
+    font-family:'Relay-Regular';
     margin-top: 5px;
 }
 
@@ -3534,12 +3525,12 @@ right: 15px;
   text-align: center;
   font-size: 15px;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
 }
 .totalScore {
   font-size: 44px;
   font-weight: bolder;
-  font-family: 'Raleway-Regular';
+  font-family:'Relay-Regular';
   text-align: center;
   color: #f18a1a;
 
@@ -3930,11 +3921,11 @@ right: 15px;
 .box-header > .box-tools .dropdown-menu > li > a {
   color: #444!important;
 }
-.weighttitle{
-  font-family:'Raleway-Regular';
+/*.weighttitle{
+  font-family:'Relay-Regular';
   font-weight: 600;
   letter-spacing: 0.5px;
-}
+}*/
 .box.collapsed-box .box-body,
 .box.collapsed-box .box-footer {
   display: none;

@@ -783,7 +783,7 @@ class BasicInfo extends Component {
                                         </div>
                                         <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addpicmr marginsBottom" id="hide">
-                                          <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12"> {this.state.logoUrl != "" ? "Change Logo" : "ADD LOGO"} </label>
+                                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZeroo"> {this.state.logoUrl != "" ? "Change Logo" : "Add Logo"} </label>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
                                             
                                             <img src={this.state.logoUrl} className="img-responsive logoStyle" />

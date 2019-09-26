@@ -393,7 +393,8 @@ class AdminOrdersList extends Component{
                     <br/>
                       <div className="row">
                           <div className="admin-orders-SubTitleRow  row">
-                            <div className="col-lg-12">
+                            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                 <div className="admin-orders-listofColors">
                                     <span className="">
                                         <span className="admin-orders-stat-NewOrder comm-status-of-order"></span>
@@ -427,12 +428,13 @@ class AdminOrdersList extends Component{
                                         <span className="admin-orders-stat-Deliveredpaid comm-status-of-order"></span>
                                         Delivered & Paid
                                     </span>
-                                   
+                                   </div>
                                 </div>
                             </div>
                         </div>
                         <br/>
-                        <div className="col-md-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <MUIDataTable
                             title="Shipment Tracking"
                             options={options}
@@ -676,7 +678,7 @@ class AdminOrdersList extends Component{
                               </div>*/
                             }
                           </div>
-                      
+                        </div>
                       </div>
                     </div>
                   </section>

@@ -123,11 +123,11 @@
   font-weight: 500;
   padding: 0px;
   letter-spacing: 1px;
-  font-family:'MYRIADPROREGULAR';
+   font-family:'Relay-Regular';
 }
 .inputText{
   /*margin-bottom: 14px;*/
-  font-family:'MYRIADPROREGULAR';
+   font-family:'Relay-Regular';
 }
 .inputTextTwo{
   margin-bottom: 0px!important;
@@ -337,7 +337,7 @@ text-align: center;
   margin-bottom: 3%;
   outline: 0;
   letter-spacing: 1px;
-  font-family: 'MYRIADPROREGULAR';
+   font-family:'Relay-Regular';
 }
 .button2{
   box-shadow: 3px 5px 3px #ddd;
@@ -354,7 +354,7 @@ text-align: center;
   border-radius: 23px;
   outline: 0;
    letter-spacing: 1px;
-  font-family: 'MYRIADPROREGULAR';
+   font-family:'Relay-Regular';
 }
 .phoneIcon{
   margin-left: 2em;
@@ -377,7 +377,7 @@ text-align: center;
   border-radius: 23px;
   outline: 0;  
    letter-spacing: 1px;
-  font-family: 'MYRIADPROREGULAR';
+   font-family:'Relay-Regular'; 
 }
 .locationTabs{
   padding:0;
@@ -386,7 +386,7 @@ text-align: center;
   color:#fff!important;
 }
 .button6{
-  background-color: red!important; 
+  /*background-color: red!important; */
 }
 .boxul1{
     padding: 14px 9px 35px 0px;
@@ -928,7 +928,7 @@ color:#FFFFFF;
     margin-left: 14px;
 }
 .switchFieldType {
-  font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+   font-family:'Relay-Regular';
   padding: 1px;
   overflow: hidden;
 }

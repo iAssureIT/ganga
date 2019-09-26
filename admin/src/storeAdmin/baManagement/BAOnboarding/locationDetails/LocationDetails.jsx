@@ -991,9 +991,9 @@ class LocationDetails extends TrackerReact(Component) {
 																
 																	{	
 																		this.state.updateButton ?
-																		<button className="button3 button6 pull-right" onClick={this.updateLocationDetails.bind(this)}>&nbsp;Update Location</button>
+																		<button className="button3 btn-primary pull-right" onClick={this.updateLocationDetails.bind(this)}>&nbsp;Update Location</button>
 																		:
-																		<button className="button3 button6 pull-right" onClick={this.locationdetailsAdd.bind(this)}>&nbsp;Submit</button>
+																		<button className="button3 btn-primary pull-right" onClick={this.locationdetailsAdd.bind(this)}>&nbsp;Submit</button>
 																	}
 																</div>
 															</form>
