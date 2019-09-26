@@ -420,7 +420,8 @@ searchProducts(){
                       <div className="col-lg-2 col-md-2 headerpaddingtop text-center">
                           <div className="col-lg-12 headercart">
                             <div className="row dropdown">
-                                <a href="#" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{ user_ID ? this.props.cartCount:0}</span></a>
+                                <a href="#" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{ user_ID ? this.props.cartCount:0}
+                                </span></a>
                                 { user_ID ? 
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                                     <li className="col-lg-12">
