@@ -251,7 +251,7 @@ return(
 					    <div className="mt30 loginforgotpass">
 			                <input  id="idacceptcondition" type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
 			            </div>
-					    <div class="modal fade" id="myModal" role="dialog">
+					    <div class="modal" id="myModal" role="dialog">
 					      <div class="modal-dialog">
 					        <div class="modal-content">
 					          <div class="modal-header">

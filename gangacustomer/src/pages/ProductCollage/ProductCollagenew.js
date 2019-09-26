@@ -16,7 +16,7 @@ class ProductCollage extends Component {
 	    this.state = {
 	    	searchResult : [],
 	    	data:[1, 2, 3, 4, 5, 6],
-	    	price: { min: 10, max: 1299999 },
+	    	price: { min: 10, max: 129999 },
 	    	categoryDetails:[],
 	    	masterproducts:[],
 	    	products:[],
@@ -29,7 +29,8 @@ class ProductCollage extends Component {
       		sizes : [],
       		colors: [],
       		color: '',
-      		size : ''
+      		size : '',
+      		selector:{categoryID:'',subcategoryID:'',brands:[], size:'',color:'',price: { min: 10, max: 129999 } }
 	    };
 	    this.handlePriceChange = this.handlePriceChange.bind(this);  
   	}
@@ -38,7 +39,7 @@ class ProductCollage extends Component {
   		
 
   		$('div[data-toggle="collapse"]').click(function () {
-  			console.log($(this));
+  			
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
 
   		});
@@ -92,40 +93,102 @@ class ProductCollage extends Component {
 	}
 	onSelectedItemsChange(filterType, selecteditems){
 		
+		var checkboxes = document.getElementsByName('brands[]');
+		var brands = [];
+		for (var i=0, n=checkboxes.length;i<n;i++) 
+		{
+		    if (checkboxes[i].checked) 
+		    {
+		    	brands.push(checkboxes[i].value);
+		    }
+		}
 		if (filterType == 'subcategory') {
-			this.setState({subcategoryID : $(selecteditems.target).data().id},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
+
+			this.setState(
+				{	selector:
+					{ 
+						categoryID 		: this.props.match.params.categoryID,
+						subcategoryID   : $(selecteditems.target).data().id,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price		
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				} 			
+				);
 			
 		}
 		if (filterType == 'brands') {
-			var checkboxes = document.getElementsByName('brands[]');
-			var brands = [];
-			for (var i=0, n=checkboxes.length;i<n;i++) 
-			{
-			    if (checkboxes[i].checked) 
-			    {
-			    	brands.push(checkboxes[i].value);
-			    }
-			}
-			this.setState({selectedbrands : brands},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
+			this.setState(
+				{	selector:
+					{ 
+						categoryID 		: this.props.match.params.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price		
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});
 		}
 		if (filterType == 'price') {
 			var minPrice = selecteditems.min;
 			var maxPrice = selecteditems.max;
-			this.setState({price: {min: minPrice, max: maxPrice } }, ()=>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
+			this.setState({price: {min: minPrice, max: maxPrice } }, ()=>{});
+			this.setState(
+				{	selector:
+					{ 
+						categoryID 		: this.props.match.params.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: this.state.selector.color,
+						price 			: { min: minPrice, max: maxPrice } 	
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});
+		}
+		if (filterType == 'color') {
+
+			this.setState(
+				{	selector:
+					{ 
+						categoryID 		: this.props.match.params.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: $(selecteditems.currentTarget).find('.color-option').data('color'),
+						price 			: this.state.selector.price	 	
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});
+		}
+		if (filterType == 'size') {
+
+			this.setState(
+				{	selector:
+					{ 
+						categoryID 		: this.props.match.params.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: $(selecteditems.currentTarget).val(),	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price	
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});
 		}
 		
-		if (filterType == 'color') {
-			this.setState({color : $(selecteditems.currentTarget).find('.color-option').data('color')},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
-			
-		}	
+	}
+	getFilteredProducts(selector){
+		console.log(selector);
 	}
 	filterProducts(subcategoryID,selectedbrands,price,color,size){
 		console.log('masterproducts',this.state.masterproducts);
@@ -289,18 +352,15 @@ class ProductCollage extends Component {
 						{
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
 						    <div>
-						    
-
 						    <div className="card-header" id="headingTwo">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" >	
-						        <button className="btn btn-link" type="button" >
-						          COLOR 
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">	
+						        <button className="btn btn-link collapsed" type="button" >
+						          COLOR
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>
+						      </div>
 						    </div>
-						    </div>
-
-						    <div id="collapseTwo" className="collapse" >
+						    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						      <div className="card-body">
 						      {this.state.colors ? 
 						      	this.state.colors.map((data,index)=>{
@@ -320,18 +380,18 @@ class ProductCollage extends Component {
 						{
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
 						    <div>
-						    <div className="card-header" id="headingFour">
-						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour" >	
-						        <button className="btn btn-link" type="button" >
+						    <div className="card-header" id="headingTwo">
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">	
+						        <button className="btn btn-link collapsed" type="button" >
 						          SIZE
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>
 						      </div>
 						    </div>
-						    <div id="collapseFour" className="collapse" >
+						    <div id="collapseFour" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						      <br/>
 						      <div className="card-body">
-						      <select className="sortProducts">
+						      <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
 						      {this.state.sizes ? 
 						      	this.state.sizes.map((data,index)=>{
 						      		return(<option value={data}>{data}</option>);
@@ -344,18 +404,18 @@ class ProductCollage extends Component {
 						    </div>
 						    </div>  : ''
 						}
-						    <div className="card-header" id="headingThree">
-						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree">	
-						        <button className="btn btn-link" type="button">
+						    <div className="card-header" id="headingTwo">
+						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">	
+						        <button className="btn btn-link collapsed" type="button">
 						          PRICE
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>
 						      </div>
 						    </div>
-						    <div id="collapseThree" className="collapse" >
+						    <div id="collapseThree" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 						      <div className="card-body">
 						      	<InputRange
-							        maxValue={1299999}
+							        maxValue={129999}
 							        minValue={10}
 							        value={this.state.price}
 							        onChange={ this.onSelectedItemsChange.bind(this,"price")} />
