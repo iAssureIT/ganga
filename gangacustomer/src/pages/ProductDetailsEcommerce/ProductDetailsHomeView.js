@@ -39,7 +39,7 @@ export default class ProductDetailsHomeView extends Component {
             }) 
   	} 
   	componentWillReceiveProps(nextProps){
-      console.log('nextProps',nextProps)
+      // console.log('nextProps',nextProps)
       
     }  
     

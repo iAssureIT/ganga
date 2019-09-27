@@ -67,59 +67,150 @@ addtocart(event){
 componentWillMount() {}
   
   render() {  
-    return (
-          <div className="container">
-            <div className="mega-menu">
-              <ul>
-                {
-                  this.state.categoryData && this.state.categoryData.map((data,index)=>{
-                    
-                    return ( 
-                        <li className="menu-item menu-1" key={index}>
-                          <a href={"/product-collage/"+data._id}>{data.category}</a>
-                          <div className="mega-submenu">
-                            <h2>{data.category}</h2>
-                            <div className="submenu-content">
-                              <div className="section links">
-                                <ul>
-                                  {
-                                    data.subCategory && data.subCategory.map((subcat,ind)=>{
-                                      return(<li key={ind}><a href={"/product-collage/"+data._id+'/'+subcat._id}>{subcat.subCategoryTitle}</a></li>);
-                                    })
-                                  }
-                                  
-                                </ul>
-                              </div>
-                              
-                              <div className="section featured-product">
-                                <div className="product-detail">
-                                  <div className="badge">Featured</div>
-                                  <div className="productImg">
-                                  <img src={data.orderdetails[0].productImage[0]} className="productImage"/>
-                                  </div>
-                                  <div className="product-desc">
-                                    <a className="title" href="">{data.orderdetails[0].productName}</a>
-                                    <div className="price"><i className={ "fa fa-"+data.orderdetails[0].currency}>{data.orderdetails[0].offeredPrice}</i></div>
-                                    <a href={"/productdetails/"+data.orderdetails[0]._id} className="btn-atc" id={data.orderdetails[0]._id}>View Details</a>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="section promotions">
-                                <a href="#" className="promo promo 1">
-                                  <img src={data.categoryImage} className="thumb"/>
-                                </a>
-                              </div>
-                            </div>
-                          </div>  
-                        </li>
-                    );
-                    
-                  })
-                }
-
-              </ul>
-            </div>
-        </div>      
-      );  
-   }
+        return (
+          <header className="dark">
+        <nav role="navigation">
+          <a href="javascript:void(0);" className="ic menu" tabindex="1">
+            <span className="line"></span>
+            <span className="line"></span>
+            <span className="line"></span>
+          </a>
+          <a href="javascript:void(0);" className="ic close"></a>
+          <ul className="main-nav">
+            <li className="top-level-link">
+              <a><span>Home</span></a>      
+            </li> 
+            
+            <li className="top-level-link">
+              <a className="mega-menu"><span>Products</span></a>
+              <div className="sub-menu-block">
+                <div className="row">
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Clothing</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>New Born</a></li>
+                      <li><a>View All</a></li>
+                    </ul>           
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Handbags</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Wallets</a></li>
+                      <li><a>Athletic bag</a></li>
+                      <li><a>Backpack</a></li>
+                      <li><a>Bucket Bag</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li className="top-level-link">
+              <a className="mega-menu"><span>About</span></a>
+              <div className="sub-menu-block">
+                <div className="row">
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Clothing</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>New Born</a></li>
+                      <li><a>View All</a></li>
+                    </ul>           
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Handbags</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Wallets</a></li>
+                      <li><a>Athletic bag</a></li>
+                      <li><a>Backpack</a></li>
+                      <li><a>Bucket Bag</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                  <div className="col-md-2 col-lg-2 col-sm-2">
+                    <h2 className="sub-menu-head">Shoes</h2>
+                    <ul className="sub-menu-lists">
+                      <li><a>Mens</a></li>
+                      <li><a>Womens</a></li>
+                      <li><a>Kids</a></li>
+                      <li><a>View All</a></li>
+                    </ul>
+                  </div>
+                </div>                
+              </div>
+            </li>
+          </ul> 
+        </nav>
+    </header>  
+ 
+);  
+      }
 }

@@ -506,42 +506,9 @@ searchProducts(){
           <nav>
             <div className="col-lg-12 catogeryvaluebg">
               <div className="row">
-                <div className="col-lg-10 col-lg-offset-1">
-                  <div className="row">
-                    <div className="col-lg-3">
-                      <div className="row">
-                        <div className="dropdown">
-                          <button className="dropdown-toggle" id="menu1" type="button" data-toggle="dropdown">
-                          <i className="fa fa-bars megabars col-lg-3" aria-hidden="true"></i>
-                            &nbsp;&nbsp;ALL CATEGORY</button>
-                          <div className="dropdown-menu megamenudrop" role="menu" aria-labelledby="menu1">
-                             <Megamenu />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-9">
-                      <ul className="box-static-link">
-                        {this.state.hotProducts && this.state.hotProducts.length > 0?
-                          this.state.hotProducts.map((data, index)=>{
-                            if(index < 6){
-                              return(
-                                <li key={index}>
-                                  <span>HOT</span>
-                                  <a href={"/ProductDetails/"+data._id}>{data.productName}</a>
-                                </li>
-                              );
-                            }
-                          })
-                          :
-                          null
-                        }
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                </div>
+                    <Megamenu />
               </div>
+            </div>
           </nav>
     </div>
     );  
