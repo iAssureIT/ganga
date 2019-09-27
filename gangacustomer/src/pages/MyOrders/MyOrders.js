@@ -33,6 +33,7 @@ export default class MyOrders extends Component {
 
     componentDidMount() {
         this.getMyOrders();
+        this.getMyUser();
     }
     getMyOrders(){
       var userId=localStorage.getItem('user_ID');
@@ -48,6 +49,20 @@ export default class MyOrders extends Component {
                 console.log('error', error);
             })
     }
+    getMyUser(){
+      var userId=localStorage.getItem('user_ID');
+        axios.get("/api/users/"+userId)
+          .then((response)=>{
+            this.setState({ 
+                reviewuserData : response.data
+            },()=>{
+                 console.log("reviewuserData",this.state.reviewuserData.profile.fullName);
+            })
+          })
+          .catch((error)=>{
+              console.log('error', error);
+          })  
+    }
     showFeedbackForm(){
       $('#feedbackFormDiv').show();
     }
@@ -56,6 +71,7 @@ export default class MyOrders extends Component {
       var rating = $('input[name="ratingReview"]:checked', '.feedbackForm').val();
       var formValues={
         "customerID"                : localStorage.getItem('user_ID'),
+        "customerName"              : this.state.reviewuserData.profile.fullName,
         "orderID"                   : this.state.orderID,
         "productID"                 : $(event.currentTarget).data('productid'),
         "rating"                    : rating,

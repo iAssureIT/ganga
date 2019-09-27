@@ -80,7 +80,7 @@ class ProductModalViewEcommerce extends Component {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           console.log('cartProduct=======================', response.data[0].cartItems)
+           // console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
@@ -241,7 +241,7 @@ class ProductModalViewEcommerce extends Component {
   	}
   }
   render() {
-  	       console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
+  	       // console.log('prohbnhvhvhgcvhgchgchgc',this.props.productInfo,this.state.productData); 
 		return (
 				
 			this.state.productData?

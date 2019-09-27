@@ -39,7 +39,7 @@ export default class ProductDetailsHomeView extends Component {
             }) 
   	} 
   	componentWillReceiveProps(nextProps){
-      //console.log('nextProps',nextProps)
+      console.log('nextProps',nextProps)
       
     }  
     
@@ -48,7 +48,7 @@ export default class ProductDetailsHomeView extends Component {
 		return (
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180  backColorGray">
           <ProductModalViewEcommerce productInfo = { this.props.productInfo } />
-          <ProducthomeDetailsReviewFAQ productInfo = { this.props.productID } />
+          <ProducthomeDetailsReviewFAQ productInfo = { this.props.productInfo } />
         </div>
 		);
 	}

@@ -5,29 +5,81 @@ import axios                  from 'axios';
 import swal from 'sweetalert';
 import "./ProductViewEcommerceDetailsReviewFAQ.css";
 import _                      from 'underscore';
+import moment                 from "moment";
 
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
-
 export default class ProducthomeDetailsReviewFAQ extends Component {
 	constructor(props){
     super(props);
-	    
-  	} 
-  	componentDidMount(){  	} 
+      this.state = {
+      "reviewuserData":""
+      };
+       this.getMyReview()
+
+    } 
+  	componentDidMount(){  
+    this.getMyReview()
+
+      } 
+
+          componentWillReceiveProps(nextProps){
+      
+      if (nextProps.productInfo) {
+         // console.log('nextProps===============================>',nextProps.productInfo);
+        if (nextProps.productInfo.productID) {
+          this.getMyReview(nextProps.productInfo.productID);
+        }
+        
+      }
+    }
+
+    getMyReview(productID){
+      axios.get("/api/customerReview/get/list/"+productID)
+            .then((response)=>{
+              this.setState({ 
+                  reviewData : response.data
+              },()=>{
+                  console.log("reviewData",this.state.reviewData);
+              })
+                axios.get("/api/users/"+this.state.reviewData[0].customerID)
+                  .then((response)=>{
+                    this.setState({ 
+                        reviewuserData : response.data
+                    },()=>{
+                        // console.log("reviewuserData",this.state.reviewuserData);
+                    })
+                  })
+                  .catch((error)=>{
+                      console.log('error', error);
+                  })  
+          })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+
   	  	
   	render() {
 		return (
 				<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
+          { 
+            this.state.reviewData && this.state.reviewData.length >0 ?
             <ul>
               <li className="rvw"><a>REVIEWS</a></li>
             </ul> 
+              :
+              null                      
+          }
             <div className="topspace15"></div>
-           
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewborder">
+          { 
+            this.state.reviewData && this.state.reviewData.length >0 ?
+            this.state.reviewData.map((data,index)=>{
+              return (
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewborder">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 topspace15">
                   <div className="row">
                     <div className="col-lg-4 col-md-3 col-sm-3 col-xs-3 reviewuserimg text-center">
@@ -43,8 +95,8 @@ export default class ProducthomeDetailsReviewFAQ extends Component {
                         </div>    
                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <img src="/images/userImage.png"/>
-                            <p>by Amitraje Shinde</p>
-                            <p>date</p>
+                            <p>by {this.state.reviewuserData ? this.state.reviewuserData.profile.fullName: null}</p>
+                            <p>{moment(data.createdAt).format('DD-MM-YYYY')}</p>
                         </div>    
                       </div>    
                     </div>    
@@ -57,7 +109,7 @@ export default class ProducthomeDetailsReviewFAQ extends Component {
                         </div>    
                         <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 topspace8">
                           <div className="row">
-                            <p>vary low camera quality, ram showing 8gb but working as 4gb phone, screen resolution is vary low. also disappointing by Amazon because of when i want to return and apply for refund they giving a childish reason no refund no on the spot help just harassment. so please request u all don't purchase this model and also don't purchase online phone from amazon.</p>
+                            <p>{data.customerReview}</p>
                           </div>    
                         </div>    
                       </div>    
@@ -65,7 +117,11 @@ export default class ProducthomeDetailsReviewFAQ extends Component {
                   </div>    
                 </div>    
             </div>
-
+                );
+              }) 
+              :
+              null                      
+          }
           </div>
         </div>
 		);
