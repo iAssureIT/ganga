@@ -999,7 +999,7 @@ class Checkout extends Component{
                                 <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">GST ({this.state.vatPercent > 0 ? this.state.vatPercent : 0}%):</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 && this.state.vatPercent ?(this.state.productData.cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"}</span>
                                 {/* <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Gift Wrap</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight">$5.00</span> */}
                                 <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Order Total:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.state.productData.cartTotal))+(parseInt(this.state.productData.cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder mt25"></div>
                                 </div>
                                 <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb15 discountCode" onClick={this.discountCode.bind(this)}>Discount Codes:</span>
@@ -1011,8 +1011,8 @@ class Checkout extends Component{
                                     </div>
                                     :
                                     null
-                                }
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                } */}
+                                {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>
                                 <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb15 discountCode" onClick={this.comment.bind(this)}>Comment</span>
@@ -1022,15 +1022,15 @@ class Checkout extends Component{
                                     </div>
                                     :
                                     null
-                                }
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
-                                </div>
-                                <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 orderTotalText">Order Total</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight orderTotalPrize"><i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.state.productData.cartTotal))+(parseInt(this.state.productData.cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                } */}
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>
-                                <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb15 discountCode" onClick={this.giftOption.bind(this)}>Gift Options</span>
+                                <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 orderTotalText">Order Total</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight orderTotalPrize"><i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.state.productData.cartTotal))+(parseInt(this.state.productData.cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
+                                </div> */}
+                                {/* <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb15 discountCode" onClick={this.giftOption.bind(this)}>Gift Options</span>
                                 { this.state.giftOption == true ?
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15">Gift Message (optional)</label>
@@ -1041,13 +1041,13 @@ class Checkout extends Component{
                                     </div>
                                     :
                                     null
-                                }
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15">
+                                } */}
+                                {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <input type="checkbox" name="giftWrap" />  &nbsp; <span>Gift wrap</span>&nbsp;<span className="giftWrapPrize"><i class="fas fa-rupee-sign"></i>5.00</span>
-                                </div>
+                                </div> */}
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                 </div>

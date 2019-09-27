@@ -367,7 +367,7 @@ searchProducts(){
                                   user_ID? 
                                   <li><a href="/"  data-toggle="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
-                                      <li className="col-lg-12 NOpadding"><a href="/profile">Your Profile</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/account">Your Profile</a></li>
                                       <li className="col-lg-12 NOpadding"><a href="/wishlist">Your Wishlist</a></li>
                                       <li className="col-lg-12 NOpadding"><a href="/my-orders">Your Orders</a></li>
                                       <li className="col-lg-12 NOpadding" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>

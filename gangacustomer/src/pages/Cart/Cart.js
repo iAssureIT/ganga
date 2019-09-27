@@ -28,13 +28,13 @@ class Cart extends Component{
                 <div className="row">
                     <SmallBanner bannerData={this.state.bannerData}/>
                     <CartProducts />
-                    <GiftOption />
-                    <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+                    {/* <GiftOption /> */}
+                    {/* <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                             <Discount />
                             <EstimateShipping />
                         </div>
-                    </div>
+                    </div> */}
                     
                 </div>
             </div>

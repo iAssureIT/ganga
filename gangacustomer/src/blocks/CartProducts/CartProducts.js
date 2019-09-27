@@ -234,10 +234,10 @@ class CartProducts extends Component{
                                     }
                                 </tbody>
                             </table>
-                            <div className="col-lg-4 col-lg-offset-5 col-md-4 col-md-offset-5 col-sm-12 col-xs-12 NOpaddingLeft">
+                            {/* <div className="col-lg-4 col-lg-offset-5 col-md-4 col-md-offset-5 col-sm-12 col-xs-12 NOpaddingLeft">
                             <button onClick={this.continueShopping.bind(this)} className="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-12 col-xs-12 btn btn-warning continueShopping"> <i className="fa fa-angle-left cartLeftAngle" area-hidden="true"></i> &nbsp; CONTINUE SHOPPING</button>
                             </div>
-                            <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton" onClick={this.updateShoppingCart.bind(this)}> UPDATE SHOPPING CART</button>
+                            <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton" onClick={this.updateShoppingCart.bind(this)}> UPDATE SHOPPING CART</button> */}
                         </div>
                         {
                             this.props.recentCartData && this.props.recentCartData.length > 0?

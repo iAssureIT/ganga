@@ -24,9 +24,9 @@ export default class Sidebar extends Component {
   	render() {  
     return (
 		<div className="sidebar">
-			<div className="mp-title">
+			{/* <div className="mp-title">
 		        <strong>Marketplace</strong>
-		    </div>
+		    </div> */}
 		    {/* <div className="mp-subtitle">
 		        <strong>Marketplace</strong>
 		    </div>
