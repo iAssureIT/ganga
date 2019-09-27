@@ -21,6 +21,9 @@ import ViewTemplates                              from '../NotificationManagemen
 import AddNewShopProduct                          from '../../storeAdmin/product/addNewProduct/AddNewShopProduct/AddNewShopProduct.js';
 import AddNewProductImages                        from '../../storeAdmin/product/addNewProduct/AddNewProductImages/AddNewProductImages.js';
 import CategoryManagement                         from '../../storeAdmin/product/categoryManagement/component/CategoryManagement.js';
+import SectionManagement                          from '../../storeAdmin/product/sectionManagement/component/SectionManagement.js';
+
+
 import AddNewBulkProduct                          from '../../StoreManagement/product/productBulkUpload/component/ProductBulkUpload.js';
 import ProductList                                from '../../StoreManagement/product/productList/component/ProductList.js';
 import BulkProductImageUpload                     from '../../StoreManagement/bulkimageUpload/BulkProductImageUpload.js'
@@ -163,6 +166,8 @@ class Layout extends Component{
                     <Route path="/add-product/image/:productID"                                 exact strict component={ AddNewProductImages } />
                     <Route path="/category-management"                                          exact strict component={ CategoryManagement } />
                     <Route path="/category-management/:categoryID"                              exact strict component={ CategoryManagement } />
+                    <Route path="/section-management"                                           exact strict component={ SectionManagement } />
+                    <Route path="/section-management/:sectionID"                                exact strict component={ SectionManagement } />
                     <Route path="/product-upload"                                               exact strict component={ AddNewBulkProduct } />
                     <Route path="/product-list"                                                 exact strict component={ ProductList } />
                     <Route path="/product-image-bulk-upload"                                    exact strict component={ BulkProductImageUpload } />

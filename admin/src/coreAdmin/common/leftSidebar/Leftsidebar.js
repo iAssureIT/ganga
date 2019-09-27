@@ -79,6 +79,11 @@ export default class Leftsidebar extends Component{
                         <a href="/category-management">
                           <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Management</span>
                         </a>
+                      </li>
+                      <li>
+                        <a href="/section-management">
+                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Management</span>
+                        </a>
                       </li>   
                   </ul>
                 </li>
