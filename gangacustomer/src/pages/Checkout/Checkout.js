@@ -405,6 +405,7 @@ class Checkout extends Component{
         this.getCompanyDetails();
     }
     grandtotalFunction(cartItemsMoveMain){
+        console.log('cart',cartItemsMoveMain );
 		var taxes           = []; 
 		var calTax          = [];
 		var calculateTax    = [];
@@ -424,10 +425,11 @@ class Checkout extends Component{
 				var finalPrice   = offeredPrice * qty;
 				totalAmount     += finalPrice;
 				
-			} // end of i loop
+            } // end of i loop
+            console.log('totalAmount', offeredPrice, totalAmount);
 			if(totalAmount > 0){
 				var themeSettings = this.state.companyInfo;
-				
+                    console.log('themeSettings',themeSettings);
 					if(themeSettings){
 						var taxCount  = themeSettings.taxSettings.length;
 						if(taxCount > 0){
@@ -683,12 +685,10 @@ class Checkout extends Component{
                 "addType"       : this.state.addType
             }
         }
-		
+		// console.log('pls');
         if($('#checkout').valid()){
-            
             axios.patch('/api/carts/address', addressValues)
             .then((response)=>{
-                
             })
             .catch((error)=>{
                 console.log('error', error);
@@ -696,7 +696,6 @@ class Checkout extends Component{
     
             axios.patch('/api/carts/payment', formValues)
             .then((response)=>{
-                
             })
             .catch((error)=>{
                 console.log('error', error);
@@ -704,7 +703,7 @@ class Checkout extends Component{
             
             var cartItemsMoveMain  = this.state.cartProduct;
             var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
-            
+           
             if(grandTotalArray){
                 var totalAmount       = grandTotalArray.finalTotal;
                 // var totalAmount       = 100;
@@ -764,7 +763,9 @@ class Checkout extends Component{
 
                             axios.post('/api/orders/post', inputObject)
                             .then((result)=>{
+                                
                                 if(result){
+                                    
                                     axios.get('/api/orders/get/one/'+result.data.order_ID)
                                     .then((orderStatus)=>{
                                         if(orderStatus){
@@ -832,7 +833,7 @@ class Checkout extends Component{
 
             })
             .catch((error)=>{
-                console.log('error', error)
+                console.log('error', error);
             });
         }
     }
