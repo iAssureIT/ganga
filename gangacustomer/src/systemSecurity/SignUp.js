@@ -42,14 +42,17 @@ class SignUp extends Component {
                 pwd       		: '',
                 signupPassword  : '',
                 role 			: ''
-               
             },
-             formerrors :{
-				        	firstNameV 		: "",
-				        	lastNameV		: "",
-				        	mobileV 		: "",
-				        	emailIDV		: "",
-					     },
+            formerrors :{
+				firstNameV 		: "",
+				lastNameV		: "",
+				mobileV 		: "",
+				emailIDV		: "",
+			},
+			termsCondition : ["The price of products  is as quoted on the site from time to time.",
+							"Price and delivery costs are liable to change at any time, but changes will not affect orders in respect of which we have already sent you a Despatch Confirmation.",
+							"Products marked as 'non-returnable' on the product detail page cannot be returned.",
+							"Products may not be eligible for return in some cases, including cases of buyer's remorse such as incorrect model or color of product ordered or incorrect product ordered."]
         }
         console.log("In constructor");
          this.handleChange = this.handleChange.bind(this);
@@ -197,7 +200,9 @@ class SignUp extends Component {
         $('.hidePwd').toggleClass('hidePwd1');
         return $('.inputTextPass').attr('type', 'password');
     }
-
+	proceed(){
+		
+	}
 	render(){
 		// var winHeight = window.innerHeight;
   //       var divHeight = winHeight/4.5+'px';
@@ -249,7 +254,7 @@ return(
 			                    <input type="password" className="form-control" ref="signupConfirmPassword" placeholder="Confirm Password" name="signupConfirmPassword" required/>
 			                </div>
 					    <div className="mt30 loginforgotpass">
-			                <input  id="idacceptcondition" type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
+			                <input  id="idacceptcondition" required type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
 			            </div>
 					    <div class="modal" id="myModal" role="dialog">
 					      <div class="modal-dialog">
@@ -259,10 +264,22 @@ return(
 					            <h2 className="modaltext">Terms & Conditions</h2>
 					          </div>
 					          <div class="modal-body">
-					            <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p>
+								{/* <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p> */}
+								<ul>
+									{
+										this.state.termsCondition && this.state.termsCondition.length>0 ?
+										this.state.termsCondition.map((data, index)=>{
+											return(
+												<li>{data}</li>
+											);
+										})
+										:
+										null
+									}
+								</ul>
 					          </div>
 					          <div class="modal-footer">
-					            <button type="button" class="btn btn-default" data-dismiss="modal">Proceed</button>
+					            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					          </div>
 					        </div>
 					      </div>

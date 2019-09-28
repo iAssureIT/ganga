@@ -59,7 +59,8 @@ class ProductDetails extends Component{
                 productName : response.data.productName,
                 category    : response.data.category,
                 subCategory : response.data.subCategory,
-                productPrice: response.data.productPrice,
+                actualPrice: response.data.actualPrice,
+                offeredPrice: response.data.offeredPrice,
                 productDetails : response.data.productDetails,
                 productCode : response.data.productCode,
                 featureList : response.data.featureList,
@@ -180,7 +181,8 @@ class ProductDetails extends Component{
 
                                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div className="prod-detail-headerPrice">
-                                                            <h2 className="prod-detail-headerTextPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.productPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/-</h2>
+                                                            <span className="prod-detail-headerTextPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.offeredPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/-</span> &nbsp; &nbsp;
+                                                            {this.state.actualPrice != this.state.offeredPrice ? <span className="actualPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.actualPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span> : null}
                                                         </div>
                                                     </div>
 
@@ -191,22 +193,7 @@ class ProductDetails extends Component{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {/*
-                                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <div className="prod-detail-header">
-                                                    <div className="prod-detail-headerText3">
-                                                    <div className="select-quantity-input">
-                                                    Quantity: <input type="number" className="selectQntInp" defaultValue="1"/>
-                                                    </div>
-                                                    <div className="select-quantity-input">
-                                                    <div className="select-add-to-cart-btn" onClick={this.onAddToCart.bind(this)}>
-                                                    Add To Cart
-                                                    </div>
-                                                    </div>
-                                                    </div>
-
-                                                    </div>
-                                                    </div>*/}
+                                                    
                                                 </div>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div className="product-details-tabs">

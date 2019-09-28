@@ -28,7 +28,7 @@ class CategoryManagement extends Component{
               category                          : "Category Title",
               subCategory                       : "Subcategory Title",
               categoryDescription               : "Category Description",
-              categoryImage                     : "Category Image",
+              // categoryImage                     : "Category Image",
               actions                           : 'Action',
             },
             "tableObjects"              : {
@@ -85,11 +85,11 @@ class CategoryManagement extends Component{
           },
           category: {
             required: true,
-            regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]/,
+            regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
           },
           categoryDescription: {
             required: true,
-            regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]/,
+            regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
           },
         },
         errorPlacement: function(error, element) {
