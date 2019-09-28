@@ -1,9 +1,4 @@
 import React, { Component } 		from 'react';
-// import EcommerceHeader 				from "../../blocks/common/EcommerceHeader/EcommerceHeader.js";
-// import EcommerceBreadcumb 			from "../../blocks/common/Breadcumb/EcommerceBreadcumb.js";
-// import FeaturedProducts 			from "../../blocks/FeaturedProducts/FeaturedProducts.js";
-// import EcommerceFooter    			from "../../blocks/common/EcommerceFooter/EcommerceFooter.js";
-// import ProductDescriptionEcommerce 	from "../../blocks/common/ProductDescriptionEcommerce/ProductDescriptionEcommerce.js";
 import ProductViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductViewEcommerce.js";
 import ProductViewEcommerceList     from "../../blocks/ProductViewEcommerceList/ProductViewEcommerceList.js";
 import ProductViewEcommerceBestSellers     from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
