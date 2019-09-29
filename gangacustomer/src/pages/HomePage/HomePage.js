@@ -115,6 +115,7 @@ class HomePage extends Component {
         this.setState({
           [type+"Products"] : response.data
         },()=>{
+          this.forceUpdate();
           console.log(type+"Products", this.state[type+"Products"])
         })
       })
