@@ -7,8 +7,8 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import '../css/productList.css';
 
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class ProductList extends Component{
     constructor(props) { 
@@ -50,35 +50,6 @@ class ProductList extends Component{
         this.getCount();
         this.getData(this.state.startRange, this.state.limitRange);
 
-        // var a =[{key: 'a'},{key: 'v'}, {key: 'b'}]
-        var a = [1,1,2,2,'a','a','b'];
-        var b = a.filter((v, i, array)=>{ 
-            console.log(v , array.indexOf(v) +'==='+ i);
-            return array.indexOf(v) === i
-        });
-        console.log('b', b);
-        // var c= a.sort((a, b)=>{
-        //     console.log(a, b);
-        //     if(a.key > b.key){
-        //         return -1
-        //     }else{
-        //         return 1
-        //     }
-        //     return 0
-        // })
-        // console.log('c', c, a.reverse());
-
-        // let user = { 
-        //     name: "GFG", 
-        //     gfg1:() => { 
-        //         console.log("hello " + this.name); // no 'this' binding here 
-        //     }, 
-        //     gfg2(){        
-        //         console.log("Welcome to " + this.name); // 'this' binding works here 
-        //     }   
-        // }; 
-        // user.gfg1(); 
-        // user.gfg2(); 
     }
     getCount(){
         axios.get('/api/products/get/count')
@@ -108,7 +79,7 @@ class ProductList extends Component{
             console.log('error', error);
         })
     }
-
+    
     publishAllProducts(event){
         event.preventDefault();        
         

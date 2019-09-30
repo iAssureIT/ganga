@@ -38,6 +38,7 @@ class CategoryManagement extends Component{
               searchApply               : true,
               editUrl                   : '/category-management/'
             },
+            "sectionsList"              : [],
             "startRange"                : 0,
             "limitRange"                : 10,
             "editId"                    : this.props.match.params ? this.props.match.params.categoryID : ''
@@ -50,6 +51,16 @@ class CategoryManagement extends Component{
             [name]: event.target.value,
         });
     }
+    sectionChange(event){
+      const target = event.target;
+      const name   = target.name;
+      this.setState({
+          section     : event.target.value.split('|')[0],
+          section_ID  : event.target.value.split('|')[1],
+      },()=>{
+        console.log('sectionChange', this.state.section, this.state.section_ID);
+      });
+  }
     componentWillReceiveProps(nextProps) {
         var editId = nextProps.match.params.categoryID;
         if(nextProps.match.params.categoryID){
@@ -104,6 +115,7 @@ class CategoryManagement extends Component{
           }         
         }
       });
+      this.getSectionData();
       this.getDataCount();
       this.getData(this.state.startRange,this.state.limitRange);
     }
@@ -136,43 +148,6 @@ class CategoryManagement extends Component{
         console.log('error', error);
       });
     }
-    componentWillUnmount() {
-      // $("body").find("script[src='/js/adminLte.js']").remove();
-    }
-    categorySearchEvent(event){
-        // var inputText = $(event.currentTarget).val();
-
-        // if(inputText){
-        //     Session.set("inputCategorySearch",inputText);
-        // } else {
-        //     Session.set("inputCategorySearch","");
-        // }
-    }
-    categoryEditEvent(event){
-        window.scrollTo(0, 0);
-        var currentId = $(event.currentTarget).attr('data-id');
-        // FlowRouter.go('/admin/products/categoryManagement/'+currentId);      
-    }
-    cancelCategoryUpdate(){
-        // Session.set("uploadCatgImageProgressPercent","");
-        // Session.set("uploadCatgIconProgressPercent","");
-        // FlowRouter.go('/admin/products/categoryManagement');
-        // $('.imgCatgUpldInp').val("");
-        // $('.imgCatgUpldIconInp').val("");
-        // this.setState({
-        //     "categoryName"                  : '',
-        //     "categoryUrl"                   : '',
-        //     "addEditModeCategory"           : '',
-        //     "addEditModeSubCategory"        : '',
-        //     "categoryShortDesc"             : '',
-        //     "subcatgArr"                    : [],
-        // });
-        
-        // this.componentDidMount();
-        // Meteor.call("removeTemporaryCollectionData","1");
-        // Meteor.call("removeTemporaryIconsCollectionData","1");
-        
-    }
     addNewSubCatArray(event){
       let arrLength = this.state.subcatgArr;
       arrLength.push({
@@ -186,18 +161,28 @@ class CategoryManagement extends Component{
       }); 
     }
     addNewRow(index){
-        // console.log('index',index);
         return(
             <div className="col-lg-12 col-md-12 NOpadding newSubCatgArr">   
                 <div className="col-lg-11 col-md-11 NOpadding">             
                     <input type="text" id={index} value={this.state['subCategoryTitle'+index]} name={"subCategoryTitle"+index} onChange={this.handleChange.bind(this)} className={"form-control newSubCatg"+index} placeholder="Category Title" aria-label="Brand" aria-describedby="basic-addon1" ref={"newSubCatg"+index} />
                 </div>
                 <div className="col-lg-1 col-md-1 deleteSubCategory fa fa-trash" id={index} onClick={this.deleteSubCategory.bind(this)}>
-                    {/*<i className="fa fa-trash"></i>*/}
+                    
                 </div>
             </div>
-           
         );
+    }
+    getSectionData(){
+      axios.get('/api/sections/get/list')
+      .then((res)=>{
+        console.log('res', res.data);
+        this.setState({
+          sectionsList : res.data
+        })
+      })
+      .catch((error)=>{
+        console.log('error', error);
+      })
     }
     deleteSubCategory(event){
         event.preventDefault();
@@ -240,7 +225,8 @@ class CategoryManagement extends Component{
 
 
           var formValues = {
-            "section"               : this.state.section,
+            "section"                   : this.state.section,
+            "section_ID"                : this.state.section_ID,
             "category"                  : this.refs.category.value,
             "categoryUrl"               : this.refs.categoryUrl.value,
             "subCategory"               : categoryDimentionArray,
@@ -286,7 +272,8 @@ class CategoryManagement extends Component{
         
         var formValues = {
           "category_ID"               : this.state.editId,
-          "section"               : this.state.section,
+          "section"                   : this.state.section,
+          "section_ID"                : this.state.section_ID,
           "category"                  : this.refs.category.value,
           "categoryUrl"               : this.refs.categoryUrl.value,
           "subCategory"               : categoryDimentionArray,
@@ -316,7 +303,7 @@ class CategoryManagement extends Component{
             });
             this.getData(this.state.startRange, this.state.limitRange);
             this.setState({
-              "section"                   : 'Select',
+              "section"                       : 'Select',
               "category"                      : '',
               "categoryUrl"                   : '',
               "addEditModeCategory"           : '',
@@ -343,7 +330,8 @@ class CategoryManagement extends Component{
         console.log('edit', response.data);
         if(response.data){
             this.setState({
-              "section"               : response.data.section,
+              "section"                   : response.data.section,
+              "section_ID"                : response.data.section_ID,
               "category"                  : response.data.category,
               "categoryUrl"               : response.data.categoryUrl,
               "addEditModeCategory"       : response.data.category,
@@ -524,10 +512,19 @@ class CategoryManagement extends Component{
                               <div className="col-lg-6">
                                   <div className="col-lg-12">
                                       <label>Section <i className="redFont">*</i></label>
-                                      <select onChange={this.handleChange.bind(this)} value={this.state.section}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
-                                        <option disabled selected defaultValue="Select">Select Section</option>
-                                        <option value="Main-Site">Main Site</option>
-                                        <option value="Grocery">Grocery</option>
+                                      <select onChange={this.sectionChange.bind(this)} value={this.state.section+'|'+this.state.section_ID}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
+                                        {
+                                          this.state.sectionsList && this.state.sectionsList.length>0 ?
+                                          this.state.sectionsList.map((data, index)=>{
+                                            return(
+                                              <option value={data.section+'|'+data._id}>{data.section}</option>
+                                            );
+                                          })
+                                          :
+                                          null
+                                        }
+                                       
+                                        
                                       </select>
                                   </div>
 
@@ -585,9 +582,7 @@ class CategoryManagement extends Component{
                               <div className="col-lg-12 NOpadding-right">
                                   <div className="addCategoryNewBtn col-lg-12 NOpadding-right">
                                       <div className="pull-right col-lg-6 NOpadding-right">
-                                          {/*<div className=" col-lg-6">
-                                              <div onClick={this.cancelCategoryUpdate.bind(this)} className="edit-cancel-catg btn col-lg-12 col-md-12 col-sm-12 col-xs-12">Cancel</div>
-                                          </div>*/}
+                                          
                                           <div className=" col-lg-6 col-lg-offset-6">
                                             {
                                               this.state.editId ? 

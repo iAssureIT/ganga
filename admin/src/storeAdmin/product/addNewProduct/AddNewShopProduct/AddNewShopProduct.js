@@ -189,18 +189,16 @@ class AddNewShopProduct extends Component{
         }         
       }
     });
-
-    this.getWebCategories();
+    this.getSectionData();
   }
-  getWebCategories(){
-    axios.get('/api/category/get/list')
+  
+  getSectionData(){
+    axios.get('/api/sections/get/list')
     .then((response)=>{
-      console.log('getWebCategories', response)
-      var sections = _.pluck(response.data, "section");
-      var sectionArray = _.unique(sections);
-        this.setState({
-          sectionArray : sectionArray
-        })
+      console.log('getWebCategories', response.data);
+      this.setState({
+        sectionArray : response.data
+      })
     })
     .catch((error)=>{
         console.log('error', error);
@@ -243,11 +241,7 @@ class AddNewShopProduct extends Component{
       console.log('error',error);
     })
   }
-  componentWillUnmount() {
-      // $("body").find("script[src='/js/adminLte.js']").remove();
-      // if(this.basicPageTracker)
-      //   this.basicPageTracker.stop();
-  }
+  
   addNewRow(event) {
     event.preventDefault();
     var newArr = this.state.addrows;
@@ -259,129 +253,8 @@ class AddNewShopProduct extends Component{
         });
     }
   }
-  addSubCategoryWithProduct(event){
-      event.preventDefault();
-      // const isValidEmail = categoryRef.checkValidity();
-      // console.log('isValidEmail',isValidEmail);
-      // var categoryVal = this.refs.categoryRef.value;
-      // var subcategoryVal = this.refs.modalAddSubCategoryRef.value;
-      // if(categoryVal != '-Select-'){
-      //     if(subcategoryVal){
-      //         if (categoryVal.indexOf("/") >= 0 || subcategoryVal.indexOf("/") >= 0){
-      //             swal({
-      //                 position: 'top-right',
-      //                 type: 'error',
-      //                 title: 'Please remove "/" from subcategory',
-      //                 text: 'Please remove "/" from subcategory',
-      //                 showConfirmButton: false,
-      //                 timer: 1500
-      //             });
-      //         }else{
-      //             var formValues = {
-      //                 "category"          :   categoryVal,
-      //                 "subCategory"       :   subcategoryVal,
-      //             }
-          
-      //             Meteor.call('addNewSubCategory', formValues, (error, result) => {
-      //                 if(error){
-      //                     swal({
-      //                         position: 'top-right',
-      //                         type: 'error',
-      //                         text: 'Sub Category Not Added',
-      //                         title: 'Sub Category Not Added',
-      //                         showConfirmButton: false,
-      //                         timer: 1500
-      //                     });
-      //                 } else {
-      //                     swal({
-      //                         position: 'top-right',
-      //                         type: 'success',
-      //                         text: 'Sub Category Added Successfully',
-      //                         title: 'Sub Category Added Successfully',
-      //                         showConfirmButton: false,
-      //                         timer: 1500
-      //                     });
-      //                     this.refs.modalAddSubCategoryRef.value    = "";
-      //                     $('#openSubCatgModal').modal('hide');
-                          
-      //                 }
-      //             });
-      //         }
-      //     }else{
-      //         this.setState({
-      //             subCatFormErrors : true
-      //         });
-      //     }
-      // }else{
-      //     swal({
-      //         position: 'top-right',
-      //         type: 'error',
-      //         text: 'Please select category value.',
-      //         title: 'Please select category value.',
-      //         showConfirmButton: false,
-      //     });
-      //     $('#openSubCatgModal').modal('hide');
-      // }
-  }
-  addCategoryWithProduct(event){
-      event.preventDefault();
-      // var categoryVal = this.refs.modalCategoryRef.value;
-      // var subcategoryVal = this.refs.modalSubCategoryRef.value;
-      // if(categoryVal){
-      //     if(subcategoryVal){
-      //         if (categoryVal.indexOf("/") >= 0 || subcategoryVal.indexOf("/") >= 0){
-      //             swal({
-      //                 position: 'top-right',
-      //                 type: 'error',
-      //                 text: 'Please remove "/" from category or subcategory',
-      //                 title: 'Please remove "/" from category or subcategory',
-      //                 showConfirmButton: false,
-      //                 timer: 1500
-      //             });
-      //         }else{
-      //             var formValues = {
-      //                 "category"          :   categoryVal,
-      //                 "subCategory"       :   subcategoryVal,
-      //             }
-          
-      //             Meteor.call('addNewCategory', formValues, (error, result) => {
-      //                 if(error){
-      //                     swal({
-      //                         position: 'top-right',
-      //                         type: 'error',
-      //                         text: 'Category Not Added',
-      //                         title: 'Category Not Added',
-      //                         showConfirmButton: false,
-      //                         timer: 1500
-      //                     });
-      //                 } else {
-      //                     swal({
-      //                         position: 'top-right',
-      //                         type: 'success',
-      //                         text: 'Category Added Successfully',
-      //                         title: 'Category Added Successfully',
-      //                         showConfirmButton: false,
-      //                         timer: 1500
-      //                     });
-      //                     this.refs.modalCategoryRef.value    = "";
-      //                     this.refs.modalSubCategoryRef.value = "";
-      //                     $('#openCatgModal').modal('hide');
-                          
-      //                 }
-      //             });            
-      //         }
-      //     }else{
-      //         this.setState({
-      //             subCatError : true
-      //         });
-      //     }
-      // }else{
-      //     this.setState({
-      //         catError : true
-      //     });
-      // }
-      
-  }
+  
+  
   showRelevantSubCategories(event){
     event.preventDefault();
     const target = event.target;
@@ -623,53 +496,7 @@ class AddNewShopProduct extends Component{
           $(".productUrl").val(url);
       }
   }
-  catError(event){
-      // var modalCategoryRef = this.refs.modalCategoryRef.value;
-      // if(modalCategoryRef){
-      //     this.setState({
-      //         catError : false
-      //     });
-      // }else{
-      //     this.setState({
-      //         catError : true
-      //     });
-      // }
-  }
-  subCatError(event){
-      // var modalSubCategoryRef = this.refs.modalSubCategoryRef.value;
-      // if(modalSubCategoryRef){
-      //     this.setState({
-      //         subCatError : false
-      //     });
-      // }else{
-      //     this.setState({
-      //         subCatError : true
-      //     });
-      // }
-  }
-  subCatFormErrors(){
-      // var modalAddSubCategoryRef = this.refs.modalAddSubCategoryRef.value;
-      // if(modalAddSubCategoryRef){
-      //     this.setState({
-      //         subCatFormErrors : false
-      //     });
-      // }else{
-      //     this.setState({
-      //         subCatFormErrors : true
-      //     });
-      // }
-  }
-  closeCatModal(event){
-      event.preventDefault();
-      // $('#openCatgModal').modal('hide');
-      // this.refs.modalCategoryRef.value = '';
-      // this.refs.modalSubCategoryRef.value = '';
-  }
-  closeCatSubModal(event){
-      event.preventDefault();
-      // $('#openSubCatgModal').modal('hide');
-      // this.refs.modalAddSubCategoryRef.value = '';
-  }
+  
   makeProductOffered(event){
     // event.preventDefault();
     var id = event.target.id;
@@ -710,7 +537,7 @@ class AddNewShopProduct extends Component{
                                         { this.state.sectionArray && this.state.sectionArray.length > 0 ?
                                           this.state.sectionArray.map( (data, index)=>{
                                             return (
-                                              <option key={index} value={data}>{data}</option>
+                                              <option key={index} value={data.section}>{data.section}</option>
                                             );
                                           })
                                           :
