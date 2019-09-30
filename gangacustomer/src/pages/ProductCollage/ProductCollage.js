@@ -5,6 +5,7 @@ import $                    		from 'jquery';
 import InputRange 					from 'react-input-range';
 import  'react-input-range/lib/css/index.css';
 import axios 						from 'axios';
+import swal                       from 'sweetalert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/collapse.js';
@@ -47,6 +48,14 @@ class ProductCollage extends Component {
   		this.getSize();
   		this.getColor();
   		this.getPriceLimits();
+
+  $('.dropdown-submenu a.test').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+
+
   	}
   	getCategoryDetails(categoryID){
 		axios.get("/api/category/get/one/"+categoryID)
@@ -249,128 +258,136 @@ class ProductCollage extends Component {
 				  	</ul>
 				</div>	
                {/*for sm and xs*/}
-                     <div className="hidden-lg menudiv hidden-md col-sm-12 col-xs-12">
-		              <div className="hidden-lg menudiv hidden-md col-sm-6 col-xs-6">
-		               <div className="nb-brand">
-		                  <div className="menubtn  text-center" data-toggle="collapse" data-target="#accordionExample1" >  
-		                    <button className="  btn-link" type="button" >
-		                    Menu 
-		                  </button>
-		                  <span className="expand"><i className="plusSign fa fa-plus"></i></span>
-		                </div>
-						<div className="accordion" id="accordionExample1">
-						   <div className="card-header" id="headingOne">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapsetwo" >	
-						        <button className="btn btn-link" type="button" >
-						          CATEGORY 
-						        </button>
-						        <span className="expand"><i className=" plusSign fa fa-plus"></i></span>
-						    </div>
-						   </div>
-						    <div id="collapsetwo" className="collapse">
-						      <div className="card-body">
-						      	{
+
+                  <div className="hidden-lg hidden-md col-sm-12 col-xs-12 menudiv1">
+                    <div className="hidden-lg menudiv hidden-md col-sm-4 col-xs-4">
+                      <div class="dropdown">
+					    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
+					    <span class="caret"></span></button>
+					    <ul class="dropdown-menu">
+					     
+
+					     {/* <li class="dropdown-submenu">
+					        <a class="test" tabindex="-1" href="#">CATEGORY 1 <span class="caret"></span></a>
+					        <ul class="dropdown-menu">
+					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+					        </ul>
+					      </li>*/}
+
+					      <li class="dropdown-submenu">
+					        <a class="test" tabindex="-2" href="#">CATEGORY<span class="caret"></span></a>
+					        <ul class="dropdown-menu">
+
+					        {
 									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
 									this.state.categoryDetails.subCategory.map((data,index)=>{
 										return(
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
-												<div className="row">
+												<li>
 													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{data.subCategoryTitle}</a>
-												</div>
+												</li>
 											</div>
 										);
 									})
 									:
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-									<h5>No data Found</h5>
+									<li>No data Found</li>
 									</div>
-								}
-						      </div>
-						    </div>
-						{
+							}
+
+					        
+					        </ul>
+					      </li>
+
+					      {
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-						    <div>
-						     <div className="card-header" id="headingTwo">
-						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo1" >	
-						        <button className="btn btn-link" type="button" >
-						          COLOR 
-						        </button>
-						        <span className="expand"><i className="plusSign fa fa-plus"></i></span>
-						     </div>
-						    </div>
-						    <div id="collapseTwo1" className="collapse" >
-						      <div className="card-body">
-						      {this.state.colors ? 
+					       <li class="dropdown-submenu">
+					        <a class="test" tabindex="-1" href="#">COLOR <span class="caret"></span></a>
+					        <ul class="dropdown-menu">
+
+					          {this.state.colors ? 
 						      	this.state.colors.map((data,index)=>{
 						      		return(
-						      		<a href="#" className="swatch-option-link-layered" onClick={ this.onSelectedItemsChange.bind(this,"color")}>
+						      		<a href="#" className="col-sm-6 col-xs-6 swatch-option-link-layered" onClick={ this.onSelectedItemsChange.bind(this,"color")}>
                                     	<div className="color-option" data-color={data} style={{backgroundColor:data}} option-tooltip-value={data} ></div>
                             		</a>);
 						      	})
 						      	
-						      	: ''}	
-						      </div>
-						    </div>
-						    </div>  : ''
-						}
-						{
+						      	: <li>"no data </li>}	
+
+					          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
+					        </ul>
+					      </li>
+
+						      :
+
+						      ""
+
+						  }
+
+						   {
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-						    <div>
-						    <div className="card-header" id="headingFour">
-						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour1" >	
-						        <button className="btn btn-link" type="button" >
-						          SIZE
-						        </button>
-						        <span className="expand"><i className="plusSign fa fa-plus"></i></span>
-						      </div>
-						    </div>
-						    <div id="collapseFour1" className="collapse" >
-						      <br/>
-						      <div className="card-body">
-						      <select className="sortProducts">
-						      {this.state.sizes ? 
+						    
+
+					       <li class="dropdown-submenu">
+					        <a class="test" tabindex="-1" href="#">SIZE <span class="caret"></span></a>
+					        <ul class="dropdown-menu">
+					         <select className="sortProducts">
+					          {this.state.sizes ? 
 						      	this.state.sizes.map((data,index)=>{
 						      		return(<option value={data}>{data}</option>);
 						      	  })
 
 						      	: ''}
-						      	
-                            </select>	
-						      </div>
-						    </div>
-						    </div>  : ''
-						}
-						    <div className="card-header" id="headingThree">
-						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree1">	
-						        <button className="btn btn-link" type="button">
-						          PRICE
-						        </button>
-						        <span className="expand"><i className="plusSign fa fa-plus"></i></span>
-						      </div>
-						    </div>
-						    <div id="collapseThree1" className="collapse" >
-						      <div className="card-body">
-						      	<InputRange
-							        maxValue={1299999}
-							        minValue={10}
-							        value={this.state.price}
-							        onChange={ this.onSelectedItemsChange.bind(this,"price")} />
-							        <input className="input-field min-value" type="text" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
-							        <input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
-						      </div> 
-						    </div>
-						 </div>
-              		</div>
-             </div>
-             <div className="hidden-lg hidden-md col-sm-6 col-xs-6">
-              <div className="menubtn" data-toggle="collapse" data-target="#accordionExample2" >  
-                <button className="pull-right  btn-link" type="button" >
-                Menu1
-                </button>
-              <span className="expand"><i className="plusSign fa fa-plus"></i></span>
-            </div>
-           </div>
-          </div>   
+						      	</select>
+
+					          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
+					        </ul>
+					      </li>
+
+					      :
+
+					      ""
+					  }
+
+					    </ul>
+					  </div>		
+			          </div> 
+			           <div className="hidden-lg  hidden-md col-sm-4 col-xs-4 pull-right">
+			            <div class="dropdown">
+			              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu1
+						   <span class="caret"></span></button>
+						    <ul class="dropdown-menu">
+						     <li class="dropdown-submenu">
+						        <a class="test" tabindex="-2" href="#">Featured Brands<span class="caret"></span></a>
+						        <ul class="dropdown-menu">
+
+						        { this.state.brands && this.state.brands.length > 0 ? 
+								this.state.brands.map((data,index)=>{											
+									return(
+									<div className="hidden-lg hidden-md col-sm-6 col-xs-6 " key={index}>
+										<div>
+										 <div className="centreDetailContainerEcommerce col-lg-1 row">
+										 <input type="checkbox" name="brands[]" onChange={this.onSelectedItemsChange.bind(this,"brands")} value={data}/>
+										 <span className="centreDetailCheckEcommerce"></span>
+										</div>
+											<span className="centreDetaillistItemEcommerce">{data}</span>
+										</div>
+									</div>
+									);
+								})
+								: ''
+					            } 
+						       </ul>
+						      </li>
+						    </ul>
+			             </div>
+			           </div>
+			          </div> 
+
 
          {/*for lg and md*/}
 			 		
