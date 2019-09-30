@@ -60,7 +60,7 @@ class CategoryManagement extends Component{
       },()=>{
         console.log('sectionChange', this.state.section, this.state.section_ID);
       });
-  }
+    }
     componentWillReceiveProps(nextProps) {
         var editId = nextProps.match.params.categoryID;
         if(nextProps.match.params.categoryID){
