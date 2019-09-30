@@ -827,10 +827,14 @@ class AddNewShopProduct extends Component{
                                       <input onChange={this.handleChange.bind(this)} value={this.state.actualPrice} id="actualPrice" name="actualPrice" type="text" className="form-control actualPrice selectdropdown" placeholder="" aria-describedby="basic-addon1" ref="actualPrice"  />
                                     </div>
                                      
-                                       {/* <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 add-new-productCol NOpadding">
-                                          <label>Product Offered Price <i className="redFont">*</i></label>
-                                          <input onChange={this.handleChange.bind(this)} value={this.state.offeredPrice} id="offeredPrice" name="offeredPrice" type="text" className="form-control offeredPrice" placeholder="Price" aria-describedby="basic-addon1" ref="offeredPrice"  />
-                                        </div>*/}
+                                     <div className=" col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                                            <label>Size</label>
+                                            <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control actualPrice" placeholder="Size" aria-describedby="basic-addon1" ref="size"  />
+                                          </div>
+                                          <div className=" col-lg-1 col-md-1 col-sm-12 col-xs-12   ">
+                                            <label>Color</label>
+                                            <input onChange={this.handleChange.bind(this)} value={this.state.color} id="color" name="color" type="color" className="form-control actualPrice" placeholder="Color" aria-describedby="basic-addon1" ref="color"  />
+                                          </div> 
                                         
                                   </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive">
