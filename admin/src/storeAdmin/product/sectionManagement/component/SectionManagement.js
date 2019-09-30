@@ -18,17 +18,16 @@ class SectionManagement extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            "addEditModesection"               : "",
             "addEditMode"                       : "",
             
             "tableHeading"                      : {
               section                           : "Section",
-              section                          : "Section Title",
+              section                           : "Section Title",
               actions                           : 'Action',
             },
             "tableObjects"              : {
               deleteMethod              : 'delete',
-              apiLink                   : '/api/section/',
+              apiLink                   : 'http://localhost:5006/api/sections/',
               paginationApply           : true,
               searchApply               : true,
               editUrl                   : '/section-management/'
@@ -97,7 +96,7 @@ class SectionManagement extends Component{
       this.getData(this.state.startRange,this.state.limitRange);
     }
     getDataCount(){
-      axios.get('/api/sections/get/count')
+      axios.get('http://localhost:5006/api/sections/get/count')
       .then((response)=>{
         console.log('dataCount', response.data);
         this.setState({
@@ -109,7 +108,7 @@ class SectionManagement extends Component{
       });
     }
     getData(startRange, limitRange){
-      axios.get('/api/sections/get/list-with-limits/'+startRange+'/'+limitRange,)
+      axios.get('http://localhost:5006/api/sections/get/list-with-limits/'+startRange+'/'+limitRange,)
       .then((response)=>{
         console.log('tableData', response.data);
         this.setState({
@@ -128,7 +127,7 @@ class SectionManagement extends Component{
             "section"                  : this.state.section,
             "createdBy"                : localStorage.getItem("admin_ID")
         }
-        axios.post('/api/sections/post', formValues)
+        axios.post('http://localhost:5006/api/sections/post', formValues)
           .then((response)=>{
             swal({
               text  : response.data.message,
@@ -137,7 +136,6 @@ class SectionManagement extends Component{
             this.setState({
               "section"                      : 'Select',
               "sectionUrl"                   : '',
-              "addEditModesection"           : '',
               "addEditModeSubsection"        : '',
             });
             this.getData(this.state.startRange, this.state.limitRange);
@@ -150,82 +148,39 @@ class SectionManagement extends Component{
     }
     updatesection(event){
       event.preventDefault();
-      console.log('bjgjbmbmb',$('#sectionManagement').valid());
       if($('#sectionManagement').valid()){
-        var addRowLength = this.state.subcatgArr.length;
-        var sectionDimentionArray = [];
         
         var formValues = {
-          "section_ID"               : this.state.editId,
-          "section"               : this.state.section,
-          "section"                  : this.refs.section.value,
-          "sectionUrl"               : this.refs.sectionUrl.value,
-          "subsection"               : sectionDimentionArray,
-          "sectionDescription"       : this.refs.sectionDescription.value
+          "sectionID"                : this.state.editId,
+          "section"                  : this.state.section,
         }
 
-        axios.get('/api/section/get/count')
-        .then((response)=>{
-          var catCodeLength = response.data.dataCount;
-          if(addRowLength){
-            for(var i=0;i<addRowLength;i++){
-              var obj = {
-                   "index"             : i,
-                   "subsectionCode"   : catCodeLength+'|'+i,
-                   "subsectionTitle"  : $(".newSubCatg"+i).val(),
-              }
-              sectionDimentionArray.push(obj);
-            }
-          }
-          axios.patch('/api/section/patch', formValues)
+        axios.patch('http://localhost:5006/api/sections/patch', formValues)
           .then((response)=>{
-
             swal({
               text  : response.data.message,
               title : response.data.message,
             });
             this.getData(this.state.startRange, this.state.limitRange);
             this.setState({
-              "section"                   : 'Select',
-              "section"                      : '',
-              "sectionUrl"                   : '',
-              "addEditModesection"           : '',
-              "addEditModeSubsection"        : '',
-              "editId"                        : ''
+              "section"                   : '',
+              "sectionUrl"                : '',
             });
-            this.props.history.push('/section-management');
+            //this.props.history.push('/section-management');
           })
           .catch((error)=>{
             console.log('error', error);
           });
-        })
-        .catch((error)=>{
-          console.log('error', error);
-        });
       }
     }
     edit(id){
-      axios.get('/api/section/get/one/'+id)
+      axios.get('http://localhost:5006/api/sections/get/one/'+id)
       .then((response)=>{
         console.log('edit', response.data);
         if(response.data){
             this.setState({
-              "section"               : response.data.section,
               "section"                  : response.data.section,
-              "sectionUrl"               : response.data.sectionUrl,
-              "addEditModesection"       : response.data.section,
-            },()=>{
-                var addRowLength = this.state.subcatgArr.length;
-
-                if(addRowLength){
-                    for(var i=0;i<addRowLength;i++){
-                        this.setState ({
-                          ['subsectionTitle'+response.data.subsection[i].subsectionCode] : response.data.subsection[i].subsectionTitle
-                        },()=>{
-                          
-                        });
-                    }
-                }
+              "sectionUrl"               : response.data.sectionUrl
             });
         } else{
             this.setState ({
