@@ -15,14 +15,14 @@ class ContactDetails extends Component {
     
       this.state = {
         'MobileNo'             : '',
-        'Email'           : '',
-        'Name'              : '',
+        'Email'                : '',
+        'Name'                 : '',
         'altMobileNo'          : '',
-        'Landing'           : '',
-        'contactValue'    : '',
-        'contactIndex'      : '',
-        'levelIndex'        : '',
-        'contactId'         : ''
+        'Landing'              : '',
+        'contactValue'         : '',
+        'contactIndex'         : '',
+        'levelIndex'           : '',
+        'contactId'            : ''
       };
       this.handleChange = this.handleChange.bind(this);
     }

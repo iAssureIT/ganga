@@ -44,8 +44,10 @@ export default class LocationDetails extends Component{
     
     componentDidMount() {
       window.scrollTo(0, 0);
+      $('.button1').hide();
       if(this.props.contactEdit){
           this.setState({locationInfoAdded:1,  contactEdit: 1});
+         
       }
       if(this.props.updateBasic || this.props.locationEdit){
         this.locationDetails();
@@ -273,7 +275,6 @@ export default class LocationDetails extends Component{
                                     ]
                 
             }
-    console.log();
     axios.patch("/api/businessassociates/patch/updateBaLoc",formValues)
             .then((response)=>{
               console.log(response);        
@@ -456,6 +457,11 @@ export default class LocationDetails extends Component{
     locationDetails(){
       axios.get("/api/businessassociates/get/one/"+this.props.baId)
             .then((response)=>{
+              if (response.data[0].locationDetails.length > 0) {
+                $('.button1').show();
+              }else{
+                 $('.button1').hide();
+              }
               this.setState({'locationarray':response.data[0].locationDetails});
             })
             .catch((error)=>{
@@ -570,75 +576,6 @@ export default class LocationDetails extends Component{
             .catch((error)=>{
                 console.log('error', error);
           })
-    /*var routerIdSupplier  = FlowRouter.getParam("id");
-    var route = routerIdSupplier.split('-');
-    if(/[-]/.test(routerIdSupplier)){
-        var routerId = routerIdSupplier.split('-')[0];
-    }else{
-        var routerId = routerIdSupplier;
-    }
-    // if (route[1]) {
-    //  var routerId = route[0];
-    // }else{
-    //  var routerId = route[0];
-    // }
-    var formValues={
-      'locationType'      : this.state.locationType,
-      'addressLineone'    : this.state.addressLineone,
-      'city'              : this.state.city,
-      'states'            : this.state.states,
-      'area'              : this.state.area,
-      'addressLinetwo'    : this.state.addressLinetwo,
-      'pincode'           : this.state.pincode,
-      'country'           : this.state.country,
-      'indexOneValue'   : this.state.indexOneValue,
-      'uderscoreId'   : this.state.uderscoreId,
-    }
-    Meteor.call('editUpdatelocationDetails',formValues,
-              (error,result)=>{
-                if(error){
-                  // console.log(error.reason);
-                }else{
-                 this.setState({
-                  'locationType'     : '--Select Location Type--',
-              'addressLineone'   : '',
-              'city'             : '-- Select --',
-              'states'           : '-- Select --',
-              'area'             : '',
-              'addressLinetwo'   : '',
-              'pincode'          : '',
-              'country'          : '-- Select --',
-                  indexOneValue         : '',
-                  uderscoreId         : '',
-          'locationTypeDisable'     : false,
-                  'updateButton'        : false,
-
-                 });
-                  // // console.log('in update');
-          $('.button2').attr('disabled',false);
-            $('.button1').attr('disabled',false);
-                  swal({
-                    title:'abc',
-                    text:'Updated added location details.'
-                  });
-
-                  if(location.pathname == '/LocationDetails/'+routerId){
-              FlowRouter.go("/LocationDetails/"+routerId);
-              }else if(location.pathname == '/LocationDetails/'+routerIdSupplier){
-              FlowRouter.go("/LocationDetails/"+routerIdSupplier);
-              }else if(location.pathname == '/LocationDetailsSTL/'+routerId){
-              FlowRouter.go("/LocationDetailsSTL/"+routerId);
-              }else if(location.pathname == '/LocationDetailsSTL/'+routerIdSupplier){
-              FlowRouter.go("/LocationDetailsSTL/"+routerIdSupplier);
-              }else if(location.pathname == '/LocationDetailsSTM/'+routerId){
-              FlowRouter.go("/LocationDetailsSTM/"+routerId);
-              }else if(location.pathname == '/LocationDetailsSTM/'+routerIdSupplier){
-              FlowRouter.go("/LocationDetailsSTM/"+routerIdSupplier);
-              }else{
-              FlowRouter.go("/LocationDetails/"+routerId);
-              }
-                }
-            });*/
   }
   admin(event){
       event.preventDefault();
