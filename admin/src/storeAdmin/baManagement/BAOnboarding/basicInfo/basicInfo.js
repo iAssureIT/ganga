@@ -38,7 +38,8 @@ class BasicInfo extends Component {
       'baId'             : '',
       'updateBasic'      : 0,
       'locationEdit'     : 0,
-      'contactEdit'      : 0 
+      'contactEdit'      : 0,
+      'checkBAExists'    : 0, 
       //'baId'       : '5d4a63f991ccf561c4c683cd'
     };
     
@@ -59,7 +60,6 @@ class BasicInfo extends Component {
               var attachedDocuments = [];
               if (response.data[0].documents.length>0 ) {
 
-                
                 for (var i = 0; i < response.data[0].documents.length; i++) {
                    attachedDocuments.push({name : response.data[0].documents[i]  })
                 }
@@ -184,32 +184,18 @@ class BasicInfo extends Component {
               if (element.attr("name") == "companyname"){
                 error.insertAfter("#basicInfo1");
               }
-              // if (element.attr("name") == "pan"){
-              //   error.insertAfter("#basicInfo2");
-              // }
-              if (element.attr("name") == "tin"){
+              if (element.attr("name") == "emailID"){
+                error.insertAfter("#basicInfo2");
+              }
+              if (element.attr("name") == "MobileNo"){
                 error.insertAfter("#basicInfo3");
               }
-              if (element.attr("name") == "website"){
-                error.insertAfter("#basicInfo4");
+              if (element.attr("name") == "pan"){
+                error.insertAfter("#basicInfo5");
               }
-              // if (element.attr("name") == "gstno"){
-              //   error.insertAfter("#basicInfo5");
-              // }
-              if (element.attr("name") == "category"){
-                error.insertAfter("#basicInfo8");
-              }
-
-              if (element.attr("name") == "coino"){
+              if (element.attr("name") == "gstno"){
                 error.insertAfter("#basicInfo6");
               }
-              if (element.attr("name") == "mfg"){
-                error.insertAfter("#basicInfo7");
-              }
-              // if (element.attr("name") == "LogoImageUp"){
-              //   error.insertAfter("#LogoImageUpOne");
-              // }
-              
             }
       });
     $(document).ready(function(){
@@ -233,12 +219,28 @@ class BasicInfo extends Component {
       event.preventDefault();
       const target = event.target;
       const name = target.name;
-
       this.setState({
           [name]: event.target.value
-      });   
+      });  
   }
-
+  checkBAExists(event){
+    axios.get('/api/businessassociates/get/checkBAExists/'+event.target.value)
+           .then((response)=>{
+                if (response.data.length>0) {
+                  $(".checkBAExistsError").show();
+                  $('.button3').attr('disabled','disabled');
+                  this.setState({checkBAExists: 1})
+                 
+                } else{
+                  $(".checkBAExistsError").hide();
+                  $('.button3').removeAttr('disabled');
+                  this.setState({checkBAExists: 0})
+                }                        
+            })
+           .catch(function(error){
+                console.log(error);
+           })
+  }
   handleOptionChange(event) {
       const target = event.target;
       const name = target.name;
@@ -250,7 +252,7 @@ class BasicInfo extends Component {
   supplier(event){
       event.preventDefault();
       
-      if($('#BasicInfo').valid()){
+      if($('#BasicInfo').valid() && !this.state.checkBAExists){
 
           var userForm = {
             'companyName'      : this.state.companyname,
@@ -722,8 +724,6 @@ class BasicInfo extends Component {
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <form id="BasicInfo">
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                    
-                                    {/*<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">*/}
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <h4 className="MasterBudgetTitle"><i className="fa fa-info-circle " aria-hidden="true"></i> Basic Info</h4>     
                                       </div> 
@@ -735,26 +735,27 @@ class BasicInfo extends Component {
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Company Name <i className="astrick">*</i></label>
                                             <input type="text" id="basicInfo1" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.companyname}  ref="companyname" name="companyname" onChange={this.handleChange} placeholder="Enter company name.." required/>
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left NOpadding-right" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email Id
+                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email Id <i className="astrick">*</i>
                                              <a data-tip data-for='basicInfo4Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo4Tooltip' type='error'>
                                                 <span>Please enter valid Email Id</span>
                                               </ReactTooltip>
                                             </label>
-                                            <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange} required/>
+                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange} onBlur={this.checkBAExists.bind(this)}  required/>
+                                            <p className="checkBAExistsError">Business Associate already exists!</p>
                                           </div>
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Mobile No
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Mobile No <i className="astrick">*</i>
                                              <a data-tip data-for='basicInfo4Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo4Tooltip' type='error'>
                                                 <span>Please enter valid Mobile No</span>
                                               </ReactTooltip>
                                             </label>
-                                            <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
+                                            <input type="text" id="basicInfo3" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 Websiteerror NOpadding-left NOpadding-right" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website
+                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website 
                                              <a data-tip data-for='basicInfo4Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo4Tooltip' type='error'>
                                                 <span>Please enter valid Website(www.abc.xyz).</span>
@@ -762,23 +763,23 @@ class BasicInfo extends Component {
                                             </label>
                                             <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.website} ref="website" name="website" onChange={this.handleChange}/>
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 panerror" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick"></i>
+                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick">*</i>
                                              <a data-tip data-for='basicInfo2Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo2Tooltip' type='error'>
                                                 <span>Please enter valid PAN number (like this ABCDE1234Z).</span>
                                               </ReactTooltip>
                                             </label>
-                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText"  value={this.state.pan} ref="pan" name="pan" onChange={this.handleChange} placeholder="ABCDE1234Z" required/>
+                                            <input type="text" id="basicInfo5" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText"  value={this.state.pan} ref="pan" name="pan" onChange={this.handleChange} placeholder="ABCDE1234Z" required/>
                                         </div>
-                                        <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left NOpadding-right"> 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick"></i>
+                                        <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick">*</i>
                                             <a data-tip data-for='basicInfo5Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo5Tooltip' type='error'>
                                                 <span>Please enter valid GST number(like this 29ABCDE1234F1Z5)</span>
                                               </ReactTooltip>
                                             </label>
-                                            <input type="text" id="basicInfo5" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.gstno} ref="gstno" name="gstno" onChange={this.handleChange} placeholder="29ABCDE1234F2Z5" required/>
+                                            <input type="text" id="basicInfo6" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.gstno} ref="gstno" name="gstno" onChange={this.handleChange} placeholder="29ABCDE1234F2Z5" required/>
                                         </div>
                                         </div>
                                         <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">

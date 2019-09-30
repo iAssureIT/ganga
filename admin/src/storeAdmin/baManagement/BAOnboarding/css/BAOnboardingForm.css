@@ -1,3 +1,7 @@
+.checkBAExistsError{
+  display: none;
+  color: red
+}
 .basic-info-pillss{
   padding: 7px 15px !important;
 }

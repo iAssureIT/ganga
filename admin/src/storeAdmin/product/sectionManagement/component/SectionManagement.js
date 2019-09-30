@@ -27,7 +27,7 @@ class SectionManagement extends Component{
             },
             "tableObjects"              : {
               deleteMethod              : 'delete',
-              apiLink                   : 'http://localhost:5006/api/sections/',
+              apiLink                   : '/api/sections/',
               paginationApply           : true,
               searchApply               : true,
               editUrl                   : '/section-management/'
@@ -96,7 +96,7 @@ class SectionManagement extends Component{
       this.getData(this.state.startRange,this.state.limitRange);
     }
     getDataCount(){
-      axios.get('http://localhost:5006/api/sections/get/count')
+      axios.get('/api/sections/get/count')
       .then((response)=>{
         console.log('dataCount', response.data);
         this.setState({
@@ -108,7 +108,7 @@ class SectionManagement extends Component{
       });
     }
     getData(startRange, limitRange){
-      axios.get('http://localhost:5006/api/sections/get/list-with-limits/'+startRange+'/'+limitRange,)
+      axios.get('/api/sections/get/list-with-limits/'+startRange+'/'+limitRange,)
       .then((response)=>{
         console.log('tableData', response.data);
         this.setState({
@@ -127,7 +127,7 @@ class SectionManagement extends Component{
             "section"                  : this.state.section,
             "createdBy"                : localStorage.getItem("admin_ID")
         }
-        axios.post('http://localhost:5006/api/sections/post', formValues)
+        axios.post('/api/sections/post', formValues)
           .then((response)=>{
             swal({
               text  : response.data.message,
@@ -155,7 +155,7 @@ class SectionManagement extends Component{
           "section"                  : this.state.section,
         }
 
-        axios.patch('http://localhost:5006/api/sections/patch', formValues)
+        axios.patch('/api/sections/patch', formValues)
           .then((response)=>{
             swal({
               text  : response.data.message,
@@ -174,7 +174,7 @@ class SectionManagement extends Component{
       }
     }
     edit(id){
-      axios.get('http://localhost:5006/api/sections/get/one/'+id)
+      axios.get('/api/sections/get/one/'+id)
       .then((response)=>{
         console.log('edit', response.data);
         if(response.data){
