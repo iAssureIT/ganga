@@ -301,16 +301,16 @@ export default class MyOrders extends Component {
                               <td data-th="Date" className="col date"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
                               <td data-th="Ship To" className="col shipping">Ordered: {productData.quantity}</td>
                               <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
-                              {/* data.status == "Paid" ?
+                              { data.status == "Paid" ?
                               <td data-th="Order Total" className="col total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
                               </td>
                               :
                               null
-                            */}
-{                              <td data-th="Order Total" className="col total actbtns">
+                            }
+{/*                              <td data-th="Order Total" className="col total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
-                              </td>}
+                              </td>*/}
                           </tr>
                           );
                       })
