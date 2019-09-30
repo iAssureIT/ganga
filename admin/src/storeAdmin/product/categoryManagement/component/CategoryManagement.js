@@ -484,12 +484,12 @@ class CategoryManagement extends Component{
                     <section className="content">
                       <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                         <div className="row">
-                            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
-                              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 contactdeilsmg pageHeader">
-                                  Category Management                  
-                               </div>
-                              <hr className="hr-head container-fluid row"/>
-                            </div>
+                         <div className="box">
+                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                                <h4 className="NOpadding-right">Category Management </h4>
+                          </div>
+                          </div>
+                          <div className="col-lg-12 col-md-12 marginTopp">
                             <form id="categoryManagement" className="">
                               <div className="col-lg-6">
                                   <div className="col-lg-12">
@@ -565,13 +565,16 @@ class CategoryManagement extends Component{
                               <div className="col-lg-12 NOpadding-right">
                                   <div className="addCategoryNewBtn col-lg-12 NOpadding-right">
                                       <div className="pull-right col-lg-6 NOpadding-right">
-                                          
-                                          <div className=" col-lg-6 col-lg-offset-6">
+                                          {/*<div className=" col-lg-6">
+                                              <div onClick={this.cancelCategoryUpdate.bind(this)} className="edit-cancel-catg btn col-lg-12 col-md-12 col-sm-12 col-xs-12">Cancel</div>
+                                          </div>*/}
+                                          <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
                                             {
                                               this.state.editId ? 
-                                              <button onClick={this.updateCategory.bind(this)} className="submitBtn btn btnSubmit col-lg-12 col-md-12 col-sm-12 col-xs-12">Update</button>
+                                              <button onClick={this.updateCategory.bind(this)} className="submitBtn btn btnSubmit col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right ">Update</button>
                                               :
-                                              <button onClick={this.submitCategory.bind(this)} className="submitBtn btn btnSubmit col-lg-12 col-md-12 col-sm-12 col-xs-12">Submit</button>
+                                              <button onClick={this.submitCategory.bind(this)} className="submitBtn btn btnSubmit col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right">Submit</button>
                                             }
                                           </div>
                                       
@@ -580,6 +583,7 @@ class CategoryManagement extends Component{
                                   
                               </div>
                           </form>
+                          </div>
 
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                               <IAssureTable 

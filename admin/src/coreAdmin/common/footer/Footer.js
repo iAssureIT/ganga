@@ -28,16 +28,16 @@ export default class Footer extends Component{
   render(){
     return(
 
-
-         <footer  className="main-footer">
-        {/* <footer  className={mainfootershow}>*/}
-        <div className="pull-right col-lg-6">
-        </div>
-        <strong>Copyright © 2018 <a href="" className="footclr">Online Abacus</a></strong> All rights
-        reserved.
-        <div className="iAssureITNM col-lg-6 ">
-        <strong>Design & Developed by <a href="http://iassureit.com">iAssure International Technology Pvt Ltd</a></strong>
-        </div>
+        <footer  className="main-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerLeftCss"><span className="footerLeftCss">Copyright © 2019</span> <a href="/" className="footerLeftCss">GangaExpress</a><span className="footclr">&nbsp;&nbsp;All rights
+                    reserved.</span>
+                </div>
+            </div>
+            <div className="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                <p className="pull-right footerRightCss">Version 1.1.4</p>
+                <p className="footerRightCss1">Design & Developed by <a href="http://iassureit.com">iAssure International Technology Pvt Ltd</a>&nbsp;&nbsp;</p>
+            </div>
       </footer>
 
       );
