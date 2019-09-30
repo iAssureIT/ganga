@@ -565,7 +565,8 @@ class ContactDetails extends Component {
                     'MobileNo'             : response.data[0].contactDetails[0].mobileNo,
                     'Email'                : response.data[0].contactDetails[0].email,
                     'altMobileNo'          : response.data[0].contactDetails[0].altMobileno,
-                    'Landing'              : response.data[0].contactDetails[0].officeLandlineNo
+                    'Landing'              : response.data[0].contactDetails[0].officeLandlineNo,
+                    'contactValue'         : response.data[0].contactDetails[0]._id
               })
             })
       /*var levelId     = $(event.currentTarget).attr('id');
