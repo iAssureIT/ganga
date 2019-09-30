@@ -5,20 +5,18 @@
     font-size: 1.1vw;
     font-weight: normal;
     padding-top: 20px;
-    color: #333;
+    color: #333 ;
 }
 .hover:hover{
-    background-color: #039BE5 ;
-    height: 50px;
-    color: #fff;
+/*    background-color: #039BE5 ;
+    height: 50px;*/
+    color: #333;
     
 }
 .usricn{
   padding-left:0px;
 }
-.hover:hover i{
-    color: #fff;
-}
+
 .img{
     position: absolute;
     top: 15px;

@@ -9,6 +9,8 @@ import AddNewTableFeature     from '../addNewTableFeature/addNewTableFeature.js'
 import 'bootstrap/js/tab.js';
 import "./AddNewProduct.css";
 
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 class AddNewShopProduct extends Component{
   constructor(props) {
       super(props);
@@ -193,6 +195,7 @@ class AddNewShopProduct extends Component{
   getWebCategories(){
     axios.get('/api/category/get/list')
     .then((response)=>{
+      console.log('getWebCategories', response)
       var sections = _.pluck(response.data, "section");
       var sectionArray = _.unique(sections);
         this.setState({
@@ -205,6 +208,7 @@ class AddNewShopProduct extends Component{
   }
   showRelevantCategories(event){
     var section = event.target.value;
+    console.log('section', section);
     axios.get('/api/category/get/list/'+section)
     .then((response)=>{
         this.setState({
@@ -255,7 +259,129 @@ class AddNewShopProduct extends Component{
         });
     }
   }
-  
+  addSubCategoryWithProduct(event){
+      event.preventDefault();
+      // const isValidEmail = categoryRef.checkValidity();
+      // console.log('isValidEmail',isValidEmail);
+      // var categoryVal = this.refs.categoryRef.value;
+      // var subcategoryVal = this.refs.modalAddSubCategoryRef.value;
+      // if(categoryVal != '-Select-'){
+      //     if(subcategoryVal){
+      //         if (categoryVal.indexOf("/") >= 0 || subcategoryVal.indexOf("/") >= 0){
+      //             swal({
+      //                 position: 'top-right',
+      //                 type: 'error',
+      //                 title: 'Please remove "/" from subcategory',
+      //                 text: 'Please remove "/" from subcategory',
+      //                 showConfirmButton: false,
+      //                 timer: 1500
+      //             });
+      //         }else{
+      //             var formValues = {
+      //                 "category"          :   categoryVal,
+      //                 "subCategory"       :   subcategoryVal,
+      //             }
+          
+      //             Meteor.call('addNewSubCategory', formValues, (error, result) => {
+      //                 if(error){
+      //                     swal({
+      //                         position: 'top-right',
+      //                         type: 'error',
+      //                         text: 'Sub Category Not Added',
+      //                         title: 'Sub Category Not Added',
+      //                         showConfirmButton: false,
+      //                         timer: 1500
+      //                     });
+      //                 } else {
+      //                     swal({
+      //                         position: 'top-right',
+      //                         type: 'success',
+      //                         text: 'Sub Category Added Successfully',
+      //                         title: 'Sub Category Added Successfully',
+      //                         showConfirmButton: false,
+      //                         timer: 1500
+      //                     });
+      //                     this.refs.modalAddSubCategoryRef.value    = "";
+      //                     $('#openSubCatgModal').modal('hide');
+                          
+      //                 }
+      //             });
+      //         }
+      //     }else{
+      //         this.setState({
+      //             subCatFormErrors : true
+      //         });
+      //     }
+      // }else{
+      //     swal({
+      //         position: 'top-right',
+      //         type: 'error',
+      //         text: 'Please select category value.',
+      //         title: 'Please select category value.',
+      //         showConfirmButton: false,
+      //     });
+      //     $('#openSubCatgModal').modal('hide');
+      // }
+  }
+  addCategoryWithProduct(event){
+      event.preventDefault();
+      // var categoryVal = this.refs.modalCategoryRef.value;
+      // var subcategoryVal = this.refs.modalSubCategoryRef.value;
+      // if(categoryVal){
+      //     if(subcategoryVal){
+      //         if (categoryVal.indexOf("/") >= 0 || subcategoryVal.indexOf("/") >= 0){
+      //             swal({
+      //                 position: 'top-right',
+      //                 type: 'error',
+      //                 text: 'Please remove "/" from category or subcategory',
+      //                 title: 'Please remove "/" from category or subcategory',
+      //                 showConfirmButton: false,
+      //                 timer: 1500
+      //             });
+      //         }else{
+      //             var formValues = {
+      //                 "category"          :   categoryVal,
+      //                 "subCategory"       :   subcategoryVal,
+      //             }
+          
+      //             Meteor.call('addNewCategory', formValues, (error, result) => {
+      //                 if(error){
+      //                     swal({
+      //                         position: 'top-right',
+      //                         type: 'error',
+      //                         text: 'Category Not Added',
+      //                         title: 'Category Not Added',
+      //                         showConfirmButton: false,
+      //                         timer: 1500
+      //                     });
+      //                 } else {
+      //                     swal({
+      //                         position: 'top-right',
+      //                         type: 'success',
+      //                         text: 'Category Added Successfully',
+      //                         title: 'Category Added Successfully',
+      //                         showConfirmButton: false,
+      //                         timer: 1500
+      //                     });
+      //                     this.refs.modalCategoryRef.value    = "";
+      //                     this.refs.modalSubCategoryRef.value = "";
+      //                     $('#openCatgModal').modal('hide');
+                          
+      //                 }
+      //             });            
+      //         }
+      //     }else{
+      //         this.setState({
+      //             subCatError : true
+      //         });
+      //     }
+      // }else{
+      //     this.setState({
+      //         catError : true
+      //     });
+      // }
+      
+  }
   showRelevantSubCategories(event){
     event.preventDefault();
     const target = event.target;
@@ -270,6 +396,7 @@ class AddNewShopProduct extends Component{
   edit(id){
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
+      console.log('edit', response.data);
       this.getCategories();
       this.getSubCategories(response.data.category_ID);
       this.setState({
@@ -286,13 +413,13 @@ class AddNewShopProduct extends Component{
         offeredPrice      : response.data.offeredPrice,
         actualPrice       : response.data.actualPrice,
         offered           : response.data.offered,
-        size              : response.data.size,
-        color             : response.data.color,
         unit              : response.data.unit,
         availableQuantity : response.data.availableQuantity,
         currency          : response.data.currency,
         status            : response.data.status,
       },()=>{
+        console.log('this', this.state);
+        
       })
       
     })
@@ -303,6 +430,7 @@ class AddNewShopProduct extends Component{
   submitProduct(event){
     event.preventDefault();
     var addRowLength = (this.state.addrows).length;
+    // console.log('addRowLength: ', addRowLength);
     if(this.state.productFeatured){
       var productFeatured = this.state.productFeatured;
     }else {
@@ -343,8 +471,6 @@ class AddNewShopProduct extends Component{
       "offeredPrice"      :   this.state.offeredPrice ? this.state.offeredPrice : this.state.actualPrice,
       "availableQuantity" :   this.refs.availableQuantity.value,
       "unit"              :   this.refs.unit.value,
-      "size"              :   this.refs.size.value,
-      "color"             :   this.refs.color.value,
       "offered"           :   this.state.offered,
       "currency"          :   this.refs.currency.value,
       "status"            :   this.refs.status.value,
@@ -352,9 +478,11 @@ class AddNewShopProduct extends Component{
       "exclusive"         :   productExclusive,
       "fileName"          :   "Manual",
     }
+    console.log('formValues', formValues);
     if($('#addNewShopProduct').valid()){
       axios.post('/api/products/post', formValues)
       .then((response)=>{
+        console.log('response', response);
         this.props.history.push('/add-product/image/'+response.data.product_ID);
         swal({
           title : response.data.message,
@@ -368,9 +496,6 @@ class AddNewShopProduct extends Component{
           productCode       : "",
           productName       : "",
           productUrl        : "",
-          unit              : "",
-          size              : "",
-          color             : "",
           productDetails    : "",
           shortDescription  : "",
           actualPrice       : "",
@@ -427,9 +552,6 @@ class AddNewShopProduct extends Component{
       "productCode"       :   this.refs.productCode.value,
       "productName"       :   this.refs.productName.value,
       "productUrl"        :   this.refs.productUrl.value,
-      "unit"              :   this.refs.unit.value,
-      "size"              :   this.refs.size.value,
-      "color"             :   this.refs.color.value,
       "productDetails"    :   this.refs.productDetails.value,
       "shortDescription"  :   this.refs.shortDescription.value,
       "featureList"       :   productDimentionArray,
@@ -458,9 +580,6 @@ class AddNewShopProduct extends Component{
         productCode       : "",
         productName       : "",
         productUrl        : "",
-        unit              : "",
-        size              : "",
-        color             : "",
         productDetails    : "",
         shortDescription  : "",
         offeredPrice      : "",
@@ -555,9 +674,11 @@ class AddNewShopProduct extends Component{
     // event.preventDefault();
     var id = event.target.id;
     var checked = event.target.checked;
+    console.log('id', id, checked);
     this.setState({
       [id] : event.target.checked
     },()=>{
+      console.log('offered', this.state.offered);
       if(this.state.offered == false){
         this.setState({
           offeredPrice : "",
@@ -582,7 +703,7 @@ class AddNewShopProduct extends Component{
                             <form className="newTemplateForm" id="addNewShopProduct">
                               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Section <i className="redFont">*</i></label>
                                       <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
                                         <option disabled selected defaultValue="Select Section">Select Category</option>
@@ -598,7 +719,7 @@ class AddNewShopProduct extends Component{
                                       </select>
                                       
                                   </div>
-                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Category <i className="redFont">*</i></label>
                                     {/*<div className="input-group" id="category">*/}
                                       <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category}  name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
@@ -615,7 +736,7 @@ class AddNewShopProduct extends Component{
                                       </select>
                                       
                                   </div>
-                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                     <label>Sub Category <i className="redFont">*</i></label>
                                     {/*<div className="input-group" id="subCategory">*/}
                                       <select className="form-control allProductSubCategories" aria-describedby="basic-addon1" name="subCategory" id="subCategory"  ref="subCategory" value={this.state.subCategory} onChange={this.handleChange.bind(this)}>
@@ -637,10 +758,7 @@ class AddNewShopProduct extends Component{
                                 </div>
 
                                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                  <div className="formheight col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                    <label>Brand Name <i className="redFont">*</i></label>
-                                    <input value={this.state.brand} name="brand" id="brand"  type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
-                                  </div>
+                                
                                   <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">                                                                        
                                     <label>Product Code <i className="redFont">*</i></label>                                                                        
                                     <input value={this.state.productCode} name="productCode" id="productCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="productCode" onChange={this.handleChange.bind(this)} />
@@ -649,67 +767,71 @@ class AddNewShopProduct extends Component{
                                     <label>Product Name <i className="redFont">*</i></label>                                                                        
                                     <input value={this.state.productName} name="productName" id="productName" onChange={this.createProductUrl.bind(this)} type="text" className="form-control link-subcategory newProductName" placeholder="Product Name" aria-label="Username" aria-describedby="basic-addon1" ref="productName"  />
                                   </div>
-                                </div>
-                                  <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                  <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                     <label>Product URL <i className="redFont">*</i></label>                                                                    
                                     <input value={this.state.productUrl} onChange={this.handleChange.bind(this)} id="productUrl" name="productUrl" type="text" className="form-control link-subcategory newProductName productUrl" placeholder="Product URL" aria-describedby="basic-addon1" ref="productUrl"  />
                                   </div>
-                                  <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                    <label>Unit <i className="redFont">*</i></label>
-                                    <select className="form-control" ref="unit" id="unit" name="unit" value={this.state.unit} onChange={this.handleChange.bind(this)}>
-                                      <option value="Single">Single</option>
-                                      <option value="Dozen">Dozen</option>
-                                      <option value="Kilograms">Kilograms</option>
-                                      <option value="Miligrams">Miligrams</option>
-                                      <option value="Liters">Liters</option>
-                                      <option value="Mililiters">Mililiters</option>
-                                    </select>
-                                  </div>
-                                  <div className="formheightcol-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                    <label>Available Quantity <i className="redFont">*</i></label>
-                                    <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="text" className="form-control availableQuantityNew" placeholder="Available Quantity" aria-describedby="basic-addon1" ref="availableQuantity"  />
-                                  </div>
-                                  </div>
+                                </div>
                                   <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                    <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                      <label>Product Currency <i className="redFont">*</i></label>
-                                      <select className="form-control" ref="currency" id="currency" name="currency" value={this.state.currency} onChange={this.handleChange.bind(this)}>
+                                 
+
+                                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <label>Brand Name <i className="redFont">*</i></label>
+                                    <input value={this.state.brand} name="brand" id="brand"  type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
+                                  </div>
+
+                                    <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
+                                      <label>Quantity <i className="redFont">*</i></label>
+                                      <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="text" className="form-control availableQuantityNew" placeholder="Quantity" aria-describedby="basic-addon1" ref="availableQuantity"  />
+                                    </div>
+                                    <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
+                                      <label>Unit <i className="redFont">*</i></label>
+                                      <select className="form-control selectdropdown " ref="unit" id="unit" name="unit" value={this.state.unit} onChange={this.handleChange.bind(this)}>
+                                        <option value="Single">Single</option>
+                                        <option value="Dozen">Dozen</option>
+                                        <option value="Kilograms">Kilograms</option>
+                                        <option value="Miligrams">Miligrams</option>
+                                        <option value="Liters">Liters</option>
+                                        <option value="Mililiters">Mililiters</option>
+                                      </select>
+                                    </div>
+
+                                    <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
+                                      <label>Original Price <i className="redFont">*</i></label>
+                                      <input onChange={this.handleChange.bind(this)} value={this.state.actualPrice} id="actualPrice" name="actualPrice" type="text" className="form-control actualPrice availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="actualPrice"  />
+                                    </div>
+                                     <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
+                                      <label>Currency <i className="redFont">*</i></label>
+                                      <select className="form-control selectdropdown" ref="currency" id="currency" name="currency" value={this.state.currency} onChange={this.handleChange.bind(this)}>
                                         <option value="inr">INR</option>
                                         <option value="usd">USD</option>
                                         <option value="eur">EUR</option>
                                         <option value="gbp">GBP</option>
                                       </select>
                                     </div>
-                                    <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                      <label>Product Actual Price <i className="redFont">*</i></label>
-                                      <input onChange={this.handleChange.bind(this)} value={this.state.actualPrice} id="actualPrice" name="actualPrice" type="text" className="form-control actualPrice" placeholder="Price" aria-describedby="basic-addon1" ref="actualPrice"  />
-                                    </div>
-                                    <div className="formheight col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                        <label>Offered</label>
-                                        <input type="checkBox" id="offered" checked={this.state.offered}  onChange={this.makeProductOffered.bind(this)}/>
-                                      </div>
-                                      {
-                                        this.state.offered ? 
-                                        <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 add-new-productCol NOpadding">
-                                          <label>Product Offered Price <i className="redFont">*</i></label>
-                                          <input onChange={this.handleChange.bind(this)} value={this.state.offeredPrice} id="offeredPrice" name="offeredPrice" type="text" className="form-control offeredPrice" placeholder="Price" aria-describedby="basic-addon1" ref="offeredPrice"  />
-                                        </div>
-                                        : 
-                                        null
-                                      }
-                                    </div>
                                   </div>
                                   <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                                    <div className=" col-lg-4 col-md-4 col-sm-12 col-xs-12 add-new-productCol">
-                                      <label>Size</label>
-                                      <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control actualPrice" placeholder="Size" aria-describedby="basic-addon1" ref="size"  />
+
+                                    
+
+                       
+                             
+                                    
+                                      
+                                    <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
+                                      <label>Discount Percent (%)<i className="redFont">*</i></label>
+                                      <input onChange={this.handleChange.bind(this)} value={this.state.actualPrice} id="actualPrice" name="actualPrice" type="text" className="form-control actualPrice availableQuantityNew" placeholder="" aria-describedby="basic-addon1" ref="actualPrice"  />
                                     </div>
-                                    <div className=" col-lg-1 col-md-1 col-sm-12 col-xs-12 add-new-productCol">
-                                      <label>Color</label>
-                                      <input onChange={this.handleChange.bind(this)} value={this.state.color} id="color" name="color" type="color" className="form-control actualPrice" placeholder="Color" aria-describedby="basic-addon1" ref="color"  />
-                                    </div>                                  
+                                     <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
+                                      <label>Discount Price <i className="redFont">*</i></label>
+                                      <input onChange={this.handleChange.bind(this)} value={this.state.actualPrice} id="actualPrice" name="actualPrice" type="text" className="form-control actualPrice selectdropdown" placeholder="" aria-describedby="basic-addon1" ref="actualPrice"  />
+                                    </div>
+                                     
+                                       {/* <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 add-new-productCol NOpadding">
+                                          <label>Product Offered Price <i className="redFont">*</i></label>
+                                          <input onChange={this.handleChange.bind(this)} value={this.state.offeredPrice} id="offeredPrice" name="offeredPrice" type="text" className="form-control offeredPrice" placeholder="Price" aria-describedby="basic-addon1" ref="offeredPrice"  />
+                                        </div>*/}
+                                        
                                   </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive">
                                   <table className="add-new-product-table table table-bordered">

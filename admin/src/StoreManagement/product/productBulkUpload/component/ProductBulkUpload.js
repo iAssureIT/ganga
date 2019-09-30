@@ -1,25 +1,7 @@
-// import { Meteor }               from 'meteor/meteor';
-// import { Mongo }                from 'meteor/mongo';
-// import React, { Component }     from 'react';
-// import { render }               from 'react-dom';
-// import TrackerReact             from 'meteor/ultimatejs:tracker-react';
-// import { createContainer }      from 'meteor/react-meteor-data';
-// import Validation               from 'react-validation';
-// import validator                from 'validator';
-// import {Tracker}                from 'meteor/tracker';
-// import { browserHistory }       from 'react-router';
-// import { Session }              from 'meteor/session';
-// import swal                     from 'sweetalert';
-// import { FlowRouter }           from 'meteor/ostrio:flow-router-extra';
-// import {withTracker}            from 'meteor/react-meteor-data';
-// import { ProductShop }          from '/imports/StoreManagement/product/addNewProduct/AddNewDispalyProduct/ProductMaster.js';
-// import { Suppliers }            from '/imports/StoreManagement/SupplierManagement/supplierOnboarding/api/apiSupplierOnboardingForm.js';
-
 import React, { Component }   from 'react';
 import $                      from 'jquery';
 import axios                  from 'axios';
 import ReactTable             from "react-table";
-// import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
 import swal                   from 'sweetalert';
 import XLSX                   from "xlsx";
 import _                      from 'underscore';
@@ -422,7 +404,7 @@ class AddNewBulkProduct extends Component{
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
                 <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
-                    <div className="content">
+                    <div className="content col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">

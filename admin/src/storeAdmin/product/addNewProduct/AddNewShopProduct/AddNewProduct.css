@@ -298,3 +298,22 @@
     padding-left: 0px;
     padding-right: 0px;
 }
+.availableQuantityNew{
+        border-right-width: 0;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.selectdropdown{
+        border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;    
+}
+.paddingRightZeroo{
+    padding-right: 0;
+}
+.paddingLeftZeroo{
+    padding-left: 0;
+}
+/*.input-group-text{
+padding: 0.87rem .85rem !important;
+    border-left-width: 0 !important;
+}*/
