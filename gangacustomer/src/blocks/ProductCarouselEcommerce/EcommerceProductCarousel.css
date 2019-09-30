@@ -430,7 +430,15 @@ background-color: transparent !important;
 .customnNavButtoncaro1{
 
 }
-
+@media screen and (max-width: 480px) {
+   .card{
+    border: 1px solid #f1f2f2;
+    max-width: 270px;
+    margin: 5px;
+    height: 385px;
+    padding: 0px;
+   }   
+}
 
 .card{
     border: 1px solid #f1f2f2;

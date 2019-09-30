@@ -341,8 +341,8 @@ class ProductModalViewEcommerce extends Component {
 												</ul>
 											}
 										</div>			                         
-			                        </div>
-			                    </div>
+			             </div>
+			          </div>
 							</div>
 						</div>
 						<br/>
@@ -373,15 +373,11 @@ class ProductModalViewEcommerce extends Component {
 										</span>
 									</div>	
 								</div>
-								<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 paddingleftzero">
-												
-								</div>   
-		                    </div>
+								<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 paddingleftzero"></div>   
+		          </div>
 						</div>
 					</div>
-					
-                </div>
-
+        </div>
         <div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">

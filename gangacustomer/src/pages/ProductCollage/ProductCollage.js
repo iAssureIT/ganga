@@ -242,42 +242,44 @@ class ProductCollage extends Component {
 		let maxPrice = this.state.price.max;
 		return (
 	      	<div className="container" id="containerDiv">
-	     	<div className="row"> 
+	     	 <div className="row"> 
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
 				    	<li><a href={"/product-collage/"+this.state.categoryDetails._id}>{this.state.categoryDetails && this.state.categoryDetails.category}</a></li>
 				  	</ul>
-				</div>		
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-              		
-              		<div className="nb-brand">
-						<div className="accordion" id="accordionExample">
-						    <div className="card-header" id="headingOne">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" >	
+				</div>	
+               {/*for sm and xs*/}
+                     <div className="hidden-lg menudiv hidden-md col-sm-12 col-xs-12">
+		              <div className="hidden-lg menudiv hidden-md col-sm-6 col-xs-6">
+		               <div className="nb-brand">
+		                  <div className="menubtn  text-center" data-toggle="collapse" data-target="#accordionExample1" >  
+		                    <button className="  btn-link" type="button" >
+		                    Menu 
+		                  </button>
+		                  <span className="expand"><i className="plusSign fa fa-plus"></i></span>
+		                </div>
+						<div className="accordion" id="accordionExample1">
+						   <div className="card-header" id="headingOne">
+						    <div className="pagefilter" data-toggle="collapse" data-target="#collapsetwo" >	
 						        <button className="btn btn-link" type="button" >
 						          CATEGORY 
 						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
+						        <span className="expand"><i className=" plusSign fa fa-plus"></i></span>
 						    </div>
-						    </div>
-
-						    <div id="collapseOne" className="collapse">
+						   </div>
+						    <div id="collapsetwo" className="collapse">
 						      <div className="card-body">
 						      	{
 									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
 									this.state.categoryDetails.subCategory.map((data,index)=>{
-										
 										return(
-												
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
 												<div className="row">
 													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{data.subCategoryTitle}</a>
-												
 												</div>
 											</div>
 										);
-
 									})
 									:
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
@@ -289,17 +291,132 @@ class ProductCollage extends Component {
 						{
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
 						    <div>
-						    
+						     <div className="card-header" id="headingTwo">
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo1" >	
+						        <button className="btn btn-link" type="button" >
+						          COLOR 
+						        </button>
+						        <span className="expand"><i className="plusSign fa fa-plus"></i></span>
+						     </div>
+						    </div>
+						    <div id="collapseTwo1" className="collapse" >
+						      <div className="card-body">
+						      {this.state.colors ? 
+						      	this.state.colors.map((data,index)=>{
+						      		return(
+						      		<a href="#" className="swatch-option-link-layered" onClick={ this.onSelectedItemsChange.bind(this,"color")}>
+                                    	<div className="color-option" data-color={data} style={{backgroundColor:data}} option-tooltip-value={data} ></div>
+                            		</a>);
+						      	})
+						      	
+						      	: ''}	
+						      </div>
+						    </div>
+						    </div>  : ''
+						}
+						{
+						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
+						    <div>
+						    <div className="card-header" id="headingFour">
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour1" >	
+						        <button className="btn btn-link" type="button" >
+						          SIZE
+						        </button>
+						        <span className="expand"><i className="plusSign fa fa-plus"></i></span>
+						      </div>
+						    </div>
+						    <div id="collapseFour1" className="collapse" >
+						      <br/>
+						      <div className="card-body">
+						      <select className="sortProducts">
+						      {this.state.sizes ? 
+						      	this.state.sizes.map((data,index)=>{
+						      		return(<option value={data}>{data}</option>);
+						      	  })
 
-						    <div className="card-header" id="headingTwo">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" >	
+						      	: ''}
+						      	
+                            </select>	
+						      </div>
+						    </div>
+						    </div>  : ''
+						}
+						    <div className="card-header" id="headingThree">
+						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree1">	
+						        <button className="btn btn-link" type="button">
+						          PRICE
+						        </button>
+						        <span className="expand"><i className="plusSign fa fa-plus"></i></span>
+						      </div>
+						    </div>
+						    <div id="collapseThree1" className="collapse" >
+						      <div className="card-body">
+						      	<InputRange
+							        maxValue={1299999}
+							        minValue={10}
+							        value={this.state.price}
+							        onChange={ this.onSelectedItemsChange.bind(this,"price")} />
+							        <input className="input-field min-value" type="text" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
+							        <input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
+						      </div> 
+						    </div>
+						 </div>
+              		</div>
+             </div>
+             <div className="hidden-lg hidden-md col-sm-6 col-xs-6">
+              <div className="menubtn" data-toggle="collapse" data-target="#accordionExample2" >  
+                <button className="pull-right  btn-link" type="button" >
+                Menu1
+                </button>
+              <span className="expand"><i className="plusSign fa fa-plus"></i></span>
+            </div>
+           </div>
+          </div>   
+
+         {/*for lg and md*/}
+			 		
+              <div className="col-lg-3 col-md-3 hidden-sm hidden-xs">
+              		<div className="nb-brand">
+						<div className="accordion" id="accordionExample">
+						   <div className="card-header" id="headingOne">
+						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" >	
+						        <button className="btn btn-link" type="button" >
+						          CATEGORY 
+						        </button>
+						        <span className="expand"><i className="fa fa-plus"></i></span>
+						    </div>
+						   </div>
+						    <div id="collapseOne" className="collapse">
+						      <div className="card-body">
+						      	{
+									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
+									this.state.categoryDetails.subCategory.map((data,index)=>{
+										return(
+											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
+												<div className="row">
+													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{data.subCategoryTitle}</a>
+												</div>
+											</div>
+										);
+									})
+									:
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
+									<h5>No data Found</h5>
+									</div>
+								}
+						      </div>
+						    </div>
+						{
+						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
+						    <div>
+						     <div className="card-header" id="headingTwo">
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" >	
 						        <button className="btn btn-link" type="button" >
 						          COLOR 
 						        </button>
 						        <span className="expand"><i className="fa fa-plus"></i></span>
+						     </div>
 						    </div>
-						    </div>
-
 						    <div id="collapseTwo" className="collapse" >
 						      <div className="card-body">
 						      {this.state.colors ? 
@@ -310,9 +427,7 @@ class ProductCollage extends Component {
                             		</a>);
 						      	})
 						      	
-						      	: ''}
-						      	
-                            	
+						      	: ''}	
 						      </div>
 						    </div>
 						    </div>  : ''
@@ -335,8 +450,8 @@ class ProductCollage extends Component {
 						      {this.state.sizes ? 
 						      	this.state.sizes.map((data,index)=>{
 						      		return(<option value={data}>{data}</option>);
-						      	})
-						      	
+						      	  })
+
 						      	: ''}
 						      	
                             </select>	
@@ -364,13 +479,10 @@ class ProductCollage extends Component {
 						      </div> 
 						    </div>
 						 </div>
-						
-
               		</div>
               		<br/>
  					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nb-brand">
-					<div className="Featured-Brands-tittle">Featured Brands</div>
-						
+					 <div className="Featured-Brands-tittle">Featured Brands</div>	
 						{/*<ul className="Featured-Brands">
 																
 							<li className="Featured-Brands-li">
@@ -387,32 +499,27 @@ class ProductCollage extends Component {
 						</ul>*/}
 						<br/>
 						{ this.state.brands && this.state.brands.length > 0 ? 
-										this.state.brands.map((data,index)=>{
-											
-											return(
-											<div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 " key={index}>
-												<div>
-														<div className="centreDetailContainerEcommerce col-lg-1 row">
-														<input type="checkbox" name="brands[]" onChange={this.onSelectedItemsChange.bind(this,"brands")} value={data}/>
-														<span className="centreDetailCheckEcommerce"></span>
-														</div>
-													<span className="centreDetaillistItemEcommerce">{data}</span>
-												</div>
-											</div>
-											);
-										})
-										: ''
-
-									}
-						
+							this.state.brands.map((data,index)=>{											
+								return(
+								<div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 " key={index}>
+									<div>
+									 <div className="centreDetailContainerEcommerce col-lg-1 row">
+									 <input type="checkbox" name="brands[]" onChange={this.onSelectedItemsChange.bind(this,"brands")} value={data}/>
+									 <span className="centreDetailCheckEcommerce"></span>
+									</div>
+										<span className="centreDetaillistItemEcommerce">{data}</span>
+									</div>
+								</div>
+								);
+							})
+							: ''
+						}
 					</div>
               </div>
-              <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9" id="productDiv">
-
+              <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12" id="productDiv">
 				<br/>
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
-				    	
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
 				    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails}/>
 				     	</div>
@@ -420,11 +527,9 @@ class ProductCollage extends Component {
 				    <div id="categories" className="tab-pane fade">
 				    	Categories 
 				    </div>
-				    
 				  </div>
-              	
               </div>
-            </div>
+             </div>
 	     	</div>
 	    )
 	}

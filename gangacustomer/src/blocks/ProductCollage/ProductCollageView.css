@@ -199,6 +199,42 @@
 	color: #fbbb65;
 	text-transform: uppercase;
 }
+.actionsmobview{
+	left: 0;
+	bottom: 0;
+	text-align: center;
+	width: 104px;
+	padding-left: 0;
+	padding-right: 0;
+	border-radius: 20px;
+	font-size: 11px;
+	padding: 6px 0 5px;
+	border: 1px solid #fbbb65 !important;
+	background: #fff;
+	color: #fbbb65;
+	text-transform: uppercase;
+}
+
+
+
+/*@media screen and (max-width: 480px) {
+  .actions button{
+	left: 0;
+	bottom: 0;
+	text-align: center;
+	width: 104px;
+	padding-left: 0;
+	padding-right: 0;
+	border-radius: 20px;
+	font-size: 11px;
+	padding: 6px 0 5px;
+	border: 1px solid #fbbb65 !important;
+	background: #fff;
+	color: #fbbb65;
+	text-transform: uppercase;
+}
+}
+*/
 
 
 

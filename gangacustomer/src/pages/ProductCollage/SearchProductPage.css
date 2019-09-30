@@ -1,4 +1,23 @@
+.menubtn{
+  border-radius: 25px;
+  background-color: #eee !important;
+  color: #333;
+  margin-top: 20px;
 
+}
+.menudiv{
+  z-index:1;
+  position:absolute;
+}
+.plusSign{
+  margin-right: 24px;
+  margin-top: 10px;
+}
+.menubtn1{
+  margin-top: 20px;
+  border-radius: 25px;
+
+}
 .links{
 	padding: 0;
 }
