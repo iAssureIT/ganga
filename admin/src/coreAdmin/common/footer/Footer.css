@@ -1,0 +1,31 @@
+.footclr{
+	color: #333;
+    font-family:'Relay-Regular';
+	/*z-index: 999;*/
+}
+.footerCSS{
+	/*margin-top: 48%;*/
+    z-index: 999;
+}
+.footerRightCss {
+	color: #333;
+     font-family:'Relay-Regular';
+    font-size: 13px;
+    margin-top: 5px;
+}
+.footerRightCss1 {
+    color: #333;
+     font-family:'Relay-Regular';
+    font-size: 13px;
+    margin-top: 5px;
+}
+.footerLeftCss a{
+	 font-family:'Relay-Regular';
+    font-size: 13px;
+}
+.footerLeftCss{
+	color: #333;
+    font-family:'Relay-Regular';
+    font-size: 13px;
+    margin-top: 3px;
+}

@@ -538,14 +538,11 @@ class BasicInfo extends Component {
   render() {
     
       return (
-        <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="row">
                   <section className="content">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
-                      <div className="row">
-                        <div className="">
-
-                        <div className="">
+                    <div className="pageContent">
+                      
                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
                             <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Vendor Management</h4>
                             <div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
@@ -834,10 +831,6 @@ class BasicInfo extends Component {
                           </section>
                           
                         </div>
-
-                    </div>
-                  </div>
-                </div>
               </section>
           
               </div> 

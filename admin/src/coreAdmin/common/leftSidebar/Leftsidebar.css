@@ -125,6 +125,10 @@ i, span {
 #sidebar ul.components {
     padding: 0px 0;
     border-bottom: 1px solid #333;
+    overflow-y: scroll;
+    height: 1000px;
+    
+    /*min-height: 1000px;*/
 }
 
 #sidebar ul li a {
@@ -388,7 +392,7 @@ a.article, a.article:hover {
     /*text-align: center;*/
     margin: 0px;
     background: #fff;
-    padding: 15px;
+    padding-top: 10px;
     color: #444;
     border-top: 1px solid #d2d6de;
   }
