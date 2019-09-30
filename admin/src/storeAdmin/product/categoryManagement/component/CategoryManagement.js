@@ -473,25 +473,7 @@ class CategoryManagement extends Component{
             })
         }
     }
-    categoryDeleteEvent(event){
-        // event.preventDefault();
-
-        // var id = event.target.id;
-        // Meteor.call('categoryDeleteEvent', id, (error, result)=>{
-        //     if(error){
-        //         console.log(error);
-        //     }else{
-        //         swal({
-        //             position: 'top-right',
-        //             type: 'error',
-        //             text: result,
-        //             title: 'Category deleted successfully.',
-        //             showConfirmButton: false,
-        //             // timer: 1500
-        //         });
-        //     }
-        // });
-    }
+    
     render(){
        console.log("s3url------------->",this.state.categoryImage);
       // console.log('categoryImage', this.state.categoryImage);
@@ -513,6 +495,7 @@ class CategoryManagement extends Component{
                                   <div className="col-lg-12">
                                       <label>Section <i className="redFont">*</i></label>
                                       <select onChange={this.sectionChange.bind(this)} value={this.state.section+'|'+this.state.section_ID}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
+                                      <option value="select">Select</option>
                                         {
                                           this.state.sectionsList && this.state.sectionsList.length>0 ?
                                           this.state.sectionsList.map((data, index)=>{
