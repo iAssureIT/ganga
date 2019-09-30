@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios                  from 'axios';
 import $                  from 'jquery';
-import swal                   from 'sweetalert';
 import './MyOrders.css';
 import {Route, withRouter} from 'react-router-dom';
 import Sidebar from '../../common/Sidebar/Sidebar.js';

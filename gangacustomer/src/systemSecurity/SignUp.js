@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {browserHistory} from 'react-router';
-import swal from 'sweetalert';
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
@@ -95,28 +94,29 @@ class SignUp extends Component {
                 	axios.post('/api/users',auth)
 			            .then((response)=> {
 			                console.log("-------userData------>>",response.data.user_id);
-		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
+		            		// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
 			                this.props.history.push("/confirm-otp/"+response.data.user_id);
 			                
 			            })
 			            .catch(function (error) {
 			                console.log(error);
-        					swal("Unable to submit data.");
+        					// swal("Unable to submit data.");
 			            })
                 	)
                 :
 	                (
-		                document.getElementById("signUpBtn").value = 'Sign Up',
-		                swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
+		                document.getElementById("signUpBtn").value = 'Sign Up'
+		                // swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
 	                )
+
                 
             } else {
                 document.getElementById("signUpBtn").value = 'Sign Up';
-		        return swal("Passwords does not match","Please Try Again")
+		        // return swal("Passwords does not match","Please Try Again")
             }
             }else{
                 document.getElementById("signUpBtn").value = 'Sign Up';
-				swal("Please enter mandatory fields", "", "warning");
+				// swal("Please enter mandatory fields", "", "warning");
 				console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
         

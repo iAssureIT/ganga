@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 */import $         from 'jquery';
 import OwlCarousel     from 'react-owl-carousel';
 import axios                from 'axios';
-import swal from 'sweetalert';
 import "./EcommerceProductCarousel.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';  
@@ -53,10 +52,10 @@ class EcommerceProductCarousel extends Component {
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
             // console.log('response', response);
-          swal(response.data.message)
-            .then((obj)=>{
-                  window.location.reload();
-            });
+          // swal(response.data.message)
+          //   .then((obj)=>{
+          //         window.location.reload();
+          //   });
 
           })
           .catch((error)=>{
@@ -84,8 +83,8 @@ class EcommerceProductCarousel extends Component {
           axios.post('/api/wishlist/post', formValues)
           .then((response)=>{
             // console.log('response', response);
-            swal(response.data.message)
-              window.location.reload();
+            // swal(response.data.message)
+            //   window.location.reload();
           })
           .catch((error)=>{
             console.log('error', error);

@@ -3,7 +3,6 @@ import $ 				                  from 'jquery';
 import jQuery                     from 'jquery';
 import Loadable                   from 'react-loadable';
 import axios                      from 'axios';
-import swal                       from 'sweetalert';
 import { connect }                from 'react-redux';
 import "./EcommerceProductCarousel.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -55,16 +54,16 @@ class EcommerceProductCarousel extends Component {
 
   componentDidMount() {
 
-      const second = 1000,
-      minute = second * 60,
-      hour = minute * 60,
-      day = hour * 24;
+    //   const second = 1000,
+    //   minute = second * 60,
+    //   hour = minute * 60,
+    //   day = hour * 24;
 
-    let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
-    x = setInterval(function() {
+    // let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
+    // x = setInterval(function() {
 
-      let now = new Date().getTime(),
-          distance = countDown - now;
+    //   let now = new Date().getTime(),
+    //       distance = countDown - now;
 
         // document.getElementById('days').innerText = Math.floor(distance / (day));
         // document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
@@ -77,7 +76,7 @@ class EcommerceProductCarousel extends Component {
       //  'IT'S MY BIRTHDAY!;
       //}
 
-    }, second)
+    // }, second)
   }  
   getCartData(){
         // const userid = '5d5bfb3154b8276f2a4d22bf';
@@ -122,7 +121,7 @@ class EcommerceProductCarousel extends Component {
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
             this.getCartData();  
-            swal(response.data.message);
+            // swal(response.data.message);
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -134,18 +133,18 @@ class EcommerceProductCarousel extends Component {
       })
     }
     else{
-      swal({
-          title: "Need to Sign In",
-          text: "Please Sign In First",
-          icon: "warning",
-          buttons: ["No Thanks", "Sign In"],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            window.location = "/login";
-          } 
-      });
+      // swal({
+      //     title: "Need to Sign In",
+      //     text: "Please Sign In First",
+      //     icon: "warning",
+      //     buttons: ["No Thanks", "Sign In"],
+      //     dangerMode: true,
+      //   })
+      //   .then((willDelete) => {
+      //     if (willDelete) {
+      //       window.location = "/login";
+      //     } 
+      // });
     }
   }
   componentWillReceiveProps(nextProps){
@@ -168,7 +167,7 @@ class EcommerceProductCarousel extends Component {
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
       
-      swal(response.data.message);
+      // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
     .catch((error)=>{
@@ -176,18 +175,18 @@ class EcommerceProductCarousel extends Component {
     })
      }
       else{
-      swal({
-          title: "Need to Sign In",
-          text: "Please Sign In First",
-          icon: "warning",
-          buttons: ["No Thanks", "Sign In"],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            window.location = "/login";
-          } 
-      });
+      // swal({
+      //     title: "Need to Sign In",
+      //     text: "Please Sign In First",
+      //     icon: "warning",
+      //     buttons: ["No Thanks", "Sign In"],
+      //     dangerMode: true,
+      //   })
+      //   .then((willDelete) => {
+      //     if (willDelete) {
+      //       window.location = "/login";
+      //     } 
+      // });
     }
   }
   getCategoryID(event){
@@ -218,13 +217,13 @@ class EcommerceProductCarousel extends Component {
                       </h3>
                     </div>
                     <div className="col-lg-5 producttimer producttimerposition1">
-                      <ul>
+{/*                      <ul>
                         <li><div className="producttimerdiv"><span id="days"></span>/D</div></li>
                         <li><div className="producttimerdiv"><span id="hours"></span>/H</div></li>
                         <li><div className="producttimerdiv"><span id="minutes"></span>/M</div></li>
                         <li><div className="producttimerdiv"><span id="seconds"></span>/S</div></li>
                       </ul>                    
-                    </div>
+*/}                    </div>
                     <div className="col-lg-5 producttimer producttimerposition">
                         <OwlCarousel
                             className="owl-theme customnNavButtoncaro1"

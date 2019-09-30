@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal                 from 'sweetalert';
 import $                    from 'jquery';
 import axios                from 'axios';
 import jQuery               from 'jquery';
@@ -366,7 +365,7 @@ class Checkout extends Component{
         }
         axios.patch("/api/carts/remove" ,formValues)
         .then((response)=>{
-            swal(response.data.message);
+            // swal(response.data.message);
             this.getCartData();   
             this.getCompanyDetails();
             this.getCartTotal();
@@ -778,7 +777,7 @@ class Checkout extends Component{
                                             
                                                         
                                             var userId  = localStorage.getItem('user_ID');
-                                            swal('Order Placed Successfully');   
+                                            // swal('Order Placed Successfully');   
                                             
                                             this.props.history.push('/payment/'+result.data.order_ID);
                                              	
@@ -826,7 +825,7 @@ class Checkout extends Component{
             
             axios.patch('/api/users/patch/address', addressValues)
             .then((response)=>{
-                swal(response.data.message);
+                // swal(response.data.message);
                 this.getUserAddress();
                 $(".checkoutAddressModal").hide();
                 $(".modal-backdrop").hide();

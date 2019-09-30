@@ -12,7 +12,6 @@ import Megamenu         from '../Megamenu/Megamenu.js';
 import axios                    from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import { connect }        from 'react-redux';
-import swal from 'sweetalert';
 
 class Header extends Component {
 constructor(props){
@@ -251,10 +250,10 @@ searchProducts(){
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
             console.log('removed');
-            swal(response.data.message)           
-             .then((obj)=>{
-                  window.location.reload();
-             });
+            // swal(response.data.message)           
+             // .then((obj)=>{
+             //      window.location.reload();
+             // });
 
             this.getCartData();   
             this.getCompanyDetails();
@@ -273,7 +272,7 @@ searchProducts(){
 
     axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
-      swal(response.data.message) 
+      // swal(response.data.message) 
       jQuery("#customercareModal").modal("hide");
 
       })

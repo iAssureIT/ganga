@@ -1,8 +1,6 @@
 import React, { Component }     from 'react';
-import $              from 'jquery';
 import {Route, withRouter} from 'react-router-dom';
 import axios                  from 'axios';
-import swal from 'sweetalert';
 import "./ProductViewEcommerceDetailsReviewFAQ.css";
 import _                      from 'underscore';
 import moment                 from "moment";

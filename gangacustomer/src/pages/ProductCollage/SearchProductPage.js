@@ -5,7 +5,6 @@ import $                    		from 'jquery';
 import InputRange 					from 'react-input-range';
 import  'react-input-range/lib/css/index.css';
 import axios 						from 'axios';
-import swal                       from 'sweetalert';
 import { connect }        from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
 

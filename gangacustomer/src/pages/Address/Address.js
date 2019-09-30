@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
 import $ from 'jquery';
 import axios from 'axios';
 import SmallBanner from '../../blocks/SmallBanner/SmallBanner.js';
@@ -92,7 +91,7 @@ class Address extends Component {
             console.log('form deliveryAddressID', formValues);
             axios.patch('/api/users/useraddress', formValues)
             .then((response)=>{
-                swal(response.data);
+                // swal(response.data);
             })
             .catch((error)=>{
                 console.log('error', error)
@@ -101,7 +100,7 @@ class Address extends Component {
             console.log('form', formValues);
             axios.patch('/api/users/patch/address', formValues)
             .then((response)=>{
-                swal(response.data.message);
+                // swal(response.data.message);
             })
             .catch((error)=>{
                 console.log('error', error)

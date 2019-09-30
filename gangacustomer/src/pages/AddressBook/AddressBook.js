@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
 import $                    from 'jquery';
 import axios                from 'axios';
 import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
@@ -70,7 +69,7 @@ class AddressBook extends Component{
         .then((response)=>{
             console.log('response', response);
             this.getUserAddresses();
-            swal(response.data.message);
+            // swal(response.data.message);
         })
         .catch((error)=>{
             console.log('error', error);

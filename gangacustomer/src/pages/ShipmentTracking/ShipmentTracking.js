@@ -3,7 +3,6 @@ import $ from 'jquery';
 import axios from 'axios';
 import moment from "moment";
 // import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
-import swal from 'sweetalert';
 import './ShipmentTracking.css';
 
 axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';

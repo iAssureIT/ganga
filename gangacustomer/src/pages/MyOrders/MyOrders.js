@@ -4,7 +4,6 @@ import $                  from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
-import swal                   from 'sweetalert';
 import './MyOrders.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import moment                 from "moment";
@@ -80,7 +79,7 @@ export default class MyOrders extends Component {
 
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
-               swal(response.data.message);    
+               // swal(response.data.message);    
             })
             .catch((error)=>{
             })
@@ -140,23 +139,23 @@ export default class MyOrders extends Component {
        axios.patch('/api/orders/get/returnOrder', formValues)
                         .then((response)=>{
                            this.getMyOrders();
-                            swal({
-                                    title: "Order is returned",
-                                    icon: "info", 
-                                    buttons: ["View Return Policy","Close"],
-                                    focusConfirm: false,
-                                    showCloseButton: true
-                                  })
-                            .then((inputValue) => {
-                              if (inputValue != true) {
-                                window.location = '/returnpolicy';
-                              }
+                            // swal({
+                            //         title: "Order is returned",
+                            //         icon: "info", 
+                            //         buttons: ["View Return Policy","Close"],
+                            //         focusConfirm: false,
+                            //         showCloseButton: true
+                            //       })
+                            // .then((inputValue) => {
+                            //   if (inputValue != true) {
+                            //     window.location = '/returnpolicy';
+                            //   }
                               })
                              
                         .catch((error)=>{
                           console.log('error', error);
                         })
-                      })
+                      // })
 
     }
     cancelProduct(event){
@@ -199,15 +198,15 @@ export default class MyOrders extends Component {
                           const el = document.createElement('div')
                       el.innerHTML = "<a href='/CancellationPolicy' style='color:blue !important'>View Cancellation Policy</a>"
                       
-                          swal({
-                            html:true,
-                            text: "Your order is cancelled. Refund will be made as per Cancellation Policy.",
-                            content: el,
-                            icon: "info",
-                            button: "Close",
-                            focusConfirm: false,
-                            showCloseButton: true
-                          });
+                          // swal({
+                          //   html:true,
+                          //   text: "Your order is cancelled. Refund will be made as per Cancellation Policy.",
+                          //   content: el,
+                          //   icon: "info",
+                          //   button: "Close",
+                          //   focusConfirm: false,
+                          //   showCloseButton: true
+                          // });
                         })
                         .catch((error)=>{
                           console.log('error', error);

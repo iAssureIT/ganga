@@ -2,7 +2,6 @@ import React, { Component }     from 'react';
 import $              from 'jquery';
 import {Route, withRouter} from 'react-router-dom';
 import axios                  from 'axios';
-import swal from 'sweetalert';
 import "./ProductViewEcommerceBestSellers.css";
 import _                      from 'underscore';
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -106,7 +105,7 @@ class ProductViewEcommerceBestSellers extends Component {
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
             
-          swal(response.data.message);
+          // swal(response.data.message);
           this.props.changeCartCount(response.data.cartCount);
           })
           .catch((error)=>{
@@ -131,7 +130,7 @@ class ProductViewEcommerceBestSellers extends Component {
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
       
-      swal(response.data.message);
+      // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
     .catch((error)=>{

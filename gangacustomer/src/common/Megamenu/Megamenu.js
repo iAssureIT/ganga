@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import swal                       from 'sweetalert';
 import './Megamenu.css';
 
 import $ from "jquery";
@@ -53,7 +52,7 @@ addtocart(event){
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
               
-            swal(response.data.message);
+            // swal(response.data.message);
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{

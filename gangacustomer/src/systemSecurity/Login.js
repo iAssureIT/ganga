@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link} from 'react-router-dom';
 // import {browserHistory} from 'react-router-dom';
 import { Redirect } from 'react-router';
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import $ from "jquery";
 
 import 'font-awesome/css/font-awesome.min.css';
@@ -48,7 +48,7 @@ class Login extends Component {
         console.log("localStorage =",localStorage.getItem('user_ID'));
         
         if(localStorage==null){
-          swal("Invalid Email or Password","Please Enter valid email and password");
+          // swal("Invalid Email or Password","Please Enter valid email and password");
         }else{
           this.setState({
               loggedIn  :   true
@@ -60,24 +60,24 @@ class Login extends Component {
 
       }else{
 
-            swal({
-                title: "Need to Verify OTP",
-                text: "Please Verify Your OPT First",
-                icon: "warning",
-                buttons: ["No Thanks", "Verfy OTP"],
-                dangerMode: true,
-              })
-              .then((willDelete) => {
-                if (willDelete) {
-                  window.location = "/confirm-otp/"+response.data.user_ID;
-                } 
-            });
+            // swal({
+            //     title: "Need to Verify OTP",
+            //     text: "Please Verify Your OPT First",
+            //     icon: "warning",
+            //     buttons: ["No Thanks", "Verfy OTP"],
+            //     dangerMode: true,
+            //   })
+            //   .then((willDelete) => {
+            //     if (willDelete) {
+            //       window.location = "/confirm-otp/"+response.data.user_ID;
+            //     } 
+            // });
           }
       })
       .catch((error)=> {
           console.log('error==========  ', error);
         if(localStorage!==null){
-          swal(error.message);
+          // swal(error.message);
         }
         
       });

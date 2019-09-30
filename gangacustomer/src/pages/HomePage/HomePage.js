@@ -7,6 +7,7 @@ import ShopByCategoriesEcommerce  from "../../blocks/ShopByCategories/ShopByCate
 import ProductDivider             from "../../blocks/ProductDivider/ProductDivider.js";
 import SaleProductDivider         from "../../blocks/ProductDivider/SaleProductDivider.js"
 import ProductCollageView         from "../../blocks/ProductCollage/ProductCollageView.js"
+import Pagealert                  from "../../common/Pagealert/Pagealert.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
 axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
@@ -130,6 +131,7 @@ class HomePage extends Component {
 					<div className="row">
 					 
 						<EcommerceBanner/>
+            <Pagealert />
             </div>
             <div className="homeRow">
             { /*new product */}

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
 import $                    from 'jquery';
 import axios                from 'axios';
 

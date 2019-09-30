@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import InputMask from 'react-input-mask';
 import axios   from 'axios';
-import swal      from 'sweetalert';
 import "./Edituser.css";
 import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
@@ -44,10 +43,10 @@ class Edituser extends Component{
                         profileImage = objTitle ;
                         
                     }else{          
-                        swal("Images not uploaded","Something went wrong","error");  
+                        // swal("Images not uploaded","Something went wrong","error");  
                     }//file
                 }else{ 
-                    swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                    // swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
                 }//file types
             }//file
         // }//for 
@@ -129,10 +128,10 @@ class Edituser extends Component{
     
         axios.patch('/api/users/useraddress/'+userid, formvalues)
         .then((response)=> {    
-          swal({
-            title:"User updated successfully",
-            text:"User updated successfully",
-          });   
+          // swal({
+          //   title:"User updated successfully",
+          //   text:"User updated successfully",
+          // });   
         })
         .catch(function (error) {
           console.log('error============',error);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import $ from "jquery";
 import axios from 'axios';
 
@@ -29,7 +29,7 @@ import './SignUp.css';
       console.log('formValues', formValues);
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
-        swal(response.data.message);
+        // swal(response.data.message);
         this.props.history.push('/login');
       })
       .catch((error)=>{
@@ -59,7 +59,7 @@ import './SignUp.css';
           axios.get('/api/users/resendotp/'+userid)
           .then((response)=>{
             // console.log('response', response);
-            swal(response.data.message)
+            // swal(response.data.message)
           })
           .catch((error)=>{
             console.log('error', error);

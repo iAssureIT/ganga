@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
 import $                    from 'jquery';
 import axios                from 'axios';
 import {Route, withRouter} from 'react-router-dom';
@@ -99,10 +98,10 @@ class CartProducts extends Component{
 
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
-            swal(response.data.message)           
-             .then((obj)=>{
-                this.props.fetchCartData();
-             });
+            // swal(response.data.message)           
+            //  .then((obj)=>{
+            //     this.props.fetchCartData();
+            //  });
 
 
             this.getCompanyDetails();

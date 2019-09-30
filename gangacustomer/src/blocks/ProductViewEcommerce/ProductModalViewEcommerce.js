@@ -2,7 +2,7 @@ import React, { Component } 		from 'react';
 import $ 				 			from 'jquery';
 import {Route, withRouter} from 'react-router-dom';
 import axios                  from 'axios';
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import "./ProductViewEcommerce.css";
 import _                      from 'underscore';
 import { connect }                from 'react-redux';
@@ -130,7 +130,7 @@ class ProductModalViewEcommerce extends Component {
           .then((response)=>{
             // console.log('response', response);
           this.getCartData();  
-          swal(response.data.message)
+          // swal(response.data.message)
           this.props.changeCartCount(response.data.cartCount);
 
           })
@@ -142,18 +142,18 @@ class ProductModalViewEcommerce extends Component {
       console.log('error', error);
     })
     }else{
-      swal({
-          title: "Need to Sign In",
-          text: "Please Sign In First",
-          icon: "warning",
-          buttons: ["No Thanks", "Sign In"],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            window.location = "/login";
-          } 
-      });
+      // swal({
+      //     title: "Need to Sign In",
+      //     text: "Please Sign In First",
+      //     icon: "warning",
+      //     buttons: ["No Thanks", "Sign In"],
+      //     dangerMode: true,
+      //   })
+      //   .then((willDelete) => {
+      //     if (willDelete) {
+      //       window.location = "/login";
+      //     } 
+      // });
     }
   }
    addtowishlist(event){
@@ -174,7 +174,7 @@ class ProductModalViewEcommerce extends Component {
 	          axios.post('/api/wishlist/post', formValues)
 	          .then((response)=>{
 	            // console.log('response', response);
-	            swal(response.data.message)
+	            // swal(response.data.message)
 	            window.location.reload();
 	          })
 	          .catch((error)=>{
@@ -185,18 +185,18 @@ class ProductModalViewEcommerce extends Component {
 	      console.log('error', error);
 	    })
     }else{
-      swal({
-          title: "Need to Sign In",
-          text: "Please Sign In First",
-          icon: "warning",
-          buttons: ["No Thanks", "Sign In"],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            window.location = "/login";
-          } 
-      });
+      // swal({
+      //     title: "Need to Sign In",
+      //     text: "Please Sign In First",
+      //     icon: "warning",
+      //     buttons: ["No Thanks", "Sign In"],
+      //     dangerMode: true,
+      //   })
+      //   .then((willDelete) => {
+      //     if (willDelete) {
+      //       window.location = "/login";
+      //     } 
+      // });
     }
     
   }

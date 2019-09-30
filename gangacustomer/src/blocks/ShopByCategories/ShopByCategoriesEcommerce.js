@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "./ShopByCategoriesEcommerce.css";
 import $ 				 from 'jquery';
 import axios                from 'axios';
-import swal from 'sweetalert';
 import { connect }        from 'react-redux';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -41,7 +40,7 @@ class ShopByCategoriesEcommerce extends Component {
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
             
-		  swal(response.data.message);
+		  // swal(response.data.message);
 		  this.props.changeCart(response.data.cartCount);
 
           })
@@ -70,7 +69,7 @@ class ShopByCategoriesEcommerce extends Component {
           axios.post('/api/wishlist/post', formValues)
           .then((response)=>{
             
-			swal(response.data.message);
+			// swal(response.data.message);
 			this.props.changeWishlistCount(response.data.wishlistCount);
           })
           .catch((error)=>{

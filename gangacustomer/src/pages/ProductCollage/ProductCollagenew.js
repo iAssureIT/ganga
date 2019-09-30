@@ -5,7 +5,6 @@ import $                    		from 'jquery';
 import InputRange 					from 'react-input-range';
 import  'react-input-range/lib/css/index.css';
 import axios 						from 'axios';
-import swal                       from 'sweetalert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/collapse.js';

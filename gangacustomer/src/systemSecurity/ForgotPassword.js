@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import swal from 'sweetalert';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import axios from 'axios';
@@ -29,7 +28,7 @@ class ForgotPassword extends Component {
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{
                 console.log('res', response);
-                swal(response.data.message);
+                // swal(response.data.message);
             })
             .catch((error)=>{
                 console.log('error', error);

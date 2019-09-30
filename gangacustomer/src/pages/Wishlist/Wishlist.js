@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import axios              from 'axios';
 import $                  from 'jquery';
 import { connect }        from 'react-redux';
-import swal               from 'sweetalert';
 import SmallBanner        from '../../blocks/SmallBanner/SmallBanner.js';
 import './Wishlist.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
@@ -112,7 +111,7 @@ class Wishlist extends Component {
           .then((response)=>{
             console.log('response', response.data);
             this.props.changeCartCount(response.data.cartCount);
-            swal(response.data.message)
+            // swal(response.data.message)
             axios.delete('/api/wishlist/delete/'+wishlist_ID)
             .then((response)=>{
               this.setState({
@@ -147,7 +146,7 @@ class Wishlist extends Component {
               products : []
             })
             this.getData();
-            swal(response.data.message);
+            // swal(response.data.message);
             
             
           })

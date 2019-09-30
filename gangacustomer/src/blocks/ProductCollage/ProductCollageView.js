@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "./ProductCollageView.css";
 import axios                      from 'axios';
 import { connect }                from 'react-redux';
-import swal                       from 'sweetalert';
 import ProductDetailsHomeView from "../../pages/ProductDetailsEcommerce/ProductDetailsHomeView.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
@@ -77,7 +76,7 @@ class ProductCollageView extends Component {
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
             this.getCartData();  
-            swal(response.data.message);
+            // swal(response.data.message);
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -88,18 +87,18 @@ class ProductCollageView extends Component {
         console.log('error', error);
       })
         }else{
-      swal({
-          title: "Need to Sign In",
-          text: "Please Sign In First",
-          icon: "warning",
-          buttons: ["No Thanks", "Sign In"],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            window.location = "/login";
-          } 
-      });
+      // swal({
+      //     title: "Need to Sign In",
+      //     text: "Please Sign In First",
+      //     icon: "warning",
+      //     buttons: ["No Thanks", "Sign In"],
+      //     dangerMode: true,
+      //   })
+      //   .then((willDelete) => {
+      //     if (willDelete) {
+      //       window.location = "/login";
+      //     } 
+      // });
     }
    }
     addtowishlist(event){
@@ -119,7 +118,7 @@ class ProductCollageView extends Component {
             axios.post('/api/wishlist/post', formValues)
             .then((response)=>{
               // console.log('response', response);
-              swal(response.data.message)
+              // swal(response.data.message)
               
             })
             .catch((error)=>{
@@ -130,18 +129,18 @@ class ProductCollageView extends Component {
         console.log('error', error);
       })
     }else{
-      swal({
-          title: "Need to Sign In",
-          text: "Please Sign In First",
-          icon: "warning",
-          buttons: ["No Thanks", "Sign In"],
-          dangerMode: true,
-        })
-        .then((willDelete) => {
-          if (willDelete) {
-            window.location = "/login";
-          } 
-      });
+      // swal({
+      //     title: "Need to Sign In",
+      //     text: "Please Sign In First",
+      //     icon: "warning",
+      //     buttons: ["No Thanks", "Sign In"],
+      //     dangerMode: true,
+      //   })
+      //   .then((willDelete) => {
+      //     if (willDelete) {
+      //       window.location = "/login";
+      //     } 
+      // });
     }
     
   
