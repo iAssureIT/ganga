@@ -122,7 +122,7 @@ class AddNewShopProduct extends Component {
         },
         originalPrice: {
           required: true,
-          regxPrice: /^[0-9 ]*$/,
+          // regxPrice: /^[0-9 ]*$/,
         },
         availableQuantity: {
           required: true,
@@ -189,7 +189,6 @@ class AddNewShopProduct extends Component {
     });
     this.getSectionData();
   }
-
   getSectionData() {
     axios.get('/api/sections/get/list')
       .then((response) => {
@@ -244,7 +243,6 @@ class AddNewShopProduct extends Component {
         console.log('error', error);
       })
   }
-
   addNewRow(event) {
     event.preventDefault();
     var newArr = this.state.addrows;
@@ -515,8 +513,8 @@ class AddNewShopProduct extends Component {
     this.setState({
       [event.target.name] : event.target.value
     })
-    var originalPrice = parseInt(this.refs.originalPrice.value);
-    var discountedPrice = parseInt((originalPrice * event.target.value)/100);
+    var originalPrice = parseFloat(this.refs.originalPrice.value);
+    var discountedPrice = parseFloat((originalPrice * event.target.value)/100);
     this.setState({
       discountedPrice : discountedPrice
     })
@@ -526,11 +524,30 @@ class AddNewShopProduct extends Component {
     this.setState({
       [event.target.name] : event.target.value
     })
-    var originalPrice = parseInt(this.refs.originalPrice.value);
-    var discountPercent = parseInt((event.target.value/originalPrice )*100);
+    var originalPrice = parseFloat(this.refs.originalPrice.value).toFixed(2);
+    var discountPercent = parseFloat((event.target.value/originalPrice )*100).toFixed(2);
     this.setState({
       discountPercent : discountPercent
     })
+  }
+  percentAndPrice(event){
+    event.preventDefault();
+    this.setState({
+      [event.target.name] : event.target.value
+    });
+    var discountPercent =  parseFloat(this.refs.discountPercent.value);
+    var discountedPrice = parseFloat(this.refs.discountedPrice.value);
+
+    if(discountPercent){
+      this.setState({
+        discountedPrice : parseFloat((event.target.value * discountPercent)/100).toFixed(2)
+      });
+    }
+    if(discountedPrice){
+      this.setState({
+        discountPercent : parseFloat((discountedPrice/event.target.value )*100).toFixed(2)
+      });
+    }
   }
   render() {
     return (
@@ -640,7 +657,7 @@ class AddNewShopProduct extends Component {
 
                   <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
                     <label>Original Price <i className="redFont">*</i></label>
-                    <input onChange={this.handleChange.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="text" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
+                    <input onChange={this.percentAndPrice.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="text" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
                   </div>
                   <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
                     <label>Currency <i className="redFont">*</i></label>
@@ -735,7 +752,6 @@ class AddNewShopProduct extends Component {
           </div>
         </div>
       </section>
-
     );
   }
 }
