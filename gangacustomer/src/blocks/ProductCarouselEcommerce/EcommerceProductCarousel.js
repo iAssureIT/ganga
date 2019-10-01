@@ -1,5 +1,6 @@
 import React, { Component }       from 'react';
 import $ 				                  from 'jquery';
+import Noty                       from 'noty';
 import jQuery                     from 'jquery';
 import Loadable                   from 'react-loadable';
 import axios                      from 'axios';
@@ -11,6 +12,8 @@ import ProductDetailsHomeView from "../../pages/ProductDetailsEcommerce/ProductD
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+
 
 const OwlCarousel = Loadable({
   loader: () => import('react-owl-carousel'),
@@ -53,7 +56,7 @@ class EcommerceProductCarousel extends Component {
   } 
 
   componentDidMount() {
-
+    
     //   const second = 1000,
     //   minute = second * 60,
     //   hour = minute * 60,
@@ -121,7 +124,7 @@ class EcommerceProductCarousel extends Component {
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
             this.getCartData();  
-            // swal(response.data.message);
+            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -133,6 +136,8 @@ class EcommerceProductCarousel extends Component {
       })
     }
     else{
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+
       // swal({
       //     title: "Need to Sign In",
       //     text: "Please Sign In First",
@@ -147,6 +152,7 @@ class EcommerceProductCarousel extends Component {
       // });
     }
   }
+
   componentWillReceiveProps(nextProps){
     this.setState({
       newProducts : nextProps.newProducts,
@@ -166,7 +172,8 @@ class EcommerceProductCarousel extends Component {
     }
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
-      
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+      ToastsStore.info(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
       // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
@@ -175,6 +182,7 @@ class EcommerceProductCarousel extends Component {
     })
      }
       else{
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
       // swal({
       //     title: "Need to Sign In",
       //     text: "Please Sign In First",
@@ -201,6 +209,14 @@ class EcommerceProductCarousel extends Component {
       modalIDNew : {productID:modalID, productType: this.state.productType}
     })
   }
+  Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+
+  }
   render() {
   	// console.log('newProducts Product', this.state.newProducts);
   	  	  const token = localStorage.getItem("user_ID") ;
@@ -209,6 +225,9 @@ class EcommerceProductCarousel extends Component {
 
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
 						<div className="row">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
   						  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading text-center">
                     <div className="producttextclass  col-lg-2">

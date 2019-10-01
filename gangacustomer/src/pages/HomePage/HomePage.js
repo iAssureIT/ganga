@@ -1,7 +1,7 @@
 import React, { Component } 		  from 'react';
 import $                          from 'jquery';
 import EcommerceProductCarousel 	from "../../blocks/ProductCarouselEcommerce/EcommerceProductCarousel.js";
-import Ecommercenewproductcaro   from "../../blocks/ProductCarouselEcommerce/Ecommercenewproductcaro.js";
+import Ecommercenewproductcaro    from "../../blocks/ProductCarouselEcommerce/Ecommercenewproductcaro.js";
 import EcommerceBanner 				    from "../../blocks/Banner/EcommerceBanner.js";
 import ShopByCategoriesEcommerce  from "../../blocks/ShopByCategories/ShopByCategoriesEcommerce.js";
 import ProductDivider             from "../../blocks/ProductDivider/ProductDivider.js";
@@ -131,8 +131,7 @@ class HomePage extends Component {
 					<div className="row">
 					 
 						<EcommerceBanner/>
-            <Pagealert />
-            </div>
+              </div>
             <div className="homeRow">
             { /*new product */}
 						<EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
