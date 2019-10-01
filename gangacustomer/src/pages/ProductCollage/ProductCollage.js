@@ -21,6 +21,7 @@ class ProductCollage extends Component {
 	    	categoryDetails:[],
 	    	masterproducts:[],
 	    	products:[],
+	    	sectionID:'',
 	    	categoryID:'',
 			subcategoryID:'',
       		activePage: 1,
@@ -30,36 +31,46 @@ class ProductCollage extends Component {
       		sizes : [],
       		colors: [],
       		color: '',
-      		size : ''
+      		size : '',
+      		selector:{}
+      		//selector:{sectionID: this.props.match.params.sectionID, categoryID:'',subcategoryID:'',brands:[], size:'',color:'',price: { min: 10, max: 129999 } }
 	    };
 	    this.handlePriceChange = this.handlePriceChange.bind(this);  
   	}
 
   	componentDidMount() {
-  		
 
   		$('div[data-toggle="collapse"]').click(function () {
-  			console.log($(this));
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
-
   		});
-  		this.getCategoryDetails(this.props.match.params.categoryID);
-  		this.getProductsByCategory(this.props.match.params.categoryID);
+  		this.getSectionDetails(this.props.match.params.sectionID);
+  		// this.getCategoryDetails(this.props.match.params.categoryID);
+  		this.getProductsBySection(this.props.match.params.sectionID);
   		this.getBrands();
   		this.getSize();
   		this.getColor();
-  		this.getPriceLimits();
+  		// this.getPriceLimits();
 
-  $('.dropdown-submenu a.test').on("click", function(e){
-    $(this).next('ul').toggle();
-    e.stopPropagation();
-    e.preventDefault();
-  });
-
-
+		$('.dropdown-submenu a.test').on("click", function(e){
+		    $(this).next('ul').toggle();
+		    e.stopPropagation();
+		    e.preventDefault();
+		});
+  	}
+  	getSectionDetails(sectionID){
+  		axios.get("http://localhost:5006/api/category/get/"+sectionID)
+	      .then((response)=>{ 
+	          this.setState({
+	              categoryDetails : response.data
+	          })
+	          
+	      })
+	      .catch((error)=>{
+	            console.log('error', error);
+	      })
   	}
   	getCategoryDetails(categoryID){
-		axios.get("/api/category/get/one/"+categoryID)
+		axios.get("http://localhost:5006/api/category/get/one/"+categoryID)
 	      .then((response)=>{ 
 	          this.setState({
 	              categoryDetails : response.data
@@ -71,7 +82,7 @@ class ProductCollage extends Component {
 	      })
 	}
 	getPriceLimits(){
-		axios.get("/api/products/get/minmaxprice")
+		axios.get("http://localhost:5006/api/products/get/minmaxprice")
 	      .then((response)=>{ 
 	      		
 
@@ -85,8 +96,8 @@ class ProductCollage extends Component {
 	            console.log('error', error);
 	      })
 	}
-	getProductsByCategory(categoryID){
-		axios.get("/api/products/get/list/"+categoryID)
+	getProductsBySection(sectionID){
+		axios.get("http://localhost:5006/api/products/get/list/"+sectionID)
 	      .then((response)=>{ 
 	          this.setState({
 	              products 		 : response.data,
@@ -101,40 +112,180 @@ class ProductCollage extends Component {
 	}
 	onSelectedItemsChange(filterType, selecteditems){
 		
-		if (filterType == 'subcategory') {
-			this.setState({subcategoryID : $(selecteditems.target).data().id},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
+		var checkboxes = document.getElementsByName('brands[]');
+		var brands = [];
+		for (var i=0, n=checkboxes.length;i<n;i++) 
+		{
+		    if (checkboxes[i].checked) 
+		    {
+		    	brands.push(checkboxes[i].value);
+		    }
+		}
+		if (filterType == 'category') {
+			var selector=this.state.selector;
+			selector.section_ID = this.props.match.params.sectionID;
+			selector.price = this.state.price;
+			selector.category_ID = $(selecteditems.target).data().id;
+
+			this.setState({	selector: selector },()=>{
+					this.getFilteredProducts(this.state.selector);
+				}) 
 			
+			/*this.setState(
+				{	selector:
+					{ 
+						sectionID 		: this.props.match.params.sectionID,
+						categoryID 		: $(selecteditems.target).data().id,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price		
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				} 			
+				);*/
+		}
+		if (filterType == 'subcategory') {
+			var selector=this.state.selector;
+			selector.section_ID = this.props.match.params.sectionID;
+			selector.price = this.state.price;
+			selector.subCategory_ID = $(selecteditems.target).data().id;
+			
+			this.setState({	selector: selector },()=>{
+				this.getFilteredProducts(this.state.selector);
+			}) 
+			/*this.setState(
+				{	selector:
+					{ 
+						sectionID 		: this.props.match.params.sectionID,
+						categoryID 		: this.state.selector.categoryID,
+						subcategoryID   : $(selecteditems.target).data().id,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price		
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				} 			
+				);*/
 		}
 		if (filterType == 'brands') {
-			var checkboxes = document.getElementsByName('brands[]');
-			var brands = [];
-			for (var i=0, n=checkboxes.length;i<n;i++) 
-			{
-			    if (checkboxes[i].checked) 
-			    {
-			    	brands.push(checkboxes[i].value);
-			    }
-			}
-			this.setState({selectedbrands : brands},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
+			var selector=this.state.selector;
+			selector.section_ID = this.props.match.params.sectionID;
+			selector.price = this.state.price;
+			selector.brands = brands;
+			
+			this.setState({	selector: selector },()=>{
+				this.getFilteredProducts(this.state.selector);
+			})
+			/*this.setState(
+				{	selector:
+					{ 
+						sectionID 		: this.props.match.params.sectionID,
+						categoryID 		: this.state.selector.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price		
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});*/
 		}
 		if (filterType == 'price') {
 			var minPrice = selecteditems.min;
 			var maxPrice = selecteditems.max;
-			this.setState({price: {min: minPrice, max: maxPrice } }, ()=>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
-		}
-		
-		if (filterType == 'color') {
-			this.setState({color : $(selecteditems.currentTarget).find('.color-option').data('color')},() =>{
-				this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price,this.state.color,this.state.size);
-			});
+
+			var selector=this.state.selector;
+			selector.section_ID = this.props.match.params.sectionID;
 			
-		}	
+			this.setState({price: {min: minPrice, max: maxPrice } }, ()=>{
+				selector.price = this.state.price;
+				this.setState({	selector: selector },()=>{
+					this.getFilteredProducts(this.state.selector);
+				})
+			});
+
+			
+
+			// this.setState(
+			// 	{	selector:
+			// 		{ 
+			// 			sectionID 		: this.props.match.params.sectionID,
+			// 			categoryID 		: this.state.selector.categoryID,
+			// 			subcategoryID   : this.state.selector.subcategoryID,
+			// 			brands 			: brands,
+			// 			size 			: this.state.selector.size,	
+			// 			color 			: this.state.selector.color,
+			// 			price 			: { min: minPrice, max: maxPrice } 	
+			// 		}
+			// 	},()=>{
+			// 		this.getFilteredProducts(this.state.selector);
+			// 	});
+		}
+		if (filterType == 'color') {
+			var selector=this.state.selector;
+			selector.section_ID = this.props.match.params.sectionID;
+			selector.price = this.state.price;
+			selector.color = $(selecteditems.currentTarget).find('.color-option').data('color');
+			this.setState({	selector: selector },()=>{
+				this.getFilteredProducts(this.state.selector);
+			})
+			/*this.setState(
+				{	selector:
+					{ 
+						sectionID 		: this.props.match.params.sectionID,
+						categoryID 		: this.state.selector.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: this.state.selector.size,	
+						color 			: $(selecteditems.currentTarget).find('.color-option').data('color'),
+						price 			: this.state.selector.price	 	
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});*/
+		}
+		if (filterType == 'size') {
+			var selector=this.state.selector;
+			selector.section_ID 	= this.props.match.params.sectionID;
+			selector.brands 	= brands;
+			selector.price 		= this.state.price;
+
+			this.setState({	selector: selector },()=>{
+				this.getFilteredProducts(this.state.selector);
+			})
+			/*this.setState(
+				{	selector:
+					{ 
+						sectionID 		: this.props.match.params.sectionID,
+						categoryID 		: this.state.selector.categoryID,
+						subcategoryID   : this.state.selector.subcategoryID,
+						brands 			: brands,
+						size 			: $(selecteditems.currentTarget).val(),	
+						color 			: this.state.selector.color,
+						price 			: this.state.selector.price	
+					}
+				},()=>{
+					this.getFilteredProducts(this.state.selector);
+				});*/
+		}
+	}
+	getFilteredProducts(selector){
+		console.log(selector);
+		
+		axios.post("http://localhost:5006/api/products/post/list/filterProducts/",selector)
+
+	      	.then((response)=>{ 
+	      		this.setState({products :response.data});
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
 	}
 	filterProducts(subcategoryID,selectedbrands,price,color,size){
 		console.log('masterproducts',this.state.masterproducts);
@@ -185,7 +336,7 @@ class ProductCollage extends Component {
 		}
 	}
 	getBrands(){
-		axios.get("/api/products/get/listBrand/"+this.props.match.params.categoryID)
+		axios.get("http://localhost:5006/api/products/get/listBrand/"+this.props.match.params.sectionID)
 
 	      	.then((response)=>{ 
 	      	
@@ -198,7 +349,7 @@ class ProductCollage extends Component {
 	      	})
 	}
 	getSize(){
-		axios.get("/api/products/get/listSize/"+this.props.match.params.categoryID)
+		axios.get("http://localhost:5006/api/products/get/listSize/"+this.props.match.params.sectionID)
 
 	      	.then((response)=>{ 
 	      	
@@ -211,7 +362,7 @@ class ProductCollage extends Component {
 	      	})
 	}
 	getColor(){
-		axios.get("/api/products/get/listColor/"+this.props.match.params.categoryID)
+		axios.get("http://localhost:5006/api/products/get/listColor/"+this.props.match.params.sectionID)
 
 	      	.then((response)=>{ 
 	      	
@@ -245,8 +396,8 @@ class ProductCollage extends Component {
 	}
 	
   	render() {
-		//console.log('pricemin,',this.state.price.min);
-		//console.log('pricemax,',this.state.price.max);
+		console.log('categoryDetails,',this.state.categoryDetails);
+
 		let minPrice = this.state.price.min;
 		let maxPrice = this.state.price.max;
 		return (
@@ -255,38 +406,29 @@ class ProductCollage extends Component {
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
-				    	<li><a href={"/product-collage/"+this.state.categoryDetails._id}>{this.state.categoryDetails && this.state.categoryDetails.category}</a></li>
+				    	{
+				    	/*<li><a href={"/product-collage/"+this.state.categoryDetails._id}>{this.state.categoryDetails && this.state.categoryDetails.category}</a></li>*/
+				  		}
 				  	</ul>
 				</div>	
                {/*for sm and xs*/}
 
                   <div className="hidden-lg hidden-md col-sm-12 col-xs-12 menudiv1">
                     <div className="hidden-lg menudiv hidden-md col-sm-4 col-xs-4">
-                      <div class="dropdown">
-					    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
-					    <span class="caret"></span></button>
-					    <ul class="dropdown-menu">
-					     
-
-					     {/* <li class="dropdown-submenu">
-					        <a class="test" tabindex="-1" href="#">CATEGORY 1 <span class="caret"></span></a>
-					        <ul class="dropdown-menu">
-					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-					        </ul>
-					      </li>*/}
-
-					      <li class="dropdown-submenu">
-					        <a class="test" tabindex="-2" href="#">CATEGORY<span class="caret"></span></a>
-					        <ul class="dropdown-menu">
-
+                      <div className="dropdown">
+					    <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
+					    <span className="caret"></span></button>
+					    <ul className="dropdown-menu">
+					      <li className="dropdown-submenu">
+					        <a className="test" tabindex="-2" href="#">CATEGORY<span className="caret"></span></a>
+					        <ul className="dropdown-menu">
 					        {
-									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
-									this.state.categoryDetails.subCategory.map((data,index)=>{
+									this.state.categoryDetails.length > 0  ?
+									this.state.categoryDetails.map((data,index)=>{
 										return(
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
 												<li>
-													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{data.subCategoryTitle}</a>
+													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'category')} style={{fontWeight:"100!important"}}>{data.category}</a>
 												</li>
 											</div>
 										);
@@ -296,16 +438,15 @@ class ProductCollage extends Component {
 									<li>No data Found</li>
 									</div>
 							}
-
 					        
 					        </ul>
 					      </li>
 
 					      {
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-					       <li class="dropdown-submenu">
-					        <a class="test" tabindex="-1" href="#">COLOR <span class="caret"></span></a>
-					        <ul class="dropdown-menu">
+					       <li className="dropdown-submenu">
+					        <a className="test" tabindex="-1" href="#">COLOR <span className="caret"></span></a>
+					        <ul className="dropdown-menu">
 
 					          {this.state.colors ? 
 						      	this.state.colors.map((data,index)=>{
@@ -332,9 +473,9 @@ class ProductCollage extends Component {
 						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
 						    
 
-					       <li class="dropdown-submenu">
-					        <a class="test" tabindex="-1" href="#">SIZE <span class="caret"></span></a>
-					        <ul class="dropdown-menu">
+					       <li className="dropdown-submenu">
+					        <a className="test" tabindex="-1" href="#">SIZE <span className="caret"></span></a>
+					        <ul className="dropdown-menu">
 					         <select className="sortProducts">
 					          {this.state.sizes ? 
 						      	this.state.sizes.map((data,index)=>{
@@ -358,13 +499,13 @@ class ProductCollage extends Component {
 					  </div>		
 			          </div> 
 			           <div className="hidden-lg  hidden-md col-sm-4 col-xs-4 pull-right">
-			            <div class="dropdown">
-			              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu1
-						   <span class="caret"></span></button>
-						    <ul class="dropdown-menu">
-						     <li class="dropdown-submenu">
-						        <a class="test" tabindex="-2" href="#">Featured Brands<span class="caret"></span></a>
-						        <ul class="dropdown-menu">
+			            <div className="dropdown">
+			              <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu1
+						   <span className="caret"></span></button>
+						    <ul className="dropdown-menu">
+						     <li className="dropdown-submenu">
+						        <a className="test" tabindex="-2" href="#">Featured Brands<span className="caret"></span></a>
+						        <ul className="dropdown-menu">
 
 						        { this.state.brands && this.state.brands.length > 0 ? 
 								this.state.brands.map((data,index)=>{											
@@ -406,27 +547,37 @@ class ProductCollage extends Component {
 						    <div id="collapseOne" className="collapse">
 						      <div className="card-body">
 						      	{
-									this.state.categoryDetails && this.state.categoryDetails.subCategory !== undefined ?
-									this.state.categoryDetails.subCategory.map((data,index)=>{
+									this.state.categoryDetails.length > 0  ?
+									this.state.categoryDetails.map((data,index)=>{
 										return(
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
-												<div className="row">
-													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{data.subCategoryTitle}</a>
-												</div>
+												<li>
+													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'category')} style={{fontWeight:"100!important"}}>{data.category}</a>
+													<ul>
+														{
+															data.subCategory.map((subcat,subind)=>{
+																return(
+																	<li>
+																	<a href="#productDiv" className="subcategory" data-id={subcat._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{subcat.subCategoryTitle}</a>
+																	</li>
+																);	
+															})
+														}
+														
+													</ul>
+												</li>
 											</div>
 										);
 									})
 									:
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-									<h5>No data Found</h5>
+									<li>No data Found</li>
 									</div>
 								}
 						      </div>
 						    </div>
-						{
-						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-						    <div>
-						     <div className="card-header" id="headingTwo">
+						
+						    <div className="card-header" id="headingTwo">
 						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" >	
 						        <button className="btn btn-link" type="button" >
 						          COLOR 
@@ -447,11 +598,8 @@ class ProductCollage extends Component {
 						      	: ''}	
 						      </div>
 						    </div>
-						    </div>  : ''
-						}
-						{
-						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-						    <div>
+						
+						
 						    <div className="card-header" id="headingFour">
 						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour" >	
 						        <button className="btn btn-link" type="button" >
@@ -463,19 +611,18 @@ class ProductCollage extends Component {
 						    <div id="collapseFour" className="collapse" >
 						      <br/>
 						      <div className="card-body">
-						      <select className="sortProducts">
-						      {this.state.sizes ? 
-						      	this.state.sizes.map((data,index)=>{
-						      		return(<option value={data}>{data}</option>);
-						      	  })
+							    <select className="sortProducts" onClick={ this.onSelectedItemsChange.bind(this,"size")}>
+							      {this.state.sizes ? 
+							      	this.state.sizes.map((data,index)=>{
+							      		return(<option value={data}>{data}</option>);
+							      	  })
 
-						      	: ''}
-						      	
-                            </select>	
+							      	: ''}
+							      	
+	                            </select>	
 						      </div>
 						    </div>
-						    </div>  : ''
-						}
+
 						    <div className="card-header" id="headingThree">
 						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree">	
 						        <button className="btn btn-link" type="button">

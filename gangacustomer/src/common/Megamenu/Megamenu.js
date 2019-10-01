@@ -15,8 +15,9 @@ constructor(props) {
     }
 
 componentDidMount(){
-  axios.get("/api/products/get/getmegamenulist")
+  axios.get("/api/sections/get/get_megamenu_list")
             .then((response)=>{
+             
               this.setState({ 
                   categoryData : response.data
               })
@@ -28,7 +29,7 @@ componentDidMount(){
 addtocart(event){
       event.preventDefault();
       var id = event.target.id;
-      console.log('id', id);
+     
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
         var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
@@ -80,132 +81,37 @@ componentWillMount() {}
               <a><span>Home</span></a>      
             </li> 
             
-            <li className="top-level-link">
-              <a className="mega-menu"><span>Products</span></a>
-              <div className="sub-menu-block">
-                <div className="row">
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Clothing</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>New Born</a></li>
-                      <li><a>View All</a></li>
-                    </ul>           
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Handbags</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Wallets</a></li>
-                      <li><a>Athletic bag</a></li>
-                      <li><a>Backpack</a></li>
-                      <li><a>Bucket Bag</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="top-level-link">
-              <a className="mega-menu"><span>About</span></a>
-              <div className="sub-menu-block">
-                <div className="row">
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Clothing</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>New Born</a></li>
-                      <li><a>View All</a></li>
-                    </ul>           
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Handbags</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Wallets</a></li>
-                      <li><a>Athletic bag</a></li>
-                      <li><a>Backpack</a></li>
-                      <li><a>Bucket Bag</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                  <div className="col-md-2 col-lg-2 col-sm-2">
-                    <h2 className="sub-menu-head">Shoes</h2>
-                    <ul className="sub-menu-lists">
-                      <li><a>Mens</a></li>
-                      <li><a>Womens</a></li>
-                      <li><a>Kids</a></li>
-                      <li><a>View All</a></li>
-                    </ul>
-                  </div>
-                </div>                
-              </div>
-            </li>
+            {
+              this.state.categoryData && this.state.categoryData.map((data,index)=>{
+                  return(
+                    <li className="top-level-link">
+                      <a className="mega-menu" href={"/section/"+data._id}><span>{data.section}</span></a>
+                      <div className="sub-menu-block">
+                        <div className="row">
+                          {
+                            data.categorylist.map((cateoryDetails,catindex)=>{
+                              return(
+                                  <div className="col-md-2 col-lg-2 col-sm-2">
+                                    <h2 className="sub-menu-head">{cateoryDetails.category}</h2>
+                                    <ul className="sub-menu-lists">
+                                      {
+                                        cateoryDetails.subCategory.map((subCat,subindex)=>{
+                                          return(
+                                              <li><a>{subCat.subCategoryTitle}</a></li>
+                                            );
+                                        })
+                                      }
+                                    </ul>           
+                                  </div>
+                                );
+                            })
+                          }
+                        </div>
+                      </div>
+                    </li>
+                    );
+              })
+            }
           </ul> 
         </nav>
     </header>  

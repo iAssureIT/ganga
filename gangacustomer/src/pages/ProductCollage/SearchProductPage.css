@@ -110,7 +110,7 @@
 }
 .card-body a{
   display: inline-block;
-  margin: 10px;
+  margin: 5px;
 } 
 .subcategory{
   color: #333;
@@ -259,4 +259,7 @@
   font-size: 20px;
   margin: 5px;
   cursor: pointer;
+}
+li{
+  list-style: none
 }

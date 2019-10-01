@@ -186,7 +186,7 @@ class AddNewShopProduct extends Component {
     this.getSectionData();
   }
   getSectionData() {
-    axios.get('/api/sections/get/list')
+    axios.get('http://localhost:5006/api/sections/get/list')
       .then((response) => {
         console.log('getWebCategories', response.data);
         this.setState({
@@ -199,14 +199,12 @@ class AddNewShopProduct extends Component {
   }
   showRelevantCategories(event) {
     var section = event.target.value;
-    console.log('section', section);
     this.setState({
       section: event.target.value.split('|')[0],
       section_ID: event.target.value.split('|')[1],
     })
-    axios.get('/api/category/get/list/' + event.target.value.split('|')[0])
+    axios.get('http://localhost:5006/api/category/get/list/' + event.target.value.split('|')[0])
       .then((response) => {
-        console.log('res', response.data);
         this.setState({
           categoryArray: response.data,
           category: "Select Category",
@@ -218,7 +216,7 @@ class AddNewShopProduct extends Component {
       })
   }
   getCategories() {
-    axios.get('/api/category/get/list')
+    axios.get('http://localhost:5006/api/category/get/list')
       .then((response) => {
         this.setState({
           categoryArray: response.data
@@ -229,7 +227,7 @@ class AddNewShopProduct extends Component {
       })
   }
   getSubCategories(categoryID) {
-    axios.get('/api/category/get/one/' + categoryID)
+    axios.get('http://localhost:5006/api/category/get/one/' + categoryID)
       .then((response) => {
         this.setState({
           subcategoryArray: response.data.subCategory,
@@ -262,7 +260,7 @@ class AddNewShopProduct extends Component {
     this.getSubCategories(categoryID);
   }
   edit(id) {
-    axios.get('/api/products/get/one/' + id)
+    axios.get('http://localhost:5006/api/products/get/one/' + id)
       .then((response) => {
         console.log('edit', response.data);
         this.getCategories();
@@ -356,7 +354,7 @@ class AddNewShopProduct extends Component {
     }
     console.log('formValues', formValues);
     if ($('#addNewShopProduct').valid()) {
-      axios.post('/api/products/post', formValues)
+      axios.post('http://localhost:5006/api/products/post', formValues)
         .then((response) => {
           console.log('response', response);
           this.props.history.push('/add-product/image/' + response.data.product_ID);
@@ -447,7 +445,7 @@ class AddNewShopProduct extends Component {
       "exclusive": productExclusive,
     }
 
-    axios.patch('/api/products/patch', formValues)
+    axios.patch('http://localhost:5006/api/products/patch', formValues)
       .then((response) => {
 
         swal({

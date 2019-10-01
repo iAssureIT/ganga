@@ -29,7 +29,6 @@ class ProductCollageView extends Component {
 
   	}
     componentWillReceiveProps(nextProps){
-  		//console.log('nextProps11',nextProps.products); 
 	    this.setState({
         products : nextProps.products,
         masterLimitProducts : nextProps.products,
@@ -58,7 +57,7 @@ class ProductCollageView extends Component {
       var id = event.target.id;
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
-        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+        var totalForQantity   =   parseInt(1 * response.data.discountedPrice);
             const userid = localStorage.getItem('user_ID');           
             const formValues = { 
                 "user_ID"    : userid,
@@ -70,8 +69,8 @@ class ProductCollageView extends Component {
                 "subCategory" : response.data.subCategory,
                 "productImage" : response.data.productImage,
                 "quantity" : 1  ,
-                "offeredPrice" : parseInt(response.data.offeredPrice),
-                "actualPrice" : parseInt(response.data.actualPrice),
+                "discountedPrice" : parseInt(response.data.discountedPrice),
+                "originalPrice" : parseInt(response.data.originalPrice),
                 "totalForQantity" : totalForQantity,
                 
             }
@@ -149,13 +148,13 @@ class ProductCollageView extends Component {
         
       }
       if(sortBy == "priceAsc"){
-        let field='offeredPrice';
+        let field='discountedPrice';
         this.setState({
           products: this.state.products.sort((a, b) => a[field] - b[field])
         });
       }
       if(sortBy == "priceDsc"){
-        let field='offeredPrice';
+        let field='discountedPrice';
         this.setState({
           products: this.state.products.sort((a, b) => b[field] - a[field])
         });
@@ -191,7 +190,7 @@ class ProductCollageView extends Component {
       })
     }
   render() {
-  	//console.log('products',this.state.product);
+    
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="pagealertnone">
@@ -225,7 +224,7 @@ class ProductCollageView extends Component {
         <div className="row">
         {
             this.state.products && this.state.products.map((value, index) =>{
-             
+            
             return (
               <div className="col-lg-4 col-md-4 col-sm-5 col-xs-5 card" key={index}>
                 <div className="item-top">
@@ -244,11 +243,11 @@ class ProductCollageView extends Component {
                   </div>
                   <div className="productDetails">
                     <div className="innerDiv">
-                      {/*<a href={"/productdetails/"+ value._id } className="product-item-link">
+                      {<a href={"/productdetails/"+ value._id } className="product-item-link">
                        {
                         value.productName !== undefined ? 
                           (value.productName.length > 25 ? value.productName.substring(0, 25) + '...' : value.productName )
-                        : ''}</a>*/}
+                        : ''}</a>}
                       <div className="product-reviews-summary">
                           <div className="rating-summary">
                               <div className="ratingReview stars ">
@@ -262,8 +261,8 @@ class ProductCollageView extends Component {
                           </div>
                       </div>
                       <div > 
-                        <span className="price"><i className={"fa fa-"+value.currency}>{value.offeredPrice}</i></span> &nbsp;
-                        <span className="oldprice"><i className={"fa fa-"+value.currency}>{ value.actualPrice}</i></span> 
+                        <span className="price"><i className={"fa fa-"+value.currency}>{value.discountedPrice}</i></span> &nbsp;
+                        <span className="oldprice"><i className={"fa fa-"+value.currency}>{ value.originalPrice}</i></span> 
                       </div>
                       <div className="actions">
                       <button type="submit" id={value._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart addtocartbtn btn-warning ">

@@ -102,7 +102,6 @@ class ProductCollage extends Component {
 		    }
 		}
 		if (filterType == 'subcategory') {
-
 			this.setState(
 				{	selector:
 					{ 
@@ -117,7 +116,6 @@ class ProductCollage extends Component {
 					this.getFilteredProducts(this.state.selector);
 				} 			
 				);
-			
 		}
 		if (filterType == 'brands') {
 			this.setState(
@@ -153,7 +151,6 @@ class ProductCollage extends Component {
 				});
 		}
 		if (filterType == 'color') {
-
 			this.setState(
 				{	selector:
 					{ 
@@ -169,7 +166,6 @@ class ProductCollage extends Component {
 				});
 		}
 		if (filterType == 'size') {
-
 			this.setState(
 				{	selector:
 					{ 
