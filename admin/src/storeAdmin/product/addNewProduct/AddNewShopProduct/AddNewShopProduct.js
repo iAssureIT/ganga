@@ -55,7 +55,7 @@ class AddNewShopProduct extends Component {
     $.validator.addMethod("regxSubCat", function (value, element, arg) {
       return arg !== value;
     }, "Please select the sub category");
-    $.validator.addMethod("regxWebCat", function (value, element, arg) {
+    $.validator.addMethod("regxsection", function (value, element, arg) {
       return arg !== value;
     }, "Please select the section");
     $.validator.addMethod("regxbrand", function (value, element, regexpr) {
@@ -90,23 +90,19 @@ class AddNewShopProduct extends Component {
 
     $("#addNewShopProduct").validate({
       rules: {
-        category: {
-          required: true,
-          valueNotEquals: "Select Category"
-        },
-        subCategory: {
-          required: true,
-          regxSubCat: "Select Sub-Category"
-        },
+        
         section: {
           required: true,
-          regxWebCat: "Select Section"
+          regxsection: "Select Section"
         },
         brand: {
           required: true,
           regxbrand: /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/,
         },
         productCode: {
+          required: true,
+        },
+        itemCode:{
           required: true,
         },
         productName: {
@@ -116,10 +112,7 @@ class AddNewShopProduct extends Component {
           required: true,
           regxUrl: /^[A-Za-z][A-Za-z0-9\-\s]*$/,
         },
-        discountedPrice: {
-          required: true,
-          regxPrice: /^[0-9 ]*$/,
-        },
+        
         originalPrice: {
           required: true,
           // regxPrice: /^[0-9 ]*$/,
@@ -157,6 +150,9 @@ class AddNewShopProduct extends Component {
         }
         if (element.attr("name") == "productCode") {
           error.insertAfter("#productCode");
+        }
+        if (element.attr("name") == "itemCode") {
+          error.insertAfter("#itemCode");
         }
         if (element.attr("name") == "productName") {
           error.insertAfter("#productName");
@@ -278,6 +274,7 @@ class AddNewShopProduct extends Component {
           subCategory: response.data.subCategory + '|' + response.data.subCategory_ID,
           brand: response.data.brand,
           productCode: response.data.productCode,
+          itemCode : response.data.itemCode,
           productName: response.data.productName,
           productUrl: response.data.productUrl,
           productDetails: response.data.productDetails,
@@ -338,6 +335,7 @@ class AddNewShopProduct extends Component {
       "subCategory": this.refs.subCategory.value.split('|')[0],
       "brand": this.refs.brand.value,
       "productCode": this.refs.productCode.value,
+      "itemCode" : this.refs.itemCode.value,
       "productName": this.refs.productName.value,
       "productUrl": this.refs.productUrl.value,
       "productDetails": this.refs.productDetails.value,
@@ -372,6 +370,7 @@ class AddNewShopProduct extends Component {
             subCategory: "Select Sub-Category",
             brand: "",
             productCode: "",
+            itemCode : "",
             productName: "",
             productUrl: "",
             productDetails: "",
@@ -430,6 +429,7 @@ class AddNewShopProduct extends Component {
       "subCategory": this.refs.subCategory.value.split('|')[0],
       "brand": this.refs.brand.value,
       "productCode": this.refs.productCode.value,
+      "itemCode": this.refs.itemCode.value,
       "productName": this.refs.productName.value,
       "productUrl": this.refs.productUrl.value,
       "productDetails": this.refs.productDetails.value,
@@ -460,6 +460,7 @@ class AddNewShopProduct extends Component {
           subCategory: "Select Sub-Category",
           brand: "",
           productCode: "",
+          itemCode : "",
           productName: "",
           productUrl: "",
           productDetails: "",
@@ -482,6 +483,7 @@ class AddNewShopProduct extends Component {
       subCategory: "Select Sub-Category",
       brand: "",
       productCode: "",
+      itemCode : "",
       productName: "",
       productUrl: "",
       productDetails: "",
@@ -566,7 +568,7 @@ class AddNewShopProduct extends Component {
                   <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <label>Section <i className="redFont">*</i></label>
                     <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section + '|' + this.state.section_ID} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
-                      <option defaultValue="Select Section">Select Category</option>
+                      <option defaultValue="Select Section">Select Section</option>
                       {this.state.sectionArray && this.state.sectionArray.length > 0 ?
                         this.state.sectionArray.map((data, index) => {
                           return (
@@ -577,13 +579,12 @@ class AddNewShopProduct extends Component {
                         null
                       }
                     </select>
-
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <label>Category </label>
                     {/*<div className="input-group" id="category">*/}
                     <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category} name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
-                      <option disabled selected defaultValue="Select Category">Select Category</option>
+                      <option disabled selected defaultValue="">Select Category</option>
                       {this.state.categoryArray && this.state.categoryArray.length > 0 ?
                         this.state.categoryArray.map((data, index) => {
                           return (
@@ -599,7 +600,7 @@ class AddNewShopProduct extends Component {
                     <label>Sub Category </label>
                     {/*<div className="input-group" id="subCategory">*/}
                     <select className="form-control allProductSubCategories" aria-describedby="basic-addon1" name="subCategory" id="subCategory" ref="subCategory" value={this.state.subCategory} onChange={this.handleChange.bind(this)}>
-                      <option disabled selected defaultValue="Select Sub-Category">Select Sub-Category</option>
+                      <option disabled selected defaultValue="">Select Sub-Category</option>
                       {this.state.subcategoryArray && this.state.subcategoryArray.length > 0 ?
                         this.state.subcategoryArray.map((data, index) => {
 
@@ -611,7 +612,6 @@ class AddNewShopProduct extends Component {
                         null
                       }
                     </select>
-
                   </div>
 
                 </div>
@@ -623,16 +623,20 @@ class AddNewShopProduct extends Component {
                     <input value={this.state.productCode} name="productCode" id="productCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="productCode" onChange={this.handleChange.bind(this)} />
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <label>Item Code <i className="redFont">*</i></label>
+                    <input value={this.state.itemCode} name="itemCode" id="itemCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="itemCode" onChange={this.handleChange.bind(this)} />
+                  </div>
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <label>Product Name <i className="redFont">*</i></label>
                     <input value={this.state.productName} name="productName" id="productName" onChange={this.createProductUrl.bind(this)} type="text" className="form-control link-subcategory newProductName" placeholder="Product Name" aria-label="Username" aria-describedby="basic-addon1" ref="productName" />
                   </div>
+                  
+                </div>
+                <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <label>Product URL <i className="redFont">*</i></label>
                     <input value={this.state.productUrl} onChange={this.handleChange.bind(this)} id="productUrl" name="productUrl" type="text" className="form-control link-subcategory newProductName productUrl" placeholder="Product URL" aria-describedby="basic-addon1" ref="productUrl" />
                   </div>
-                </div>
-                <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-
 
                   <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     <label>Brand Name <i className="redFont">*</i></label>
@@ -655,6 +659,9 @@ class AddNewShopProduct extends Component {
                     </select>
                   </div>
 
+                  
+                </div>
+                <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                   <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
                     <label>Original Price <i className="redFont">*</i></label>
                     <input onChange={this.percentAndPrice.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="text" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
@@ -668,28 +675,26 @@ class AddNewShopProduct extends Component {
                       <option value="gbp">GBP</option>
                     </select>
                   </div>
-                </div>
-                <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-
                   <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
-                    <label>Discount Percent (%)<i className="redFont">*</i></label>
+                    <label>Discount Percent (%)</label>
                     <input  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="text" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
                   </div>
                   <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
-                    <label>Discount Price <i className="redFont">*</i></label>
+                    <label>Discount Price </label>
                     <input onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="text" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
                   </div>
 
-                  <div className=" col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+                  <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
                     <label>Size</label>
                     <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control " placeholder="Size" aria-describedby="basic-addon1" ref="size" />
                   </div>
-                  <div className=" col-lg-1 col-md-1 col-sm-12 col-xs-12   ">
+                  <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12   ">
                     <label>Color</label>
                     <input onChange={this.handleChange.bind(this)} value={this.state.color} id="color" name="color" type="color" className="form-control" placeholder="Color" aria-describedby="basic-addon1" ref="color" />
                   </div>
 
                 </div>
+                
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive">
                   <table className="add-new-product-table table table-bordered">
                     <thead>
@@ -711,7 +716,7 @@ class AddNewShopProduct extends Component {
 
                   </table>
                   <div className="marginTop17">
-                    <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" onClick={this.addNewRow}>Add Row</button>
+                    <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right" onClick={this.addNewRow}>Add Row</button>
                   </div>
                 </div>
 
@@ -740,9 +745,9 @@ class AddNewShopProduct extends Component {
                   <div className="">
                     {
                       this.state.editId ?
-                        <button onClick={this.updateProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9">Update</button>
+                        <button onClick={this.updateProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right">Update</button>
                         :
-                        <button onClick={this.submitProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9">Save & Next</button>
+                        <button onClick={this.submitProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right">Save & Next</button>
                     }
                   </div>
                 </div>

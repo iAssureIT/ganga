@@ -251,7 +251,7 @@ class SectionManagement extends Component {
                 <div className="row">
                      <div className="box">
                            <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                                <h4 className="NOpadding-right">Category Management </h4>
+                                <h4 className="NOpadding-right">Section Master </h4>
                           </div>
                           </div>
                             <div className="col-lg-12 col-md-12 marginTopp">
