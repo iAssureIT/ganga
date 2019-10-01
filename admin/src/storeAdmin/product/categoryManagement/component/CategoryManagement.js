@@ -491,7 +491,7 @@ class CategoryManagement extends Component{
                           </div>
                           <div className="col-lg-12 col-md-12 marginTopp">
                             <form id="categoryManagement" className="">
-                              <div className="col-lg-6">
+                              <div className="col-lg-6 col-md-12 col-xs-12 col-sm-12  NOpadding">
                                   <div className="col-lg-12">
                                       <label>Section <i className="redFont">*</i></label>
                                       <select onChange={this.sectionChange.bind(this)} value={this.state.section+'|'+this.state.section_ID}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">

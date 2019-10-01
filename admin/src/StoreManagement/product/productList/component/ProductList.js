@@ -118,8 +118,8 @@ class ProductList extends Component{
                                         
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div className="searchProductFromList row">
-                                            <div className="col-lg-4 pull-left">
+                                        <div className="searchProductFromList  col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
                                                 <div className="publishAllProductsClient" aria-hidden="true" data-toggle="modal" data-target={"#publishProduct"}>
                                                     Publish All Products
                                                 </div>

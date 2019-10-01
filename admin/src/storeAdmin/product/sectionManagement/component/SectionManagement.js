@@ -249,12 +249,12 @@ class SectionManagement extends Component {
             <section className="content">
               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                 <div className="row">
-                  <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 contactdeilsmg pageHeader">
-                      Section Management
-                    </div>
-                    <hr className="hr-head container-fluid row" />
-                  </div>
+                     <div className="box">
+                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                                <h4 className="NOpadding-right">Category Management </h4>
+                          </div>
+                          </div>
+                            <div className="col-lg-12 col-md-12 marginTopp">
                   <form id="sectionManagement" className="">
                       <div className="col-lg-5">
                         <div className="col-lg-12">
@@ -282,6 +282,7 @@ class SectionManagement extends Component {
                       </div>
                     
                   </form>
+                  </div>
 
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <IAssureTable
