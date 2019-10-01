@@ -136,7 +136,7 @@ class Login extends Component {
                 <div className="form-group form-group1 fltlft input-group col-lg-12 col-md-12 col-sm-12 inputContent ">     
                   <span className="blocking-span noIb">
                     <input type="password" className="form-control border3 pass oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="loginpassword" name="loginpassword" required/>
-                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>                 
+                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock lockIcon" aria-hidden="true"></i> Password</span>                 
                   </span>
                
                 <div className="showHideSignDiv">

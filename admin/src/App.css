@@ -4,6 +4,12 @@
   height: 40vmin;
   pointer-events: none;
 }
+.paddingLeftCss{
+  padding-left: 0;
+}
+.paddingRightCss{
+  padding-right: 0;
+}
 
 .App-header {
   background-color: #282c34;
@@ -123,7 +129,9 @@ input, select{
   font-family:'Relay-Regular';
   font-size: 12px !important;
   color: #333333;
-  font-weight: normal;
+  /*font-weight: normal;*/
+  padding:0;
+  margin-bottom: 2px !important;
 }
 .paddingZeroo{
   padding: 0 !important;

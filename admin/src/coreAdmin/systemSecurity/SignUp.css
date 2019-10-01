@@ -53,10 +53,10 @@
 }
 .OESSubTitle2, .signUpNameTitle,.signInNameTitle,.resetpwdNameTitle{
   text-align: center;
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .bordbt{
-  border-bottom: 2px solid #1d109d;
+  /*border-bottom: 2px solid #1d109d;*/
 }
 .marBtm30{
   margin-bottom: 30px;
@@ -69,7 +69,7 @@
 }
 
 .loginbg{
-  background-image: url("/images/Sing-In-Sign-Up.png");
+  background-image: url("/images/Web_app.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -149,7 +149,7 @@
   font-size: 34px;
     color: #337ab7;
     margin-top: 10px !important;
-    font-family: 'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
     padding: 0px;
     text-align: center;
 }
@@ -158,7 +158,7 @@
   margin-top: 2px !important;
   color: #337ab7;
   font-size: 20px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   text-align: center;
 }
 .ETESignTit{
@@ -176,16 +176,16 @@
     height: 35px !important;
     font-size: 16px;
     background: #d8d8d8;
-    font-family: 'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
 }
 .tmsLoginTextBox{
   height: 35px !important;
   margin-bottom: 30px;
   box-shadow: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   background: #d8d8d8;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .glyphi-custommm{
   border-left: 0px solid; 
@@ -276,7 +276,7 @@
 .loginPageTit,.loginPageTitsub{
   font-size: 40px;
     color: #fff;
-    font-family: 'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
     margin-top: 35px !important;
 
 }
@@ -287,7 +287,7 @@
   color: #fff;
     margin-top: 10px !important;
     font-size: 20px;
-    font-family: 'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
 }
 .boxed-view__form  .btn{
   margin-top: 20px !important;
@@ -352,7 +352,7 @@
 
 .viewNDDel{
   border-radius: 0px !important;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   padding: 2px 6px;
 }
 
@@ -531,7 +531,7 @@
   color: #333 !important;
   font-size: 16px;
   text-align: center;
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .award_ModalBody{
   padding: 5% 0px !important;
@@ -540,7 +540,7 @@
   margin-right: 15px;
   /*background: #38678f !important;*/
   color: #fff !important;
-  font-family:'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
   padding: 2px 10px;
   font-size: 16px;
   border-radius: 0px!important;
@@ -712,7 +712,7 @@
   
   margin-bottom: 5%;
   /*text-align: left;*/
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   font-size: 14px;
   padding-left: 0px;
   padding-right: 15px;
@@ -809,7 +809,7 @@
 
 .modalbg {
   position: fixed;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   top: 0;
   right: 0;
   bottom: 0;
@@ -1037,7 +1037,7 @@ input[type="radio"]:checked:before {
   height: 35px !important;
   font-size: 16px;
   background: #d8d8d8;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 
 .userCreateWrap{
@@ -1251,11 +1251,12 @@ input[type="radio"]:checked:before {
 .signInNameTitle{
   font-size: 20px;
   margin-top: 8%;
-  margin-bottom: 10%;
+  margin-bottom: 60px;
   /*color: #333333;*/
   color: #F04723;
   font-weight: bold;
-  font-family:'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
+
 }
 .signT{
   margin-top: 8%;
@@ -1327,7 +1328,7 @@ input[type="radio"]:checked:before {
   font-size: 34px;
     color: #337ab7;
     margin-top: 10px !important;
-    font-family:'Roboto', sans-serif !important;
+   font-family:'Relay-Regular';
     padding: 0px;
     text-align: center;
 }
@@ -1336,7 +1337,7 @@ input[type="radio"]:checked:before {
   margin-top: 2px !important;
   color: #337ab7;
   font-size: 20px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   text-align: center;
 }
 .ETESignTit{
@@ -1356,7 +1357,7 @@ input[type="radio"]:checked:before {
     font-size: 16px;
     /*background: #d8d8d8;*/
     background-color: #fff;
-    font-family: 'Roboto', sans-serif !important;
+   font-family:'Relay-Regular';
 }
 .tmsLoginTextBox{
   height: 35px !important;
@@ -1364,9 +1365,9 @@ input[type="radio"]:checked:before {
   border: 1px solid #ccc!important;
   box-shadow: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   background: #fff;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 .glyphi-custommm{
   border-left: 0px solid; 
@@ -1461,7 +1462,7 @@ input[type="radio"]:checked:before {
 .loginPageTit,.loginPageTitsub{
   font-size: 40px;
     color: #fff;
-    font-family:'Roboto', sans-serif !important;
+    font-family:'Relay-Regular';
     margin-top: 35px !important;
 
 }
@@ -1472,7 +1473,7 @@ input[type="radio"]:checked:before {
   color: #fff;
     margin-top: 10px !important;
     font-size: 20px;
-    font-family: 'Roboto', sans-serif !important;
+   font-family:'Relay-Regular';
 }
 .boxed-view__form  .btn{
   margin-top: 20px !important;
@@ -1537,7 +1538,7 @@ input[type="radio"]:checked:before {
 
 .viewNDDel{
   border-radius: 0px !important;
-  font-family:'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
   padding: 2px 6px;
 }
 
@@ -1548,7 +1549,7 @@ input[type="radio"]:checked:before {
 }
 .offeredBtnWrap button{
   border-radius: 0px;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   font-weight: bold;
   font-size: 16px;
 }
@@ -1723,7 +1724,7 @@ input[type="radio"]:checked:before {
   color: #333 !important;
   font-size: 16px;
   text-align: center;
-  font-family: 'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
 }
 .award_ModalBody{
   padding: 5% 0px !important;
@@ -1732,7 +1733,7 @@ input[type="radio"]:checked:before {
   margin-right: 15px;
   /*background: #38678f !important;*/
   color: #fff !important;
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   padding: 2px 10px;
   font-size: 16px;
   border-radius: 0px!important;
@@ -1756,7 +1757,7 @@ input[type="radio"]:checked:before {
   font-weight: bold;
   margin-bottom: 20px;
   border-radius: 4px !important; 
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 
 .UMloginbutton:hover{
@@ -1914,7 +1915,7 @@ input[type="radio"]:checked:before {
   /*color: #fff;*/
   margin-bottom: 1%;
   /*text-align: left;*/
-  font-family: 'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   font-size: 14px;
   padding-left: 0px;
   padding-right: 15px;
@@ -1968,7 +1969,7 @@ input[type="radio"]:checked:before {
   background-repeat: no-repeat;
 }
 .oesSignUpForm:focus ~ .floating-label, .oesSignUpForm:not(:focus):valid ~ .floating-label {
-    top: -16px;
+    top: -19px;
     font-size: 13px;
     color: #000!important;
     left: 18px !important;
@@ -1986,12 +1987,16 @@ input[type="radio"]:checked:before {
     transition: 0.2s ease all;
 }
 .oesSignUpForm:focus ~ .floating-label1, .oesSignUpForm:not(:focus):valid ~ .floating-label1 {
-    top: -16px;
+    top: -19px;
     font-size: 13px;
     color: #000!important;
     left: 5px !important;
     display: block;
     font-weight: 100;
+}
+.lockIcon{
+  font-size:18px;
+  padding-right: 2px;
 }
 .lbfloatpass{
   left: 10px !important;
@@ -2012,7 +2017,7 @@ input[type="radio"]:checked:before {
 
 .modalbg {
   position: fixed;
-  font-family:'Roboto', sans-serif !important;
+ font-family:'Relay-Regular';
   top: 0;
   right: 0;
   bottom: 0;
@@ -2201,7 +2206,7 @@ input[type=radio]:checked ~ span{
   color: #f04723;
   font-weight: bold;
   text-align: center;
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
   /*font-family: 'Roboto-BoldCondensed';*/
 }
 .signInbtn1{
@@ -2244,7 +2249,7 @@ input[type="radio"]:checked:before {
   font-size: 16px;
   /*background: #d8d8d8;*/
   background-color: #fff;
-  font-family:'Roboto', sans-serif !important;
+  font-family:'Relay-Regular';
 }
 
 .userCreateWrap{
@@ -2433,7 +2438,7 @@ input[type="radio"]:checked:before {
 }*/
 
 .showHideSignDiv{
-    top:-28px;
+    top:-25px;
     float: right;
     margin-right: 9px;
     z-index: 999;

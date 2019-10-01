@@ -115,107 +115,68 @@ class UMListOfUsers extends Component {
 render(){
 	// console.log('this.state.completeDataCount', this.state.completeDataCount);
      return(
-   		<div className="">
-   		<div className="">
-      	</div>
-			<section className="">
-		        <div className="">
-		        <div className="">
-		          	<div className="">
-			            <div className="">
-				            
-							<div className="modal-bodyuser">
+		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+			<div className="modal-bodyuser col-lg-12 col-md-12 col-sm-12 col-xs-12 UMbackgroundWrapper NOpadding">
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border nopaddingum2">
+					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  NOpadding">
 
-						        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border nopaddingum2">
-
-									<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  paddingright">
-
-										<h4 className="usrmgnttitle weighttitle">User Management</h4>
-									</div>
-									<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodal">
-										<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
-										<CreateUser getData={this.getData.bind(this)}/>
-									</div>
-									<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
-										<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
-									</div>
-							
-				                   {/* <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 searchTableBoxAlignSETUM">
-				                   		<span className="blocking-span">
-					                   		<input type="text" name="search"  className="col-lg-8 col-md-8 col-sm-8 Searchusers Searchfind inputTextSearch outlinebox pull-right "  placeholder="&#128269; Search by Name "  />
-					                   	</span>
-				                    </div>*/}
-								</div>
-						        <form className="newTemplateForm">
-									
-									<div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 usrmgnhead">
-										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
-											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
-											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" >
-												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" name="userListDDOption">-- Select --</option>	
-												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="block_selected" name="userListDDOption">Block Selected</option>	
-												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="active_selected" name="userListDDOption">Active Selected</option>
-												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="cancel_selected" name="userListDDOption">Delete Selected Acccounts</option>	
-												{/* 	this.adminRolesListData().map( (rolesData)=>{
-														return <UMAddRolRow key={rolesData._id} roleDataVales={rolesData}/>
-												  	})
-												*/}
-												{ /*this.adminRolesListData().map( (rolesData)=>{
-													return <UMDelRolRow key={rolesData._id} roleDataVales={rolesData}/>
-													  })
-												*/}
-											</select>
-
-										</div> 
-										
-
-										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
-											
-											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
-											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" >
-												<option name="roleListDDOption">-- Select --</option>
-												<option value="all" name="roleListDDOption">Show All</option>		
-												{ /*this.rolesListData().map( (rolesData)=>{
-													return <UMSelectRoleUsers key={rolesData._id} roleDataVales={rolesData}/>
-												  }) 
-												*/}	
-												 
-											</select>
-										</div>
-
-				
-										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
-											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
-											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" onChange={this.handleChange}>
-												<option>-- Select --</option>	
-												<option value="all"	>Show All</option>	
-												<option value="Blocked">Blocked</option>	
-												<option value="Active">Active </option>	
-											</select>
-										</div>
-									</div>
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  usrmgnhead">
-										<IAssureTableUM
-  										  dataCount={this.state.dataCount}
-  										  tableObjects={this.state.tableObjects}
-					                      twoLevelHeader={this.state.twoLevelHeader} 
-					                      getData={this.getData.bind(this)} 
-					                      tableHeading={this.state.tableHeading} 
-					                      tableData={this.state.tableData} 
-					                      getSearchText={this.getSearchText.bind(this)} 
-										/>			
-									</div>
-								</form>
-						    </div>
-
+						<h4 className="usrmgnttitle weighttitle">User Management</h4>
+					</div>
+					<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding">
+						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodal">
+							<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
+							<CreateUser getData={this.getData.bind(this)}/>
+						</div>
+						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodalcl">
+							<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
 						</div>
 					</div>
-				</div></div>
-			</section>
-  		</div>
+
+				</div>
+				<form className="newTemplateForm">
+					<div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 usrmgnhead">
+						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
+							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" >
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" name="userListDDOption">-- Select --</option>	
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="block_selected" name="userListDDOption">Block Selected</option>	
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="active_selected" name="userListDDOption">Active Selected</option>
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="cancel_selected" name="userListDDOption">Delete Selected Acccounts</option>	
+							</select>
+						</div> 
+						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
+							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" >
+								<option name="roleListDDOption">-- Select --</option>
+								<option value="all" name="roleListDDOption">Show All</option>		
+							</select>
+						</div>
+						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
+							<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" onChange={this.handleChange}>
+								<option>-- Select --</option>	
+								<option value="all"	>Show All</option>	
+								<option value="Blocked">Blocked</option>	
+								<option value="Active">Active </option>	
+							</select>
+						</div>
+					</div>
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginbottom">
+						<IAssureTableUM
+						dataCount={this.state.dataCount}
+						tableObjects={this.state.tableObjects}
+						twoLevelHeader={this.state.twoLevelHeader} 
+						getData={this.getData.bind(this)} 
+						tableHeading={this.state.tableHeading} 
+						tableData={this.state.tableData} 
+						getSearchText={this.getSearchText.bind(this)} 
+						/>			
+					</div>
+				</form>
+			</div>
+		</div>
      );
     }
-
 }
 
 

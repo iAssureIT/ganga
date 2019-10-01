@@ -16,6 +16,22 @@
 .userbtn:hover{
   color: #ffffff !important;
 }
+.mobileIcon{
+
+      font-size: 22px !important;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.UMbackgroundWrapper{
+  background: #fff;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.mobileCssIcon{
+      font-size: 23px;
+    padding-right: 2px;
+    padding-left: 6px;
+}
 /*====Anuja====*/
 .topMargin{
   margin-top: 15px;
@@ -601,6 +617,9 @@ ul {
 }
 .usrmgnhead{
   margin-top: 35px;
+}
+.marginbottom{
+  margin-bottom: 30px;
 }
 
 /*--------- carousel code ------------------*/

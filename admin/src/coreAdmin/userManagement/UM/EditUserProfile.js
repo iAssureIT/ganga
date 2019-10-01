@@ -87,17 +87,13 @@ class EditUserProfile extends Component{
   	
 	render(){      
 		return (
-				<div>
-					<div>					        
-					    <div className="">					        
-					         <section className="content-header">
-					            <h3 className="contentTitle">Edit User</h3>
-					         </section>					         
-					          <section className="content viewContent">
-					            <div className="row">
-					              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+				<div>				        
+					<div className="">					        				         
+					    <section className="content viewContent">
+					        <div className="row">
+					            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 					                <div className="box">					                 
-					                  <div className="box-header with-border boxMinHeight">
+					                  <div className="">
 								            <div className="box-header with-border">
 								            <h4 className="reportTitle">Edit User Data</h4>
 								            </div>										
@@ -133,7 +129,7 @@ class EditUserProfile extends Component{
                                                       </div>
                                                       <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
                                                           <label className="formLable">Last Name <label className="requiredsign">*</label></label>
-                                                          <span className="blocking-span row">
+                                                          <span className="blocking-span ">
                                                           <div className="input-group inputBox-main  new_inputbx " >
                                                              <div className="input-group-addon remove_brdr inputIcon">
                                                               <i className="fa fa-user-circle fa "></i>
@@ -145,16 +141,24 @@ class EditUserProfile extends Component{
                                                       </div>
 
 
-														<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12 group btmmargin inputContent">
+														<div className="col-lg-6 col-sm-12 col-xs-12 col-md-6 group btmmargin inputContent">
 															<label className="formLable">Username/Email <label className="requiredsign">*</label></label>
+                                                          	
+														<span className="blocking-span ">
+                                                          <div className="input-group inputBox-main  new_inputbx " >
+                                                             <div className="input-group-addon remove_brdr inputIcon">
+                                                              <i className="fa fa-envelope "></i>
+                                                            </div> 
                                                           	<input type="text" disabled  onChange={this.handleChange} className="disableInput inputMaterial form-control inputText" ref="username" name="username" required/>
+															</div>
+														</span>
 														</div>
-														<div className="col-lg-6 col-sm-6 col-xs-6 col-md-6 group btmmargin inputContent">
+														<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12  group btmmargin inputContent">
 															<label className="formLable">Mobile Number <label className="requiredsign">*</label></label>
 	                                                          <span className="blocking-span">
 	                                                           <div className="input-group inputBox-main  new_inputbx " >
 	                                                             <div className="input-group-addon remove_brdr inputIcon">
-	                                                            <i className="fa fa-mobile"></i>
+	                                                            <i className="fa fa-mobile mobileCssIcon"></i>
 	                                                            </div>  
 	                                                              <input type="text" style={{textTransform:'capitalize'}}
 	                                                               className="form-control UMname inputText form-control  has-content"
@@ -164,8 +168,10 @@ class EditUserProfile extends Component{
 														</div>	
 													</div>
 													<br/>
-														<div className="col-lg-6 col-sm-12 col-xs-12 col-md-12 pull-right btmmargin userProfileEditBtn">
-																<button onClick={this.handleSubmit.bind(this)} className="btn btn-primary pull-right">&nbsp; &nbsp;Update Profile&nbsp; &nbsp;</button>
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  pull-right btmmargin userProfileEditBtn">
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																<button onClick={this.handleSubmit.bind(this)} className="col-lg-2 col-md-2 col-sm-12 col-xs-12 btn btn-primary pull-right">Update Profile</button>
+															</div>
 														</div>
 													</div>
 												</div>	
@@ -176,8 +182,7 @@ class EditUserProfile extends Component{
 							    </section>
 							  </div>
 							</div>
-					     		
-						</div>
+					     	
 					);
 					
 				

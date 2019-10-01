@@ -150,7 +150,7 @@ class CreateUser extends Component {
             <div>
                         <div className="modal fade" id="CreateUserModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div className="modal-dialog modal-lg " role="document">
-                            <div className="modal-content modalContent ummodallftmg ummodalmfdrt col-lg-12 ">
+                            <div className="modal-content modalContent ummodallftmg ummodalmfdrt col-lg-12 NOpadding ">
                               <div className="modal-header userHeader">
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
@@ -238,7 +238,7 @@ class CreateUser extends Component {
                                                           <span className="blocking-span ">
                                                            <div className="input-group inputBox-main  new_inputbx " >
                                                              <div className="input-group-addon remove_brdr inputIcon">
-                                                              <i className="fa fa-mobile"></i>
+                                                              <i className="fa fa-mobile mobileIcon"></i>
                                                              </div>  
                                                              <InputMask mask="9999999999" pattern="^(0|[1-9][0-9-]*)$" 
                                                                className= "form-control UMname inputText form-control  has-content"

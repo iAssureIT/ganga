@@ -391,8 +391,8 @@ class IAssureTable extends Component {
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
 				{this.state.tableObjects.paginationApply == true ?
-					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-						<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
+					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 paddingLeftCss">
+						<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12  NOpadding">Data Per Page</label>
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
 							<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
 								<option value="Not Selected" disabled>Select Limit</option>

@@ -75,22 +75,13 @@ export default class Leftsidebar extends Component{
                           <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Image Bulk Upload</span>
                         </a>
                       </li>   
-                      <li>
-                        <a href="/category-management">
-                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Management</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/section-management">
-                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Management</span>
-                        </a>
-                      </li>   
+                      
                   </ul>
                 </li>
                 <li className="sidebarMenuText">
                   <a href="#Shipment" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-map-marker" />
-                    Shipment Tracking
+                    Shipment Management
                      <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Shipment">
@@ -193,6 +184,7 @@ export default class Leftsidebar extends Component{
                   <a href="#MasterData" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-university" />
                     Master Data
+                    <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="MasterData">
                     <li>
@@ -207,6 +199,16 @@ export default class Leftsidebar extends Component{
                         <span className="sidebarMenuSubText">Vendor Location Type</span>
                       </a>
                     </li>
+                    <li>
+                        <a href="/category-management">
+                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/section-management">
+                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Master</span>
+                        </a>
+                      </li>   
                   </ul>
                 </li>          
               </ul>

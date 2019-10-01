@@ -548,9 +548,9 @@ class IAssureTable extends Component {
 		// console.log('this.state.tableObjects.paginationApply', this.state.tableObjects);
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
-	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 paddingLeftCss">
+					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12  NOpadding">Data Per Page</label>
+					<div className="">
 						<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
 							<option value="Not Selected" disabled>Select Limit</option>
 							<option value={10}>10</option>
@@ -561,8 +561,8 @@ class IAssureTable extends Component {
 						</select>
 					</div>
 				</div>           
-				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
-	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
+				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 paddingRightCss">
+	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingLeftCss">Search</label>
 	        		<div className="input-group">
 				        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
 				    	<span className="input-group-addon"><i className="fa fa-search"></i></span>

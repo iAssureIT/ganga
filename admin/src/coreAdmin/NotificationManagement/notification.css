@@ -915,12 +915,12 @@ display: block;
       text-align: right!important;
   }
   .addexamform {
-    background: #2189d2;
+       background: #2189d2;
     cursor: pointer;
     font-size: 14px;
-    padding: 3px;
+    padding: 5px;
     margin-top: 5px;
-    border-radius: 7px;
+    border-radius: 3px;
     border: 1px solid #ccc;
     text-align: center;
     color: #fff;
