@@ -33,7 +33,7 @@ class CategoryManagement extends Component{
             },
             "tableObjects"              : {
               deleteMethod              : 'delete',
-              apiLink                   : 'http://localhost:5006/api/category/',
+              apiLink                   : '/api/category/',
               paginationApply           : true,
               searchApply               : true,
               editUrl                   : '/category-management/'
@@ -120,7 +120,7 @@ class CategoryManagement extends Component{
       this.getData(this.state.startRange,this.state.limitRange);
     }
     getDataCount(){
-      axios.get('http://localhost:5006/api/category/get/count')
+      axios.get('/api/category/get/count')
       .then((response)=>{
         console.log('dataCount', response.data);
         this.setState({
@@ -137,7 +137,7 @@ class CategoryManagement extends Component{
         limitRange : limitRange
       }
 
-      axios.post('http://localhost:5006/api/category/get/list', data)
+      axios.post('/api/category/get/list', data)
       .then((response)=>{
         console.log('tableData', response.data);
         this.setState({
@@ -173,7 +173,7 @@ class CategoryManagement extends Component{
         );
     }
     getSectionData(){
-      axios.get('http://localhost:5006/api/sections/get/list')
+      axios.get('/api/sections/get/list')
       .then((res)=>{
         console.log('res', res.data);
         this.setState({
@@ -209,7 +209,7 @@ class CategoryManagement extends Component{
         var categoryDimentionArray = [];
         
 
-        axios.get('http://localhost:5006/api/category/get/count')
+        axios.get('/api/category/get/count')
         .then((response)=>{
           var catCodeLength = response.data.dataCount;
           if(addRowLength){
@@ -234,7 +234,7 @@ class CategoryManagement extends Component{
             "categoryImage"             : this.state.categoryImage,
           }
 
-          axios.post('http://localhost:5006/api/category/post', formValues)
+          axios.post('/api/category/post', formValues)
           .then((response)=>{
 
             swal({
@@ -281,7 +281,7 @@ class CategoryManagement extends Component{
           "categoryImage"             : this.state.categoryImage,
         }
 
-        axios.get('http://localhost:5006/api/category/get/count')
+        axios.get('/api/category/get/count')
         .then((response)=>{
           var catCodeLength = response.data.dataCount;
           if(addRowLength){
@@ -294,7 +294,7 @@ class CategoryManagement extends Component{
               categoryDimentionArray.push(obj);
             }
           }
-          axios.patch('http://localhost:5006/api/category/patch', formValues)
+          axios.patch('/api/category/patch', formValues)
           .then((response)=>{
 
             swal({
@@ -325,7 +325,7 @@ class CategoryManagement extends Component{
       }
     }
     edit(id){
-      axios.get('http://localhost:5006/api/category/get/one/'+id)
+      axios.get('/api/category/get/one/'+id)
       .then((response)=>{
         console.log('edit', response.data);
         if(response.data){
