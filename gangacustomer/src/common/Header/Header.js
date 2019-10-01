@@ -12,6 +12,7 @@ import Megamenu         from '../Megamenu/Megamenu.js';
 import axios                    from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import { connect }        from 'react-redux';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 class Header extends Component {
 constructor(props){
@@ -250,6 +251,7 @@ searchProducts(){
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
             console.log('removed');
+            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
             // swal(response.data.message)           
              // .then((obj)=>{
              //      window.location.reload();
@@ -272,6 +274,7 @@ searchProducts(){
 
     axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
       // swal(response.data.message) 
       jQuery("#customercareModal").modal("hide");
 
@@ -280,6 +283,19 @@ searchProducts(){
           console.log('error', error);
     })
   }
+    Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
   getHotProduct(){
     axios.get("/api/products/get/hotproduct")
     .then((response)=>{ 
@@ -296,6 +312,9 @@ searchProducts(){
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
+      <div className="pagealertnone">
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+        </div>
           <header className="col-lg-12 headerflow"> 
             <div className="row"> 
                   <div className="col-lg-12 header1wrapper">

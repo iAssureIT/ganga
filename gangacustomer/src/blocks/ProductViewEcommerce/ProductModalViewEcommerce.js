@@ -6,6 +6,8 @@ import axios                  from 'axios';
 import "./ProductViewEcommerce.css";
 import _                      from 'underscore';
 import { connect }                from 'react-redux';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+
 
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -129,7 +131,8 @@ class ProductModalViewEcommerce extends Component {
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
             // console.log('response', response);
-          this.getCartData();  
+          this.getCartData(); 
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
           // swal(response.data.message)
           this.props.changeCartCount(response.data.cartCount);
 
@@ -142,18 +145,7 @@ class ProductModalViewEcommerce extends Component {
       console.log('error', error);
     })
     }else{
-      // swal({
-      //     title: "Need to Sign In",
-      //     text: "Please Sign In First",
-      //     icon: "warning",
-      //     buttons: ["No Thanks", "Sign In"],
-      //     dangerMode: true,
-      //   })
-      //   .then((willDelete) => {
-      //     if (willDelete) {
-      //       window.location = "/login";
-      //     } 
-      // });
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
     }
   }
    addtowishlist(event){
@@ -175,7 +167,10 @@ class ProductModalViewEcommerce extends Component {
 	          .then((response)=>{
 	            // console.log('response', response);
 	            // swal(response.data.message)
-	            window.location.reload();
+              if(response.status == 200){
+              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
+              }
+              ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 	          })
 	          .catch((error)=>{
 	            console.log('error', error);
@@ -185,21 +180,24 @@ class ProductModalViewEcommerce extends Component {
 	      console.log('error', error);
 	    })
     }else{
-      // swal({
-      //     title: "Need to Sign In",
-      //     text: "Please Sign In First",
-      //     icon: "warning",
-      //     buttons: ["No Thanks", "Sign In"],
-      //     dangerMode: true,
-      //   })
-      //   .then((willDelete) => {
-      //     if (willDelete) {
-      //       window.location = "/login";
-      //     } 
-      // });
-    }
+          ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+
+      }
     
   }
+    Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
   addQuantity(){
     console.log("#addQuantity",$('#productviewmodal'+this.props.productInfo.productType).find('#addQuantity'));
   	var totalQuanity = this.state.totalQuanity
@@ -246,6 +244,9 @@ class ProductModalViewEcommerce extends Component {
 				
 			this.state.productData?
 			<div className="row">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 mb20 NoPadding">
 					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 NoPadding" id="parentDiv">							
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 imageContainer NoPadding">

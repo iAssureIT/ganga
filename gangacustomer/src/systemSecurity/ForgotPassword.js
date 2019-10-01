@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import axios from 'axios';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 class ForgotPassword extends Component {
@@ -28,6 +30,7 @@ class ForgotPassword extends Component {
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{
                 console.log('res', response);
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                 // swal(response.data.message);
             })
             .catch((error)=>{
@@ -35,6 +38,19 @@ class ForgotPassword extends Component {
             })
         }
     }
+      Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
     validation() {
         $.validator.addMethod("regxemail", function (value, element, regexpr) {
             return regexpr.test(value);
@@ -64,6 +80,9 @@ class ForgotPassword extends Component {
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
                     <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>
                     <form id="resetPass">

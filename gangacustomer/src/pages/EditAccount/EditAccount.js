@@ -4,6 +4,7 @@ import axios                from 'axios';
 import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
 import "./EditAccount.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 class EditAccount extends Component{
     constructor(props) {
@@ -112,6 +113,7 @@ class EditAccount extends Component{
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
                 console.log(response.message);
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                 // swal(response.data.message);
             })
             .catch((error)=> {
@@ -119,6 +121,19 @@ class EditAccount extends Component{
             });
         }
     }
+  Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
     changeEmail(event){
         this.setState({
             changeEmail : event.target.checked
@@ -137,6 +152,9 @@ class EditAccount extends Component{
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                 <div className="container">
                     <br/>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">

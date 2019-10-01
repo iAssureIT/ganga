@@ -8,6 +8,7 @@ import 'bootstrap/js/tab.js';
 import 'font-awesome/css/font-awesome.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 import axios from 'axios';
 axios.defaults.baseURL = 'http://localhost:3060';
@@ -94,6 +95,7 @@ class SignUp extends Component {
                 	axios.post('/api/users',auth)
 			            .then((response)=> {
 			                console.log("-------userData------>>",response.data.user_id);
+            				 ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 		            		// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
 			                this.props.history.push("/confirm-otp/"+response.data.user_id);
 			                
@@ -101,26 +103,43 @@ class SignUp extends Component {
 			            .catch(function (error) {
 			                console.log(error);
         					// swal("Unable to submit data.");
+       						 ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 			            })
                 	)
                 :
 	                (
-		                document.getElementById("signUpBtn").value = 'Sign Up'
+		                document.getElementById("signUpBtn").value = 'Sign Up',
+       					ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 		                // swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
 	                )
 
                 
             } else {
                 document.getElementById("signUpBtn").value = 'Sign Up';
+       			ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 		        // return swal("Passwords does not match","Please Try Again")
             }
             }else{
                 document.getElementById("signUpBtn").value = 'Sign Up';
+       			ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 				// swal("Please enter mandatory fields", "", "warning");
 				console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
         
  	}
+ 	  Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
  	handleChange(event){
 	    // const target = event.target;
 	    // const {name , value}   = event.target;
@@ -209,6 +228,9 @@ class SignUp extends Component {
 		
 return(
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+	    <div className="pagealertnone">
+	      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+	      </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
           <div className="row">
             <h3>Create New Customer Account</h3>

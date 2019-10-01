@@ -9,6 +9,7 @@ import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Loadable                   from 'react-loadable';
 import { connect }                from 'react-redux';
 // import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 const OwlCarousel = Loadable({
   loader: () => import('react-owl-carousel'),
@@ -21,7 +22,7 @@ axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
-
+const user_ID = localStorage.getItem("user_ID");
 class ProductViewEcommerceBestSellers extends Component {
   constructor(props){
     super(props);
@@ -80,45 +81,51 @@ class ProductViewEcommerceBestSellers extends Component {
 
   addtocart(event){
     event.preventDefault();
-    var id = event.target.id;
-    console.log('id', id);
-    axios.get('/api/products/get/one/'+id)
-    .then((response)=>{
-      var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
-          const userid = localStorage.getItem('user_ID');
-          
-          const formValues = { 
-              "user_ID"    : userid,
-              "product_ID" : response.data._id,
-              "currency" : response.data.currency,
-              "productCode" : response.data.productCode,
-              "productName" : response.data.productName,
-              "category" : response.data.category,
-              "subCategory" : response.data.subCategory,
-              "productImage" : response.data.productImage,
-              "quantity" : 1  ,
-              "offeredPrice" : parseInt(response.data.offeredPrice),
-              "actualPrice" : parseInt(response.data.actualPrice),
-              "totalForQantity" : totalForQantity,
-              
-          }
-          axios.post('/api/carts/post', formValues)
-          .then((response)=>{
+    if(user_ID){     
+      event.preventDefault();
+      var id = event.target.id;
+      // console.log('id', id);
+      axios.get('/api/products/get/one/'+id)
+      .then((response)=>{
+        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+            const userid = localStorage.getItem('user_ID');
             
-          // swal(response.data.message);
-          this.props.changeCartCount(response.data.cartCount);
-          })
-          .catch((error)=>{
-            console.log('error', error);
-          })
-    })
-    .catch((error)=>{
-      console.log('error', error);
-    })
+            const formValues = { 
+                "user_ID"    : userid,
+                "product_ID" : response.data._id,
+                "currency" : response.data.currency,
+                "productCode" : response.data.productCode,
+                "productName" : response.data.productName,
+                "category" : response.data.category,
+                "subCategory" : response.data.subCategory,
+                "productImage" : response.data.productImage,
+                "quantity" : 1  ,
+                "offeredPrice" : parseInt(response.data.offeredPrice),
+                "actualPrice" : parseInt(response.data.actualPrice),
+                "totalForQantity" : totalForQantity,
+                
+            }
+            axios.post('/api/carts/post', formValues)
+            .then((response)=>{
+            this.getCartData();  
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+            this.props.changeCartCount(response.data.cartCount);
+            })
+            .catch((error)=>{
+              console.log('error', error);
+            })
+      })
+      .catch((error)=>{
+        console.log('error', error);
+      })
+    }
+    else{
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+    }
   }
 
 
-  addtowishlist(event){
+  addtowishlist(event){  if(user_ID){     
     event.preventDefault();
     var id = event.target.id;
     const userid = localStorage.getItem('user_ID');
@@ -129,13 +136,33 @@ class ProductViewEcommerceBestSellers extends Component {
     }
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
-      
+      // console.log("response",response.status);
+      if(response.status == 200){
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
+      }
+      ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
       // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
     .catch((error)=>{
       console.log('error', error);
     })
+     }
+      else{
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+    }
+  }
+    Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
   }
   render() {
     // console.log('Product', this.props.title,this.props.newProducts);
@@ -145,6 +172,9 @@ class ProductViewEcommerceBestSellers extends Component {
 
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
             <div className="row">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
                     <div className="producttextclass  col-lg-3">
@@ -184,7 +214,7 @@ class ProductViewEcommerceBestSellers extends Component {
                                   <div className="hoveractions1">
                                       <ul>
                                         <li  data-toggle="modal" data-target="#productviewmodal"><a className="circle spin" href="#"> <i className="fa fa-info viewDetail"></i></a></li>
-                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList"></i></li>
+                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
                                       </ul>
                                   </div>
                                 </div>

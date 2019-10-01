@@ -5,6 +5,7 @@ import jQuery               from 'jquery';
 import moment               from 'moment';
 import _                    from 'underscore';
 import SmallBanner          from '../../blocks/SmallBanner/SmallBanner.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 import 'jquery-validation';
 import "./Checkout.css";
@@ -365,6 +366,7 @@ class Checkout extends Component{
         }
         axios.patch("/api/carts/remove" ,formValues)
         .then((response)=>{
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
             // swal(response.data.message);
             this.getCartData();   
             this.getCompanyDetails();
@@ -777,7 +779,9 @@ class Checkout extends Component{
                                             
                                                         
                                             var userId  = localStorage.getItem('user_ID');
-                                            // swal('Order Placed Successfully');   
+                                            // swal('Order Placed Successfully'); 
+                                            ToastsStore.success(<div className="alertback">Order Placed Successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+
                                             
                                             this.props.history.push('/payment/'+result.data.order_ID);
                                              	
@@ -825,6 +829,7 @@ class Checkout extends Component{
             
             axios.patch('/api/users/patch/address', addressValues)
             .then((response)=>{
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                 // swal(response.data.message);
                 this.getUserAddress();
                 $(".checkoutAddressModal").hide();
@@ -836,9 +841,24 @@ class Checkout extends Component{
             });
         }
     }
+  Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                 <div className="row">
                     <SmallBanner bannerData={this.state.bannerData}/>
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">

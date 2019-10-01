@@ -6,6 +6,8 @@ import "./CartProducts.css";
 import { connect }        from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCartCata } from '../../actions/index';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+
 
 
 class CartProducts extends Component{
@@ -98,10 +100,10 @@ class CartProducts extends Component{
 
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
-            // swal(response.data.message)           
-            //  .then((obj)=>{
-            //     this.props.fetchCartData();
-            //  });
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             .then((obj)=>{
+                this.props.fetchCartData();
+             });
 
 
             this.getCompanyDetails();
@@ -142,6 +144,19 @@ class CartProducts extends Component{
           })
         
     }
+      Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
 
     cartquantitydecrease(event){
     	event.preventDefault();
@@ -184,6 +199,9 @@ class CartProducts extends Component{
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
+                <div className="pagealertnone">
+                  <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+                  </div>
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
                             <table className="table table-responsive cartProductTable">

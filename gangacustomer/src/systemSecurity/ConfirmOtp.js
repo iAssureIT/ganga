@@ -5,6 +5,7 @@ import $ from "jquery";
 import axios from 'axios';
 
 import './SignUp.css';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
  class ConfirmOtp extends Component {
     constructor(props){
@@ -29,6 +30,7 @@ import './SignUp.css';
       console.log('formValues', formValues);
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
         // swal(response.data.message);
         this.props.history.push('/login');
       })
@@ -60,11 +62,25 @@ import './SignUp.css';
           .then((response)=>{
             // console.log('response', response);
             // swal(response.data.message)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
           })
           .catch((error)=>{
             console.log('error', error);
           })    
     }
+      Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
 
 
   render(){
@@ -79,6 +95,9 @@ import './SignUp.css';
 
 return(
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+      <div className="pagealertnone">
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+        </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
           <div className="row">
             <h3>CONFIRMOTP</h3>

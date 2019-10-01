@@ -4,6 +4,8 @@ import axios   from 'axios';
 import "./Edituser.css";
 import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import $                          from 'jquery';
 
 class Edituser extends Component{
   constructor(props) {
@@ -43,9 +45,11 @@ class Edituser extends Component{
                         profileImage = objTitle ;
                         
                     }else{          
-                        // swal("Images not uploaded","Something went wrong","error");  
+                        // swal("Images not uploaded","Something went wrong","error"); 
+                        ToastsStore.error(<div className="alertback">Images not uploaded, Something went wrong<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)         
                     }//file
                 }else{ 
+                    ToastsStore.warning(<div className="alertback">Please upload Image, Allowed images formats are (jpg,png,jpeg)<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                     // swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
                 }//file types
             }//file
@@ -107,7 +111,19 @@ class Edituser extends Component{
         }
     }
   }
-  
+
+  Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }  
   handleSubmit(event) {
     var userid = this.state.UserId;
     var formvalues = {
@@ -127,7 +143,8 @@ class Edituser extends Component{
     }
     
         axios.patch('/api/users/useraddress/'+userid, formvalues)
-        .then((response)=> {    
+        .then((response)=> {   
+          ToastsStore.success(<div className="alertback">User updated successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
           // swal({
           //   title:"User updated successfully",
           //   text:"User updated successfully",
@@ -178,7 +195,9 @@ class Edituser extends Component{
         <div>
           <div>                 
               <div className="">                  
-                      
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                     <section className="content viewContent">
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">

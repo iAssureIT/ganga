@@ -5,6 +5,7 @@ import { connect }        from 'react-redux';
 import SmallBanner        from '../../blocks/SmallBanner/SmallBanner.js';
 import './Wishlist.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 class Wishlist extends Component {
 	constructor(props) {
@@ -111,6 +112,7 @@ class Wishlist extends Component {
           .then((response)=>{
             console.log('response', response.data);
             this.props.changeCartCount(response.data.cartCount);
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
             // swal(response.data.message)
             axios.delete('/api/wishlist/delete/'+wishlist_ID)
             .then((response)=>{
@@ -118,6 +120,7 @@ class Wishlist extends Component {
                 products : []
               })
               this.getData();
+             ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
               // swal(response.data.message);
               
             })
@@ -146,6 +149,7 @@ class Wishlist extends Component {
               products : []
             })
             this.getData();
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
             // swal(response.data.message);
             
             
@@ -154,10 +158,26 @@ class Wishlist extends Component {
             console.log('error', error);
           })  
   }
+    Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
     
     render() {  
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                 <SmallBanner bannerData={this.state.bannerData}/>  
                 
                 <div className="container">

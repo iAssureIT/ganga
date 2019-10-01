@@ -1,6 +1,5 @@
 import React, { Component }       from 'react';
 import $ 				                  from 'jquery';
-import Noty                       from 'noty';
 import jQuery                     from 'jquery';
 import Loadable                   from 'react-loadable';
 import axios                      from 'axios';
@@ -124,7 +123,7 @@ class EcommerceProductCarousel extends Component {
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
             this.getCartData();  
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -136,20 +135,7 @@ class EcommerceProductCarousel extends Component {
       })
     }
     else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
-
-      // swal({
-      //     title: "Need to Sign In",
-      //     text: "Please Sign In First",
-      //     icon: "warning",
-      //     buttons: ["No Thanks", "Sign In"],
-      //     dangerMode: true,
-      //   })
-      //   .then((willDelete) => {
-      //     if (willDelete) {
-      //       window.location = "/login";
-      //     } 
-      // });
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
     }
   }
 
@@ -172,8 +158,11 @@ class EcommerceProductCarousel extends Component {
     }
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
-      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
-      ToastsStore.info(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+      // console.log("response",response.status);
+      if(response.status == 200){
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
+      }
+      ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
       // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
@@ -182,19 +171,7 @@ class EcommerceProductCarousel extends Component {
     })
      }
       else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
-      // swal({
-      //     title: "Need to Sign In",
-      //     text: "Please Sign In First",
-      //     icon: "warning",
-      //     buttons: ["No Thanks", "Sign In"],
-      //     dangerMode: true,
-      //   })
-      //   .then((willDelete) => {
-      //     if (willDelete) {
-      //       window.location = "/login";
-      //     } 
-      // });
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
     }
   }
   getCategoryID(event){
@@ -213,8 +190,12 @@ class EcommerceProductCarousel extends Component {
     event.preventDefault();
     $(".toast-error").html('');
     $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
     $(".toast-error").removeClass('toast');
     $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
 
   }
   render() {

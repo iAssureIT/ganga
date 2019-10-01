@@ -10,6 +10,7 @@ import moment                 from "moment";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 export default class MyOrders extends Component {
 	constructor(props) {
@@ -79,6 +80,7 @@ export default class MyOrders extends Component {
 
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                // swal(response.data.message);    
             })
             .catch((error)=>{
@@ -150,6 +152,7 @@ export default class MyOrders extends Component {
                             //   if (inputValue != true) {
                             //     window.location = '/returnpolicy';
                             //   }
+                              ToastsStore.warning(<div className="alertback">Order is returned<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                               })
                              
                         .catch((error)=>{
@@ -158,6 +161,18 @@ export default class MyOrders extends Component {
                       // })
 
     }
+      Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
     cancelProduct(event){
       
       $('#cancelProductModal').show();
@@ -207,6 +222,7 @@ export default class MyOrders extends Component {
                           //   focusConfirm: false,
                           //   showCloseButton: true
                           // });
+                                ToastsStore.warning(<div className="alertback">Your order is cancelled. Refund will be made as per Cancellation Policy<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
                         })
                         .catch((error)=>{
                           console.log('error', error);
@@ -215,6 +231,9 @@ export default class MyOrders extends Component {
   render() {  
     return (
     <div className="container">	
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
         <br/>
       	<div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">

@@ -8,6 +8,7 @@ import $ from "jquery";
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 import axios from 'axios';
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
@@ -48,6 +49,7 @@ class Login extends Component {
         console.log("localStorage =",localStorage.getItem('user_ID'));
         
         if(localStorage==null){
+        ToastsStore.error(<div className="alertback">Invalid Email or Password, Please Enter valid email and password<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
           // swal("Invalid Email or Password","Please Enter valid email and password");
         }else{
           this.setState({
@@ -72,12 +74,14 @@ class Login extends Component {
             //       window.location = "/confirm-otp/"+response.data.user_ID;
             //     } 
             // });
+        ToastsStore.error(<div className="alertback">Need to Verify OTP, Please Verify Your OPT First<a className="pagealerturl" href={"/confirm-otp/"+response.data.user_ID}>Verify Your OPT >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
           }
       })
       .catch((error)=> {
           console.log('error==========  ', error);
         if(localStorage!==null){
           // swal(error.message);
+        ToastsStore.error(<div className="alertback">{error.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
         }
         
       });
@@ -92,10 +96,25 @@ class Login extends Component {
       $('.hidePwd').toggleClass('hidePwd1');
       return $('.inputTextPass').attr('type', 'password');
   }
+    Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
   render(){
     
     return(  
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+      <div className="pagealertnone">
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+        </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
           <div className="row">
             <h3>Please Sign In</h3>

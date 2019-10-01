@@ -4,6 +4,7 @@ import axios                from 'axios';
 import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
 import "./AddressBook.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 class AddressBook extends Component{
     constructor(props) {
@@ -67,19 +68,36 @@ class AddressBook extends Component{
         }
         axios.patch('/api/users/delete/address', formValues)
         .then((response)=>{
-            console.log('response', response);
+            // console.log('response', response);
             this.getUserAddresses();
             // swal(response.data.message);
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
         })
         .catch((error)=>{
             console.log('error', error);
         })
     }
 
+      Closepagealert(event){
+    event.preventDefault();
+    $(".toast-error").html('');
+    $(".toast-success").html('');
+    $(".toast-info").html('');
+    $(".toast-warning").html('');
+    $(".toast-error").removeClass('toast');
+    $(".toast-success").removeClass('toast');
+    $(".toast-info").removeClass('toast');
+    $(".toast-warning").removeClass('toast');
+
+  }
+
 
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <div className="pagealertnone">
+              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              </div>
                 <div className="container">
                     <br/>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
