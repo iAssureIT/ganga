@@ -76,7 +76,7 @@ const WebLayout = () => (
     <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
     <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
     <Route path="/about-us"             exact strict component={Aboutuspage}  />
-
+    <Route path="/sitemap" exact strict component={Aboutuspage}  />
   </div>
 );
 
