@@ -19,21 +19,21 @@ export default class Banner extends Component {
 							<div className="row">
 								<Carousel showArrows={true} onChange={onChange} onClickItem={onClickItem} onClickThumb={onClickThumb}>
 					                <div>
-					                    <img src="/images/slider2.jpg" />
+					                    <img src="/images/Banner_1.jpg" />
 					                    <p className="legend">Legend 1</p>
 					                </div>
 					                <div>
-					                    <img src="assets/2.jpeg" />
+					                    <img src="assets/Banner_2.jpeg" />
 					                    <p className="legend">Legend 2</p>
 					                </div>
 					                <div>
-					                    <img src="assets/3.jpeg" />
+					                    <img src="assets/Banner_3.jpeg" />
 					                    <p className="legend">Legend 3</p>
 					                </div>
-					                <div>
+					                {/* <div>
 					                    <img src="assets/4.jpeg" />
 					                    <p className="legend">Legend 4</p>
-					                </div>
+					                </div> */}
 					            </Carousel>
 							</div>
 						</div>
