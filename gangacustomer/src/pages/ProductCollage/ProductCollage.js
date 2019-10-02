@@ -58,7 +58,7 @@ class ProductCollage extends Component {
 		});
   	}
   	getSectionDetails(sectionID){
-  		axios.get("http://localhost:5006/api/category/get/"+sectionID)
+  		axios.get("/api/category/get/"+sectionID)
 	      .then((response)=>{ 
 	          this.setState({
 	              categoryDetails : response.data
@@ -70,7 +70,7 @@ class ProductCollage extends Component {
 	      })
   	}
   	getCategoryDetails(categoryID){
-		axios.get("http://localhost:5006/api/category/get/one/"+categoryID)
+		axios.get("/api/category/get/one/"+categoryID)
 	      .then((response)=>{ 
 	          this.setState({
 	              categoryDetails : response.data
@@ -82,7 +82,7 @@ class ProductCollage extends Component {
 	      })
 	}
 	getPriceLimits(){
-		axios.get("http://localhost:5006/api/products/get/minmaxprice")
+		axios.get("/api/products/get/minmaxprice")
 	      .then((response)=>{ 
 	      		
 
@@ -97,7 +97,7 @@ class ProductCollage extends Component {
 	      })
 	}
 	getProductsBySection(sectionID){
-		axios.get("http://localhost:5006/api/products/get/list/"+sectionID)
+		axios.get("/api/products/get/list/"+sectionID)
 	      .then((response)=>{ 
 	          this.setState({
 	              products 		 : response.data,
@@ -228,6 +228,9 @@ class ProductCollage extends Component {
 			// 	});
 		}
 		if (filterType == 'color') {
+			$('.color-option').css('box-shadow','0px 0px 0px 0px #888888');
+			$(selecteditems.currentTarget).find('.color-option').css('box-shadow','0px 0px 1px 4px #888888');
+			console.log($(selecteditems.currentTarget).find('.color-option'))
 			var selector=this.state.selector;
 			selector.section_ID = this.props.match.params.sectionID;
 			selector.price = this.state.price;
@@ -253,8 +256,8 @@ class ProductCollage extends Component {
 		if (filterType == 'size') {
 			var selector=this.state.selector;
 			selector.section_ID 	= this.props.match.params.sectionID;
-			selector.brands 	= brands;
 			selector.price 		= this.state.price;
+			selector.size 	= $(selecteditems.currentTarget).val();
 
 			this.setState({	selector: selector },()=>{
 				this.getFilteredProducts(this.state.selector);
@@ -278,7 +281,7 @@ class ProductCollage extends Component {
 	getFilteredProducts(selector){
 		console.log(selector);
 		
-		axios.post("http://localhost:5006/api/products/post/list/filterProducts/",selector)
+		axios.post("/api/products/post/list/filterProducts/",selector)
 
 	      	.then((response)=>{ 
 	      		this.setState({products :response.data});
@@ -336,7 +339,7 @@ class ProductCollage extends Component {
 		}
 	}
 	getBrands(){
-		axios.get("http://localhost:5006/api/products/get/listBrand/"+this.props.match.params.sectionID)
+		axios.get("/api/products/get/listBrand/"+this.props.match.params.sectionID)
 
 	      	.then((response)=>{ 
 	      	
@@ -349,7 +352,7 @@ class ProductCollage extends Component {
 	      	})
 	}
 	getSize(){
-		axios.get("http://localhost:5006/api/products/get/listSize/"+this.props.match.params.sectionID)
+		axios.get("/api/products/get/listSize/"+this.props.match.params.sectionID)
 
 	      	.then((response)=>{ 
 	      	
@@ -362,7 +365,7 @@ class ProductCollage extends Component {
 	      	})
 	}
 	getColor(){
-		axios.get("http://localhost:5006/api/products/get/listColor/"+this.props.match.params.sectionID)
+		axios.get("/api/products/get/listColor/"+this.props.match.params.sectionID)
 
 	      	.then((response)=>{ 
 	      	
@@ -419,82 +422,75 @@ class ProductCollage extends Component {
 					    <button className="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Menu
 					    <span className="caret"></span></button>
 					    <ul className="dropdown-menu">
-					      <li className="dropdown-submenu">
+					      	<li className="dropdown-submenu">
 					        <a className="test" tabindex="-2" href="#">CATEGORY<span className="caret"></span></a>
 					        <ul className="dropdown-menu">
 					        {
-									this.state.categoryDetails.length > 0  ?
-									this.state.categoryDetails.map((data,index)=>{
-										return(
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
-												<li>
-													<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'category')} style={{fontWeight:"100!important"}}>{data.category}</a>
-												</li>
-											</div>
-										);
-									})
-									:
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-									<li>No data Found</li>
-									</div>
-							}
-					        
+								this.state.categoryDetails.length > 0  ?
+								this.state.categoryDetails.map((data,index)=>{
+									return(
+										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 categoriesContainerEcommerce" key={index} >
+											<li>
+												<a href="#productDiv" className="subcategory" data-id={data._id} onClick={this.onSelectedItemsChange.bind(this,'category')} style={{fontWeight:"100!important"}}>{data.category}</a>
+												<ul>
+													{
+														data.subCategory.map((subcat,subind)=>{
+															return(
+																<li>
+																<a href="#productDiv" className="subcategory" data-id={subcat._id} onClick={this.onSelectedItemsChange.bind(this,'subcategory')} style={{fontWeight:"100!important"}}>{subcat.subCategoryTitle}</a>
+																</li>
+															);	
+														})
+													}
+													
+												</ul>
+											</li>
+										</div>
+									);
+								})
+								:
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
+								<li>No data Found</li>
+								</div>
+							}	
 					        </ul>
-					      </li>
+					      	</li>
 
-					      {
-						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-					       <li className="dropdown-submenu">
-					        <a className="test" tabindex="-1" href="#">COLOR <span className="caret"></span></a>
-					        <ul className="dropdown-menu">
+					      	
+						    <li className="dropdown-submenu">
+						        <a className="test" tabindex="-1" href="#">COLOR <span className="caret"></span></a>
+						        <ul className="dropdown-menu">
 
-					          {this.state.colors ? 
-						      	this.state.colors.map((data,index)=>{
-						      		return(
-						      		<a href="#" className="col-sm-6 col-xs-6 swatch-option-link-layered" onClick={ this.onSelectedItemsChange.bind(this,"color")}>
-                                    	<div className="color-option" data-color={data} style={{backgroundColor:data}} option-tooltip-value={data} ></div>
-                            		</a>);
-						      	})
-						      	
-						      	: <li>"no data </li>}	
+						          {this.state.colors ? 
+							      	this.state.colors.map((data,index)=>{
+							      		return(
+							      		<a href="#" className="col-sm-6 col-xs-6 swatch-option-link-layered" onClick={ this.onSelectedItemsChange.bind(this,"color")}>
+	                                    	<div className="color-option" data-color={data} style={{backgroundColor:data}} option-tooltip-value={data} ></div>
+	                            		</a>);
+							      	})
+							      	
+							      	: <li>"no data </li>}	
 
-					          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
-					        </ul>
-					      </li>
-
-						      :
-
-						      ""
-
-						  }
-
-						   {
-						 	this.state.categoryDetails && this.state.categoryDetails.webCategory == 'Main-Site' ?
-						    
-
-					       <li className="dropdown-submenu">
+						          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+						          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
+						        </ul>
+						    </li>
+						     
+					       	<li className="dropdown-submenu">
 					        <a className="test" tabindex="-1" href="#">SIZE <span className="caret"></span></a>
 					        <ul className="dropdown-menu">
-					         <select className="sortProducts">
+					         <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
 					          {this.state.sizes ? 
 						      	this.state.sizes.map((data,index)=>{
 						      		return(<option value={data}>{data}</option>);
 						      	  })
-
 						      	: ''}
 						      	</select>
 
 					          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
 					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
 					        </ul>
-					      </li>
-
-					      :
-
-					      ""
-					  }
-
+					      	</li>
 					    </ul>
 					  </div>		
 			          </div> 
@@ -585,8 +581,10 @@ class ProductCollage extends Component {
 						        <span className="expand"><i className="fa fa-plus"></i></span>
 						     </div>
 						    </div>
+
 						    <div id="collapseTwo" className="collapse" >
 						      <div className="card-body">
+						      <br/>
 						      {this.state.colors ? 
 						      	this.state.colors.map((data,index)=>{
 						      		return(
@@ -611,7 +609,7 @@ class ProductCollage extends Component {
 						    <div id="collapseFour" className="collapse" >
 						      <br/>
 						      <div className="card-body">
-							    <select className="sortProducts" onClick={ this.onSelectedItemsChange.bind(this,"size")}>
+							    <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
 							      {this.state.sizes ? 
 							      	this.state.sizes.map((data,index)=>{
 							      		return(<option value={data}>{data}</option>);

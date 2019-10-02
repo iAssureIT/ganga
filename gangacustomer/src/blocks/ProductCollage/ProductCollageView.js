@@ -215,7 +215,7 @@ class ProductCollageView extends Component {
             <label className="col-lg-5 col-md-5 col-sm-10 col-xs-10 NoPadding labeldiv">Show</label>
             <select className="limitProducts col-lg-6 col-md-6 col-sm-6 col-xs-6 NoPadding" onChange={this.limitProducts.bind(this)}>
               <option  className="10" >10</option>
-              <option value="1">20</option>
+              <option value="20">20</option>
               <option value="30">30</option>
               <option value="40">40</option>
           </select>
