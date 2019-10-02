@@ -7,7 +7,7 @@ import { connect }        from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCartCata } from '../../actions/index';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import IMask from 'imask';
 
 
 class CartProducts extends Component{
@@ -35,7 +35,7 @@ class CartProducts extends Component{
 
     async componentDidMount(){
     	await this.props.fetchCartData();
-        
+        this.validateNumber();
         this.getCompanyDetails();
     }
     componentWillReceiveProps(nextProps) { 
@@ -92,28 +92,21 @@ class CartProducts extends Component{
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
         const cartitemid = event.target.getAttribute('id');
-
         const formValues = { 
-              "user_ID"    : userid,
-              "cartItem_ID" : cartitemid,
-          }
-
+            "user_ID"    : userid,
+            "cartItem_ID" : cartitemid,
+        }
         axios.patch("/api/carts/remove" ,formValues)
-          .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
-             .then((obj)=>{
+        .then((response)=>{
+            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+            .then((obj)=>{
                 this.props.fetchCartData();
-             });
-
-
-            this.getCompanyDetails();
-
-          })
-          .catch((error)=>{
-                console.log('error', error);
-          })
-
-
+            });
+        this.getCompanyDetails();
+        })
+        .catch((error)=>{
+        console.log('error', error);
+        })
     }
 
     cartquantityincrease(event){
@@ -121,13 +114,11 @@ class CartProducts extends Component{
         const userid = localStorage.getItem('user_ID');
         const cartitemid = event.target.getAttribute('id');
         const quantity = parseInt(event.target.getAttribute('dataquntity'));
-
         const quantityAdded = parseInt(quantity+1);
         const proprice = event.target.getAttribute('dataprice');
         if(quantity>0){
            var totalIndPrice   = quantityAdded * proprice;      
         }
-        
         const formValues = { 
 			"user_ID"     	: userid,
 			"cartItem_ID" 	: cartitemid,
@@ -135,29 +126,24 @@ class CartProducts extends Component{
 			"totalIndPrice"	: totalIndPrice
 		}
         axios.patch("/api/carts/quantity" ,formValues)
-          .then((response)=>{
-            this.props.fetchCartData();
-            
-          })
-          .catch((error)=>{
+        .then((response)=>{
+                this.props.fetchCartData();
+        })
+        .catch((error)=>{
                 console.log('error', error);
-          })
-        
+        })
     }
-      Closepagealert(event){
-    event.preventDefault();
-    $(".toast-error").html('');
-    $(".toast-success").html('');
-    $(".toast-info").html('');
-    $(".toast-warning").html('');
-    $(".toast-error").removeClass('toast');
-    $(".toast-success").removeClass('toast');
-    $(".toast-info").removeClass('toast');
-    $(".toast-warning").removeClass('toast');
-
-  }
-
-
+    Closepagealert(event){
+        event.preventDefault();
+        $(".toast-error").html('');
+        $(".toast-success").html('');
+        $(".toast-info").html('');
+        $(".toast-warning").html('');
+        $(".toast-error").removeClass('toast');
+        $(".toast-success").removeClass('toast');
+        $(".toast-info").removeClass('toast');
+        $(".toast-warning").removeClass('toast');
+    }
     cartquantitydecrease(event){
     	event.preventDefault();
         const userid = localStorage.getItem('user_ID');
@@ -195,7 +181,19 @@ class CartProducts extends Component{
     updateShoppingCart(){
         window.location.reload();
     }
+    validateNumber(e) {
+        var varx = document.getElementById('productPrize').innerHTML;
+        console.log('var', varx);
+    
+        // var dynamicMask = new IMask(document.getElementById('productPrize').innerHTML, {
+        //     mask: [{
+        //         mask: '00000-00000'
+        //     }]
+        // })
+        
+    }
     render(){
+        
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
@@ -218,6 +216,12 @@ class CartProducts extends Component{
                                     {
                                         this.props.recentCartData &&  this.props.recentCartData.length &&  this.props.recentCartData[0].cartItems.length > 0?
                                         this.props.recentCartData[0].cartItems.map((data, index)=>{
+                                            var x = data.offeredPrice;
+                                            var offeredPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
+                                            var y = data.totalForQantity;
+                                            var z = this.state.totalForQantity;
+                                            var totalForQantity = y.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
+                                            var totalForQantityState = z ?  z.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",") : "";
                                             return(
                                                 <tr key={index}>
                                                     <td>
@@ -231,13 +235,13 @@ class CartProducts extends Component{
                                                             </td>
                                                         </tr>
                                                     </td>
-                                                    <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp; {data.offeredPrice}</span></td>
+                                                    <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{offeredPrice}</span></td>
                                                     <td className="nowrap">
                                                         <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.offeredPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
                                                         <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
                                                         <span className="plusQuantity fa fa-plus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.offeredPrice} onClick={this.cartquantityincrease.bind(this)}></span>
                                                     </td>
-                                                    <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{this.state.totalIndPrice !=0 ? this.state.totalIndPrice : data.totalForQantity}</span></td>
+                                                    <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
                                                     <td>
                                                         <span className="fa fa-times cartDelete" id={data._id} onClick={this.Removefromcart.bind(this)}></span>
                                                     </td>
@@ -251,10 +255,7 @@ class CartProducts extends Component{
                                     }
                                 </tbody>
                             </table>
-                            {/* <div className="col-lg-4 col-lg-offset-5 col-md-4 col-md-offset-5 col-sm-12 col-xs-12 NOpaddingLeft">
-                            <button onClick={this.continueShopping.bind(this)} className="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-12 col-xs-12 btn btn-warning continueShopping"> <i className="fa fa-angle-left cartLeftAngle" area-hidden="true"></i> &nbsp; CONTINUE SHOPPING</button>
-                            </div>
-                            <button className="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn btn-warning cartButton" onClick={this.updateShoppingCart.bind(this)}> UPDATE SHOPPING CART</button> */}
+                            
                         </div>
                         {
                             this.props.recentCartData && this.props.recentCartData.length > 0?
@@ -275,11 +276,11 @@ class CartProducts extends Component{
                                                     </tr>
                                                     <tr>
                                                         <td>GST ({this.state.vatPercent > 0 ? this.state.vatPercent : 0}%)</td>
-                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].cartTotal > 0 && this.state.vatPercent ?(this.props.recentCartData[0].cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"} </td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].cartTotal > 0 && this.state.vatPercent ?(this.props.recentCartData[0].cartTotal*(this.state.vatPercent/100)).toFixed(2).replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",") : "0.00"} </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Order Total</td>
-                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.props.recentCartData[0].cartTotal))+(parseInt(this.props.recentCartData[0].cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}  </td>
+                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.props.recentCartData[0].cartTotal))+(parseInt(this.props.recentCartData[0].cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",")}  </td>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -23,6 +23,8 @@ class AddNewShopProduct extends Component {
       catError: false,
       subCatError: false,
       subCatFormErrors: false,
+      showDiscount : true,
+      discountPercentError : "",
       editId: this.props.match.params ? this.props.match.params.productID : ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -354,7 +356,9 @@ class AddNewShopProduct extends Component {
     }
     console.log('formValues', formValues);
     if ($('#addNewShopProduct').valid()) {
-      axios.post('/api/products/post', formValues)
+      if(this.state.discountPercentError == ""){
+        console.log('discountPercentError', this.state.discountPercentError);
+        axios.post('/api/products/post', formValues)
         .then((response) => {
           console.log('response', response);
           this.props.history.push('/add-product/image/' + response.data.product_ID);
@@ -386,9 +390,8 @@ class AddNewShopProduct extends Component {
         .catch((error) => {
           console.log('error', error);
         })
+      }
     }
-
-
   }
   updateProduct(event) {
     event.preventDefault();
@@ -513,39 +516,72 @@ class AddNewShopProduct extends Component {
     this.setState({
       [event.target.name] : event.target.value
     })
-    var originalPrice = parseFloat(this.refs.originalPrice.value);
-    var discountedPrice = parseFloat((originalPrice * event.target.value)/100);
-    this.setState({
-      discountedPrice : discountedPrice
-    })
+    console.log('discountPercent', event.target.value);
+    if(event.target.value > 100){
+      this.setState({
+        discountPercentError : "Discount Percent should be less than 100."
+      })
+    }else if(event.target.value < 0){
+      this.setState({
+        discountPercentError : "Discount Percent should be greater than 0.",
+        discountedPrice : 0
+      })
+    }else{
+      this.setState({
+        discountPercentError : ""
+      })
+    }
+    var originalPrice = parseFloat(this.refs.originalPrice.value).toFixed(2);
+    
+    if(originalPrice != "NaN"){
+      var discountedPrice = parseFloat(originalPrice) - parseFloat((originalPrice * event.target.value)/100);
+      this.setState({
+        discountedPrice : discountedPrice < 0 ? 0 : discountedPrice
+      })
+    }
   }
   discountPercent(event){
     event.preventDefault();
     this.setState({
       [event.target.name] : event.target.value
     })
+    
     var originalPrice = parseFloat(this.refs.originalPrice.value).toFixed(2);
-    var discountPercent = parseFloat((event.target.value/originalPrice )*100).toFixed(2);
-    this.setState({
-      discountPercent : discountPercent
-    })
+    if(originalPrice != "NaN"){
+      var discountPercent = parseFloat(((originalPrice - event.target.value)/originalPrice )*100).toFixed(2);
+      this.setState({
+        discountPercent : discountPercent
+      })
+    }
   }
   percentAndPrice(event){
     event.preventDefault();
     this.setState({
-      [event.target.name] : event.target.value
+      [event.target.name] : event.target.value,
+      
     });
+    if(event.target.value){
+      this.setState({
+        showDiscount : false
+      })
+    }else{
+      this.setState({
+        showDiscount : true,
+        discountPercent : "",
+        discountedPrice : "",
+      })
+    }
     var discountPercent =  parseFloat(this.refs.discountPercent.value);
     var discountedPrice = parseFloat(this.refs.discountedPrice.value);
 
     if(discountPercent){
       this.setState({
-        discountedPrice : parseFloat((event.target.value * discountPercent)/100).toFixed(2)
+        discountedPrice : parseFloat(event.target.value) - parseFloat((event.target.value * discountPercent)/100).toFixed(2)
       });
     }
     if(discountedPrice){
       this.setState({
-        discountPercent : parseFloat((discountedPrice/event.target.value )*100).toFixed(2)
+        discountPercent : parseFloat((event.target.value - discountedPrice/event.target.value )*100).toFixed(2)
       });
     }
   }
@@ -673,15 +709,18 @@ class AddNewShopProduct extends Component {
                       <option value="gbp">GBP</option>
                     </select>
                   </div>
-                  <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
-                    <label>Discount Percent (%)</label>
-                    <input  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="text" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
+                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+                    <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingRightZeroo">
+                      <label>Discount Percent (%)</label>
+                      <input disabled={this.state.showDiscount}  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="number" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingLeftZeroo">
+                      <label>Discount Price </label>
+                      <input disabled={this.state.showDiscount} onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="text" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
+                    </div>
+                    <label className="error col-lg-12">{this.state.discountPercentError}</label>
                   </div>
-                  <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
-                    <label>Discount Price </label>
-                    <input onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="text" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
-                  </div>
-
+                  
                   <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
                     <label>Size</label>
                     <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control " placeholder="Size" aria-describedby="basic-addon1" ref="size" />

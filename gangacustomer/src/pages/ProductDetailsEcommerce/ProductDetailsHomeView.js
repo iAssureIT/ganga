@@ -1,16 +1,6 @@
 import React, { Component } 		from 'react';
-// import EcommerceHeader 				from "../../blocks/common/EcommerceHeader/EcommerceHeader.js";
-// import EcommerceBreadcumb 			from "../../blocks/common/Breadcumb/EcommerceBreadcumb.js";
-// import FeaturedProducts 			from "../../blocks/FeaturedProducts/FeaturedProducts.js";
-// import EcommerceFooter    			from "../../blocks/common/EcommerceFooter/EcommerceFooter.js";
-// import ProductDescriptionEcommerce 	from "../../blocks/common/ProductDescriptionEcommerce/ProductDescriptionEcommerce.js";
-import ProductViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductViewEcommerce.js";
 import ProductModalViewEcommerce     from "../../blocks/ProductViewEcommerce/ProductModalViewEcommerce.js";
-import ProductViewEcommerceList     from "../../blocks/ProductViewEcommerceList/ProductViewEcommerceList.js";
-import ProductViewEcommerceBestSellers     from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
-import ProductViewEcommerceShopingFeature     from "../../blocks/ProductViewEcommerceShopingFeature/ProductViewEcommerceShopingFeature.js";
 import ProducthomeDetailsReviewFAQ 		from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProducthomeDetailsReviewFAQ.js";
-// import FeaturedProductsEcommerce 	from "../../blocks/FeaturedProducts/FeaturedProductsEcommerce.js";
 import axios                  		from 'axios';
 
 axios.defaults.baseURL = 'http://gangaapi.iassureit.com';

@@ -20,7 +20,7 @@ class ProductList extends Component{
             },
             tableObjects : {
                 paginationApply : true,
-                searchApply     : false,
+                searchApply     : true,
                 deleteMethod    : 'delete',
                 apiLink         : '/api/products',
                 editUrl         : '/add-product/'
@@ -68,6 +68,7 @@ class ProductList extends Component{
             startRange : startRange,
             limitRange : limitRange
         }
+        this.getCount();
         axios.post('/api/products/get/list', data)
         .then((response)=>{
             console.log('response', response.data)
@@ -100,6 +101,20 @@ class ProductList extends Component{
 
         });
         this.getData(this.state.startRange, this.state.limitRange);
+    }
+    getSearchText(searchText){
+        axios.get("/api/products/get/search/"+searchText)
+        .then((response)=>{ 
+            console.log('tableData', response.data);
+            this.setState({
+                tableData : response.data,
+                dataCount : response.data.length
+            });
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+        
     }
 
 
@@ -158,6 +173,7 @@ class ProductList extends Component{
                                         tableData={this.state.tableData}
                                         getData={this.getData.bind(this)}
                                         tableObjects={this.state.tableObjects}
+                                        getSearchText = {this.getSearchText.bind(this)}
                                         />
                                     </div>
                                 </div>

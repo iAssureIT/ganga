@@ -468,9 +468,12 @@ class IAssureTable extends Component {
 					:
 					null        
 		       	}
-		       	{
+				   <div className="col-lg-4 col-md-4 col-xs-12 col-sm-12 totalDataCount">Total Data : <b>{this.state.dataCount}</b>
+					   
+				   </div>
+				{
 		       		this.state.tableObjects.searchApply == true ? 
-			       		<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding pull-right">
+			       		<div className="col-lg-4  col-md-4  col-xs-12 col-sm-12 marginTop17 NOpadding pull-right">
 			        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
 			        		<div className="input-group">
 						        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
@@ -618,7 +621,7 @@ class IAssureTable extends Component {
 										}
 									) 	
 									:
-									<tr className="trAdmin"><td colSpan={this.state.tableHeading ? Object.keys(this.state.tableHeading).length+1 : 1} className="noTempData textAlignCenter">No Record Found!</td></tr>               		
+									<tr className="trAdmin"><td colSpan={9} className="noTempData textAlignCenter">No Record Found!</td></tr>               		
 								}
 	                    	</tbody>
 	                    </table>
