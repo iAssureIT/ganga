@@ -405,10 +405,12 @@
     color: #fbbb65;
 }
 .viewAddtoCart:hover{
-    color: #fbbb65;
+    background-color: #fbbb65;
+    color: #fff;
 }
 .viewWishList:hover{
-    color: #fbbb65;
+    background-color: #fbbb65;
+    color: #fff;
 }
 .viewAddtoCart:before {
     font-family: "Font Awesome 5 Free";

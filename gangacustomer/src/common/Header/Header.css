@@ -178,11 +178,10 @@
 	height: 40px;
 }
 .signinmenuul{
-	left:310px!important;
-	top: 38px!important;
 	font-size: 20px!important;
 	border-radius: 0px;
 	padding: 0px;
+	width: 250px;
 }
 
 .signinmenuul li a{
@@ -304,13 +303,13 @@ ul.box-static-link li span {
 	border-radius: 10px;
 }
 .cartdropheight{
-	height: 180px;
+	height: 100px;
 }
 .cartdropaction{
 	font-size:18px;
 	color: #aaa;
 	cursor: pointer;
-	margin-top: 20px;
+	margin-top: 2px;
 
 }
 .cartdropaction:hover{
@@ -324,4 +323,8 @@ ul.box-static-link li span {
 	border:none;
 	padding: 0px!important;
 	margin:0px!important;
+}
+
+.carewrap{
+	margin-top: 45px;
 }

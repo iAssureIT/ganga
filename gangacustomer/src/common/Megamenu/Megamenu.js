@@ -88,30 +88,49 @@ componentWillMount() {}
                       <a className="mega-menu" href={"/section/"+data._id}><span>{data.section}</span></a>
                       <div className="sub-menu-block">
                         <div className="row">
-                          {
-                            data.categorylist.map((cateoryDetails,catindex)=>{
-                              return(
-                                  <div className="col-md-2 col-lg-2 col-sm-2">
-                                    <h2 className="sub-menu-head">{cateoryDetails.category}</h2>
-                                    <ul className="sub-menu-lists">
-                                      {
-                                        cateoryDetails.subCategory.map((subCat,subindex)=>{
-                                          return(
-                                              <li><a>{subCat.subCategoryTitle}</a></li>
-                                            );
-                                        })
-                                      }
-                                    </ul>           
-                                  </div>
-                                );
-                            })
-                          }
+                          <div className="col-md-3 col-lg-3 col-sm-3 megamenusubwidth">
+                            {
+                              data.categorylist.map((cateoryDetails,catindex)=>{
+                                if(!cateoryDetails.subCategory.length>0){
+                                  return(
+                                    <div className="col-md-12 col-lg-12 col-sm-12 megamenusubwidth1">
+                                      <h1 className="sub-menu-head"><a href={"/section/"+data._id}>{cateoryDetails.category}</a></h1>
+                                    </div>
+                                  );
+                                }
+                                
+                              })
+                            }
+                          </div>
+                          <div className="col-md-7 col-lg-7 col-sm-7 megamenusubwidth">
+                            {
+                              data.categorylist.map((cateoryDetails,catindex)=>{
+                                if(cateoryDetails.subCategory.length>0){
+                                  return(
+                                    <div className="col-md-2 col-lg-2 col-sm-2 megamenusubwidth">
+                                      <h1 className="sub-menu-head"><a href={"/section/"+data._id}>{cateoryDetails.category}</a></h1>
+                                      <ul className="sub-menu-lists">
+                                        {
+                                          cateoryDetails.subCategory.map((subCat,subindex)=>{
+                                            return(
+                                                <li><a>{subCat.subCategoryTitle}</a></li>
+                                              );
+                                          })
+                                        }
+                                      </ul>           
+                                    </div>
+                                  );
+                                }
+                                
+                              })
+                            }
+                          </div>
                         </div>
                       </div>
                     </li>
                     );
-              })
-            }
+                 })
+              }
           </ul> 
         </nav>
     </header>  

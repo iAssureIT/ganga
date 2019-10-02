@@ -7,7 +7,7 @@
   bottom: 15px;
   right: 15px;
   font-size: 14px;
-  color: #999;
+  color: #999
 }
 
 .author a {
@@ -34,12 +34,12 @@ blockquote h2 { padding-right: 40px; margin: 0px; }
 header.dark blockquote a {color: orange; text-decoration: underline;}
 header.light blockquote a {text-decoration: underline;}
 /*header { min-height: 450px; }*/
-header.dark { background-color: #232f3e; }
+header.dark { background-color: #232F3E!important; }
 header.light { background-color: #fff; }
 
 /* Navigation Styles */
 nav { position: relative;  }
-header.dark nav { background-color:rgba(255,255,255,0.5); }
+/*header.dark nav { background-color:rgba(255,255,255,0.5); }*/
 header.light nav { background-color:rgba(0,0,0,0.5); }
 
 ul.main-nav { 
@@ -64,6 +64,7 @@ ul.main-nav > li > a {
   font-weight: 400;
   box-sizing: border-box;
   cursor: pointer;
+  text-decoration: none;
 }
 
 ul.main-nav > li:hover { background-color: #f9f9f9; }
@@ -82,6 +83,13 @@ ul.main-nav > li ul.sub-menu-lists > li {
 
 ul.main-nav > li ul.sub-menu-lists > li > a {
   font-size: 14px;
+  color: #777;
+  text-decoration: none;
+  cursor: pointer;
+}
+ul.main-nav > li ul.sub-menu-lists > li > a:hover {
+  color: #FBBD65;
+
 }
 
 .ic {
@@ -303,10 +311,11 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     opacity: 1;
   }
   
-  .sub-menu-head { font-size: 20px;}
+  .sub-menu-head { font-size: 16px; cursor: pointer;}
+  .sub-menu-head:hover {color:#FBBD65;}
   
   /* List Separator: Outer Border */
-  header.dark ul.main-nav > li > a { border-right: 1px solid #bbb; }
+  /*header.dark ul.main-nav > li > a { border-right: 1px solid #bbb; }*/
   header.light ul.main-nav > li > a { border-right: 1px solid #666; }
   
   /* List Separator: Inner Border */
@@ -319,7 +328,7 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     top: 0px;
     z-index : 2;
   }
-  header.dark ul.main-nav > li > a:after { background-color: #777; }
+  /*header.dark ul.main-nav > li > a:after { background-color: #777; }*/
   header.light ul.main-nav > li > a:after { background-color: #999; }
   
   /* Drop Down/Up Arrow for Mega Menu */
@@ -344,4 +353,20 @@ ul.main-nav > li ul.sub-menu-lists > li > a {
     border-bottom: 5px solid #666;
   }
   .banners-area { border-top: 1px solid #ccc; }
+}
+
+.megamenusubwidth{
+  width: auto!important;
+}
+.megamenusubwidth1{
+  width: auto!important;
+  float: none!important;
+}
+
+.sub-menu-head a{
+  text-decoration: none;
+  color: #333
+}
+.sub-menu-head a:hover{
+  color: #FBBD65;
 }

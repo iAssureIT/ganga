@@ -9,6 +9,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/dropdown.js';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Megamenu         from '../Megamenu/Megamenu.js';
+import ContactPage      from '../../pages/ContactPage/ContactPage.js';
 import axios                    from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import { connect }        from 'react-redux';
@@ -81,6 +82,16 @@ componentDidMount(){
             .catch((error)=>{
                 console.log('error', error);
             })  
+
+            $(".dropdown").hover(
+              function () {
+                $(this).addClass("open");
+              },
+              function () {
+                $(this).removeClass("open");
+              }
+            );
+
 }
 
 
@@ -265,6 +276,11 @@ searchProducts(){
                 console.log('error', error);
           })
     }
+    Removefromcartwarning(event){
+
+        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" onClick={this.Removefromcart.bind(this)} >Remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+
+    }
   submitQuery(){
     var formValues = {
       "customerName" : this.refs.firstName.value,
@@ -329,44 +345,35 @@ searchProducts(){
                                 <li className="borderLeft cursorpointer" data-toggle="modal" data-target="#customercareModal"><a>Customer Care</a></li>
                                 <div className="modal " id="customercareModal" role="dialog">
                                   <div className="modal-dialog modal-lg dialog">
-                                    <div className="modal-content"> 
-                                      <div className="modal-header">
-                                        <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                        <h4 className="modal-title">CUSTOMER REVIEWS</h4>
-                                      </div> 
-                                      <div className="modal-body">
-                                          <div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop180 topspace">
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                              <div className="row">
-                                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                 <label className=" ">Name</label>
-                                                 <input disabled ref="firstName" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
-                                                </div>
-                                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                 <label className=" ">MobileNumber</label>
-                                                  <input  disabled ref="mobNumber" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputbx" type="text"/>
-                                                </div>
+                                    <div className="modal-content col-lg-8 col-lg-offset-2"> 
+                                      <div className="row"> 
+                                        <div className="modal-header">
+                                          <img src="/images/Icon.png" />
+                                          <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
+                                          <h4 className="modal-title modalheadingcont">CUSTOMER CARE</h4>
+                                        </div> 
+                                        <div className="">
+                                          <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1 carewrap">
+                                              <div className="formcontent col-lg-12">
+                                                <label htmlFor="name">Name<span className="redFont">*</span></label>
+                                                <input disabled  className="form-control" id="name" type="text"ref="firstName"/>
                                               </div>
-                                              <div className="row topspace15">
-                                                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                  <label className=" ">Review</label>
-                                                </div>               
+                                              <div className="formcontent col-lg-12">
+                                                <label htmlFor="email">Mobile No<span className="redFont">*</span></label>
+                                                <input disabled className="form-control" id="mobileno" type="number"ref="mobNumber"/>
                                               </div>
-                                               <div className="row topspace15">
-                                                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                <textarea id="message" ref="query" className="col-lg-12 col-md-12 col-xs-12 col-sm-12" rows="4" cols="50"></textarea>
-                                                </div>
+                                              <div className="formcontent1 col-lg-12">
+                                                <label htmlFor="message">Message<span className="redFont">*</span></label>
+                                                <textarea className="form-control" id="message"ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)}></textarea>
                                               </div>
-                                              <div className="row topspace15">
-                                                <div className="col-lg-offset-8 col-lg-4 col-md-offset-9 col-md-3 col-xs-12 col-sm-12">
-                                                  <div className="col-lg-12 text-center btn btn-warning" onClick={this.submitQuery.bind(this)}>Submit Review</div>
-                                                </div>               
+                                              <div className="checkbox">
                                               </div>
-                                            </div>
-                                          </div>
+                                              <div onClick={this.submitQuery.bind(this)} className="btn btn-warning pull-right"> Submit</div>
+                                           </div>    
                                         </div>  
                                        <div className="modal-footer">                     
                                       </div>                  
+                                      </div>
                                     </div>
                                   </div>
                                 </div>          
@@ -383,7 +390,7 @@ searchProducts(){
                                 <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
                                 {
                                   user_ID? 
-                                  <li><a href="/"  data-toggle="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                  <li className="dropdown"><a href="/"  data-toggle="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
                                       <li className="col-lg-12 NOpadding"><a href="/account">Your Profile</a></li>
                                       <li className="col-lg-12 NOpadding"><a href="/wishlist">Your Wishlist</a></li>
@@ -462,26 +469,15 @@ searchProducts(){
                                                           <img src={data.productImage[0]}/>
                                                         </div>
                                                       </div>
-                                                      <div className="col-lg-7 cartdropimg">
+                                                      <div className="col-lg-9 cartdropimg">
                                                         <div className="row">
                                                           <a href={"/productdetails/"+data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
-                                                          <div className="cursorpointer col-lg-12">
-                                                            <p className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></p>
-                                                          </div>
-                                                          <div className="col-lg-12">
+                                                          <div className="col-lg-12 text-center">
                                                             <div className="row">
-                                                              <div className="col-lg-6">
-                                                                <div className="row">
-                                                                  <p className="col-md-6">Qty:</p>
-                                                                  <p className="col-md-6 cartmodquntityborder text-center">{data.quantity}</p>
-                                                                </div>
-                                                              </div>
-                                                              <div className="col-lg-6">
-                                                                <div className="row">
-                                                                  <div className="col-md-1 col-lg-1 pull-right"><div className="row"><a href={"/productdetails/"+data.product_ID}><i className="fa fa-cog cartdropaction" aria-hidden="true"></i></a></div></div>
-                                                                  <div className="col-md-1 col-lg-1 pull-right"><div className="row"><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcart.bind(this)}></i></div></div>
-                                                                </div>
-                                                              </div>
+                                                              <div className="col-lg-4"><p className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></p></div>
+                                                              <div className="col-lg-3"><p className="row"><b> {data.quantity}</b></p></div>
+                                                              <div className="col-lg-3"><p className="row"><b><i className="fa fa-inr"></i> {data.totalForQantity}</b></p></div>
+                                                              <div className="col-lg-2"><div className="row"><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcartwarning.bind(this)}></i></div></div>
                                                             </div>
                                                           </div>
                                                         </div>
@@ -534,8 +530,8 @@ searchProducts(){
 }
 const mapStateToProps = (state)=>{
   return {
-    cartCount      :  state.cartCount,
-    cartData       :  state.cartData,
+    cartCount      : state.cartCount,
+    cartData       : state.cartData,
     wishlistCount  : state.wishlistCount,
     searchResult   : state.searchResult,
     searchCriteria : state.searchCriteria

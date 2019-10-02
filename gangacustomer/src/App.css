@@ -75,3 +75,34 @@ button:focus{
   margin-left: 20px;
   color: #333;
 }
+
+.modal-content{
+  border-radius: 0px!important;
+}
+
+.modal-header{
+  background: #b83118;
+  height: 37px;
+  color:#fff;
+  padding: 10px!important
+}
+.modal-header img{
+  height: 20px;
+
+}
+
+.modalheadingcont{
+  text-align: center;
+  margin-top: -22px!important;
+}
+
+.modalclosebut{
+ opacity: 10!important;
+    background: #fff!important;
+    height: 21px;
+    width: 17px;
+}
+
+a:hover{
+  color: #FBBD65!important;
+}

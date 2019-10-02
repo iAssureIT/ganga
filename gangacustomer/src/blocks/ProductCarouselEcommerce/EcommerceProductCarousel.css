@@ -377,6 +377,12 @@ background-color: transparent !important;
     cursor: pointer;
     text-align: center;
 }
+.productcarotext1:hover{
+  color: #FBBD65!important;
+}
+.productcarotext1:focus{
+  color: #FBBD65!important;
+}
 
 .owl-theme .owl-dots{
     display: none;

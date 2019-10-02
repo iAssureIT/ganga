@@ -42,6 +42,7 @@ import AddressBook                               from '../pages/AddressBook/Addr
 import PrivacyPolicy                             from "../pages/PrivacyPolicy/PrivacyPolicy.js";
 import Aboutuspage                               from "../pages/Aboutuspage/Aboutuspage.js";
 import ReturnPolicy                              from '../pages/ReturnPolicy/ReturnPolicy.js';
+import ContactPage                               from '../pages/ContactPage/ContactPage.js';
 
 
 
@@ -77,6 +78,7 @@ const WebLayout = () => (
     <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
     <Route path="/about-us"             exact strict component={Aboutuspage}  />
     <Route path="/sitemap" exact strict component={Aboutuspage}  />
+    <Route path="/contact-us" exact strict component={ContactPage}  />
   </div>
 );
 
