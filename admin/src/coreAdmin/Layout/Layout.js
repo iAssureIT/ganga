@@ -28,7 +28,17 @@ import AddNewBulkProduct                          from '../../StoreManagement/pr
 import ProductList                                from '../../StoreManagement/product/productList/component/ProductList.js';
 import BulkProductImageUpload                     from '../../StoreManagement/bulkimageUpload/BulkProductImageUpload.js'
 import FileWiseProductList                        from '../../StoreManagement/product/fileproductList/component/fileproductList.js';
-import AdminOrdersList                            from '../../StoreManagement/orders/component/AdminOrdersList.js';
+
+import AllOrdersList                              from '../../StoreManagement/orders/component/AllOrders.js';
+import NewOrdersList                              from '../../StoreManagement/orders/component/NewOrdersList.js';
+import VerifiedOrdersList                         from '../../StoreManagement/orders/component/VerifiedOrdersList.js';
+import PackedOrdersList                           from '../../StoreManagement/orders/component/PackedOrdersList.js';
+import InspectedOrdersList                        from '../../StoreManagement/orders/component/InspectedOrdersList.js';
+import ApprovedOrdersList                         from '../../StoreManagement/orders/component/ApprovedOrdersList.js';
+import DispatchedOrdersList                       from '../../StoreManagement/orders/component/DispatchedOrdersList.js';
+import DeliveryInitiatedOrders                    from '../../StoreManagement/orders/component/DeliveryInitiatedOrders.js';
+import DeliveredOrders                            from '../../StoreManagement/orders/component/DeliveredOrders.js';
+
 import BaList                                     from '../../storeAdmin/baManagement/listOfBAs/components/BusinessAssociateList.js';
 
 import AddNewBA                                   from '../../storeAdmin/baManagement/BAOnboarding/basicInfo/basicInfo.js';
@@ -187,7 +197,17 @@ class Layout extends Component{
                                         <Route path="/vendor-location-type"                                         exact strict component={ VendorLocationType } />
 
                                         { /*Order List*/}
-                                        <Route path="/orders-list"                                                  exact strict component={ AdminOrdersList } />
+                                        <Route path="/allorders"                                                    exact strict component={ AllOrdersList } />
+                                        <Route path="/new-orders-list"                                              exact strict component={ NewOrdersList } />
+                                        <Route path="/verified-orders-list"                                         exact strict component={ VerifiedOrdersList } />
+                                        <Route path="/packed-orders-list"                                           exact strict component={ PackedOrdersList } />
+                                        <Route path="/inspected-orders-list"                                        exact strict component={ InspectedOrdersList } />
+                                        <Route path="/approved-orders-list"                                         exact strict component={ ApprovedOrdersList } />
+                                        <Route path="/dispatched-orders-list"                                       exact strict component={ DispatchedOrdersList } />
+                                        <Route path="/delivery-initiated-orders"                                    exact strict component={ DeliveryInitiatedOrders } />
+                                        <Route path="/delivered-orders-list"                                        exact strict component={ DeliveredOrders } />
+
+
                                         <Route path="/viewOrder/:orderID"                                           exact strict component={ viewOrder } />
 
                                         { /*Ba List*/ }

@@ -20,7 +20,7 @@ class AdminOrdersList extends Component{
     constructor(props) {
         super(props);
 
-        if(!this.props.loading){
+        if(!this.props.loading){ 
             this.state = {
                 "orderData":[],
                 "orderId": ''
@@ -36,53 +36,9 @@ class AdminOrdersList extends Component{
     }
 
     componentDidMount() {
-        this.getOrders();
         this.getBA();
-           
     }
-    getOrders(){
-      axios.get("/api/orders/get/list")
-            .then((response)=>{
-              var UsersArray = [];
-                for (let i = 0; i < response.data.length; i++) {
-                  var _id = response.data[i]._id;
-                  var orderID = response.data[i].orderID;
-                  var userFullName = response.data[i].userFullName;
-                  var totalQuantity = response.data[i].totalQuantity;
-                  var currency = response.data[i].currency;
-                  var totalAmount = response.data[i].totalAmount;
-                  var createdAt = response.data[i].createdAt;
-                  var status = response.data[i].status;
-                  var deliveryStatus = response.data[i].deliveryStatus[0].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[0].status;
-                  var viewOrder =  "/viewOrder/"+response.data[i]._id;
-                  var deliveryStatus =  response.data[i].deliveryStatus[0].status;
-
-                  var UserArray = [];
-                  UserArray.push(orderID);
-                  UserArray.push(userFullName);
-                  UserArray.push(totalQuantity);
-                  UserArray.push(<i className={"fa fa-"+currency}>&nbsp;{(parseInt(totalAmount)).toFixed(2)}</i>);
-                   
-                  UserArray.push(createdAt);
-                  UserArray.push({status : status, deliveryStatus : deliveryStatus});
-                  UserArray.push({_id:_id, viewOrder:viewOrder, deliveryStatus:deliveryStatus});
-                  
-                  UsersArray.push(UserArray);
-                }
-
-                this.setState({
-                  data: UsersArray
-                });
-
-                this.setState({
-                  orderData: response.data
-                });
-
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            })
-    }
+    
     getBA(){
       axios.get("/api/businessassociates/get/list")
             .then((response)=>{
@@ -95,10 +51,10 @@ class AdminOrdersList extends Component{
             })  
     }
     componentWillReceiveProps(nextProps){
-      console.log(nextProps);
+      console.log('nextProps',nextProps);
         if(nextProps){
             this.setState({
-                "orderData": nextProps.data,
+                "data": nextProps.data,
             });
         }
     }
@@ -113,8 +69,7 @@ class AdminOrdersList extends Component{
         event.preventDefault();
         var status = $(event.currentTarget).attr('data-status');
         var id = $(event.currentTarget).attr('data-id');
-        console.log('status',status)
-        console.log('id',id)
+        
         if(status != "Dispatch"){
             if(status!="Done"){
                 swal({
@@ -134,7 +89,7 @@ class AdminOrdersList extends Component{
                         }
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
-                          this.getOrders();
+                          this.props.getOrdersFun();
                           console.log('response', response);
                           swal({
                             title : response.data.message,
@@ -182,7 +137,7 @@ class AdminOrdersList extends Component{
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
                           console.log('response', response);
-                          this.getOrders();
+                          this.props.getOrdersFun();
                           swal({
                             title : response.data.message,
                             text  : response.data.message,
@@ -207,6 +162,7 @@ class AdminOrdersList extends Component{
     
     render(){
       const data = this.state.data;
+
       const options = {
         print: false,
         viewColumns: false,
@@ -388,6 +344,7 @@ class AdminOrdersList extends Component{
             <div className="container-fluid">
               <div className="row">
                 <div className="formWrapper">
+
                   <section className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                     <br/>

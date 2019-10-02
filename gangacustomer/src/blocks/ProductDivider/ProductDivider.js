@@ -26,9 +26,9 @@ export default class ProductDivider extends Component {
 						if (index < 8 ) {
 						return(
 							<div className="col-lg-3 col-md-3 col-sm-6 col-xs-6" key={index}>
-				                <a href={"/product-collage/"+data._id} >
+				                <a href={"/section/"+data.section_ID} >
 				                <div className="block">
-				                    <a className="image" href={"/product-collage/"+data._id} target="_blank"> 
+				                    <a className="image" href={"/section/"+data.section_ID} target="_blank"> 
 				                    <img src={data.categoryImage} alt="home banner" className="divImage"/></a>
 				                	<div className="figcaption">
 				                		<span>{data.category}</span>

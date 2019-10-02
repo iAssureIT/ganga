@@ -81,14 +81,62 @@ export default class Leftsidebar extends Component{
                 <li className="sidebarMenuText">
                   <a href="#Shipment" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-map-marker" />
-                    Shipment Management
+                    Order Management
                      <i class="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Shipment">
                     <li>
-                      <a href="/orders-list">
+                      <a href="/allorders">
                         <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Shipment Tracking</span>
+                        <span className="sidebarMenuSubText">All Orders</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/new-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">New Order List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/verified-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Verified Order List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/packed-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Packed Order List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/inspected-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Inspected Order List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/approved-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Approved Order List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/dispatched-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Dispatched Order List</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/delivery-initiated-orders">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Delivery Initiated Orders</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/delivered-orders-list">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Delivered Order List</span>
                       </a>
                     </li>
                   </ul>
