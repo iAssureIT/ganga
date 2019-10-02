@@ -207,7 +207,7 @@ class ProductViewEcommerceBestSellers extends Component {
                           <div className="card">
                             <div className="item-top">
                                 <div className="productImg">
-                               { <div className="btn-warning discounttag">-93%</div>}
+                               { <div className=" discounttag">-93%Discount</div>}
                                   <a className="product photo product-item-photo" tabindex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
@@ -225,10 +225,10 @@ class ProductViewEcommerceBestSellers extends Component {
                                       <div className="rating-summary">
                                         <fieldset className="ratingReview stars ">
                                           <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
-                                          <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
+                                          {/*<input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
                                           <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
                                           <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
-                                          <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
+                                          <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>*/}
                                         </fieldset>
                                       <div className="clearfix "></div>
                                       </div>

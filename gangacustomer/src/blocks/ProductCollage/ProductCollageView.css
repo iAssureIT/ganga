@@ -2,7 +2,7 @@
 	border: 1px solid #f1f2f2;
 	max-width: 270px;
 	margin: 5px;
-	height: 385px;
+	/*height: 336px;*/
 }
 .productDetails{
 	padding-bottom: 15px;
@@ -59,7 +59,7 @@
 
 
 .innerDiv{
-	padding: 30px 10px 20px 10px;
+	padding: 10px 10px 5px 10px;
 	display: inline-block;
 	width: 100%;
 }
@@ -122,7 +122,7 @@
     white-space:nowrap;
     cursor:pointer;
     font-size:200%;
-    line-height:1.2;
+    line-height:1;
     color:#c7c7c7;
 }
 
@@ -182,23 +182,34 @@
 	text-decoration: line-through;
 }
 .actions{
-	margin-top: 15px
+	margin-top: 0
 }
 .actions button{
 	left: 0;
 	bottom: 0;
 	text-align: center;
-	width: 143px;
+	/*width: 82px;*/
 	padding-left: 0;
 	padding-right: 0;
 	border-radius: 20px;
-	font-size: 14px;
+	font-size: 9px;
 	padding: 6px 0 6px;
 	border: 1px solid #fbbb65 !important;
 	background: #fff;
 	color: #fbbb65;
 	text-transform: uppercase;
 }
+
+.actionButtons button{
+		border-radius: 20px;
+	font-size: 9px;
+	padding: 6px 0 6px;
+	border: 1px solid #fbbb65 !important;
+	background: #fff;
+	color: #fbbb65;
+	text-transform: uppercase;
+}
+
 .actionsmobview{
 	left: 0;
 	bottom: 0;

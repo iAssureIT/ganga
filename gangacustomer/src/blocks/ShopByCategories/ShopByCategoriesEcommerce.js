@@ -136,13 +136,13 @@ render() {
 																<img src={data.productImage[1] ? data.productImage[1] : (data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg')} className="flip-box-back img-responsive " alt="blog1"/>
 															</div></a>
 													<div id="" className="col-lg-6 col-sm-12 col-xs-12 mt40 row">
-																	<fieldset className="ratingReview stars ">
+																	{/*<fieldset className="ratingReview stars ">
 																		<input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
 																		<input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
 																		<input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
 																		<input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
 																		<input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
-																	</fieldset>
+																	</fieldset>*/}
 																	<div className="clearfix "></div>
 																</div>
 																<label className="pull-right priceDivProduct mt40"><i className={"fa fa-"+data.currency}> </i>&nbsp;{data.actualPrice}</label><br/>

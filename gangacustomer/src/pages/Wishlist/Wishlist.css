@@ -1,8 +1,8 @@
 .wishlist{
     border: 1px solid #dedede;
     border-radius: 5px;
-    margin-bottom: 30px !important;
-    margin-top: 30px !important;
+    margin-bottom: 20px !important;
+    margin-top: 45px !important;
 }
 .wishlistInput{
     padding: 6px 12px;
@@ -35,7 +35,7 @@
     border-color: #eea236;
 }
 .wishProductDetails{
-    padding: 30px 15px;
+    padding: 8px 15px;
 }
 .wishRemove{
     margin-top: 10px;
@@ -58,5 +58,5 @@
 }
 
 .colageimg img{
-    height: 200px;
+    margin-top: 5px;
 }

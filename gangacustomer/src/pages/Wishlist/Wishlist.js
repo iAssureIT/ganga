@@ -192,7 +192,7 @@ class Wishlist extends Component {
                                 console.log('data', data);
                                 return(
                                     <div className="wishlist col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 colageimg">
+                                        <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 colageimg NOpadding">
                                             <img className="img img-responsive" src={data.productImage[0]} />
                                         </div>
                                         <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 wishProductDetails">
