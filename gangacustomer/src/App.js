@@ -1,5 +1,6 @@
 import React              from 'react';
 import Routes from './lib/Routes';
+import './root.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {

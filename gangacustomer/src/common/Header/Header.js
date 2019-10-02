@@ -210,7 +210,7 @@ searchProducts(){
   } 
   getUserData(){
     const userid = localStorage.getItem('user_ID');
-    console.log("userid-----------------------------------------",userid);
+    // console.log("userid-----------------------------------------",userid);
      axios.get('/api/users/'+ userid)
         .then( (res)=>{
           var FName = res.data.profile.fullName;
