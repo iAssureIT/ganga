@@ -34,9 +34,8 @@ export default class GroceryProductCollageView extends Component {
 								<span className="priceg">$200.00</span> &nbsp;
 								<span className="oldpriceg">$230.00</span> 
 							</div>
-							<div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i>
-                            </div>
-							{/*<div className="product-reviews-summary">
+
+							<div className="product-reviews-summary">
 							    <div className="rating-summary">
 	                                  	<fieldset className="ratingReview stars ">
 	                                      <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
@@ -47,7 +46,7 @@ export default class GroceryProductCollageView extends Component {
 	                                  	</fieldset>
 	                                  <div className="clearfix "></div>
 							    </div>
-							</div>*/}
+							</div>
 							
 							<div className="actionsg">
 								<button type="submit" title="Add to Cart" className="actiontocart primary ">

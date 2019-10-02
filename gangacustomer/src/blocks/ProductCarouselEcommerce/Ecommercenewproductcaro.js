@@ -369,6 +369,7 @@ class Ecommercenewproductcaro extends Component {
   }
 }
 const mapStateToProps = (state)=>{
+  
   return {
     cartData :  state.cartData
   }

@@ -276,18 +276,30 @@ class EcommerceProductCarousel extends Component {
                                   <a className="product photo product-item-photo" tabIndex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
-                                  <div className="hoveractions1">
+                                  {/*<div className="hoveractions1">
                                       <ul>
                                         <li  data-toggle="modal" className="circle spin" data-target={"#productviewmodal"+this.state.productType}><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
                                         <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
                                       </ul>
-                                  </div>
+                                  </div>*/}
                                 </div>
                               <div className="productDetails">
                                 <div className="innerDiv">
                                     <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
+                                     <div className="col-lg-12 col-md-12">
+                                     {
+                                        data.offered == true ?
+                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                          :
+                                          <div className="col-lg-12 col-md-12">
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
+                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                          </div>
+                                      }
+                                    </div>
                                     <div className="product-reviews-summary">
-                                      <div className="rating-summary">
+                                    <div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div>
+                                      {/*<div className="rating-summary">
                                         <fieldset className="ratingReview stars ">
                                           <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
                                           <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
@@ -296,24 +308,23 @@ class EcommerceProductCarousel extends Component {
                                           <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
                                         </fieldset>
                                       <div className="clearfix "></div>
-                                      </div>
+                                      </div>*/}
                                     </div>
                                     <div > 
-                                      {
-                                        data.offered == true ?
-                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
-                                          :
-                                          <div>
-                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
-                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
-                                          </div>
-                                      }
+                                      
                                     </div>
-                                    <div className="actions">
-                                      <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart addtocartbtn btn-warning ">
-                                        {/*<i className="fa fa-shopping-cart"></i>*/}&nbsp;Add to Cart
-                                      </button>
-                                    </div>
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
+                                        <button type="submit" id={data._id} title="" className="homeCart fa fa-heart col-lg-12 " onClick={this.addtowishlist.bind(this)}>
+                                          &nbsp;Wishlist
+                                        </button>
+                                      </div>
+                                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
+                                        <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
+                                          &nbsp;Add to Cart
+                                        </button>
+                                      </div>
+                                   </div> 
                                 </div>
                               </div>
                             </div>
