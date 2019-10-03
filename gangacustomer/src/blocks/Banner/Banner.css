@@ -1,5 +1,5 @@
 .bannercaro img{
-  height: 520px!important;
+  height: 600px!important;
 
 }
 
@@ -10,6 +10,7 @@
   text-align: center;
   top: 465px;
   left: 639px;
+  margin-top: 70px;
 }
 .bannercaro .owl-dots .owl-dot span{
 background: #fff;

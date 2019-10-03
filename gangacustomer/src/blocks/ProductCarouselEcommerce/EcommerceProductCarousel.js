@@ -102,7 +102,7 @@ class EcommerceProductCarousel extends Component {
       // console.log('id', id);
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
-        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+        var totalForQantity   =   parseInt(1 * response.data.discountedPrice);
             const userid = localStorage.getItem('user_ID');
             
             const formValues = { 
@@ -115,8 +115,8 @@ class EcommerceProductCarousel extends Component {
                 "subCategory" : response.data.subCategory,
                 "productImage" : response.data.productImage,
                 "quantity" : 1  ,
-                "offeredPrice" : parseInt(response.data.offeredPrice),
-                "actualPrice" : parseInt(response.data.actualPrice),
+                "discountedPrice" : parseInt(response.data.discountedPrice),
+                "originalPrice" : parseInt(response.data.originalPrice),
                 "totalForQantity" : totalForQantity,
                 
             }
@@ -272,7 +272,7 @@ class EcommerceProductCarousel extends Component {
                           <div className="card">
                             <div className="item-top">
                                 <div className="productImg">
-                               { <div className="btn-warning discounttag">-93%</div>}
+                               { data.discountPercent ?  <div className="btn-warning discounttag">{data.discountPercent} % </div> : null}
                                   <a className="product photo product-item-photo" tabIndex="-1">
                                     <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
                                   </a>
@@ -288,13 +288,13 @@ class EcommerceProductCarousel extends Component {
                                     <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
                                      <div className="col-lg-12 col-md-12">
                                      {
-                                        data.offered == true ?
-                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
-                                          :
+                                        data.discountPercent ?
                                           <div className="col-lg-12 col-md-12">
-                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
-                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.discountedPrice}</span> &nbsp;                     
+                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                           </div>
+                                          :
+                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                       }
                                     </div>
                                     <div className="product-reviews-summary">

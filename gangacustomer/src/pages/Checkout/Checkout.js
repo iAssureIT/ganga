@@ -684,6 +684,18 @@ class Checkout extends Component{
                 "mobileNumber"  : this.state.mobileNumber,
                 "addType"       : this.state.addType
             }
+            axios.patch('/api/users/patch/address', addressValues)
+            .then((response)=>{
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                // swal(response.data.message);
+                this.getUserAddress();
+                $(".checkoutAddressModal").hide();
+                $(".modal-backdrop").hide();
+
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            });
         }
 		// console.log('pls');
         if($('#checkout').valid()){

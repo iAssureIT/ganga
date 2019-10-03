@@ -46,7 +46,7 @@ class HomePage extends Component {
     featuredProductData(){
       var productType1 = 'featured';
       
-      axios.get("/api/products/get/listbytype/Main-Site/exclusive")
+      axios.get("/api/products/get/listbytype/exclusive")
             .then((response)=>{
               // console.log('featuredProducts' , response.data)
               this.setState({
@@ -60,7 +60,7 @@ class HomePage extends Component {
     }
     exclusiveProductsData(){
       var productType2 = 'exclusive';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType2)
+      axios.get("/api/products/get/listbytype/"+productType2)
             .then((response)=>{
 
               this.setState({
@@ -73,7 +73,7 @@ class HomePage extends Component {
     }
     newProductsData(){
       var productType3 = 'newProduct';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType3)
+      axios.get("/api/products/get/listbytype/"+productType3)
             .then((response)=>{
 
               this.setState({
@@ -86,7 +86,7 @@ class HomePage extends Component {
     }
     bestSellerData(){
       var productType4 = 'bestSeller';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
+      axios.get("/api/products/get/listbytype/"+productType4)
             .then((response)=>{
               this.setState({
                   bestSellerProducts : response.data
@@ -125,6 +125,7 @@ class HomePage extends Component {
       })
     }
   render() {
+    console.log('this.state.exclusiveProducts', this.state.exclusiveProducts);
 		return (
       <div className="">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorGray">
