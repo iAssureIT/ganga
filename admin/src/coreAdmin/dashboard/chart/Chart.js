@@ -113,7 +113,7 @@ export default class Charts extends Component{
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12.">
       <div className="row">
-        <div className="col-lg-12 co">
+        <div className="col-lg-12 NOpadding">
             <div className="col-lg-6">
               <div className="box2">
                   <div className="box1a">
@@ -134,7 +134,7 @@ export default class Charts extends Component{
       </div>  
         <br/>
       <div className="row">
-        <div className="col-lg-12">
+        <div className="col-lg-12 NOpadding marginBottom">
           <div className="col-lg-6">
             <div className="box2">
                 <div className="box1a">

@@ -10,7 +10,10 @@
 }*/
 .supplierForm{
   padding: 0;
-  margin-bottom: -19px;
+  margin-top: 19px;
+}
+.inputFields{
+  height: 85px;
 }
 .formHrTag{
   border-bottom: 1px solid #66666659;
@@ -248,7 +251,7 @@ text-align: center;
   /*margin-bottom: 3%;*/
 }
 .attachDocuments{
-  margin-top: 2%;
+
   font-size: 16px;
   margin-bottom: 1%;
   padding:0;
@@ -366,7 +369,7 @@ text-align: center;
 .button3{
   box-shadow: 3px 5px 3px #ddd;
   font-weight: 700;
-  margin-top: 2%;
+  /*margin-top: 2%;*/
   /*background-color: #666;*/
 
 

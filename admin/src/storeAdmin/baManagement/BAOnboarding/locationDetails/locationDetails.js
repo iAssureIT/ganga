@@ -662,7 +662,7 @@ export default class LocationDetails extends Component{
                         <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pdcls">
                                 <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                                  <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Onboarding Form</h4>
+                                  <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Add Business Associate</h4>
                                   <div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
                                     
                                   </div>
@@ -715,7 +715,7 @@ export default class LocationDetails extends Component{
                               <form id="LocationsDetail" >  
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationSupplierForm">
                                 
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Address Line 1 <sup className="astrick">*</sup>
                                     <a data-tip data-for='happyFace' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                     <ReactTooltip id='happyFace' type='error'>
@@ -724,11 +724,11 @@ export default class LocationDetails extends Component{
                                   </label>
                                   <input id="Line1" type="text" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.addressLineone} ref="addressLineone" name="addressLineone" onChange={this.handleChange} required/>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Address Line 2</label>
                                   <input id="Line2" type="text" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.addressLinetwo} ref="addressLinetwo" name="addressLinetwo" onChange={this.handleChange} />
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Country <sup className="astrick">*</sup>
                                   </label>
                                   <select id="datacountry" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
@@ -745,7 +745,7 @@ export default class LocationDetails extends Component{
                                     }
                                   </select>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">State <sup className="astrick">*</sup>
                                   </label>
                                   <select id="Statedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
@@ -762,8 +762,8 @@ export default class LocationDetails extends Component{
                                     }
                                   </select>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">District {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">District <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
                                   </label>
                                   <select id="Citydata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
                                     ref="district" name="district" onChange={this.handleChangeDistrict} >
@@ -779,8 +779,8 @@ export default class LocationDetails extends Component{
                                     }
                                     </select>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">City {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">City <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
                                   </label>
                                     <select id="Blocksdata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
                                      ref="block" name="block" onChange={this.handleChangeBlock} >
@@ -796,8 +796,8 @@ export default class LocationDetails extends Component{
                                       }
                                     </select>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area 
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area <sup className="astrick">*</sup>
                                   </label>
                                     <select id="Areasdata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
                                      ref="area" name="area" onChange={this.handleChange} >
@@ -813,8 +813,8 @@ export default class LocationDetails extends Component{
                                       }
                                     </select>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null } 
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null } 
                                   </label>
                                   <input type="text" id="Pincodedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode}  ref="pincode" name="pincode" onChange={this.handleChange} />
 
@@ -831,7 +831,7 @@ export default class LocationDetails extends Component{
                                     </select>*/}
                                 </div>
                                 </div>
-                                <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7  marginsB">
+                                <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7  inputFields">
                                   { 
                                     this.state.updateButton ?
                                     <button className="button3 btn-primary pull-right" onClick={this.updateLocationDetails.bind(this)}>&nbsp;Update Location</button>

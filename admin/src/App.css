@@ -28,6 +28,9 @@
 .App-link {
   color: #61dafb;
 }
+.inputFields{
+  height: 85px;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -699,4 +702,7 @@ margin-right: 12px;
 .noPadding{
   padding: 0px !important;
 }
-.h,mn,{}
+
+.marginBottom{
+  margin-bottom: 20px;
+}

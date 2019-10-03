@@ -47,7 +47,7 @@ export default class Leftsidebar extends Component{
                   <a href="#Plan" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-pie-chart" />
                     Product Management
-                    <i class="fa fa-sort-down pull-right"></i>
+                    <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Plan">
                       <li>
@@ -162,11 +162,11 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li>
-                <li className="sidebarMenuText">
+             {/*   <li className="sidebarMenuText">
                   <a href="#vendor" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-industry" />
                     Vendor Management
-                     <i class="fa fa-sort-down pull-right"></i>
+                     <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="vendor">
                     <li>
@@ -182,8 +182,8 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li className="sidebarMenuText">
+                </li>*/}
+{/*                <li className="sidebarMenuText">
                   <a href="/">
                     <i className="fa fa-percent"></i>
                     Discount Management
@@ -206,7 +206,7 @@ export default class Leftsidebar extends Component{
                     <i className="fa fa-file"></i>
                     Agreement Management
                   </a>
-                </li>
+                </li>*/}
                 
                 <li className="sidebarMenuText">
                   <a href="#Report" data-toggle="collapse" aria-expanded="false">
@@ -232,7 +232,7 @@ export default class Leftsidebar extends Component{
                   <a href="#MasterData" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-university" />
                     Master Data
-                    <i class="fa fa-sort-down pull-right"></i>
+                    <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="MasterData">
                     <li>

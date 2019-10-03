@@ -675,11 +675,11 @@ class BasicInfo extends Component {
             {!this.state.basicInfoAdded && <div className="">
               <div className="col-lg-12 col-md-12 hidden-sm hidden-xs secdiv"></div>
                  <section className="content">
-                  <div className="row">
+                  <div className="">
                  
                         <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                            <h4 className="NOpadding-right">Onboarding Form</h4>
+                            <h4 className="NOpadding-right">Add Business Associate</h4>
                             <div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
                               {this.props.vendorData ? <div className="redirectToAdmin col-lg-5 col-lg-offset-7 col-md-10 col-xs-10 col-sm-10 fa fa-arrow-right"></div> : null}
                             </div>
@@ -729,12 +729,12 @@ class BasicInfo extends Component {
                                       
                                       <div className="col-lg-12 col-md-12 col-sm-12 supplierForm"> 
                      
-                                        <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pdcls">
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+                                        <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pdcls inputFieldsWrapper">
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields"> 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Company Name <i className="astrick">*</i></label>
                                             <input type="text" id="basicInfo1" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.companyname}  ref="companyname" name="companyname" onChange={this.handleChange} placeholder="Enter company name.." required/>
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email Id <i className="astrick">*</i>
                                              <a data-tip data-for='basicInfo4Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo4Tooltip' type='error'>
@@ -744,7 +744,7 @@ class BasicInfo extends Component {
                                             <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange} onBlur={this.checkBAExists.bind(this)}  required/>
                                             <p className="checkBAExistsError">Business Associate already exists!</p>
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Mobile No <i className="astrick">*</i>
                                              <a data-tip data-for='basicInfo4Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo4Tooltip' type='error'>
@@ -753,16 +753,16 @@ class BasicInfo extends Component {
                                             </label>
                                             <input type="text" id="basicInfo3" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website 
                                              <a data-tip data-for='basicInfo4Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo4Tooltip' type='error'>
                                                 <span>Please enter valid Website(www.abc.xyz).</span>
                                               </ReactTooltip>
                                             </label>
-                                            <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.website} ref="website" name="website" onChange={this.handleChange}/>
+                                            <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.website} ref="website" name="website" onChange={this.handleChange} />
                                           </div>
-                                          <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick">*</i>
                                              <a data-tip data-for='basicInfo2Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo2Tooltip' type='error'>
@@ -771,7 +771,7 @@ class BasicInfo extends Component {
                                             </label>
                                             <input type="text" id="basicInfo5" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText"  value={this.state.pan} ref="pan" name="pan" onChange={this.handleChange} placeholder="ABCDE1234Z" required/>
                                         </div>
-                                        <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields"> 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick">*</i>
                                             <a data-tip data-for='basicInfo5Tooltip' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                               <ReactTooltip id='basicInfo5Tooltip' type='error'>
@@ -833,7 +833,9 @@ class BasicInfo extends Component {
                                     </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <button className="btn button3 btn-primary pull-right" onClick={this.state.updateBasic ? this.updateBA.bind(this): this.supplier.bind(this)} > {this.state.updateBasic ? 'Update' : 'Save & Next'}  &nbsp;<i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      </div>
                                     </div> 
                                 </form>
                               </div>

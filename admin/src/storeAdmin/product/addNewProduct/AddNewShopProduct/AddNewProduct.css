@@ -18,7 +18,7 @@
 }
 
 .add-new-productCol {
-    margin-bottom: 20px !important;
+    /*margin-bottom: 20px !important;*/
 }
 
 .add-new-product-table {
@@ -302,6 +302,7 @@
         border-right-width: 0;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+
 }
 .selectdropdown{
         border-bottom-left-radius: 0px;
