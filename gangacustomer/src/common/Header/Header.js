@@ -278,14 +278,14 @@ searchProducts(){
     }
     Removefromcartwarning(event){
 
-        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" onClick={this.Removefromcart.bind(this)} >Remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
 
     }
   submitQuery(){
     var formValues = {
       "customerName" : this.refs.firstName.value,
       "customerMobile" : this.refs.mobNumber.value,
-      "query"        : this.refs.query.value
+      "query"        : this.refs.message.value
     }
 
     axios.post("/api/customerQuery/post",formValues)
@@ -390,7 +390,7 @@ searchProducts(){
                                 <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
                                 {
                                   user_ID? 
-                                  <li className="dropdown"><a href="/"  data-toggle="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                  <li className="dropdown"><a href="/"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
                                       <li className="col-lg-12 NOpadding"><a href="/account">Your Profile</a></li>
                                       <li className="col-lg-12 NOpadding"><a href="/wishlist">Your Wishlist</a></li>
@@ -445,7 +445,7 @@ searchProducts(){
                       <div className="col-lg-2 col-md-2 headerpaddingtop text-center">
                           <div className="col-lg-12 headercart">
                             <div className="row dropdown">
-                                <a href="#" data-toggle="dropdown"><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{ user_ID ? this.props.cartCount:0}
+                                <a href={user_ID ? "/cart" : "/login"}><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{ user_ID ? this.props.cartCount:0}
                                 </span></a>
                                 { user_ID ? 
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">

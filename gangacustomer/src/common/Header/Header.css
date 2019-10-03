@@ -247,8 +247,9 @@ ul.box-static-link li span {
 .cartdropmenu{
 	width: 400px!important;
     position: absolute;
-    left: -200px;
+    left: -125px;
     border-radius: 0px;
+    top:28px;
 }
 .cartdropborder{
 	border-top:1px solid #aaa;
@@ -328,3 +329,4 @@ ul.box-static-link li span {
 .carewrap{
 	margin-top: 45px;
 }
+
