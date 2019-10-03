@@ -254,12 +254,12 @@ class SectionManagement extends Component {
                                 <h4 className="NOpadding-right">Section Master </h4>
                           </div>
                           </div>
-                            <div className="col-lg-12 col-md-12 marginTopp">
+                            <div className="col-lg-12 col-md-12 marginTopp NOpadding">
                   <form id="sectionManagement" className="">
                       <div className="col-lg-5">
                         <div className="col-lg-12">
                           <label>Section Title <i className="redFont">*</i></label>
-                          <input value={this.state.section} name="section" id="section" onChange={this.createsectionUrl.bind(this)} type="text" className="form-control edit-catg-new" placeholder="section Title" ref="section" />
+                          <input value={this.state.section} name="section" id="section" onChange={this.createsectionUrl.bind(this)} type="text" className="form-control edit-catg-new" placeholder="Section Title" ref="section" />
                         </div>
                       </div>
                       <div className="col-lg-5">
