@@ -190,7 +190,7 @@ class AddNewShopProduct extends Component {
   getSectionData() {
     axios.get('/api/sections/get/list')
       .then((response) => {
-        console.log('getWebCategories', response.data);
+        // console.log('getWebCategories', response.data);
         this.setState({
           sectionArray: response.data
         })
@@ -264,7 +264,7 @@ class AddNewShopProduct extends Component {
   edit(id) {
     axios.get('/api/products/get/one/' + id)
       .then((response) => {
-        console.log('edit', response.data);
+        
         this.getCategories();
         this.getSubCategories(response.data.category_ID);
         this.setState({
@@ -281,7 +281,7 @@ class AddNewShopProduct extends Component {
           shortDescription: response.data.shortDescription,
           addrows: response.data.featureList,
           discountPercent: response.data.discountPercent,
-          discountedPrice: response.data.discountedPrice,
+          discountedPrice: response.data.discountedPrice == response.data.originalPrice ? "": response.data.discountedPrice,
           originalPrice: response.data.originalPrice,
           size: response.data.size,
           color: response.data.color,
@@ -290,7 +290,7 @@ class AddNewShopProduct extends Component {
           currency: response.data.currency,
           status: response.data.status,
         }, () => {
-          console.log('this', this.state);
+          // console.log('this', this.state);
 
         })
 
@@ -354,13 +354,13 @@ class AddNewShopProduct extends Component {
       "exclusive": productExclusive,
       "fileName": "Manual",
     }
-    console.log('formValues', formValues);
+    // console.log('formValues', formValues);
     if ($('#addNewShopProduct').valid()) {
       if(this.state.discountPercentError == ""){
-        console.log('discountPercentError', this.state.discountPercentError);
+        // console.log('discountPercentError', this.state.discountPercentError);
         axios.post('/api/products/post', formValues)
         .then((response) => {
-          console.log('response', response);
+          // console.log('response', response);
           this.props.history.push('/add-product/image/' + response.data.product_ID);
           swal({
             title: response.data.message,
@@ -516,7 +516,7 @@ class AddNewShopProduct extends Component {
     this.setState({
       [event.target.name] : event.target.value
     })
-    console.log('discountPercent', event.target.value);
+    // console.log('discountPercent', event.target.value);
     if(event.target.value > 100){
       this.setState({
         discountPercentError : "Discount Percent should be less than 100."

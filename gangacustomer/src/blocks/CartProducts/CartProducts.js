@@ -35,7 +35,7 @@ class CartProducts extends Component{
 
     async componentDidMount(){
     	await this.props.fetchCartData();
-        this.validateNumber();
+        
         this.getCompanyDetails();
     }
     componentWillReceiveProps(nextProps) { 
@@ -181,17 +181,7 @@ class CartProducts extends Component{
     updateShoppingCart(){
         window.location.reload();
     }
-    validateNumber(e) {
-        var varx = document.getElementById('productPrize').innerHTML;
-        console.log('var', varx);
     
-        // var dynamicMask = new IMask(document.getElementById('productPrize').innerHTML, {
-        //     mask: [{
-        //         mask: '00000-00000'
-        //     }]
-        // })
-        
-    }
     render(){
         
         return(
@@ -216,8 +206,8 @@ class CartProducts extends Component{
                                     {
                                         this.props.recentCartData &&  this.props.recentCartData.length &&  this.props.recentCartData[0].cartItems.length > 0?
                                         this.props.recentCartData[0].cartItems.map((data, index)=>{
-                                            var x = data.offeredPrice;
-                                            var offeredPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
+                                            var x = data.discountedPrice;
+                                            var discountedPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
                                             var y = data.totalForQantity;
                                             var z = this.state.totalForQantity;
                                             var totalForQantity = y.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
@@ -235,11 +225,11 @@ class CartProducts extends Component{
                                                             </td>
                                                         </tr>
                                                     </td>
-                                                    <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{offeredPrice}</span></td>
+                                                    <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{discountedPrice}</span></td>
                                                     <td className="nowrap">
-                                                        <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.offeredPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
+                                                        <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
                                                         <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
-                                                        <span className="plusQuantity fa fa-plus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.offeredPrice} onClick={this.cartquantityincrease.bind(this)}></span>
+                                                        <span className="plusQuantity fa fa-plus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantityincrease.bind(this)}></span>
                                                     </td>
                                                     <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
                                                     <td>

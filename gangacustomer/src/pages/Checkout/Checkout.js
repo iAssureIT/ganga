@@ -422,12 +422,12 @@ class Checkout extends Component{
 			for(var i=0;i < noOfProducts;i++){
 				var productId    = cartElem.cartItems[i].productId;
 				var qty          = cartElem.cartItems[i].quantity;
-				var offeredPrice = cartElem.cartItems[i].offeredPrice;
-				var finalPrice   = offeredPrice * qty;
+				var discountedPrice = cartElem.cartItems[i].discountedPrice;
+				var finalPrice   = discountedPrice * qty;
 				totalAmount     += finalPrice;
 				
             } // end of i loop
-            console.log('totalAmount', offeredPrice, totalAmount);
+            console.log('totalAmount', discountedPrice, totalAmount);
 			if(totalAmount > 0){
 				var themeSettings = this.state.companyInfo;
                     console.log('themeSettings',themeSettings);
@@ -670,7 +670,6 @@ class Checkout extends Component{
                 "addType"       : deliveryAddress.length> 0? deliveryAddress[0].addType : "",
             }
         }else{
-            
             addressValues ={
                 "user_ID"       : localStorage.getItem('user_ID'),
                 "name"          : this.state.name,
@@ -738,7 +737,7 @@ class Checkout extends Component{
                             }
         
                             productIds[i]   = productId;
-                            prices[i]       = (cartProduct.offeredPrice);
+                            prices[i]       = (cartProduct.discountedPrice);
                             qtys[i]         = qty;
                             totals[i]       = (cartProduct.totalForQantity); ;
                             totalAmount     = totalAmount + totals[i];
@@ -1001,7 +1000,7 @@ class Checkout extends Component{
                                                         <td><img className="img img-responsive orderImg" src={data.productImage[0]} /></td>
                                                         <td><span className="productName">{data.productName}</span></td>
                                                         <td><span className="quantityInput textAlignRight">{data.quantity}</span></td>
-                                                        <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-"+data.currency}></i> &nbsp;{data.offeredPrice}</span></td>
+                                                        <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-"+data.currency}></i> &nbsp;{data.discountedPrice}</span></td>
                                                     </tr>
                                                 );
                                                 })
