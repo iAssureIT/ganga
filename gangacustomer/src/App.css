@@ -76,6 +76,7 @@ button:focus{
   color: #333;
 }
 
+
 .modal-content{
   border-radius: 0px!important;
 }
@@ -105,4 +106,3 @@ button:focus{
 
 a:hover{
   color: #FBBD65!important;
-}
