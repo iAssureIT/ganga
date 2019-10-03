@@ -113,7 +113,7 @@ class EditAccount extends Component{
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
                 console.log(response.message);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
             })
             .catch((error)=> {

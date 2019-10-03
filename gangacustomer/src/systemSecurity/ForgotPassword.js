@@ -30,7 +30,7 @@ class ForgotPassword extends Component {
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{
                 console.log('res', response);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
             })
             .catch((error)=>{

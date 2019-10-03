@@ -71,7 +71,7 @@ class AddressBook extends Component{
             // console.log('response', response);
             this.getUserAddresses();
             // swal(response.data.message);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         })
         .catch((error)=>{
             console.log('error', error);

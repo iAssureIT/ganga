@@ -366,4 +366,3 @@ const mapDispachToProps = (dispach) => {
 	}
 }
 export default connect(mapStateToProps, mapDispachToProps)(ProductViewEcommerce);
-

@@ -28,7 +28,7 @@ class ResetPassword extends Component {
             axios.put('/api/users/resetpwd/'+userID, formValues)
             .then((response)=>{
                 console.log('res', response);
-                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
                 this.props.history.push('/login');
             })

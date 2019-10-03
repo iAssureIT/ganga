@@ -80,7 +80,7 @@ export default class MyOrders extends Component {
 
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                // swal(response.data.message);    
             })
             .catch((error)=>{
@@ -152,7 +152,7 @@ export default class MyOrders extends Component {
                             //   if (inputValue != true) {
                             //     window.location = '/returnpolicy';
                             //   }
-                              ToastsStore.warning(<div className="alertback">Order is returned<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+                              ToastsStore.warning(<div className="alertback">Order is returned<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                               })
                              
                         .catch((error)=>{
@@ -222,7 +222,7 @@ export default class MyOrders extends Component {
                           //   focusConfirm: false,
                           //   showCloseButton: true
                           // });
-                                ToastsStore.warning(<div className="alertback">Your order is cancelled. Refund will be made as per Cancellation Policy<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+                                ToastsStore.warning(<div className="alertback">Your order is cancelled. Refund will be made as per Cancellation Policy<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                         })
                         .catch((error)=>{
                           console.log('error', error);

@@ -92,7 +92,7 @@ class Address extends Component {
             console.log('form deliveryAddressID', formValues);
             axios.patch('/api/users/useraddress', formValues)
             .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data);
             })
             .catch((error)=>{
@@ -102,7 +102,7 @@ class Address extends Component {
             console.log('form', formValues);
             axios.patch('/api/users/patch/address', formValues)
             .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
             })
             .catch((error)=>{

@@ -46,10 +46,10 @@ class Edituser extends Component{
                         
                     }else{          
                         // swal("Images not uploaded","Something went wrong","error"); 
-                        ToastsStore.error(<div className="alertback">Images not uploaded, Something went wrong<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)         
+                        ToastsStore.error(<div className="alertback">Images not uploaded, Something went wrong<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)         
                     }//file
                 }else{ 
-                    ToastsStore.warning(<div className="alertback">Please upload Image, Allowed images formats are (jpg,png,jpeg)<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+                    ToastsStore.warning(<div className="alertback">Please upload Image, Allowed images formats are (jpg,png,jpeg)<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                     // swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
                 }//file types
             }//file
@@ -144,7 +144,7 @@ class Edituser extends Component{
     
         axios.patch('/api/users/useraddress/'+userid, formvalues)
         .then((response)=> {   
-          ToastsStore.success(<div className="alertback">User updated successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+          ToastsStore.success(<div className="alertback">User updated successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           // swal({
           //   title:"User updated successfully",
           //   text:"User updated successfully",

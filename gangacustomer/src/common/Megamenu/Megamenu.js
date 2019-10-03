@@ -78,7 +78,7 @@ componentWillMount() {}
           <a href="javascript:void(0);" className="ic close"></a>
           <ul className="main-nav">
             <li className="top-level-link">
-              <a><span>Home</span></a>      
+              <a href="/"><span>Home</span></a>      
             </li> 
             
             {

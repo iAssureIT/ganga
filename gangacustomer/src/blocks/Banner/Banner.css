@@ -13,8 +13,10 @@
 }
 .bannercaro .owl-dots .owl-dot span{
 background: #fff;
-height: 12px;
-width:12px;
+height: 15px;
+width:15px;
+border: 2px solid #FBBD65;
+
 }
 .bannercaro .owl-dots .owl-dot.active span{
 background: #FBBD65;

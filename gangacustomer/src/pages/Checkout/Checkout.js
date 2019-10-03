@@ -366,7 +366,7 @@ class Checkout extends Component{
         }
         axios.patch("/api/carts/remove" ,formValues)
         .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
             // swal(response.data.message);
             this.getCartData();   
             this.getCompanyDetails();
@@ -780,7 +780,7 @@ class Checkout extends Component{
                                                         
                                             var userId  = localStorage.getItem('user_ID');
                                             // swal('Order Placed Successfully'); 
-                                            ToastsStore.success(<div className="alertback">Order Placed Successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+                                            ToastsStore.success(<div className="alertback">Order Placed Successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 
                                             
                                             this.props.history.push('/payment/'+result.data.order_ID);
@@ -829,7 +829,7 @@ class Checkout extends Component{
             
             axios.patch('/api/users/patch/address', addressValues)
             .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
                 this.getUserAddress();
                 $(".checkoutAddressModal").hide();

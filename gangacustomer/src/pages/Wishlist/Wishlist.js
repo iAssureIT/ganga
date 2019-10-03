@@ -112,7 +112,7 @@ class Wishlist extends Component {
           .then((response)=>{
             console.log('response', response.data);
             this.props.changeCartCount(response.data.cartCount);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
             // swal(response.data.message)
             axios.delete('/api/wishlist/delete/'+wishlist_ID)
             .then((response)=>{
@@ -120,7 +120,7 @@ class Wishlist extends Component {
                 products : []
               })
               this.getData();
-             ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
               // swal(response.data.message);
               
             })
@@ -149,7 +149,7 @@ class Wishlist extends Component {
               products : []
             })
             this.getData();
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
             // swal(response.data.message);
             
             

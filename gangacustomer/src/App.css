@@ -1,6 +1,6 @@
 
 div, a, p, h1, h2, h3, h4, h5, h6, i, span, label{
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .NOpadding{
@@ -103,6 +103,29 @@ button:focus{
     height: 21px;
     width: 17px;
 }
+.modalclosebut:hover{
+  color: red;
+
+}
 
 a:hover{
   color: #FBBD65!important;
+
+}
+
+.inputcontent{
+  height: 30px;
+  border-radius: 8px;
+  border:1px solid #aaa;
+}
+.inputcontenttextarea{
+  height: 70px;
+  border-radius: 8px;
+  border:1px solid #aaa;
+}
+.formcontentheight{
+  height: 75px;
+}
+.redFont{
+  color: red;
+}

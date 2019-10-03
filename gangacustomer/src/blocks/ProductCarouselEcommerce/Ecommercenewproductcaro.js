@@ -130,7 +130,7 @@ class Ecommercenewproductcaro extends Component {
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
           this.getCartData(); 
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           // swal(response.data.message);
           this.props.changeCartCount(response.data.cartCount);
           })
@@ -143,7 +143,7 @@ class Ecommercenewproductcaro extends Component {
     })
     }
     else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
     }
   }
   componentWillReceiveProps(nextProps){
@@ -167,9 +167,9 @@ class Ecommercenewproductcaro extends Component {
     axios.post('/api/wishlist/post', formValues)
     .then((response)=>{
       if(response.status == 200){
-      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
       }
-      ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+      ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
       // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
@@ -178,7 +178,7 @@ class Ecommercenewproductcaro extends Component {
     })
     }
     else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
     }
   }
   getCategoryID(event){

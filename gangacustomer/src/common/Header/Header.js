@@ -262,7 +262,7 @@ searchProducts(){
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
             console.log('removed');
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
+            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
             // swal(response.data.message)           
              // .then((obj)=>{
              //      window.location.reload();
@@ -278,7 +278,7 @@ searchProducts(){
     }
     Removefromcartwarning(event){
 
-        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 
     }
   submitQuery(){
@@ -290,7 +290,7 @@ searchProducts(){
 
     axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
-      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)  
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
       // swal(response.data.message) 
       jQuery("#customercareModal").modal("hide");
 
@@ -341,8 +341,11 @@ searchProducts(){
                             <div className="row">
                               <ul>
                                 <li><a href="/">Get the app</a></li>
-                                
+                                {user_ID ?
                                 <li className="borderLeft cursorpointer" data-toggle="modal" data-target="#customercareModal"><a>Customer Care</a></li>
+                                :
+                                <li className="borderLeft cursorpointer"><a href="/login">Customer Care</a></li>
+                                }
                                 <div className="modal " id="customercareModal" role="dialog">
                                   <div className="modal-dialog modal-lg dialog">
                                     <div className="modal-content col-lg-8 col-lg-offset-2"> 
@@ -354,17 +357,17 @@ searchProducts(){
                                         </div> 
                                         <div className="">
                                           <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1 carewrap">
-                                              <div className="formcontent col-lg-12">
+                                              <div className="formcontentheight col-lg-12">
                                                 <label htmlFor="name">Name<span className="redFont">*</span></label>
-                                                <input disabled  className="form-control" id="name" type="text"ref="firstName"/>
+                                                <input disabled  className="col-lg-12 inputcontent" id="name" type="text"ref="firstName"/>
                                               </div>
-                                              <div className="formcontent col-lg-12">
+                                              <div className="formcontentheight col-lg-12">
                                                 <label htmlFor="email">Mobile No<span className="redFont">*</span></label>
-                                                <input disabled className="form-control" id="mobileno" type="number"ref="mobNumber"/>
+                                                <input disabled className="col-lg-12 inputcontent" id="mobileno" type="number"ref="mobNumber"/>
                                               </div>
                                               <div className="formcontent1 col-lg-12">
                                                 <label htmlFor="message">Message<span className="redFont">*</span></label>
-                                                <textarea className="form-control" id="message"ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)}></textarea>
+                                                <textarea className="col-lg-12 inputcontenttextarea" id="message"ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)} row="5"></textarea>
                                               </div>
                                               <div className="checkbox">
                                               </div>
@@ -450,11 +453,9 @@ searchProducts(){
                                 { user_ID ? 
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                                     <li className="col-lg-12">
-                                      <div>
-                                        <p className="col-lg-12"><b>{this.props.cartCount}</b> items</p>
-                                        <p className="col-lg-12 text-right">Cart Subtotal :</p>
-
-                                        <p className="col-lg-12 text-right"><i className="fa fa-inr"></i>{this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</p>
+                                      <div className="">
+                                        <p className="col-lg-6 mb20"><b>{this.props.cartCount}</b> items</p>
+                                        <div className="col-lg-6 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</div>
                                         <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
@@ -500,7 +501,7 @@ searchProducts(){
                                   :
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                                     <li className="col-lg-12 text-center">
-                                    <h3>Please Sign In First</h3>
+                                    <h4>Please Sign In First</h4>
                                     </li>
                                       <li className="col-lg-12 ">
                                         <div className="cartdropborder">

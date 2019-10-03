@@ -49,7 +49,7 @@ class Login extends Component {
         console.log("localStorage =",localStorage.getItem('user_ID'));
         
         if(localStorage==null){
-        ToastsStore.error(<div className="alertback">Invalid Email or Password, Please Enter valid email and password<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.error(<div className="alertback">Invalid Email or Password, Please Enter valid email and password<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           // swal("Invalid Email or Password","Please Enter valid email and password");
         }else{
           this.setState({
@@ -74,14 +74,14 @@ class Login extends Component {
             //       window.location = "/confirm-otp/"+response.data.user_ID;
             //     } 
             // });
-        ToastsStore.error(<div className="alertback">Need to Verify OTP, Please Verify Your OPT First<a className="pagealerturl" href={"/confirm-otp/"+response.data.user_ID}>Verify Your OPT >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.error(<div className="alertback">Need to Verify OTP, Please Verify Your OPT First<a className="pagealerturl" href={"/confirm-otp/"+response.data.user_ID}>Verify Your OPT >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           }
       })
       .catch((error)=> {
           console.log('error==========  ', error);
         if(localStorage!==null){
           // swal(error.message);
-        ToastsStore.error(<div className="alertback">{error.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+        ToastsStore.error(<div className="alertback">{error.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         }
         
       });

@@ -30,7 +30,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
       console.log('formValues', formValues);
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         // swal(response.data.message);
         this.props.history.push('/login');
       })
@@ -62,7 +62,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
           .then((response)=>{
             // console.log('response', response);
             // swal(response.data.message)
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           })
           .catch((error)=>{
             console.log('error', error);

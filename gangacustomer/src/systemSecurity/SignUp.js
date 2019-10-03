@@ -95,7 +95,7 @@ class SignUp extends Component {
                 	axios.post('/api/users',auth)
 			            .then((response)=> {
 			                console.log("-------userData------>>",response.data.user_id);
-            				 ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+            				 ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 		            		// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
 			                this.props.history.push("/confirm-otp/"+response.data.user_id);
 			                
@@ -103,25 +103,25 @@ class SignUp extends Component {
 			            .catch(function (error) {
 			                console.log(error);
         					// swal("Unable to submit data.");
-       						 ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+       						 ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 			            })
                 	)
                 :
 	                (
 		                document.getElementById("signUpBtn").value = 'Sign Up',
-       					ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+       					ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 		                // swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
 	                )
 
                 
             } else {
                 document.getElementById("signUpBtn").value = 'Sign Up';
-       			ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+       			ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 		        // return swal("Passwords does not match","Please Try Again")
             }
             }else{
                 document.getElementById("signUpBtn").value = 'Sign Up';
-       			ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+       			ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 				// swal("Please enter mandatory fields", "", "warning");
 				console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}

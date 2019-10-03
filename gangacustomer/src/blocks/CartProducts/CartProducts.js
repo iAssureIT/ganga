@@ -98,7 +98,7 @@ class CartProducts extends Component{
         }
         axios.patch("/api/carts/remove" ,formValues)
         .then((response)=>{
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
             .then((obj)=>{
                 this.props.fetchCartData();
             });
