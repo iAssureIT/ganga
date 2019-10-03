@@ -40,7 +40,7 @@ class ProductCollageView extends Component {
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
-           console.log('cartProduct=======================', response.data[0].cartItems)
+           // console.log('cartProduct=======================', response.data[0].cartItems)
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
@@ -222,59 +222,83 @@ class ProductCollageView extends Component {
           </div>
         </div>
         <div className="row">
-        {
-            this.state.products && this.state.products.map((value, index) =>{
+        { this.state.products && this.state.products.length > 0 ?
+            this.state.products && this.state.products.map((data, index) =>{
             
             return (
-              <div className="col-lg-4 col-md-4 col-sm-5 col-xs-5 card" key={index}>
-                <div className="item-top">
-                  <div className="productImg">
-                  <a href="#" className="product photo product-item-photo" tabIndex="-1">
-                    <img className="productImage" src={value.productImage && value.productImage[0] ? value.productImage[0] : '/images/notavailable.jpg'} />
-                  </a>
-                  <div className="hoveractions">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">  
-                        <ul>
-                            <li  data-toggle="modal" className="circle spin" data-target="#productviewmodal"><i id={value._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li> 
-                            <li><a className="circle spin" href="#" onClick={this.addtowishlist.bind(this)} id={value._id}> <i className="fa fa-heart addTOWishList"></i></a></li>
-                        </ul>
-                    </div>
-                  </div>
-                  </div>
-                  <div className="productDetails">
-                    <div className="innerDiv">
-                      {<a href={"/productdetails/"+ value._id } className="product-item-link">
-                       {
-                        value.productName !== undefined ? 
-                          (value.productName.length > 25 ? value.productName.substring(0, 25) + '...' : value.productName )
-                        : ''}</a>}
-                      <div className="product-reviews-summary">
-                          <div className="rating-summary">
-                              <div className="ratingReview stars ">
-                                <label htmlFor="star5"></label>
-                                <label htmlFor="star4"></label>
-                                <label htmlFor="star3"></label>
-                                <label htmlFor="star2"></label>
-                                <label htmlFor="star1"></label>
+                      <div className="item col-lg-4 col-md-4 col-sm-4 col-xs-4" key={index}>
+                        <div className="">
+                          <div className="card">
+                            <div className="item-top">
+                                <div className="productImg">
+                               { <div className="btn-warning discounttag">-93%</div>}
+                                  <a className="productcolagimg product photo product-item-photo" tabIndex="-1">
+                                    <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
+                                  </a>
+                                  {/*<div className="hoveractions1">
+                                      <ul>
+                                        <li  data-toggle="modal" className="circle spin" data-target={"#productviewmodal"+this.state.productType}><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
+                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
+                                      </ul>
+                                  </div>*/}
+                                </div>
+                              <div className="productDetails">
+                                <div className="innerDiv">
+                                    <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
+                                     <div className="col-lg-12 col-md-12">
+                                     {
+                                        data.offered == true ?
+                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                          :
+                                          <div className="col-lg-12 col-md-12">
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
+                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                          </div>
+                                      }
+                                    </div>
+                                    <div className="product-reviews-summary">
+                                    <div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div>
+                                      {/*<div className="rating-summary">
+                                        <fieldset className="ratingReview stars ">
+                                          <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
+                                          <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
+                                          <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
+                                          <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
+                                          <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
+                                        </fieldset>
+                                      <div className="clearfix "></div>
+                                      </div>*/}
+                                    </div>
+                                    <div > 
+                                      
+                                    </div>
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
+                                        <button type="submit" id={data._id} title="" className="homeCart fa fa-heart col-lg-12 " onClick={this.addtowishlist.bind(this)}>
+                                          &nbsp;Wishlist
+                                        </button>
+                                      </div>
+                                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
+                                        <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
+                                          &nbsp;Add to Cart
+                                        </button>
+                                      </div>
+                                   </div> 
+                                </div>
                               </div>
-                            <div className="clearfix "></div>
-                          </div>
+                            </div>
+                          </div>    
+                        </div> 
                       </div>
-                      <div > 
-                        <span className="price"><i className={"fa fa-"+value.currency}>{value.discountedPrice}</i></span> &nbsp;
-                        <span className="oldprice"><i className={"fa fa-"+value.currency}>{ value.originalPrice}</i></span> 
-                      </div>
-                      <div className="actions">
-                      <button type="submit" id={value._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="actiontocart addtocartbtn btn-warning ">
-                      {/*<i className="fa fa-shopping-cart"></i>*/}&nbsp;Add to Cart
-                      </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              );
+                    );
             })
+            :
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div className="wishlistNoProduct col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                      <i className="fa fa-exclamation-triangle"></i>&nbsp;  There is no items in this category.
+                  </div>
+                  <a href="/" className="pull-right mt15 wishBack">Back</a>
+              </div>
         } 
         <div id="productviewmodal" className="modal" role="dialog">
           <div className="modal-dialog modal-lg">
