@@ -282,14 +282,16 @@ class AddNewBulkProduct extends Component{
         if (files && files[0]) this.handleFile(files[0]);
     }
     handleFile(file) {
+    
         const reader = new FileReader();
         const rABS = !!reader.readAsBinaryString;
         reader.onload = ({ target: { result } }) => {
+
           const wb = XLSX.read(result, { type: rABS ? "binary" : "array" });
           const wsname = wb.SheetNames[0];
+
           const ws = wb.Sheets[wsname];
           const data = XLSX.utils.sheet_to_json(ws, { header: 1 }); 
-
 
             var documentObj = [];
             let count = 0;    
@@ -330,7 +332,8 @@ class AddNewBulkProduct extends Component{
                                 }else{
                                     documentObj.push({[header[k]]:record[k]});
                                 }
-                            }else{ 
+                            }else{
+
                                 if (header[k].startsWith("featureList")) {
                                     if (header[k]=='featureList1') {
                                         if (record[k] != undefined && record[k] != '') {
@@ -348,7 +351,13 @@ class AddNewBulkProduct extends Component{
                                             featuresArray.push({ feature: record[k], index:2 });
                                         }
                                     }
+                                    
                                     documentObj[count]['featureList'] = featuresArray;
+                                }
+                                else if(header[k]=='tags') {
+                                    if (record[k] != undefined) {
+                                        documentObj[count]['tags'] = record[k].split(','); 
+                                    }
                                 }
                                 
                                 else{
@@ -356,14 +365,14 @@ class AddNewBulkProduct extends Component{
                                 }
                             }
                         }
-                        if (record[header.indexOf('webCategory')] != undefined) {
-                            
-                            featuresArray = [];
-                            count++;
-                        } 
+                        
+                        featuresArray = [];
+                        count++;
+                         
                     }
                 }
-                
+                documentObj.filename = file.name;
+                documentObj.createdBy = localStorage.getItem('admin_ID');;
                 this.setState({finalData:documentObj},()=>{
                      console.log(this.state.finalData);
                 });
