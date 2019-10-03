@@ -250,32 +250,36 @@ class ProductViewEcommerce extends Component {
 							<div className="row">
 								<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
 								{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-<div className="row  productNameClassNew">{this.state.productData.productName}</div>
-</div>*/}
+								<div className="row  productNameClassNew">{this.state.productData.productName}</div>
+								</div>*/}
 
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div className="row">
 										<p className="orangetxt "><a href="#gotoreview" className="anchorclr">Be the first to review this product</a> (Product Code: {this.state.productData.productCode})</p>
 										{/*<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}*/}
+										{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}*/}
 									</div>
 									<div className="undrln row"> </div>
 								</div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div className="row">
-										<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero ttl" >
+										<span className="col-md-1 col-lg-1 col-sm-12 col-xs-12 paddingleftzero ttl" >
 											Price:
-</span>
+										</span>
+										
 										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
 											<span className="priceEcommerceNew" ><i className={"fa fa-" + this.state.productData.currency}></i>&nbsp;{this.state.productData.discountedPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{this.state.productData.discountPercent == true ? <span className="actualPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null}
+											{this.state.productData.discountPercent == true ? <span className="actualPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null}
 										</span>
+										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+											<div className="col-lg-1 col-md-1 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div> &nbsp; 11 ratings and 1 reviews
+										</div>
 									</div>
 
 									<div className="row listspace">
 										<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
 											Features
-</span>
+										</span>
 										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ttllist" >
 											{this.state.productData.featureList &&
 												<div className="">

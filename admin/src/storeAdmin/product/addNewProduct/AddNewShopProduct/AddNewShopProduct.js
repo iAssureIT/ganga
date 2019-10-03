@@ -742,12 +742,14 @@ class AddNewShopProduct extends Component {
                     </thead>
 
                     <tbody className="tableBodyClass">
-                      {
+                      {this.state.addrows ? 
                         this.state.addrows.map((data, index) => {
                           return (
                             <AddNewTableFeature index={index} feature={data.feature} key={index} />
                           );
                         })
+                        :
+                        null
                       }
                     </tbody>
 
