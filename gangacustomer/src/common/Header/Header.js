@@ -250,13 +250,13 @@ searchProducts(){
  Removefromcart(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
-        // console.log("userid",userid);
-        const cartitemid = event.target.getAttribute('id');
-        // console.log("cartitemid",cartitemid);
+         console.log("userid",userid);
+        const cartitemremoveid = event.target.getAttribute('removeid');
+         console.log("cartitemid",cartitemremoveid);
 
         const formValues = { 
               "user_ID"    : userid,
-              "cartItem_ID" : cartitemid,
+              "cartItem_ID" : cartitemremoveid,
           }
 
         axios.patch("/api/carts/remove" ,formValues)
@@ -277,8 +277,10 @@ searchProducts(){
           })
     }
     Removefromcartwarning(event){
+        const cartitemid = event.target.getAttribute('id');
+         console.log("cartitemid",cartitemid);
 
-        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" removeid={cartitemid} onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 
     }
   submitQuery(){
@@ -428,7 +430,7 @@ searchProducts(){
                             <div className="row">
                                 <div className="col-lg-3">
                                   <div className="row">
-                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" margin-top={"40px"} options={this.state.options} onChange={this.handleChange.bind(this)}/>
+                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" options={this.state.options} className={"customStyles"} onChange={this.handleChange.bind(this)}/>
                                   </div>   
                                 </div>   
                                 <div className="col-lg-7">
@@ -454,8 +456,8 @@ searchProducts(){
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                                     <li className="col-lg-12">
                                       <div className="">
-                                        <p className="col-lg-6 mb20"><b>{this.props.cartCount}</b> items</p>
-                                        <div className="col-lg-6 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</div>
+                                        <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> items</p>
+                                        <div className="col-lg-9 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</div>
                                         <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
