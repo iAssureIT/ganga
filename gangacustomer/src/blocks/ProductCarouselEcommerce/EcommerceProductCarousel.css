@@ -521,6 +521,7 @@ background-color: transparent !important;
     padding: 10px 10px 5px 10px;
     display: inline-block;
     width: 100%;
+    text-align: left;
 }
 .innerDiv a{
     color: #555;
@@ -631,12 +632,12 @@ background-color: transparent !important;
 }
 
 .price{
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
-    color: #fbbb65 !important;
+    color: #555 !important;
 }
 .oldprice{
-    font-size: 14px;
+    font-size: 13px;
     color: #555 !important;
     text-decoration: line-through;
 }
@@ -663,8 +664,8 @@ background-color: transparent !important;
 
 .product-item-link{
     color: #555;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 13px;
+    /* font-weight: bold; */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -674,7 +675,18 @@ background-color: transparent !important;
 .product-item-link:hover{
     color:  #fbbb65;
 }
-
+.product-brand{
+    color: #555;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+.product-brand:hover{
+    color:  #fbbb65;
+}
 .producttextclass h3{
     font-size: 18px!important;
 }
@@ -724,4 +736,3 @@ background-color: transparent !important;
     background: #fbbb65;
     color: #fff;
 }
-

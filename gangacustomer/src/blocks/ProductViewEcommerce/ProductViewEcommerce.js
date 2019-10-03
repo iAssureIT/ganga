@@ -89,7 +89,7 @@ class ProductViewEcommerce extends Component {
 
 			axios.get('/api/products/get/one/' + id)
 				.then((response) => {
-					var totalForQantity = parseInt(Number(this.state.totalQuanity) * response.data.offeredPrice);
+					var totalForQantity = parseInt(Number(this.state.totalQuanity) * response.data.discountedPrice);
 					const userid = localStorage.getItem('user_ID');
 
 					const formValues = {
@@ -102,8 +102,8 @@ class ProductViewEcommerce extends Component {
 						"subCategory": response.data.subCategory,
 						"productImage": response.data.productImage,
 						"quantity": this.state.totalQuanity,
-						"offeredPrice": parseInt(response.data.offeredPrice),
-						"actualPrice": parseInt(response.data.actualPrice),
+						"discountedPrice": parseInt(response.data.discountedPrice),
+						"originalPrice": parseInt(response.data.originalPrice),
 						"totalForQantity": totalForQantity,
 
 					}
@@ -267,8 +267,8 @@ class ProductViewEcommerce extends Component {
 											Price:
 </span>
 										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
-											<span className="priceEcommerceNew" ><i className={"fa fa-" + this.state.productData.currency}></i>&nbsp;{this.state.productData.offeredPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-{this.state.productData.offered == true ? <span className="actualPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.actualPrice}</i></span> : null}
+											<span className="priceEcommerceNew" ><i className={"fa fa-" + this.state.productData.currency}></i>&nbsp;{this.state.productData.discountedPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{this.state.productData.discountPercent == true ? <span className="actualPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null}
 										</span>
 									</div>
 
