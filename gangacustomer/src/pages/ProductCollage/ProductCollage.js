@@ -14,7 +14,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
 class ProductCollage extends Component {
 	constructor(props){
     super(props);
-	    this.state = {
+	    this.state = { 
 	    	searchResult : [],
 	    	data:[1, 2, 3, 4, 5, 6],
 	    	price: { min: 10, max: 1299999 },
@@ -43,9 +43,20 @@ class ProductCollage extends Component {
   		$('div[data-toggle="collapse"]').click(function () {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
+
+  		console.log(this.props.match.params);
+  		if (this.props.match.params.categoryID && this.props.match.params.subcategoryID) {
+  			this.getProductsBySubCategory(this.props.match.params.categoryID, this.props.match.params.subcategoryID);
+  		}
+  		else if(this.props.match.params.categoryID){
+  			this.getProductsByCategory(this.props.match.params.categoryID);
+  		}
+  		else{
+  			this.getProductsBySection(this.props.match.params.sectionID);
+  		}
   		this.getSectionDetails(this.props.match.params.sectionID);
   		// this.getCategoryDetails(this.props.match.params.categoryID);
-  		this.getProductsBySection(this.props.match.params.sectionID);
+  		
   		this.getBrands();
   		this.getSize();
   		this.getColor();
@@ -98,6 +109,36 @@ class ProductCollage extends Component {
 	}
 	getProductsBySection(sectionID){
 		axios.get("/api/products/get/list/"+sectionID)
+	      .then((response)=>{ 
+	          this.setState({
+	              products 		 : response.data,
+	              masterproducts : response.data
+	          })
+	          
+	          
+	      })
+	      .catch((error)=>{
+	            console.log('error', error);
+	      })
+	}
+	
+	getProductsByCategory(categoryID){
+		axios.get("/api/products/get/listbycategory/"+categoryID)
+	      .then((response)=>{ 
+	          this.setState({
+	              products 		 : response.data,
+	              masterproducts : response.data
+	          })
+	          
+	          
+	      })
+	      .catch((error)=>{
+	            console.log('error', error);
+	      })
+	}
+	
+	getProductsBySubCategory(categoryID, subcategoryID){
+		axios.get("/api/products/get/list/"+categoryID+'/'+subcategoryID)
 	      .then((response)=>{ 
 	          this.setState({
 	              products 		 : response.data,
