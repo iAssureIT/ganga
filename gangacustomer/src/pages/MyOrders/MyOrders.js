@@ -246,7 +246,7 @@ export default class MyOrders extends Component {
         this.state.orderData && this.state.orderData.length > 0 ?
             this.state.orderData.map((data, index)=>{
               return(
-                <div className="orderbodyborder">
+                <div className={data.deliveryStatus[0].status == 'Cancelled' ? "cancelledorder" : "orderbodyborder"}  >
             		<table className="data table table-order-items history" id="my-orders-table">
                   <thead>
                       <tr>
@@ -279,14 +279,14 @@ export default class MyOrders extends Component {
 
                                         {
                                           delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
-                                          <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
+                                          delivery.status == 'Delivered & Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
                                           onClick={this.returnProduct.bind(this)} data-status={delivery.status} data-id={data._id}>
-                                          <i className="fa"  data-status={delivery.status} data-id={data._id}>&#xf0e2;</i></button>
+                                          <i className="fa"  data-status={delivery.status} data-id={data._id}>&#xf0e2;</i></button> :''
                                         }
                                         {
-                                           delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
-                                          <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
-                                          data-status={delivery.status} data-id={data._id}>X</button>
+                                          delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
+                                          delivery.status=="New Order" || delivery.status=="Verified" || delivery.status=="Packed" ? <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
+                                          data-status={delivery.status} data-id={data._id}>X</button> : ''
                                         }
                                         </div>
                                       );

@@ -447,6 +447,9 @@ class ProductCollage extends Component {
 		return (
 	      	<div className="container" id="containerDiv">
 	     	 <div className="row"> 
+
+	     	 	{this.state.products.length > 0 ? 
+	     	 	<div>		
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
@@ -732,6 +735,8 @@ class ProductCollage extends Component {
 				    </div>
 				  </div>
               </div>
+              </div>
+               : <div className="text-center"><img src="/images/noproducts.jpeg" /></div>}
              </div>
 	     	</div>
 	    )

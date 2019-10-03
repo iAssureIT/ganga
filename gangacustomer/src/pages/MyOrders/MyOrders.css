@@ -44,7 +44,7 @@ table > tfoot > tr > td:last-of-type {
     padding-left: 0;
     padding-right: 0;
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 9px;
     padding: 5px 0 5px;
     border: 1px solid #fbbb65 !important;
     background: #fff;
@@ -84,7 +84,13 @@ table > tfoot > tr > td:last-of-type {
 	border-radius: 5px;
 	margin-bottom: 10px;
 }
-
+.cancelledorder{
+	border:2px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+	background: #eee;
+}
 .modalfooterborder{
 	border:none;
 }
