@@ -32,6 +32,12 @@
     background: white;
 }
 
+.tableCss{
+  margin-top: 50px;
+}
+.descriptionCss{
+    margin-top: 20px;
+}
 .add-new-product-table th, .add-new-product-table td {
     text-align: center;
     border: 1px solid #aaa !important;

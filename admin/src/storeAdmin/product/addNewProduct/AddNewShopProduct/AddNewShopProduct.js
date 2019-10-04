@@ -595,11 +595,24 @@ class AddNewShopProduct extends Component {
                 <h4 className="NOpadding-right">Add Products</h4>
               </div>
 
+              <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li className="nav-item">
+    <a className="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+  </li>
+  <li className="nav-item">
+    <a className="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+  </li>
+</ul>
+<div className="tab-content" id="pills-tabContent">
+  <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+  <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+</div>
+
             </div>
             <form className="newTemplateForm" id="addNewShopProduct">
               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 marginTopp">
                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Section <i className="redFont">*</i></label>
                     <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section + '|' + this.state.section_ID} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
                       <option defaultValue="Select Section">Select Section</option>
@@ -614,7 +627,7 @@ class AddNewShopProduct extends Component {
                       }
                     </select>
                   </div>
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Category </label>
                     {/*<div className="input-group" id="category">*/}
                     <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category} name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
@@ -630,7 +643,7 @@ class AddNewShopProduct extends Component {
                       }
                     </select>
                   </div>
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Sub Category </label>
                     {/*<div className="input-group" id="subCategory">*/}
                     <select className="form-control allProductSubCategories" aria-describedby="basic-addon1" name="subCategory" id="subCategory" ref="subCategory" value={this.state.subCategory} onChange={this.handleChange.bind(this)}>
@@ -652,15 +665,15 @@ class AddNewShopProduct extends Component {
 
                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
 
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Product Code <i className="redFont">*</i></label>
                     <input value={this.state.productCode} name="productCode" id="productCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="productCode" onChange={this.handleChange.bind(this)} />
                   </div>
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Item Code <i className="redFont">*</i></label>
                     <input value={this.state.itemCode} name="itemCode" id="itemCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="itemCode" onChange={this.handleChange.bind(this)} />
                   </div>
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Product Name <i className="redFont">*</i></label>
                     <input value={this.state.productName} name="productName" id="productName" onChange={this.createProductUrl.bind(this)} type="text" className="form-control link-subcategory newProductName" placeholder="Product Name" aria-label="Username" aria-describedby="basic-addon1" ref="productName" />
                   </div>
@@ -672,7 +685,7 @@ class AddNewShopProduct extends Component {
                     <input value={this.state.productUrl} onChange={this.handleChange.bind(this)} id="productUrl" name="productUrl" type="text" className="form-control link-subcategory newProductName productUrl" placeholder="Product URL" aria-describedby="basic-addon1" ref="productUrl" />
                   </div>
 
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                     <label>Brand Name <i className="redFont">*</i></label>
                     <input value={this.state.brand} name="brand" id="brand" type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
                   </div>
@@ -732,7 +745,7 @@ class AddNewShopProduct extends Component {
 
                 </div>
                 
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive tableCss">
                   <table className="add-new-product-table table table-bordered">
                     <thead>
                       <tr>
@@ -763,7 +776,7 @@ class AddNewShopProduct extends Component {
                   <label>Product Detail <i className="redFont">*</i></label>
                   <textarea value={this.state.productDetails} name="productDetails" id="productDetails" onChange={this.handleChange.bind(this)} className="form-control newProductDetails" placeholder="Product Detail..." rows="4" aria-describedby="basic-addon1" ref="productDetails" ></textarea>
                 </div>
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol descriptionCss">
                   <div className="row">
                     <div className="col-lg-6">
                       <label>Short Description <i className="redFont">*</i></label>
