@@ -13,29 +13,30 @@ export default class StepWizard extends Component{
 			
 		}
 	}
-
+	componentWillReceiveProps(nextProps){
+		console.log('nextProps',nextProps);
+	}
 	componentDidMount(){
 		var pathname = window.location.pathname;
-		console.log("pathname",pathname);
 
-		if(pathname =='/cart'){
-			$('#cartbg').addClass('bgcolor');
-			console.log("cartin");
-
-		}else if(pathname =='/address'){
-			$('#cartbg').addClass('bgcolor');
-			$('#addressbg').addClass('bgcolor');
-						console.log("addin");
-
-			
-		}else if(pathname =='/confirm-order'){
-			$('#cartbg').addClass('bgcolor');
-			$('#addressbg').addClass('bgcolor');		
-			$('#ConfirmOrder').addClass('bgcolor');		
-				console.log("billin");
-
+		if(this.props.data.deliveryStatus[0].status =='New Order'){
+			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
+		}
+		if(this.props.data.deliveryStatus[0].status =='Dispatch'){
+			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
+			$('#outfrdelivery'+this.props.data._id).addClass('neworderstatus');
+		}
+		if(this.props.data.deliveryStatus[0].status =='Delivery Initiated'){
+			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
+			$('#outfrdelivery'+this.props.data._id).addClass('neworderstatus');
+			$('#intransit'+this.props.data._id).addClass('neworderstatus');
 		}	
-
+		if(this.props.data.deliveryStatus[0].status =='Delivered & Paid'){
+			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
+			$('#outfrdelivery'+this.props.data._id).addClass('neworderstatus');
+			$('#intransit'+this.props.data._id).addClass('neworderstatus');
+			$('#paid'+this.props.data._id).addClass('neworderstatus');
+		}
 	}
 
 	render(){
@@ -48,28 +49,28 @@ export default class StepWizard extends Component{
 
 	                    <li role="presentation" className=''>
 	                        <a>
-	                            <span title="Cart" className="round-tab selectcart stepwizardclass" id="cartbg">
+	                            <span title="Cart" className="round-tab selectcart stepwizardclass" id= {"cartbg"+this.props.data._id}>
 	                                <i className="fa fa-shopping-cart" aria-hidden="true"></i>
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Order Placed</div>
-	                        <div className="wiztext">2-10-19</div>
-	                        <div className="wiztext">17:20</div></div>
+	                        
+	                        </div>
 	                    </li>
 	                    <li role="presentation" className="">
 	                        <a>
-	                            <span title="Delivery Address" className="round-tab selectAddr stepwizardclass" id="addressbg">
+	                            <span title="Delivery Address" className="round-tab selectAddr stepwizardclass" id= {"outfrdelivery"+this.props.data._id}>
 	                                <i className="fa fa-map-marker" aria-hidden="true"></i>
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Out for delivery</div>
-	                        <div className="wiztext">2-10-19</div>
-	                        <div className="wiztext">17:20</div></div>
+	                       
+	                        </div>
 	                    </li>
 
 	                    <li role="presentation" className="">
 	                        <a>
-	                            <span  title="Order Summary" className="round-tab selectPayment stepwizardclass" id="ConfirmOrder">
+	                            <span  title="Order Summary" className="round-tab selectPayment stepwizardclass" id= {"intransit"+this.props.data._id}>
 	                                <i className="fa fa-credit-card" aria-hidden="true"></i>
 	                            </span>
 	                        </a>
@@ -80,13 +81,13 @@ export default class StepWizard extends Component{
 
 	                    <li role="presentation" className="">
 	                        <a>
-	                            <span  title="Order Summary" className="round-tab selectPayment stepwizardclass" id="ConfirmOrder">
+	                            <span  title="Order Summary" className="round-tab selectPayment stepwizardclass" id= {"paid"+this.props.data._id}>
 	                                <i className="fa fa-check-circle" aria-hidden="true"></i>
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Delivered</div>
-	                        <div className="wiztext">2-10-19</div>
-	                        <div className="wiztext">17:20</div></div>
+	                        
+	                        </div>
 	                    </li>
 	                </ul>
 	            </div>

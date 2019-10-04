@@ -93,13 +93,14 @@ export default class MyOrders extends Component {
       
       var status = $(event.target).data('status');
       var id = $(event.target).data('id');
-
+      var productid = $(event.target).data('productid');
       
       var str= '';
 
-      if(status=="Delivered & Paid" || status=="Delivery Initiated") {
+      if(status=="Paid") {
         str = 'Do you want to return order?';
         $('#returnProductBtn').attr('data-id', id);
+        $('#returnProductBtn').attr('data-productid', productid);
         $('.cantreturn').hide();
         $('.canreturn').show();
       } else{
@@ -132,13 +133,14 @@ export default class MyOrders extends Component {
     returnProductAction(event){
       event.preventDefault();
         var id = $(event.target).data('id');
-
+        var productid = $(event.target).data('productid');
         var formValues = {
-                          "orderID" :  id,  
-                          "userid"  :  localStorage.getItem('user_ID')
+                          "orderID"   : id,  
+                          "productID" : productid,
+                          "userid"    : localStorage.getItem('user_ID')
                         }
-
-       axios.patch('/api/orders/get/returnOrder', formValues)
+        console.log(formValues)
+       /*axios.patch('/api/orders/get/returnOrder', formValues)
                         .then((response)=>{
                            this.getMyOrders();
                             // swal({
@@ -157,7 +159,7 @@ export default class MyOrders extends Component {
                              
                         .catch((error)=>{
                           console.log('error', error);
-                        })
+                        })*/
                       // })
 
     }
@@ -276,13 +278,6 @@ export default class MyOrders extends Component {
 
                                         <a className="btn alphab filterallalphab" href={"/view-order/"+data._id} title="View Order">
                                         <span> <i className="fa fa-eye"></i></span></a>
-
-                                        {
-                                          delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
-                                          delivery.status == 'Delivered & Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
-                                          onClick={this.returnProduct.bind(this)} data-status={delivery.status} data-id={data._id}>
-                                          <i className="fa"  data-status={delivery.status} data-id={data._id}>&#xf0e2;</i></button> :''
-                                        }
                                         {
                                           delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
                                           delivery.status=="New Order" || delivery.status=="Verified" || delivery.status=="Packed" ? <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
@@ -322,6 +317,12 @@ export default class MyOrders extends Component {
                               { data.status == "Paid" ?
                               <td data-th="Order Total" className="col total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
+                                  {
+                                    data.status == 'Cancelled' || data.status == 'Returned' ? '' :
+                                    data.status == 'Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
+                                    onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-productid={productData._id}>
+                                    <i className="fa"  data-status={data.status} data-id={data._id}>&#xf0e2;</i></button> :''
+                                  }
                               </td>
                               :
                               null

@@ -68,7 +68,8 @@ class dispatchModal extends Component{
                     modal.style.display = "none";
                     $('#businessAssociate').val('');
                     $('.expDeliveryDate').val('');
-                    window.loaction.reload();
+                    this.props.history.push('/');
+                    window.location.reload();
                 }
           })
           .catch((error)=>{

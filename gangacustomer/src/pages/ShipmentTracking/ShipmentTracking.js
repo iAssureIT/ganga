@@ -34,13 +34,12 @@ class ShipmentTracking extends Component {
     var userId = localStorage.getItem('user_ID');
     axios.get("/api/orders/get/list/" + userId)
       .then((response) => {
-       
           var orderData = response.data.filter((data,index)=>{
             console.log('data',data);
             return  data.deliveryStatus[0].status == 'Dispatch' || data.deliveryStatus[0].status == 'Delivery Initiated'
                         || data.deliveryStatus[0].status == 'Delivered & Paid'
           })
-          this.setState({orderData:orderData})
+          this.setState({orderData:response.data})
           console.log('orderData',orderData);
       })
       .catch((error) => {
@@ -99,7 +98,7 @@ class ShipmentTracking extends Component {
                           <div key={index} className="col-lg-12 bgwhite">
                             <div className="col-lg-12 orderpagebox">
                               <div className="row">
-                              <StepWizard />
+                              <StepWizard data={data} />
                               </div>
                               <hr className="hrline" />
                               <div className="row">

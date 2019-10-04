@@ -18,6 +18,14 @@
     border: 2px solid #d58980;
     color: #fff!important;
 }
+.neworderstatus{
+    background: #777 !important;
+    border: 2px solid #d58980;
+    color: #fff!important;
+}
+.neworderstatus i {
+    color: #fff !important
+}
 .backcolor{
     background-color: #000 important;
 }
