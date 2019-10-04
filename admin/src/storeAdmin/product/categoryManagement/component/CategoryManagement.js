@@ -75,6 +75,9 @@ class CategoryManagement extends Component{
       if(this.state.editId){      
         this.edit(this.state.editId);
       }
+      $.validator.addMethod("regxsection", function (value, element, arg) {
+        return arg !== value;
+      }, "Please select the section");
       $.validator.addMethod("valueNotEquals", function(value, element, arg){
         return arg !== value;
       }, "Please select the category");
@@ -92,15 +95,15 @@ class CategoryManagement extends Component{
         rules: {
           section: {
             required: true,
-            valueNotEquals: "Select Section"
+            regxsection: "Select Section"
           },
           category: {
             required: true,
-            regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
+            // regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
           },
           categoryDescription: {
             required: true,
-            regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
+            // regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
           },
         },
         errorPlacement: function(error, element) {
@@ -473,7 +476,12 @@ class CategoryManagement extends Component{
             })
         }
     }
-    
+    deleteImage(event){
+      event.preventDefault();
+      this.setState({
+        categoryImage : ""
+      })
+    }
     render(){
        console.log("s3url------------->",this.state.categoryImage);
       // console.log('categoryImage', this.state.categoryImage);
@@ -495,7 +503,7 @@ class CategoryManagement extends Component{
                                   <div className="col-lg-12">
                                       <label>Section <i className="redFont">*</i></label>
                                       <select onChange={this.sectionChange.bind(this)} value={this.state.section+'|'+this.state.section_ID}  name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
-                                      <option value="select">Select</option>
+                                      <option value="Select Section">Select Section</option>
                                         {
                                           this.state.sectionsList && this.state.sectionsList.length>0 ?
                                           this.state.sectionsList.map((data, index)=>{
@@ -549,18 +557,30 @@ class CategoryManagement extends Component{
                                       <label>Category Short Description <i className="redFont">*</i></label>                                                                    
                                       <input type="text" value={this.state.categoryDescription} onChange={this.handleChange.bind(this)} name="categoryDescription" id="categoryDescription" className="form-control categoryShortDesc" placeholder="Category Short Description" ref="categoryDescription" />
                                   </div>
-                                  <div className="divideCatgRows">
-                                  <label>Category Image</label>
+                                  {/* <div className="divideCatgRows">
+                                    <label>Category Image</label>
                                       <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6">
                                       <div className="col-lg-12 col-md-12 col-xs-6 col-sm-6 categoryImage" style={{"backgroundImage":`url(`+(this.state.categoryImage && this.state.categoryImage != "" ? this.state.categoryImage : "/images/notavailable.jpg")+`)`}}>
                                         <div className="row">
-                                          {/* <span className="fa fa-camera"> */}
-                                            <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="imgUp col-lg-12 col-sm-12 col-xs-12 col-md-12" accept=".jpg,.jpeg,.png" />
-                                          {/* </span> */}
+                                          <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="imgUp col-lg-12 col-sm-12 col-xs-12 col-md-12" accept=".jpg,.jpeg,.png" />
                                         </div>
                                       </div>
                                       </div>
+                                  </div> */}
+                                  <div className="divideCatgRows">
+                                      <label>Category Image</label>                                                                    
+                                      <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="" accept=".jpg,.jpeg,.png" />
                                   </div>
+                                  <div className="row">
+                                    <div className="col-lg-4 productImgCol">
+                                      <div className="prodImage">
+                                          <div className="prodImageInner">
+                                              <span className="prodImageCross" title="Delete" data-imageUrl={this.state.categoryImage} onClick={this.deleteImage.bind(this)} >x</span>
+                                          </div>
+                                          <img title="view Image" src={this.state.categoryImage ? this.state.categoryImage : "/images/notavailable.jpg"} className="img-responsive" />
+                                      </div>    
+                                    </div>
+                                </div>
                               </div>
                               <div className="col-lg-12 NOpadding-right">
                                   <div className="addCategoryNewBtn col-lg-12 NOpadding-right">

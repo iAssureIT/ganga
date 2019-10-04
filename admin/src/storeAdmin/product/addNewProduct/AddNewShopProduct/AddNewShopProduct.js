@@ -112,7 +112,7 @@ class AddNewShopProduct extends Component {
         },
         productUrl: {
           required: true,
-          regxUrl: /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+          // regxUrl: /^[A-Za-z][A-Za-z0-9\-\s]*$/,
         },
         
         originalPrice: {
@@ -361,31 +361,35 @@ class AddNewShopProduct extends Component {
         axios.post('/api/products/post', formValues)
         .then((response) => {
           // console.log('response', response);
-          this.props.history.push('/add-product/image/' + response.data.product_ID);
-          swal({
-            title: response.data.message,
-            text: response.data.message,
-          });
-          this.setState({
-            section: "Select Section",
-            category: "Select Category",
-            subCategory: "Select Sub-Category",
-            brand: "",
-            productCode: "",
-            itemCode : "",
-            productName: "",
-            productUrl: "",
-            productDetails: "",
-            shortDescription: "",
-            originalPrice: "",
-            discountedPrice: "",
-            size: "",
-            color: "",
-            availableQuantity: "",
-            availableQuantity: "",
-            currency: "",
-            status: "",
-          });
+          if(response.data.message == "Item code already exists."){
+            swal({
+              title: response.data.message,
+              text: response.data.message,
+            });
+          }else{
+            this.props.history.push('/add-product/image/' + response.data.product_ID);
+            
+            this.setState({
+              section: "Select Section",
+              category: "Select Category",
+              subCategory: "Select Sub-Category",
+              brand: "",
+              productCode: "",
+              itemCode : "",
+              productName: "",
+              productUrl: "",
+              productDetails: "",
+              shortDescription: "",
+              originalPrice: "",
+              discountedPrice: "",
+              size: "",
+              color: "",
+              availableQuantity: "",
+              availableQuantity: "",
+              currency: "",
+              status: "",
+            });
+          }
         })
         .catch((error) => {
           console.log('error', error);
@@ -623,7 +627,8 @@ class AddNewShopProduct extends Component {
                           );
                         })
                         :
-                        null
+                        <option disabled>{"No section added"}</option>
+                        
                       }
                     </select>
                   </div>
@@ -639,7 +644,7 @@ class AddNewShopProduct extends Component {
                           );
                         })
                         :
-                        null
+                        <option disabled>{"No category added"}</option>
                       }
                     </select>
                   </div>
@@ -656,7 +661,7 @@ class AddNewShopProduct extends Component {
                           );
                         })
                         :
-                        null
+                        <option disabled>{"No sub category added"}</option>
                       }
                     </select>
                   </div>

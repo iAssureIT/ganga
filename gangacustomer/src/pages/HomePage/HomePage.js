@@ -154,8 +154,8 @@ class HomePage extends Component {
               </div>
             <div className="homeRow">
             { /*new product */}
-						<EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <Ecommercenewproductcaro getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}  title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+						<EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            <Ecommercenewproductcaro   title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <ProductDivider categories={this.state.categories} />
             <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>

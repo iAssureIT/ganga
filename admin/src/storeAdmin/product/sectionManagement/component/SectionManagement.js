@@ -178,14 +178,10 @@ class SectionManagement extends Component {
   updatesection(event) {
     event.preventDefault();
     if ($('#sectionManagement').valid()) {
-
-
       var formValues = {
         "sectionID": this.state.editId,
         "section": this.state.section,
-
       }
-
       axios.patch('/api/sections/patch', formValues)
         .then((response) => {
           swal({
@@ -196,8 +192,9 @@ class SectionManagement extends Component {
           this.setState({
             "section": '',
             "sectionUrl": '',
+            "editId" : ''
           });
-          //this.props.history.push('/section-management');
+          this.props.history.push('/section-management');
         })
         .catch((error) => {
           console.log('error', error);

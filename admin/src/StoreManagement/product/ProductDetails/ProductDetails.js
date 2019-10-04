@@ -59,8 +59,8 @@ class ProductDetails extends Component{
                 productName : response.data.productName,
                 category    : response.data.category,
                 subCategory : response.data.subCategory,
-                actualPrice: response.data.actualPrice,
-                offeredPrice: response.data.offeredPrice,
+                originalPrice: response.data.originalPrice,
+                discountedPrice: response.data.discountedPrice,
                 productDetails : response.data.productDetails,
                 productCode : response.data.productCode,
                 featureList : response.data.featureList,
@@ -181,8 +181,8 @@ class ProductDetails extends Component{
 
                                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div className="prod-detail-headerPrice">
-                                                            <span className="prod-detail-headerTextPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.offeredPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/-</span> &nbsp; &nbsp;
-                                                            {this.state.actualPrice != this.state.offeredPrice ? <span className="actualPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.actualPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span> : null}
+                                                            <span className="prod-detail-headerTextPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.discountedPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}/-</span> &nbsp; &nbsp;
+                                                            {this.state.originalPrice != this.state.discountedPrice ? <span className="actualPrice"><i className={"fa fa-"+this.state.currency}></i> {(parseInt(this.state.originalPrice)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span> : null}
                                                         </div>
                                                     </div>
 

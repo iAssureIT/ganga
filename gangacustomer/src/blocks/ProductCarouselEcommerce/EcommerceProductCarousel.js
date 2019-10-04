@@ -158,12 +158,7 @@ class EcommerceProductCarousel extends Component {
       }
       axios.post('/api/wishlist/post', formValues)
         .then((response) => {
-          // console.log("response",response.status);
-          // if (response.status == 200) {
-          //   ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-          // }
-          // ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-          // swal(response.data.message);
+          this.props.getWishData();
           this.props.changeWishlistCount(response.data.wishlistCount);
         })
         .catch((error) => {
@@ -256,6 +251,14 @@ class EcommerceProductCarousel extends Component {
                     {
                       this.state.newProducts && this.state.newProducts.length > 0 ?
                         this.state.newProducts.map((data, index) => {
+                          var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
+                          if(x && x.length > 0){
+                            var wishClass = '';
+                            var tooltipMsg = 'Wish listed';
+                          }else{
+                            var wishClass = '-o';
+                            var tooltipMsg = 'Add to wishlist';
+                          }
                           return (
                             <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                               <a href={"/productdetails/" + data._id}>
@@ -263,7 +266,7 @@ class EcommerceProductCarousel extends Component {
                                   <div className="card">
                                     <div className="item-top">
                                       <div className="productImg">
-                                        <button type="submit" id={data._id} title="Add to Wishlist" className=" fa fa-heart wishIcon" onClick={this.addtowishlist.bind(this)}></button>
+                                        <button type="submit" id={data._id} title={tooltipMsg} className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
                                         {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
                                         <a className="product photo product-item-photo" tabIndex="-1">
                                           <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />

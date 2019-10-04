@@ -277,7 +277,7 @@ class Ecommercenewproductcaro extends Component {
                                   <div className="card">
                                     <div className="item-top">
                                       <div className="productImg">
-                                        <button type="submit" id={data._id} title="Add to Wishlist" className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
+                                        <button type="submit" id={data._id} title={tooltipMsg} className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
                                         {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
                                         <a className="product photo product-item-photo" tabIndex="-1">
                                           <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
