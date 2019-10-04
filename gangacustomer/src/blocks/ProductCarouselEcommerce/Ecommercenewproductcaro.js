@@ -51,7 +51,8 @@ class Ecommercenewproductcaro extends Component {
 
       productType: props.type,
       newProducts: [],
-      modalIDNew: []
+      modalIDNew: [],
+      wishList : []
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -61,7 +62,7 @@ class Ecommercenewproductcaro extends Component {
     })
   }
   componentDidMount() {
-
+  
 
     //   const second = 1000,
     //   minute = second * 60,
@@ -152,6 +153,7 @@ class Ecommercenewproductcaro extends Component {
       newProducts: nextProps.newProducts,
       type: nextProps.type
     })
+ 
   }
 
   addtowishlist(event) {
@@ -159,23 +161,18 @@ class Ecommercenewproductcaro extends Component {
       event.preventDefault();
       var id = event.target.id;
       const userid = localStorage.getItem('user_ID');
-      const formValues =
-      {
+      const formValues = {
         "user_ID": userid,
         "product_ID": id,
       }
       axios.post('/api/wishlist/post', formValues)
-        .then((response) => {
-          if (response.status == 200) {
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-          }
-          ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-          // swal(response.data.message);
-          this.props.changeWishlistCount(response.data.wishlistCount);
-        })
-        .catch((error) => {
-          console.log('error', error);
-        })
+      .then((response) => {
+        this.props.getWishData();
+        this.props.changeWishlistCount(response.data.wishlistCount);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      })
     }
     else {
       ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
@@ -206,8 +203,8 @@ class Ecommercenewproductcaro extends Component {
     $(".toast-warning").removeClass('toast');
 
   }
+  
   render() {
-    const token = localStorage.getItem("user_ID");
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
         <div className="row">
@@ -265,6 +262,14 @@ class Ecommercenewproductcaro extends Component {
                     {
                       this.state.newProducts && this.state.newProducts.length > 0 ?
                         this.state.newProducts.map((data, index) => {
+                          var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
+                          if(x && x.length > 0){
+                            var wishClass = '';
+                            var tooltipMsg = 'Wish listed';
+                          }else{
+                            var wishClass = '-o';
+                            var tooltipMsg = 'Add to wishlist';
+                          }
                           return (
                             <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                               <a href={"/productdetails/" + data._id}>
@@ -272,21 +277,22 @@ class Ecommercenewproductcaro extends Component {
                                   <div className="card">
                                     <div className="item-top">
                                       <div className="productImg">
-                                        {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null}
+                                        <button type="submit" id={data._id} title="Add to Wishlist" className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
+                                        {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
                                         <a className="product photo product-item-photo" tabIndex="-1">
                                           <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
                                         </a>
                                       </div>
                                       <div className="productDetails">
                                         <div className="innerDiv">
-                                          <div className="product-brand" title={data.productName}>{data.brand}</div>
-                                          <div className="product-item-link" title={data.productName}>{data.productName}</div>
+                                          <div className="product-brand" title={data.productName}>{data.productName}</div>
+                                          <div className=" product-item-link" title={data.productName}>{data.brand}</div>
                                           <div className="col-lg-12 col-md-12 NOpadding">
                                             {
                                               data.discountPercent ?
                                                 <div className="col-lg-12 col-md-12 NOpadding">
                                                   <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> &nbsp;
-                                                  <span className="price"><i className="fa fa-inr"></i>&nbsp;{ data.discountedPrice}</span>
+                                                  <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
                                                 </div>
                                                 :
                                                 <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
@@ -299,8 +305,7 @@ class Ecommercenewproductcaro extends Component {
                                           </div>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                             <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 NOpadding">
-                                              <button type="submit" id={data._id} title="" className="homeCart fa fa-heart col-lg-12 " onClick={this.addtowishlist.bind(this)}>
-                                              </button>
+                                              
                                             </div>
                                             <div className=" col-lg-7 col-md-7 col-sm-12 col-xs-12 NOpadding">
                                               <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-11 col-lg-offset-1">
@@ -316,6 +321,7 @@ class Ecommercenewproductcaro extends Component {
                               </a>
                             </div>
                           );
+                        
                         })
                         : ''
                     }

@@ -56,13 +56,13 @@ class Wishlist extends Component {
               var products = this.state.products;
               products.push({
                 "productName"       : res.data.productName,
-                "actualPrice"       : res.data.actualPrice,
+                "originalPrice"       : res.data.originalPrice,
                 "availableQuantity" : res.data.availableQuantity,
                 "bestSeller"        : res.data.bestSeller,
                 "brand"             : res.data.brand,
                 "category"          : res.data.category,
                 "currency"          : res.data.currency,
-                "offeredPrice"      : res.data.offeredPrice,
+                "discountedPrice"      : res.data.discountedPrice,
                 "productCode"       : res.data.productCode,
                 "productImage"      : res.data.productImage,
                 "product_ID"        : res.data._id,
@@ -90,7 +90,7 @@ class Wishlist extends Component {
      console.log("ididid", id);
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
-      var totalForQantity   =   parseInt(this.state.quantity * response.data.offeredPrice);
+      var totalForQantity   =   parseInt(this.state.quantity * response.data.discountedPrice);
           const userid = localStorage.getItem('admin_ID');
           // console.log("userid",response.data);
           const formValues = { 
@@ -103,8 +103,8 @@ class Wishlist extends Component {
               "subCategory" : response.data.subCategory,
               "productImage" : response.data.productImage,
               "quantity" : this.state.quantity,
-              "offeredPrice" : parseInt(response.data.offeredPrice),
-              "actualPrice" : parseInt(response.data.actualPrice),
+              "discountedPrice" : parseInt(response.data.discountedPrice),
+              "originalPrice" : parseInt(response.data.originalPrice),
               "totalForQantity" : totalForQantity,
               
           }
@@ -197,7 +197,7 @@ class Wishlist extends Component {
                                         </div>
                                         <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 wishProductDetails">
                                             <h5 className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding wishProductName">{data.productName}</h5>
-                                            <p className="fa fa-inr col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding wishProductPrize mb25"> {data.offeredPrice}</p>
+                                            <p className="fa fa-inr col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding wishProductPrize mb25"> {data.discountedPrice}</p>
                                             <input className="col-lg-1 col-md-1 col-sm-2 col-xs-2 wishlistInput" value={this.state.quantity} name="quantity" onChange={this.handleChange.bind(this)}/>
                                             <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                                 <button className="btn col-lg-4 col-md-4 col-sm-10 col-xs-10 wishAddtoCart" wishid={data.wishlist_ID} id={data.product_ID} onClick={this.addtocart.bind(this)}>ADD TO CART</button>

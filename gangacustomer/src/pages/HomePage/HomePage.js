@@ -32,6 +32,7 @@ class HomePage extends Component {
       this.newProductsData();
       this.bestSellerData();
       this.getCategories();
+      this.getWishData();
         var refresh = window.localStorage.getItem('refresh');
         console.log(refresh);
         if (refresh===null){
@@ -124,6 +125,24 @@ class HomePage extends Component {
         console.log('error', error);
       })
     }
+    getWishData(){
+      var user_ID = localStorage.getItem('user_ID');
+      axios.get('/api/wishlist/get/userwishlist/'+user_ID)
+      .then((response)=>{
+        this.featuredProductData();
+        this.exclusiveProductsData();
+        this.newProductsData();
+        this.bestSellerData();
+        this.setState({
+          wishList : response.data
+        },()=>{
+          console.log('wishList', this.state.wishList);
+        })
+      })
+      .catch((error)=>{
+        console.log('error', error);
+      })
+    }
   render() {
     console.log('this.state.exclusiveProducts', this.state.exclusiveProducts);
 		return (
@@ -136,10 +155,10 @@ class HomePage extends Component {
             <div className="homeRow">
             { /*new product */}
 						<EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <Ecommercenewproductcaro  title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            <Ecommercenewproductcaro getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}  title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <ProductDivider categories={this.state.categories} />
-            <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             <SaleProductDivider />
         </div>
       </div>

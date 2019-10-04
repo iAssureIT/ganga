@@ -159,10 +159,10 @@ class EcommerceProductCarousel extends Component {
       axios.post('/api/wishlist/post', formValues)
         .then((response) => {
           // console.log("response",response.status);
-          if (response.status == 200) {
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-          }
-          ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+          // if (response.status == 200) {
+          //   ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+          // }
+          // ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           // swal(response.data.message);
           this.props.changeWishlistCount(response.data.wishlistCount);
         })
@@ -263,15 +263,16 @@ class EcommerceProductCarousel extends Component {
                                   <div className="card">
                                     <div className="item-top">
                                       <div className="productImg">
-                                        {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null}
+                                        <button type="submit" id={data._id} title="Add to Wishlist" className=" fa fa-heart wishIcon" onClick={this.addtowishlist.bind(this)}></button>
+                                        {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
                                         <a className="product photo product-item-photo" tabIndex="-1">
                                           <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
                                         </a>
                                       </div>
                                       <div className="productDetails">
                                         <div className="innerDiv">
-                                          <div className="product-brand" title={data.productName}>{data.brand}</div>
-                                          <div className="product-item-link" title={data.productName}>{data.productName}</div>
+                                          <div className="product-brand" title={data.productName}>{data.productName}</div>
+                                          <div className=" product-item-link" title={data.productName}>{data.brand}</div>
                                           <div className="col-lg-12 col-md-12 NOpadding">
                                             {
                                               data.discountPercent ?
@@ -290,9 +291,7 @@ class EcommerceProductCarousel extends Component {
                                           </div>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                             <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 NOpadding">
-                                              <button type="submit" id={data._id} title="" className="homeCart fa fa-heart col-lg-12 " onClick={this.addtowishlist.bind(this)}>
-                                                
-                                                </button>
+                                              
                                             </div>
                                             <div className=" col-lg-7 col-md-7 col-sm-12 col-xs-12 NOpadding">
                                               <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-11 col-lg-offset-1">

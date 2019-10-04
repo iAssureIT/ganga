@@ -426,8 +426,9 @@ background-color: transparent !important;
 .discounttag{
     position: absolute;
     padding: 3px 6px 3px 5px;
-    left: 20px;
-    top: 13px;
+    left: 7.7%;
+    top: 4%;
+    width: 50px;
     font-size: 13px;
     font-weight: 700;
 }
@@ -520,7 +521,7 @@ background-color: transparent !important;
     padding: 10px 10px 5px 10px;
     display: inline-block;
     width: 100%;
-    text-align: left;
+    /* text-align: left; */
 }
 .innerDiv a{
     color: #555;
@@ -724,7 +725,8 @@ background-color: transparent !important;
 }
 .homeCart{
     margin-top: 5px;
-    padding: 6px 9px;
+    padding: 6px 6px;
+    font-weight: bold;
     font-size: 12px;
     border: 1px solid #fbbb65;
     border-radius: 15px;
@@ -734,4 +736,20 @@ background-color: transparent !important;
 .homeCart:hover{
     background: #fbbb65;
     color: #fff;
+}
+
+.wishIcon{
+    margin-top: 5px;
+    padding: 6px 6px;
+    font-weight: bold;
+    font-size: 12px;
+    border: transparent;
+    /* border-radius: 15px; */
+    color: #fbbb65;
+    background: transparent;
+    position: absolute;
+    left: 80%;
+    top: 2%;
+    font-size: 20px;
+    font-weight: 700;
 }
