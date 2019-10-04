@@ -61,6 +61,8 @@ componentWillMount() {
     }
 
 componentDidMount(){
+  console.log('comp');
+  document.getElementsByTagName("DIV")[0].removeAttribute("style"); 
   this.getCartCount();
   this.getWishlistCount();
   this.getHotProduct();
@@ -368,7 +370,7 @@ searchProducts(){
                                                 <input disabled className="col-lg-12 inputcontent" id="mobileno" type="number"ref="mobNumber"/>
                                               </div>
                                               <div className="formcontent1 col-lg-12">
-                                                <label htmlFor="message">Message<span className="redFont">*</span></label>
+                                                <label htmlFor="message">Write a Feedback<span className="redFont">*</span></label>
                                                 <textarea className="col-lg-12 inputcontenttextarea" id="message"ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)} row="5"></textarea>
                                               </div>
                                               <div className="checkbox">
@@ -429,7 +431,7 @@ searchProducts(){
                           <div className="col-lg-12">
                             <div className="row">
                                 <div className="col-lg-3">
-                                  <div className="row">
+                                  <div className="row abc">
                                       <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" options={this.state.options} className={"customStyles"} onChange={this.handleChange.bind(this)}/>
                                   </div>   
                                 </div>   

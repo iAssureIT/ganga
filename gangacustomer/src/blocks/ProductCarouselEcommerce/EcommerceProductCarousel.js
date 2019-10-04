@@ -294,7 +294,7 @@ class EcommerceProductCarousel extends Component {
                                                 
                                                 </button>
                                             </div>
-                                            <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
+                                            <div className=" col-lg-7 col-md-7 col-sm-12 col-xs-12 NOpadding">
                                               <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-11 col-lg-offset-1">
                                                 &nbsp;Add to Cart
                                               </button>
