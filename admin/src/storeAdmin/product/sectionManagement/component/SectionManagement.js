@@ -123,31 +123,31 @@ class SectionManagement extends Component {
       });
     }
     
-    submitsection(event){
-      event.preventDefault();
-      if($('#sectionManagement').valid()){
-        var formValues = {
-            "section"                  : this.state.section,
-            "createdBy"                : localStorage.getItem("admin_ID")
-        }
-        axios.post('/api/sections/post', formValues)
-          .then((response)=>{
-            swal({
-              text  : response.data.message,
-              title : response.data.message,
-            });
-            this.setState({
-              "section"                      : 'Select',
-              "sectionUrl"                   : '',
-              "addEditModeSubsection"        : '',
-            });
-            this.getData(this.state.startRange, this.state.limitRange);
-          })
-          .catch((error)=>{
-            console.log('error', error);
-          });
-      }
-    }
+    // submitsection(event){
+    //   event.preventDefault();
+    //   if($('#sectionManagement').valid()){
+    //     var formValues = {
+    //         "section"                  : this.state.section,
+    //         "createdBy"                : localStorage.getItem("admin_ID")
+    //     }
+    //     axios.post('/api/sections/post', formValues)
+    //       .then((response)=>{
+    //         swal({
+    //           text  : response.data.message,
+    //           title : response.data.message,
+    //         });
+    //         this.setState({
+    //           "section"                      : 'Select',
+    //           "sectionUrl"                   : '',
+    //           "addEditModeSubsection"        : '',
+    //         });
+    //         this.getData(this.state.startRange, this.state.limitRange);
+    //       })
+    //       .catch((error)=>{
+    //         console.log('error', error);
+    //       });
+    //   }
+    // }
 
   submitsection(event) {
     event.preventDefault();
@@ -179,13 +179,13 @@ class SectionManagement extends Component {
     event.preventDefault();
     if ($('#sectionManagement').valid()) {
       var formValues = {
-        "sectionID": this.state.editId,
+        "sectionID": this.props.match.params.sectionID,
         "section": this.state.section,
       }
+      // console.log('form', formValues);
       axios.patch('/api/sections/patch', formValues)
         .then((response) => {
           swal({
-            text: response.data.message,
             title: response.data.message,
           });
           this.getData(this.state.startRange, this.state.limitRange);
