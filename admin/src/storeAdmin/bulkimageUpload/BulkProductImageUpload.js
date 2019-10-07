@@ -3,17 +3,19 @@ import $                      from 'jquery';
 import axios                  from 'axios';
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
+import S3FileUpload           from 'react-s3';
 class BulkProductImageUpload extends Component{
   constructor(props){
       super(props);
       this.state = {
         notuploadedImages : [],
-        allshopproductimages : []
+        allshopproductimages : [],
+        productImageArray : []
       }
   }
 
   componentDidMount() {
-    
+    this.getData();
   }
   componentWillReceiveProps(nextProps){
     this.setState({
@@ -22,13 +24,158 @@ class BulkProductImageUpload extends Component{
   }
   bulkuplodaProductImages(event){
     event.preventDefault();
+    event.preventDefault();
+        var productImage = [];
+        if (event.currentTarget.files && event.currentTarget.files[0]) {
+            for(var i=0; i<event.currentTarget.files.length; i++){
+                var file = event.currentTarget.files[i];
+                if (file) {
+                    var fileName  = file.name; 
+                    var itemCode = file.name.split('-')[0];
+                    console.log('file',fileName, itemCode);
+                    var ext = fileName.split('.').pop();  
+                    if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+                        if (file) {
+                            var objTitle = { 
+                              fileInfo :file,
+                              itemCode : itemCode
+                            }
+                            productImage.push(objTitle);
+                            
+                        }else{          
+                            swal("Images not uploaded","Something went wrong","error");  
+                        }//file
+                    }else{ 
+                        swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                    }//file types
+                }//file
+            }//for 
+
+            if(i >= event.currentTarget.files.length){
+                this.setState({
+                    productImage : productImage
+                },()=>{
+                  console.log('productImage', this.state.productImage)
+                });  
+                main().then(formValues=>{
+                    console.log('formValues.productImage', formValues);
+                    var newImages = this.state.productImageArray;
+                    newImages.push(formValues.productImage);
+                    this.setState({
+                        productImageArray : _.flatten(newImages)
+                    },()=>{
+                        console.log('form', this.state.productImageArray);
+                    })
+                });
+                async function main(){
+                    var config = await getConfig();
+                    
+                    var s3urlArray = [];
+                    for (var i = 0; i<productImage.length; i++) {
+                        var s3url = await s3upload(productImage[i].fileInfo, config, this);
+                        console.log('s3url', s3url);
+                        s3urlArray.push({
+                          productImage : s3url,
+                          itemCode : productImage[i].itemCode
+                        });
+                    }
+                    const formValues = {
+                        "product_ID"        : "fhfgf",
+                        "productImage"      : s3urlArray,
+                        "status"            : "New"
+                    };
+        
+                    // console.log("1 formValues = ",formValues);
+                    return Promise.resolve(formValues);
+                }
+                function s3upload(image,configuration){
+        
+                    return new Promise(function(resolve,reject){
+                        S3FileUpload
+                           .uploadFile(image,configuration)
+                           .then((Data)=>{
+                                // console.log("Data = ",Data);
+                                resolve(Data.location);
+                           })
+                           .catch((error)=>{
+                                console.log(error);
+                           })
+                    })
+                }   
+                function getConfig(){
+                    return new Promise(function(resolve,reject){
+                        axios
+                           .get('/api/projectSettings/get/one/s3')
+                           .then((response)=>{
+                                // console.log("proj set res = ",response.data);
+                                const config = {
+                                    bucketName      : response.data.bucket,
+                                    dirName         : 'propertiesImages',
+                                    region          : response.data.region,
+                                    accessKeyId     : response.data.key,
+                                    secretAccessKey : response.data.secret,
+                                }
+                                resolve(config);                           
+                            })
+                           .catch(function(error){
+                                console.log(error);
+                           })
+        
+                    })
+                }        
+            }
+        }
     
+  }
+  getData(){
+    
+    axios.get('/api/products/get/list')
+    .then((response)=>{
+        console.log('response', response.data)
+        this.setState({
+          allshopproductimages : response.data
+        })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
+}
+  saveImages(event){
+    event.preventDefault();
+    for(var i=0; i<this.state.productImageArray.length; i++){
+      var formValue = {
+        productImage  : this.state.productImageArray[i].productImage,
+        itemCode      : this.state.productImageArray[i].itemCode
+      }
+      console.log('formvalue', formValue);
+      axios.patch('/api/products/patch/bulkimages/', formValue)
+      .then((response)=>{
+        console.log('res', response);
+        swal(response.data.message);
+      })
+      .catch((error)=>{
+        console.log('error', error);
+      })
+    }
   }
   getUploadBulUSPercentage(){
   }
   deleteproductImages(event){
-    event.preventDefault();
-    
+    event.preventDefault(); 
+    var id = event.target.getAttribute('data-productid');
+    var image = event.target.getAttribute('data-image');
+    var formValues = {
+      id    : id,
+      image : image
+    }
+    console.log('id', id, image);
+    axios.patch('/api/products/remove/image', formValues)
+    .then((res)=>{
+      console.log('res', res);
+    })
+    .catch((error)=>{
+      console.log('errro', error);
+    })
   }
     
   render(){
@@ -46,14 +193,20 @@ class BulkProductImageUpload extends Component{
                   </div>
                           
                   <form className="addRolesInWrap newTemplateForm">
-                    <div className="row inputrow">
-                      <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12">
+                    <div className="">
+                      <div className="col-lg-4 col-lg-offset-3  col-md-4 col-md-offset-3 col-sm-12 col-xs-12">
                         <div className="form-group">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">
                             Upload Product Images 
                           </label>
                           <input type="file" className="form-control bulkuplodaProductImagesInp" multiple onChange ={this.bulkuplodaProductImages.bind(this)}/>
                           <div>{this.getUploadBulUSPercentage()}</div>
+                        </div>
+                      </div>
+                      <div className="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                        <div className="form-group">
+                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">&nbsp; </label>
+                          <button className="btn btn-primary" onClick={this.saveImages.bind(this)}>Save Images</button>
                         </div>
                       </div>
                     </div>
@@ -97,7 +250,7 @@ class BulkProductImageUpload extends Component{
                             <thead className="tempTableHeader">
                               <tr >
                                 <th className="col-lg-1 umDynamicHeader srpadd">Sr no.</th>
-                                <th className="col-lg-2 umDynamicHeader srpadd">Product Code</th>
+                                <th className="col-lg-2 umDynamicHeader srpadd">Item Code</th>
                                 <th className="col-lg-2 umDynamicHeader srpadd">Product Name</th>
                                 <th className="col-lg-7 umDynamicHeader srpadd">Images</th>
                               </tr>
@@ -108,7 +261,7 @@ class BulkProductImageUpload extends Component{
                                   return(
                                     <tr key ={index}>
                                       <td> {index+1}     </td>
-                                      <td> {data.productCode}    </td>
+                                      <td> {data.itemCode}    </td>
                                       <td> {data.productName}    </td>
                                       <td>
                                       {
@@ -118,7 +271,7 @@ class BulkProductImageUpload extends Component{
                                               data.productImage.map((imgdata,index)=>{
                                                 return(
                                                   <div className="col-lg-3 deleteImgBlkUpldCol-lg-3" key={index}>
-                                                    <i className="fa fa-times deleteImgBlkUpld" aria-hidden="true" data-productid={data._id} data-currentindex={imgdata} onClick={this.deleteproductImages.bind(this)}></i>
+                                                    <i className="fa fa-times deleteImgBlkUpld" aria-hidden="true" data-image={imgdata} data-productid={data._id}   onClick={this.deleteproductImages.bind(this)}></i>
                                                     <img src={imgdata} className="img-thumbnail"/>
                                                   </div>
                                                 );
@@ -141,17 +294,6 @@ class BulkProductImageUpload extends Component{
                       </div>
                     </div>
                   </div>
-
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    {/*<IAssureTable 
-                      tableHeading={this.state.tableHeading}
-                      twoLevelHeader={this.state.twoLevelHeader} 
-                      dataCount={this.state.dataCount}
-                      tableData={this.state.tableData}
-                      getData={this.getData.bind(this)}
-                      tableObjects={this.state.tableObjects}
-                    />*/}
-                  </div>
                 </div>
               </div>
             </section>
@@ -162,11 +304,3 @@ class BulkProductImageUpload extends Component{
   }
 }
 export default BulkProductImageUpload ;
-// = withTracker(props =>{
-//   const productHandle     = Meteor.subscribe("productShopPublish");
-//   const productData       = ProductShop.find({},{fields:{productCode:1, productImage:1, productName:1}}).fetch();
-//   const loading1          = !productHandle.ready();
-// return{
-//   productData
-// };
-// })(BulkProductImageUpload);
