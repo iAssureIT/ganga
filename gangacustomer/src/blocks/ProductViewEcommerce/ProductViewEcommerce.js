@@ -277,11 +277,15 @@ class ProductViewEcommerce extends Component {
 									</div>
 
 									<div className="row listspace">
+									{this.state.productData.featureList ?
 										<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
 											Features
 										</span>
+										:
+										null
+									}
 										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ttllist" >
-											{this.state.productData.featureList &&
+											{this.state.productData.featureList ?
 												<div className="">
 													<ul className="paddingleftzero">
 														{this.state.productData.featureList &&
@@ -299,6 +303,8 @@ class ProductViewEcommerce extends Component {
 														}
 													</ul>
 												</div>
+												:
+												null
 											}
 
 										</span>

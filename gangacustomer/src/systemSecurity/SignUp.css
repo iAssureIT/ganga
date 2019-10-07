@@ -77,3 +77,8 @@
   border-radius: 25px;
   padding: 10px 15px;
 }
+
+.checkBAExistsError{
+    color:red;
+    margin-top: 5px;
+  }

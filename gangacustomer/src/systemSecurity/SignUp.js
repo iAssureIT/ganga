@@ -32,7 +32,8 @@ class SignUp extends Component {
 
  	constructor(){
       super();
-        this.state = {           
+        this.state = {  
+      	  checkBAExists    		: 0, 
            loggedIn : false,
            auth:{
                 firstname       : '',
@@ -84,7 +85,7 @@ class SignUp extends Component {
         var passwordVar              = this.refs.signupPassword.value;
         var signupConfirmPasswordVar = this.refs.signupConfirmPassword.value;
  		
-            if(formValid(this.state.formerrors)){
+            if(formValid(this.state.formerrors )){
     			console.log('companyName==',this.state.formerrors);
             if (passwordVar === signupConfirmPasswordVar) {
                 return (passwordVar.length >= 6) ? 
@@ -138,6 +139,25 @@ class SignUp extends Component {
     $(".toast-info").removeClass('toast');
     $(".toast-warning").removeClass('toast');
 
+  }
+
+    checkBAExists(event){
+    axios.get('/api/users/get/checkUserExists/'+event.target.value)
+           .then((response)=>{
+                if (response.data.length>0) {
+                  $(".checkBAExistsError").show();
+                  $('.button3').attr('disabled','disabled');
+                  this.setState({checkBAExists: 1})
+                 
+                } else{
+                  $(".checkBAExistsError").hide();
+                  $('.button3').removeAttr('disabled');
+                  this.setState({checkBAExists: 0})
+                }                        
+            })
+           .catch(function(error){
+                console.log(error);
+           })
   }
 
  	handleChange(event){
@@ -206,6 +226,8 @@ class SignUp extends Component {
         $(".modalbg").css("display","none");
     }
     componentDidMount(){
+    $(".checkBAExistsError").hide();
+
 
     }
 
@@ -262,7 +284,8 @@ return(
 						    </div>
 							<div className="logininput mt30">  
 					   		<label>Email ID</label><label className="astricsign">*</label>
-							  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" required/>
+							  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkBAExists.bind(this)} required/>
+                                <p className="checkBAExistsError">User already exists!!!</p>
 							  {this.state.formerrors.emailIDV  && (
 		                        <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
 		                      )}
@@ -308,7 +331,7 @@ return(
 					    </div>
 
 						<div className=" mt30">
-					    	<input id="signUpBtn" className="col-lg-10 col-md-10 col-sm-10 col-xs-10  btn btn-warning" type="submit" value="Create an Account"/>
+					    	<input id="signUpBtn" className="col-lg-10 col-md-10 col-sm-10 col-xs-10 button3  btn btn-warning" type="submit" value="Create an Account"/>
 					    </div>		   
 
 				    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">
