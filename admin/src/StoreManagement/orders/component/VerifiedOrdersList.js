@@ -35,10 +35,11 @@ export default class VerifiedOrdersList extends Component{
                   var totalAmount = response.data[i].totalAmount;
                   var createdAt = response.data[i].createdAt;
                   var status = response.data[i].status;
-                  var deliveryStatus = response.data[i].deliveryStatus[0].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[0].status;
+                  console.log('sadm',response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1]);
+                  var deliveryStatus = response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1].status == "Dispatch" ? 'Out for Delivery' : 
+                  response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1].status;
                   var viewOrder =  "/viewOrder/"+response.data[i]._id;
-                  var deliveryStatus =  response.data[i].deliveryStatus[0].status;
-
+                  
                   var UserArray = [];
                   UserArray.push(orderID);
                   UserArray.push(userFullName);

@@ -38,15 +38,16 @@ class BaOrdersList extends Component{
             .then((response)=>{
 
               var finaldata = $(response.data).filter(function (i,n){
-                  return (n.deliveryStatus[0].status == 'Dispatch'
-                     || n.deliveryStatus[0].status == 'Delivery Initiated' 
-                     || n.deliveryStatus[0].status == 'Delivered & Paid' || n.deliveryStatus[0].status == 'Returned' 
-                     || n.deliveryStatus[0].status == 'Cancelled' ); 
+                  return (n.deliveryStatus[n.deliveryStatus.length-1].status == 'Dispatch'
+                     || n.deliveryStatus[n.deliveryStatus.length-1].status == 'Delivery Initiated' 
+                     || n.deliveryStatus[n.deliveryStatus.length-1].status == 'Delivered & Paid' || n.deliveryStatus[n.deliveryStatus.length-1].status == 'Returned' 
+                     || n.deliveryStatus[n.deliveryStatus.length-1].status == 'Cancelled' ); 
               });
-              console.log(finaldata);
+              
 
               var UsersArray = [];
                 for (let i = 0; i < finaldata.length; i++) {
+                  console.log('finaldata',finaldata[i].deliveryStatus);
                   var _id = finaldata[i]._id;
                   var orderID = finaldata[i].orderID;
                   var userFullName = finaldata[i].userFullName;
@@ -55,9 +56,9 @@ class BaOrdersList extends Component{
                   var totalAmount = finaldata[i].totalAmount;
                   var createdAt = finaldata[i].createdAt;
                   var status = finaldata[i].status;
-                  var deliveryStatus = finaldata[i].deliveryStatus[0].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[0].status;
+                  var deliveryStatus = finaldata[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status;
                   var viewOrder =  "/viewOrder/"+finaldata[i]._id;
-                  var deliveryStatus =  finaldata[i].deliveryStatus[0].status;
+                  var deliveryStatus =  finaldata[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status;
 
                   var UserArray = [];
                   UserArray.push(orderID);

@@ -140,7 +140,7 @@ export default class MyOrders extends Component {
                           "userid"    : localStorage.getItem('user_ID')
                         }
         console.log(formValues)
-       /*axios.patch('/api/orders/get/returnOrder', formValues)
+       axios.patch('/api/orders/get/returnOrder', formValues)
                         .then((response)=>{
                            this.getMyOrders();
                             // swal({
@@ -159,8 +159,7 @@ export default class MyOrders extends Component {
                              
                         .catch((error)=>{
                           console.log('error', error);
-                        })*/
-                      // })
+                        })
 
     }
       Closepagealert(event){
@@ -248,7 +247,7 @@ export default class MyOrders extends Component {
         this.state.orderData && this.state.orderData.length > 0 ?
             this.state.orderData.map((data, index)=>{
               return(
-                <div className={data.deliveryStatus[0].status == 'Cancelled' ? "cancelledorder" : "orderbodyborder"}  >
+                <div className={data.deliveryStatus[data.deliveryStatus.length-1].status == 'Cancelled' ? "cancelledorder" : "orderbodyborder"}  >
             		<table className="data table table-order-items history" id="my-orders-table">
                   <thead>
                       <tr>
@@ -266,28 +265,20 @@ export default class MyOrders extends Component {
       		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</td>
       							          <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
       		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
-      		                    <td data-th="Status" className="col status">{ data.deliveryStatus[0].status=="Dispatch" || data.deliveryStatus[0].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[0].status }</td>
+      		                    <td data-th="Status" className="col status">{ data.deliveryStatus[data.deliveryStatus.length-1].status=="Dispatch" || data.deliveryStatus[data.deliveryStatus.length-1].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[data.deliveryStatus.length-1].status }</td>
       		                    <td data-th="Actions" className="col actions">
-
-      		                  
                               {
-                                    data.deliveryStatus ?
-                                    data.deliveryStatus.map((delivery, index)=>{ 
-                                      return(
-                                        <div className="actbtns">
+                                    <div className="actbtns">
 
                                         <a className="btn alphab filterallalphab" href={"/view-order/"+data._id} title="View Order">
                                         <span> <i className="fa fa-eye"></i></span></a>
                                         {
-                                          delivery.status == 'Cancelled' || delivery.status == 'Returned' ? '' :
-                                          delivery.status=="New Order" || delivery.status=="Verified" || delivery.status=="Packed" ? <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
-                                          data-status={delivery.status} data-id={data._id}>X</button> : ''
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status == 'Cancelled' || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Returned' ? '' :
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status =="New Order" || data.deliveryStatus[data.deliveryStatus.length-1].status =="Verified" 
+                                          || data.deliveryStatus[data.deliveryStatus.length-1].status =="Packed" ? <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)} 
+                                          data-status={data.deliveryStatus[data.deliveryStatus.length-1].status} data-id={data._id}>X</button> : ''
                                         }
-                                        </div>
-                                      );
-                                     
-                                    }) 
-                                    : ''
+                                    </div>
                               }
       		                    </td>
       		                </tr>

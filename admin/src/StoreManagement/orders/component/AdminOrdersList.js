@@ -16,7 +16,7 @@ import MUIDataTable from "mui-datatables";
 // axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-class AdminOrdersList extends Component{
+class AdminOrdersList extends Component{ 
     constructor(props) {
         super(props);
 

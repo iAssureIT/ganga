@@ -36,8 +36,8 @@ class ShipmentTracking extends Component {
       .then((response) => {
           var orderData = response.data.filter((data,index)=>{
             console.log('data',data);
-            return  data.deliveryStatus[0].status == 'Dispatch' || data.deliveryStatus[0].status == 'Delivery Initiated'
-                        || data.deliveryStatus[0].status == 'Delivered & Paid'
+            return  data.deliveryStatus[data.deliveryStatus.length-1].status == 'Dispatch' || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivery Initiated'
+                        || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivered & Paid'
           })
           this.setState({orderData:response.data})
           console.log('orderData',orderData);

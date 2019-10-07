@@ -30,7 +30,7 @@ class SectionManagement extends Component {
         deleteMethod: 'delete',
         apiLink: '/api/sections/',
         paginationApply: true,
-        searchApply: true,
+        searchApply: false,
         editUrl: '/section-management/'
       },
       "startRange": 0,
@@ -59,13 +59,10 @@ class SectionManagement extends Component {
     if (this.state.editId) {
       this.edit(this.state.editId);
     }
-    $.validator.addMethod("valueNotEquals", function (value, element, arg) {
-      return arg !== value;
-    }, "Please select the section");
-
+    
     $.validator.addMethod("regxA1", function (value, element, regexpr) {
       return regexpr.test(value);
-    }, "Name should only contain letters & number.");
+    }, "Name should only contain letters and special chanracters like (@&()_+-)");
 
     $.validator.setDefaults({
       debug: true,
@@ -74,13 +71,10 @@ class SectionManagement extends Component {
 
     $("#sectionManagement").validate({
       rules: {
+        
         section: {
           required: true,
-          valueNotEquals: "Select Section"
-        },
-        section: {
-          required: true,
-          regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]/,
+          regxA1: /^[A-Z@&()_+-]*$/i,
         },
 
       },
