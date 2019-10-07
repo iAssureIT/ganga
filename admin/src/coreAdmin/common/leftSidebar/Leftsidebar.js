@@ -235,7 +235,7 @@ export default class Leftsidebar extends Component{
                     <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="MasterData">
-                    <li>
+                    {/* <li>
                       <a href="/vendor-category">
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Vendor Category</span>
@@ -246,7 +246,7 @@ export default class Leftsidebar extends Component{
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Vendor Location Type</span>
                       </a>
-                    </li>
+                    </li> */}
                     <li>
                         <a href="/category-management">
                           <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
