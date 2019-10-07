@@ -599,7 +599,7 @@ class AddNewShopProduct extends Component {
                 <h4 className="NOpadding-right">Add Products</h4>
               </div>
 
-              <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              {/*<ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li className="nav-item">
     <a className="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
   </li>
@@ -610,7 +610,7 @@ class AddNewShopProduct extends Component {
 <div className="tab-content" id="pills-tabContent">
   <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
   <div className="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-</div>
+</div>*/}
 
             </div>
             <form className="newTemplateForm" id="addNewShopProduct">
