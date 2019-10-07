@@ -26,7 +26,7 @@ import SectionManagement                          from '../../storeAdmin/product
 
 import AddNewBulkProduct                          from '../../StoreManagement/product/productBulkUpload/component/ProductBulkUpload.js';
 import ProductList                                from '../../StoreManagement/product/productList/component/ProductList.js';
-import BulkProductImageUpload                     from '../../StoreManagement/bulkimageUpload/BulkProductImageUpload.js'
+import BulkProductImageUpload                     from '../../storeAdmin/bulkimageUpload/BulkProductImageUpload.js'
 import FileWiseProductList                        from '../../StoreManagement/product/fileproductList/component/fileproductList.js';
 
 import AllOrdersList                              from '../../StoreManagement/orders/component/AllOrders.js';

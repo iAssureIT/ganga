@@ -1,164 +1,35 @@
-// import { Meteor }           from 'meteor/meteor';
-// import { Mongo }            from 'meteor/mongo';
-// import React, { Component } from 'react';
-// import { render }           from 'react-dom';
-// import TrackerReact         from 'meteor/ultimatejs:tracker-react';
-// import { createContainer }  from 'meteor/react-meteor-data';
-// import Validation           from 'react-validation';
-// import validator            from 'validator';
-// import {Tracker}            from 'meteor/tracker';
-// import { browserHistory }   from 'react-router';
-// import { ProductShop }      from '/imports/StoreManagement/product/addNewProduct/AddNewDispalyProduct/ProductMaster.js'
-// import {withTracker}        from 'meteor/react-meteor-data';
-// import swal from 'sweetalert';
-
-
 import React, { Component }   from 'react';
 import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
-// import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 class BulkProductImageUpload extends Component{
-	constructor(props){
-        super(props);
-        this.state = {
-            'allshopproductimages': [],
-            'notuploadedImages':[],
-        }
-    }
+  constructor(props){
+      super(props);
+      this.state = {
+        notuploadedImages : [],
+        allshopproductimages : []
+      }
+  }
 
-    componentDidMount() {
-        // if(!$("link[href='/css/dashboard.css']").length > 0){
-        //     var dashboardCss = document.createElement("link");
-        //     dashboardCss.type="text/css";
-        //     dashboardCss.rel ="stylesheet";
-        //     dashboardCss.href="/css/dashboard.css";
-        //     document.head.append(dashboardCss);
-        // }
+  componentDidMount() {
     
-        // Meteor.subscribe('projectSettings');
-
-        // this.bulkimagestracketr = Tracker.autorun(()=>{
-        //   var handle = Meteor.subscribe('productShopPublish');
-        //   var allproductImages = ProductShop.find({}).fetch();
-          
-        //   if(allproductImages){
-        //       this.setState({
-        //         'allshopproductimages':allproductImages,
-        //       });
-        //   }else{
-        //     this.setState({
-        //       'allshopproductimages':[],
-        //     });
-        //   }
-        // });
-
-    }
-    componentWillReceiveProps(nextProps){
-      this.setState({
-        'allshopproductimages':nextProps.productData,
-      });
-    }
-    bulkuplodaProductImages(event){
-      event.preventDefault();
-      // Session.set('addProductImgsBulkUploadToS3Function',"");
-      // var filesupload = event.target.files;
-      // // // console.log("this: ",this);
-      
-      // let self = this;
-      // var notUploadedImg = [];
-      // // var currentUpload = 0;
-      // for (var i = 0; i < filesupload.length; i++) {
-      //   // currentUpload = i;
-      
-      //   if (event.currentTarget.files[i]) {
-      //     var dataImg =event.currentTarget.files[i];
-
-      //     var fileName     = filesupload[i].name;
-      //     var splitFileName= fileName.split("-");
-      //     var productCode  = splitFileName[0];
-
-      //     if((dataImg.type == "image/jpeg" || dataImg.type == "image/png")&&splitFileName.length==2){
-      //         addProductImgsBulkUploadToS3Function(filesupload[i],self,productCode);
-      //     } else {
-      //       notUploadedImg.push(fileName);
-      //     }
-      //   } 
-      // }
-
-      
-      
-
-      // this.setState({
-      //   "notuploadedImages": notUploadedImg,
-      // });
-      //   $('.bulkuplodaProductImagesInp').val("");
-      
-    }
-
-  
-
-    getUploadBulUSPercentage(){
-      // var uploadProgressPercent = Session.get("addProductImgsBulkUploadToS3Function");
-      // if(uploadProgressPercent){
-      //     var percentVal = parseInt(uploadProgressPercent);
-      //     if(percentVal){
-              
-      //         var styleC = {
-      //             width:percentVal + "%",
-      //             display:"block",
-      //         }
-      //         var styleCBar = {
-      //             display:"block",
-      //             marginTop:5,
-      //         }
-      //     }
-      //     if(!percentVal){
-      //         var percentVal = 0;
-  
-      //         var styleC = {
-      //             width:0 + "%",
-      //             display:"none",
-      //         }
-      //         var styleCBar = {
-      //             display:"none",
-      //             marginTop:5,
-      //         }
-      //     }
-      //     console.log('percentVal',percentVal);
-      //     if(percentVal == 100){
-      //       return(
-      //           <div></div>
-      //         );
-      //     }else{
-      //       return (
-      //         <div>
-      //             <div className="progress"  style= {styleCBar}>
-      //                 <div className="progress-bar progress-bar-striped active" role="progressbar"
-      //               aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style= {styleC}>
-      //                 {percentVal} %
-      //                 </div>
-      //             </div>
-      //         </div>
-      //       );  
-      //     }          
-      // }
-    }
-
-
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      'allshopproductimages':nextProps.productData,
+    });
+  }
+  bulkuplodaProductImages(event){
+    event.preventDefault();
     
-
-    deleteproductImages(event){
-      event.preventDefault();
-      // var imageUrl = $(event.currentTarget).attr('data-currentindex');
-      // var productId   = $(event.currentTarget).attr('data-productid');
-     
-      // if(imageUrl && productId){
-      //   Meteor.call('deleteShopProductImage',productId,imageUrl);
-      // }
-    }
+  }
+  getUploadBulUSPercentage(){
+  }
+  deleteproductImages(event){
+    event.preventDefault();
+    
+  }
     
   render(){
     return( 
@@ -179,7 +50,7 @@ class BulkProductImageUpload extends Component{
                       <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12">
                         <div className="form-group">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">
-                            Upload Product Shop Images 
+                            Upload Product Images 
                           </label>
                           <input type="file" className="form-control bulkuplodaProductImagesInp" multiple onChange ={this.bulkuplodaProductImages.bind(this)}/>
                           <div>{this.getUploadBulUSPercentage()}</div>
@@ -190,7 +61,7 @@ class BulkProductImageUpload extends Component{
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 upldImgTextColor">
                       Image name must be saved in format <span className="upldImgTextColor1">Your Product Code</span> - <span className="upldImgTextColor2">Image Number for that product. </span>
-                      eg. Cubiscan150TS-1, Cubiscan150TS-2, Cubiscan200TS-1, ... etc.
+                      eg. ProductCode0-1, ProductCode0-2, ProductCode0-3, ... etc.
                     </div>
                     <div className="col-lg-12">
                       {
