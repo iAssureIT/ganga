@@ -363,6 +363,8 @@ class AddNewBulkProduct extends Component{
                                 else{
                                     documentObj[count][header[k]] = record[k];
                                 }
+                                documentObj[count]['filename'] = file.name;
+                                documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
                             }
                         }
                         
@@ -371,8 +373,7 @@ class AddNewBulkProduct extends Component{
                          
                     }
                 }
-                documentObj.filename = file.name;
-                documentObj.createdBy = localStorage.getItem('admin_ID');;
+                
                 this.setState({finalData:documentObj},()=>{
                      console.log(this.state.finalData);
                 });
@@ -389,8 +390,9 @@ class AddNewBulkProduct extends Component{
     }
     bulkUpload(){
         
-        console.log(this.state.finalData);
+        
         var formValues = this.state.finalData;
+        console.log('formValues',formValues);
         axios.post('http://localhost:5006/api/products/post/bulkUploadProduct', formValues)
         .then((response)=>{
             console.log('response', response);

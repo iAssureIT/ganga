@@ -102,7 +102,7 @@ class ProductList extends Component{
         });
         this.getData(this.state.startRange, this.state.limitRange);
     }
-    getSearchText(searchText){
+    getSearchText(searchText){ 
         axios.get("/api/products/get/search/"+searchText)
         .then((response)=>{ 
             console.log('tableData', response.data);
@@ -114,9 +114,7 @@ class ProductList extends Component{
         .catch((error)=>{
               console.log('error', error);
         })
-        
     }
-
 
     render(){
         return(
