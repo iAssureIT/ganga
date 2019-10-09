@@ -132,13 +132,13 @@ class SearchProduct extends Component {
 			});
 		}
 		if(sortBy == "priceAsc"){
-			let field='offeredPrice';
+			let field='discountedPrice';
 			this.setState({
 				products: this.state.products.sort((a, b) => a[field] - b[field])
 			});
 		}
 		if(sortBy == "priceDsc"){
-			let field='offeredPrice';
+			let field='discountedPrice';
 			this.setState({
 				products: this.state.products.sort((a, b) => b[field] - a[field])
 			});

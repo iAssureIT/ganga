@@ -32,7 +32,7 @@ addtocart(event){
      
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
-        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+        var totalForQantity   =   parseInt(1 * response.data.discountedPrice);
             const userid = localStorage.getItem('user_ID');
             
             const formValues = { 
@@ -45,8 +45,8 @@ addtocart(event){
                 "subCategory" : response.data.subCategory,
                 "productImage" : response.data.productImage,
                 "quantity" : 1  ,
-                "offeredPrice" : parseInt(response.data.offeredPrice),
-                "actualPrice" : parseInt(response.data.actualPrice),
+                "discountedPrice" : parseInt(response.data.discountedPrice),
+                "originalPrice" : parseInt(response.data.originalPrice),
                 "totalForQantity" : totalForQantity,
                 
             }

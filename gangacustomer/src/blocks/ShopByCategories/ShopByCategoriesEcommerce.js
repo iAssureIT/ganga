@@ -19,7 +19,7 @@ class ShopByCategoriesEcommerce extends Component {
      
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
-      var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+      var totalForQantity   =   parseInt(1 * response.data.discountedPrice);
           const userid = localStorage.getItem('user_ID');
           
           const formValues = { 
@@ -32,8 +32,8 @@ class ShopByCategoriesEcommerce extends Component {
               "subCategory" : response.data.subCategory,
               "productImage" : response.data.productImage,
               "quantity" : 1  ,
-			  "offeredPrice" : parseInt(response.data.offeredPrice),
-              "actualPrice" : parseInt(response.data.actualPrice),
+			  "discountedPrice" : parseInt(response.data.discountedPrice),
+              "originalPrice" : parseInt(response.data.originalPrice),
               "totalForQantity" : totalForQantity,
               
           }
@@ -124,11 +124,11 @@ render() {
 														{
 															data.offered == true ?
 															<div className="row">
-															<div className="offerDetailstrue col-lg-6">Offer Price </div><div className="offerDetailstrue col-lg-6 "><span className="pull-right"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span></div>
+															<div className="offerDetailstrue col-lg-6">Offer Price </div><div className="offerDetailstrue col-lg-6 "><span className="pull-right"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span></div>
 															</div>
 															:
 															<div className="row">
-															<div className="offerDetails col-lg-6">Offer Price </div><div className="offerDetails col-lg-6 "><span className="pull-right"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span></div>
+															<div className="offerDetails col-lg-6">Offer Price </div><div className="offerDetails col-lg-6 "><span className="pull-right"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span></div>
 															</div>
 														}
 															<a title="View Product"href={"/ProductDetailsEcommerce/"+data._id}><div className=" flip-box-inner">
@@ -145,7 +145,7 @@ render() {
 																	</fieldset>*/}
 																	<div className="clearfix "></div>
 																</div>
-																<label className="pull-right priceDivProduct mt40"><i className={"fa fa-"+data.currency}> </i>&nbsp;{data.actualPrice}</label><br/>
+																<label className="pull-right priceDivProduct mt40"><i className={"fa fa-"+data.currency}> </i>&nbsp;{data.originalPrice}</label><br/>
 														<span className="col-lg-12 row nameOfProduct">{data.productName}</span>
 														{
 														token ?

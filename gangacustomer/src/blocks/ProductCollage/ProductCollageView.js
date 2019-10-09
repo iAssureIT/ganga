@@ -248,11 +248,11 @@ class ProductCollageView extends Component {
                                      <div className="col-lg-12 col-md-12">
                                      {
                                         data.offered == true ?
-                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                           :
                                           <div className="col-lg-12 col-md-12">
-                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
-                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.actualPrice}</span>
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.discountedPrice}</span> &nbsp;                     
+                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                           </div>
                                       }
                                     </div>

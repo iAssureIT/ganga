@@ -195,8 +195,8 @@ class ProductCollage extends Component {
 
 			var products = this.state.masterproducts.filter( (array_el)=>  {
               return subcategoryID == array_el.subCategory_ID 
-              && Number(array_el.offeredPrice) > Number(this.state.price.min) 
-              && Number(array_el.offeredPrice) < Number(this.state.price.max);
+              && Number(array_el.discountedPrice) > Number(this.state.price.min) 
+              && Number(array_el.discountedPrice) < Number(this.state.price.max);
         	});
         	this.setState({products :products});
 		}
@@ -205,8 +205,8 @@ class ProductCollage extends Component {
 				return selectedbrands.filter( (selectedItems_el) => {
                   return selectedItems_el == array_el.brand 
                   	&& subcategoryID == array_el.subCategory_ID
-                  	&& Number(array_el.offeredPrice) > Number(this.state.price.min) 
-              		&& Number(array_el.offeredPrice) < Number(this.state.price.max);
+                  	&& Number(array_el.discountedPrice) > Number(this.state.price.min) 
+              		&& Number(array_el.discountedPrice) < Number(this.state.price.max);
                 }).length != 0
         	});
         	this.setState({products :products})
@@ -214,8 +214,8 @@ class ProductCollage extends Component {
 		if (subcategoryID == '') {
 			
 			var products = this.state.masterproducts.filter( (array_el)=>  {
-              return Number(array_el.offeredPrice) > Number(this.state.price.min) 
-              && Number(array_el.offeredPrice) < Number(this.state.price.max);
+              return Number(array_el.discountedPrice) > Number(this.state.price.min) 
+              && Number(array_el.discountedPrice) < Number(this.state.price.max);
         	});
          	this.setState({products :products});
 		}
@@ -223,8 +223,8 @@ class ProductCollage extends Component {
 			var products = this.state.masterproducts.filter( (array_el)=>  {
 				return selectedbrands.filter( (selectedItems_el) => {
                   return selectedItems_el == array_el.brand
-                  	&& Number(array_el.offeredPrice) > Number(this.state.price.min) 
-              		&& Number(array_el.offeredPrice) < Number(this.state.price.max);
+                  	&& Number(array_el.discountedPrice) > Number(this.state.price.min) 
+              		&& Number(array_el.discountedPrice) < Number(this.state.price.max);
                 }).length != 0
         	});
         	this.setState({products :products});

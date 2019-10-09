@@ -479,7 +479,7 @@ searchProducts(){
                                                           <a href={"/productdetails/"+data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
                                                           <div className="col-lg-12 text-center">
                                                             <div className="row">
-                                                              <div className="col-lg-4"><p className="row"><b><i className="fa fa-inr"></i> {data.offeredPrice}</b></p></div>
+                                                              <div className="col-lg-4"><p className="row"><b><i className="fa fa-inr"></i> {data.discountedPrice}</b></p></div>
                                                               <div className="col-lg-3"><p className="row"><b> {data.quantity}</b></p></div>
                                                               <div className="col-lg-3"><p className="row"><b><i className="fa fa-inr"></i> {data.totalForQantity}</b></p></div>
                                                               <div className="col-lg-2"><div className="row"><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} onClick={this.Removefromcartwarning.bind(this)}></i></div></div>

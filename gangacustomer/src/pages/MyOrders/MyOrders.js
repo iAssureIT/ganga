@@ -412,7 +412,7 @@ export default class MyOrders extends Component {
                             <tr>
                                 <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
                                 <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
-                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
                             </tr>
                             :
                            null

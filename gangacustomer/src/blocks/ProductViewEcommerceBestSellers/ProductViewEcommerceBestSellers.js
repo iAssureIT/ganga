@@ -87,7 +87,7 @@ class ProductViewEcommerceBestSellers extends Component {
       // console.log('id', id);
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
-        var totalForQantity   =   parseInt(1 * response.data.offeredPrice);
+        var totalForQantity   =   parseInt(1 * response.data.discountedPrice);
             const userid = localStorage.getItem('user_ID');
             
             const formValues = { 
@@ -100,8 +100,8 @@ class ProductViewEcommerceBestSellers extends Component {
                 "subCategory" : response.data.subCategory,
                 "productImage" : response.data.productImage,
                 "quantity" : 1  ,
-                "offeredPrice" : parseInt(response.data.offeredPrice),
-                "actualPrice" : parseInt(response.data.actualPrice),
+                "discountedPrice" : parseInt(response.data.discountedPrice),
+                "originalPrice" : parseInt(response.data.originalPrice),
                 "totalForQantity" : totalForQantity,
                 
             }
@@ -236,11 +236,11 @@ class ProductViewEcommerceBestSellers extends Component {
                                     <div > 
                                       {
                                         data.offered == true ?
-                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
+                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
                                           :
                                           <div>
-                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.offeredPrice}</span> &nbsp;                     
-                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.offeredPrice}</span>
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.discountedPrice}</span> &nbsp;                     
+                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
                                           </div>
                                       }
                                     </div>
