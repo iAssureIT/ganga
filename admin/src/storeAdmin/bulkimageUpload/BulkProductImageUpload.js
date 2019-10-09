@@ -165,8 +165,8 @@ class BulkProductImageUpload extends Component{
     var id = event.target.getAttribute('data-productid');
     var image = event.target.getAttribute('data-image');
     var formValues = {
-      id    : id,
-      image : image
+      product_ID    : id,
+      imageLik      : image
     }
     console.log('id', id, image);
     axios.patch('/api/products/remove/image', formValues)
