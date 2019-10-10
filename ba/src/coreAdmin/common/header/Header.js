@@ -56,9 +56,11 @@ logout(){
                 </div>
                 <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 ">
                   <div className="row">
-                    <div onClick={this.openNav.bind(this)} className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right">
-                    <i className="fa fa-cogs headicon "></i>
-                  </div>
+                    {
+                      /*<div onClick={this.openNav.bind(this)} className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right">
+                      <i className="fa fa-cogs headicon "></i>
+                      </div>*/
+                    }
                 <div className="col-lg-1 col-md-1 col-sm-6 col-xs-6 pull-right">
                     <div className="row">
                         <span className="pull-right">
@@ -90,11 +92,12 @@ logout(){
               </div>
             </div>
             </header>
-
-          <div id="mySidenav" className="sidenav">
-          <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)} >&times;</a>
-         <Rightsidebar/>
-        </div>
+          {
+          /*<div id="mySidenav" className="sidenav">
+            <a href="javascript:void(0)" className="closebtn" onClick={this.closeNav.bind(this)} >&times;</a>
+           <Rightsidebar/>
+          </div>*/
+          }
       </div>
     );
   }

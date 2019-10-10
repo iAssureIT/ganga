@@ -7,7 +7,7 @@ import YearlyReport         from './YearlyReport.js';
 import CustomisedReport     from './CustomisedReport.js';
 import "./Reports.css";
 
-class Reports extends Component{
+class Reports extends Component{ 
 	constructor(props){
     super(props);
     this.state = {
@@ -63,7 +63,7 @@ class Reports extends Component{
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 contactdeilsmg pageHeader">
-                      Report                   
+                      Reports        =======           
                     </div>
                     <hr className="hr-head container-fluid row"/>
                   </div>

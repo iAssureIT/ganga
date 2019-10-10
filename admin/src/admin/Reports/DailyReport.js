@@ -2,6 +2,10 @@ import React, { Component }   from 'react';
 import axios                  from 'axios';
 import swal                   from 'sweetalert';
 import IAssureTable           from "../../coreAdmin/IAssureTable/IAssureTable.jsx";
+import moment from 'moment';
+// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 
 class AnnualPlan extends Component{
   
@@ -41,128 +45,14 @@ class AnnualPlan extends Component{
       // "editId"              : this.props.match.params ? this.props.match.params.id : '',
       fields                : {},
       errors                : {},
+      currentDate           : ''
     }
   }
  
   handleChange(event){
-    event.preventDefault();
-    this.setState({
-      "month"               : this.refs.month.value,          
-      "sectorName"          : this.refs.sectorName.value,
-      "year"                : this.refs.year.value,          
-      "activity"            : this.refs.activity.value,
-      "physicalUnit"        : this.refs.physicalUnit.value,
-      "unitCost"            : this.refs.unitCost.value,
-      "totalBudget"         : this.refs.totalBudget.value,
-      "noOfBeneficiaries"   : this.refs.noOfBeneficiaries.value,
-      "LHWRF"               : this.refs.LHWRF.value,
-      "NABARD"              : this.refs.NABARD.value,
-      "bankLoan"            : this.refs.bankLoan.value,
-      "govtscheme"          : this.refs.govtscheme.value,
-      "directCC"            : this.refs.directCC.value,
-      "indirectCC"          : this.refs.indirectCC.value,
-      "other"               : this.refs.other.value,
-      "remark"              : this.refs.remark.value,
-    /*  "center"              : this.refs.center.value,
-      "sector_id"           : this.refs.sector_id.value,*/
-    });
-    let fields = this.state.fields;
-    fields[event.target.name] = event.target.value;
-    this.setState({
-      fields
-    });
-    if (this.validateForm()) {
-      let errors = {};
-      errors[event.target.name] = "";
-      this.setState({
-        errors: errors
-      });
-    }
+    event.preventDefault(); 
   }
-   
-  SubmitAnnualPlan(event){
-    event.preventDefault();
-    var id2 = this.state.uID;
-    if (this.validateFormReq() &&this.validateForm()) {
-    var annualPlanValues= 
-    {
-      "year"                : this.refs.year.value,          
-      "month"               : this.refs.month.value,          
-      // "center"              : this.refs.center.value,
-      // "sector_id"           : this.refs.sector_id.value,
-      "sectorName"          : this.refs.sectorName.value,
-      "activity"            : this.refs.activity.value,
-      "physicalUnit"        : this.refs.physicalUnit.value,
-      "unitCost"            : this.refs.unitCost.value,
-      "totalBudget"         : this.refs.totalBudget.value,
-      "noOfBeneficiaries"   : this.refs.noOfBeneficiaries.value,
-      "LHWRF"               : this.refs.LHWRF.value,
-      "NABARD"              : this.refs.NABARD.value,
-      "bankLoan"            : this.refs.bankLoan.value,
-      "govtscheme"          : this.refs.govtscheme.value,
-      "directCC"            : this.refs.directCC.value,
-      "indirectCC"          : this.refs.indirectCC.value,
-      "other"               : this.refs.other.value,
-      "remark"              : this.refs.remark.value,
-    };
-
-    let fields = {};
-    fields["year"]              = "";
-    fields["month"]             = "";
-    fields["sectorName"]        = "";
-    fields["activity"]          = "";
-    fields["physicalUnit"]      = "";
-    fields["unitCost"]          = "";
-    fields["totalBudget"]       = "";
-    fields["noOfBeneficiaries"] = "";
-    fields["LHWRF"]             = "";
-    fields["NABARD"]            = "";
-    fields["bankLoan"]          = "";
-    fields["govtscheme"]        = "";
-    fields["directCC"]          = "";
-    fields["indirectCC"]        = "";
-    fields["other"]             = "";
-    fields["remark"]            = "";
-   
-    
-    console.log("annualPlanValues",annualPlanValues);
-
-    axios.post('/api/annualPlans/',annualPlanValues)
-    .then(function(response){
-      swal({
-        title : response.data,
-        text  : response.data
-      });
-      console.log("response"+response.data);
-      this.getData(this.state.startRange, this.state.limitRange);
-    })
-    .catch(function(error){
-      console.log("error"+error);
-      });
-      this.setState({
-        "year"                :"",
-        "month"               :"",
-        "center"              :"",
-        "sector_id"           :"",
-        "sectorName"          :"",
-        "activity"            :"",
-        "physicalUnit"        :"",
-        "unitCost"            :"",
-        "totalBudget"         :"",
-        "noOfBeneficiaries"   :"",
-        "LHWRF"               :"",
-        "NABARD"              :"",
-        "bankLoan"            :"",
-        "govtscheme"          :"",
-        "directCC"            :"",
-        "indirectCC"          :"",
-        "other"               :"",
-        "remark"              :"",
-        "fields":fields
-      });
-    }
-  }
-    
+       
   getData(startRange, limitRange){
    axios({
       method: 'get',
@@ -178,118 +68,6 @@ class AnnualPlan extends Component{
     });
   }
 
-  Update(event){    
-    event.preventDefault();
-    if(this.refs.year.value == "" || this.refs.month.value =="" || this.refs.sectorName.value=="" || this.refs.activity.value=="" 
-      || this.refs.physicalUnit.value=="" || this.refs.unitCost.value=="" || this.refs.totalBudget.value=="" || this.refs.noOfBeneficiaries.value=="" 
-      || this.refs.LHWRF.value=="" || this.refs.NABARD.value=="" || this.refs.bankLoan.value=="" || this.refs.govtscheme.value=="" 
-      || this.refs.directCC.value=="" || this.refs.indirectCC.value=="" || this.refs.other.value=="" || this.refs.remark.value=="")
-      {
-        if (this.validateFormReq() && this.validateForm()){
-        }
-      }else{
-        var annualPlanValues= 
-        {
-          "year"                : this.refs.year.value,          
-          "month"               : this.refs.month.value,          
-          // "center"              : this.refs.center.value,
-          // "sector_id"           : this.refs.sector_id.value,
-          "sectorName"          : this.refs.sectorName.value,
-          "activity"            : this.refs.activity.value,
-          "physicalUnit"        : this.refs.physicalUnit.value,
-          "unitCost"            : this.refs.unitCost.value,
-          "totalBudget"         : this.refs.totalBudget.value,
-          "noOfBeneficiaries"   : this.refs.noOfBeneficiaries.value,
-          "LHWRF"               : this.refs.LHWRF.value,
-          "NABARD"              : this.refs.NABARD.value,
-          "bankLoan"            : this.refs.bankLoan.value,
-          "govtscheme"          : this.refs.govtscheme.value,
-          "directCC"            : this.refs.directCC.value,
-          "indirectCC"          : this.refs.indirectCC.value,
-          "other"               : this.refs.other.value,
-          "remark"              : this.refs.remark.value,
-        };
-
-      let fields = {};
-      fields["year"]              = "";
-      fields["month"]             = "";
-      fields["sectorName"]        = "";
-      fields["activity"]          = "";
-      fields["physicalUnit"]      = "";
-      fields["unitCost"]          = "";
-      fields["totalBudget"]       = "";
-      fields["noOfBeneficiaries"] = "";
-      fields["LHWRF"]             = "";
-      fields["NABARD"]            = "";
-      fields["bankLoan"]          = "";
-      fields["govtscheme"]        = "";
-      fields["directCC"]          = "";
-      fields["indirectCC"]        = "";
-      fields["other"]             = "";
-      fields["remark"]            = "";
-      axios.patch('/api/annualPlans/',annualPlanValues)
-      .then(function(response){
-        swal({
-          title : response.data,
-          text  : response.data
-        });
-        this.getData(this.state.startRange, this.state.limitRange);
-      })
-      .catch(function(error){
-        console.log("error"+error);
-        });
-      this.setState({
-        "year"                :"",
-        "month"               :"",
-        "center"              :"",
-        "sector_id"           :"",
-        "sectorName"          :"",
-        "activity"            :"",
-        "physicalUnit"        :"",
-        "unitCost"            :"",
-        "totalBudget"         :"",
-        "noOfBeneficiaries"   :"",
-        "LHWRF"               :"",
-        "NABARD"              :"",
-        "bankLoan"            :"",
-        "govtscheme"          :"",
-        "directCC"            :"",
-        "indirectCC"          :"",
-        "other"               :"",
-        "remark"              :"",
-        "fields"              :fields
-      });
-    }
-  }
-  
-  validateFormReq() {
-    let fields = this.state.fields;
-    let errors = {};
-    let formIsValid = true;
-      if (!fields["sectorName"]) {
-        formIsValid = false;
-        errors["sectorName"] = "This field is required.";
-      }     
-      if (!fields["activity"]) {
-        formIsValid = false;
-        errors["activity"] = "This field is required.";
-      }     
-      this.setState({
-        errors: errors
-      });
-      return formIsValid;
-  }
-  
-  validateForm() {
-    let fields = this.state.fields;
-    let errors = {};
-    let formIsValid = true;
-
-      this.setState({
-        errors: errors
-      });
-      return formIsValid;
-  }
   componentWillReceiveProps(nextProps){
     var editId = nextProps.match.params.id;
     if(nextProps.match.params.id){
@@ -301,7 +79,9 @@ class AnnualPlan extends Component{
   }
 
   componentDidMount() {
-    console.log('editId componentDidMount', this.state.editId);
+      
+    document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
+    this.setState({ currentDate:moment().startOf('day').format("DD/MM/YYYY") });
     if(this.state.editId){      
       this.edit(this.state.editId);
     }
@@ -325,41 +105,7 @@ class AnnualPlan extends Component{
     });
   }
 
-  edit(id){
-    axios({
-      method: 'get',
-      url: '/api/annualPlans/'+id,
-      }).then((response)=> {
-      var editData = response.data[0];
-      console.log('editData',editData);
-      this.setState({
-        "year"                : editData.year,
-        "month"               : editData.month,
-        "center"              : editData.center,
-        "sectorName"          : editData.sectorName,
-        "activity"            : editData.activity,
-        "physicalUnit"        : editData.physicalUnit,
-        "unitCost"            : editData.unitCost,
-        "totalBudget"         : editData.totalBudget,
-        "noOfBeneficiaries"   : editData.noOfBeneficiaries,
-        "LHWRF"               : editData.LHWRF,
-        "NABARD"              : editData.NABARD,
-        "bankLoan"            : editData.bankLoan,
-        "govtscheme"          : editData.govtscheme,
-        "directCC"            : editData.directCC,
-        "indirectCC"          : editData.indirectCC,
-        "other"               : editData.other,
-        "remark"              : editData.remark,
-      });
-    }).catch(function (error) {
-    });
-  }
-
-  toglehidden(){
-    this.setState({
-       shown: !this.state.shown
-      });
-  }
+  
   previousDate(event){
     // event.preventDefault();
     // var selectedDate1 = $(".reportsDayRef").val();
@@ -412,13 +158,14 @@ class AnnualPlan extends Component{
     // if(mm<10){
     //     mm='0'+mm;
     // }
-  //       var today = yyyy+'-'+mm+'-'+dd;
+    //  var today = yyyy+'-'+mm+'-'+dd;
 
     // return today;
 
   }
 
   render() {
+    console.log('editId componentDidMount',this.state.currentDate);
     var shown = {
       display: this.state.shown ? "block" : "none"
     };
@@ -435,7 +182,8 @@ class AnnualPlan extends Component{
               <div className="reports-select-date-Title">Daily Reports</div>
               <div className="input-group">
                 <span onClick={this.previousDate.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
-                <input onChange={this.handleChange} value={this.currentDate()} name="reportsDayRef" type="date" className="reportsDateRef reportsDayRef form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="reportsDayRef"  />
+                <input onChange={this.handleChange} defaultValue={this.state.currentDate} name="reportsDayRef" type="date" className="reportsDateRef reportsDayRef form-control" placeholder="" 
+                aria-label="Brand" ref="reportsDayRef"  />
                 <span onClick={this.nextDate.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-right" aria-hidden="true"></i></span>
               </div>
             </div>

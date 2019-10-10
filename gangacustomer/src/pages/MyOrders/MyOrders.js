@@ -34,10 +34,44 @@ export default class MyOrders extends Component {
     componentDidMount() {
         this.getMyOrders();
         this.getMyUser();
+        $.validator.setDefaults({
+          debug: true,
+          success: "valid"
+        });
+        $("#returnForm").validate({
+        rules: {
+        reasonForReturn: {
+          required: true,
+        },
+        bankname: {
+          required: true,
+        },
+        bankacctno: {
+          required: true,
+        },
+        ifsccode: {
+          required: true,
+        }
+      },
+        errorPlacement: function(error, element) {
+              if (element.attr("name") == "reasonForReturn"){
+                error.insertAfter(".reasonForReturn");
+              }
+              if (element.attr("name") == "bankname"){
+                error.insertAfter("#bankname");
+              }
+              if (element.attr("name") == "bankacctno"){
+                error.insertAfter("#bankacctno");
+              }
+              if (element.attr("name") == "ifsccode"){
+                error.insertAfter("#ifsccode");
+              }
+            }
+      });
     }
     getMyOrders(){
       var userId=localStorage.getItem('user_ID');
-      axios.get("/api/orders/get/list/"+userId)
+      axios.get("http://localhost:5006/api/orders/get/list/"+userId)
             .then((response)=>{
               this.setState({ 
                   orderData : response.data
@@ -94,9 +128,20 @@ export default class MyOrders extends Component {
       var status = $(event.target).data('status');
       var id = $(event.target).data('id');
       var productid = $(event.target).data('productid');
-      
+      console.log($(event.target));
       var str= '';
 
+      axios.get("http://localhost:5006/api/products/get/one/"+productid)
+            .then((response)=>{
+              this.setState({ 
+                oneproductdetails : response.data
+              },()=>{
+                console.log("oneproductdetails",this.state.oneproductdetails);
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
       if(status=="Paid") {
         str = 'Do you want to return order?';
         $('#returnProductBtn').attr('data-id', id);
@@ -110,14 +155,14 @@ export default class MyOrders extends Component {
         $('.canreturn').hide();
       }
 
-      $('.modaltext').html('');
-      $('.modaltext').append(str); 
+      //$('.modaltext').html('');
+      // $('.modaltext').append(str); 
     }
     getoneproductdetails(event){      
       var id = event.target.id;
       this.setState({orderID:id});
       // console.log("oneproductdetails==>",id);
-      axios.get("/api/products/get/one/"+id)
+      axios.get("http://localhost:5006/api/products/get/one/"+id)
             .then((response)=>{
               this.setState({ 
                 oneproductdetails : response.data
@@ -134,35 +179,34 @@ export default class MyOrders extends Component {
       event.preventDefault();
         var id = $(event.target).data('id');
         var productid = $(event.target).data('productid');
+        var reasonForReturn = $('.reasonForReturn').val();
+        console.log('returnForm',$('#returnForm').valid());
+        
         var formValues = {
                           "orderID"   : id,  
                           "productID" : productid,
-                          "userid"    : localStorage.getItem('user_ID')
+                          "reasonForReturn" : reasonForReturn,
+                          "bankname"  : $('#bankname').val(), 
+                          "bankacctno" : $('#bankacctno').val(),
+                          "ifsccode"   : $('#ifsccode').val()
                         }
-        console.log(formValues)
-       axios.patch('/api/orders/get/returnOrder', formValues)
-                        .then((response)=>{
-                           this.getMyOrders();
-                            // swal({
-                            //         title: "Order is returned",
-                            //         icon: "info", 
-                            //         buttons: ["View Return Policy","Close"],
-                            //         focusConfirm: false,
-                            //         showCloseButton: true
-                            //       })
-                            // .then((inputValue) => {
-                            //   if (inputValue != true) {
-                            //     window.location = '/returnpolicy';
-                            //   }
-                              ToastsStore.warning(<div className="alertback">Order is returned<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                              })
-                             
-                        .catch((error)=>{
-                          console.log('error', error);
-                        })
+        //console.log(formValues);
 
+        if ($('#returnForm').valid()) {
+          axios.patch('http://localhost:5006/api/orders/get/returnOrder', formValues)
+              .then((response)=>{
+                console.log('response',response)
+                this.getMyOrders();
+                    ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                    $('#returnProductModal').modal('hide');
+                })
+                   
+              .catch((error)=>{
+                console.log('error', error);
+              })
+        }
     }
-      Closepagealert(event){
+  Closepagealert(event){
     event.preventDefault();
     $(".toast-error").html('');
     $(".toast-success").html('');
@@ -206,7 +250,7 @@ export default class MyOrders extends Component {
                           "orderID" :  id,  
                           "userid"  :  localStorage.getItem('user_ID')
                         }
-        axios.patch('/api/orders/get/cancelOrder', formValues)
+        axios.patch('http://localhost:5006/api/orders/get/cancelOrder', formValues)
                         .then((response)=>{
                          
                           console.log('response', response);
@@ -229,7 +273,13 @@ export default class MyOrders extends Component {
                           console.log('error', error);
                         })                
     }
+    handleChange(event){
+        this.setState({
+            [event.target.name] : event.target.value
+        })
+    }
   render() {  
+    console.log('oneproductdetails',this.state.oneproductdetails);
     return (
     <div className="container">	
             <div className="pagealertnone">
@@ -297,7 +347,8 @@ export default class MyOrders extends Component {
                   <tbody>
                     {
                     data.products && data.products.length > 0 ?
-                        data.products.map((productData, index)=>{
+                        data.products.map((productData, pindex)=>{
+                          console.log('productData',productData)
                           return(
                           <tr key={'id'+index}>
                               <td data-th="Order #" className="col id orderimgsize"><img src={productData.productImage[0]}/></td>
@@ -309,10 +360,10 @@ export default class MyOrders extends Component {
                               <td data-th="Order Total" className="col total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
                                   {
-                                    data.status == 'Cancelled' || data.status == 'Returned' ? '' :
+                                    data.status == 'Cancelled' || productData.status == 'Returned' ? '' :
                                     data.status == 'Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
-                                    onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-productid={productData._id}>
-                                    <i className="fa"  data-status={data.status} data-id={data._id}>&#xf0e2;</i></button> :''
+                                    onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-productid={productData.product_ID}>
+                                    <i className="fa"  data-status={data.status} data-id={data._id} data-productid={productData.product_ID} >&#xf0e2;</i></button> :''
                                   }
                               </td>
                               :
@@ -324,14 +375,18 @@ export default class MyOrders extends Component {
                           </tr>
                           );
                       })
-                      : ""
-                    }
+                : 
+                ""
+                  } 
                   </tbody>
                 </table>
           </div>
             );
           })
-          : ""
+          : 
+        <div className="col-lg-12 textAlignCenter">
+          <img src="/images/emptyorder.png" />
+        </div>
         }
 
 
@@ -341,22 +396,70 @@ export default class MyOrders extends Component {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
-                  <button type="button" className="close" data-dismiss="modal">&times;</button>
-                  <h3 className="modalTitle">Return Order</h3>
-                </div>
-                <div className="modal-body">
+                  <img src="/images/Icon.png" />
+                  <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
+                  <h4 className="modal-title modalheadingcont">Return Product</h4>
+                </div> 
                   <h4 className="modaltext"></h4>
-                </div>
-                <div className="modal-footer">
-                  <div className="cantreturn">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <table className="data table table-order-items history" id="my-orders-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" className="col id">Product Image</th>
+                            <th scope="col" className="col id">Product Name</th>
+                            <th scope="col" className="col date">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>{
+                              this.state.oneproductdetails  ?
+                            <tr>
+                                <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
+                                <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
+                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                            </tr>
+                            :
+                           null
+                          }
+                    </tbody>
+                  </table>
+                  <div className="inputrow">
+                    <h4>Back Details</h4>
+                  </div>
+
+                  <form id="returnForm">
+                    <div className="inputrow">
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Reason for Return</label>
+                      <textarea rows="5" cols="55" className="reasonForReturn" name="reasonForReturn" required></textarea>
+                    </div> 
+                    <div className="inputrow">
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Bank Name</label>
+                      <input type="text" ref="bankname" name="bankname" id="bankname" value={this.state.bankname} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
+                    </div>
+                    <div className="inputrow">
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Bank Account No.</label>
+                      <input type="text" ref="bankacctno" name="bankacctno" id="bankacctno" value={this.state.bankacctno} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
+                    </div>
+                    <div className="inputrow">
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">IFSC Code</label>
+                      <input type="text" ref="ifsccode" name="ifsccode" id="ifsccode" value={this.state.ifsccode} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
+                    </div>
+                  </form>
+                  
+
+                  </div>
+                
+{/*                  <div className="cantreturn">
                     <a className="btn btn-warning"  href="/returnpolicy">View Return Policy</a>
                     <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
-                  <div className="canreturn">
-                    <button className="btn btn-danger" onClick={this.returnProductAction.bind(this)} id="returnProductBtn" data-dismiss="modal"  >Yes</button>
-                    <button type="button" className="btn btn-default" data-dismiss="modal">No</button>
-                  </div>
-                </div>
+*/}                 <div className="canreturn modal-footer">
+                      <div className="col-lg-12">
+                        <br/>
+
+                        <button className="btn btn-danger" onClick={this.returnProductAction.bind(this)} id="returnProductBtn" >Save</button>
+                        <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
               </div>
             </div>
           </div>

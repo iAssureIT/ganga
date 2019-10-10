@@ -351,7 +351,11 @@ class AddNewBulkProduct extends Component{
                                             featuresArray.push({ feature: record[k], index:2 });
                                         }
                                     }
-                                    
+                                    if (header[k]=='featureList4') {
+                                        if (record[k] != undefined && record[k] != '') {
+                                            featuresArray.push({ feature: record[k], index:3 });
+                                        }
+                                    }
                                     documentObj[count]['featureList'] = featuresArray;
                                 }
                                 else if(header[k]=='tags') {

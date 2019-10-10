@@ -25,14 +25,12 @@ class ShipmentTracking extends Component {
 
   componentDidMount() {
     this.getMyOrders();
-
   }
   getMyOrders() {
     var userId = localStorage.getItem('user_ID');
     axios.get("/api/orders/get/list/" + userId)
       .then((response) => {
           var orderData = response.data.filter((data,index)=>{
-            console.log('data',data);
             return  data.deliveryStatus[data.deliveryStatus.length-1].status == 'Dispatch' || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivery Initiated'
                         || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivered & Paid'
           })

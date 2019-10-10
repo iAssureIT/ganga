@@ -145,7 +145,7 @@ i, span {
     margin-right: 10px;
 }
 
-#sidebar ul li.active > a, a[aria-expanded="true"] {
+#sidebar ul li.active > a, #sidebar a[aria-expanded="true"] {
     color: #fff;
     background: #222;
 }

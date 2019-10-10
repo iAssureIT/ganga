@@ -46,7 +46,7 @@ class Login extends Component {
         if (response.data.roles.indexOf("ba") != -1) {
           localStorage.setItem("token",response.data.token);
           localStorage.setItem("admin_ID",response.data.user_ID);
-          
+          localStorage.setItem("user_ID",response.data.user_ID);
           this.props.history.push("/dashboard");
           window.location.reload();
           // direct.setState({loggedIn:response.data.token})

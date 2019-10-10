@@ -82,7 +82,7 @@ export default class Leftsidebar extends Component{
                   <a href="#Shipment" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-map-marker" />
                     Order Management
-                     <i class="fa fa-sort-down pull-right"></i>
+                     <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Shipment">
                     <li>
@@ -139,13 +139,19 @@ export default class Leftsidebar extends Component{
                         <span className="sidebarMenuSubText">Delivered Order List</span>
                       </a>
                     </li>
+                    <li>
+                      <a href="/returned-products">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Returned Products</span>
+                      </a>
+                    </li>
                   </ul>
                 </li> 
                 <li className="sidebarMenuText">
                   <a href="#baData" data-toggle="collapse" aria-expanded="false">
                     <i className="glyphicon glyphicon-briefcase" />
                     Business Associates
-                     <i class="fa fa-sort-down pull-right"></i>
+                     <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="baData">
                     <li>
