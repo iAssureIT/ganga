@@ -78,7 +78,7 @@
   padding: 10px 15px;
 }
 
-.checkBAExistsError{
+.checkUserExistsError{
     color:red;
     margin-top: 5px;
   }

@@ -38,6 +38,7 @@ class IAssureTable extends Component {
 		    "resetPassword"				: "",
 		    "resetPasswordConfirm" 		: "",
 		    "show" 						: true,
+		    "selectUsers" 				: [],
 		    // "usernames"					: "",
 		}
 		this.deleteExam = this.deleteExam.bind(this);
@@ -540,9 +541,37 @@ class IAssureTable extends Component {
 		// FlowRouter.go('/Profile/'+e.currentTarget.id);
 		this.props.history.push('/edituserprofile/'+e.target.id );
 		// console.log("here showprofile view",e.currentTarget.id);
-
 	}
-	 
+	selectUsers(event){
+		this.setState({
+			[event.target.name] : event.target.checked
+		});
+		// console.log("slected user id",event.target.name,event.target.checked);
+		var selectUsers = this.state.selectUsers;
+		if(event.target.checked ==true){
+			selectUsers.push(
+				event.target.name
+			)
+			this.props.getSelectedUserID(selectUsers);
+			this.setState({
+				selectUsers :selectUsers
+			},()=>{
+				// console.log("selectUsers",this.state.selectUsers);
+			})
+
+		}else{
+			 var index = selectUsers.findIndex(v => v === event.target.name);
+			 selectUsers.splice(selectUsers.findIndex(v => v === event.target.name), 1);
+			 this.props.getSelectedUserID(selectUsers);
+	         this.setState({
+	          selectUsers : selectUsers
+	         },()=>{
+	           // console.log('selectUsersremove',this.state.selectUsers);
+	         });
+
+		}
+	}
+
 
 	render() {
 		// console.log('this.state.tableObjects.paginationApply', this.state.tableObjects);
@@ -613,12 +642,11 @@ class IAssureTable extends Component {
 	                        <tbody>
 	                           { this.state.tableData && this.state.tableData.length > 0 ?
 	                           		this.state.tableData.map( 
-										(value, i)=> {													
+										(value, i)=> {	
 											return(
 												<tr key={i} className="">
 													{/*console.log("values",value)*/}
-													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={value._id} /></td>
-													
+													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name={value._id} checked={this.state[value._id]} className="userCheckbox" onChange={this.selectUsers.bind(this)} /></td>
 													{/*<td>{value._id}</td>*/}
 													<td className="textAlignCenter">{this.state.startRange+1+i}</td>
 													{

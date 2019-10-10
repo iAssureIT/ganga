@@ -55,7 +55,7 @@ class Login extends Component {
         window.location.reload();
         // direct.setState({loggedIn:response.data.token})
         if(localStorage==null){
-          swal("Invalid Email or Password","Please Enter valid email and password");
+          swal("Invalid Email Id or Password","Please Enter valid email id and password");
         }else{
           this.setState({
               loggedIn  :   true
@@ -65,7 +65,7 @@ class Login extends Component {
       .catch(function (error) {
           console.log(error);
         if(localStorage!==null){
-          swal("Invalid Email or Password","Please Enter valid email and password");
+          swal("Invalid Email Id or Password","Please Enter valid email id and password");
         }
       });
   }

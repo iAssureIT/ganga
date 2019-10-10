@@ -33,7 +33,7 @@ class SignUp extends Component {
  	constructor(){
       super();
         this.state = {  
-      	  checkBAExists    		: 0, 
+      	  checkUserExists    	: 0, 
            loggedIn : false,
            auth:{
                 firstname       : '',
@@ -141,18 +141,18 @@ class SignUp extends Component {
 
   }
 
-    checkBAExists(event){
+    checkUserExists(event){
     axios.get('/api/users/get/checkUserExists/'+event.target.value)
            .then((response)=>{
                 if (response.data.length>0) {
-                  $(".checkBAExistsError").show();
+                  $(".checkUserExistsError").show();
                   $('.button3').attr('disabled','disabled');
-                  this.setState({checkBAExists: 1})
+                  this.setState({checkUserExists: 1})
                  
                 } else{
-                  $(".checkBAExistsError").hide();
+                  $(".checkUserExistsError").hide();
                   $('.button3').removeAttr('disabled');
-                  this.setState({checkBAExists: 0})
+                  this.setState({checkUserExists: 0})
                 }                        
             })
            .catch(function(error){
@@ -226,7 +226,7 @@ class SignUp extends Component {
         $(".modalbg").css("display","none");
     }
     componentDidMount(){
-    $(".checkBAExistsError").hide();
+    $(".checkUserExistsError").hide();
 
 
     }
@@ -284,8 +284,8 @@ return(
 						    </div>
 							<div className="logininput mt30">  
 					   		<label>Email ID</label><label className="astricsign">*</label>
-							  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkBAExists.bind(this)} required/>
-                                <p className="checkBAExistsError">User already exists!!!</p>
+							  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkUserExists.bind(this)} required/>
+                                <p className="checkUserExistsError">User already exists!!!</p>
 							  {this.state.formerrors.emailIDV  && (
 		                        <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
 		                      )}

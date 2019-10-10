@@ -388,82 +388,66 @@ export default class MyOrders extends Component {
 
         {/* feedbackProductModal */ }
 
-        <div className="modal " id="feedbackProductModal" role="dialog">
-          <div className="modal-dialog modal-lg dialog">
-            <div className="modal-content col-lg-8 col-lg-offset-2"> 
-              <div className="row"> 
+          <div className="modal" id="feedbackProductModal" role="dialog">
+            <div className="modal-dialog">
+              <div className="modal-content">
                 <div className="modal-header">
                   <img src="/images/Icon.png" />
                   <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
-                  <h4 className="modal-title modalheadingcont">Create Review</h4>
+                  <h4 className="modal-title modalheadingcont">PRODUCT- REVIEW</h4>
                 </div> 
-                <div className="">
+                <div className="modal-body">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <table className="data table table-order-items history" id="my-orders-table">
-                    <thead>
-                        <tr>
-                            <th scope="col" className="col id">Product Image</th>
-                            <th scope="col" className="col id">Product Name</th>
-                            <th scope="col" className="col date">Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>{
-                              this.state.oneproductdetails  ?
-                            <tr>
-                                <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
-                                <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
-                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
-                            </tr>
-                            :
-                           null
-                          }
-                    </tbody>
-                  </table>
-                    <form className="feedbackForm" id="">
-                        
-                        <div className="col-lg-6 col-sm-12 col-xs-12 row">
-                           {/* <fieldset className="ratingReview stars givefeedback ">
-                                <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
-                                <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
-                                <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
-                                <input type="radio" id="star5" name="ratingReview" value="1"/><label htmlFor="star5"></label>
-                            </fieldset>*/}
-                            <div className="clearfix "></div>
+                <table className="data table table-order-items history" id="my-orders-table">
+                  <thead>
+                      <tr>
+                          <th scope="col" className="col id">Product Image</th>
+                          <th scope="col" className="col id">Product Name</th>
+                          <th scope="col" className="col date">Price</th>
+                      </tr>
+                  </thead>
+                  <tbody>{
+                            this.state.oneproductdetails  ?
+                          <tr>
+                              <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
+                              <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
+                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                          </tr>
+                          :
+                         null
+                        }
+                  </tbody>
+                </table>
+                  <form className="feedbackForm" id="">
+                      
+                      <div className="col-lg-6 col-sm-12 col-xs-12 row">
+                          <fieldset className="ratingReview stars givefeedback ">
+                              <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
+                              <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
+                              <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
+                              <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
+                              <input type="radio" id="star5" name="ratingReview" value="1"/><label htmlFor="star5"></label>
+                          </fieldset>
+                          <div className="clearfix "></div>
+                      </div>
+                        <div className="row inputrow">
+                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
+                          <textarea rows="5" cols="60"></textarea>
                         </div>
-                          <div className="row inputrow">
-                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                            <textarea rows="5" cols="65"></textarea>
-                          </div>
-                          <div className="row inputrow">
-                          
-                          </div>
-                    </form>      
-                  </div>
-                  <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1 carewrap">
-                      <div className="formcontentheight col-lg-12">
-                        <label htmlFor="name">Name<span className="redFont">*</span></label>
-                        <input disabled  className="col-lg-12 inputcontent" id="name" type="text"ref="firstName"/>
-                      </div>
-                      <div className="formcontentheight col-lg-12">
-                        <label htmlFor="email">Mobile No<span className="redFont">*</span></label>
-                        <input disabled className="col-lg-12 inputcontent" id="mobileno" type="number"ref="mobNumber"/>
-                      </div>
-                      <div className="formcontent1 col-lg-12">
-                        <label htmlFor="message">Write a Feedback<span className="redFont">*</span></label>
-                        <textarea className="col-lg-12 inputcontenttextarea" id="message"ref="message" name="message" value={this.state.message} row="5"></textarea>
-                      </div>
-                      <div className="checkbox">
-                      </div>
-                      <div  className="btn btn-warning pull-right"> Submit</div>
-                   </div>    
-                </div>  
-               <div className="modal-footer">                     
-              </div>                  
+                        <div className="row inputrow">
+                        
+                        </div>
+                  </form>      
+                </div>
+                    
+                </div>
+                <div className="modal-footer modalfooterborder ">
+                     <button className="btn btn-warning" onClick={this.submitReview.bind(this)} data-productid={this.state.oneproductdetails && this.state.oneproductdetails._id}
+                     >Submit</button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>              
+          </div>             
       	</div>
       </div>
     </div>  

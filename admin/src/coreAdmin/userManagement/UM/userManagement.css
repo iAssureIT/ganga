@@ -3,6 +3,10 @@
     filter: alpha(opacity=50);
     opacity: 0 !important;
 }*/
+.checkUserExistsError{
+  color: red;
+  margin-top: 5px;
+}
 .zzero{
   z-index: 0!important;
 }

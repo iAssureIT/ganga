@@ -40,7 +40,7 @@ class Login extends Component {
 
     axios.post('/api/users/login',auth)
       .then((response)=> {
-        console.log("-------userData------>>",response);
+        // console.log("-------userData------>>",response);
 
         if (response.data.status=="Active") {
         localStorage.setItem("token",response.data.token);

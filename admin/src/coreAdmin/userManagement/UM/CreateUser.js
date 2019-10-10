@@ -28,6 +28,7 @@ class CreateUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      checkUserExists     : 0, 
       show              : true,
       office            : null,
       allPosts          : null,
@@ -48,6 +49,11 @@ class CreateUser extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+    componentDidMount(){
+    $(".checkUserExistsError").hide();
+
+
+    }
 
  handleChange(event){
     const datatype = event.target.getAttribute('data-text');
@@ -85,6 +91,26 @@ class CreateUser extends Component {
       [name]:value
     } );
   }
+
+      checkUserExists(event){
+    axios.get('/api/users/get/checkUserExists/'+event.target.value)
+           .then((response)=>{
+                if (response.data.length>0) {
+                  $(".checkUserExistsError").show();
+                  $('.button3').attr('disabled','disabled');
+                  this.setState({checkUserExists: 1})
+                 
+                } else{
+                  $(".checkUserExistsError").hide();
+                  $('.button3').removeAttr('disabled');
+                  this.setState({checkUserExists: 0})
+                }                        
+            })
+           .catch(function(error){
+                console.log(error);
+           })
+  }
+
 
     createUser(event){
       event.preventDefault();
@@ -223,9 +249,9 @@ class CreateUser extends Component {
 
                                                             <input type="text" className="formFloatingLabels form-control  newinputbox" 
                                                             ref="signupEmail" name="signupEmail" id="signupEmail" data-text="signupEmail" onChange={this.handleChange}  value={this.state.signupEmail}
-                                                             placeholder="Email"/>
-                                                              
-                                                         </div>   
+                                                             placeholder="Email" onBlur={this.checkUserExists.bind(this)}/>
+                                                         </div> 
+                                                              <p className="checkUserExistsError">User already exists!!!</p>
                                                           </span>
                                                            {this.state.formerrors.signupEmail &&(
                                                                   <span className="text-danger">{this.state.formerrors.signupEmail}</span> 
@@ -254,102 +280,10 @@ class CreateUser extends Component {
                                                       </div>
                                                       
                                                     </div>
-
-
-{/*                                                     <div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr">
-                                                         <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent">
-                                                           <label className="formLable col-lg-12 col-md-12">Role <label className="requiredsign">*</label></label>
-                                                              <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                             
-                                                               <select className="form-control" value={this.state.role} onChange={this.handleChange} ref ="role" id="role" name="role" data-text="role">
-                                                                    <option  hidden> --Select-- </option>
-                                                                    <option value="Technical Admin" > Technical Admin </option>
-                                                                    <option value="Executive Admin" > Executive Admin </option>
-                                                                    <option value="Sales Manager" > Sales Manager </option>
-                                                                    <option value="Sales Agent" > Sales Agent </option>
-                                                                    <option value="Field Manager" > Field Manager </option>
-                                                                    <option value=" Field Agent" >  Field Agent </option>
-                                                                    </select>
-
-                                                              </span>
-                                                               {this.state.formerrors.role &&(
-                                                                  <span className="text-danger">{ this.state.formerrors.role}</span> 
-                                                                )}
-                                                          </div>
-
-                                                          <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
-                                                              <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
-                                                                  <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                    <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
-                                                                        <option hidden> --Select-- </option>
-                                                                        <option value="Head Office">  Head Office </option>
-                                                                        <option value="Sales Agent Office"> Sales Agent Office </option>
-                                                                           { this.state.office != null ?
-                                                                          this.state.office[0].map( (locData, index)=>{
-                                                                          // console.log('locData',locData);
-                                                                           return( 
-
-                                                                                 <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
-
-
-                                                                                   )}
-                                                                           )
-                                                                          :
-                                                                          null
-
-                                                                        }
-                                                                    </select>
-
-                                                                  </span>
-                                                           </div>
-                                                     </div>
-
-*/}
                                                     <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                                                      <button data-toggle="modal" className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit topMargin outlinebox" type="submit" onClick={this.createUser.bind(this)} id="CreateUserModal" >Register</button>
+                                                      <button data-toggle="modal" className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit topMargin outlinebox button3" type="submit" onClick={this.createUser.bind(this)} id="CreateUserModal" >Register</button>
                                                      </div>    
                                                 </form>
-
-
-
-
-                                                          {/*<form id="signUpUser" onSubmit={this.createUser.bind(this)}>
-                                                              <div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                                               <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-                                                                    <label className="">First Name <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span">
-                                                                        <input type="text" style={{textTransform:'capitalize'}} className="form-control UMname inputText tmsUserAccForm has-content" id="firstname" ref="firstname" name="firstname"/>
-                                                                    </span>
-                                                                </div>
-
-                                                               <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-                                                                    <label className="">Last Name <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span row">
-                                                                       <input type="text"className="form-control UMname inputText tmsUserAccForm has-content" id="lastname" ref="lastname" name="lastname" />
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent">
-                                                                    <label className="">Email ID <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                      <input type="text" className="formFloatingLabels form-control" ref="signupEmail" name="signupEmail" id="signupEmail"/>
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-6 inputContent">
-                                                                    <label className="">Mobile Number <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span">
-                                                                       <InputMask mask="99999-99999" pattern="^(0|[1-9][0-9-]*)$"   className= "form-control UMname inputText tmsUserAccForm has-content" ref="mobNumber" name="mobNumber" id="mobNumber"/>
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                                                                    <input className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit outlinebox" type="submit" value="REGISTER" />
-                                                               </div>   
-
-                                                              </div> 
-                                                          </form>*/}
                                                         </div>  
                                                     </div>
                                                 
@@ -358,11 +292,7 @@ class CreateUser extends Component {
                                       </div>
                                     </div>
                                   
-                               {/* </section>*/}
                               </div>
-                      
-
-
                   </div>
                   </div>
                       
