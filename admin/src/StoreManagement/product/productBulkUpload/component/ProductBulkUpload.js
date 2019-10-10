@@ -393,7 +393,7 @@ class AddNewBulkProduct extends Component{
         
         var formValues = this.state.finalData;
         console.log('formValues',formValues);
-        axios.post('http://localhost:5006/api/products/post/bulkUploadProduct', formValues)
+        axios.post('/api/products/post/bulkUploadProduct', formValues)
         .then((response)=>{
             console.log('response', response);
             swal({
