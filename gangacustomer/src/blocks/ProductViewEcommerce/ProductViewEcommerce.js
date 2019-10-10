@@ -8,10 +8,6 @@ import { connect } from 'react-redux';
 import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
 import ReactImageZoom from 'react-image-zoom';
 
-
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 const user_ID = localStorage.getItem("user_ID");
 class ProductViewEcommerce extends Component {
 	constructor(props) {

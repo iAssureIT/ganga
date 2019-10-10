@@ -4,9 +4,6 @@ import axios 	 from 'axios';
 import swal      from 'sweetalert';
 import "./userManagement.css";
 
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 class EditUserProfile extends Component{
 	constructor(props) {
 	  super(props);

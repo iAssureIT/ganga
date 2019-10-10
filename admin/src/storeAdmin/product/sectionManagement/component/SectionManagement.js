@@ -11,9 +11,6 @@ import 'jquery-validation';
 import 'bootstrap/js/tab.js';
 import '../css/SectionManagement.css';
 
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 
 class SectionManagement extends Component {
   constructor(props) {

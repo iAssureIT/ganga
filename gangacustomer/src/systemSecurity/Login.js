@@ -11,9 +11,6 @@ import './SignUp.css';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 class Login extends Component {
 
   constructor(){

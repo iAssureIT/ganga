@@ -18,10 +18,6 @@ const OwlCarousel = Loadable({
   }
 });
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-
 const user_ID = localStorage.getItem("user_ID");
 class ProductViewEcommerceBestSellers extends Component {
   constructor(props){

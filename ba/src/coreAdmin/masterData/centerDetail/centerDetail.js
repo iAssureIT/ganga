@@ -7,9 +7,6 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import 'bootstrap/js/tab.js';
 import "./centerDetail.css";
-
-axios.defaults.baseURL = 'http://qalmisapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
       
 var centerDetailArray  = [];
 class centerDetail extends Component{

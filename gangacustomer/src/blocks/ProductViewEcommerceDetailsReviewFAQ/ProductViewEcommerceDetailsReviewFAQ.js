@@ -6,9 +6,6 @@ import "./ProductViewEcommerceDetailsReviewFAQ.css";
 import _                      from 'underscore';
 import moment                 from "moment";
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 
 
 export default class ProductViewEcommerceDetailsReviewFAQ extends Component {

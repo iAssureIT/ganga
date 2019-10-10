@@ -3,8 +3,6 @@ import ProductViewEcommerce                 from "../../blocks/ProductViewEcomme
 import ProductViewEcommerceBestSellers      from "../../blocks/ProductViewEcommerceBestSellers/ProductViewEcommerceBestSellers.js";
 import ProductViewEcommerceDetailsReviewFAQ from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
 import axios                  		          from 'axios';
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 var webCategory  = 'Main-Site';
 
 export default class ProductDetailsEcommerce extends Component {

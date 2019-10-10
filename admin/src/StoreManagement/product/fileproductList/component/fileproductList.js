@@ -5,9 +5,6 @@ import ReactTable             from "react-table";
 import IAssureTable           from "../../../../coreAdmin/IAssureTable/IAssureTable.jsx";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
-
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
 class FileWiseProductList extends Component{
     constructor(props) {
       super(props);

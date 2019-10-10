@@ -8,10 +8,6 @@ import S3FileUpload 			from 'react-s3';
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './ImageUpload.css';
 
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-
 var imgArray = [];
 var imgTitleArray = [];
  class ImageUpload extends Component {

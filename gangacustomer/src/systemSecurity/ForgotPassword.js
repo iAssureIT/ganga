@@ -3,9 +3,6 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 import axios from 'axios';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 class ForgotPassword extends Component {
     constructor(props) {
         super(props);

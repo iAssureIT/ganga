@@ -10,8 +10,6 @@ import ProductCollageView         from "../../blocks/ProductCollage/ProductColla
 import Pagealert                  from "../../common/Pagealert/Pagealert.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 var webCategory  = 'Main-Site';
 class HomePage extends Component {
 	  constructor(props){

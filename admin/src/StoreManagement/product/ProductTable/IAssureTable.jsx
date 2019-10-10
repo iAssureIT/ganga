@@ -8,9 +8,6 @@ import './IAssureTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 var sum = 0;
 class IAssureTable extends Component {
 	constructor(props){

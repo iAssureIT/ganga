@@ -19,7 +19,7 @@ import Login                                     from '../systemSecurity/Login.j
 import ConfirmOtp                                from '../systemSecurity/ConfirmOtp.js'; 
 import ForgotPasswordOld                         from '../systemSecurity/ForgotPasswordOld.js';
 import ForgotPassword                            from '../systemSecurity/ForgotPassword.js';
-import ResetPasswordOld                             from '../systemSecurity/ResetPasswordOld.js';
+import ResetPasswordOld                          from '../systemSecurity/ResetPasswordOld.js';
 import ResetPassword                             from '../systemSecurity/ResetPassword.js';
 import SignUp                                    from '../systemSecurity/SignUp.js';
 import VerifyAccount                             from '../systemSecurity/VerifyAccount.js';

@@ -6,9 +6,6 @@ import StepWizard         from "../../common/Wizard/StepWizard.jsx";
 // import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
 import './ShipmentTracking.css';
 
-axios.defaults.baseURL = 'http://gangaexpressapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 class ShipmentTracking extends Component {
   constructor(props) {
     super(props);

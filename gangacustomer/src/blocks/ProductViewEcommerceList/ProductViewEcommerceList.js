@@ -5,9 +5,6 @@ import axios                  from 'axios';
 import "./ProductViewEcommerceList.css";
 import _                      from 'underscore';
 
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 
 
 export default class ProductViewEcommerceList extends Component {

@@ -8,9 +8,6 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 
 
-// axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
-// axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 class dispatchModal extends Component{
     constructor(props) {
         super(props);
