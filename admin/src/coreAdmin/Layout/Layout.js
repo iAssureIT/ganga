@@ -195,7 +195,9 @@ class Layout extends Component{
                                         <Route path="/contact-details/:vendor_ID"                                   exact strict component={ ContactDetails } />
                                         <Route path="/vendor-list"                                                  exact strict component={ ListOfVendor } />
                                         <Route path="/vendor-category"                                              exact strict component={ VendorCategory } />
+                                        <Route path="/vendor-category/:vendorID"                                              exact strict component={ VendorCategory } />
                                         <Route path="/vendor-location-type"                                         exact strict component={ VendorLocationType } />
+                                        <Route path="/vendor-location-type/:locationTypeID"                                         exact strict component={ VendorLocationType } />
 
                                         { /*Order List*/}
                                         <Route path="/allorders"                                                    exact strict component={ AllOrdersList } />

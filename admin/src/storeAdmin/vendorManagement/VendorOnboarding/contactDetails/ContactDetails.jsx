@@ -91,6 +91,7 @@ class ContactDetails extends Component {
 	    this.handleChange = this.handleChange.bind(this);  
     }
     componentDidMount() {
+		this.getLocationType();
     	window.scrollTo(0, 0);
     	
     	$.validator.addMethod("regxA1", function(value, element, regexpr) {          
@@ -285,7 +286,7 @@ class ContactDetails extends Component {
 		}else if(window.location.pathname == '/ContactDetailsSTL/'+routerId){
 			this.props.history.push("/LocationDetailsSTL/"+routerId);
 		}else{
-			this.props.history.push("/LocationDetailsSTM/"+routerId);
+			this.props.history.push("/location-details/"+routerId);
 		}
 	}   
     contactdetailBtn(event){
@@ -372,48 +373,58 @@ class ContactDetails extends Component {
 	    // var supplierId = userId._id;
 	    // var locationOffice = this.refs.Location.value;
 		if($('#ContactDetail').valid()){
-	    //     var formValues = {
-	    //         'Location'      	: this.refs.Location.value,
-	    //         'Designation'       : this.refs.Designation.value,
-	    //         'ContactLevel'      : parseInt(this.refs.ContactLevel.value),
-	    //         'Phone'             : this.refs.Phone.value,
-	    //         'Email'          	: this.refs.Email.value,
-	    //         'Name'            	: this.refs.Name.value,
-	    //         'Reportinmanager'   : this.refs.Reportinmanager.value,
-	    //         'AltPhone'          : this.refs.AltPhone.value,
-	    //         'Landing'           : this.refs.Landing.value,
-	    //     }
-	    //     Meteor.call('updatesuppliers',formValues,supplierId,locationOffice,contact_id,
-	    //       	(error,result)=>{
-	    //         if(error){
-	    //           // console.log(error.reason);
-	    //         }else{
-	    //           $('.inputText').val('');
-	    //           swal({
-	    //           	title:"abc",
-	    //           	text:'Contact Details added successfully.'
-	    //           });
-	    //           $("#ContactDetail").validate().resetForm();
-	    //           this.setState({
-	    //           	'Location'     		: '--Select Location Type--',
-		// 	        'Designation'       : '',
-		// 	        'ContactLevel'      : '--Select Contact Level--',
-		// 	        'Phone'             : '',
-		// 	        'Email'          	: '',
-		// 	        'Name'            	: '',
-		// 	        'Reportinmanager'   : '',
-		// 	        'AltPhone'          : '',
-		// 	        'Landing'           : '',
-		// 	        'updateButton' 		: false,
-	    //           })
-	    //         }
-	    //     });
+	        var formValues = {
+	            'Location'      	: this.refs.Location.value,
+	            'Designation'       : this.refs.Designation.value,
+	            'ContactLevel'      : parseInt(this.refs.ContactLevel.value),
+	            'Phone'             : this.refs.Phone.value,
+	            'Email'          	: this.refs.Email.value,
+	            'Name'            	: this.refs.Name.value,
+	            'Reportinmanager'   : this.refs.Reportinmanager.value,
+	            'AltPhone'          : this.refs.AltPhone.value,
+	            'Landing'           : this.refs.Landing.value,
+			}
+			axios.patch('/api/vendors/contact/'+routerId, formValues)
+			.then((response)=>{
+				$('.inputText').val('');
+				this.setState({
+					'Location'     		: '--Select Location Type--',
+					'Designation'       : '',
+					'ContactLevel'      : '--Select Contact Level--',
+					'Phone'             : '',
+					'Email'          	: '',
+					'Name'            	: '',
+					'Reportinmanager'   : '',
+					'AltPhone'          : '',
+					'Landing'           : '',
+					'updateButton' 		: false,
+				})
+				swal(response.data.message);
+				$("#LocationsDetail").validate().resetForm();
+			})
+			.catch((error)=>{
+
+			})
+	    
 
         }else{
         	$(event.target).parent().parent().find('.inputText.error:first').focus();
         }
     }
-
+	getLocationType(){
+		axios.get('/api/vendorLocationType/get/list')
+		.then((response)=>{
+			console.log('res', response.data)
+			this.setState({
+				locationTypeArry : response.data
+			},()=>{
+				console.log('locationTypeArry', this.state.locationTypeArry);
+			})
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+	}	
     updatecontactdetailAddBtn(event){
     	event.preventDefault();
     	var contactId = $(event.currentTarget).attr('data-id');
@@ -751,14 +762,18 @@ class ContactDetails extends Component {
 					                                            </label>
 																<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange}>
 											                        <option selected="true" disabled="true">--Select Location Type--</option>
-											                        {/*
-																		uniquelocationtype.map((locationtypedata, index)=>{
+											                        {
+																		this.state.locationTypeArry && this.state.locationTypeArry.length>0?
+																		this.state.locationTypeArry.map((locationtypedata, index)=>{
+																			console.log('locationtypedata', locationtypedata);
 																			return(      
-																					<option key={index}>{locationtypedata.value}</option>
+																					<option key={index}>{locationtypedata.locationType}</option>
 																				);
 																			}
 																		)
-																		*/}
+																		:
+																		null
+																	}
 											                    </select>
 															</div>
 

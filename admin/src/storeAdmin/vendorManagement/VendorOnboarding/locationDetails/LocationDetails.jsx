@@ -15,7 +15,7 @@ class LocationDetails extends Component {
       this.state = {
         'locationType'     : '--Select Location Type--',
         'addressLineone'   : '',
-        'city'             : '-- Select --',
+        'city'             : '',
         'states'           : '',
         'area'             : '',
         'addressLinetwo'   : '',
@@ -156,7 +156,7 @@ class LocationDetails extends Component {
 
 		// -------------- disable button --------------------- //
 
-		var route   = this.props.match.params.id;
+		var route   = this.props.match.params.vendor_ID;
         if(/[-]/.test(route)){      
 	    	// var id = route.split('-')[0];
 	    	$('.button2').attr('disabled','true');
@@ -180,7 +180,7 @@ class LocationDetails extends Component {
     	if (!this.props.loading6) {
 	    	if(this.props.post5 && this.props.post5.locationDetails && this.props.post5.locationDetails.length > 0){ 
 	    		$(".addLocationForm").show();
-	    		var route   = this.props.match.params.id;
+	    		var route   = this.props.match.params.vendor_ID;
 		        var routerId   = route.split('-');
 		        var indexValue = routerId[1];
 		        var RouterId = routerId[0];
@@ -322,7 +322,7 @@ class LocationDetails extends Component {
     }
     locationdetailBack(event){
     	event.preventDefault();
-    	var id = this.props.match.params.id;
+    	var id = this.props.match.params.vendor_ID;
     	if(window.location.pathname == '/LocationDetails/'+id){
       		this.props.history.push("/SupplierOnboardingForm/"+id);
       	}else if(window.location.pathname == '/LocationDetailsSTL/'+id){
@@ -333,7 +333,7 @@ class LocationDetails extends Component {
     }
     locationdetailsAdd(event){
         event.preventDefault();
-		var routerId   = this.props.match.params.id;
+		var routerId   = this.props.match.params.vendor_ID;
 		console.log('routerId',routerId);
 		// var userId	   = Suppliers.findOne({'_id':routerId});
 		// var supplierId = userId._id;
@@ -347,31 +347,27 @@ class LocationDetails extends Component {
                 'addressLinetwo'   	: this.refs.addressLinetwo.value,
                 'pincode'          	: this.refs.pincode.value,
                 'country'           : this.refs.country.value,
-            }
-            // Meteor.call('updatelocationDetails',formValues,supplierId,
-            // 	(error,result)=>{
-            //     if(error){
-            //       // console.log(error.reason);
-            //     }else{
-            //       $('.inputText').val('');
-            //       this.setState({
-			// 			'locationType'     : '--Select Location Type--',
-			// 	        'addressLineone'   : '',
-			// 	        'city'             : '-- Select --',
-			// 	        'states'           : '-- Select --',
-			// 	        'area'             : '',
-			// 	        'addressLinetwo'   : '',
-			// 	        'pincode'          : '',
-			// 	        'country'          : '-- Select --',
-            //       })
-			// 		$("#LocationsDetail").validate().resetForm();
-					
-			// 		swal({
-			// 			title:'abc',
-			// 			text:'Location Details added successfully.'
-			// 		});
-            //     }
-            // });
+			}
+			axios.patch('/api/vendors/location/'+routerId, formValues)
+			.then((response)=>{
+				$('.inputText').val('');
+				this.setState({
+					'locationType'     : '--Select Location Type--',
+					'addressLineone'   : '',
+					'city'             : '',
+					'states'           : '-- Select --',
+					'area'             : '',
+					'addressLinetwo'   : '',
+					'pincode'          : '',
+					'country'          : '-- Select --',
+				});
+				swal(response.data.message);
+				$("#LocationsDetail").validate().resetForm();
+			})
+			.catch((error)=>{
+
+			})
+            
         }else{
         	$(event.target).parent().parent().find('.inputText.error:first').focus();
         	
@@ -380,29 +376,28 @@ class LocationDetails extends Component {
 
     locationdetailBtn(event){
         event.preventDefault();
-        if(this.state.locationType != "--Select Location Type--" || this.state.addressLineone != '' || this.state.city != '-- Select --' || this.state.states != '-- Select --' || this.state.area != '-- Select --' || this.state.addressLinetwo != '' || this.state.pincode != '' || this.state.country != '-- Select --'){
-			
+        if(this.state.locationType != "--Select Location Type--" || this.state.addressLineone != '' || this.state.city != '-- Select --' || this.state.states != '-- Select --' || this.state.area != '-- Select --' || this.state.addressLinetwo != '' || this.state.pincode != '' || this.state.country != '-- Select --'){		
 			swal({
 				title:'abc',
 				text: "It seem that you are trying to enter a location. Click 'Cancel' to continue entering location. Click 'Ok' to go to next page.But you may lose values if already entered in the location form",
 				buttons: {
-					    cancel: {
-							text: "Cancel",
-							value: false,
-							visible: true,
-							className: "CancelButtonSwal"
-					    },
-					    confirm: {
-							text: "OK",
-							value: true,
-							visible: true,
-							className: "OkButtonSwal",
-							closeModal: true
-					    }
-				  	},
+					cancel: {
+						text: "Cancel",
+						value: false,
+						visible: true,
+						className: "CancelButtonSwal"
+					},
+					confirm: {
+						text: "OK",
+						value: true,
+						visible: true,
+						className: "OkButtonSwal",
+						closeModal: true
+					}
+				},
 			})
 	        .then((value) => {
-			  	var router   = this.props.match.params.id;
+			  	var router   = this.props.match.params.vendor_ID;
 			  	var routeIdSplit = router.split('-');
 			  	if (routeIdSplit[1]) {
 			  		var routerId = router;
@@ -410,16 +405,16 @@ class LocationDetails extends Component {
 			  		var routerId = router;
 			  	}
 				if (routerId && value === true) {
-					// var id = this.props.match.params.id;
+					// var id = this.props.match.params.vendor_ID;
 
 					if(window.location.pathname == '/LocationDetails/'+routerId){
 	            		this.props.history.push("/ContactDetails/"+routerId);
 	            	}else if(window.location.pathname == '/LocationDetailsSTL/'+routerId){
 	            		this.props.history.push("/ContactDetailsSTL/"+routerId);
 	            	}else if(window.location.pathname == '/LocationDetailsSTM/'+routerId){
-		        		this.props.history.push("/ContactDetailsSTM/"+routerId);
+		        		this.props.history.push("/contact-details/"+routerId);
 		        	}else{
-	            		this.props.history.push("/ContactDetailsSTM/"+routerId);
+	            		this.props.history.push("/contact-details/"+routerId);
 	            	}
 				}else{
 	            	this.props.history.push("/LocationDetails/"+routerId);
@@ -429,7 +424,7 @@ class LocationDetails extends Component {
 			$(".CancelButtonSwal").parents('.swal-button-container').addClass('postionSwalLeft');
 
 		}else{
-        	var routerId   = this.props.match.params.id;
+        	var routerId   = this.props.match.params.vendor_ID;
         	
 			if (routerId) {
 				if(window.location.pathname == '/LocationDetails/'+routerId){
@@ -437,9 +432,9 @@ class LocationDetails extends Component {
 	        	}else if(window.location.pathname == '/LocationDetailsSTL/'+routerId){
 	        		this.props.history.push("/ContactDetailsSTL/"+routerId);
 	        	}else if(window.location.pathname == '/LocationDetailsSTM/'+routerId){
-	        		this.props.history.push("/ContactDetailsSTM/"+routerId);
+	        		this.props.history.push("/contact-details/"+routerId);
 	        	}else{
-	        		this.props.history.push("/ContactDetailsSTM/"+routerId);
+	        		this.props.history.push("/contact-details/"+routerId);
 	        	}
             	// this.props.history.push("/ContactDetails/"+routerId);
 			}else{
@@ -448,7 +443,7 @@ class LocationDetails extends Component {
 	        	}else if(window.location.pathname == '/LocationDetailsSTL/'){
 	        		this.props.history.push("/ContactDetailsSTL/");
 	        	}else{
-	        		this.props.history.push("/ContactDetailsSTM/");
+	        		this.props.history.push("/contact-details/");
 	        	}
             	// this.props.history.push("/ContactDetails/");
 			}
@@ -572,7 +567,7 @@ class LocationDetails extends Component {
     	if (!props.loading6) {
 	    	if(props.post5.locationDetails && props.post5.locationDetails.length > 0){ 
 	    		$(".addLocationForm").show();
-	    		var route   = this.props.match.params.id;
+	    		var route   = this.props.match.params.vendor_ID;
 		        var routerId   = route.split('-');
 		        var indexValue = routerId[1];
 		        var RouterId = routerId[0];
@@ -641,14 +636,14 @@ class LocationDetails extends Component {
 	    this.handleChange = this.handleChange.bind(this);  
     }
     locationDetails(props){
-        var route   = this.props.match.params.id;
+        var route   = this.props.match.params.vendor_ID;
         // var routerUser   = route.split('-');
         // if (routerUser[1]) {
         // 	var routerId = routerUser[0];
         // }else{
         // 	var routerId = route;
         // }
-        // var paramID = this.props.match.params.id;    
+        // var paramID = this.props.match.params.vendor_ID;    
 
         // if(/[-]/.test(paramID)){      
         // 	var id = paramID.split('-')[0];    
@@ -716,7 +711,7 @@ class LocationDetails extends Component {
 	    // }
     }
 	updateLocationDetails(event){
-		var routerIdSupplier  = this.props.match.params.id;
+		var routerIdSupplier  = this.props.match.params.vendor_ID;
 		var route = routerIdSupplier.split('-');
 		if(/[-]/.test(routerIdSupplier)){
 		    var routerId = routerIdSupplier.split('-')[0];
@@ -1031,18 +1026,12 @@ class LocationDetails extends Component {
 																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
 																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">City {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
 																	</label>
+																	<input type="text" id="city" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.city}  ref="city" name="city" onChange={this.handleChange} />
+																</div>
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
+																	</label>
 																	<input type="text" id="area" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.area}  ref="area" name="area" onChange={this.handleChange} />
-																		{/*<select id="Areadata"  className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.area} ref="area" name="area" onChange={this.handleChange} >
-																																				<option selected="true" disabled="true">-- Select --</option>
-																																				{
-																																					currentArea.map((Areadata, index)=>{
-																																						return(      
-																																								<option  key={index}>{Areadata.value}</option>
-																																							);
-																																						}
-																																					)
-																																				}
-																																		    </select>*/}
 																</div>
 																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
 																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null } 
@@ -1135,67 +1124,3 @@ class LocationDetails extends Component {
 	} 
 }
 export default LocationDetails 
-// = withTracker((props)=>{
-
-//     const postHandle = Meteor.subscribe('supplierList');
-//     const post       = Suppliers.findOne({'createdBy':Meteor.userId()})||{};
-//     const loading    = !postHandle.ready();
-  
-// 	const postHandle2 = Meteor.subscribe('locationdata');
-// 	const postHandleCountry = Meteor.subscribe('countriesdata');
-// 	const postHandleState = Meteor.subscribe('statedata');
-// 	const postHandleDistrict = Meteor.subscribe('districtdata');
-// 	const post2       = Location.find({}).fetch()||[];
-// 	const postCountry     = Countries.find({}).fetch()||[];
-// 	const postState       = State.find({}).fetch()||[];
-// 	const postDistrict    = District.find({}).fetch()||[];
-// 	const loading2    = !postHandle2.ready();
-// 	const loadingCountry    = !postHandleCountry.ready();
-// 	const loadingState    = !postHandleState.ready();
-// 	const loadingDistrict    = !postHandleDistrict.ready();
-	
-// 	const postHandle3 = Meteor.subscribe('MasterDataSupplierLocationType');
-// 	const post3       = MasterData.find({'type':'Supplier Location Type'}).fetch()||[];
-// 	console.log('post3',post3);
-// 	const loading3    = !postHandle3.ready();
-
-// 	var route   = this.props.match.params.id;
-	
-//     if(/[-]/.test(route)){      
-//     	var id = route.split('-')[0];
-// 	}else{      
-// 		var id = route;
-// 	}
-// 	const demoSub    = Meteor.subscribe('supplierListByID',id);
-// 	const loading6   = !demoSub.ready();
-// 	const post5      = Suppliers.findOne({"_id":id})||{};
-// 	const typeOption = post5.typeOptions;
-
-// 	var OwnerId = Meteor.userId();
-//     const vendorData  = Suppliers.findOne({"OwnerId":OwnerId});
-//     console.log('vendorDataId',vendorData, OwnerId, Meteor.userId());
-
-//     return {
-//       loading,
-//       post,
-
-//       loading2,
-//       post2, 
-          
-//       loading3,
-//       post3, 
-
-//       id,
-//       demoSub,
-//       post5,
-//       loading6,
-//       typeOption,
-//       loadingCountry,
-//       postCountry,
-//       loadingState,
-//       postState,
-//       loadingDistrict,
-//       postDistrict,
-//       vendorData
-//     };
-// }) (LocationDetails);

@@ -615,6 +615,10 @@ margin-right: 12px;
   .redFont{
     color: #ea0202;
   }
+  .NOpadding{
+    padding-left: 0px; 
+    padding-right: 0px;
+  }
   .NOpadding-left{
       padding-left: 0px;
   }

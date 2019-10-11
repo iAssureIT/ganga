@@ -11,10 +11,7 @@ import '../css/SupplierOnboardingForm.css'
 class BasicInfo extends Component {
   
   componentDidMount() {
-    // // console.log('logo',this.state.logo);
-    
-    
-
+    this.getCategoryList();
     window.scrollTo(0, 0);
     $.validator.addMethod("regxA1", function(value, element, regexpr) {          
       return regexpr.test(value);
@@ -331,7 +328,7 @@ class BasicInfo extends Component {
       if($('#BasicInfo').valid()){
           var formValues = {
               'typeOptions'      : this.state.typeOptions,
-              'companyname'      : this.state.companyname,
+              'companyName'      : this.state.companyname,
               'pan'              : this.state.pan,
               'tin'              : this.state.tin,
               'website'          : this.state.website,
@@ -341,7 +338,7 @@ class BasicInfo extends Component {
               'mfg'              : this.state.mfg,
               'Evaluation'       : this.state.Evaluation,
               'score'            : this.state.score,
-              'vendor_ID'        : Math.floor(Math.random() * 1000) + 1,
+              'vendorID'        : Math.floor(Math.random() * 1000) + 1,
               'Owner_ID'         : localStorage.getItem('admin_ID'),
           }
           axios.post('/api/vendors/post', formValues)
@@ -535,6 +532,20 @@ class BasicInfo extends Component {
       event.preventDefault();
       this.props.history.push('/adminDashboard');  
   }
+  getCategoryList(){
+		axios.get('/api/vendorCategory/get/list')
+		.then((response)=>{
+			console.log('res', response.data)
+			this.setState({
+				categoryList : response.data
+			},()=>{
+				console.log('categoryList', this.state.categoryList);
+			})
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+	}	
   render() {
     
       return (
@@ -616,7 +627,7 @@ class BasicInfo extends Component {
                                         <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pdcls">
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Company Name <i className="astrick">*</i></label>
-                                            <input type="text" id="basicInfo1" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.companyname}  ref="companyname" name="companyname" onChange={this.handleChange} placeholder="Enter company name.." required/>
+                                            <input type="text" id="companyname" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.companyname}  ref="companyname" name="companyname" onChange={this.handleChange} placeholder="Enter company name.." required/>
                                           </div>
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 Websiteerror NOpadding-left NOpadding-right" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website <i className="astrick">*</i>
@@ -628,15 +639,15 @@ class BasicInfo extends Component {
                                             <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" onKeyDown={this.keyPressWeb} value={this.state.website} ref="website" name="website" onChange={this.handleChange} required/>
                                           </div>
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Category of Supplier<i className="astrick">*</i></label>
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Category of Vendor<i className="astrick">*</i></label>
                                             <select id="basicInfo8" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.category} ref="category" name="category" onChange={this.handleChange}>
                                                 {/* <option disabled>-- Select --</option> */}
                                                 <option value="category">Select Category</option>
-                                                {this.props.post3 && this.props.post3.length >0 ?
-                                                  this.props.post3.map((Countrydata, index)=>{
+                                                {this.state.categoryList && this.state.categoryList.length >0 ?
+                                                  this.state.categoryList.map((Countrydata, index)=>{
                                                     
                                                     return(      
-                                                        <option  key={index}>{Countrydata.value}</option>
+                                                        <option  key={index}>{Countrydata.categoryName}</option>
                                                       );
                                                     }
                                                   )
@@ -751,23 +762,23 @@ class BasicInfo extends Component {
                                     
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxhr"></div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachDocuments">
+                                    {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachDocuments">
                                       Attach Documents
                                                
-                                    </div>
+                                    </div> */}
                                     
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="hidedoc">
+                                    {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="hidedoc">
                                       <div className="attachDoc">
                                         <input onChange={this.docBrowse.bind(this)} type="file" multiple className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 docAttach" id="upload-file" name="upload-file"/>
                                         <i className="fa fa-upload uploadlogo uploadlogoTwo col-lg-1 col-md-1 col-sm-1 col-xs-1 clickHere" aria-hidden="true" onClick={this.clicktoattach.bind(this)}></i>
                                         <div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 drag ">
-                                        {/*Drag and drop or <a href="" onChange={this.docBrowse.bind(this)}>browse</a> your files*/}
+                                        
                                         Drag and drop your Documents or  <a onClick={this.clicktoattach.bind(this)} className="clickHere">click here</a> to select files.Attach Document such as Technical Specification , Drawings,Designs,Images,Additional information, etc.
                                         </div>
 
                                       </div>
-                                    {this.getUploadFileAttachPercentage()}
-                                    </div>
+                                      {this.getUploadFileAttachPercentage()}
+                                    </div> */}
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                                       {
 

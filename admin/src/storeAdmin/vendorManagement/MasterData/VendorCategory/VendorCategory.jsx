@@ -30,6 +30,7 @@ class VendorCategory extends Component {
     }
     componentDidMount() {
         var editId = this.props.match.params.vendorID;
+        console.log('ven', editId);
         this.getData(this.state.startRange, this.state.limitRange);
         this.getDataCount();
         this.edit(editId);
@@ -137,17 +138,17 @@ class VendorCategory extends Component {
     });
     }
     edit(id){
-    axios.get('/api/vendorCategory/get/one/'+id)
-    .then((response)=>{
-        if(response.data){
-        this.setState({
-            "categoryName"                  : response.data.categoryName,
+        axios.get('/api/vendorCategory/get/one/'+id)
+        .then((response)=>{
+            console.log('res', response);
+            this.setState({
+                "categoryName"                  : response.data.categoryName,
+            });
+            
+        })
+        .catch((error)=>{
+            console.log('error', error);
         });
-        }
-    })
-    .catch((error)=>{
-        console.log('error', error);
-    });
     }
     render() {
         return (
