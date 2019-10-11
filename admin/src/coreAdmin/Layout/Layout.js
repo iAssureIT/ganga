@@ -106,14 +106,12 @@ class Layout extends Component {
 
 
     const token = localStorage.getItem("admin_ID");
-    console.log("Dashboard Token = ", token);
     if (token !== null) {
-      // console.log("*********===***********imin ",token);
       this.setState({
         loggedIn: true
       })
     } else {
-      // console.log("token is not available");
+      
     }
 
   }
@@ -121,7 +119,7 @@ class Layout extends Component {
   logout() {
     var token = localStorage.removeItem("admin_ID");
     if (token !== null) {
-      console.log("Header Token = ", token);
+      
       this.setState({
         loggedIn: false
       })
@@ -134,7 +132,7 @@ class Layout extends Component {
 
   render() {
     if (this.state.loggedIn === true) {
-      // console.log('if');
+      
       window.onscroll = function () { scrollFunction() };
 
       function scrollFunction() {
@@ -194,7 +192,11 @@ class Layout extends Component {
                   <Route path="/contact-details/:vendor_ID" exact strict component={ContactDetails} />
                   <Route path="/vendor-list" exact strict component={ListOfVendor} />
                   <Route path="/vendor-category" exact strict component={VendorCategory} />
+                  <Route path="/vendor-category/:vendorID" exact strict component={VendorCategory} />
                   <Route path="/vendor-location-type" exact strict component={VendorLocationType} />
+                  <Route path="/vendor-location-type" exact strict component={VendorLocationType} />
+                  <Route path="/vendor-location-type" exact strict component={VendorLocationType} />
+                  <Route path="/vendor-location-type/:locationTypeID" exact strict component={VendorLocationType} />
 
                   { /*Order List*/}
                   <Route path="/allorders" exact strict component={AllOrdersList} />
@@ -241,7 +243,6 @@ class Layout extends Component {
         </div>
       );
     } else {
-      console.log('else');
       return (
         <div>
           <Router>

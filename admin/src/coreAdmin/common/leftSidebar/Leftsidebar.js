@@ -168,7 +168,7 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li>
-             {/*   <li className="sidebarMenuText">
+                <li className="sidebarMenuText">
                   <a href="#vendor" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-industry" />
                     Vendor Management
@@ -188,7 +188,7 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li>*/}
+                </li>
 {/*                <li className="sidebarMenuText">
                   <a href="/">
                     <i className="fa fa-percent"></i>
@@ -241,7 +241,7 @@ export default class Leftsidebar extends Component{
                     <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="MasterData">
-                    {/* <li>
+                    <li>
                       <a href="/vendor-category">
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Vendor Category</span>
@@ -252,7 +252,7 @@ export default class Leftsidebar extends Component{
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Vendor Location Type</span>
                       </a>
-                    </li> */}
+                    </li>
                     <li>
                         <a href="/category-management">
                           <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>

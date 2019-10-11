@@ -34,6 +34,7 @@ class LocationDetails extends Component {
     }
     
     componentDidMount() {
+		this.getLocationType();
     	window.scrollTo(0, 0);
     	
     	   	$.validator.addMethod("regxAlphaNum", function(value, element, regexpr) {          
@@ -717,13 +718,27 @@ class LocationDetails extends Component {
 	admin(event){
       event.preventDefault();
       this.props.history.push('/adminDashboard');  
-  	}
+	}
+	getLocationType(){
+		axios.get('/api/vendorLocationType/get/list')
+		.then((response)=>{
+			console.log('res', response.data)
+			this.setState({
+				locationTypeArry : response.data
+			},()=>{
+				console.log('locationTypeArry', this.state.locationTypeArry);
+			})
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+	}	
 	render() {
 		
 		var locationDataList 	 =  this.props.post2;
 		var locationTypeSelect 	 =  this.props.post3;
 
-		var locationTypeArry = [];
+		var locationTypeArry = this.state.locationTypeArry;
 		var currentCountry 	 = [];
 		var currentState     = [];
 		var currentCity      = [];
@@ -864,13 +879,16 @@ class LocationDetails extends Component {
 																	</label>
 																	<select id="Incoterms" placeholder="Incoterms" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.locationType} ref="locationType" name="locationType" onChange={this.handleChange}>
 												                        <option disabled>--Select Location Type--</option>
-												                        {
-																			locationTypeArry.map((locationtypedata, index)=>{
+												                        {this.state.locationTypeArry && this.state.locationTypeArry.length>0?
+																			this.state.locationTypeArry.map((locationtypedata, index)=>{
+																				console.log('locationtypedata', locationtypedata);
 																				return(      
-																						<option key={index}>{locationtypedata.value}</option>
+																						<option key={index}>{locationtypedata.locationType}</option>
 																					);
 																				}
 																			)
+																			:
+																			null
 																		}
 												                    </select>
 																</div>
