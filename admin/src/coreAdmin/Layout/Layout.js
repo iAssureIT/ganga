@@ -131,7 +131,7 @@ class Layout extends Component {
 
 
   render() {
-    if (this.state.loggedIn === true) {
+    if (this.state.loggedIn === false) {
       
       window.onscroll = function () { scrollFunction() };
 
