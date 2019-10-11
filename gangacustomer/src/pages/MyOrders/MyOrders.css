@@ -94,3 +94,6 @@ table > tfoot > tr > td:last-of-type {
 .modalfooterborder{
 	border:none;
 }
+.greybg{
+	background: #eee;
+}

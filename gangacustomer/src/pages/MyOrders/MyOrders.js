@@ -279,7 +279,6 @@ export default class MyOrders extends Component {
         })
     }
   render() {  
-    console.log('oneproductdetails',this.state.oneproductdetails);
     return (
     <div className="container">	
             <div className="pagealertnone">
@@ -350,7 +349,7 @@ export default class MyOrders extends Component {
                         data.products.map((productData, pindex)=>{
                           console.log('productData',productData)
                           return(
-                          <tr key={'id'+index}>
+                          <tr key={'id'+index} className={productData.status=="Returned" ? "greybg" : ""}>
                               <td data-th="Order #" className="col id orderimgsize"><img src={productData.productImage[0]}/></td>
                               <td data-th="Order #" className="col id">{productData.productName}</td>
                               <td data-th="Date" className="col date"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
@@ -369,10 +368,22 @@ export default class MyOrders extends Component {
                               :
                               null
                             }
-{/*                              <td data-th="Order Total" className="col total actbtns">
-                                  <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
-                              </td>*/}
+                            {
+                              productData.status == "Returned" ?  
+                              data.returnProducts.map((value)=> { 
+                                if (value.product_ID == productData.product_ID) {
+                                  return(
+                                    <td>
+                                    { value.returnStatus[value.returnStatus.length-1].status }
+                                    </td>
+                                  );  
+                                }
+                              })
+                              :
+                              null
+                            }  
                           </tr>
+                           
                           );
                       })
                 : 
