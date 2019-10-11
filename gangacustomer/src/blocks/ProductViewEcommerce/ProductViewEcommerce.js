@@ -7,12 +7,32 @@ import _ from 'underscore';
 import { connect } from 'react-redux';
 import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
 import ReactImageZoom from 'react-image-zoom';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';	
+import Loadable                   from 'react-loadable';
 
+const OwlCarousel = Loadable({
+  loader: () => import('react-owl-carousel'),
+  loading() {
+    return <div className="col-sm-12 col-xs-12 col-lg-2 col-lg-offset-5 col-md-12 loadingImg"><img src="../images/loadersglms.gif" className="img-responsive" alt="loading"/></div>
+  }
+});
 const user_ID = localStorage.getItem("user_ID");
 class ProductViewEcommerce extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+	    responsive:{
+            0:{
+                items:1
+            },
+            600:{
+                items:2
+            },
+            1000:{
+                items:5 
+            }
+          },
 			"productData": [],
 			"subImgArray": [],
 			"totalQuanity": 1,
@@ -31,17 +51,11 @@ class ProductViewEcommerce extends Component {
 					selectedImage : response.data.productImage[0],
 					quanityLimit: response.data.availableQuantity
 				})
+				this.forceUpdate();
 			})
 			.catch((error) => {
 				console.log('error', error);
 			})
-
-		var imageArray = [
-			{ "image": "/images/45-home_default.jpg" },
-			{ "image": "/images/41-home_default.jpg" },
-			{ "image": "/images/32-home_default.jpg" },
-			{ "image": "/images/45-home_default.jpg" },
-		]
 	}
 	changeImage = (event) => {
 		
@@ -197,51 +211,62 @@ class ProductViewEcommerce extends Component {
 			this.setState({ totalQuanity: totalQuanity }, () => {
 				document.getElementById('totalQuanity').innerHTML = this.state.totalQuanity;
 			});
-
 		} else {
 			$('#decreaseQuantity').addClass('no-drop');
 			$('#decreaseQuantity').css('background-color', '#ccc');
 		}
 	}
 	render() {
-		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1;background-color:#fff; height:600px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/imgNotFound.jpg" };
+		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1000;background-color:#fff; height:500px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/imgNotFound.jpg" };
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
 				<div className="pagealertnone">
 					<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
 				</div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
-					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 ">
-						<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 imageContainer">
-							{
-								this.state.productData.productImage ?
-								this.state.productData.productImage.map((data, index) => {
-									if (!_.isEmpty(data)) {
-										return (
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew"  >
-												<div className="row">
-													{
-														data && <img data-index={index} id="change-image" onClick={this.changeImage} src={data} alt="default" />
-													}
-												</div>
-											</div>
-										);
-									}
-								})
-								:
-								null
-							}
-						</div>
-						<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 imageContainer imgCont">
+					<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer imgCont">
 							<div className="prod-detail-slider prod-detail-filpCommon">
 								<div id="react-app" className={"item img-responsiveProduct"}>
 									<ReactImageZoom {...props}  />
 								</div>
 							</div>
 						</div> 
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer mt50">
+							<div className="">
+										<OwlCarousel
+					                            className="owl-theme productview"
+					                            margin={0}
+					                            nav={true}
+					                            responsive={this.state.responsive} 
+					                            autoplay={true}
+					                            autoplayHoverPause={true}
+					                        >
+												{
+													this.state.productData &&  this.state.productData.productImage && this.state.productData.productImage.length>0 ?
+													this.state.productData.productImage.map((data, index) => {
+														console.log("productData=>>>>>>>>>>>>>>>",data);
+														// if (!_.isEmpty(data)) {
+															return (
+																<div key={index} className="item col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew"  >
+																	<div className="row">
+																		{
+																			data && <img data-index={index} id="change-image" onClick={this.changeImage} src={data} alt="default" />
+																		}
+																	</div>
+																</div>
+															);
+														// }
+													})
+													:
+													null
+												}
+					          </OwlCarousel>
+					        </div>
+						</div>
 					</div>
 					
-					<div className="col-lg-7 col-md-7  col-sm-12 col-xs-12 ">
+					<div className="col-lg-6 col-md-6  col-sm-12 col-xs-12 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
 							<div className="row">
 								<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
@@ -313,7 +338,7 @@ class ProductViewEcommerce extends Component {
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
 
 									<div className="row spc">
-										<div className="col-lg-5 col-md-5 col-sm-4 col-xs-4 NOpadding">
+										<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
 											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 qtyInput" id="totalQuanity">
 												1
 </div>

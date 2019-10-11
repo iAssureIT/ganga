@@ -261,22 +261,22 @@ class EcommerceProductCarousel extends Component {
                           }
                           return (
                             <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
-                              <a href={"/productdetails/" + data._id}>
+                              <a>
                                 <div className="">
                                   <div className="card">
                                     <div className="item-top">
                                       <div className="productImg">
                                         <button type="submit" id={data._id} title={tooltipMsg} className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
                                         {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
-                                        <a className="product photo product-item-photo" tabIndex="-1">
+                                        <a href={"/productdetails/" + data._id} className="product photo product-item-photo" tabIndex="-1">
                                           <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
                                         </a>
                                       </div>
                                       <div className="productDetails">
                                         <div className="innerDiv">
-                                          <div className="product-brand" title={data.productName}>{data.productName}</div>
-                                          <div className=" product-item-link" title={data.productName}>{data.brand}</div>
-                                          <div className="col-lg-12 col-md-12 NOpadding">
+                                          <a href={"/productdetails/" + data._id}><div className="product-brand" title={data.productName}>{data.productName}</div></a>
+                                          <a href={"/productdetails/" + data._id}><div className=" product-item-link" title={data.productName}>{data.brand}</div></a>
+                                          <a href={"/productdetails/" + data._id}><div className="col-lg-12 col-md-12 NOpadding">
                                             {
                                               data.discountPercent ?
                                                 <div className="col-lg-12 col-md-12 NOpadding">
@@ -286,7 +286,7 @@ class EcommerceProductCarousel extends Component {
                                                 :
                                                 <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                             }
-                                          </div>
+                                          </div></a>
                                           {/* <div className="product-reviews-summary">
                                             <div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div>
                                           </div> */}

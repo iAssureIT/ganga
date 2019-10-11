@@ -480,6 +480,7 @@ background-color: transparent !important;
     display: block;
     text-align: center;
     /*padding-top: 20px;*/
+    outline: 0px;
 }
 
 .hoveractions1 a{

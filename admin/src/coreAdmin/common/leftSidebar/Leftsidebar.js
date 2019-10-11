@@ -235,6 +235,20 @@ export default class Leftsidebar extends Component{
                   </ul>
                 </li>
                 <li className="sidebarMenuText">
+                  <a href="#productreview" data-toggle="collapse" aria-expanded="false">
+                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    Product Review
+                  </a>
+                  <ul className="collapse list-unstyled" id="productreview">
+                    <li>
+                      <a href="/productreview">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">product review</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li className="sidebarMenuText">
                   <a href="#MasterData" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-university" />
                     Master Data

@@ -4,7 +4,7 @@ import Routes from './lib/Routes';
 import './root.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-axios.defaults.baseURL = 'http://gangaapi.iassureit.com';
+axios.defaults.baseURL = 'http://gangaapi.nurseryworld.in';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 function App() {
   return (

@@ -522,7 +522,6 @@ export default class MyOrders extends Component {
                   </tbody>
                 </table>
                   <form className="feedbackForm" id="">
-                      
                       <div className="col-lg-6 col-sm-12 col-xs-12 row">
                           <fieldset className="ratingReview stars givefeedback ">
                               <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
@@ -538,7 +537,6 @@ export default class MyOrders extends Component {
                           <textarea rows="5" cols="60"></textarea>
                         </div>
                         <div className="row inputrow">
-                        
                         </div>
                   </form>      
                 </div>
