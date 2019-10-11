@@ -314,3 +314,6 @@
 .productcolagimg img{
 	width: 240px;
 }
+.collage img{
+	width: 100%;
+}

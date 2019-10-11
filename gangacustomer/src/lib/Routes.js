@@ -32,7 +32,7 @@ import ShipmentTracking                          from '../pages/ShipmentTracking
 import ProductDetailsEcommerce                   from '../pages/ProductDetailsEcommerce/ProductDetailsEcommerce.js';
 import SearchProduct                             from '../pages/ProductCollage/SearchProductPage.js';
 import ProductCollage                            from '../pages/ProductCollage/ProductCollage.js';
-import GroceryProductCollage                     from '../pages/ProductCollage/GroceryProductCollage.js';
+
 import Payment                                   from '../pages/Payment/Payment.js';
 import Wishlist                                  from '../pages/Wishlist/Wishlist.js';
 import Productreview                             from '../pages/Productreview/Productreview.js';
@@ -67,7 +67,7 @@ const WebLayout = () => (
     <Route path="/category/:url/:sectionID/:categoryID"            exact strict component={ ProductCollage } />
     <Route path="/subcategory/:sectionID/:categoryID/:subcategoryID"            exact strict component={ ProductCollage } />
     <Route path="/product-collage/:categoryID/:subcategoryID"   exact strict component={ ProductCollage } />
-    <Route path="/GroceryProductCollage"            exact strict component={ GroceryProductCollage } />
+    
     <Route path="/profile"            exact strict component={ Edituser } />
     <Route path="/payment/:order_ID"            exact strict component={ Payment } />
     <Route path="/wishlist"            exact strict component={ Wishlist } />

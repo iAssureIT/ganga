@@ -224,71 +224,63 @@ class ProductCollageView extends Component {
         <div className="row">
         { this.state.products && this.state.products.length > 0 ?
             this.state.products && this.state.products.map((data, index) =>{
-            
+              var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
+              if(x && x.length > 0){
+                var wishClass = '';
+                var tooltipMsg = 'Wish listed';
+              }else{
+                var wishClass = '-o';
+                var tooltipMsg = 'Add to wishlist';
+              }
             return (
                       <div className="item col-lg-4 col-md-4 col-sm-4 col-xs-4" key={index}>
-                        <div className="">
-                          <div className="card">
-                            <div className="item-top">
-                                <div className="productImg">
-                               { <div className="btn-warning discounttag">-93%</div>}
-                                  <a className="productcolagimg product photo product-item-photo" tabIndex="-1">
-                                    <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'}/>
-                                  </a>
-                                  {/*<div className="hoveractions1">
-                                      <ul>
-                                        <li  data-toggle="modal" className="circle spin" data-target={"#productviewmodal"+this.state.productType}><i id={data._id} onClick={this.openModal.bind(this)} className="fa fa-info viewDetail cursorpointer"></i></li>
-                                        <li className="circle spin"> <i id={data._id} onClick={this.addtowishlist.bind(this)} className="fa fa-heart addTOWishList cursorpointer"></i></li>
-                                      </ul>
-                                  </div>*/}
-                                </div>
-                              <div className="productDetails">
-                                <div className="innerDiv">
-                                    <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
-                                     <div className="col-lg-12 col-md-12">
-                                     {
-                                        data.offered == true ?
-                                          <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
-                                          :
-                                          <div className="col-lg-12 col-md-12">
-                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.discountedPrice}</span> &nbsp;                     
-                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
+                        <a href={"/productdetails/" + data._id}>
+                                <div className="">
+                                  <div className="card">
+                                    <div className="item-top">
+                                      <div className="productImg">
+                                        <button type="submit" id={data._id} title={tooltipMsg} className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
+                                        {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
+                                        <a className="product photo product-item-photo collage" tabIndex="-1">
+                                          <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
+                                        </a>
+                                      </div>
+                                      <div className="productDetails">
+                                        <div className="innerDiv">
+                                          <div className="product-brand" title={data.productName}>{data.productName}</div>
+                                          <div className=" product-item-link" title={data.productName}>{data.brand}</div>
+                                          <div className="col-lg-12 col-md-12 NOpadding">
+                                            {
+                                              data.discountPercent ?
+                                                <div className="col-lg-12 col-md-12 NOpadding">
+                                                  <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> &nbsp;
+                                                  <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
+                                                </div>
+                                                :
+                                                <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
+                                            }
                                           </div>
-                                      }
-                                    </div>
-                                    <div className="product-reviews-summary">
-                                    <div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div>
-                                      {/*<div className="rating-summary">
-                                        <fieldset className="ratingReview stars ">
-                                          <input type="radio" id="star5" name="ratingReview" value="5" /><label htmlFor="star5"></label>
-                                          <input type="radio" id="star4" name="ratingReview" value="4" /><label htmlFor="star4"></label>
-                                          <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                          <input type="radio" id="star2" name="ratingReview" value="2" /><label htmlFor="star2"></label>
-                                          <input type="radio" id="star1" name="ratingReview" value="1"/><label htmlFor="star1"></label>
-                                        </fieldset>
-                                      <div className="clearfix "></div>
-                                      </div>*/}
-                                    </div>
-                                    <div > 
-                                      
-                                    </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
-                                        <button type="submit" id={data._id} title="" className="homeCart fa fa-heart col-lg-12 " onClick={this.addtowishlist.bind(this)}>
-                                          &nbsp;Wishlist
-                                        </button>
+                                          {/* <div className="product-reviews-summary">
+                                            <div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div>
+                                          </div> */}
+                                          <div >
+                                          </div>
+                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 NOpadding">
+                                              
+                                            </div>
+                                            <div className=" col-lg-7 col-md-7 col-sm-12 col-xs-12 NOpadding">
+                                              <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-11 col-lg-offset-1">
+                                                &nbsp;Add to Cart
+                                              </button>
+                                            </div>
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
-                                        <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
-                                          &nbsp;Add to Cart
-                                        </button>
-                                      </div>
-                                   </div> 
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                          </div>    
-                        </div> 
+                              </a>
                       </div>
                     );
             })
