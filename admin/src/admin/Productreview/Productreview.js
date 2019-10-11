@@ -13,7 +13,7 @@ class Productreview extends Component{
         super(props);
         this.state = {
             tableHeading :{
-                "customerID" : 'Customer Code',
+                "product"   : "Product Name(Product Code)",
                 "customerReview" : 'Customer Review',
                 "customerName" : 'Customer Name',
                 "rating" : 'Product Rating',
@@ -75,7 +75,7 @@ class Productreview extends Component{
             var tableData = response.data.map((a, i)=>{
               return{
                 "_id"           : a._id,
-                "customerID"    : a.customerID,
+                "product"    : a.productDetails[0] ? (a.productDetails[0].productName+" "+"("+a.productDetails[0].productCode)+")" : "",
                 "customerReview": a.customerReview,
                 "customerName"  : a.customerName,
                 "orderID"       : a.orderID,

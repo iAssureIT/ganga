@@ -45,7 +45,7 @@ class ProductViewEcommerce extends Component {
 	componentDidMount() {
 		axios.get("/api/products/get/one/" + this.props.productID)
 			.then((response) => {
-				console.log("product info---->", response);
+				// console.log("product info---->", response);
 				this.setState({
 					productData: response.data,
 					selectedImage : response.data.productImage[0],

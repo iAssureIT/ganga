@@ -223,14 +223,24 @@ searchProducts(){
   } 
   getUserData(){
     const userid = localStorage.getItem('user_ID');
-    // console.log("userid-----------------------------------------",userid);
+     // console.log("userid-----------------------------------------",userid);
      axios.get('/api/users/'+ userid)
         .then( (res)=>{
           var FName = res.data.profile.fullName;
           var Mnob  = res.data.mobileNumber;
+     // console.log("firstnameint,lastnameint-----------------------------------------",firstnameint,lastnameint);
 
         this.refs.firstName.value = FName 
         this.refs.mobNumber.value = Mnob
+                    this.setState({
+                userData : res.data,
+                firstname: res.data.profile.firstName.substring(0, 1),
+                 lastname: res.data.profile.lastName.substring(0, 1)
+            },()=>{
+              console.log("useriddata-----------------------------------------",this.state.firstname,this.state.lastname);
+
+            })
+
 
      
         })
@@ -399,6 +409,25 @@ searchProducts(){
                                   user_ID? 
                                   <li className="dropdown"><a href="/"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
+                                      <li className="col-lg-12 NOpadding">
+                                        <a><div className="row">
+                                          <div className="col-lg-2">
+                                            <div className="shortnamebk">
+                                              <div className="">
+                                                <div className="userinfo">{this.state.firstname}{this.state.lastname}</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div className="col-lg-10">
+                                            <div className="col-lg-12">
+                                              <div><p className="userinfotext">{this.state.userData ?this.state.userData.profile.fullName :null}</p></div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                              <div><p className="userinfotext">{this.state.userData ?this.state.userData.profile.emailId :null}</p></div>
+                                            </div>
+                                          </div>
+                                        </div></a>
+                                      </li>
                                       <li className="col-lg-12 NOpadding"><a href="/account">Your Profile</a></li>
                                       <li className="col-lg-12 NOpadding"><a href="/wishlist">Your Wishlist</a></li>
                                       <li className="col-lg-12 NOpadding"><a href="/my-orders">Your Orders</a></li>

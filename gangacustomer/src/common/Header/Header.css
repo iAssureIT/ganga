@@ -338,3 +338,26 @@ ul.box-static-link li span {
 	/*display: block !important;*/
 }
 
+.shortnamebk{
+	background: #eee;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    padding: 8px;
+}
+
+.userinfotext{
+	color: #555;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+.userinfo{
+	color: #555;
+    font-size: 16px;
+    font-weight: bold;
+
+}
