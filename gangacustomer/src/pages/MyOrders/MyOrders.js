@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import ReturnStatus         from "../../common/Wizard/ReturnStatus.jsx";
 
 export default class MyOrders extends Component {
 	constructor(props) {
@@ -335,28 +336,30 @@ export default class MyOrders extends Component {
               	</table>
                 <table className="data table table-order-items history" id="my-orders-table">
                   <thead>
-                      <tr>
-                          <th scope="col" className="col id">Product Image</th>
-                          <th scope="col" className="col id">Product Name</th>
-                          <th scope="col" className="col date">Price</th>
-                          <th scope="col" className="col shipping">Qty</th>
-                          <th scope="col" className="col total">Subtotal</th>
+                  <div className="col-lg-12">
+                      <tr className="col-lg-12">
+                          <th scope="col" className="col-lg-2 id"><div className="row">Product Image</div></th>
+                          <th scope="col" className="col-lg-3 id text-center"><div className="row">Product Name</div></th>
+                          <th scope="col" className="col-lg-2 date text-center"><div className="row">Price</div></th>
+                          <th scope="col" className="col-lg-2 shipping text-center"><div className="row">Qty</div></th>
+                          <th scope="col" className="col-lg-2 total text-center"><div className="row">Subtotal</div></th>
                       </tr>
+                      </div>
                   </thead>
                   <tbody>
                     {
                     data.products && data.products.length > 0 ?
                         data.products.map((productData, pindex)=>{
-                          console.log('productData',productData)
                           return(
-                          <tr key={'id'+index} className={productData.status=="Returned" ? "greybg" : ""}>
-                              <td data-th="Order #" className="col id orderimgsize"><img src={productData.productImage[0]}/></td>
-                              <td data-th="Order #" className="col id">{productData.productName}</td>
-                              <td data-th="Date" className="col date"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
-                              <td data-th="Ship To" className="col shipping">Ordered: {productData.quantity}</td>
-                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
+                          <div className="col-lg-12">
+                          <tr key={'id'+index} className={productData.status=="Returned col-lg-12" ? "greybg col-lg-12" : "col-lg-12"}>
+                              <td data-th="Order #" className="col-lg-2 id orderimgsize"><img src={productData.productImage[0]}/></td>
+                              <td data-th="Order #" className="col-lg-3 productnamecss id">{productData.productName}</td>
+                              <td data-th="Date" className="col-lg-2 date text-center"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
+                              <td data-th="Ship To" className="col-lg-2 shipping text-center">Ordered: {productData.quantity}</td>
+                              <td data-th="Order Total" className="col-lg-2 total text-center"><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
                               { data.status == "Paid" ?
-                              <td data-th="Order Total" className="col total actbtns">
+                              <td data-th="Order Total" className="col-lg-1 total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
                                   {
                                     data.status == 'Cancelled' || productData.status == 'Returned' ? '' :
@@ -368,22 +371,23 @@ export default class MyOrders extends Component {
                               :
                               null
                             }
+                            </tr>
+
                             {
                               productData.status == "Returned" ?  
                               data.returnProducts.map((value)=> { 
                                 if (value.product_ID == productData.product_ID) {
                                   return(
-                                    <td>
-                                    { value.returnStatus[value.returnStatus.length-1].status }
-                                    </td>
+                                    <div className="col-lg-12">
+                                    <ReturnStatus data={value}/>
+                                    </div>
                                   );  
                                 }
                               })
                               :
                               null
-                            }  
-                          </tr>
-                           
+                            }
+                            </div> 
                           );
                       })
                 : 
@@ -426,7 +430,7 @@ export default class MyOrders extends Component {
                             <tr>
                                 <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
                                 <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
-                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
                             </tr>
                             :
                            null
@@ -455,15 +459,9 @@ export default class MyOrders extends Component {
                       <input type="text" ref="ifsccode" name="ifsccode" id="ifsccode" value={this.state.ifsccode} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
                     </div>
                   </form>
-                  
-
-                  </div>
                 
-{/*                  <div className="cantreturn">
-                    <a className="btn btn-warning"  href="/returnpolicy">View Return Policy</a>
-                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
-*/}                 <div className="canreturn modal-footer">
+                 <div className="canreturn modal-footer">
                       <div className="col-lg-12">
                         <br/>
 

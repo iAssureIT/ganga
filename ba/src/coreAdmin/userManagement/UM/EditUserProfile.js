@@ -31,7 +31,7 @@ class EditUserProfile extends Component{
 			"mobileNumber"  : this.refs.mobNumber.value,
 		}
 		console.log("formvalues",formvalues);
-				axios.patch('http://localhost:3060/api/users/'+userid, formvalues)
+				axios.patch('/api/users/'+userid, formvalues)
 				.then((response)=> {		
 					swal({
 						title:"User updated successfully",
@@ -55,7 +55,7 @@ class EditUserProfile extends Component{
 		console.log("here edit view");
 		var userid = this.state.UserId;
 		console.log("userid-----------------------------------------",userid);
-		 axios.get('http://localhost:3060/api/users/'+ userid)
+		 axios.get('/api/users/'+ userid)
 	      .then( (res)=>{
 	        console.log(res.data);
 	        var FName = res.data.profile.fullName.split(' ');

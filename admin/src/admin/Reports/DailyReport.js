@@ -17,23 +17,22 @@ class DailyReport extends Component{
       shown                 : true,
        "twoLevelHeader"     : {
         apply               : false,
-        firstHeaderData     : [
-          {
-              heading : '',
-              mergedColoums : 10
-          },
-          {
-              heading : 'Source of Fund',
-              mergedColoums : 7
-          },
-        ]
+        // firstHeaderData     : [
+        //   {
+        //       heading : '',
+        //       mergedColoums : 10
+        //   },
+        //   {
+        //       heading : 'Source of Fund',
+        //       mergedColoums : 7
+        //   },
+        // ]
       },
       "tableHeading"        : {
-        createdAt           : "Date",
-        orderID             : "Order No.",
-        userName            : "Customer"
+        deliveryStatus             : "Order No."
       },
-      "tableObjects"       : {
+      "tableData"           : [],
+      "tableObjects"        : {
         apiLink             : '/api/annualPlans/',
         editUrl             : '/Plan/',
       },
@@ -49,35 +48,43 @@ class DailyReport extends Component{
   getReport(event){
     event.preventDefault(); 
     console.log(event.currentTarget.value)
-    this.getData(event.currentTarget.value);
+    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange);
   }
        
-  getData(startDate){
-    axios.get("/api/orders/get/report/"+startDate+'/'+startDate)
-          .then((response)=>{
-
-            this.setState({ 
-              tableData : response.data,
-              dataCount : response.data.length
-            },()=>{
-              console.log("tableData",this.state.tableData);
-            })
-          })
-          .catch((error)=>{
-              console.log('error', error);
-          })
+  getData(startDate,startRange,limitRange){
+    axios.get("/api/orders/get/report/"+startDate+'/'+startDate+'/'+startRange+'/'+limitRange)
+    .then((response)=>{
+      this.setState({ 
+        tableData : response.data
+      },()=>{ 
+        console.log("tableData",this.state.tableData);
+      })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
   }
-
+  getCount(){
+        axios.get('/api/orders/get/count')
+        .then((response)=>{
+            this.setState({
+                dataCount : response.data.dataCount
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
   componentWillReceiveProps(nextProps){
     
   }
 
   componentDidMount() {
-      
+    this.getCount();  
     document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
     this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
       console.log('currentDate',this.state.currentDate);
-      this.getData(this.state.currentDate);
+      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
     });
     
   }

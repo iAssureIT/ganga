@@ -230,9 +230,13 @@ export default class ReturnProducts extends Component{
                               { returnApproved ==1 && pickupInitiated ==1 && productPickedUp && productAccepted != 1 ? <button className="btn btn-warning" onClick={this.openproductApproval.bind(this)} id={data._id} >Accept Product </button> : ""}
                               
                             </div>
-                            <div className="col-lg-4 mtop10">
-                            <a className="btn btn-warning showmore" data-toggle="collapse" href={"#multiCollapseExample"+index} role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show More</a>
-                            </div>
+                            {
+                              returnApproved ==1 && 
+                              <div className="col-lg-4 mtop10">
+                                <a className="btn btn-warning showmore" data-toggle="collapse" href={"#multiCollapseExample"+index} role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Show More</a>
+                              </div>
+                            }
+                            
                             <div className="collapse multi-collapse" id={"multiCollapseExample"+index}>
                               
                               {

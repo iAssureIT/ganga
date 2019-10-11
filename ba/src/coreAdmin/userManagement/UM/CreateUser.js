@@ -164,7 +164,7 @@ class CreateUser extends Component {
         }
 
         if(this.state.firstname!="" && this.state.lastname !="" && this.state.signupEmail && this.state.mobNumber){
-           axios.post('http://localhost:3060/api/users', formValues)
+           axios.post('/api/users', formValues)
                 .then( (res)=>{
                     swal({
                       title: "User added successfully",

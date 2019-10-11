@@ -52,7 +52,7 @@ class Productreview extends Component{
 
     }
     getCount(){
-        axios.get('http://localhost:5006/api/customerReview/get/count')
+        axios.get('/api/customerReview/get/count')
         .then((response)=>{
             console.log('dataCount', response.data.dataCount);
             this.setState({
@@ -69,7 +69,7 @@ class Productreview extends Component{
             limitRange : limitRange
         }
         this.getCount();
-        axios.post('http://localhost:5006/api/customerReview/get/list', data)
+        axios.post('/api/customerReview/get/list', data)
         .then((response)=>{
             console.log('response============>', response.data)
             var tableData = response.data.map((a, i)=>{

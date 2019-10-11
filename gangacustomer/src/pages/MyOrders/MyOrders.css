@@ -97,3 +97,7 @@ table > tfoot > tr > td:last-of-type {
 .greybg{
 	background: #eee;
 }
+
+.productnamecss{
+	/*width: 100%;*/
+}
