@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Route, Switch,Link,location } from 'react-router-dom';
 import axios                  from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
 import moment from "moment";
@@ -22,13 +23,31 @@ export default class ReturnProducts extends Component{
    
   componentDidMount(){
     this.getOrders();
-    $('[data-toggle="collapse"]').click(function () {
+    $('.showmore').click(function () {
       console.log('this',$(this));
 
-      });
+    });
+    
+    $.validator.setDefaults({
+      debug: true,
+      success: "valid"
+    });
+
+    $("#pickupform").validate({
+      rules: {
+      pickupby: {
+        required: true,
+      }
+    },
+    errorPlacement: function(error, element) {
+      if (element.attr("name") == "pickupby"){
+        error.insertAfter("#pickupby");
+      }
+    }
+    });
   }    
   getOrders(){
-      axios.get("http://localhost:5006/api/returnedProducts/get/list")
+      axios.get("/api/returnedProducts/get/list")
             .then((response)=>{
                 this.setState({
                   returnedProducts: response.data
@@ -48,7 +67,7 @@ export default class ReturnProducts extends Component{
       "id" : $(event.target).data('id'),
       "status" : "Return Approved"
     }
-    axios.patch('http://localhost:5006/api/returnedProducts/returnStatusUpdate',formValues)
+    axios.patch('/api/returnedProducts/returnStatusUpdate',formValues)
           .then((response)=>{
             console.log('response', response);
             this.getOrders();
@@ -72,7 +91,8 @@ export default class ReturnProducts extends Component{
       "id" : $(event.target).data('id'),
       "pickupby" : $('#pickupby').val()
     }
-    axios.patch('http://localhost:5006/api/returnedProducts/returnPickeupInitiated',formValues)
+    if ($('#pickupby').valid()) {
+      axios.patch('/api/returnedProducts/returnPickeupInitiated',formValues)
           .then((response)=>{
             console.log('response', response);
             this.getOrders();
@@ -84,6 +104,8 @@ export default class ReturnProducts extends Component{
           .catch((error)=>{
             console.log('error', error);
           })
+    }
+    
   }
   openpickupproduct(event){
     event.preventDefault();
@@ -96,7 +118,7 @@ export default class ReturnProducts extends Component{
       "id" : $(event.target).data('id'),
       "status" : "Return Pickedup"
     }
-    axios.patch('http://localhost:5006/api/returnedProducts/returnStatusUpdate',formValues)
+    axios.patch('/api/returnedProducts/returnStatusUpdate',formValues)
           .then((response)=>{
             console.log('response', response);
             this.getOrders();
@@ -121,7 +143,7 @@ export default class ReturnProducts extends Component{
       "id" : $(event.target).data('id'),
       "status" : "Return Accepted"
     }
-    axios.patch('http://localhost:5006/api/returnedProducts/returnStatusUpdate',formValues)
+    axios.patch('/api/returnedProducts/returnStatusUpdate',formValues)
           .then((response)=>{
             console.log('response', response);
             this.getOrders();
@@ -140,9 +162,9 @@ export default class ReturnProducts extends Component{
       <div className="container-fluid">
         {
           this.state.returnedProducts && this.state.returnedProducts.map((data,index)=>{
-            console.log('returnstatus',data.returnStatus);
+            //console.log('returnstatus',data.returnStatus);
             var returnApprovalPending = 0, returnApproved = 0, returnApprovedOn, pickupInitiated = 0, pickupInitiatedOn,
-    productPickedUp = 0,productPickedUpOn, productArrived, productAccepted, productAcceptedOn;
+            productPickedUp = 0,productPickedUpOn, productArrived, productAccepted, productAcceptedOn;
 
             return (
               <div className="row" key={index}>
@@ -154,7 +176,7 @@ export default class ReturnProducts extends Component{
                             <div className="orderButton">Order-ID : <b>{data._id}</b></div>
                           </div>
                           <div className="col-lg-4 pull-right">
-                              <p><span style={{marginTop:"15px"}}>Ordered On { moment(data.createdAt).format("DD/MM/YYYY HH:mm") }</span>&nbsp;</p>
+                              <p><span style={{marginTop:"15px"}}>Ordered On { moment(data.createdAt).format("DD/MM/YYYY hh:mm a") }</span>&nbsp;</p>
                           </div>
                           <div className="col-lg-12">
                             <div className="col-lg-2 mtop10">
@@ -310,15 +332,17 @@ export default class ReturnProducts extends Component{
                 <h3 className="modalTitle">Add Pickup Deatils</h3>
               </div>
               <div className="modal-body">
-                
-                 <div className="inputrow">
+              <form id="pickupform">
+                <div className="inputrow">
                   <div className="col-lg-8 col-md-8 col-sm-4 col-xs-12">
                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Pick up person name  :</label>
                     <input type="text" ref="pickupby" name="pickupby" id="pickupby" className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
                   </div>
                 </div>
-               
                 <br/>
+                <br/>
+                <br/>
+              </form>
               </div>
               <div className="modal-footer">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

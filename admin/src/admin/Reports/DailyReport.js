@@ -7,7 +7,7 @@ import moment from 'moment';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
-class AnnualPlan extends Component{
+class DailyReport extends Component{
   
   constructor(props){
     super(props); 
@@ -29,80 +29,57 @@ class AnnualPlan extends Component{
         ]
       },
       "tableHeading"        : {
-        date                : "Date",
-        orderNo             : "Order No.",
-        transactionType     : "Transaction Type",
-        productCount        : "Product Count",
-        quantity            : "Quantity",
-        amount              : "Amount"
+        createdAt           : "Date",
+        orderID             : "Order No.",
+        userName            : "Customer"
       },
-      " tableObjects"       : {
+      "tableObjects"       : {
         apiLink             : '/api/annualPlans/',
         editUrl             : '/Plan/',
       },
       "startRange"          : 0,
       "limitRange"          : 10,
-      // "editId"              : this.props.match.params ? this.props.match.params.id : '',
       fields                : {},
       errors                : {},
-      currentDate           : ''
+      currentDate           : '',
+      dataCount             : 0
     }
   }
  
-  handleChange(event){
+  getReport(event){
     event.preventDefault(); 
+    console.log(event.currentTarget.value)
+    this.getData(event.currentTarget.value);
   }
        
-  getData(startRange, limitRange){
-   axios({
-      method: 'get',
-      url: '/api/annualPlans/list',
-    }).then(function(response){
-      console.log('response======================', response.data);
-      this.setState({
-        tableData : response.data
-      });
-     
-    }).catch(function (error) {
-      console.log('error', error);
-    });
+  getData(startDate){
+    axios.get("/api/orders/get/report/"+startDate+'/'+startDate)
+          .then((response)=>{
+
+            this.setState({ 
+              tableData : response.data,
+              dataCount : response.data.length
+            },()=>{
+              console.log("tableData",this.state.tableData);
+            })
+          })
+          .catch((error)=>{
+              console.log('error', error);
+          })
   }
 
   componentWillReceiveProps(nextProps){
-    var editId = nextProps.match.params.id;
-    if(nextProps.match.params.id){
-      this.setState({
-        editId : editId
-      })
-      this.edit(editId);
-    }
+    
   }
 
   componentDidMount() {
       
     document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
-    this.setState({ currentDate:moment().startOf('day').format("DD/MM/YYYY") });
-    if(this.state.editId){      
-      this.edit(this.state.editId);
-    }
-    var data = {
-      limitRange : 0,
-      startRange : 1,
-    }
-    axios({
-      method: 'get',
-      url: '/api/annualPlans/list',
-      }).then((response)=> {
-      var tableData = response.data.map((a, index)=>{return});
-      this.setState({
-        tableData : response.data,
-        editUrl   : this.props.match.params
-      },()=>{
-        
-      });
-    }).catch(function (error) {
-      console.log('error', error);
+    this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
+      console.log('currentDate',this.state.currentDate);
+      this.getData(this.state.currentDate);
     });
+    
   }
 
   
@@ -126,21 +103,7 @@ class AnnualPlan extends Component{
     // Session.set('newDate', newDate2);
 
   }
-  handleChange(event){
-      // event.preventDefault();
-      // var target = event.target;
-      // var name = target.name;
-
-      // var dateVal = event.target.value;
-      // var dateUpdate = new Date(dateVal);
-      // Session.set('newDate',dateUpdate);
-      
-
-      // this.setState({
-      //     [name] : event.target.value,
-      // });
-  }
-
+  
   currentDate(){
    //       var setDate = Session.get('newDate');
 
@@ -165,7 +128,7 @@ class AnnualPlan extends Component{
   }
 
   render() {
-    console.log('editId componentDidMount',this.state.currentDate);
+    console.log('componentDidMount',this.state.currentDate);
     var shown = {
       display: this.state.shown ? "block" : "none"
     };
@@ -182,22 +145,23 @@ class AnnualPlan extends Component{
               <div className="reports-select-date-Title">Daily Reports</div>
               <div className="input-group">
                 <span onClick={this.previousDate.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
-                <input onChange={this.handleChange} defaultValue={this.state.currentDate} name="reportsDayRef" type="date" className="reportsDateRef reportsDayRef form-control" placeholder="" 
-                aria-label="Brand" ref="reportsDayRef"  />
+                <input onChange={this.getReport.bind(this)} defaultValue={this.state.currentDate} name="reportsDayRef" type="date" className="reportsDateRef reportsDayRef form-control" 
+                ref="reportsDayRef"  />
+               
                 <span onClick={this.nextDate.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-right" aria-hidden="true"></i></span>
               </div>
             </div>
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt formLable boxHeightother " >
             <div className="row">  
-              <IAssureTable 
+              {<IAssureTable 
                 tableHeading={this.state.tableHeading}
                 twoLevelHeader={this.state.twoLevelHeader} 
                 dataCount={this.state.dataCount}
                 tableData={this.state.tableData}
                 getData={this.getData.bind(this)}
                 tableObjects={this.state.tableObjects}
-              />
+              />}
             </div>
           </div> 
         </div>
@@ -205,4 +169,4 @@ class AnnualPlan extends Component{
     );
   }
 }
-export default AnnualPlan
+export default DailyReport

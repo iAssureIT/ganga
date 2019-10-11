@@ -30,7 +30,7 @@ class Productreview extends Component {
         getMyReview(){
               const userid = localStorage.getItem('user_ID');
             // console.log("userid=========================>",userid);
-      axios.get("http://localhost:5006/api/customerReview/get/user/list/5d88630840a13a6cc20d63e1")
+      axios.get("/api/customerReview/get/user/list/5d88630840a13a6cc20d63e1")
             .then((response)=>{
               this.setState({ 
                   reviewData : response.data,
@@ -67,7 +67,7 @@ class Productreview extends Component {
         "customerReview"            : $('.feedbackForm textarea').val()
       }
 
-      axios.patch("http://localhost:5006/api/customerReview/patch",formValues)
+      axios.patch("/api/customerReview/patch",formValues)
             .then((response)=>{
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                // swal(response.data.message);    

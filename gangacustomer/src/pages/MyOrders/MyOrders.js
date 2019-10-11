@@ -71,7 +71,7 @@ export default class MyOrders extends Component {
     }
     getMyOrders(){
       var userId=localStorage.getItem('user_ID');
-      axios.get("http://localhost:5006/api/orders/get/list/"+userId)
+      axios.get("/api/orders/get/list/"+userId)
             .then((response)=>{
               this.setState({ 
                   orderData : response.data
@@ -131,7 +131,7 @@ export default class MyOrders extends Component {
       console.log($(event.target));
       var str= '';
 
-      axios.get("http://localhost:5006/api/products/get/one/"+productid)
+      axios.get("/api/products/get/one/"+productid)
             .then((response)=>{
               this.setState({ 
                 oneproductdetails : response.data
@@ -162,7 +162,7 @@ export default class MyOrders extends Component {
       var id = event.target.id;
       this.setState({orderID:id});
       // console.log("oneproductdetails==>",id);
-      axios.get("http://localhost:5006/api/products/get/one/"+id)
+      axios.get("/api/products/get/one/"+id)
             .then((response)=>{
               this.setState({ 
                 oneproductdetails : response.data
@@ -193,7 +193,7 @@ export default class MyOrders extends Component {
         //console.log(formValues);
 
         if ($('#returnForm').valid()) {
-          axios.patch('http://localhost:5006/api/orders/get/returnOrder', formValues)
+          axios.patch('/api/orders/get/returnOrder', formValues)
               .then((response)=>{
                 console.log('response',response)
                 this.getMyOrders();
@@ -250,7 +250,7 @@ export default class MyOrders extends Component {
                           "orderID" :  id,  
                           "userid"  :  localStorage.getItem('user_ID')
                         }
-        axios.patch('http://localhost:5006/api/orders/get/cancelOrder', formValues)
+        axios.patch('/api/orders/get/cancelOrder', formValues)
                         .then((response)=>{
                          
                           console.log('response', response);
