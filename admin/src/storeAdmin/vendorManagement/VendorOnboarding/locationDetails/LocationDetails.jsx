@@ -27,10 +27,14 @@ class LocationDetails extends Component {
         'stateArray'       : [],
         'districtArray'       : []
         // 'attachedDocuments'	: '',
-      };
+      }; 
       this.handleChange = this.handleChange.bind(this);
+      
       this.handleChangeCountry = this.handleChangeCountry.bind(this);
       this.handleChangeState = this.handleChangeState.bind(this);
+      this.handleChangeDistrict = this.handleChangeDistrict.bind(this);
+      this.handleChangeBlock= this.handleChangeBlock.bind(this);
+      this.camelCase = this.camelCase.bind(this)
     }
     
     componentDidMount() {
@@ -231,24 +235,91 @@ class LocationDetails extends Component {
     }
 
     handleChangeCountry(event){
-    	const target = event.target;
-        // const name = target.name;
-        // var stateData = State.find({"countryName":event.target.value}).fetch();
-        // this.setState({
-        //     stateArray: stateData,
-        //     country: event.target.value
-        // });
+      const target = event.target;
+      this.getStates($(target).val())
+    }
+    getStates(StateCode){
+      axios.get("http://locationapi.iassureit.com/api/states/get/list/"+StateCode)
+            .then((response)=>{
+          
+              this.setState({
+                  stateArray : response.data
+              })
+              $('#Statedata').val(this.state.states);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
     }
     handleChangeState(event){
-    	const target = event.target;
-        // const name = target.name;
-        // var districtData = District.find({"stateName":event.target.value}).fetch();
-        // this.setState({
-        //     districtArray: districtData,
-        //     states: event.target.value
-        // });
+      const target = event.target;
+      const stateCode = $(target).val();
+      const countryCode = $("#datacountry").val();
+     
+      this.getDistrict(stateCode,countryCode);
+       
+    }
+    getDistrict(stateCode,countryCode){
+      axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
+            .then((response)=>{
+              this.setState({
+                  districtArray : response.data
+              })
+              console.log(this.state.city);
+              $('#Citydata').val(this.state.city);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+    handleChangeDistrict(event){
+      const target = event.target;
+      const districtName = $(target).val();
+      const stateCode = $('#Statedata').val();
+      const countryCode = $("#datacountry").val();
+      this.getBlocks(districtName,stateCode,countryCode);
     }
 
+    handleChangeBlock(event){
+      const target = event.target;
+      const blockName = $(target).val();
+      const districtName = $('#Citydata').val();
+      const stateCode = $('#Statedata').val();
+      const countryCode = $("#datacountry").val();
+      this.getAreas(blockName,districtName,stateCode,countryCode);
+    }
+    
+    getBlocks(districtName,stateCode,countryCode){
+      axios.get("http://locationapi.iassureit.com/api/blocks/get/list/"+countryCode+'/'+stateCode+"/"+districtName)
+            .then((response)=>{
+              this.setState({
+                blocksArray : response.data
+              })
+              $('#Blocksdata').val(this.state.block);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+    getAreas(blockName,districtName,stateCode,countryCode){
+      axios.get("http://locationapi.iassureit.com/api/areas/get/list/"+countryCode+'/'+stateCode+"/"+districtName+'/'+blockName+'/Pune city')
+            .then((response)=>{
+              this.setState({
+                areasArray : response.data
+              })
+              $('#Areasdata').val(this.state.area);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+    camelCase(str){
+      return str
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    }
     locationdetailBack(event){
     	event.preventDefault();
     	var id = this.props.match.params.id;
@@ -908,47 +979,54 @@ class LocationDetails extends Component {
 																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
 																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Country <sup className="astrick">*</sup>
 							                                       	</label>
-																	<select id="datacountry" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.country}  ref="country" name="country" onChange={this.handleChangeCountry} >
-																		<option selected="true" disabled="true">-- Select --</option>
-																		{/*
-																			this.props.postCountry.map((Countrydata, index)=>{
-																				return(      
-																						<option  key={index}>{Countrydata.countryName}</option>
-																					);
-																				}
-																			)
-																			*/}
-																    </select>
+																	<select id="datacountry" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+									                                    ref="country" name="country" onChange={this.handleChangeCountry} >
+									                                    <option selected={true} disabled={true}>-- Select --</option>
+									                                    <option value="IN">India</option>
+									                                    {
+									                                    /* this.props.postCountry.map((Countrydata, index)=>{
+									                                        return(      
+									                                            <option  key={index}>{Countrydata.countryName}</option>
+									                                          );
+									                                        }
+									                                      )*/
+									                                    }
+									                                </select>
 																</div>
 																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
 																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">State {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
 																	</label>
-																	<select id="Statedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.states}  ref="states" name="states" onChange={this.handleChangeState} >
-																		<option selected="true" disabled="true">-- Select --</option>
-																		{
-																			this.state.stateArray.map((Statedata, index)=>{
-																				return(      
-																						<option  key={index}>{Statedata.stateName}</option>
-																					);
-																				}
-																			)
-																		}
-																    </select>
+																	<select id="Statedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+									                                    ref="states" name="states" onChange={this.handleChangeState} >
+									                                    <option selected={true} disabled={true}>-- Select --</option>
+									                                    {
+									                                      this.state.stateArray && this.state.stateArray.length > 0 ?
+									                                      this.state.stateArray.map((stateData, index)=>{
+									                                        return(      
+									                                            <option key={index} value={stateData.stateCode}>{this.camelCase(stateData.stateName)}</option>
+									                                          );
+									                                        }
+									                                      ) : ''
+									                                    }
+									                                </select>
+									                            
 																</div>
 																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
 																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">District {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
 																	</label>
-																	<select id="Citydata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.city}  ref="city" name="city" onChange={this.handleChange} >
-																		<option selected="true" disabled="true">-- Select --</option>
-																		{
-																			this.state.districtArray.map((Citydata, index)=>{
-																				return(      
-																						<option  key={index}>{Citydata.districtName}</option>
-																					);
-																				}
-																			)
-																		}
-																    </select>
+																	<select id="Citydata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+									                                    ref="district" name="district" onChange={this.handleChangeDistrict} >
+									                                    <option selected={true} disabled={true}>-- Select --</option>
+									                                    {  
+									                                      this.state.districtArray && this.state.districtArray.length > 0 ?
+									                                      this.state.districtArray.map((districtdata, index)=>{
+									                                        return(      
+									                                            <option  key={index} value={districtdata.districtName}>{this.camelCase(districtdata.districtName)}</option>
+									                                          );
+									                                        }
+									                                      ) : ''
+									                                    }
+									                                </select>
 																</div>
 																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" > 
 																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">City {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
