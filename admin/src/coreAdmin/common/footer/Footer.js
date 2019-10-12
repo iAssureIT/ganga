@@ -35,7 +35,7 @@ export default class Footer extends Component{
                 </div>
             </div>
             <div className="col-lg-7 col-md-7 col-sm-7 col-xs-12">
-                <p className="pull-right footerRightCss">Version 1.1.4</p>
+                <p className="pull-right footerRightCss">Version 1.4.5</p>
                 <p className="footerRightCss1">Design & Developed by <a href="http://iassureit.com">iAssure International Technology Pvt Ltd</a>&nbsp;&nbsp;</p>
             </div>
       </footer>

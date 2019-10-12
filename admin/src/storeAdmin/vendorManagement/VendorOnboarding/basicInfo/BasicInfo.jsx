@@ -110,27 +110,9 @@ class BasicInfo extends Component {
               if (element.attr("name") == "mfg"){
                 error.insertAfter("#basicInfo7");
               }
-              // if (element.attr("name") == "LogoImageUp"){
-              //   error.insertAfter("#LogoImageUpOne");
-              // }
               
             }
       });
-    // $(document).ready(function(){
-    //     $("#companyIn").keypress(function(event){
-    //         var inputValue = event.charCode;
-    //         if(!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0) && !(inputValue >=48 &&  inputValue <= 57)){
-    //             event.preventDefault();
-    //         }
-    //     });
-    // });
-    // $(document).ready(function(){
-    //     history.pushState(null, null, location.href);
-    //       window.onpopstate = function () {
-    //           history.go(1);
-    //       };
-    // });
-    // this.removeImageTempRender();
 
   }
 

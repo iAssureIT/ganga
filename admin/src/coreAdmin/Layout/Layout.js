@@ -193,6 +193,7 @@ class Layout extends Component{
                                         {/* Vendor Management */}
                                         <Route path="/vendor-onboarding"                                            exact strict component={ BasicInfo } />
                                         <Route path="/location-details/:vendor_ID"                                  exact strict component={ LocationDetails } />
+                                        <Route path="/location-details/:vendor_ID/:location_ID"                                  exact strict component={ LocationDetails } />
                                         <Route path="/contact-details/:vendor_ID"                                   exact strict component={ ContactDetails } />
                                         <Route path="/vendor-list"                                                  exact strict component={ ListOfVendor } />
                                         <Route path="/vendor-category"                                              exact strict component={ VendorCategory } />
