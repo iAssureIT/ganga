@@ -385,7 +385,7 @@ class AddNewBulkProduct extends Component{
         };
         if (rABS) reader.readAsBinaryString(file);
         else reader.readAsArrayBuffer(file);
-        $('.submitBtn').prop('disabled',false);
+        //$('.submitBtn').prop('disabled',false);
        
     }
 
@@ -394,12 +394,11 @@ class AddNewBulkProduct extends Component{
     }
     bulkUpload(){
         
-        
         var formValues = this.state.finalData;
         console.log('formValues',formValues);
         axios.post('/api/products/post/bulkUploadProduct', formValues)
         .then((response)=>{
-            console.log('response', response);
+            window.location.reload();
             swal({
                     title : response.data.message,
                     text  : response.data.message,
@@ -430,7 +429,7 @@ class AddNewBulkProduct extends Component{
                     <div className="">
                     <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
-                        <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding" onClick={this.enableBulkUpload.bind(this)}>
+                        <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
                             <a className="videocard" href="/products.xlsx" title="Click to Download" download><div className="publishAllProductsClient">
                             SAMPLE DATA FORMAT
                             </div></a>
@@ -445,7 +444,7 @@ class AddNewBulkProduct extends Component{
                                                   ref={this.fileInput}
                                                   type="file"
                                                   accept={SheetJSFT}
-                                                  onChange={this.handleChange.bind(this)}
+                                                  onChange={this.handleChange.bind(this)} 
                                                 />
                     </div>
 
@@ -456,7 +455,15 @@ class AddNewBulkProduct extends Component{
                     <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
                     </ul>
                     </div>
-                    <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" onClick={this.bulkUpload.bind(this)}>Submit</button>
+                    {
+                        this.state.finalData.length > 0 ?
+                        <button className="submitBtnGo btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
+                        onClick={this.bulkUpload.bind(this)} >Submit</button>
+                        :
+                        <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
+                        disabled>Submit</button>
+                    
+                    }
                     
                     </div>
                     </div>

@@ -88,14 +88,15 @@ class ProductList extends Component{
         console.log('tableData', data)
         axios.put('/api/products/multiple', data)
         .then((response)=>{
-            
             swal({
-                text: 'Product ed Successfully',
-                title: 'Product ed Successfully',
+                text: 'Product published successfully',
+                title: 'Product published successfully',
             });
         })
         .catch((error)=>{
-
+            swal({
+                title: 'All products are published.',
+            });
         });
         this.getData(this.state.startRange, this.state.limitRange);
     }
