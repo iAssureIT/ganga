@@ -83,7 +83,7 @@ class SignUp extends Component {
             if (passwordVar === signupConfirmPasswordVar) {
                 return (passwordVar.length >= 6) ? 
                 	(true, 
-                	 console.log("formValues= ",auth),
+                	 console.log("auth= ",auth),
 		             document.getElementById("signUpBtn").value = 'Sign Up',
       				// browserHistory.push("/"),
                 	axios

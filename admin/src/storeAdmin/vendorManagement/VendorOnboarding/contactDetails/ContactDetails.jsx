@@ -25,19 +25,20 @@ class ContactDetails extends Component {
         'contactValue'		: '',
         'contactIndex'      : '',
 		'levelIndex'        : '',
-		'vendor_ID': this.props.match.params ? this.props.match.params.vendor_ID : '',
-		'location_ID': this.props.match.params ? this.props.match.params.location_ID : ''
+		'vendor_ID' 		: this.props.match.params ? this.props.match.params.vendor_ID : '',
+		'contactDetails_ID' : this.props.match.params ? this.props.match.params.contactDetails_ID : '',
+		'contactLevel_ID' 	: this.props.match.params ? this.props.match.params.contactLevel_ID : ''
       };
       this.handleChange = this.handleChange.bind(this);
     }
     componentWillReceiveProps(nextProps){
-    	
+    	this.contactEdit();
     }
     componentDidMount() {
 		this.getLocationType();
 		this.levelOneContact();
     	window.scrollTo(0, 0);
-    	
+    	this.contactEdit();
     	$.validator.addMethod("regxA1", function(value, element, regexpr) {          
 			return regexpr.test(value);
 		}, "Please enter valid phone number.");
@@ -293,7 +294,6 @@ class ContactDetails extends Component {
 				})
 				this.levelOneContact();
 				swal(response.data.message);
-				$("#LocationsDetail").validate().resetForm();
 			})
 			.catch((error)=>{
 				console.log('error', error);
@@ -306,11 +306,8 @@ class ContactDetails extends Component {
 		var vendorID = this.state.vendor_ID;
 		axios.get('/api/vendors/get/one/'+vendorID)
 		.then((response)=>{
-			console.log('res', response.data)
 			this.setState({
 				locationTypeArry : response.data.locationDetails
-			},()=>{
-				console.log('locationTypeArry', this.state.locationTypeArry);
 			})
 		})
 		.catch((error)=>{
@@ -319,75 +316,78 @@ class ContactDetails extends Component {
 	}	
     updatecontactdetailAddBtn(event){
     	event.preventDefault();
-    	var contactId = $(event.currentTarget).attr('data-id');
-		var idRoute   = this.props.match.params.vendor_ID;
-		var route = idRoute.split('-');
-		if (route[1]) {
-			var routerId = route[0];
-		}else{
-			var routerId = idRoute;
-		}
+    	var vendor_ID 			= this.state.vendor_ID;
+		var contactDetails_ID 	= this.state.contactDetails_ID;
+		var contactLevel_ID 	= this.state.contactLevel_ID;
+
 		if($('#ContactDetail').valid()){
-    	var formValues={
-			'Location'      	: this.state.Location,
-            'Designation'       : this.state.Designation,
-            'ContactLevel'      : parseInt(this.state.ContactLevel),
-            'Phone'             : this.state.Phone,
-            'Email'          	: this.state.Email,
-            'Name'            	: this.state.Name,
-            'Reportinmanager'   : this.state.Reportinmanager,
-            'AltPhone'          : this.state.AltPhone,
-            'Landing'           : this.state.Landing,
-            '_id'				: routerId,
-		    'levelId'			: contactId,
-		    'contactIndex'      : this.state.contactIndex,
-			'levelIndex'        : this.state.levelIndex
-		}
-		// Meteor.call('editUpdatecontactDetails',formValues,
-        //       (error,result)=>{
-        //         if(error){
-        //           // console.log(error.reason);
-        //         }else{
-		//             this.setState({
-		//             	'_id'				: '',
-		//             	'levelId'			: '',
-		//              	'Location'     		: '--Select Location Type--',
-		// 		        'Designation'       : '',
-		// 		        'ContactLevel'      : '--Select Contact Level--',
-		// 		        'Phone'             : '',
-		// 		        'Email'          	: '',
-		// 		        'Name'            	: '',
-		// 		        'Reportinmanager'   : '',
-		// 		        'AltPhone'          : '',
-		// 		        'Landing'           : '',
-		// 		        'contactValue'		: '',
-		// 		        'contactIndex'      : '',
-		// 				'levelIndex'        : '',
-		// 		        'updateButton' 		: false,
-		//             })
-		//             $('.button2').attr('disabled',false);
-	    //  			$('.button1').attr('disabled',false);
-        //       		swal({
-        //       			title:'abc',
-        //       			text:'Contact details updated successfully.'
-        //       		});
-
-        //       		if(window.location.pathname == '/ContactDetailsSTM/'+idRoute){
-        //       			this.props.history.push("/ContactDetailsSTM/"+idRoute);
-        //       		}else if(window.location.pathname == '/ContactDetailsSTL/'+idRoute){
-        //       			this.props.history.push("/ContactDetailsSTL/"+idRoute);
-        //       		}else{
-        //       			this.props.history.push("/ContactDetails/"+routerId);
-        //       		}
-
-                  
-        //         }
-        //     });
+			var formValues={
+				'Location'      	: this.state.Location,
+				'Designation'       : this.state.Designation,
+				'ContactLevel'      : parseInt(this.state.ContactLevel),
+				'Phone'             : this.state.Phone,
+				'Email'          	: this.state.Email,
+				'Name'            	: this.state.Name,
+				'Reportinmanager'   : this.state.Reportinmanager,
+				'AltPhone'          : this.state.AltPhone,
+				'Landing'           : this.state.Landing,
+			}
+			axios.patch('/api/vendors/update/contact/'+vendor_ID+'/'+contactDetails_ID+'/'+contactLevel_ID, formValues)
+			.then((response)=>{
+				swal(response.data.message);
+				this.setState({
+					'_id'				: '',
+					'levelId'			: '',
+					'Location'     		: '--Select Location Type--',
+					'Designation'       : '',
+					'ContactLevel'      : '--Select Contact Level--',
+					'Phone'             : '',
+					'Email'          	: '',
+					'Name'            	: '',
+					'Reportinmanager'   : '',
+					'AltPhone'          : '',
+					'Landing'           : '',
+					'contactValue'		: '',
+					'contactIndex'      : '',
+					'levelIndex'        : '',
+					'updateButton' 		: false,
+				})
+			})
+			.catch((error)=>{
+				console.log('error', error);
+			})
 		}
     }
+	contactEdit(){
+		var vendor_ID 			= this.state.vendor_ID;
+		var contactDetails_ID 	= this.state.contactDetails_ID;
+		var contactLevel_ID 	= this.state.contactLevel_ID;
 
+		axios.get('/api/vendors/get/one/'+vendor_ID)
+		.then((response)=>{
+			var x = response.data.contactDetails;
+			var contactDetails = x.filter(a => a._id = contactDetails_ID);
+			var contactLevel = contactDetails[0].LocationLevel.filter(b => b._id == contactLevel_ID);
+			var contactLevelDetail = contactLevel[0];
+			console.log('contactLevelDetail', contactLevelDetail);
+			this.setState({
+				AltPhone 		: contactLevelDetail.AltPhone,
+				ContactLevel 	: contactLevelDetail.ContactLevel,
+				Designation 	: contactLevelDetail.Designation,
+				Email 			: contactLevelDetail.Email,
+				Landing 		: contactLevelDetail.Landing,
+				Location 		: contactLevelDetail.Location,
+				Name 			: contactLevelDetail.Name,
+				Phone 			: contactLevelDetail.Phone,
+				Reportinmanager : contactLevelDetail.Reportinmanager
+			})
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+		
+ 	}
     levelOneContact(){
-    	
 	    var contactarray = [];
 	    var locationarr  = [];
 	    var uniqLocationarr  = [];
@@ -396,24 +396,19 @@ class ContactDetails extends Component {
 		axios.get('/api/vendors/get/one/'+vendorID)
 		.then((response)=>{
 			var contactOne = response.data;
-			if (contactOne) {
+			if(contactOne){
 				for (var i = 0; i < contactOne.contactDetails.length; i++) {
 					var Location = contactOne.contactDetails[i].Location;
 					if (contactOne.contactDetails[i].LocationLevel.length > 0) {
-	
-					var a =	<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 tithead">
-	
+						var a =	<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 tithead">
 									<h4><i className="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;{contactOne.contactDetails[i].Location}</h4>
 								</div>;
 					}
-								// // console.log('{contactOne.contactDetails[i].Location}',contactOne.contactDetails[i].LocationLevel.length)
 					contactarray.push({
 						'a'			  : a,
 					});
 					if (Location) {
-						
 						let levelsArr = contactOne.contactDetails[i].LocationLevel;
-						// // console.log('levelsArr==>',levelsArr.length);
 						levelsArr = _.sortBy(levelsArr, 'ContactLevel');
 						var arrow = 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 downarr">
 											<i className="fa fa-arrow-down" aria-hidden="true"></i>
@@ -428,14 +423,14 @@ class ContactDetails extends Component {
 							}else if(levelsArr[j].ContactLevel == 3){
 								var bgColor = 'bglevel2';
 							}
-							   var locationLevel =levelsArr[j].ContactLevel;
-							var branchLevel = <div data={locationLevel} id={levelsArr[j].contact_id}>
+							console.log('ids', contactOne._id, contactOne.contactDetails[i]._id, levelsArr[j]._id, )
+							    var locationLevel =levelsArr[j].ContactLevel;
+								var branchLevel = <div data={locationLevel} id={levelsArr[j]._id}>
 										{ (j >=1) ? ((locationLevel > levelsArr[j-1].ContactLevel) ? arrow :  '') : ''}
 										<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 boxul pdcls">
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls levelOneBox">
 											<div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 usericn pdcls">
-	{/*											<i className="fa fa-user-circle" aria-hidden="true"></i>
-	*/}										</div>
+										</div>
 											<ul className="col-lg-4 col-md-10 col-sm-10 col-xs-10 pdcls">
 												<li className="liheader"><i className="fa fa-user-o iconpd" aria-hidden="true"></i>{levelsArr[j].Name}</li>
 												<li><i className="fa fa-address-card-o iconpd" aria-hidden="true"></i>{levelsArr[j].Designation}</li>
@@ -448,12 +443,11 @@ class ContactDetails extends Component {
 												<div className="dots dropdown1">
 												<i className="fa fa-ellipsis-h dropbtn1" aria-hidden="true"></i>
 												<div className="dropdown-content1">
-												
 													<ul className="pdcls ulbtm">
-														<li id={levelsArr[j].contact_id} className="styleContactActbtn" data-index={i +"-"+ j} data-id={contactOne._id} data-locationtype={contactOne.contactDetails[i].Location} onClick={this.contactEditUpdate.bind(this)}>	
-															<a><i className="fa fa-pencil penmrleft" aria-hidden="true" ></i>&nbsp;&nbsp;<span className="mrflfedit">Edit</span></a>
+														<li vendor-ID={contactOne._id} contactDetails_ID={contactOne.contactDetails[i]._id} contactLevel-ID={levelsArr[j]._id}  className="styleContactActbtn" >	
+															<a href={'/contact-details/'+contactOne._id+'/'+contactOne.contactDetails[i]._id+'/'+levelsArr[j]._id}><i className="fa fa-pencil penmrleft" aria-hidden="true" ></i>&nbsp;&nbsp;<span className="mrflfedit">Edit</span></a>
 														</li>
-														<li id={levelsArr[j].contact_id} className="styleContactActbtn" data-id={contactOne._id} data-index={i +"-"+ j} onClick={this.removeLevel.bind(this)}>
+														<li id={levelsArr[j]._id} className="styleContactActbtn" data-id={contactOne._id} data-index={i +"-"+ j} onClick={this.removeLevel.bind(this)}>
 															<a><i className="fa fa-trash-o" aria-hidden="true" ></i>&nbsp;Delete</a>
 														</li>
 													</ul>
@@ -480,7 +474,7 @@ class ContactDetails extends Component {
 					}//EOF haedoffice
 				}
 			}
-			console.log('contactarray', contactarray);
+			
 			this.setState({
 				contactarray : contactarray
 			})
@@ -493,50 +487,58 @@ class ContactDetails extends Component {
     contactEditUpdate(event){
     	event.preventDefault();
     	$(".addContactForm").show();
-    	// var levelId 	  = $(event.currentTarget).attr('id');
-    	// var contactId 	  = $(event.currentTarget).attr('data-id');
-    	// var locationtypes = $(event.currentTarget).attr('data-locationtype');
-    	// var dataIndex     = $(event.currentTarget).attr('data-index');
-    	// var splitIndex    = dataIndex.split('-');
-    	// var contactIndex  = splitIndex[0];
-    	// var levelIndex    = splitIndex[1];
- 
-    	// var suppliers  = Suppliers.findOne({'_id':contactId});
-    	// var suppContact = suppliers.contactDetails.length;
-    	// for (var i = 0; i < suppContact; i++) {
-    	// 	if (suppliers.contactDetails[i].Location == locationtypes) {
-    	// 		for (var j = 0; j < suppliers.contactDetails[i].LocationLevel.length; j++) {
-    	// 			if (suppliers.contactDetails[i].LocationLevel[j].contact_id == levelId) {
-    	// 				this.setState({
-    	// 					'Location'     		: suppliers.contactDetails[i].Location,
-		// 			        'Designation'       : suppliers.contactDetails[i].LocationLevel[j].Designation,
-		// 			        'ContactLevel'      : suppliers.contactDetails[i].LocationLevel[j].ContactLevel,
-		// 			        'Phone'             : suppliers.contactDetails[i].LocationLevel[j].Phone,
-		// 			        'Email'          	: suppliers.contactDetails[i].LocationLevel[j].Email,
-		// 			        'Name'            	: suppliers.contactDetails[i].LocationLevel[j].Name,
-		// 			        'Reportinmanager'   : suppliers.contactDetails[i].LocationLevel[j].Reportinmanager,
-		// 			        'AltPhone'          : suppliers.contactDetails[i].LocationLevel[j].AltPhone,
-		// 			        'Landing'           : suppliers.contactDetails[i].LocationLevel[j].Landing,
-		// 			        'contactValue'		: suppliers.contactDetails[i].LocationLevel[j].contact_id,
-		// 			        'contactIndex'      : contactIndex,
-		// 			        'levelIndex'        : levelIndex
-    	// 				});
-    	// 				window.scrollTo(0, 0);
-	    // 				if(suppliers.contactDetails[i].LocationLevel[j].contact_id == levelId){     
-		// 			    	this.setState({
-		// 			    		'updateButton' 		: true,
-		// 			    	});
-		// 			    }else{ 
-		// 			    	this.setState({
-		// 			    		'updateButton' 		: false,
-		// 			    	});     
-		// 			    }
-    	// 			}
-    				
-    	// 		}
+    	var levelId 	  = $(event.currentTarget).attr('id');
+		var contactId 	  = $(event.currentTarget).attr('data-id');
+    	var locationtypes = $(event.currentTarget).attr('data-locationtype');
+    	var dataIndex     = $(event.currentTarget).attr('data-index');
+    	var splitIndex    = dataIndex.split('-');
+    	var contactIndex  = splitIndex[0];
+		var levelIndex    = splitIndex[1];
+		
+		console.log('ids', levelId, contactId, locationtypes);
+		axios.get('/api/vendors/get/one/'+contactId)
+		.then((response)=>{
+			var suppliers = response.data;
+			var suppContact = suppliers.contactDetails.length;
+			for (var i = 0; i < suppContact; i++) {
+				if (suppliers.contactDetails[i].Location == locationtypes) {
+					for (var j = 0; j < suppliers.contactDetails[i].LocationLevel.length; j++) {
+						if (suppliers.contactDetails[i].LocationLevel[j].contact_id == levelId) {
+							this.setState({
+								'Location'     		: suppliers.contactDetails[i].Location,
+								'Designation'       : suppliers.contactDetails[i].LocationLevel[j].Designation,
+								'ContactLevel'      : suppliers.contactDetails[i].LocationLevel[j].ContactLevel,
+								'Phone'             : suppliers.contactDetails[i].LocationLevel[j].Phone,
+								'Email'          	: suppliers.contactDetails[i].LocationLevel[j].Email,
+								'Name'            	: suppliers.contactDetails[i].LocationLevel[j].Name,
+								'Reportinmanager'   : suppliers.contactDetails[i].LocationLevel[j].Reportinmanager,
+								'AltPhone'          : suppliers.contactDetails[i].LocationLevel[j].AltPhone,
+								'Landing'           : suppliers.contactDetails[i].LocationLevel[j].Landing,
+								'contactValue'		: suppliers.contactDetails[i].LocationLevel[j].contact_id,
+								'contactIndex'      : contactIndex,
+								'levelIndex'        : levelIndex
+							});
+							window.scrollTo(0, 0);
+							if(suppliers.contactDetails[i].LocationLevel[j].contact_id == levelId){     
+								this.setState({
+									'updateButton' 		: true,
+								});
+							}else{ 
+								this.setState({
+									'updateButton' 		: false,
+								});     
+							}
+						}
+						
+					}
 
-    	// 	}
-    	// }
+				}
+			}
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+    	
     }
 
 	removeLevel(event){
@@ -563,189 +565,187 @@ class ContactDetails extends Component {
 	
 
 	render() {
-    return (
-       	<div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
-	        <div className="row">
-		        <section className="content">
-		            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
-		              	<div className="row">
-			              	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-			                	<div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
-				                    <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 pdcls">
-			                          <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-			                            <h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Vendor Management</h4>
-			                            <div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
-			                            </div>
-			                          </div>
-			                        </div>
-							        <div id="parkingreport" className="nav-center OnboardingTabs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										<ul className="nav nav-pills ">
-											<li className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 transactionTab pdcls pdclsOne btn1 disabled">
-												<a href="" className="basic-info-pillss pillsHover">
-												<i className="fa fa-info-circle" aria-hidden="true"></i>
-												Basic Info 
-												</a>
-												<div className="triangleone" id="triangle-right"></div>
-											</li>
-											<li className="col-lg-2 col-md-2 col-sm-12 col-xs-12 transactionTab pdcls pdclsOne btn2 disabled">
-												<div className="triangletwo" id="triangle-right1"></div>
-												<a href="" className="basic-info-pillss pillsHover">
-												<i className="fa fa-map-marker iconMarginLeft" aria-hidden="true"></i>
-												Location
-												</a>
-												<div className="trianglethree" id="triangle-right"></div>
-											</li>
-											<li className="active col-lg-2 col-md-2 col-sm-12 col-xs-12 transactionTab pdcls pdclsOne btn3">
-												<div className="trianglefour" id="triangle-right2"></div>
-												<a href="" className="basic-info-pillss pillsHover backgroundPro">
-												<i className="fa fa-phone phoneIcon" aria-hidden="true"></i>
-												Contact
-												</a>
-											</li>
-										</ul>
-									</div>
-							       	<section className="Content">
-										<div className="row">
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">
-													<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">
-														<div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
-															 <h4 className="MasterBudgetTitle"><i className="fa fa-phone" aria-hidden="true"></i> Contact Details</h4>
-														</div>
-														<div className="col-lg-6 col-md-6 col-sm-6 col-sm-6 ">
-															 <h4 className="noteSupplier">Note: Please start adding contacts from 1st point of contact to higher authority.</h4>
-														</div>
-														<div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
-															<div className="button4  pull-right">
-																<i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Contact
-															</div>
-														</div>	
-														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formHrTag"></div> 	
-													</div>
-													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
-														<form id="ContactDetail">
-															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
-															<div  className="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Location Type <sup className="astrick">*</sup> 
-					                                            </label>
-																<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange}>
-											                        <option selected="true" disabled="true">--Select Location Type--</option>
-											                        {
-																		this.state.locationTypeArry && this.state.locationTypeArry.length>0?
-																		this.state.locationTypeArry.map((locationtypedata, index)=>{
-																			console.log('locationtypedata', locationtypedata);
-																			return(      
-																					<option key={index}>{locationtypedata.locationType}</option>
-																				);
-																			}
-																		)
-																		:
-																		null
-																	}
-											                    </select>
-															</div>
-
-										                    <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Designation <sup className="astrick">*</sup> 
-						                                        </label>
-																<input id="Designations" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Designation} ref="Designation" name="Designation" onChange={this.handleChange} />
-															</div>
-															<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Level <sup className="astrick">*</sup> 
-						                                        </label>
-																<select id="ContactLevel" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.ContactLevel} ref="ContactLevel" name="ContactLevel" onChange={this.handleChange}>
-											                        <option selected="true" disabled="true">--Select Contact Level--</option>
-											                        <option value="1">First level of contact</option>
-											                        <option value="2">Second level of contact</option>
-											                        <option value="3">Third level of contact</option>
-											                    </select>
-															</div>
-															<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 "> 
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
-						                                        </label>
-																<InputMask mask="9999999999" maskChar=" " id="Phones" name="phones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Phone} ref="Phone" name="Phone" onChange={this.handleChange} pattern="[0-9]+" required/>
-															</div>
-															<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
-						                                       	</label>
-																<input id="Emails" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
-															</div>
-														
-															<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
-						                                        </label>
-																<input id="Names" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
-															</div>
-															<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
-																<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Reporting Manager
-						                                        </label>
-																<input id="Reportinmanagers" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.Reportinmanager} ref="Reportinmanager" name="Reportinmanager" onChange={this.handleChange} />
-															</div>
-															<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
-																<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
-						                                        </label>
-																<InputMask mask="9999999999" maskChar=" " id="AltPhones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.AltPhone} ref="AltPhone" name="AltPhone" onChange={this.handleChange} pattern="[0-9]+" />
-															</div>
-															<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
-																<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Office Landline No. 
-						                                        </label>
-
-																<input id="Landings" name="Landings" type="text" onKeyDown={this.keyPressNumber} className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" minLength="6" maxLength="13" value={this.state.Landing} ref="Landing" name="Landing" onChange={this.handleChange} />
-															</div>
-															</div>
-															
-															<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 contactSubmit">
-																{	
-																	this.state.updateButton ?
-																		<button className="button3 btn-primary pull-right" onClick={this.updatecontactdetailAddBtn.bind(this)} data-id={this.state.contactValue}>Update Contact</button>
-																			:
-																		<button className="button3 btn-primary pull-right" onClick={this.contactdetailAddBtn.bind(this)}>Submit</button>
-																}
-															</div>
-														</form>
-													</div>
-													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<button className="button2" onClick={this.locationdetailBack.bind(this)}><i className="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;Location Details</button>
-														<button className="button1 pull-right" onClick={this.contactdetailBtn.bind(this)}>Finish&nbsp;</button>
-													</div>
-												</div> 
-											</div>
-											
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 foothd">
-														 <h4 className="MasterBudgetTitle">Contacts</h4>
-													</div>
-													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bxht pdcls">
-														{this.state.contactarray && this.state.contactarray.length?
-															this.state.contactarray.map((contactArr,index)=>{
-																return(
-																	<div key={index}>
-																		{contactArr.a}
-																		{contactArr.headOfficce}
-																	</div>
-																	);
-															})
-															:
-															<div className="textAlign">Contact Details will be shown here.</div>	
-														}
-													</div>
-
-												</div>
+		return (
+			<div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
+				<div className="row">
+					<section className="content">
+						<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+							<div className="row">
+								<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
+									<div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
+										<div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 pdcls">
+										<div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+											<h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Vendor Management</h4>
+											<div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
 											</div>
 										</div>
-									</section>
-		                		</div>
-		                  	</div>
-	                  	</div>
-	                </div>
-	            </section>
-	        </div>
-	    </div>
-	    );
+										</div>
+										<div id="parkingreport" className="nav-center OnboardingTabs col-lg-12 col-md-12 col-sm-12 col-xs-12">
+											<ul className="nav nav-pills ">
+												<li className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 transactionTab pdcls pdclsOne btn1 disabled">
+													<a href="" className="basic-info-pillss pillsHover">
+													<i className="fa fa-info-circle" aria-hidden="true"></i>
+													Basic Info 
+													</a>
+													<div className="triangleone" id="triangle-right"></div>
+												</li>
+												<li className="col-lg-2 col-md-2 col-sm-12 col-xs-12 transactionTab pdcls pdclsOne btn2 disabled">
+													<div className="triangletwo" id="triangle-right1"></div>
+													<a href="" className="basic-info-pillss pillsHover">
+													<i className="fa fa-map-marker iconMarginLeft" aria-hidden="true"></i>
+													Location
+													</a>
+													<div className="trianglethree" id="triangle-right"></div>
+												</li>
+												<li className="active col-lg-2 col-md-2 col-sm-12 col-xs-12 transactionTab pdcls pdclsOne btn3">
+													<div className="trianglefour" id="triangle-right2"></div>
+													<a href="" className="basic-info-pillss pillsHover backgroundPro">
+													<i className="fa fa-phone phoneIcon" aria-hidden="true"></i>
+													Contact
+													</a>
+												</li>
+											</ul>
+										</div>
+										<section className="Content">
+											<div className="row">
+												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">
+														<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">
+															<div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
+																<h4 className="MasterBudgetTitle"><i className="fa fa-phone" aria-hidden="true"></i> Contact Details</h4>
+															</div>
+															<div className="col-lg-6 col-md-6 col-sm-6 col-sm-6 ">
+																<h4 className="noteSupplier">Note: Please start adding contacts from 1st point of contact to higher authority.</h4>
+															</div>
+															<div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
+																<div className="button4  pull-right">
+																	<i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Contact
+																</div>
+															</div>	
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formHrTag"></div> 	
+														</div>
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
+															<form id="ContactDetail">
+																<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
+																<div  className="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Location Type <sup className="astrick">*</sup> 
+																	</label>
+																	<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange}>
+																		<option selected="true" disabled="true">--Select Location Type--</option>
+																		{
+																			this.state.locationTypeArry && this.state.locationTypeArry.length>0?
+																			this.state.locationTypeArry.map((locationtypedata, index)=>{
+																				
+																				return(      
+																						<option key={index}>{locationtypedata.locationType}</option>
+																					);
+																				}
+																			)
+																			:
+																			null
+																		}
+																	</select>
+																</div>
 
+																<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Designation <sup className="astrick">*</sup> 
+																	</label>
+																	<input id="Designations" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Designation} ref="Designation" name="Designation" onChange={this.handleChange} />
+																</div>
+																<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Level <sup className="astrick">*</sup> 
+																	</label>
+																	<select id="ContactLevel" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.ContactLevel} ref="ContactLevel" name="ContactLevel" onChange={this.handleChange}>
+																		<option selected="true" disabled="true">--Select Contact Level--</option>
+																		<option value="1">First level of contact</option>
+																		<option value="2">Second level of contact</option>
+																		<option value="3">Third level of contact</option>
+																	</select>
+																</div>
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 "> 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
+																	</label>
+																	<InputMask mask="9999999999" maskChar=" " id="Phones" name="phones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Phone} ref="Phone" name="Phone" onChange={this.handleChange} pattern="[0-9]+" required/>
+																</div>
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
+																	</label>
+																	<input id="Emails" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
+																</div>
+															
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
+																	</label>
+																	<input id="Names" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
+																</div>
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
+																	<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Reporting Manager
+																	</label>
+																	<input id="Reportinmanagers" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.Reportinmanager} ref="Reportinmanager" name="Reportinmanager" onChange={this.handleChange} />
+																</div>
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
+																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
+																	</label>
+																	<InputMask mask="9999999999" maskChar=" " id="AltPhones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.AltPhone} ref="AltPhone" name="AltPhone" onChange={this.handleChange} pattern="[0-9]+" />
+																</div>
+																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
+																	<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Office Landline No. 
+																	</label>
+
+																	<input id="Landings" name="Landings" type="text" onKeyDown={this.keyPressNumber} className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" minLength="6" maxLength="13" value={this.state.Landing} ref="Landing" name="Landing" onChange={this.handleChange} />
+																</div>
+																</div>
+																
+																<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 contactSubmit">
+																	{	
+																		this.state.contactLevel_ID ?
+																			<button className="button3 btn-primary pull-right" onClick={this.updatecontactdetailAddBtn.bind(this)} data-id={this.state.contactValue}>Update Contact</button>
+																				:
+																			<button className="button3 btn-primary pull-right" onClick={this.contactdetailAddBtn.bind(this)}>Submit</button>
+																	}
+																</div>
+															</form>
+														</div>
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<button className="button2" onClick={this.locationdetailBack.bind(this)}><i className="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;Location Details</button>
+															<button className="button1 pull-right" onClick={this.contactdetailBtn.bind(this)}>Finish&nbsp;</button>
+														</div>
+													</div> 
+												</div>
+												
+												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 foothd">
+															<h4 className="MasterBudgetTitle">Contacts</h4>
+														</div>
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bxht pdcls">
+															{this.state.contactarray && this.state.contactarray.length?
+																this.state.contactarray.map((contactArr,index)=>{
+																	return(
+																		<div key={index}>
+																			{contactArr.a}
+																			{contactArr.headOfficce}
+																		</div>
+																		);
+																})
+																:
+																<div className="textAlign">Contact Details will be shown here.</div>	
+															}
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		);
 	} 
-
 }
 
 export default ContactDetails;

@@ -12,7 +12,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
 
 import axios from 'axios';
 const formValid = formerrors=>{
-  console.log("formerrors",formerrors);
+//   console.log("formerrors",formerrors);
   let valid = true;
   Object.values(formerrors).forEach(val=>{
   val.length>0 && (valid = false);
@@ -51,7 +51,7 @@ class SignUp extends Component {
 							"Products marked as 'non-returnable' on the product detail page cannot be returned.",
 							"Products may not be eligible for return in some cases, including cases of buyer's remorse such as incorrect model or color of product ordered or incorrect product ordered."]
         }
-        console.log("In constructor");
+        // console.log("In constructor");
          this.handleChange = this.handleChange.bind(this);
     }
     componentWillMount() {
@@ -59,7 +59,7 @@ class SignUp extends Component {
     }
  	usersignup(event){
  		event.preventDefault();
- 			console.log("-------this.state.auth------>>",this.state.auth);
+ 			// console.log("-------this.state.auth------>>",this.state.auth);
  			var auth={
 	                firstName       : this.refs.firstname.value,
 	                lastName        : this.refs.lastname.value,
@@ -82,25 +82,25 @@ class SignUp extends Component {
         var signupConfirmPasswordVar = this.refs.signupConfirmPassword.value;
  		
             if(formValid(this.state.formerrors )){
-    			console.log('companyName==',this.state.formerrors);
+    			// console.log('companyName==',this.state.formerrors);
             if (passwordVar === signupConfirmPasswordVar) {
                 return (passwordVar.length >= 6) ? 
                 	(true, 
-                	 console.log("formValues= ",auth),
+                	//  console.log("formValues= ",auth),
 		             document.getElementById("signUpBtn").value = 'Sign Up',
       				// browserHistory.push("/"),
                 	axios.post('/api/users',auth)
 			            .then((response)=> {
-			                console.log("-------userData------>>",response.data.user_id);
+			                // console.log("-------userData------>>",response.data.user_id);
             				 ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 		            		// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
 			                this.props.history.push("/confirm-otp/"+response.data.user_id);
 			                
 			            })
-			            .catch(function (error) {
+			            .catch((error)=> {
 			                console.log(error);
         					// swal("Unable to submit data.");
-       						 ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+       						//  ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 			            })
                 	)
                 :
@@ -120,11 +120,11 @@ class SignUp extends Component {
                 document.getElementById("signUpBtn").value = 'Sign Up';
        			ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 				// swal("Please enter mandatory fields", "", "warning");
-				console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
         
  	}
- 	  Closepagealert(event){
+Closepagealert(event){
     event.preventDefault();
     $(".toast-error").html('');
     $(".toast-success").html('');
@@ -163,7 +163,7 @@ class SignUp extends Component {
 	    const {name,value} = event.target;
 	    let formerrors = this.state.formerrors;
 	    
-	    console.log("datatype",datatype);
+	    // console.log("datatype",datatype);
 	    switch (datatype){
 	     
 	       case 'firstNameV' : 
@@ -197,7 +197,7 @@ class SignUp extends Component {
 	}
  	acceptcondition(event){
 	    var conditionaccept = event.target.value;
-	    console.log("condition",conditionaccept);
+	    // console.log("condition",conditionaccept);
 	    if(conditionaccept=="acceptedconditions"){
 	        $(".acceptinput").removeAttr('disabled');
 	        // if(this.state.roletype=="Student"){
