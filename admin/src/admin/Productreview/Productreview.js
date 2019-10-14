@@ -52,7 +52,7 @@ class Productreview extends Component{
 
     }
     getCount(){
-        axios.get('/api/customerReview/get/count')
+        axios.get('http://localhost:5006/api/customerReview/get/count')
         .then((response)=>{
             console.log('dataCount', response.data.dataCount);
             this.setState({
@@ -69,9 +69,37 @@ class Productreview extends Component{
             limitRange : limitRange
         }
         this.getCount();
-        axios.post('/api/customerReview/get/list', data)
+        axios.post('http://localhost:5006/api/customerReview/get/list', data)
         .then((response)=>{
-            console.log('response============>', response.data)
+            var tableData = response.data.map((a, i)=>{
+              return{
+                "_id"           : a._id,
+                "product"       : a.productDetails[0] ? (a.productDetails[0].productName+" "+"("+a.productDetails[0].productCode)+")" : "",
+                "customerReview": a.customerReview,
+                "customerName"  : a.customerName,
+                "orderID"       : a.orderID,
+                "productID"     : a.productID,
+                "rating"        : a.rating,
+                "reviewlist"    : a.reviewlist
+              };
+            })
+            this.setState({
+                tableData : tableData
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
+    getSearchText(searchText, startRange, limitRange){
+        console.log('searchText', searchText);
+        var formValues = {
+            searchText : searchText, 
+            startRange : startRange, 
+            limitRange : limitRange
+        };
+        axios.post('http://localhost:5006/api/customerReview/search/post', formValues)
+        .then((response)=>{
             var tableData = response.data.map((a, i)=>{
               return{
                 "_id"           : a._id,
@@ -92,29 +120,6 @@ class Productreview extends Component{
             console.log('error', error);
         })
     }
-    
-    // publishAllProducts(event){
-    //     event.preventDefault();        
-        
-
-    //     var data ={
-    //         publishData:  _.pluck(this.state.tableData, '_id')
-    //     };
-    //     console.log('tableData', data)
-    //     axios.put('/api/products/multiple', data)
-    //     .then((response)=>{
-            
-    //         swal({
-    //             text: 'Product ed Successfully',
-    //             title: 'Product ed Successfully',
-    //         });
-    //     })
-    //     .catch((error)=>{
-
-    //     });
-    //     this.getData(this.state.startRange, this.state.limitRange);
-    // }
-
     render(){
         return(
             <div className="container-fluid">
@@ -170,7 +175,7 @@ class Productreview extends Component{
                                         tableData={this.state.tableData}
                                         getData={this.getData.bind(this)}
                                         tableObjects={this.state.tableObjects}
-                                        // getSearchText = {this.getSearchText.bind(this)}
+                                        getSearchText = {this.getSearchText.bind(this)}
                                         />
                                     </div>
                                 </div>

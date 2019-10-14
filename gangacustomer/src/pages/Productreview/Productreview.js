@@ -35,7 +35,7 @@ class Productreview extends Component {
               this.setState({ 
                   reviewData : response.data,
               },()=>{
-                     console.log("reviewData=========================>",this.state.reviewData);
+                     // console.log("reviewData=========================>",this.state.reviewData);
                    // console.log("reviewuserid",this.state.reviewuserid);
               })
           })

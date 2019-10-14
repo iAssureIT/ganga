@@ -341,9 +341,9 @@ ul.box-static-link li span {
 .shortnamebk{
 	background: #eee;
     border-radius: 50%;
-    height: 35px;
-    width: 35px;
-    padding: 8px;
+    height: 45px;
+    width: 45px;
+    padding: 10px;
 }
 
 .userinfotext{

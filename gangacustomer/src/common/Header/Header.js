@@ -466,7 +466,7 @@ searchProducts(){
                                 </div>   
                                 <div className="col-lg-7">
                                   <div className="row">
-                                      <input type="text" className="col-lg-12 headersearch" name="x" placeholder="What are you looking for...." />
+                                      <input type="text" className="col-lg-12 headersearch" name="x" placeholder="Search by product name, category, brand..." />
                                   </div>   
                                 </div>   
                                 <div className="col-lg-2">
