@@ -5,8 +5,8 @@ import './root.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//axios.defaults.baseURL = 'http://localhost:5006';
-axios.defaults.baseURL = 'http://gangaapi.nurseryworld.in';
+axios.defaults.baseURL = 'http://localhost:3060';
+// axios.defaults.baseURL = 'http://gangaapi.nurseryworld.in';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 function App() {

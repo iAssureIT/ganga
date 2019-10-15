@@ -25,6 +25,7 @@ class ContactDetails extends Component {
         'contactValue'		: '',
         'contactIndex'      : '',
 		'levelIndex'        : '',
+		'openForm' 			: false,
 		'vendor_ID' 		: this.props.match.params ? this.props.match.params.vendor_ID : '',
 		'contactDetails_ID' : this.props.match.params ? this.props.match.params.contactDetails_ID : '',
 		'contactLevel_ID' 	: this.props.match.params ? this.props.match.params.contactLevel_ID : ''
@@ -32,13 +33,18 @@ class ContactDetails extends Component {
       this.handleChange = this.handleChange.bind(this);
     }
     componentWillReceiveProps(nextProps){
-    	this.contactEdit();
-    }
+    	this.edit();
+	}
+	openForm(){
+		this.setState({
+			openForm : this.state.openForm == false ? true : false
+		})
+	}
     componentDidMount() {
 		this.getLocationType();
-		this.levelOneContact();
+		this.contactDetails();
+		this.edit();
     	window.scrollTo(0, 0);
-    	this.contactEdit();
     	$.validator.addMethod("regxA1", function(value, element, regexpr) {          
 			return regexpr.test(value);
 		}, "Please enter valid phone number.");
@@ -290,9 +296,9 @@ class ContactDetails extends Component {
 					'Reportinmanager'   : '',
 					'AltPhone'          : '',
 					'Landing'           : '',
-					'updateButton' 		: false,
+					'openForm' 			: false,
 				})
-				this.levelOneContact();
+				this.contactDetails();
 				swal(response.data.message);
 			})
 			.catch((error)=>{
@@ -318,7 +324,6 @@ class ContactDetails extends Component {
     	event.preventDefault();
     	var vendor_ID 			= this.state.vendor_ID;
 		var contactDetails_ID 	= this.state.contactDetails_ID;
-		var contactLevel_ID 	= this.state.contactLevel_ID;
 
 		if($('#ContactDetail').valid()){
 			var formValues={
@@ -332,7 +337,7 @@ class ContactDetails extends Component {
 				'AltPhone'          : this.state.AltPhone,
 				'Landing'           : this.state.Landing,
 			}
-			axios.patch('/api/vendors/update/contact/'+vendor_ID+'/'+contactDetails_ID+'/'+contactLevel_ID, formValues)
+			axios.patch('/api/vendors/update/contact/'+vendor_ID+'/'+contactDetails_ID, formValues)
 			.then((response)=>{
 				swal(response.data.message);
 				this.setState({
@@ -350,14 +355,43 @@ class ContactDetails extends Component {
 					'contactValue'		: '',
 					'contactIndex'      : '',
 					'levelIndex'        : '',
-					'updateButton' 		: false,
+					'openForm' 			: false,
+					'contactDetails_ID' : ''
+				})
+				this.contactDetails();
+				this.props.history.push('/contact-details/'+this.state.vendor_ID);
+			})
+			.catch((error)=>{
+				console.log('error', error);
+			})
+		}
+	}
+	edit(){
+		var vendor_ID 			= this.state.vendor_ID;
+		var contactDetails_ID 	= this.state.contactDetails_ID;
+		if(contactDetails_ID){
+			axios.get('/api/vendors/get/one/'+vendor_ID)
+			.then((response)=>{
+				var x = response.data.contactDetails;
+				var contactDetails = x.filter(a => a._id = contactDetails_ID);
+				this.setState({
+					openForm 		: true,
+					AltPhone 		: contactDetails[0].AltPhone,
+					ContactLevel 	: contactDetails[0].ContactLevel,
+					Designation 	: contactDetails[0].Designation,
+					Email 			: contactDetails[0].Email,
+					Landing 		: contactDetails[0].Landing,
+					Location 		: contactDetails[0].Location,
+					Name 			: contactDetails[0].Name,
+					Phone 			: contactDetails[0].Phone,
+					Reportinmanager : contactDetails[0].Reportinmanager
 				})
 			})
 			.catch((error)=>{
 				console.log('error', error);
 			})
 		}
-    }
+	}
 	contactEdit(){
 		var vendor_ID 			= this.state.vendor_ID;
 		var contactDetails_ID 	= this.state.contactDetails_ID;
@@ -369,7 +403,6 @@ class ContactDetails extends Component {
 			var contactDetails = x.filter(a => a._id = contactDetails_ID);
 			var contactLevel = contactDetails[0].LocationLevel.filter(b => b._id == contactLevel_ID);
 			var contactLevelDetail = contactLevel[0];
-			console.log('contactLevelDetail', contactLevelDetail);
 			this.setState({
 				AltPhone 		: contactLevelDetail.AltPhone,
 				ContactLevel 	: contactLevelDetail.ContactLevel,
@@ -423,7 +456,7 @@ class ContactDetails extends Component {
 							}else if(levelsArr[j].ContactLevel == 3){
 								var bgColor = 'bglevel2';
 							}
-							console.log('ids', contactOne._id, contactOne.contactDetails[i]._id, levelsArr[j]._id, )
+							
 							    var locationLevel =levelsArr[j].ContactLevel;
 								var branchLevel = <div data={locationLevel} id={levelsArr[j]._id}>
 										{ (j >=1) ? ((locationLevel > levelsArr[j-1].ContactLevel) ? arrow :  '') : ''}
@@ -483,7 +516,6 @@ class ContactDetails extends Component {
 			console.log('error', error);
 		})
     }
-
     contactEditUpdate(event){
     	event.preventDefault();
     	$(".addContactForm").show();
@@ -495,7 +527,6 @@ class ContactDetails extends Component {
     	var contactIndex  = splitIndex[0];
 		var levelIndex    = splitIndex[1];
 		
-		console.log('ids', levelId, contactId, locationtypes);
 		axios.get('/api/vendors/get/one/'+contactId)
 		.then((response)=>{
 			var suppliers = response.data;
@@ -540,30 +571,36 @@ class ContactDetails extends Component {
 		})
     	
     }
-
-	removeLevel(event){
+	contactDelete(event){
 	    event.preventDefault();
-	    var id = $(event.currentTarget).attr('data-id');
-	    var idlevele = $(event.currentTarget).attr('id');
-	    var dataIndex     = $(event.currentTarget).attr('data-index');
-    	var splitIndex    = dataIndex.split('-');
-    	var contactIndex  = splitIndex[0];
-    	var levelIndex    = splitIndex[1];
-
-	    // Meteor.call('removelevel',id,contactIndex,levelIndex,idlevele,
-	    //     function(error,result){
-	    //       if(error){
-	    //         // console.log(error.reason);
-	    //       }else{
-	    //         swal({
-	    //         	title:'abc',
-	    //         	text:'Contact Details deleted successfully!'
-	    //     	});
-	    //       }
-	    //   });
+		var vendorID = this.state.vendor_ID;
+		var locationID = event.target.id;
+		
+		var formValues = {
+			vendor_ID   : vendorID,
+			location_ID : locationID
+		}
+		axios.patch('/api/vendors/delete/contact/'+vendorID+"/"+locationID, formValues)
+		.then((response)=>{
+			this.contactDetails();
+			swal(response.data.message);
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
 	}
-	
-
+	contactDetails() {
+		axios.get('/api/vendors/get/one/' + this.props.match.params.vendor_ID)
+		.then((response) => {
+			
+			this.setState({
+				contactarray: response.data.contactDetails
+			})
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
+	}
 	render() {
 		return (
 			<div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -618,94 +655,99 @@ class ContactDetails extends Component {
 																<h4 className="noteSupplier">Note: Please start adding contacts from 1st point of contact to higher authority.</h4>
 															</div>
 															<div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
-																<div className="button4  pull-right">
-																	<i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Contact
+																<div className="button4  pull-right" onClick={this.openForm.bind(this)}>
+																	<i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Location
 																</div>
 															</div>	
 															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formHrTag"></div> 	
 														</div>
-														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
-															<form id="ContactDetail">
-																<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
-																<div  className="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Location Type <sup className="astrick">*</sup> 
-																	</label>
-																	<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange}>
-																		<option selected="true" disabled="true">--Select Location Type--</option>
-																		{
-																			this.state.locationTypeArry && this.state.locationTypeArry.length>0?
-																			this.state.locationTypeArry.map((locationtypedata, index)=>{
-																				
-																				return(      
-																						<option key={index}>{locationtypedata.locationType}</option>
-																					);
-																				}
-																			)
-																			:
-																			null
-																		}
-																	</select>
-																</div>
-
-																<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Designation <sup className="astrick">*</sup> 
-																	</label>
-																	<input id="Designations" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Designation} ref="Designation" name="Designation" onChange={this.handleChange} />
-																</div>
-																<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Level <sup className="astrick">*</sup> 
-																	</label>
-																	<select id="ContactLevel" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.ContactLevel} ref="ContactLevel" name="ContactLevel" onChange={this.handleChange}>
-																		<option selected="true" disabled="true">--Select Contact Level--</option>
-																		<option value="1">First level of contact</option>
-																		<option value="2">Second level of contact</option>
-																		<option value="3">Third level of contact</option>
-																	</select>
-																</div>
-																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 "> 
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
-																	</label>
-																	<InputMask mask="9999999999" maskChar=" " id="Phones" name="phones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Phone} ref="Phone" name="Phone" onChange={this.handleChange} pattern="[0-9]+" required/>
-																</div>
-																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
-																	</label>
-																	<input id="Emails" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
-																</div>
-															
-																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
-																	</label>
-																	<input id="Names" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
-																</div>
-																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
-																	<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Reporting Manager
-																	</label>
-																	<input id="Reportinmanagers" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.Reportinmanager} ref="Reportinmanager" name="Reportinmanager" onChange={this.handleChange} />
-																</div>
-																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
-																	<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
-																	</label>
-																	<InputMask mask="9999999999" maskChar=" " id="AltPhones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.AltPhone} ref="AltPhone" name="AltPhone" onChange={this.handleChange} pattern="[0-9]+" />
-																</div>
-																<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
-																	<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Office Landline No. 
-																	</label>
-
-																	<input id="Landings" name="Landings" type="text" onKeyDown={this.keyPressNumber} className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" minLength="6" maxLength="13" value={this.state.Landing} ref="Landing" name="Landing" onChange={this.handleChange} />
-																</div>
-																</div>
-																
-																<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 contactSubmit">
-																	{	
-																		this.state.contactLevel_ID ?
-																			<button className="button3 btn-primary pull-right" onClick={this.updatecontactdetailAddBtn.bind(this)} data-id={this.state.contactValue}>Update Contact</button>
+														{
+															this.state.openForm == true ? 
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
+																<form id="ContactDetail">
+																	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
+																	<div  className="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Location Type <sup className="astrick">*</sup> 
+																		</label>
+																		<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange}>
+																			<option selected="true" disabled="true">--Select Location Type--</option>
+																			{
+																				this.state.locationTypeArry && this.state.locationTypeArry.length>0?
+																				this.state.locationTypeArry.map((locationtypedata, index)=>{
+																					
+																					return(      
+																							<option key={index}>{locationtypedata.locationType}</option>
+																						);
+																					}
+																				)
 																				:
-																			<button className="button3 btn-primary pull-right" onClick={this.contactdetailAddBtn.bind(this)}>Submit</button>
-																	}
-																</div>
-															</form>
-														</div>
+																				null
+																			}
+																		</select>
+																	</div>
+
+																	<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Designation <sup className="astrick">*</sup> 
+																		</label>
+																		<input id="Designations" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Designation} ref="Designation" name="Designation" onChange={this.handleChange} />
+																	</div>
+																	<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Level <sup className="astrick">*</sup> 
+																		</label>
+																		<select id="ContactLevel" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.ContactLevel} ref="ContactLevel" name="ContactLevel" onChange={this.handleChange}>
+																			<option selected="true" disabled="true">--Select Contact Level--</option>
+																			<option value="1">First level of contact</option>
+																			<option value="2">Second level of contact</option>
+																			<option value="3">Third level of contact</option>
+																		</select>
+																	</div>
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 "> 
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
+																		</label>
+																		<InputMask mask="9999999999" maskChar=" " id="Phones" name="phones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Phone} ref="Phone" name="Phone" onChange={this.handleChange} pattern="[0-9]+" required/>
+																	</div>
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
+																		</label>
+																		<input id="Emails" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
+																	</div>
+																
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
+																		</label>
+																		<input id="Names" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
+																	</div>
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
+																		<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Reporting Manager
+																		</label>
+																		<input id="Reportinmanagers" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.Reportinmanager} ref="Reportinmanager" name="Reportinmanager" onChange={this.handleChange} />
+																	</div>
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
+																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
+																		</label>
+																		<InputMask mask="9999999999" maskChar=" " id="AltPhones" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.AltPhone} ref="AltPhone" name="AltPhone" onChange={this.handleChange} pattern="[0-9]+" />
+																	</div>
+																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
+																		<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Office Landline No. 
+																		</label>
+
+																		<input id="Landings" name="Landings" type="text" onKeyDown={this.keyPressNumber} className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" minLength="6" maxLength="13" value={this.state.Landing} ref="Landing" name="Landing" onChange={this.handleChange} />
+																	</div>
+																	</div>
+																	
+																	<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 contactSubmit">
+																		{	
+																			this.state.contactDetails_ID ?
+																				<button className="button3 btn-primary pull-right" onClick={this.updatecontactdetailAddBtn.bind(this)} data-id={this.state.contactValue}>Update Contact</button>
+																					:
+																				<button className="button3 btn-primary pull-right" onClick={this.contactdetailAddBtn.bind(this)}>Submit</button>
+																		}
+																	</div>
+																</form>
+															</div>
+															:
+															null
+														}
 														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 															<button className="button2" onClick={this.locationdetailBack.bind(this)}><i className="fa fa-angle-double-left" aria-hidden="true"></i>&nbsp;Location Details</button>
 															<button className="button1 pull-right" onClick={this.contactdetailBtn.bind(this)}>Finish&nbsp;</button>
@@ -716,23 +758,42 @@ class ContactDetails extends Component {
 												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 														<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 foothd">
-															<h4 className="MasterBudgetTitle">Contacts</h4>
+															<h4 className="MasterBudgetTitle">Contact Details</h4>
 														</div>
-														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bxht pdcls">
-															{this.state.contactarray && this.state.contactarray.length?
-																this.state.contactarray.map((contactArr,index)=>{
-																	return(
-																		<div key={index}>
-																			{contactArr.a}
-																			{contactArr.headOfficce}
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															{this.state.contactarray && this.state.contactarray.length > 0 ?
+																this.state.contactarray.map((data, index) => {
+																	
+																	return (
+																		<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12 boxul1" key={index}>
+																			<div className="liheader1 col-lg-1 col-md-1 col-sm-1 col-xs-1">
+																				<i className="fa fa-map-marker" aria-hidden="true"></i>
+																			</div>
+																			<ul className="col-lg-10 col-md-10 col-sm-10 col-xs-10 palfclr addrbox">
+																				<li>{data.Name}</li>
+																				<li>{data.Email} , {data.Phone}</li>
+																				<li>{data.Location}, {data.Designation}, {data.Reportinmanager}</li>
+																			</ul>
+																			<div className="liheader1 dropdown col-lg-1 col-md-1 col-sm-1 col-xs-1">
+																				<i className="fa fa-ellipsis-h dropbtn" aria-hidden="true"></i>
+																				<div className="dropdown-content dropdown-contentLocation">
+																					<ul className="pdcls ulbtm">
+																						<li  name={index}>
+																							<a href={"/contact-details/"+this.props.match.params.vendor_ID+"/"+data._id}><i className="fa fa-pencil penmrleft" aria-hidden="true"></i>&nbsp;&nbsp;Edit</a>
+																						</li>
+																						<li  name={index}>
+																							<span onClick={this.contactDelete.bind(this)} id={data._id}><i className="fa fa-trash-o" aria-hidden="true"></i> &nbsp; Delete</span>
+																						</li>
+																					</ul>
+																				</div>
+																			</div>
 																		</div>
-																		);
+																	);
 																})
 																:
-																<div className="textAlign">Contact Details will be shown here.</div>	
+																<div className="textAlign">Locations will be shown here.</div>
 															}
 														</div>
-
 													</div>
 												</div>
 											</div>

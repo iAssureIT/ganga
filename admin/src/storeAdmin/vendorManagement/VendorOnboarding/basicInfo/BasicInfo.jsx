@@ -12,6 +12,7 @@ class BasicInfo extends Component {
   
   componentDidMount() {
     this.getCategoryList();
+    this.edit();
     window.scrollTo(0, 0);
     $.validator.addMethod("regxA1", function(value, element, regexpr) {          
       return regexpr.test(value);
@@ -266,8 +267,6 @@ class BasicInfo extends Component {
         );
       }
   }
-  
-  
   removeImageTempRender(event){
       var suppliersID = this.props.match.params.id;
     //   if (suppliersID) {
@@ -284,7 +283,7 @@ class BasicInfo extends Component {
     //               }
     //           });
     //     }
-    }
+  }
   handleChange(event) {
       event.preventDefault();
       const target = event.target;
@@ -320,7 +319,7 @@ class BasicInfo extends Component {
               'mfg'              : this.state.mfg,
               'Evaluation'       : this.state.Evaluation,
               'score'            : this.state.score,
-              'vendorID'        : Math.floor(Math.random() * 1000) + 1,
+              'vendorID'         : Math.floor(Math.random() * 1000) + 1,
               'Owner_ID'         : localStorage.getItem('admin_ID'),
           }
           axios.post('/api/vendors/post', formValues)
@@ -488,26 +487,7 @@ class BasicInfo extends Component {
     //   });
   }
   componentWillReceiveProps(nextProps) { 
-    if(nextProps.routerId && nextProps.post5){ 
-      // var lengthDatas = nextProps.post.locationDetails; 
-      var lengthData = nextProps.post.length;    
-      this.setState({         
-        typeOptions                   : nextProps.post5.typeOptions,         
-        companyname                   : nextProps.post5.companyname,         
-        pan                           : nextProps.post5.pan,         
-        tin                           : nextProps.post5.tin,         
-        website                       : nextProps.post5.website,         
-        gstno                         : nextProps.post5.gstno,         
-        category                      : nextProps.post5.category,                  
-        coino                         : nextProps.post5.coino,         
-        mfg                           : nextProps.post5.mfg,         
-        score                         : nextProps.post5.score,         
-        Evaluation                    : nextProps.post5.Evaluation,         
-        attachedDocuments             : nextProps.post5.attachedDocuments,         
-        logo                          : nextProps.post5.logo,
-        edit                          : true          
-      });    
-    }
+    this.edit();
     this.handleChange = this.handleChange.bind(this);  
   }
   admin(event){
@@ -527,7 +507,34 @@ class BasicInfo extends Component {
 		.catch((error)=>{
 			console.log('error', error);
 		})
-	}	
+  }	
+  edit(){
+    var vendor_ID 			= this.state.vendor_ID;
+		
+		if(vendor_ID != ''){
+			axios.get('/api/vendors/get/one/'+vendor_ID)
+			.then((response)=>{
+				this.setState({
+					'typeOptions'      : response.data.typeOptions,
+          'companyName'      : response.data.companyname,
+          'pan'              : response.data.pan,
+          'tin'              : response.data.tin,
+          'website'          : response.data.website,
+          'gstno'            : response.data.gstno,
+          'category'         : response.data.category,
+          'coino'            : response.data.coino,
+          'mfg'              : response.data.mfg,
+          'Evaluation'       : response.data.Evaluation,
+          'score'            : response.data.score,
+          'vendorID'         : response.data.vendorID,
+          'Owner_ID'         : response.data.Owner_ID,
+				})
+			})
+			.catch((error)=>{
+				console.log('error', error);
+			})
+		}
+  }
   render() {
     
       return (

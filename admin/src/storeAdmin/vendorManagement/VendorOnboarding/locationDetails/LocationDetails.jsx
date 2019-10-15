@@ -199,7 +199,7 @@ class LocationDetails extends Component {
 		} else if (window.location.pathname == '/LocationDetailsSTL/' + id) {
 			this.props.history.push("/SupplierOnboardingFormSTL/" + id);
 		} else {
-			this.props.history.push("/SupplierOnboardingFormSTM/" + id);
+			this.props.history.push("/vendor-onboarding/" + id);
 		}
 	}
 	locationdetailsAdd(event) {
@@ -442,8 +442,7 @@ class LocationDetails extends Component {
 			console.log('error', error);
 		})
 	}
-	render() {
-
+	render(){
 		return (
 			<div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
 				<div className="row">
@@ -457,7 +456,7 @@ class LocationDetails extends Component {
 												<div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
 													<h4 className="weighttitle col-lg-11 col-md-11 col-xs-11 col-sm-11 NOpadding-right">Vendor Management</h4>
 													<div title="Go to Admin" className="col-lg-1 col-md-1 col-xs-1 col-sm-1 NOpadding-right">
-														{/*this.props.vendorData && this.props.vendorData.OwnerId == Meteor.userId() ? <div onClick={this.admin.bind(this)} className="redirectToAdmin col-lg-5 col-lg-offset-7 col-md-10 col-xs-10 col-sm-10 fa fa-arrow-right"></div> : null*/}
+														
 													</div>
 												</div>
 											</div>

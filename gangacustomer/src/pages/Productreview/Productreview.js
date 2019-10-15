@@ -30,7 +30,7 @@ class Productreview extends Component {
         getMyReview(){
               const userid = localStorage.getItem('user_ID');
             // console.log("userid=========================>",userid);
-      axios.get("/api/customerReview/get/user/list/5d88630840a13a6cc20d63e1")
+      axios.get("/api/customerReview/get/user/list/"+userid)
             .then((response)=>{
               this.setState({ 
                   reviewData : response.data,
