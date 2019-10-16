@@ -22,7 +22,7 @@ class Productreview extends Component{
                 paginationApply : true,
                 searchApply     : true,
                 deleteMethod    : 'delete',
-                apiLink         : '/api/products',
+                apiLink         : '/api/customerReview',
                 editUrl         : '/add-product/'
             },
             startRange : 0,

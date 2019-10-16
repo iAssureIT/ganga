@@ -420,33 +420,30 @@ class IAssureTable extends Component {
 			})
         }
     }
-    
     changeStatusOfProd(event){
     	var status = event.target.getAttribute('data-status');
-        var product_ID = event.target.getAttribute('data-ID');
-        if(status == "Publish" && product_ID){
+        var review_ID = event.target.getAttribute('data-ID');
+        if(status == "Publish" && review_ID){
             var changingStat = "Unpublish";
         }else {
             var changingStat = "Publish";
         }
         var data = {
         	status : changingStat,
-        	product_ID : product_ID
+        	review_ID : review_ID
         }
-        axios.put('/api/products/status', data)
+        axios.put('/api/customerReview/status', data)
         .then((response)=>{
         	this.props.getData(this.state.startRange, this.state.limitRange);
         	swal({
-                text: 'Product '+changingStat+'ed Successfully',
-                title: 'Product '+changingStat+'ed Successfully',
+                text: 'Review '+changingStat+'ed Successfully',
+                title: 'Review '+changingStat+'ed Successfully',
             });
         })
         .catch((error)=>{
 
         });
-        
 	}
-	
 	render(){
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	

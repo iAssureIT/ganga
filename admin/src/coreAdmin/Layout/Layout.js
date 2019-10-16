@@ -51,8 +51,8 @@ import viewOrder                                  from '../../StoreManagement/or
 
 //================== Reports ===============//
 import Reports                                    from '../../admin/Reports/Reports.js';
-import CategoryWiseReports                                    from '../../admin/categoryWiseReports/Reports.js';
-import Productreview                              from '../../admin/Productreview/Productreview.js';
+import CategoryWiseReports                        from '../../admin/categoryWiseReports/Reports.js';
+import Productreview                              from '../../storeAdmin/Productreview/Productreview.js';
 
 import ImageUpload from '../../ImageUpload/ImageUpload.js';
 
