@@ -204,7 +204,7 @@ class AddNewShopProduct extends Component {
       section: event.target.value.split('|')[0],
       section_ID: event.target.value.split('|')[1],
     })
-    axios.get('/api/category/get/list/' + event.target.value.split('|')[0])
+    axios.get('/api/category/get/list/' + event.target.value.split('|')[1])
       .then((response) => {
         this.setState({
           categoryArray: response.data,
