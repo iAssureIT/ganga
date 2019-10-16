@@ -44,7 +44,7 @@ import PrivacyPolicy                             from "../pages/PrivacyPolicy/Pr
 import Aboutuspage                               from "../pages/Aboutuspage/Aboutuspage.js";
 import ReturnPolicy                              from '../pages/ReturnPolicy/ReturnPolicy.js';
 import ContactPage                               from '../pages/ContactPage/ContactPage.js';
-
+import SiteMap                                   from '../pages/SiteMap/SiteMap.js';
 
 
 const WebLayout = () => (
@@ -80,7 +80,7 @@ const WebLayout = () => (
     <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
     <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
     <Route path="/about-us"             exact strict component={Aboutuspage}  />
-    <Route path="/sitemap" exact strict component={Aboutuspage}  />
+    <Route path="/sitemap" exact strict component={SiteMap}  />
     <Route path="/contact-us" exact strict component={ContactPage}  />
   </div>
 );

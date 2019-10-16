@@ -23,7 +23,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
       // console.log('url = ',url);
       var formValues ={
         "user_ID" :  this.props.match.params.user_ID,
-        "mobOTP"  :  parseInt(this.refs.mobotp.value),
+        // "mobOTP"  :  parseInt(this.refs.mobotp.value),
         "emailOTP":  parseInt(this.refs.emailotp.value),
         "status"  :  "Active"
       }
