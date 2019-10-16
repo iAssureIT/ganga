@@ -169,12 +169,12 @@ export default class Leftsidebar extends Component{
                   </ul>
                 </li>
                 <li className="sidebarMenuText">
-                  <a href="#vendor" data-toggle="collapse" aria-expanded="false">
+                  <a href="#vendors" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-industry" />
                     Vendor Management
                      <i className="fa fa-sort-down pull-right"></i>
                   </a>
-                  <ul className="collapse list-unstyled" id="vendor">
+                  <ul className="collapse list-unstyled" id="vendors">
                     <li>
                       <a href="/vendor-onboarding">
                         <i className="fa fa-circle-o" /> 
