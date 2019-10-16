@@ -23,18 +23,22 @@ class ShopByCategoriesEcommerce extends Component {
           const userid = localStorage.getItem('user_ID');
           
           const formValues = { 
-              "user_ID"    : userid,
-              "product_ID" : response.data._id,
-              "currency" : response.data.currency,
-              "productCode" : response.data.productCode,
-              "productName" : response.data.productName,
-              "category" : response.data.category,
-              "subCategory" : response.data.subCategory,
-              "productImage" : response.data.productImage,
-              "quantity" : 1  ,
-			  "discountedPrice" : parseInt(response.data.discountedPrice),
-              "originalPrice" : parseInt(response.data.originalPrice),
-              "totalForQantity" : totalForQantity,
+			"user_ID"    : userid,
+			"product_ID" : response.data._id,
+			"currency" : response.data.currency,
+			"productCode" : response.data.productCode,
+			"productName" : response.data.productName,
+			"section_ID"        : response.data.section_ID,
+			"section"           : response.data.section,
+			"category_ID": response.data.category_ID,
+			"category": response.data.category,
+			"subCategory_ID": response.data.subCategory_ID,
+			"subCategory": response.data.subCategory,
+			"productImage" : response.data.productImage,
+			"quantity" : 1  ,
+			"discountedPrice" : parseInt(response.data.discountedPrice),
+			"originalPrice" : parseInt(response.data.originalPrice),
+			"totalForQantity" : totalForQantity,
               
           }
           axios.post('/api/carts/post', formValues)
