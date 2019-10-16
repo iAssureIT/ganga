@@ -38,7 +38,13 @@ export default class WeeklyReport extends Component{
 
     componentDidMount(){
         this.getCount();  
-        
+        axios.get("/api/sections/get/list/")
+        .then((response)=>{
+          this.setState({ sections : response.data })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
         this.setState({
             selectedWeekYear : moment().format('Y')+'-'+moment().format('w')+'W',
             selectedWeek : moment().format('w'),
@@ -46,7 +52,7 @@ export default class WeeklyReport extends Component{
             endDate     : moment().year(moment().format('Y')).week(moment().format('W')).endOf('week').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null )    
         })
     }
     componentWillReceiveProps(nextProps){
@@ -67,20 +73,23 @@ export default class WeeklyReport extends Component{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange){
-        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
-        .then((response)=>{
-          this.setState({ 
-            tableData : response.data
-          },()=>{ 
-            console.log("tableData",this.state.tableData);
-          })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+    getData(startDate,endDate, startRange,limitRange,category, subcategory){
+        var formValues={
+              "startTime" : startDate,
+              "endTime"   : endDate,
+              "category"  : category,
+              "subcategory" : subcategory
+            }
+            axios.post("/api/orders/get/category-wise-report",formValues)
+            .then((response)=>{
+              this.setState({ 
+                tableData : response.data
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
     }
-    
 
 	previousWeek(event){
 		event.preventDefault();
@@ -93,10 +102,9 @@ export default class WeeklyReport extends Component{
             startDate       : startDate,
             endDate         : moment(startDate).add(1, "week").format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )   
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )   
         })
 	}
-
 	nextWeek(event){
 		event.preventDefault();
         
@@ -108,7 +116,7 @@ export default class WeeklyReport extends Component{
             startDate       : startDate,
             endDate         : moment(startDate).add(1, "week").format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )   
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )   
         })
     }
     
@@ -121,42 +129,40 @@ export default class WeeklyReport extends Component{
            [name] : event.target.value,
         });
     }
-    dataTableList(){
-        // var weekNumFromSess = Session.get("selectedWeek");
-        
-        // var mondayInWeek = moment(weekNumFromSess).day("Monday").week(weekNumFromSess).format();
-
-        // var mondayInWeekDt = new Date(mondayInWeek);
-        // var sundayOfWeek = moment(mondayInWeek).add(7,"days").format();
-        // var sundayOfWeekDt = new Date(sundayOfWeek);
-        
-        // var reportData = [];
-        // if(this.props.selectedCategory){
-        //     if(this.props.selectedSubCategory){
-        //         reportData =  Orders.find({'createdAt':{$gte : mondayInWeekDt, $lt : sundayOfWeekDt }, 'status' : 'Paid',  "products": { $elemMatch: { category: this.props.selectedCategory, subCategory: this.props.selectedSubCategory}}}, {sort: {'createdAt': -1}}).fetch();
-        //     }else{
-        //         reportData =  Orders.find({'createdAt':{$gte : mondayInWeekDt, $lt : sundayOfWeekDt }, 'status' : 'Paid',  "products": { $elemMatch: { category: this.props.selectedCategory}}}, {sort: {'createdAt': -1}}).fetch();
-        //     }
-        // }else{
-        //     reportData =  Orders.find({'createdAt':{$gte : mondayInWeekDt, $lt : sundayOfWeekDt }, 'status' : 'Paid'}, {sort: {'createdAt': -1}}).fetch();
-        // }
-        // this.setState({
-        //     reportData : reportData
-        // });
-
-    }
     
     getSearchText(searchText, startRange, limitRange){
         this.setState({
             tableData : []
         });
     }
+    handleSection(event){
+        axios.get("/api/category/get/list/"+event.target.value)
+        .then((response)=>{
+          this.setState({ 
+            categories : response.data
+          })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
+    handleCategory(event){
+        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        axios.get("/api/category/get/one/"+event.target.value)
+        .then((response)=>{
+          this.setState({ 
+            subcategories : response.data.subCategory
+          })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
     render(){
         if(!this.props.loading){
             return( 
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="sales-report-main-class">
-                        <div className="reports-select-date-boxmain">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 sales-report-main-class">
+                    <div className="reports-select-date-boxmain">
                             <div className="reports-select-date-boxsec">
                                 <div className="reports-select-date-Title">Weekly Reports</div>
                                 <div className="input-group">
@@ -166,9 +172,48 @@ export default class WeeklyReport extends Component{
                                 </div>
                             </div>
                         </div>
-
-                        <div className="report-list-downloadMain">
-                            
+                        <br/>
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Section 
+                        </label>
+                        <select id="section" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                          ref="section" name="section" onChange={this.handleSection.bind(this)} >
+                          <option selected={true} disabled={true}>-- Select --</option>
+                          {
+                            this.state.sections && this.state.sections.map((data,index)=>{
+                              return(<option value={data._id}>{data.section}</option>);
+                            })
+                          }
+                        </select>
+                      </div>
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Category 
+                        </label>
+                        <select id="category" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                          ref="category" name="category" onChange={this.handleCategory.bind(this)} >
+                          <option selected={true} disabled={true}>-- Select --</option>
+                          {
+                            this.state.categories && this.state.categories.map((data,index)=>{
+                              return(<option value={data._id}>{data.category}</option>);
+                            })
+                          }
+                        </select>
+                      </div>
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
+                        </label>
+                        <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                          ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+                          <option selected={true} disabled={true}>-- Select --</option>
+                          {
+                            this.state.subcategories && this.state.subcategories.map((data,index)=>{
+                              return(<option value={data._id}>{data.subCategoryTitle}</option>);
+                            })
+                          }
+                        </select>
+                      </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt">
+                            <div className="row tablebg">   
                             {
                             <IAssureTable 
                                 tableHeading={this.state.tableHeading}
@@ -179,11 +224,8 @@ export default class WeeklyReport extends Component{
                                 tableObjects={this.state.tableObjects}
                             />
                             }
-
+                            </div>
                         </div>
-                    </div>
-                
-                    
                 </div>
                 
             );

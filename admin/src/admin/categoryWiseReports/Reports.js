@@ -6,6 +6,7 @@ import MonthlyReport        from './MonthlyReport.js';
 import YearlyReport         from './YearlyReport.js';
 import CustomisedReport     from './CustomisedReport.js';
 import "./Reports.css";
+import axios                  from 'axios';
 
 class Reports extends Component{ 
 	constructor(props){
@@ -43,7 +44,13 @@ class Reports extends Component{
   }
 
   componentDidMount(){
-
+    axios.get("/api/sections/get/list/")
+    .then((response)=>{
+      this.setState({ sections : response.data })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
   }
   
   changeReportComponent(event){
@@ -53,6 +60,7 @@ class Reports extends Component{
       'currentTabView': currentComp,
     })
   }
+  
   render(){
     return( 
       <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -63,12 +71,13 @@ class Reports extends Component{
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 contactdeilsmg pageHeader">
-                      Reports           
+                     Category Reports          
                     </div>
                     <hr className="hr-head container-fluid row"/>
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop11">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17">
+                    
+                    <div className="marginTop17">
                       <div className="sales-report-main-class">
                         <div className="sales-report-commonpre">
                           <div onClick={this.changeReportComponent.bind(this)} id="Daily" className={this.state.currentTabView == "Daily" ? "sales-report-common sales-report-today report-currentlyActive" : "sales-report-common sales-report-today"}>

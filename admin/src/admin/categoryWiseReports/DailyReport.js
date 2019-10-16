@@ -42,16 +42,23 @@ class DailyReport extends Component{
  
   getReport(event){
     event.preventDefault(); 
-    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange);
+    
+    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val()); 
   }
        
-  getData(startDate,startRange,limitRange){
-    axios.get("/api/orders/get/report/"+startDate+'/'+startDate+'/'+startRange+'/'+limitRange)
+  getData(startDate,startRange,limitRange,category, subcategory){
+    var formValues={
+      "startTime" : startDate,
+      "endTime"   : startDate,
+      "category"  : category,
+      "subcategory" : subcategory
+    }
+    console.log("formValues",formValues);
+
+    axios.post("/api/orders/get/category-wise-report",formValues)
     .then((response)=>{
       this.setState({ 
         tableData : response.data
-      },()=>{ 
-        console.log("tableData",this.state.tableData);
       })
     })
     .catch((error)=>{
@@ -75,10 +82,16 @@ class DailyReport extends Component{
 
   componentDidMount() {
     this.getCount();  
+    axios.get("/api/sections/get/list/")
+    .then((response)=>{
+      this.setState({ sections : response.data })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
     document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
     this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
-     
-      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
+      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, null, null); 
     });
   }
 
@@ -89,7 +102,7 @@ class DailyReport extends Component{
     var selectedDate1 = $(".reportsDayRef").val();
 
     this.setState({currentDate: moment(selectedDate1).subtract(1, "days").format("YYYY-MM-DD")}, () => {
-        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
+        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val());
     }) 
   }
   nextDate(event){
@@ -98,7 +111,7 @@ class DailyReport extends Component{
     var selectedDate1 = $(".reportsDayRef").val();
 
     this.setState({currentDate: moment(selectedDate1).add(1, "days").format("YYYY-MM-DD")}, () => {
-        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
+        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val());
     }) 
   }
   
@@ -124,7 +137,29 @@ class DailyReport extends Component{
     // return today;
 
   }
-
+  handleSection(event){
+    axios.get("/api/category/get/list/"+event.target.value)
+    .then((response)=>{
+      this.setState({ 
+        categories : response.data
+      })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
+  }
+  handleCategory(event){
+    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+    axios.get("/api/category/get/one/"+event.target.value)
+    .then((response)=>{
+      this.setState({ 
+        subcategories : response.data.subCategory
+      })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
+  }
   render() {
     
     var shown = {
@@ -136,8 +171,7 @@ class DailyReport extends Component{
     }
 
     return (
-      <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-        <div className="sales-report-main-class">
+      <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 sales-report-main-class">
           <div className="reports-select-date-boxmain">
             <div className="reports-select-date-boxsec">
               <div className="reports-select-date-Title">Daily Reports</div>
@@ -145,13 +179,52 @@ class DailyReport extends Component{
                 <span onClick={this.previousDate.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
                 <input onChange={this.getReport.bind(this)} defaultValue={this.state.currentDate} name="reportsDayRef" type="date" className="reportsDateRef reportsDayRef form-control" 
                 ref="reportsDayRef"  />
-               
                 <span onClick={this.nextDate.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-right" aria-hidden="true"></i></span>
               </div>
             </div>
           </div>
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt formLable boxHeightother " >
-            <div className="row">  
+          <br/>
+          <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Section 
+            </label>
+            <select id="section" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+              ref="section" name="section" onChange={this.handleSection.bind(this)} >
+              <option selected={true} disabled={true}>-- Select --</option>
+              {
+                this.state.sections && this.state.sections.map((data,index)=>{
+                  return(<option value={data._id}>{data.section}</option>);
+                })
+              }
+            </select>
+          </div>
+          <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Category 
+            </label>
+            <select id="category" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+              ref="category" name="category" onChange={this.handleCategory.bind(this)} >
+              <option selected={true} disabled={true}>-- Select --</option>
+              {
+                this.state.categories && this.state.categories.map((data,index)=>{
+                  return(<option value={data._id}>{data.category}</option>);
+                })
+              }
+            </select>
+          </div>
+          <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
+            </label>
+            <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+              ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+              <option selected={true} disabled={true}>-- Select --</option>
+              {
+                this.state.subcategories && this.state.subcategories.map((data,index)=>{
+                  return(<option value={data._id}>{data.subCategoryTitle}</option>);
+                })
+              }
+            </select>
+          </div>
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt" >
+            <div className="row tablebg">  
               {<IAssureTable 
                 tableHeading={this.state.tableHeading}
                 twoLevelHeader={this.state.twoLevelHeader} 
@@ -162,7 +235,6 @@ class DailyReport extends Component{
               />}
             </div>
           </div> 
-        </div>
       </div>
     );
   }

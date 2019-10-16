@@ -40,13 +40,20 @@ export default class YearlyReport extends Component{
 
     componentDidMount(){
         this.getCount();
+        axios.get("/api/sections/get/list/")
+        .then((response)=>{
+          this.setState({ sections : response.data })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
         this.setState({
             selectedYear : moment().format('Y'),
             startDate   : moment().startOf('year').format('YYYY-MM-DD'),
             endDate     : moment().endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null )    
         }) 
         this.handleChange = this.handleChange.bind(this);
         
@@ -69,13 +76,17 @@ export default class YearlyReport extends Component{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange){
-        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
+    getData(startDate,endDate, startRange,limitRange, category, subcategory){
+        var formValues={
+          "startTime" : startDate,
+          "endTime"   : startDate,
+          "category"  : category,
+          "subcategory" : subcategory
+        }
+        axios.post("/api/orders/get/category-wise-report",formValues)
         .then((response)=>{
           this.setState({ 
             tableData : response.data
-          },()=>{ 
-            console.log("tableData",this.state.tableData);
           })
         })
         .catch((error)=>{
@@ -103,7 +114,7 @@ export default class YearlyReport extends Component{
             endDate     : moment(startDate).endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )    
     })
 	}
 
@@ -116,33 +127,32 @@ export default class YearlyReport extends Component{
             endDate     : moment(startDate).endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )    
     })
     }
-    
-
-    dataTableList(){
-		// var yearFromSess = Session.get("selectedYear");
-        
-  //       var thisYear = yearFromSess;
-  //       var yearDateStart = new Date("1/1/" + thisYear);
-  //       var yearDateEnd = new Date (yearDateStart.getFullYear(), 11, 31);
-
-		// var reportData = [];
-  //       if(this.props.selectedCategory){
-  //           if(this.props.selectedSubCategory){
-  //               reportData =  Orders.find({'createdAt':{$gte : yearDateStart, $lt : yearDateEnd }, 'status' : 'Paid',  "products": { $elemMatch: { category: this.props.selectedCategory, subCategory: this.props.selectedSubCategory}}}, {sort: {'createdAt': -1}}).fetch();
-  //           }else{
-  //               reportData =  Orders.find({'createdAt':{$gte : yearDateStart, $lt : yearDateEnd }, 'status' : 'Paid',  "products": { $elemMatch: { category: this.props.selectedCategory}}}, {sort: {'createdAt': -1}}).fetch();
-  //           }
-  //       }else{
-  //           reportData =  Orders.find({'createdAt':{$gte : yearDateStart, $lt : yearDateEnd }, 'status' : 'Paid'}, {sort: {'createdAt': -1}}).fetch();
-  //       }
-  //       this.setState({
-  //           reportData : reportData
-  //       });
+    handleSection(event){
+        axios.get("/api/category/get/list/"+event.target.value)
+        .then((response)=>{
+          this.setState({ 
+            categories : response.data
+          })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
     }
-   
+    handleCategory(event){
+        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        axios.get("/api/category/get/one/"+event.target.value)
+        .then((response)=>{
+          this.setState({ 
+            subcategories : response.data.subCategory
+          })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
     getSearchText(searchText, startRange, limitRange){
         console.log(searchText, startRange, limitRange);
         this.setState({
@@ -153,20 +163,59 @@ export default class YearlyReport extends Component{
     render(){
         if(!this.props.loading){
             return( 
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="sales-report-main-class">
-                        <div className="reports-select-date-boxmain">
-                            <div className="reports-select-date-boxsec">
-                                <div className="reports-select-date-Title">Yearly Reports</div>
-                                <div className="input-group">
-                                    <span onClick={this.previousYear.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
-                                    <input onChange={this.handleChange} value={this.state.selectedYear} name="inputyearlyValue" type="text" className="inputyearlyValue reportsDateRef form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="inputyearlyValue"  />
-                                    <span onClick={this.nextYear.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-right" aria-hidden="true"></i></span>
-                                </div>
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 sales-report-main-class">
+                    <div className="reports-select-date-boxmain">
+                        <div className="reports-select-date-boxsec">
+                            <div className="reports-select-date-Title">Yearly Reports</div>
+                            <div className="input-group">
+                                <span onClick={this.previousYear.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
+                                <input onChange={this.handleChange} value={this.state.selectedYear} name="inputyearlyValue" type="text" className="inputyearlyValue reportsDateRef form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="inputyearlyValue"  />
+                                <span onClick={this.nextYear.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-right" aria-hidden="true"></i></span>
                             </div>
                         </div>
-
-                        <div className="report-list-downloadMain">
+                    </div>
+                    <br/>
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Section 
+                        </label>
+                        <select id="section" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                          ref="section" name="section" onChange={this.handleSection.bind(this)} >
+                          <option selected={true} disabled={true}>-- Select --</option>
+                          {
+                            this.state.sections && this.state.sections.map((data,index)=>{
+                              return(<option value={data._id}>{data.section}</option>);
+                            })
+                          }
+                        </select>
+                      </div>
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Category 
+                        </label>
+                        <select id="category" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                          ref="category" name="category" onChange={this.handleCategory.bind(this)} >
+                          <option selected={true} disabled={true}>-- Select --</option>
+                          {
+                            this.state.categories && this.state.categories.map((data,index)=>{
+                              return(<option value={data._id}>{data.category}</option>);
+                            })
+                          }
+                        </select>
+                      </div>
+                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                        <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
+                        </label>
+                        <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+                          ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+                          <option selected={true} disabled={true}>-- Select --</option>
+                          {
+                            this.state.subcategories && this.state.subcategories.map((data,index)=>{
+                              return(<option value={data._id}>{data.subCategoryTitle}</option>);
+                            })
+                          }
+                        </select>
+                      </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt">
+                          <div className="row tablebg">
                             <IAssureTable 
                                 tableHeading={this.state.tableHeading}
                                 twoLevelHeader={this.state.twoLevelHeader} 
@@ -175,9 +224,8 @@ export default class YearlyReport extends Component{
                                 getData={this.getData.bind(this)}
                                 tableObjects={this.state.tableObjects}
                             />
+                          </div>
                         </div>
-                    </div>
-                
                     
                 </div>
             );

@@ -1,27 +1,59 @@
 import React, { Component } from 'react';
 import IAssureTable           from "../../coreAdmin/IAssureTable/IAssureTable.jsx";
+import moment from 'moment';
+import $ from 'jquery';
+import axios                  from 'axios';
+
+
 export default class MonthlyReport extends Component{
 	constructor(props){
         super(props);
         this.state = {
-            "reportData":[],
-            "twoLevelHeader"    : this.props.twoLevelHeader,
-            "tableHeading"      : this.props.tableHeading,
-            "tableObjects"      : this.props.tableObjects,
-            "tableDatas"        : this.props.tableDatas,
-            "startRange"        : 0,
-            "limitRange"        : 10
+           "twoLevelHeader"     : {
+            apply               : false,
+          },
+          "tableHeading"        : {
+            orderID                    : "Order ID",
+            cratedAt                   : "Order Date",
+            userFullName               : "Customer Name",
+            totalAmount                : "Amount",
+            deliveryStatus             : "Delivery Status",
+
+          },
+          "tableData"           : [],
+          "tableObjects"        : {
+            apiLink             : '/api/annualPlans/',
+            editUrl             : '/Plan/',
+          },
+          "startRange"          : 0,
+          "limitRange"          : 10,
+          fields                : {},
+          errors                : {},
+          selectedYearMonth     : '',
+          selectedMonth         : '',
+          startDate             : '',
+          endDate               : '',
+          dataCount             : 0
         }
         this.handleChange = this.handleChange.bind(this);
         
     }
 
     componentDidMount(){
-        this.dataTableList();
+        this.getCount();
+        
+
         this.setState({
-            tableData : this.state.tableDatas.slice(this.state.startRange, this.state.limitRange),
-        });
-        this.handleChange = this.handleChange.bind(this);
+            selectedYearMonth : moment().format('Y')+'-'+moment().format('M'),
+            startDate   : moment().startOf('month').format('YYYY-MM-DD'),
+            endDate     : moment().endOf('month').format('YYYY-MM-DD')
+            },
+            ()=>{
+            console.log('month',this.state.selectedYearMonth);
+            console.log('startDate',this.state.startDate);
+            console.log('endDate',this.state.endDate);
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+        })  
         
     }
     componentWillReceiveProps(nextProps){
@@ -32,53 +64,73 @@ export default class MonthlyReport extends Component{
         }
     }
     handleChange(event){
-        event.preventDefault();
+    event.preventDefault();
        const target = event.target;
        const name = target.name;
 
        this.setState({
            [name] : event.target.value,
        });
-   }
-
+    }
+    getCount(){
+        axios.get('/api/orders/get/count')
+        .then((response)=>{
+            this.setState({
+                dataCount : response.data.dataCount
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
+    getData(startDate,endDate, startRange,limitRange){
+        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
+        .then((response)=>{
+          this.setState({ 
+            tableData : response.data
+          },()=>{ 
+            console.log("tableData",this.state.tableData);
+          })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
     currentMonth(){
-		// var monthSession = Session.get('selectedMonth');
-		// if(monthSession){
-		// 	var currentMonth = monthSession;
-		// }	else{
-		// 	var today = moment().startOf('month');
-		// 	var yyyy = moment(today).format("YYYY");
-		//     var monthNum = moment(today).format("MM");
-		//     var currentMonth = yyyy+"-"+monthNum;
-		// 	Session.set("selectedMonth",currentMonth);
-		// 	}
         var d = new Date();
         var currentMonth = d.getFullYear()+' - '+d.getMonth();
 		return currentMonth;
 	}
 
 	previousMonth(event){
-		// event.preventDefault();
-		// var selectedMonth = $(".inputmonthlyValue").val();
-		// var newMonthDt = moment(selectedMonth).subtract(1, 'months').format("YYYY-MM-DD");
-		// var newMonthNumber = moment(newMonthDt).format("MM");
-		// //Construct the WeekNumber string as 'YYYY-MM'
-		// var yearNum=moment(newMonthDt).format("YYYY");
-		// var newMonth = yearNum+"-"+newMonthNumber;
-
-		// Session.set('selectedMonth', newMonth);
+		event.preventDefault();
+        var startDate = moment(this.state.startDate).subtract(1, 'month').startOf('month').format('YYYY-MM-DD');
+        
+		this.setState({
+            selectedYearMonth : moment(startDate).format('Y')+'-'+moment(startDate).format('M'),
+            startDate   : startDate,
+            endDate     : moment(startDate).endOf('month').format('YYYY-MM-DD')
+            },
+            ()=>{
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+        }) 
 	}
 
 	nextMonth(event){
-		// event.preventDefault();
-		// var selectedMonth = $(".inputmonthlyValue").val();
-		// var newMonthDt = moment(selectedMonth).add(1, 'months').format("YYYY-MM-DD");
-		// var newMonthNumber = moment(newMonthDt).format("MM");
-		// //Construct the WeekNumber string as 'YYYY-MM'
-		// var yearNum=moment(newMonthDt).format("YYYY");
-		// var newMonth = yearNum+"-"+newMonthNumber;
-
-		// Session.set('selectedMonth', newMonth);
+		event.preventDefault();
+        var startDate = moment(this.state.startDate).add(1, 'months').startOf('month').format('YYYY-MM-DD');
+        
+        this.setState({
+            selectedYearMonth : moment(startDate).format('Y')+'-'+moment(startDate).format('M'),
+            startDate   : startDate,
+            endDate     : moment(startDate).endOf('month').format('YYYY-MM-DD')
+            },
+            ()=>{
+            console.log('month',this.state.selectedYearMonth);
+            console.log('startDate',this.state.startDate);
+            console.log('endDate',this.state.endDate);
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+        }) 
 	}
    
 
@@ -104,13 +156,7 @@ export default class MonthlyReport extends Component{
   //       });
     }
     
-    getData(startRange, limitRange){
-        this.setState({
-            tableData : this.state.tableDatas.slice(parseInt(startRange), parseInt(limitRange)),
-        },()=>{
-            console.log('tableData',this.state.tableData);
-        });
-    }
+    
     getSearchText(searchText, startRange, limitRange){
         console.log(searchText, startRange, limitRange);
         this.setState({
@@ -127,7 +173,7 @@ export default class MonthlyReport extends Component{
                                 <div className="reports-select-date-Title">Monthly Reports</div>
                                 <div className="input-group">
                                     <span onClick={this.previousMonth.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-left" aria-hidden="true"></i></span>
-                                    <input onChange={this.handleChange}  value={this.currentMonth()} name="inputmonthlyValue" type="text" className="inputmonthlyValue reportsDateRef form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="inputmonthlyValue"  />
+                                    <input onChange={this.handleChange}  value={this.state.selectedYearMonth} name="inputmonthlyValue" type="text" className="inputmonthlyValue reportsDateRef form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="inputmonthlyValue"  />
                                     <span onClick={this.nextMonth.bind(this)} className="commonReportArrowPoiner input-group-addon" id="basic-addon1"><i className="fa fa-chevron-circle-right" aria-hidden="true"></i></span>
                                 </div>
                             </div>
@@ -135,14 +181,14 @@ export default class MonthlyReport extends Component{
 
                         <div className="report-list-downloadMain">
                             <IAssureTable 
-                                completeDataCount={this.state.tableDatas.length}
+                                tableHeading={this.state.tableHeading}
                                 twoLevelHeader={this.state.twoLevelHeader} 
-                                editId={this.state.editSubId} 
-                                getData={this.getData.bind(this)} 
-                                tableHeading={this.state.tableHeading} 
-                                tableData={this.state.tableData} 
+                                dataCount={this.state.dataCount}
+                                tableData={this.state.tableData}
+                                getData={this.getData.bind(this)}
                                 tableObjects={this.state.tableObjects}
-                                getSearchText={this.getSearchText.bind(this)}/>
+                            />
+                            
                         </div>
                     </div>
                 </div>            

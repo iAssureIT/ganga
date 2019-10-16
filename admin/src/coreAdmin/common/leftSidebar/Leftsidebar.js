@@ -227,7 +227,7 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                     <li>
-                      <a href="/report">
+                      <a href="/category-wise-reports">
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Category Wise Sales Report</span>
                       </a>

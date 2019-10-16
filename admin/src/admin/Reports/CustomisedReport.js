@@ -1,17 +1,36 @@
 import React, { Component } from 'react';
 import IAssureTable         from "../../coreAdmin/IAssureTable/IAssureTable.jsx";
+import $ from 'jquery';
+import axios                  from 'axios';
+import moment from 'moment';
 
 export default class CustomisedReport extends Component{
 	constructor(props){
         super(props);
         this.state = {
-            "reportData":[],
-            "twoLevelHeader"    : this.props.twoLevelHeader,
-            "tableHeading"      : this.props.tableHeading,
-            "tableObjects"      : this.props.tableObjects,
-            "tableDatas"        : this.props.tableDatas,
-            "startRange"        : 0,
-            "limitRange"        : 10
+              "twoLevelHeader"     : {
+            apply               : false,
+          },
+          "tableHeading"        : {
+            orderID                    : "Order ID",
+            cratedAt                   : "Order Date",
+            userFullName               : "Customer Name",
+            totalAmount                : "Amount",
+            deliveryStatus             : "Delivery Status",
+
+          },
+          "tableData"           : [],
+          "tableObjects"        : {
+            apiLink             : '/api/annualPlans/',
+            editUrl             : '/Plan/',
+          },
+          "startRange"          : 0,
+          "limitRange"          : 10,
+          fields                : {},
+          errors                : {},
+          startDate             : '',
+          endDate               : '',
+          dataCount             : 0
             
         }
         this.handleFromChange = this.handleFromChange.bind(this);
@@ -20,12 +39,13 @@ export default class CustomisedReport extends Component{
     }
 
     componentDidMount(){
-        this.dataTableList();
+        this.getCount();
         this.setState({
-            tableData : this.state.tableDatas.slice(this.state.startRange, this.state.limitRange),
-        });
-        this.handleFromChange = this.handleFromChange.bind(this);
-        this.handleToChange = this.handleToChange.bind(this);
+            startDate : moment().subtract(1, 'week').format('YYYY-MM-DD'),
+            endDate   : moment().format('YYYY-MM-DD')
+        },()=>{
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )
+        })
         
     }
     componentWillReceiveProps(nextProps){
@@ -35,31 +55,45 @@ export default class CustomisedReport extends Component{
             });
         }
     }
+    getCount(){
+        axios.get('/api/orders/get/count')
+        .then((response)=>{
+            this.setState({
+                dataCount : response.data.dataCount
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
+    getData(startDate,endDate, startRange,limitRange){
+        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
+        .then((response)=>{
+          this.setState({ 
+            tableData : response.data
+          },()=>{ 
+            console.log("tableData",this.state.tableData);
+          })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
     handleFromChange(event){
-        event.preventDefault();
-       const target = event.target;
-       const name = target.name;
-
+    event.preventDefault();
        this.setState({
-           [name] : event.target.value,
-       });
-
-       var dateVal = event.target.value;
-       var dateUpdate = new Date(dateVal);
-       // Session.set('newFromDate',dateUpdate);
+            startDate : moment(event.target.value).format('YYYY-MM-DD')
+        },()=>{
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )
+        })
     }
     handleToChange(event){
-        event.preventDefault();
-       const target = event.target;
-       const name = target.name;
-
+    event.preventDefault();
        this.setState({
-           [name] : event.target.value,
-       });
-
-       var dateVal = event.target.value;
-       var dateUpdate = new Date(dateVal);
-       // Session.set('newToDate',dateUpdate);
+            endDate : moment(event.target.value).format('YYYY-MM-DD')
+        },()=>{
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )
+        })
     }
 
     currentFromDate(){
@@ -136,13 +170,7 @@ export default class CustomisedReport extends Component{
   //           reportData : reportData
   //       });
     }
-    getData(startRange, limitRange){
-        this.setState({
-            tableData : this.state.tableDatas.slice(parseInt(startRange), parseInt(limitRange)),
-        },()=>{
-            console.log('tableData',this.state.tableData);
-        });
-    }
+   
     getSearchText(searchText, startRange, limitRange){
         console.log(searchText, startRange, limitRange);
         this.setState({
@@ -163,7 +191,8 @@ export default class CustomisedReport extends Component{
                                             From
                                         </div>
                                         <div className="reports-select-date-from3">
-                                            <input onChange={this.handleFromChange} name="fromDateCustomised" ref="fromDateCustomised" value={this.currentFromDate()} type="date" className="reportsDateRef form-control" placeholder=""  />
+                                            <input onChange={this.handleFromChange} name="fromDateCustomised" ref="fromDateCustomised" 
+                                            value={this.state.startDate} type="date" className="reportsDateRef form-control" placeholder=""  />
                                         </div>
                                     </div>
                                     <div className="reports-select-date-to1">
@@ -171,7 +200,8 @@ export default class CustomisedReport extends Component{
                                             To
                                         </div>
                                         <div className="reports-select-date-to3">
-                                            <input onChange={this.handleToChange} name="toDateCustomised" ref="toDateCustomised" value={this.currentToDate()} type="date" className="reportsDateRef form-control" placeholder=""   />
+                                            <input onChange={this.handleToChange} name="toDateCustomised" ref="toDateCustomised" 
+                                            value={this.state.endDate} type="date" className="reportsDateRef form-control" placeholder=""   />
                                         </div>
                                     </div>
                                 </div>
@@ -180,14 +210,13 @@ export default class CustomisedReport extends Component{
 
                         <div className="report-list-downloadMain">
                             <IAssureTable 
-                                completeDataCount={this.state.tableDatas.length}
+                                tableHeading={this.state.tableHeading}
                                 twoLevelHeader={this.state.twoLevelHeader} 
-                                editId={this.state.editSubId} 
-                                getData={this.getData.bind(this)} 
-                                tableHeading={this.state.tableHeading} 
-                                tableData={this.state.tableData} 
+                                dataCount={this.state.dataCount}
+                                tableData={this.state.tableData}
+                                getData={this.getData.bind(this)}
                                 tableObjects={this.state.tableObjects}
-                                getSearchText={this.getSearchText.bind(this)}/>
+                            />
                         </div>
                     </div>
                 </div>

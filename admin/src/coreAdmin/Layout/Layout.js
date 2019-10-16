@@ -51,6 +51,7 @@ import viewOrder                                  from '../../StoreManagement/or
 
 //================== Reports ===============//
 import Reports                                    from '../../admin/Reports/Reports.js';
+import CategoryWiseReports                                    from '../../admin/categoryWiseReports/Reports.js';
 import Productreview                              from '../../admin/Productreview/Productreview.js';
 
 import ImageUpload from '../../ImageUpload/ImageUpload.js';
@@ -229,7 +230,10 @@ class Layout extends Component{
 
                                         {/*Report*/}
                                         <Route path="/report"                                                       exact strict component={ Reports } />
-                                        <Route path="/productreview"                                                       exact strict component={ Productreview } />
+                                        
+                                        <Route path="/category-wise-reports"                                        exact strict component={ CategoryWiseReports } />
+                                        
+                                        <Route path="/productreview"                                                exact strict component={ Productreview } />
                                     
                                     </Switch>        
                                 </Router>
