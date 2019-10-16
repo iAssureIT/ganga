@@ -217,7 +217,7 @@ class ViewTemplates extends Component{
 	  if (id) {
 	  axios({
 					method: 'get',
-					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					
 					url: '/api/masternotifications/'+id,
 				}).then((response)=> {
 	    this.setState({
@@ -231,7 +231,6 @@ class ViewTemplates extends Component{
 		 if (id) {
 	  axios({
 					method: 'get',
-					// url: 'http://localhost:3048/api/masternotifications/'+id,
 					url: '/api/masternotifications/'+id,
 				}).then((response)=> {
 	    this.setState({
@@ -245,7 +244,6 @@ class ViewTemplates extends Component{
 		 if (id) {
 	  axios({
 					method: 'get',
-					// url: 'http://localhost:3048/api/masternotifications/'+id,
 					url: '/api/masternotifications/'+id,
 				}).then((response)=> {
 	    this.setState({

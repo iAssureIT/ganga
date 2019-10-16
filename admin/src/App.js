@@ -6,9 +6,6 @@ import './App.css';
 
 import axios from 'axios';
 
-
-//axios.defaults.baseURL = 'http://localhost:5006';
-
 axios.defaults.baseURL = 'http://qaapi.gangaexpress.in';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
