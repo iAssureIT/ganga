@@ -72,6 +72,7 @@ export default class MyOrders extends Component {
     }
     getMyOrders(){
       var userId=localStorage.getItem('user_ID');
+      console.log('userId',userId);
       axios.get("/api/orders/get/list/"+userId)
             .then((response)=>{
               this.setState({ 

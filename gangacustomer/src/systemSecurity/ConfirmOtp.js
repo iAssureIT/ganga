@@ -17,30 +17,23 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
       }
     }
     confirmOTP(event){
-      // console.log('confirm otp');
       event.preventDefault();
       var url = this.props.match.params;
-      // console.log('url = ',url);
       var formValues ={
         "user_ID" :  this.props.match.params.user_ID,
-        // "mobOTP"  :  parseInt(this.refs.mobotp.value),
         "emailOTP":  parseInt(this.refs.emailotp.value),
         "status"  :  "Active"
       }
-      // console.log('formValues', formValues);
+      
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-        // swal(response.data.message);
+        ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         this.props.history.push('/login');
       })
       .catch((error)=>{
         console.log('error', error);
       })
     }
-
-
-
     inputEffect(event){
       event.preventDefault();
       if($(event.target).val() != ""){
@@ -49,7 +42,6 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
         $(event.target).removeClass("has-content");
       }
     }
-
     resendOtp(event){
       event.preventDefault();
       var element = document.getElementById("resendOtpBtn");
@@ -117,13 +109,7 @@ return(
                           <input type="text" className="form-control" ref="emailotp" name="emailotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="6" pattern="(0|[0-9]*)" required/>
                           <span className="input-group-addon glyphi-custommm"><i className="fa fa-key" aria-hidden="true"></i></span>
                         </div>
-                        {/* <div className=" mt30">
-                          <span>Enter four digit verification code received on <b>Mobile</b>.<br/></span>
-                        </div>
-                        <div className="input-group">
-                          <input type="text" className="form-control" ref="mobotp" name="mobotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="4" pattern="(0|[0-9]*)" required/>
-                          <span className="input-group-addon glyphi-custommm"><i className="fa fa-key" aria-hidden="true"></i></span>
-                        </div> */}
+                        
                       </div>
                       <div className="loginforgotpass mt10">
                         <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   

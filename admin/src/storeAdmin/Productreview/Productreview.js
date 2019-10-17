@@ -80,7 +80,8 @@ class Productreview extends Component{
                 "orderID"       : a.orderID,
                 "productID"     : a.productID,
                 "rating"        : a.rating,
-                "reviewlist"    : a.reviewlist
+                "reviewlist"    : a.reviewlist,
+                "status"        : a.status
               };
             })
             this.setState({

@@ -577,7 +577,7 @@ class IAssureTable extends Component {
                                                     </td>
                                                     <td className="col-lg-1">
                                                         <div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
-                                                            {(value.status == ("Unpublish") ? ("Unpublished") : (value.status == ("Draft") ? ("Draft") : ("Publish")))}
+                                                            {(value.status == ("Unpublish") ? ("Unpublished") : (value.status == ("Draft") ? ("Draft") : ("Published")))}
                                                         </div>
                                                     </td>
 													<td className="textAlignCenter">
