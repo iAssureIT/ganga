@@ -444,8 +444,41 @@ class IAssureTable extends Component {
 
         });
 	}
+	getProductDetail(productID){
+		console.log('prod', productID);
+		axios.get('/api/products/get/one/'+productID)
+		.then((response)=>{
+			console.log('res', response);
+			this.setState({
+				productData : response.data
+			});
+			return <p>nkhbhjb</p>
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+	}
+	submitReview(event){
+		var formValues = {
+			rating_ID 		: event.target.id,
+			adminComment 	: this.state.adminComment
+		}
+		console.log('adminComment', formValues);
+		axios.patch('/api/customerReview/admin/review', formValues)
+		.then((response)=>{
+			swal(response.data.message);
+		})
+		.catch((error)=>{
+			console.log('error', error);
+		})
+	}
+	handleChange(event){
+		this.setState({
+			[event.target.name] : event.target.value
+		})
+	}
 	render(){
-		console.log('this.state.tableData', this.state.tableData);
+		var fiveStar = [1, 1, 1, 1, 1]
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
 		       	{
@@ -567,12 +600,56 @@ class IAssureTable extends Component {
                                                     </td>
 													<td className="textAlignCenter">
 														<span>
-															{/*<a href={"/product-details/"+value._id} className="" title="View" data-ID={value._id}>
-																                                                            <i className="fa fa-eye" aria-hidden="true"></i>
-																                                                        </a>*/}&nbsp; &nbsp;
-															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
+															<i className="fa fa-reply" data-toggle="modal" title="Comment" data-target={"#showCommentModal-"+(value._id)} id={value._id}></i>&nbsp; &nbsp; 
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal-"+(value._id)}></i>}
 														</span>
+														<div className="modal fade" id={"showCommentModal-"+(value._id)} role="dialog">
+	                                                        <div className=" adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+	                                                            <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																	<h4 className="col-lg-4 col-md-4 col-sm-4 col-xs-6 textAlignLeft customerName">{value.customerName}</h4>
+																	<div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-7 col-md-1 col-md-offset-7 col-sm-1 col-sm-offset-7 col-xs-12 NOpadding-left NOpadding-right">
+																		<button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"#showCommentModal-"+(value._id)}>&times;</button>
+																	</div>
+	                                                            </div>
+	                                                            <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                                                              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12 prodImg">
+																	  <img src={value.productImages[0]} className="img-responsive" />
+																  </div>
+																  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 textAlignLeft">
+																	  <h4>{value.productName}</h4>
+																	  <p>{value.customerReview}</p>
+																	  {
+																		  fiveStar.map((a, i)=>{
+																			  if(i< value.rating){
+																				var star = 'activestar';
+																			  }else{
+																				var star = 'deactivestar'
+																			  }
+																			  return(
+																				<i key={i} className={"fa fa-star "+star}></i>
+																			  );
+																		  })
+																	  }
+																  </div>
+																  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textAlignLeft adminComment">
+																		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Admin Comments</label>
+																		<textarea rows="5" id="adminComment" value={this.state.adminComment} onChange={this.handleChange.bind(this)} name="adminComment" ref="adminComment" className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></textarea>
+																  </div>
+	                                                            </div>
+	                                                            <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                                                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	                                                                <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+	                                                              </div>
+	                                                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	                                                                <button onClick={this.submitReview.bind(this)} id={(value._id).replace(/-/g, "/")} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">SUBMIT</button>
+	                                                              </div>
+	                                                            </div>
+	                                                          </div>
+	                                                        </div>
+	                                                    </div>
+
+
 														<div className="modal fade" id={"showDeleteModal-"+(value._id)} role="dialog">
 	                                                        <div className=" adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">

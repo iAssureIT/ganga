@@ -13,10 +13,11 @@ class Productreview extends Component{
         super(props);
         this.state = {
             tableHeading :{
-                "product"   : "Product Name(Product Code)",
-                "customerReview" : 'Customer Review',
-                "customerName" : 'Customer Name',
-                "rating" : 'Product Rating',
+                "productName"       : "Product Name(Product Code)",
+                "customerName"      : 'Customer Name',
+                "customerReview"    : 'Customer Review',
+                "adminComment"      : 'Admin Comment',
+                "rating"            : 'Rating',
             },
             tableObjects : {
                 paginationApply : true,
@@ -71,12 +72,15 @@ class Productreview extends Component{
         this.getCount();
         axios.post('/api/customerReview/get/list', data)
         .then((response)=>{
+            console.log('res  p', response.data);
             var tableData = response.data.map((a, i)=>{
               return{
                 "_id"           : a._id,
-                "product"       : a.productDetails[0] ? (a.productDetails[0].productName+" "+"("+a.productDetails[0].productCode)+")" : "",
-                "customerReview": a.customerReview,
+                "productName"       : a.productDetails[0] ? (a.productDetails[0].productName+" "+"("+a.productDetails[0].productCode)+")" : "",
+                "productImages" : a.productDetails[0] ? a.productDetails[0].productImage : [],
                 "customerName"  : a.customerName,
+                "customerReview": a.customerReview,                
+                "adminComment"  : a.adminComment ? a.adminComment : "-",
                 "orderID"       : a.orderID,
                 "productID"     : a.productID,
                 "rating"        : a.rating,

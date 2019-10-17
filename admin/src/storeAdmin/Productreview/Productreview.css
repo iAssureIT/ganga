@@ -111,3 +111,18 @@
 /*.pageContent{
     margin-top: 50px;
 }*/
+.customerName{
+    font-weight: 600;
+}
+.prodImg{
+    max-height: 200px;
+}
+.adminComment{
+    margin-top: 17px;
+}
+.deactivestar{
+    color: #ccc;
+}
+.activestar{
+    color: gold;
+}
