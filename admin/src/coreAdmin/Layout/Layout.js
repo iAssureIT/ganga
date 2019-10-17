@@ -70,7 +70,6 @@ import VendorOnboardingForm   from '../../storeAdmin/vendorManagement/VendorOnbo
 import BasicInfo              from '../../storeAdmin/vendorManagement/VendorOnboarding/basicInfo/BasicInfo.jsx';
 import LocationDetails        from '../../storeAdmin/vendorManagement/VendorOnboarding/locationDetails/LocationDetails.jsx';
 import ContactDetails         from '../../storeAdmin/vendorManagement/VendorOnboarding/contactDetails/ContactDetails.jsx';
-import ListOfAllVendors       from '../../storeAdmin/vendorManagement/listOfVendors/components/ListOfAllVendors.jsx';
 import ListOfVendor           from '../../storeAdmin/vendorManagement/listOfVendors/components/ListOfVendor.jsx';
 import VendorCategory         from '../../storeAdmin/vendorManagement/MasterData/VendorCategory/VendorCategory.jsx';
 import VendorLocationType     from '../../storeAdmin/vendorManagement/MasterData/VendorLocationType/VendorLocationType.jsx';

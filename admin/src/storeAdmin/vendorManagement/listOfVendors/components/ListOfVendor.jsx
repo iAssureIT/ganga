@@ -5,7 +5,7 @@ import axios                  from 'axios';
 import ReactTable             from "react-table";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
-import ListOfAllVendors 	  from './ListOfAllVendors.jsx'; 
+import VendorsDetails 	  from './VendorsDetails.jsx'; 
 import 'bootstrap/js/tab.js';
 import '../css/ListOfVendors.css';
 import '../css/ListOfVendorsFilter.css';
@@ -14,7 +14,7 @@ import '../css/ListOfAllVendors.css';
 class ListOfVendors extends Component {
 	constructor(props) {
 	    super(props);
-	  
+	   
 	    this.state = {
 	    	firstname       : '',
 	    	supplierListOne : '',
@@ -26,10 +26,14 @@ class ListOfVendors extends Component {
 	    	category        : '-',
 	    	initial			: '',
 	    	lenghtCount     : '',
-	    };
+	    	searchByName  	: '',
+	    	vendorList		: [],
+	    	masterVendor	: []
+	    }; 
 
 	      this.handleChange = this.handleChange.bind(this);
 	      this.ShowForm = this.ShowForm.bind(this);
+	      this.camelCase = this.camelCase.bind(this);
 	}
 
 	handleChange(event) {
@@ -43,67 +47,115 @@ class ListOfVendors extends Component {
     }
 
 	componentDidMount(){
-		
-		$("html,body").scrollTop(0);
-		$(document).ready(()=>{
-		  // var $contenta = $(".contenta").hide();
-		  
-		  $(".toggle").on("click", (e)=>{
-		    $(this).toggleClass("expanded");
-		    // $contenta.slideToggle();
-		    $(".contenta").slideToggle();
-		  });
-		});
+		this.getVendors();
+		this.getStates('IN');
+		this.getVendorCategory();
   	}
-  	componentWillReceiveProps(nextProps){
-		// this.setState({supplierListOne : ''});
-	 	// var supplierDetail = nextProps.post;
-    	// var supplierarray = [];
-	  	// if(supplierDetail){
-	  	// 	// // console.log('Suppliers',supplierDetail);
-	  	// 	for (var i = 0; i < supplierDetail.length; i++) {
-	  	// 		if (supplierDetail[i].logo) {
-	  	// 			var logo = supplierDetail[i].logo;
-	  	// 		}else{
-	  	// 			var logo = '/images/imgNotFound.jpg';
-	  	// 		}
-		// 		if(supplierDetail[i].locationDetails.length>0 && supplierDetail[i].contactDetails.length>0){
-		// 			supplierarray.push({
-		// 					'companyName'     : supplierDetail[i].companyname,
-		// 					'category'        : supplierDetail[i].category,
-		// 					'website'     	  : supplierDetail[i].website,
-		// 					'logo'     	  	  : logo,
-		// 					'city' 	   		  : supplierDetail[i].locationDetails[0].city,
-		// 					'states'  		  : supplierDetail[i].locationDetails[0].states,
-		// 					'pincode'         : supplierDetail[i].locationDetails[0].pincode,
-		// 					'id'	   		  : supplierDetail[i]._id,
-		// 					'name'			  : supplierDetail[i].contactDetails[0].LocationLevel[0].Name ? supplierDetail[i].contactDetails[0].LocationLevel[0].Name : '',
-		// 				});
-		// 		}else{
-		// 			supplierarray.push({
-		// 					'companyName'     : supplierDetail[i].companyname,
-		// 					'category'        : supplierDetail[i].category,
-		// 					'website'     	  : supplierDetail[i].website,
-		// 					'logo'     	  	  : logo,
-		// 					'city' 	   		  : 'NA',
-		// 					'states'  		  : 'NA',
-		// 					'pincode'         : 'NA',
-		// 					'id'	   		  : supplierDetail[i]._id,
-		// 					'name'			  : 'NA',
-		// 				});
-		// 		}
-	  	// 	}
-
-	  	// }
-	  	// // // console.log(supplierarray)
-	  	// this.setState({
-		// 		supplierarrayS : supplierarray,
-		// 	},()=>{this.suppliersDetails()}); 
+  
+  	getVendorCategory(){
+      axios.get("/api/vendorCategory/get/list/")
+            .then((response)=>{
+          
+              this.setState({
+                  vendorCategory : response.data
+              })
+              
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
     }
-  	componentWillUnmount(){
-    	
-  	}
+    handleChangeCategory(event){
+    	event.preventDefault();
+    	const target = event.target;
+      	const category = $(target).val();
+    	console.log('ashdhgj',category);
+    	this.setState({
+        'category' : event.target.value,
+      	},()=>{
 
+      		this.showAllList(this.state.masterVendor, "category",null,category)
+      		
+      		var filtered=this.state.masterVendor.filter(function(i){
+      			console.log('i',i);
+      			return i.category == category
+      		});
+      		this.setState({
+		        vendorList: filtered
+		    });
+      	});
+       
+    }
+    getStates(StateCode){
+      axios.get("http://locationapi.iassureit.com/api/states/get/list/"+StateCode)
+            .then((response)=>{
+          
+              this.setState({
+                  statesArray : response.data
+              })
+              
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+    handleChangeState(event){
+      event.preventDefault();
+      const target = event.target;
+      const stateCode = $(target).val();
+      
+      this.getDistrict(stateCode,'IN');
+      this.setState({
+        'states' : event.target.value,
+      },()=>{this.showAllList(this.state.masterVendor, "locationDetails", "states",stateCode)});
+       
+    }
+    getDistrict(stateCode,countryCode){
+      axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
+            .then((response)=>{
+              this.setState({
+                  districtArray : response.data
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+    handleChangeDistrict(event){
+      const target = event.target;
+      const districtName = $(target).val();
+      const stateCode = $('.Statesdata').val();
+      const countryCode = 'IN';
+      //this.getBlocks(districtName,stateCode,countryCode);
+
+      this.setState({
+        'districts' : event.target.value,
+      },()=>{
+
+        this.showAllList(this.state.masterVendor, "locationDetails", "district",districtName)
+      });
+
+    }
+    camelCase(str){
+      return str
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    }
+  	getVendors(){
+  		axios.get("/api/vendors/get/list")
+            .then((response)=>{
+              console.log(response.data);
+              this.setState({
+                  vendorList : response.data,
+                  masterVendor : response.data
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            }) 
+  	}
   	toggleFormShow(event){
   		
 	    $(".filter_wrapper").slideToggle();
@@ -120,343 +172,161 @@ class ListOfVendors extends Component {
 	   return new RegExp(fullExp, "i");
 	}
 	
-	getTextValue(event){
-		event.preventDefault();
-		var searchby= $('.Searchfind').val();
-		if(searchby){
-			var RegExpBuildValue = this.buildRegExp(searchby);
-			this.setState({
-				firstname   : RegExpBuildValue,
-				country 	: '-',
-				state 		: '-',
-				city 		: '-',
-				catgory 	: '-',
-				initial		: '',
-			},()=>{this.showAllList()});
-			
-		}
-		else{
-			this.setState({
-				firstname   : '',
-				country 	: '-',
-				state 		: '-',
-				city 		: '-',
-				catgory 	: '-',
-				initial		: '',
-			},()=>{this.showAllList()});
-		}
-	}
-
 	ShowForm(event){
 		// console.log('inside')
-		var data = $(event.currentTarget).attr('data-child');
-		// console.log('data',data);
-		if(data){
-			if(this.state.data && this.state.data.split('-')[1] == this.state.index){
-		        this.setState({
-		            index:'',
-		            id:'',
-		        });
-			}else if(data){
-		        this.setState({
-		            index:data.split('-')[1],
-		            id:data.split('-')[0],
-		        });			
-			}
-		}
+		var data = $(event.currentTarget).attr('id');
+		this.setState({id:data});
+		
 			$('.commonSup').show()
 			$('.selected').removeClass('selectedSupplier');
 			$(event.currentTarget).addClass('selectedSupplier');
 		
 	}
 
-	shortByAlpha(event){
-		// var supplierList = this.props.post;
-		// var supplierslenght = supplierList.length;
-		// var letterUpper = $(event.target).attr('value');
-		// var letterLower = $(event.target).attr('value').toLowerCase() ;
-		// var supplierArr = [];
-		// const suppList  = [];
-		// var supplierListOne = ''
-		// this.setState({supplierarrayS : '',supplierListOne: ''})
-		// for (var i = 0; i < supplierslenght; i++) {
-		// 	var suppliersD = supplierList[i].companyname;
-		// 	supplierArr.push({'companyname':supplierList[i].companyname});
-		// }
-		// var pluck = _.pluck(supplierArr, 'companyname');
-		// // var data = _.uniq(pluck);
+	showAllList(array, findAt, prop,value){
+    
 
-		// var startsWith = pluck.filter((suppliersD) => suppliersD.startsWith(letterUpper)|| suppliersD.startsWith(letterLower));
-        // if(startsWith.length>0){
-        //   	for(var j=0;j<startsWith.length;j++){
-	    //         var uniqueArea = startsWith[j];
-	    //         var supplierLists = Suppliers.find({'companyname':uniqueArea}).fetch();
-	    //     	if(supplierLists){
-		//             for (var k = 0; k <supplierLists.length; k++) {
-		//                 suppList.push({
-		//                               'companyname' : uniqueArea,
-		                              
-		//                             });
-		//                 supplierListOne =  uniqueArea;
-		                              
-		                           
-		//             }
-	    //         }//if
-	    //     }//j
-        // }//length'
+    var searchByName = this.state.searchByName;
+    var currentState = this.state.states;
 
-        // this.setState({
-		// 		supplierListOne : suppList,
-		// 	},()=>{this.suppliersDetails()});
-        // // this.setState({
-		// // 		initial : supplierListOne,
-		// // 	},()=>{this.showAllList()});
-        // $('.commonSup').hide();
-	}
+    if(searchByName != ''){
+    	
+    }else{
 
-	suppliersDetails(){
-		// var suppListAlpha = this.state.supplierListOne;
-    	// var supplierDetail = this.props.post;
-    	// var supplierarray = [];
-	  	// if(supplierDetail){
-	  	// 	for (var i = 0; i < supplierDetail.length; i++) {
-	  	// 		if (supplierDetail[i].logo) {
-	  	// 			var logo = supplierDetail[i].logo;
-	  	// 		}else{
-	  	// 			var logo = '/images/imgNotFound.jpg';
-	  	// 		}
-	  	// 		for (var j = 0; j < suppListAlpha.length; j++) {
-		// 			var suppListCompany = suppListAlpha[j].companyname;
-		// 			if (suppListCompany ==  supplierDetail[i].companyname) {
-		// 				if(supplierDetail[i].locationDetails.length>0 && supplierDetail[i].contactDetails.length>0){
-		// 	  				supplierarray.push({
-		// 	  						'companyName'     : supplierDetail[i].companyname,
-		// 	  						'category'        : supplierDetail[i].category,
-		// 	  						'website'     	  : supplierDetail[i].website,
-		// 	  						'logo'     	  	  : logo,
-		// 	  						'city' 	   		  : supplierDetail[i].locationDetails[0].city,
-		// 	  						'states'  		  : supplierDetail[i].locationDetails[0].states,
-		// 	  						'pincode'         : supplierDetail[i].locationDetails[0].pincode,
-		// 	  						'id'	   		  : supplierDetail[i]._id,
-		// 	  						'name'			  : supplierDetail[i].contactDetails[0].LocationLevel[0].Name,
-		// 	  					});
-		// 		  		}else{
-		// 		  			supplierarray.push({
-		// 	  						'companyName'     : supplierDetail[i].companyname,
-		// 	  						'category'        : supplierDetail[i].category,
-		// 	  						'website'     	  : supplierDetail[i].website,
-		// 	  						'logo'     	  	  : logo,
-		// 	  						'city' 	   		  : 'NA',
-		// 	  						'states'  		  : 'NA',
-		// 	  						'pincode'         : 'NA',
-		// 	  						'id'	   		  : supplierDetail[i]._id,
-		// 	  						'name'			  : 'NA',
-		// 	  					});
-		// 		  		}
-
-		// 			}
-		// 		}
-	  	// 	}
-	  	// }//companyData
-	  	// var newsuplierarray = this.state.supplierarrayS;
-
-	  	// // $('.commonSup').show();
-	  	// if(newsuplierarray){
-	  	// 	supplierarray = newsuplierarray;
-	  	// }
-  		// return supplierarray;
+      var filteredData = this.filterByProperty(array, findAt, prop,value);
+       
+      this.setState({
+        vendorList: filteredData
+      });
     }
- 
-  	handleChangeCountry=(event)=>{
-  		this.setState({
-  			'country' : event.target.value,
-  		},()=>{this.showAllList()});
-  	}
 
-  	handleChangeStates=(event)=>{
-  		this.setState({
-  			'states' : event.target.value,
-  		},()=>{this.showAllList()});
-  	}
+  }
 
-  	handleChangeCity=(event)=>{
-  		this.setState({
-  			'city' : event.target.value,
-  		},()=>{this.showAllList()});
-  	}
-  	
-  	handleChangeCategory=(event)=>{
-  		this.setState({
-  			'category' : event.target.value,
-  		},()=>{this.showAllList()});
-  	}
+  filterByProperty(array, findAt, prop, value){
+    
+    var filtered = [];
+    var filteredfinal = [];
+    	for(var i = 0; i < array.length; i++){
 
+        var obj = array[i];
+
+        for(var key in obj){
+        	
+            if(typeof obj[key]  === 'object'){
+                if( key == findAt ){ 
+
+                	if (prop) {
+	                  var item = obj[key];                  
+	                  for(var k in item){
+	                     var filtered=item.filter(function(i){
+	                        for(var l in i){
+	                        return i[prop].toLowerCase()==value.toLowerCase();
+	                        }             
+	                    });
+	                    
+	                    if(filtered.length > 0){
+	                       filteredfinal.push(obj._id);
+	                    }    
+	                  }
+                	}
+                }
+              } 
+              
+        }
+    	}
+	    console.log('filteredfinal',filteredfinal); 
+
+	    var finalArray = [];   
+	    var filtered=array.filter(function(n,i){
+	    
+	      for(var k in filteredfinal){
+	        console.log('[k]',k); 
+	        console.log('filteredfinal[k]',filteredfinal[k]); 
+	          //return n._id==filteredfinal[k]; 
+	          if(n._id==filteredfinal[k]){
+	            finalArray.push(n);
+	          }
+	          
+	      }
+	    });
+	    console.log('finalArray',finalArray);   
+	    return finalArray;
+    }
+
+	shortByAlpha(event){
+	    event.preventDefault();
+
+	    var vendorList = this.state.vendorList;
+	    
+
+	    for(var key in document.querySelectorAll('.alphab')){
+	      //console.log($($('.alphab')[key]))
+	      $($('.alphab')[key]).css('background','#ddd');
+	      $($('.alphab')[key]).css('color','#fff');
+	      //$($('.alphab')[key]).style.background = '#ddd';
+	      //$($('.alphab')[key]).style.color = '#fff';
+	    }
+
+	    event.target.style.background = '#000';
+	    event.target.style.color = '#fff';
+	    
+	    if ($(event.target).attr('value') == 'All') {
+
+	      this.setState({vendorList: this.state.masterVendor});
+	      if(this.state.states != '-'){
+	        this.showAllList(this.state.masterVendor, "locationDetails", "states",this.state.states);
+	      }
+	      if(this.state.districts != '-'){
+	        this.showAllList(this.state.masterVendor, "locationDetails", "district",this.state.districts);
+	      }
+	      if(this.state.city != '-'){
+	        this.showAllList(this.state.masterVendor, "locationDetails", "city",this.state.city);
+	      }
+	    }else{
+	      var letterUpper = $(event.target).attr('value');
+	      var letterLower = $(event.target).attr('value').toLowerCase() ;
+	      
+	      var sorted = this.state.masterVendor.filter((ba) => {
+	        return ba.companyName.startsWith(letterUpper) || ba.companyName.startsWith(letterLower)
+	      });
+
+	      this.setState({vendorList : sorted});
+	    }
+	    
+	    $('.commonSup').hide();
+  	}
+	
+  	searchVendor(event){
+  		this.setState({'searchByName' : event.target.value});
+	    //var pattern = '/^'+event.target.value+'/i';
+	    var pattern = new RegExp('^' + event.target.value, 'i');
+	    var searchedData = this.state.masterVendor.filter((vendor) => {
+	      
+	        return pattern.test(vendor.companyName);
+	    });
+
+	    this.setState({vendorList : searchedData});
+  	}
   	resetFilter(event){
   		event.preventDefault();
-  		// var supplierDetail = this.props.post;
-	    	
-    	// var supplierarray = [];
-	  	// if(supplierDetail){
-	  	// 	for (var i = 0; i < supplierDetail.length; i++) {
-	  	// 		if (supplierDetail[i].logo) {
-	  	// 			var logo = supplierDetail[i].logo;
-	  	// 		}else{
-	  	// 			var logo = '/images/imgNotFound.jpg';
-	  	// 		}
-		// 		if(supplierDetail[i].locationDetails.length>0 && supplierDetail[i].contactDetails.length>0){
-		// 			supplierarray.push({
-		// 					'companyName'     : supplierDetail[i].companyname,
-		// 					'category'        : supplierDetail[i].category,
-		// 					'website'     	  : supplierDetail[i].website,
-		// 					'logo'     	  	  : logo,
-		// 					'city' 	   		  : supplierDetail[i].locationDetails[0].city,
-		// 					'states'  		  : supplierDetail[i].locationDetails[0].states,
-		// 					'pincode'         : supplierDetail[i].locationDetails[0].pincode,
-		// 					'id'	   		  : supplierDetail[i]._id,
-		// 					'name'			  : supplierDetail[i].contactDetails[0].LocationLevel[0].Name,
-		// 				});
-		// 		}else{
-		// 			supplierarray.push({
-		// 					'companyName'     : supplierDetail[i].companyname,
-		// 					'category'        : supplierDetail[i].category,
-		// 					'website'     	  : supplierDetail[i].website,
-		// 					'logo'     	  	  : logo,
-		// 					'city' 	   		  : 'NA',
-		// 					'states'  		  : 'NA',
-		// 					'pincode'         : 'NA',
-		// 					'id'	   		  : supplierDetail[i]._id,
-		// 					'name'			  : 'NA',
-		// 				});
-		// 		}
-	  	// 	}
+  		$('.category').prop('selectedIndex', 0);
+	    $('.Statesdata').prop('selectedIndex', 0);
+	    $('.districtsdata').prop('selectedIndex', 0);
+	    $('.SearchVendor').val('');
+	    this.setState({
+	      'country'         : 'IN',
+	      'states'          : '-',
+	      'districts'       : '-',
+	      'city'            : '-',
+	      'category'        : '-',
+	      'initial'         : '',
+	    })
 
-	  	// }
-
-  		// this.setState({
-  		// 	country : '',
-		// 	state 	: '',
-		// 	city 	: '',
-		// 	category : '',
-		// 	initial	: '',
-		// 	supplierarrayS: supplierarray
-  		// },()=>{this.suppliersDetails()});
+	    this.setState({
+	        vendorList: this.state.masterVendor
+	    });
   	}
 
-  	showAllList(event){
-  		// this.setState({
-  		// 	country : this.state.country,
-		// 	state 	: this.state.states,
-		// 	city 	: this.state.city,
-		// 	catgory : this.state.category,
-		// 	initial	: '',
-  		// })
-		// this.setState({supplierListOne : ''});
-		// var firstName = this.state.firstname;
-		// var formValues = {
-		// 	country : this.state.country,
-		// 	state 	: this.state.states,
-		// 	city 	: this.state.city,
-		// 	catgory : this.state.category,
-		// 	initial	: this.state.initial,
-		// }
-
-		// // // console.log('formValues: ',formValues);
-		// // // console.log('firstName: ',firstName);
-
-		// if(firstName) {
-		// 	// // console.log('inside firstname');
-	    // 	var supplierDetail = Suppliers.find({'companyname':firstName},{sort:{createdAt:1}}).fetch();
-		// }else if((formValues.country != '' && formValues.country != '-') || (formValues.state != '' && formValues.state != '-' ) || (formValues.city != '' && formValues.city != '-')|| (formValues.catgory != '' && formValues.catgory != '-' ) || formValues.initial){
-		// 	// // console.log('else');
-		// 	var initial = "";
-		// 	var catgory = "";
-		// 	var country = "";
-		// 	var state = "";
-		// 	var city = "";
-		// 	var selectorArray = [];
-
-		// 	if(formValues.initial != ""){
-		// 		var init1 = formValues.initial ; 
-		// 		initial = {"companyname" : init1 } ;
-		// 		selectorArray.push(initial);
-		// 	}
-
-		// 	if(formValues.catgory != "" && formValues.catgory != '-'){
-		// 		catgory = {"category": formValues.catgory};
-		// 		selectorArray.push(catgory);
-		// 	}
-
-
-		// 	if(formValues.city != "" && formValues.city != '-'){
-		// 		city = {"locationDetails.city" : formValues.city };
-		// 		selectorArray.push(city);
-		// 	}
-
-
-		// 	if(formValues.state != "" && formValues.state != '-' ){
-		// 		state = {"locationDetails.states" : formValues.state };
-		// 		selectorArray.push(state);
-		// 	}
-
-
-		// 	if(formValues.country != "" && formValues.country != '-'){
-		// 		country = {"locationDetails.country": formValues.country} ;
-		// 		selectorArray.push(country);
-		// 	}
-
-		// 	var selector = {$and: selectorArray };
-
-		// 	// // console.log('selector: ',selector);
-
-	    // 	var supplierDetail = Suppliers.find(selector).fetch();
-		// }else{
-	    // 	var supplierDetail = this.props.post;
-		// }
-		// // // console.log('supplierDetail: ',supplierDetail);
-    	// var supplierarray = [];
-	  	// if(supplierDetail){
-	  	// 	for (var i = 0; i < supplierDetail.length; i++) {
-	  	// 		if (supplierDetail[i].logo) {
-	  	// 			var logo = supplierDetail[i].logo;
-	  	// 		}else{
-	  	// 			var logo = '/images/imgNotFound.jpg';
-	  	// 		}
-		// 		if(supplierDetail[i].locationDetails.length>0 && supplierDetail[i].contactDetails.length>0){
-		// 			supplierarray.push({
-		// 					'companyName'     : supplierDetail[i].companyname,
-		// 					'category'        : supplierDetail[i].category,
-		// 					'website'     	  : supplierDetail[i].website,
-		// 					'logo'     	  	  : logo,
-		// 					'city' 	   		  : supplierDetail[i].locationDetails[0].city,
-		// 					'states'  		  : supplierDetail[i].locationDetails[0].states,
-		// 					'pincode'         : supplierDetail[i].locationDetails[0].pincode,
-		// 					'id'	   		  : supplierDetail[i]._id,
-		// 					'name'			  : supplierDetail[i].contactDetails[0].LocationLevel[0].Name,
-		// 				});
-		// 		}else{
-		// 			supplierarray.push({
-		// 					'companyName'     : supplierDetail[i].companyname,
-		// 					'category'        : supplierDetail[i].category,
-		// 					'website'     	  : supplierDetail[i].website,
-		// 					'logo'     	  	  : logo,
-		// 					'city' 	   		  : 'NA',
-		// 					'states'  		  : 'NA',
-		// 					'pincode'         : 'NA',
-		// 					'id'	   		  : supplierDetail[i]._id,
-		// 					'name'			  : 'NA',
-		// 				});
-		// 		}
-	  	// 	}
-
-	  	// }
-
-	  	// var lenghtCount = supplierarray.length;
-
-	  	// this.setState({
-		// 		supplierarrayS : supplierarray,
-		// 		lenghtCount    : lenghtCount,
-		// 	},()=>{this.suppliersDetails()});
-  	}
   	locationDetails(props){
     	// var locaDetail = Suppliers.findOne({'createdBy':Meteor.userId()});
     	// var locationarray = [];
@@ -542,12 +412,13 @@ class ListOfVendors extends Component {
 								        		<hr className="mrtpzero"/>
 								        </div>
 							        </div>
-						           	<h5 className="box-title2 col-lg-2 col-md-11 col-sm-11 col-xs-12">Total Suppliers :&nbsp;&nbsp;<b>{this.props.post6}</b></h5>
-						           	<h5 className="box-title2 col-lg-2 col-md-11 col-sm-11 col-xs-12">Filtered :&nbsp;&nbsp;<b>{this.state.lenghtCount ?this.state.lenghtCount : 0}</b></h5>
+						           	<h5 className="box-title2 col-lg-2 col-md-11 col-sm-11 col-xs-12">Total Suppliers :&nbsp;&nbsp;<b>{this.state.masterVendor.length}</b></h5>
+						           	<h5 className="box-title2 col-lg-2 col-md-11 col-sm-11 col-xs-12">Filtered :&nbsp;&nbsp;<b>{this.state.vendorList.length}</b></h5>
 
 						        	<div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 box-title2" >
-				                   		<span className="blocking-span" onClick={this.showAllList.bind(this)}>
-					                   		<input type="text" name="search"  className="col-lg-8 col-md-8 col-sm-8 col-xs-12 Searchusers Searchfind inputTextSearch outlinebox pull-right texttrans"  placeholder="Search..." onInput={this.getTextValue.bind(this)} />
+				                   		<span className="blocking-span" >
+					                   		<input type="text" name="search" className="col-lg-8 col-md-8 col-sm-8 col-xs-12 Searchusers SearchVendor inputTextSearch outlinebox pull-right texttrans"  
+					                   		placeholder="Search..." onInput={this.searchVendor.bind(this)} />
 					                   	</span>
 				                    </div>		        	
 						        </div>
@@ -558,63 +429,50 @@ class ListOfVendors extends Component {
 							        		<button type="button" className="reset" onClick={this.resetFilter.bind(this)}>RESET FILTER</button>
 							        	</div>
 							        	<div className="col-lg-2 col-md-12 col-xs-12 col-sm-12">
-									        	<select className="form-control resetinp selheight" ref="category" name="category" value={this.state.category} onChange={this.handleChangeCategory}>
+									        	<select className="form-control resetinp selheight category" ref="category" name="category" onChange={this.handleChangeCategory.bind(this)}>
 									        	<option selected="true" value="-" disabled>Select Category</option>
-									        	{/*
-														this.props.post5.map((Categorydata, index)=>{
-															return(      
-																	<option  key={index} value={Categorydata.value}>{Categorydata.value}</option>
-																);
-															}
-														)
-														*/}
-									        	</select>
-							        	</div>
-							        	<div className="col-lg-2 col-md-12 col-xs-12 col-sm-12">
-									        	<select className="form-control resetinp selheight" value={this.state.country}  ref="country" name="country" onChange={this.handleChangeCountry} >
-									        		<option selected="true" value="-" disabled>Select Country</option>
-									        		{/*
-														currentCountry.map((Countrydata, index)=>{
-															return(      
-																	<option  key={index} value={Countrydata.value}>{Countrydata.value}</option>
-																);
-															}
-														)
-														*/}
-									        	</select>
-							        	</div>
-							        	<div className="col-lg-2 col-md-12 col-xs-12 col-sm-12">
-									        	<select className="form-control resetinp selheight" value={this.state.states}  ref="states" name="states" onChange={this.handleChangeStates}>
-									        	<option selected="true" value="-" disabled>Select State</option>
-									        	{/*
-													currentState.map((Statedata, index)=>{
+									        	{
+													this.state.vendorCategory && this.state.vendorCategory.map((Categorydata, index)=>{
 														return(      
-																<option  key={index} value={Statedata.value}>{Statedata.value}</option>
+																<option  key={index} value={Categorydata.categoryName}>{Categorydata.categoryName}</option>
 															);
-														}
-													)
-													*/}
+													})
+												}
 									        	</select>
 							        	</div>
+							        	
 							        	<div className="col-lg-2 col-md-12 col-xs-12 col-sm-12">
-									        	<select className="form-control resetinp selheight" value={this.state.city}  ref="city" name="city" onChange={this.handleChangeCity}>
-									        		<option selected="true" value="-" disabled>Select City</option>
-									        		{/*
-														currentCity.map((Citydata, index)=>{
-															return(      
-																	<option  key={index} value={Citydata.value}>{Citydata.value}</option>
-																);
-															}
-														)
-														*/}
-									        	</select>
-							        	</div>
+				                            <select className="form-control resetinp selheight Statesdata" ref="states" name="states" onChange={this.handleChangeState.bind(this)}>
+				                            <option selected="true" value="-" disabled>Select State</option>
+				                            { this.state.statesArray && 
+				                              this.state.statesArray.map((Statedata, index)=>{
+				                                return(      
+				                                    <option  key={index} value={Statedata.stateCode}>{this.camelCase(Statedata.stateName)}</option>
+				                                  );
+				                                }
+				                              )
+				                            }
+				                            </select>
+				                        </div>
+							        	<div className="col-lg-2 col-md-12 col-xs-12 col-sm-12">
+				                            <select className="form-control resetinp districtsdata"  ref="district" name="district" onChange={this.handleChangeDistrict.bind(this)}>
+				                              <option selected="true" value="-" disabled>Select District</option>
+				                              { this.state.districtArray && this.state.districtArray.length>0 &&
+				                              this.state.districtArray.map((districtdata, index)=>{
+				                                return(      
+				                                    <option  key={index} value={districtdata.districtName}>{this.camelCase(districtdata.districtName)}</option>
+				                                  );
+				                                }
+				                              )
+				                          }
+				                            </select>
+				                        </div>
 							        	
 							        </div>
 
 							        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							        	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 alphabate">
-							        	<button type="button" className="btn alphab filterallalphab" onClick={this.showAllList.bind(this)} name="initial" value={this.state.initial} onChange={this.handleChange}>All</button>
+							        	<button type="button" className="btn alphab filterallalphab" onClick={this.shortByAlpha.bind(this)} name="initial" value={this.state.initial} onChange={this.handleChange}>All</button>
 							        	<button type="button" className="btn alphab" value="A" onClick={this.shortByAlpha.bind(this)} onChange={this.handleChange}>A</button>
 							        	<button type="button" className="btn alphab" value="B" onClick={this.shortByAlpha.bind(this)} onChange={this.handleChange}>B</button>
 							        	<button type="button" className="btn alphab" value="C" onClick={this.shortByAlpha.bind(this)} onChange={this.handleChange}>C</button>
@@ -643,16 +501,16 @@ class ListOfVendors extends Component {
 							        	<button type="button" className="btn alphab" value="Z" onClick={this.shortByAlpha.bind(this)} onChange={this.handleChange}>Z</button>
 							        </div>
 							        </div>
-						        </div>
-						        {this.suppliersDetails() && this.suppliersDetails().length >0 ?
+						        </div> 
+						        {this.state.vendorList && this.state.vendorList.length >0 ?
 
 							        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 scrollbar" id="style-2">
 								        <div className="borderlist12">	
 								        	{
-								        		this.suppliersDetails().map((data,index)=>{
-
+								        		this.state.vendorList.map((data,index)=>{
+								        			
 								        			return(
-											        		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 borderlist selected" key={index} onClick={this.ShowForm.bind(this)} name={index}  data-child={data.id+'-'+index} id={data.id}>
+											        		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 borderlist selected" key={index} onClick={this.ShowForm.bind(this)} name={index}  data-child={data._id+'-'+index} id={data._id}>
 						        								<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 supplierLogoDiv">
 						        									<img src={data.logo} className="supplierLogoImage"></img>
 												        		</div>
@@ -660,7 +518,7 @@ class ListOfVendors extends Component {
 												        			<h5 className="titleprofile">{data.companyName}</h5>
 												        			<ul className="col-lg-9 col-md-9 col-sm-9 col-xs-9 listfont">
 												        				<li><i className="fa fa-user-o col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.name}</li>
-												        				<li><i className="fa fa-map-marker col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.city},&nbsp;{data.states},{data.pincode}</li>
+												        				<li><i className="fa fa-map-marker col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.locationDetails[0].district},&nbsp;{data.locationDetails[0].area},{data.locationDetails[0].pincode}</li>
 												        				<li><i className="fa fa-arrows col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;Category: {data.category}</li>
 												        				<li><i className="fa fa-globe col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.website}</li>
 												        			</ul>					        		
@@ -678,10 +536,10 @@ class ListOfVendors extends Component {
 							        	<h5>No Data Found</h5>
 							        </div>
 						        }
-							    {this.state.index && this.state.id ? 
+							    {this.state.id ? 
 		        					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 pdcls suppliersOneProfile commonSup"  id={this.state.id}>
 						        		<div id={this.state.id} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-										  	<ListOfAllVendors name={this.state.index}  id={this.state.id}/>
+										  	<VendorsDetails name={this.state.index}  id={this.state.id}/>
 										</div>
 						        	</div>
 						        	: 

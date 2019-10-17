@@ -11,8 +11,13 @@ import '../css/SupplierOnboardingForm.css'
 class BasicInfo extends Component {
   
   componentDidMount() {
+      this.setState({
+        vendor_ID : this.props.match.params.vendor_ID
+      },()=>{
+        this.edit();
+      })
     this.getCategoryList();
-    this.edit();
+    
     window.scrollTo(0, 0);
     $.validator.addMethod("regxA1", function(value, element, regexpr) {          
       return regexpr.test(value);
@@ -49,7 +54,7 @@ class BasicInfo extends Component {
     });
     $("#BasicInfo").validate({
       rules: {
-        companyname: {
+        companyName: {
           required: true,
           // regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
         },
@@ -86,7 +91,7 @@ class BasicInfo extends Component {
 
       },
         errorPlacement: function(error, element) {
-              if (element.attr("name") == "companyname"){
+              if (element.attr("name") == "companyName"){
                 error.insertAfter("#basicInfo1");
               }
               // if (element.attr("name") == "pan"){
@@ -128,7 +133,7 @@ class BasicInfo extends Component {
     this.state = {
       'vendorId'         : '',
       'typeOptions'      : 'Local',
-      'companyname'      : '',
+      'companyName'      : '',
       'pan'              : '',
       'tin'              : '',
       'website'          : '',
@@ -309,7 +314,7 @@ class BasicInfo extends Component {
       if($('#BasicInfo').valid()){
           var formValues = {
               'typeOptions'      : this.state.typeOptions,
-              'companyName'      : this.state.companyname,
+              'companyName'      : this.state.companyName,
               'pan'              : this.state.pan,
               'tin'              : this.state.tin,
               'website'          : this.state.website,
@@ -516,7 +521,7 @@ class BasicInfo extends Component {
 			.then((response)=>{
 				this.setState({
 					'typeOptions'      : response.data.typeOptions,
-          'companyName'      : response.data.companyname,
+          'companyName'      : response.data.companyName,
           'pan'              : response.data.pan,
           'tin'              : response.data.tin,
           'website'          : response.data.website,
@@ -616,7 +621,7 @@ class BasicInfo extends Component {
                                         <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pdcls">
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Company Name <i className="astrick">*</i></label>
-                                            <input type="text" id="companyname" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.companyname}  ref="companyname" name="companyname" onChange={this.handleChange} placeholder="Enter company name.." required/>
+                                            <input type="text" id="companyName" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.companyName}  ref="companyName" name="companyName" onChange={this.handleChange} placeholder="Enter company name.." required/>
                                           </div>
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 Websiteerror NOpadding-left NOpadding-right" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website <i className="astrick">*</i>

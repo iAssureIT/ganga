@@ -3,6 +3,7 @@ import $                      from 'jquery';
 import jQuery                 from 'jquery';
 import axios                  from 'axios';
 import ReactTable             from "react-table";
+import {Route, withRouter}  from 'react-router-dom';
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import 'bootstrap/js/tab.js';
@@ -10,12 +11,14 @@ import '../css/ListOfVendors.css';
 import '../css/ListOfVendorsFilter.css';
 import '../css/ListOfAllVendors.css';
 
-class ListOfAllVendors extends Component {
+class VendorsDetails extends Component {
 	
 	constructor(props) {
       super(props);
     
       this.state = {
+      	id : '',
+      	vendorInfo : [],
         loadMore: false,
         loadless: false
       };
@@ -23,12 +26,84 @@ class ListOfAllVendors extends Component {
       this.isLoaded = false
     }
 	componentDidMount(){
-		
+		console.log('nextProps',this.props);
+		this.setState({
+  			id : this.props.id
+  		},()=>{
+
+  			axios.get("/api/vendors/get/one/"+this.state.id)
+            .then((response)=>{
+          	
+              this.setState({
+                  vendorInfo : response.data
+              },()=>{
+              	
+              	this.getLocations();
+              	this.getContacts();
+              });
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        })
 		$("html,body").scrollTop(0);
   	}
-  	componentWillUnmount(){
-    	
+  	componentWillReceiveProps(nextProps){
+  		console.log('nextProps',nextProps.id);
+  		this.setState({
+  			id : nextProps.id
+  		},()=>{
+
+  			axios.get("/api/vendors/get/one/"+this.state.id)
+            .then((response)=>{
+          	
+              this.setState({
+                  vendorInfo : response.data
+              },()=>{
+              	
+              	this.getLocations();
+              	this.getContacts();
+              });
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+		//$("html,body").scrollTop(0);
+  		})
   	}
+  	getLocations(){
+  		if(this.state.vendorInfo ){
+  			console.log('kjdjkewj',this.state.vendorInfo.locationDetails)
+  			var location = this.state.vendorInfo.locationDetails;
+			
+			this.setState({locations : location },()=>{
+				for (var i = 0; i < this.state.locations.length; i++) {
+					console.log(this.state.locations[i]);
+				}		
+			});
+			
+		}
+  	}
+
+  	getContacts(){
+  		if(this.state.vendorInfo ){
+  			var contacts = this.state.vendorInfo.contactDetails;
+			
+			this.setState({contacts : contacts },()=>{
+				for (var i = 0; i < this.state.contacts.length; i++) {
+					console.log(this.state.contacts[i]);
+				}	
+			});
+			
+		}
+  	}
+  	LocationEdit(event){
+    	this.props.history.push('/location-details/'+this.props.id)
+    }
+    
+    contactEdit(event){
+    	this.props.history.push('/contact-details/'+this.props.id)
+    }
 	levelOneContact(props){
     	// var routerId   	 = this.props.id;
 	    // var contactOne 	 = Suppliers.findOne({'createdBy':Meteor.userId(),'_id':routerId});
@@ -173,18 +248,7 @@ class ListOfAllVendors extends Component {
 		// return contactarray;
 		return [];
     }
-    contactEdit(event){
-    	// var id = $(event.currentTarget).attr('data-id');
-    	// var index = $(event.currentTarget).attr('data-index');
-    	// // // console.log('id',id);
-    	// if(location.pathname == '/ListOfSupplierSTM'){
-    	// 	FlowRouter.go("/ContactDetailsSTM/"+id+'-'+index);
-    	// }else if(location.pathname == '/ListOfSupplierSTL'){
-    	// 	FlowRouter.go("/SupplierOnboardingFormSTL/"+id+'-'+index);
-    	// }else{
-    	// 	FlowRouter.go("/ContactDetails/"+id+'-'+index);
-    	// }
-    } 
+    
     LocationAddressEdit(event){
     	// var id = $(event.currentTarget).attr('id');
     	// var locaationName = $(event.currentTarget).attr('data-Location');
@@ -215,6 +279,7 @@ class ListOfAllVendors extends Component {
     }
     editBasicform(event){
     	// var id = $(event.currentTarget).attr('data-id');
+    	this.props.history.push('/vendor-onboarding/'+this.props.id)
     	// if(location.pathname == '/ListOfSupplierSTM'){
     	// 	FlowRouter.go("/SupplierOnboardingFormSTM/"+id);
     	// }else if(location.pathname == '/ListOfSupplierSTL'){
@@ -223,7 +288,7 @@ class ListOfAllVendors extends Component {
     	// 	FlowRouter.go("/SupplierOnboardingForm/"+id);
     	// }
     }
-    showMore(event) {
+    showMore(event) { 
 		$('.listProduct').addClass('showList');
 		$('.listProduct').removeClass('hide');
 		this.setState({
@@ -237,26 +302,42 @@ class ListOfAllVendors extends Component {
 			'loadless':false,
 		})
 	}
+	deleteVendor(event){
+    	event.preventDefault();
+    	axios.delete("/api/vendors/delete/"+this.props.id)
+            .then((response)=>{
+              swal({
+                    title : response.data.message,
+                    text  : response.data.message,
+                  });
+              window.location.reload();   
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        
+    }
 	render() {
+		console.log('locations', this.state.locations);
        	return (	
 		        <div>
 		            <div className="row">	                   					  
 					        <div id="supplierprofile" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">					   
 					        	<div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkinp boxshade">
-					        			<img src={this.props.post && this.props.post.logo? this.props.post.logo:'/images/imgNotFound.jpg'} className="col-lg-2 col-md-2 col-sm-2 col-xs-2 supplierLogoImage"></img>
+					        			<img src={this.state.vendorInfo && this.state.vendorInfo.logo? this.state.vendorInfo.logo:'/images/imgNotFound.jpg'} className="col-lg-2 col-md-2 col-sm-2 col-xs-2 supplierLogoImage"></img>
 						        		<div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 listprofile">
-						        			<h4 className="titleprofile1 col-lg-6 col-md-6 col-sm-6 col-xs-6">{this.props.post && this.props.post.companyname}</h4>
+						        			<h4 className="titleprofile1 col-lg-6 col-md-6 col-sm-6 col-xs-6">{this.state.vendorInfo && this.state.vendorInfo.companyname}</h4>
 						        			<div className="dots dropdown1 col-lg-6 col-md-6 col-sm-6 col-xs-6">
 												<i className="fa fa-ellipsis-h dropbtn1 dropbtn2 buttonDrop3" aria-hidden="true"></i>
 							        			<div className="dropdown-content1 dropdown2-content2">
 												
 													<ul className="pdcls ulbtm">
-														<li id={this.props.post ? this.props.post._id : ""} className="styleContactActbtn" data-index data-id={this.props.post ? this.props.post._id : ""} onClick={this.editBasicform.bind(this)} data-locationtype>	
+														<li id={this.state.vendorInfo ? this.props.id : ""} className="styleContactActbtn" data-index data-id={this.props.id} onClick={this.editBasicform.bind(this)} >	
 													    	<a><i className="fa fa-pencil penmrleft" aria-hidden="true" ></i>&nbsp;&nbsp;<span className="mrflfedit">Edit</span></a>
 													    </li>
-													    {/*<li id className="styleContactActbtn" data-id>
+													    <li id className="styleContactActbtn" data-id={this.props.id} onClick={this.deleteVendor.bind(this)}>
 													    	<a><i className="fa fa-trash-o" aria-hidden="true" ></i>&nbsp;Delete</a>
-													    </li>*/}
+													    </li>
 												    </ul>
 												</div>
 											</div>
@@ -267,9 +348,9 @@ class ListOfAllVendors extends Component {
 						        				<li><i className="fa fa-globe" aria-hidden="true"></i></li>
 						        			</ul>*/}
 						        			<ul className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						        				<li><i className="fa fa-address-card-o col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{this.props.post ? this.props.post.pan : ""}</li>
-						        				<li><i className="fa fa-microchip col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{this.props.post ? this.props.post.gstno : ""}</li>
-						        				<li><i className="fa fa-globe col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{this.props.post ? this.props.post.website : ""}</li>
+						        				<li title="PAN NO"><i className="fa fa-address-card-o col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{this.state.vendorInfo ? this.state.vendorInfo.pan : ""}</li>
+						        				<li title="GST NO"><i className="fa fa-microchip col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{this.state.vendorInfo ? this.state.vendorInfo.gstno : ""}</li>
+						        				<li title="Website"><i className="fa fa-globe col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{this.state.vendorInfo ? this.state.vendorInfo.website : ""}</li>
 						        			</ul>				        		
 						        		</div>
 						        		{/*<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 ellipsispd">
@@ -277,94 +358,103 @@ class ListOfAllVendors extends Component {
 					        			</div>	*/}
 					        	</div>
 
-					        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkinp boxshade">
-					        		  <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 producticon">
-					        		  	<i className="fa fa-cube" aria-hidden="true"></i>
-					        		  </div>
-					        		  <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 listprofile">
-					        			<h4 className="titleproduct">Product/Services</h4>
-					        			{/*<h5 className="subtitle">Product</h5>*/}
-					        			{this.props.productserviceArr ?
-					        				this.props.productserviceArr.map((data,index)=>{
-					        					return(
-								        			<div className="" key={index}>
-								        			{
-								        				index < 4 ?
-								        				<div className="showList col-lg-6">
-								        					{index+1})	{data}							
-								        				</div>
-								        				:
-								        				null
-								        			}
-								        			{
-								        				index > 4 ?
-								        				<div className="showList hide listProduct col-lg-6" id="showMore">
-								        					{index+1})	{data}							
-								        				</div>
-								        				:
-
-								        				null
-								        			}
-								        			</div>
-								        		
-					        					);
-											})
-											:
-											null
-					        			}
-								       </div>
-					        			{/*<div className="col-lg-2 spanpd">
-					        				2) Lorem ipsum							
-					        			</div> 
-					        			<div className="col-lg-2 spanpd">
-					        				3) Lorem ipsum							
-					        			</div>*/}
-
-					        			{/*<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 ellipsispd">
-						        			<i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-						        		</div>*/}
-									{this.props.productserviceArr && this.props.productserviceArr.length > 0 ?
-										this.props.productserviceArr.length > 4 ?
-
-						        		this.state.loadless == false?
-							        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							        		<div  className="show" onClick={this.showMore.bind(this)}>Show More<span className="showicon"><i className="fa fa-angle-down" aria-hidden="true"></i></span></div>
-							        	</div>
-							        	:
-							        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							        		<div  className="show" onClick={this.showLess.bind(this)}>Show Less<span className="showicon"><i className="fa fa-angle-up" aria-hidden="true"></i></span></div>
-							        	</div>
-										:
-										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-											<h5></h5>
-										</div>
-										:
-							        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-align-center">
-							        		<h5>No Data Found</h5>
-							        	</div>
-						        	}
-					        	</div>
-
-					        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls boxshade">
+					        	{
+					        	this.state.locations && this.state.locations.length>0 &&
+					        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxshade">
 					        		{
-										this.levelOneContact().map((contactArr,index)=>{
+										this.state.locations.map((locationArr,index)=>{
 											return(
-												<div key={index}>
-													{contactArr.a}
-													{contactArr.headOfficce}
+
+												<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 tithead1">
+													<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 locationHeadingMargin">
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div className="dots dropdown1 col-lg-6 col-md-12 col-sm-12 col-xs-12 pull-right locationDropdown">
+																<i className="fa fa-ellipsis-h dropbtn1 dropbtn2 buttonDrop3" aria-hidden="true"></i>
+																<div className="dropdown-content1">
+																	<ul className="pdcls ulbtm">
+																		<li className="styleContactActbtn" onClick={this.LocationEdit.bind(this)}>	
+																	    	<a><i className="fa fa-pencil penmrleft" aria-hidden="true" ></i>&nbsp;&nbsp;<span className="mrflfedit">Edit</span></a>
+																	    </li>
+																    </ul>
+																</div>
+															</div>
+														</div>
+
+														<div className="col-lg-1 col-md-1 col-sm-12 col-xs-12 mapIconMargin">
+															<i className="fa fa-map-marker addressIcon" aria-hidden="true"></i>
+														</div>
+														<div className="col-lg-6 col-md-1 col-sm-12 col-xs-12">
+															<h4>Location Details</h4>
+														</div>
+													</div>
+													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxshade" style={{heigth:'100px'}}>
+														
+														<div  className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 locationAddress">
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationAddress">{locationArr.addressLineone} ,{locationArr.addressLinetwo}</div>
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationAddress">{locationArr.district},{locationArr.city}, {locationArr.area}, {locationArr.pincode}</div>
+														</div>
+													</div>
 												</div>
 												);
 										})
 									}
 									
 					        	</div>
+					        	}
+					        	{ /*contact Details*/ }
+					        	{
+					        		this.state.contacts && this.state.contacts.length>0 &&
+					        		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxshade">
+					        		{
+										this.state.contacts.map((contactArr,index)=>{
+											return(
+
+												<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 tithead1">
+													<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 locationHeadingMargin">
+														<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															<div className="dots dropdown1 col-lg-6 col-md-12 col-sm-12 col-xs-12 pull-right locationDropdown">
+																<i className="fa fa-ellipsis-h dropbtn1 dropbtn2 buttonDrop3" aria-hidden="true"></i>
+																<div className="dropdown-content1">
+																	<ul className="pdcls ulbtm">
+																		<li className="styleContactActbtn" onClick={this.contactEdit.bind(this)}>	
+																	    	<a><i className="fa fa-pencil penmrleft" aria-hidden="true" ></i>&nbsp;&nbsp;<span className="mrflfedit">Edit</span></a>
+																	    </li>
+																    </ul>
+																</div>
+															</div>
+														</div>
+
+														<div className="col-lg-1 col-md-1 col-sm-12 col-xs-12 mapIconMargin">
+															<i className="fa fa-map-marker addressIcon" aria-hidden="true"></i>
+														</div>
+														<div className="col-lg-6 col-md-1 col-sm-12 col-xs-12">
+															<h4>Contact Details</h4>
+														</div>
+													</div>
+													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxshade" style={{heigth:'100px'}}>
+														
+														<div  className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 locationAddress">
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationAddress">Mobile No. &nbsp;{contactArr.Phone}</div>
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationAddress">Alt Mobile No. &nbsp;{contactArr.AltPhone}</div>
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationAddress">Email: &nbsp; {contactArr.Email}</div>
+															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationAddress">Office Landline No: &nbsp;{contactArr.Landing}</div>
+															
+														</div>
+													</div>
+												</div>
+												);
+										})
+									}
+									
+					        	</div>
+					        }
 					        </div>
 	                  	  </div>
 	            </div>
 	    );
 	} 
 }
-export default ListOfAllVendors; 
+export default withRouter(VendorsDetails); 
 
 
 // = withTracker((props)=>{
