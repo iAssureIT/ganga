@@ -21,7 +21,7 @@ class Checkout extends Component{
             totalCartPrice:'',
             productData:{},
             productCartData:[],
-            vatPercent:"",
+            vatPercent:0,
             companyInfo:"",
             cartProduct:"",
             shippingCharges:0,
@@ -39,6 +39,7 @@ class Checkout extends Component{
         }
         this.getCartData();   
         this.getCompanyDetails();
+        this.camelCase = this.camelCase.bind(this)
     }
     
     componentDidMount(){
@@ -864,6 +865,32 @@ class Checkout extends Component{
     $(".toast-warning").removeClass('toast');
 
   }
+  handleChangeCountry(event){
+      const target = event.target;
+      this.setState({
+        [event.target.name] : event.target.value
+      })
+      this.getStates($(target).val())
+    }
+    getStates(countryCode){
+      axios.get("http://locationapi.iassureit.com/api/states/get/list/"+countryCode)
+            .then((response)=>{
+              this.setState({
+                  stateArray : response.data
+              })
+              $('#Statedata').val(this.state.states);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
+    camelCase(str){
+      return str
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    }
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -920,9 +947,9 @@ class Checkout extends Component{
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                            <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChangeCountry.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <option value="Select Country">Select Country</option>
-                                                <option value="India">India</option>
+                                                <option value="IN">India</option>
                                                 <option value="USA">USA</option>
                                                 <option value="Chaina">Chaina</option>
                                             </select>
@@ -930,10 +957,16 @@ class Checkout extends Component{
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
                                             <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <option value="Select State">Select State</option>
-                                                <option value="Maharashtra">Maharashtra</option>
-                                                <option value="Goa">Goa</option>
-                                                <option value="Gujarat">Gujarat</option>
+                                              <option value="Select State">Select State</option>
+                                              {
+                                                this.state.stateArray && this.state.stateArray.length > 0 ?
+                                                this.state.stateArray.map((stateData, index)=>{
+                                                  return(      
+                                                      <option key={index} value={this.camelCase(stateData.stateName)}>{this.camelCase(stateData.stateName)}</option>
+                                                    );
+                                                  }
+                                                ) : ''
+                                              }
                                             </select>
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
@@ -1006,7 +1039,7 @@ class Checkout extends Component{
                                         {
                                             this.state.productCartData && this.state.productCartData.length > 0?
                                             this.state.productCartData.map((data, index)=>{
-                                                return(
+                                                return( 
                                                     <tr key={'cartData'+index}>
                                                         <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td>
                                                         <td><img className="img img-responsive orderImg" src={data.productImage[0]} /></td>
@@ -1126,9 +1159,9 @@ class Checkout extends Component{
                                                                 </div>
                                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                                                    <select ref="modalcountry" name="modalcountry" id="modalcountry"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                    <select ref="modalcountry" name="modalcountry" id="modalcountry"  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" onChange={this.handleChangeCountry.bind(this)}>
                                                                         <option value="Select Country">Select Country</option>
-                                                                        <option value="India">India</option>
+                                                                        <option value="IN">India</option>
                                                                         <option value="USA">USA</option>
                                                                         <option value="Chaina">Chaina</option>
                                                                     </select>

@@ -18,7 +18,7 @@ class CartProducts extends Component{
             totalCartPrice:'',
             productData:{},
             productCartData:[],
-            vatPercent:"",
+            vatPercent:0,
             companyInfo:"",
             cartProduct:"",
             shippingCharges:0,
@@ -71,8 +71,9 @@ class CartProducts extends Component{
         if (this.props.recentCartData.length>0  && companyData) {
 
             if(this.props.recentCartData[0].cartItems.length>0){
-                this.setState({"shippingCharges":100.00});
+                
                     this.setState({
+                    "shippingCharges":100.00,
                     "productCartData": this.props.recentCartData[0].cartItems,
                     "productData":this.props.recentCartData[0],
                     "vatPercent":companyData.taxSettings ? companyData.taxSettings[0].taxRating : 0,
@@ -270,7 +271,8 @@ class CartProducts extends Component{
                                                     </tr>
                                                     <tr>
                                                         <td>Order Total</td>
-                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.props.recentCartData[0].cartTotal))+(parseInt(this.props.recentCartData[0].cartTotal))+this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",")}  </td>
+
+                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> { ((parseInt(this.state.vatPercent))/100*(parseInt(this.props.recentCartData[0].cartTotal))+(parseInt(this.props.recentCartData[0].cartTotal))+parseInt(this.state.shippingCharges)).toFixed(2).toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",")}  </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
