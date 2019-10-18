@@ -18,17 +18,21 @@ export default class ReturnStatus extends Component{
 	}
 	componentDidMount(){
 		this.props.data.returnStatus.map((data,ind)=>{
+
+			console.log('datadate', data); 
+			console.log('datadate', moment(data.date).format('MM/DD/YYYY hh:mm a'));
 				if (data.status == 'Return Approved') {
-					$('#approvedDate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+
+					$('#approvedDate'+this.props.data._id).html(moment(data.date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Return Pickup Initiated') {
-					$('#pickupInitiatedDate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#pickupInitiatedDate'+this.props.data._id).html(moment(data.date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Return Pickedup') {
-					$('#pickedupDate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#pickedupDate'+this.props.data._id).html(moment(data.date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Return Accepted') {
-					$('#accepteddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#accepteddate'+this.props.data._id).html(moment(data.date).format('MM/DD/YYYY hh:mm a'))
 				}
 			})
 		if(this.props.data.returnStatus[this.props.data.returnStatus.length-1].status =='Return Approved'){

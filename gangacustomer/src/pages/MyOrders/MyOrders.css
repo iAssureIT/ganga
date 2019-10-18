@@ -77,8 +77,8 @@ table > tfoot > tr > td:last-of-type {
 .actbtns button:hover{
 	padding: 5px 0 5px;
 }
-#returnProductModal{
-	margin-top: 10%;
+.modal-header{
+	height: auto;
 }
 #feedbackProductModal .modal-body{
 	height: 220px;

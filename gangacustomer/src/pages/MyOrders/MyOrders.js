@@ -315,7 +315,7 @@ export default class MyOrders extends Component {
                   <tbody>
       		                <tr key={index}>
       		                    <td data-th="Order #" className="col id">{data.orderID}</td>
-      		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</td>
+      		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY hh:mm a")}</td>
       							          <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
       		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
       		                    <td data-th="Status" className="col status">{ data.deliveryStatus[data.deliveryStatus.length-1].status=="Dispatch" || data.deliveryStatus[data.deliveryStatus.length-1].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[data.deliveryStatus.length-1].status }</td>
@@ -481,8 +481,9 @@ export default class MyOrders extends Component {
             <div className="modal-dialog">
               <div className="modal-content">
                 <div className="modal-header">
+                  <img src="/images/Icon.png" />
                   <button type="button" className="close" data-dismiss="modal">&times;</button>
-                  <h3 className="modalTitle">Cancel Order</h3>
+                  <h4 className="modalTitle">Cancel Order</h4>
                 </div>
                 <div className="modal-body">
                   <h4 className="modaltext"></h4>
@@ -526,7 +527,7 @@ export default class MyOrders extends Component {
                           <tr>
                               <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
                               <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
-                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
                           </tr>
                           :
                          null
