@@ -141,7 +141,7 @@ export default class Footer extends Component {
 
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-                        <strong className="hidelabel">phone</strong>
+                        <strong className="hidelabel">phone</strong> 
                         </div>
                             <div className="col-lg-3 icondiv">
                                 <i className="fa fa-phone"></i>
@@ -192,11 +192,11 @@ export default class Footer extends Component {
                                     return  subcat['subCategoryTitle'] ;
                                   }).join(', ');
                             }
-                              
+                            console.log('catdata', data);  
                             return(
                                 <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6  catdiv" key={index}>
                                     <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
-                                        <strong><a href={"/product-collage/"+data._id}>{data.category}</a></strong><br/><br/> 
+                                        <strong><a href={"/category/"+data.categoryUrl+'/'+data.section_ID+'/'+data._id}>{data.category}</a></strong><br/><br/> 
                                     </div>
                                     <div className="col-md-12 col-lg-12 col-sm-12 col-xs-12 NoPadding">
                                         <p>

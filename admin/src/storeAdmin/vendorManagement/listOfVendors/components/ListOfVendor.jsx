@@ -517,8 +517,13 @@ class ListOfVendors extends Component {
 												        		<div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 listprofile">
 												        			<h5 className="titleprofile">{data.companyName}</h5>
 												        			<ul className="col-lg-9 col-md-9 col-sm-9 col-xs-9 listfont">
-												        				<li><i className="fa fa-user-o col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.name}</li>
-												        				<li><i className="fa fa-map-marker col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.locationDetails[0].district},&nbsp;{data.locationDetails[0].area},{data.locationDetails[0].pincode}</li>
+												        				<li><i className="fa fa-user-o col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.companyName}</li>
+												        				{
+												        					data.locationDetails[0] ? 
+												        					<li><i className="fa fa-map-marker col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;
+												        					{data.locationDetails[0].district},&nbsp;{data.locationDetails[0].area},{data.locationDetails[0].pincode}</li>
+												        					: ""
+												        				}
 												        				<li><i className="fa fa-arrows col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;Category: {data.category}</li>
 												        				<li><i className="fa fa-globe col-lg-1 noPadding" aria-hidden="true"></i>&nbsp;{data.website}</li>
 												        			</ul>					        		

@@ -48,7 +48,6 @@ class AdminOrdersList extends Component{
             })  
     }
     componentWillReceiveProps(nextProps){
-      console.log('nextProps',nextProps);
         if(nextProps){
             this.setState({
                 "data": nextProps.data,
@@ -87,7 +86,7 @@ class AdminOrdersList extends Component{
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
                           this.props.getOrdersFun();
-                          console.log('response', response);
+                          //console.log('response', response);
                           swal({
                             title : response.data.message,
                             text  : response.data.message,
@@ -107,46 +106,40 @@ class AdminOrdersList extends Component{
     
 
     changeToPreviousStatus(event){
-        event.preventDefault();
-        var status = $(event.currentTarget).attr('data-status');     
-        var id = $(event.currentTarget).attr('data-id');
-        var currentstatus = $(event.currentTarget).attr('data-currentstatus'); 
+        event.preventDefault();   
+        var id = $(event.currentTarget).attr('data-id'); 
         
-        if(status!="Nothing"){
-            swal({
-                title: 'Are you sure you want to change status to '+status+ " ?",
-                text: 'Are you sure you want to change status to '+status+ " ?",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-              }).then((obj)=> {
-                if(obj==true){
-                    // Meteor.call("changeAdminOrdersToPreviousStatus",id, currentstatus, (error, result)=>{
-                    
-                    // });
-                    var formValues = {
-                          "orderID" :  id,  
-                          "status"  :  status,
-                          "userid"  :  localStorage.getItem('admin_ID')
-                        }
-                        axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
-                        .then((response)=>{
-                          console.log('response', response);
-                          this.props.getOrdersFun();
-                          swal({
-                            title : response.data.message,
-                            text  : response.data.message,
-                          });
-                        })
-                        .catch((error)=>{
-                          console.log('error', error);
-                        })
-                }
-              });          
-        }
-        
+        swal({
+            title: 'Are you sure, do you want to change status to previous status',
+            text: 'Are you sure, do you want to change status to previous status',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+          }).then((obj)=> {
+            if(obj==true){
+                // Meteor.call("changeAdminOrdersToPreviousStatus",id, currentstatus, (error, result)=>{
+                
+                // });
+                var formValues = {
+                      "orderID" :  id, 
+                      "userid"  :  localStorage.getItem('admin_ID')
+                    }
+                    axios.patch('/api/orders/patch/changeToPreviousStatus', formValues)
+                    .then((response)=>{
+
+                      this.props.getOrdersFun();
+                      swal({
+                        title : response.data.message,
+                        text  : response.data.message,
+                      });
+                    })
+                    .catch((error)=>{
+                      console.log('error', error);
+                    })
+            }
+          });          
     }
 
     
@@ -215,7 +208,7 @@ class AdminOrdersList extends Component{
               sort: false,
               selectableRows: false, 
               customBodyRender: (value, tableMeta, updateValue) => {
-                
+                console.log('dsfhds', value.deliveryStatus);
                   return (
 
                     <div>
@@ -226,42 +219,21 @@ class AdminOrdersList extends Component{
                     ||  value.deliveryStatus == "Delivered & Paid" || value.deliveryStatus == "New Order"? 
                             ""
                           :
-                      <div className="admin-order-view"  onClick={this.changeToPreviousStatus.bind(this)} data-id={value._id} data-status={
-                                  value.deliveryStatus == "New Order"         ? "Nothing" :  
-                                  value.deliveryStatus == "Verified"          ? "New Order" :  
-                                  value.deliveryStatus == "Packed"            ? "Verified" :  
-                                  value.deliveryStatus == "Inspection"        ? "Packed" :  
-                                  value.deliveryStatus == "Dispatch Approved" ? "Inspection" :  
-                                  value.deliveryStatus == "Dispatch"          ? "Dispatch Approved" :  
-                                  value.deliveryStatus == "Delivery Initiated" ? "Dispatch" :
-                                  value.deliveryStatus == "Delivered & Paid"  ? "Delivery Initiated" : "Nothing"
-                              } 
-                              title={
-                                  value.deliveryStatus == "New Order"          ? "Verify The Order" :  
-                                  value.deliveryStatus == "Verified"           ? "Order Packing" :  
-                                  value.deliveryStatus == "Packed"             ? "Inspect The Order" :  
-                                  value.deliveryStatus == "Inspection"         ? "Verify For Dispatch" :  
-                                  value.deliveryStatus == "Dispatch Approved"     ? "Dispatch Order" :  
-                                  value.deliveryStatus == "Dispatch"           ? "Initiate Order Delivery" :  
-                                  value.deliveryStatus == "Delivery Initiated" ? "Delivered & Paid" :  
+                      <div className="admin-order-view col-lg-2 col-md-2"  onClick={this.changeToPreviousStatus.bind(this)} data-id={value._id} 
+                              title={  
+                                  value.deliveryStatus == "Verified"           ? "New Order" :
+                                  value.deliveryStatus == "Packed"             ? "Verify Order" :
+                                  value.deliveryStatus == "Inspection"         ? "Order Packed" :
+                                  value.deliveryStatus == "Dispatch Approved"  ? "Inspect The Order" : 
                                   value.deliveryStatus == "Delivered & Paid"   ? "Done" : "Done"
                               } 
-                              data-currentstatus={
-                                  value.deliveryStatus == "New Order"          ? value.deliveryStatus :  
-                                  value.deliveryStatus == "Verified"           ? value.deliveryStatus :  
-                                  value.deliveryStatus == "Packed"             ? value.deliveryStatus :  
-                                  value.deliveryStatus == "Inspection"         ? value.deliveryStatus :  
-                                  value.deliveryStatus == "Dispatch Approved"  ? value.deliveryStatus :  
-                                  value.deliveryStatus == "Dispatch"           ? value.deliveryStatus :  
-                                  value.deliveryStatus == "Delivery Initiated" ? value.deliveryStatus : 
-                                  value.deliveryStatus == "Delivered & Paid"   ? value.deliveryStatus : ""
-                              }
+                              
                               >
                           <i className="fa fa-undo" aria-hidden="true"></i>
                       </div>
                   }
 
-                    <a href={value.viewOrder} target="_blank" title="View Invoice" className="admin-order-view">
+                    <a href={value.viewOrder} target="_blank" title="View Invoice" className="admin-order-view col-lg-2 col-md-2">
                         <i className="fa fa-eye" aria-hidden="true"></i>
                     </a>
                     
@@ -271,16 +243,16 @@ class AdminOrdersList extends Component{
                       :
                       <div className={
                         value.deliveryStatus == "New Order" ?
-                           "col-lg-5 pull-right admin-orders-stat-NewOrder" : ( value.deliveryStatus == "Packed" ? "col-lg-5 pull-right admin-orders-stat-Packed" : 
-                            value.deliveryStatus == "Verified"    ? "col-lg-5 pull-right admin-orders-stat-Verified"   : 
-                            value.deliveryStatus == "Inspection"  ? "col-lg-5 pull-right admin-orders-stat-Inspection" :
-                            value.deliveryStatus == "Dispatch Approved"  ? "col-lg-5 pull-right admin-orders-stat-OrderVerified" :
-                            value.deliveryStatus == "Dispatch"    ? "col-lg-5 pull-right admin-orders-stat-Dispatched" :
-                            value.deliveryStatus == "To Deliver"    ? "col-lg-5 pull-right admin-orders-stat-Dispatched" :
-                            value.deliveryStatus == "Delivery Initiated"    ? "col-lg-5 pull-right admin-orders-stat-Delivered" :
-                            value.deliveryStatus == "Delivered & Paid"   ? "col-lg-5 pull-right admin-orders-stat-Deliveredpaid" : 
-                            value.deliveryStatus == "Returned"   ? "col-lg-5 pull-right admin-orders-stat-Dispatched" : 
-                            value.deliveryStatus == "Cancelled"   ? "col-lg-5 pull-right admin-orders-stat-Dispatched" : ""
+                           "col-lg-2" : ( value.deliveryStatus == "Packed" ? "col-lg-2" : 
+                            value.deliveryStatus == "Verified"    ? "col-lg-2"   : 
+                            value.deliveryStatus == "Inspection"  ? "col-lg-2" :
+                            value.deliveryStatus == "Dispatch Approved"  ? "col-lg-2" :
+                            value.deliveryStatus == "Dispatch"    ? "col-lg-2" :
+                            value.deliveryStatus == "To Deliver"    ? "col-lg-2" :
+                            value.deliveryStatus == "Delivery Initiated"    ? "col-lg-2" :
+                            value.deliveryStatus == "Delivered & Paid"   ? "col-lg-2" : 
+                            value.deliveryStatus == "Returned"   ? "col-lg-2" : 
+                            value.deliveryStatus == "Cancelled"   ? "col-lg-2" : ""
                                 ) 
                                                                                       
                         } onClick={  value.deliveryStatus != "Dispatch Approved" ? this.changeOrderStatus.bind(this) : this.openModal.bind(this) } 

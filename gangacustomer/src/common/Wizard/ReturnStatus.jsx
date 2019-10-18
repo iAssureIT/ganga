@@ -19,16 +19,16 @@ export default class ReturnStatus extends Component{
 	componentDidMount(){
 		this.props.data.returnStatus.map((data,ind)=>{
 				if (data.status == 'Return Approved') {
-					$('.approvedDate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#approvedDate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Return Pickup Initiated') {
-					$('.pickupInitiatedDate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#pickupInitiatedDate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Return Pickedup') {
-					$('.pickedupDate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#pickedupDate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Return Accepted') {
-					$('.accepteddate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#accepteddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 			})
 		if(this.props.data.returnStatus[this.props.data.returnStatus.length-1].status =='Return Approved'){
@@ -66,7 +66,7 @@ export default class ReturnStatus extends Component{
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Return Approved</div>
-	                        <div className="wiztext approvedDate"></div>
+	                        <div className="wiztext" id={"approvedDate"+this.props.data._id}></div>
 	                        </div>
 	                    </li>
 	                    <li role="presentation" className="">
@@ -76,7 +76,7 @@ export default class ReturnStatus extends Component{
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Return Pickup Initiated</div>
-	                       	<div className="wiztext pickupInitiatedDate"></div>
+	                       	<div className="wiztext" id={"pickupInitiatedDate"+this.props.data._id}></div>
 	                        </div>
 	                    </li>
 
@@ -88,7 +88,7 @@ export default class ReturnStatus extends Component{
 	                        </a>
 	                        <div className="wiztextcontainer">
 	                        <div className="wiztext">Return Pickedup</div>
-	                        <div className="wiztext pickedupDate"></div>
+	                        <div className="wiztext" id={"pickedupDate"+this.props.data._id}></div>
 							</div>
 	                    </li>
 
@@ -99,7 +99,7 @@ export default class ReturnStatus extends Component{
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Return Accepted</div>
-	                        <div className="wiztext accepteddate"></div>
+	                        <div className="wiztext" id={"accepteddate"+this.props.data._id}></div>
 	                        </div>
 	                    </li>
 	                </ul>

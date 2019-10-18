@@ -97,7 +97,6 @@ componentWillMount() {}
                           <div className="col-md-3 col-lg-3 col-sm-3 megamenusubwidth">
                             {
                               data.categorylist.map((cateoryDetails,catindex)=>{
-                                // console.log('cateoryDetails',cateoryDetails);
                                 if(!cateoryDetails.subCategory.length>0){
                                   return(
                                     <div className="col-md-12 col-lg-12 col-sm-12 megamenusubwidth1">

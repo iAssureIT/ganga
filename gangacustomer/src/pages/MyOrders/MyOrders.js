@@ -200,7 +200,9 @@ export default class MyOrders extends Component {
                 console.log('response',response)
                 this.getMyOrders();
                     ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                    $('#returnProductModal').modal('hide');
+                    
+                    var modal = document.getElementById('returnProductModal');
+                    modal.style.display = "none";
                 })
                    
               .catch((error)=>{
@@ -352,8 +354,8 @@ export default class MyOrders extends Component {
                     data.products && data.products.length > 0 ?
                         data.products.map((productData, pindex)=>{
                           return(
-                          <div className="col-lg-12">
-                          <tr key={'id'+index} className={productData.status=="Returned col-lg-12" ? "greybg col-lg-12" : "col-lg-12"}>
+                          <div className={productData.status=="Returned" ? "greybg col-lg-12" : "col-lg-12"}>
+                          <tr key={'id'+index} >
                               <td data-th="Order #" className="col-lg-2 id orderimgsize"><img src={productData.productImage[0]}/></td>
                               <td data-th="Order #" className="col-lg-3 productnamecss id">{productData.productName}</td>
                               <td data-th="Date" className="col-lg-2 date text-center"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>

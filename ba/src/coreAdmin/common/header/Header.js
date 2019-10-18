@@ -61,8 +61,8 @@ logout(){
                       <i className="fa fa-cogs headicon "></i>
                       </div>*/
                     }
-                <div className="col-lg-1 col-md-1 col-sm-6 col-xs-6 pull-right">
-                    <div className="row">
+                <div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 pull-right">
+                    
                         <span className="pull-right">
                           <a  className="profileTitle btnpadd" href="/login">
                           {/* <button type="button" className="profilebtn">Logout</button>*/}
@@ -76,16 +76,16 @@ logout(){
                     <div className="col-lg-10 col-md-10 col-xs-6 col-sm-6 ">
                     <div className="headicon">Alexander Pierce</div>
                     </div>*/}
+                  
                   </div>
+                  <div className="col-lg-3 col-md-3 col-sm-3 col-xs-4 pull-right  text-right">
+                  { localStorage.getItem('userName') != 'undefined' ?  localStorage.getItem('userName') : ""}
+                  &nbsp;  <i className="fa fa-user  headicon "></i> 
                   </div>
-                  <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right">
-                    <i className="fa fa-user  headicon "></i>
-                  </div>
-                  <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right ">
+                  {/*<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right ">
                     <i className="fa fa-bell  headicon "><span className="label label-warning labelhead ">10</span></i>
-                  </div>
-                 
-
+                  </div>*/
+                  }
                 </div>
                 
                 

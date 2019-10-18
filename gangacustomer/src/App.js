@@ -5,8 +5,6 @@ import './root.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 axios.defaults.baseURL = 'http://qaapi.gangaexpress.in';
 //axios.defaults.baseURL = 'http://localhost:5006';
 

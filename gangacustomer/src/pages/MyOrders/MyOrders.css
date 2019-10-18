@@ -51,6 +51,21 @@ table > tfoot > tr > td:last-of-type {
     color: #fbbb65;
     text-transform: uppercase;
 }
+.actbtns button{
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    width: 35px;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 20px;
+    font-size: 9px;
+    padding: 5px 0 5px;
+    border: 1px solid #fbbb65 !important;
+    background: #fff;
+    color: #fbbb65;
+    text-transform: uppercase;
+}
 .actions a:hover {
 	color: #fbbb65;
 }
@@ -96,6 +111,7 @@ table > tfoot > tr > td:last-of-type {
 }
 .greybg{
 	background: #eee;
+	padding: 15px;
 }
 
 .productnamecss{

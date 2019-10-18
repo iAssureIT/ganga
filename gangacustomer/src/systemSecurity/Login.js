@@ -46,7 +46,7 @@ class Login extends Component {
         console.log("localStorage =",localStorage.getItem('user_ID'));
         
         if(localStorage==null){
-        ToastsStore.error(<div className="alertback">Invalid Email or Password, Please Enter valid email and password<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        ToastsStore.error(<div className="alertback">Invalid Email or Password, Please Enter valid email and password!<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           // swal("Invalid Email or Password","Please Enter valid email and password");
         }else{
           this.setState({
@@ -58,7 +58,6 @@ class Login extends Component {
         window.location.reload("/");
 
       }else{
-
             // swal({
             //     title: "Need to Verify OTP",
             //     text: "Please Verify Your OPT First",
@@ -78,7 +77,7 @@ class Login extends Component {
           console.log('error==========  ', error);
         if(localStorage!==null){
           // swal(error.message);
-        ToastsStore.error(<div className="alertback">{error.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        ToastsStore.error(<div className="alertback">Invalid Email or Password, Please Enter valid email and password!<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         }
         
       });

@@ -75,6 +75,9 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
+            var modal = document.getElementById('returnApprove');
+            modal.style.display = "none";
+            
           })
           .catch((error)=>{
             console.log('error', error);
@@ -100,6 +103,8 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
+            var modal = document.getElementById('pickupdetailsModal');
+            modal.style.display = "none";
           })
           .catch((error)=>{
             console.log('error', error);
@@ -126,6 +131,8 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
+            var modal = document.getElementById('pickupproductModal');
+            modal.style.display = "none";
           })
           .catch((error)=>{
             console.log('error', error);
@@ -151,6 +158,8 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
+            var modal = document.getElementById('approveProductModal');
+            modal.style.display = "none";
           })
           .catch((error)=>{
             console.log('error', error);

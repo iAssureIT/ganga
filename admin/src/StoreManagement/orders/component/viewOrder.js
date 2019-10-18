@@ -72,51 +72,30 @@ class viewOrder extends Component{
                               <div className="row">
                                 <div className="col-lg-4">
                                 <div className="">
-                                  <div  className=" col-lg-12 orderButton">{"OrderId-"+(this.state.orderData.orderID)}</div>
+                                  <div  className=" col-lg-12 orderButton">{"OrderId: "+(this.state.orderData.orderID)}</div>
                                   </div>
                                 </div>
-                               <div  className="col-lg-4 text-center">
-                               <div className="row">
-                               <div className="col-lg-5 col-lg-offset-3">
-                                {this.state.orderData.deliveryStatus ?
-                                 this.state.orderData.deliveryStatus.map((delivery, index)=>{
-                                  return(
-                                    <div className="orderfloat">
-                                  <button
-                                  title={
+                               <div  className="col-lg-4 pull-right">
+                                { this.state.orderData.deliveryStatus ?
 
-                                          delivery.status == "New Order"          ? "Order Placed" : 
-                                          delivery.status == "Verified"           ? "Verify" : 
-                                          delivery.status == "Packed"             ? "Packed" : 
-                                          delivery.status == "Inspection"         ? "Inspected" : 
-                                          delivery.status == "Order Verified"     ? "Order Verified" : 
-                                          delivery.status == "Dispatch"           ? "Out for Delivery" : 
-                                          delivery.status == "Delivered"          ? "Delivered" : 
-                                          delivery.status == "Delivered & Paid"   ? "Delivered & Paid" : "Delivered & Paid"
-                                      }
-                                className="orderButton2">
-                                <i className={ 
-                                           delivery.status == "New Order"          ? "fa fa-product-hunt admin-orders-stat-NewOrdericon" : 
-                                           delivery.status == "Verified"           ? "fa fa-check-square admin-orders-stat-Verifiedicon" : 
-                                           delivery.status == "Packed"             ? "fa fa-archive admin-orders-stat-Packedicon" : 
-                                           delivery.status == "Inspection"         ? "fa fa-info-circle admin-orders-stat-Inspectionicon" : 
-                                           delivery.status == "Order Verified"     ? "fa fa-angellist admin-orders-stat-OrderVerifiedicon" : 
-                                           delivery.status == "Dispatch"           ? "fa fa-truck admin-orders-stat-Dispatchedicon" : 
-                                           delivery.status == "Delivered"          ? "fa fa-check-circle admin-orders-stat-Deliveredicon" : 
-                                           delivery.status == "Delivered & Paid"   ? "fa fa-thumbs-up admin-orders-stat-Deliveredpaidicon" : ""
-                              }
-                                 aria-hidden="true"></i> {delivery.status=="New Order"  ? "Order Placed" 
-                                                        : delivery.status=="Dispatch"   ? "Out for Deliery" 
-                                                        : delivery.status=="TO Deliver" ? "Order Initiated" : delivery.status }</button>
-                                  
+                                  <div  className=" pull-right orderButton">Current Status: &nbsp;
+                                    <i className={  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "New Order"          ? "fa fa-product-hunt admin-orders-stat-NewOrdericon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Verified"           ? "fa fa-check-square admin-orders-stat-Verifiedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Packed"             ? "fa fa-archive admin-orders-stat-Packedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Inspection"         ? "fa fa-info-circle admin-orders-stat-Inspectionicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Dispatch Approved"  ? "fa fa-angellist admin-orders-stat-OrderVerifiedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Dispatch"           ? "fa fa-truck admin-orders-stat-Dispatchedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Delivery Initiated" ? "fa fa-check-circle admin-orders-stat-Deliveredicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Delivered & Paid"   ? "fa fa-check-circle" : ""
+                                    }
+                                    aria-hidden="true"></i> &nbsp;
+                                    {this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status }
+                               
                                   </div>
-                                 );
-                                    })
-                                   :
-                                   null
-                                  }
-                                 </div>
-                                 </div>
+                                 :
+                                  null
+                                }
                                 </div>
                                 
                               </div>

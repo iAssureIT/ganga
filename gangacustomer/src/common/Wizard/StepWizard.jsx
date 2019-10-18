@@ -19,23 +19,24 @@ export default class StepWizard extends Component{
 	componentDidMount(){
 		var pathname = window.location.pathname;
 		this.props.data.deliveryStatus.map((data,ind)=>{
+				console.log('dtattatat',data.status);
+				console.log('dtattatat date',data.Date);
 				if (data.status == 'New Order') {
-					$('.orderplaceddate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#orderplaceddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Dispatch') {
-					$('.dispatchdate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#dispatchdate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Delivery Initiated') {
-					$('.deliveryinitdate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#deliveryinitdate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 				if (data.status == 'Delivered & Paid') {
-					$('.delivereddate').html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#delivereddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 			})
 		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='New Order'){
 			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
-			
-			
+
 		}
 		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='Dispatch'){
 			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
@@ -73,7 +74,7 @@ export default class StepWizard extends Component{
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Order Placed</div>
-	                        <div className="wiztext orderplaceddate"></div>
+	                        <div className="wiztext" id={"orderplaceddate"+this.props.data._id}></div>
 	                        </div>
 	                    </li>
 	                    <li role="presentation" className="">
@@ -83,7 +84,7 @@ export default class StepWizard extends Component{
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Out for delivery</div>
-	                       	<div className="wiztext dispatchdate"></div>
+	                       	<div className="wiztext" id={"dispatchdate"+this.props.data._id}></div>
 	                        </div>
 	                    </li>
 
@@ -95,7 +96,7 @@ export default class StepWizard extends Component{
 	                        </a>
 	                        <div className="wiztextcontainer">
 	                        <div className="wiztext">In transition</div>
-	                        <div className="wiztext deliveryinitdate"></div>
+	                        <div className="wiztext" id={"deliveryinitdate"+this.props.data._id}></div>
 							</div>
 	                    </li>
 
@@ -106,7 +107,7 @@ export default class StepWizard extends Component{
 	                            </span>
 	                        </a>
 	                        <div className="wiztextcontainer"><div className="wiztext">Delivered</div>
-	                        <div className="wiztext delivereddate"></div>
+	                        <div className="wiztext" id={"delivereddate"+this.props.data._id}></div>
 	                        </div>
 	                    </li>
 	                </ul>

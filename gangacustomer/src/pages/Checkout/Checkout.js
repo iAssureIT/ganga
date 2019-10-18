@@ -1002,7 +1002,7 @@ class Checkout extends Component{
                                     
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label><i className="fa fa-calendar"></i> &nbsp;&nbsp; Delivery Date</label>
-                                        <input type="date" name="date" className="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+                                        <input type="date" name="date" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" min={moment().format('YYYY-MM-DD')}/>
                                     </div>
                                 </div>
                             </div>

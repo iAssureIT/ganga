@@ -53,7 +53,6 @@ class dispatchModal extends Component{
               text  : response.data.message,
             });
              if(response.status == 200){
-                //$('#dispatchDetails'+id).modal('hide');
                 
                     swal({
                         title: 'Order is dispatched Successflly',
@@ -61,7 +60,7 @@ class dispatchModal extends Component{
                         showConfirmButton: false
                     });
                     // this.getOrders();
-                    var modal = document.getElementById('dispatchModal');
+                    var modal = document.getElementById('adminModal');
                     modal.style.display = "none";
                     $('#businessAssociate').val('');
                     $('.expDeliveryDate').val('');
@@ -101,7 +100,7 @@ class dispatchModal extends Component{
         return( 
           <div className="col-lg-12">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="dispatchDetails" role="dialog">
-              <div className="modal-dialog adminModal addressModal-dialog">
+              <div className="modal-dialog adminModal addressModal-dialog" id="adminModal">
               <div className="modal-content adminModal-content col-lg-12 col-md-12  col-sm-12 col-xs-12 noPadding">
                   <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">                                                                              
                   <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11">DISPATCH ORDER</h4>
@@ -140,8 +139,12 @@ class dispatchModal extends Component{
                           <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                           <div className="form-group">
                               <label>Expected Delivery Date</label><span className="astrick">*</span>
-                              <input name="expDeliveryDate" type="date" className="expDeliveryDate form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="expDeliveryDate"  />
-                          </div>
+                              {
+                                
+                                <input name="expDeliveryDate" type="date" min={moment().format('YYYY-MM-DD')} className="expDeliveryDate form-control" placeholder="" aria-label="Brand" aria-describedby="basic-addon1" ref="expDeliveryDate"  />
+                         
+                              }
+                               </div>
                           </div>
                       </div>
                       </div>

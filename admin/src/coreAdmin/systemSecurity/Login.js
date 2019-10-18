@@ -46,7 +46,7 @@ class Login extends Component {
         if (response.data.roles.indexOf("admin") != -1 || response.data.roles.indexOf("superAdmin") != -1) {
           localStorage.setItem("token",response.data.token);
           localStorage.setItem("admin_ID",response.data.user_ID);
-          // localStorage.setItem("admin_email",response.data.email);
+          localStorage.setItem("userName",response.data.userFirstName);
           // localStorage.setItem("admin_fullName",response.data.fullName);
 
           console.log("localStorage =",localStorage.getItem('admin_ID'));
