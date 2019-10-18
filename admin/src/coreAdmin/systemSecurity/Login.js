@@ -43,23 +43,26 @@ class Login extends Component {
         // this.setState({
         //   token : response.data.token
         // });
+        if (response.data.roles.indexOf("admin") != -1 || response.data.roles.indexOf("superAdmin") != -1) {
+          localStorage.setItem("token",response.data.token);
+          localStorage.setItem("admin_ID",response.data.user_ID);
+          // localStorage.setItem("admin_email",response.data.email);
+          // localStorage.setItem("admin_fullName",response.data.fullName);
 
-        localStorage.setItem("token",response.data.token);
-        localStorage.setItem("admin_ID",response.data.user_ID);
-        // localStorage.setItem("admin_email",response.data.email);
-        // localStorage.setItem("admin_fullName",response.data.fullName);
+          console.log("localStorage =",localStorage.getItem('admin_ID'));
+          this.props.history.push("/dashboard");
+          window.location.reload();
 
-        console.log("localStorage =",localStorage.getItem('admin_ID'));
-        // browserHistory.replace('/');
-        this.props.history.push("/dashboard");
-        window.location.reload();
-        // direct.setState({loggedIn:response.data.token})
-        if(localStorage==null){
-          swal("Invalid Email Id or Password","Please Enter valid email id and password");
-        }else{
-          this.setState({
-              loggedIn  :   true
-          })
+          if(localStorage==null){
+            swal("Invalid Email Id or Password","Please Enter valid email id and password");
+          }else{
+            this.setState({
+                loggedIn  :   true
+            })
+          }
+        }
+        else{
+          swal("Invalid Email or Password","Please Enter valid email and password"); 
         }
       })
       .catch(function (error) {
