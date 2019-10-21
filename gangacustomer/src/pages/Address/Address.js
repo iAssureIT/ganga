@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import SmallBanner from '../../blocks/SmallBanner/SmallBanner.js';
+import jQuery from 'jquery';
+import 'jquery-validation';
 import "./Address.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import _ from 'underscore';
@@ -16,7 +17,6 @@ class Address extends Component {
         this.camelCase = this.camelCase.bind(this)
     }
     componentDidMount(){
-
         var user_ID = localStorage.getItem("user_ID");
         var deliveryAddressID = this.props.match.params.deliveryAddressID;
         console.log('deliveryAddressID', deliveryAddressID);
@@ -40,6 +40,125 @@ class Address extends Component {
         })
         .catch((error)=>{
             console.log('error', error);
+        });
+        this.validations();
+    }
+    validations(){
+        $.validator.addMethod("regxusername", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Name should only contain letters.");
+        $.validator.addMethod("regxmobileNumber", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid mobile number.");
+        $.validator.addMethod("regxemail", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid email.");
+        $.validator.addMethod("regxaddressLine", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid address.");
+        $.validator.addMethod("regxcountry", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the country.");
+        $.validator.addMethod("regxstate", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the category");
+        $.validator.addMethod("regxblock", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid block name.");
+        $.validator.addMethod("regxcity", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid city name");
+        $.validator.addMethod("regxpincode", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid pincode.");
+        $.validator.addMethod("regxaddType", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the address type.");
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+        $("#addressForm").validate({
+            rules: {
+                username: {
+                    regxusername : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                    required: true,
+                },
+                mobileNumber: {
+                    regxmobileNumber : /^([7-9][0-9]{9})$/,
+                    required: true,
+                },
+                email: {
+                    required: true,
+                },
+                addressLine1: {
+                    required: true,
+                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                },
+                addressLine2: {
+                    required: true,
+                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                },
+                country: {
+                    required: true,
+                    regxcountry: "Select Country"
+                },
+                state: {
+                    required: true,
+                    regxstate: "Select State"
+                },
+                block: {
+                    required: true,
+                    regxblock : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                },
+                city: {
+                    required: true,
+                    regxcity : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                },
+                pincode: {
+                    required: true,
+                    regxpincode : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                },
+                addType: {
+                    required: true,
+                    regxaddType: "Select Section"
+                },
+            },
+            errorPlacement: function (error, element) {
+              if (element.attr("name") == "username") {
+                error.insertAfter("#username");
+              }
+              if (element.attr("name") == "mobileNumber") {
+                error.insertAfter("#mobileNumber");
+              }
+              if (element.attr("name") == "email") {
+                error.insertAfter("#email");
+              }
+              if (element.attr("name") == "addressLine1") {
+                error.insertAfter("#addressLine1");
+              }
+              if (element.attr("name") == "addressLine2") {
+                error.insertAfter("#addressLine2");
+              }
+              if (element.attr("name") == "country") {
+                error.insertAfter("#country");
+              }
+              if (element.attr("name") == "state") {
+                error.insertAfter("#state");
+              }
+              if (element.attr("name") == "block") {
+                error.insertAfter("#block");
+              }
+              if (element.attr("name") == "city") {
+                error.insertAfter("#city");
+              }
+              if (element.attr("name") == "pincode") {
+                error.insertAfter("#pincode");
+              }
+              if (element.attr("name") == "addType") {
+                error.insertAfter("#addType");
+              }
+            }
         });
     }
     componentWillReceiveProps(nextProps){
@@ -76,7 +195,7 @@ class Address extends Component {
         var formValues = {
             "user_ID"         : localStorage.getItem("user_ID"),
             "deliveryAddressID" : deliveryAddressID,
-            "name"            : this.state.name,
+            "name"            : this.state.username,
             "email"           : this.state.email,
             "addressLine1"    : this.state.addressLine1,
             "addressLine2"    : this.state.addressLine2,  
@@ -89,27 +208,32 @@ class Address extends Component {
             "addType"         : this.state.addType,
         }
         if(deliveryAddressID){
-            console.log('form deliveryAddressID', formValues);
-            axios.patch('/api/users/useraddress', formValues)
-            .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                // swal(response.data);
-            })
-            .catch((error)=>{
-                console.log('error', error)
-            });
+            if($("#addressForm").valid()){
+                console.log('form deliveryAddressID', formValues);
+                axios.patch('/api/users/useraddress', formValues)
+                .then((response)=>{
+                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                    // swal(response.data);
+                    this.props.history.push('/address-book');
+                })
+                .catch((error)=>{
+                    console.log('error', error)
+                });
+            }
         }else{
-            console.log('form', formValues);
-            axios.patch('/api/users/patch/address', formValues)
-            .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                // swal(response.data.message);
-            })
-            .catch((error)=>{
-                console.log('error', error)
-            });
+            if($("#addressForm").valid()){
+                axios.patch('/api/users/patch/address', formValues)
+                .then((response)=>{
+                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                    // swal(response.data.message);
+                    this.props.history.push('/address-book');
+                })
+                .catch((error)=>{
+                    console.log('error', error)
+                });
+            }
         }
-        this.props.history.push('/address-book');
+        
     }
     camelCase(str){
       return str
@@ -118,7 +242,7 @@ class Address extends Component {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
     }
-      Closepagealert(event){
+    Closepagealert(event){
     event.preventDefault();
     $(".toast-error").html('');
     $(".toast-success").html('');
@@ -129,7 +253,7 @@ class Address extends Component {
     $(".toast-info").removeClass('toast');
     $(".toast-warning").removeClass('toast');
 
-  }
+    }
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -142,12 +266,12 @@ class Address extends Component {
                         <Sidebar />
                     </div>
                     <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8 NOpadding mt25 mb25">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                        <form id="addressForm" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                             <h3 className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Information</h3>
 
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
-                                <input type="text" ref="name" name="name" id="name" value={this.state.name} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                <input type="text" ref="username" name="username" id="username" value={this.state.username} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
@@ -213,9 +337,7 @@ class Address extends Component {
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                 <button onClick={this.saveAddress.bind(this)} className="btn btn-warning addressSaveBtn">Save Address</button>
                             </div>
-
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>

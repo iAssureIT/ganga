@@ -183,27 +183,3 @@ class ProductList extends Component{
         }
     }
 export default ProductList ;
-
-// ShopProductList = withTracker(props => {
-//     var userId = Meteor.userId();
-//     var productData = [];
-//     const vendorHandle = Meteor.subscribe("allSupplierList");
-//     const VendorData = Suppliers.findOne({"OwnerId":userId});
-//     console.log('VendorData',VendorData);
-//     const loading = !vendorHandle.ready();
-
-//     var VendorId = VendorData ? VendorData._id : '';
-//     console.log('VendorId',VendorId);
-//     const productHandle     = Meteor.subscribe("productShopPublish");
-//     if(Roles.userIsInRole(Meteor.userId(), ['Vendor'])){
-//         productData       = ProductShop.find({vendorId:VendorId}).fetch();
-//     }else{
-//         productData       = ProductShop.find({}).fetch();
-//     }
-//     const loading1          = !productHandle.ready();
-//     console.log('productData',productData);
-//     return {
-//         loading,
-//         productData
-//     };    
-// })(ShopProductList);

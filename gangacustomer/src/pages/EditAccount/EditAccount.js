@@ -112,12 +112,12 @@ class EditAccount extends Component{
         if($('#editAccount').valid()){
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
-                console.log(response.message);
+                // console.log(response.message);
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
             })
             .catch((error)=> {
-            console.log('error============',error);
+            console.log('error',error);
             });
         }
     }

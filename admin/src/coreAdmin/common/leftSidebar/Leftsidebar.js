@@ -32,7 +32,7 @@ export default class Leftsidebar extends Component{
           <div className="wrapper">
             <nav id="sidebar">
               <div className="sidebar-header">
-                <h4 className="text-center"><b><img className="slidlogo1" src="/images/im1.png"/></b></h4>
+                <h4 className="text-center"><b><img className="slidlogo1" src="/images/GangaExpress.png"/></b></h4>
                 <strong><img className="slidlogo" src="/images/Logo.png"/></strong>
               </div>
               <ul className="list-unstyled components">

@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 
 const initialState = {
 	cartCount	 	: 0,

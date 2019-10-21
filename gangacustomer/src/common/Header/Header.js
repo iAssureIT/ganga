@@ -450,7 +450,7 @@ searchProducts(){
                         <div className="row">
                           <div className="col-lg-8">
                             <div className="row">
-                              <a href="/"><img src="/images/logo1.png"/></a>
+                              <a href="/"><img src="/images/GangaExpress.png"/></a>
                             </div>  
                           </div>  
                         </div>  
