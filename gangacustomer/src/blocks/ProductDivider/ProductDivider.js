@@ -24,6 +24,7 @@ export default class ProductDivider extends Component {
 				{
 					this.state.categoriesImg && this.state.categoriesImg.map((data,index)=>{
 						if (index < 8 ) {
+							console.log("section", data);
 						return(
 							<div className="col-lg-3 col-md-3 col-sm-6 col-xs-6" key={index}>
 				                <a href={"/section/"+ data.section.replace(/\s+/g, '-').toLowerCase() +'/'+data.section_ID} >

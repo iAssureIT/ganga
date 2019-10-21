@@ -212,18 +212,17 @@
     left: 14.7em;
 }
 .logoStyle{
-    height: auto !important;
+    height: 100% !important;
     padding: 0;
     width: 100%;
 }
 .brdlogos{
     /*background-image: url(/images/CSLogo.png);*/
-    background-size: 232px 128px;
+    
     background-repeat: no-repeat;
     background: #ebebeb;
     border: 1px dashed #ddd;
-    height: 200px !important;
-    width: 200px !important;
+    
 }
 .camicon{
 text-align: center;

@@ -12,15 +12,12 @@ export default class ProducthomeDetailsReviewFAQ extends Component {
       this.state = {
       "reviewuserData":""
       };
-       this.getMyReview()
-
     } 
   	componentDidMount(){  
-    this.getMyReview()
+      
+    } 
 
-      } 
-
-          componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps){
       
       if (nextProps.productInfo) {
          // console.log('nextProps===============================>',nextProps.productInfo);

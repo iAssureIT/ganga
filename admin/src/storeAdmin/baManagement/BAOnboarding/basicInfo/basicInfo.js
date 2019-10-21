@@ -55,7 +55,8 @@ class BasicInfo extends Component {
       axios.get("/api/businessassociates/get/one/"+this.props.match.params.BaId)
             .then((response)=>{
               var attachedDocuments = [];
-              if (response.data[0].documents.length>0 ) {
+
+              if (response.data[0].documents ) {
 
                 for (var i = 0; i < response.data[0].documents.length; i++) {
                    attachedDocuments.push({name : response.data[0].documents[i]  })
@@ -461,8 +462,7 @@ class BasicInfo extends Component {
             
               console.log('error', error);
               swal({
-                  title : '',
-                  text  : "Change some fields",
+                  title : 'No Information Modified!',
                 });
         })
   }

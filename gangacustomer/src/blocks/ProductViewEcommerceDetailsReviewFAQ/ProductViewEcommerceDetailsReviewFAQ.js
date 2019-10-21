@@ -18,7 +18,10 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
 	     this.getMyReview()
   	} 
   	componentDidMount(){  
-    this.getMyReview()
+      if (this.state.product_id) {
+        this.getMyReview()
+      }
+    
 //$('input:radio[name="mygroup"][value="5"]').attr('checked',true);
 
     	} 
