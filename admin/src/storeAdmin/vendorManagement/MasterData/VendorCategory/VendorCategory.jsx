@@ -102,7 +102,8 @@ class VendorCategory extends Component {
             this.props.history.push('/vendor-category');
             swal(response.data.message);
             this.setState({
-                categoryName : ""
+                categoryName : "",
+                editId : ""
             })
         })
         .catch((error)=>{

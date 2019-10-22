@@ -214,7 +214,7 @@ class BulkProductImageUpload extends Component{
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 upldImgTextColor">
                       Image name must be saved in format <span className="upldImgTextColor1">Your Product Code</span> - <span className="upldImgTextColor2">Image Number for that product. </span>
-                      eg. ProductCode0-1, ProductCode0-2, ProductCode0-3, ... etc.
+                      eg. ItemCode0-1, ItemCode0-2, ItemCode0-3, ... etc.
                     </div>
                     <div className="col-lg-12">
                       {

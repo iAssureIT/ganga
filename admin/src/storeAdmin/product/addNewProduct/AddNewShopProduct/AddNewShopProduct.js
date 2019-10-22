@@ -82,7 +82,12 @@ class AddNewShopProduct extends Component {
     $.validator.addMethod("regxPrice", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Price should only numbers.");
-
+    $.validator.addMethod("regxPrice", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Quantity should only numbers.");
+    $.validator.addMethod("regxPrice", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Quantity should only numbers.");
     jQuery.validator.setDefaults({
       debug: true,
       success: "valid"
@@ -115,11 +120,16 @@ class AddNewShopProduct extends Component {
         
         originalPrice: {
           required: true,
-          // regxPrice: /^[0-9 ]*$/,
+          regxoriginalPricee: /^\d+(,\d{1,2})?$/,
+        },
+        discountPercent: {
+          required: true,
+          regxPrice: /^\d+(,\d{1,2})?$/,
         },
         availableQuantity: {
           required: true,
-          regxPrice: /^[0-9 ]*$/,
+          regxPrice: /^\d+(,\d{1,2})?$/,
+          // regxmobileNumber : /^([7-9][0-9]{9})$/,
         },
         currency: {
           required: true,
@@ -622,7 +632,7 @@ class AddNewShopProduct extends Component {
               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 marginTopp">
                 <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                   <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields">
-                    <label>Vendor </label>
+                    <label>Vendor <i className="redFont">*</i></label>
                     <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                       <option disabled selected defaultValue="">Select Vendor</option>
                       {this.state.vendorArray && this.state.vendorArray.length > 0 ?
@@ -635,6 +645,7 @@ class AddNewShopProduct extends Component {
                         <option disabled>{"No vendor added"}</option>
                       }
                     </select>
+                    {this.state.vendor ? null : <span>Please select a vendor to add a product</span>}
                   </div>
                 </div>
                 {

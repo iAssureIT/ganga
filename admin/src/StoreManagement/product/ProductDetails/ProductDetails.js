@@ -130,16 +130,13 @@ class ProductDetails extends Component{
                                                     <div className="col-lg-12">
                                                         <div className="prod-flip-divs">
 
-                                                        {
-                                                            this.state.prodImages ?
+                                                        
 
                                                                 <div className={"item img-responsiveProduct"}>
-                                                                    <img className="img-responsive zoom" src={this.state.prodImages} alt="" />
+                                                                    <img className="img-responsive zoom" src={this.state.prodImages ? this.state.prodImages : "/images/notavailable.jpg"} alt="" />
                                                                 </div>
 
-                                                            :
-                                                            null
-                                                        }
+                                                            
 
 
                                                     </div>

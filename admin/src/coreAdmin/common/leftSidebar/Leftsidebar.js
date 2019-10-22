@@ -243,7 +243,7 @@ export default class Leftsidebar extends Component{
                     <li>
                       <a href="/productreview">
                         <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">product review</span>
+                        <span className="sidebarMenuSubText">Product Review</span>
                       </a>
                     </li>
                   </ul>
