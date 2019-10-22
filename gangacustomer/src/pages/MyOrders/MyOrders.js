@@ -130,6 +130,7 @@ export default class MyOrders extends Component {
       var status = $(event.target).data('status');
       var id = $(event.target).data('id');
       var productid = $(event.target).data('productid');
+      var altorderid = $(event.target).data('altorderid');
       console.log($(event.target));
       var str= '';
 
@@ -148,6 +149,8 @@ export default class MyOrders extends Component {
         str = 'Do you want to return order?';
         $('#returnProductBtn').attr('data-id', id);
         $('#returnProductBtn').attr('data-productid', productid);
+        $('#returnProductBtn').attr('data-altorderid', altorderid);
+        
         $('.cantreturn').hide();
         $('.canreturn').show();
       } else{
@@ -181,11 +184,13 @@ export default class MyOrders extends Component {
       event.preventDefault();
         var id = $(event.target).data('id');
         var productid = $(event.target).data('productid');
+        var altorderid = $(event.target).data('altorderid');
         var reasonForReturn = $('.reasonForReturn').val();
         console.log('returnForm',$('#returnForm').valid());
         
         var formValues = {
                           "orderID"   : id,  
+                          "altorderid"  : altorderid,
                           "productID" : productid,
                           "reasonForReturn" : reasonForReturn,
                           "bankname"  : $('#bankname').val(), 
@@ -367,7 +372,7 @@ export default class MyOrders extends Component {
                                   {
                                     data.status == 'Cancelled' || productData.status == 'Returned' ? '' :
                                     data.status == 'Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return" 
-                                    onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-productid={productData.product_ID}>
+                                    onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-altorderid={data.orderID} data-productid={productData.product_ID}>
                                     <i className="fa"  data-status={data.status} data-id={data._id} data-productid={productData.product_ID} >&#xf0e2;</i></button> :''
                                   }
                               </td>

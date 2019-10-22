@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch,Link,location } from 'react-router-dom';
 import axios                  from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
 import moment from "moment";
@@ -75,9 +76,10 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
-            var modal = document.getElementById('returnApprove');
-            modal.style.display = "none";
+
             
+            $('#returnApprove').hide();
+            $('.modal-backdrop').remove();
           })
           .catch((error)=>{
             console.log('error', error);
@@ -103,8 +105,8 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
-            var modal = document.getElementById('pickupdetailsModal');
-            modal.style.display = "none";
+            $('#pickupdetailsModal').hide();
+            $('.modal-backdrop').remove();
           })
           .catch((error)=>{
             console.log('error', error);
@@ -131,8 +133,8 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
-            var modal = document.getElementById('pickupproductModal');
-            modal.style.display = "none";
+            $('#pickupproductModal').hide();
+            $('.modal-backdrop').remove();
           })
           .catch((error)=>{
             console.log('error', error);
@@ -158,8 +160,8 @@ export default class ReturnProducts extends Component{
                   title : response.data.message,
                   text  : response.data.message,
                 });
-            var modal = document.getElementById('approveProductModal');
-            modal.style.display = "none";
+            $('#approveProductModal').hide();
+            $('.modal-backdrop').remove();
           })
           .catch((error)=>{
             console.log('error', error);
@@ -237,10 +239,10 @@ export default class ReturnProducts extends Component{
                                 })  
                               }
                                 &nbsp;
-                                { returnApproved != 1 ? <button className="btn btn-warning" onClick={this.returnApproveModal.bind(this)} id={data._id} >Approve</button> : "" }
-                                { returnApproved ==1 && pickupInitiated != 1 ? <button className="btn btn-warning" onClick={this.addpickupdetails.bind(this)} id={data._id} >Add Pickup Details</button> : "" }
-                                { returnApproved ==1 && pickupInitiated ==1 && productPickedUp != 1 ? <button className="btn btn-warning" onClick={this.openpickupproduct.bind(this)} id={data._id} >Pickup Product </button> : ""}
-                                { returnApproved ==1 && pickupInitiated ==1 && productPickedUp && productAccepted != 1 ? <button className="btn btn-warning" onClick={this.openproductApproval.bind(this)} id={data._id} >Accept Product </button> : ""}
+                                { returnApproved != 1 ? <button className="btn btn-warning" data-toggle="modal" onClick={this.returnApproveModal.bind(this)} data-target="#returnApprove" id={data._id} >Approve</button> : "" }
+                                { returnApproved ==1 && pickupInitiated != 1 ? <button className="btn btn-warning" data-toggle="modal" onClick={this.addpickupdetails.bind(this)} data-target="#pickupdetailsModal" id={data._id} >Add Pickup Details</button> : "" }
+                                { returnApproved ==1 && pickupInitiated ==1 && productPickedUp != 1 ? <button className="btn btn-warning" data-toggle="modal" onClick={this.openpickupproduct.bind(this)} data-target="#pickupproductModal" id={data._id} >Pickup Product </button> : ""}
+                                { returnApproved ==1 && pickupInitiated ==1 && productPickedUp && productAccepted != 1 ? <button className="btn btn-warning" data-toggle="modal" onClick={this.openproductApproval.bind(this)} data-target="#approveProductModal" id={data._id} >Accept Product </button> : ""}
                                 
                               </div>
                               {
@@ -332,7 +334,7 @@ export default class ReturnProducts extends Component{
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
                 <h3 className="modalTitle">Return Approval</h3>
               </div>
               <div className="modal-body">
@@ -348,12 +350,12 @@ export default class ReturnProducts extends Component{
             </div>
           </div>
         </div>
-
+       
         <div className="modal" id="pickupdetailsModal" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                <button type="button" className="close modalclosebut" data-dismiss="modal" data-target={"#pickupdetailsModal"}>&times;</button>
                 <h3 className="modalTitle">Add Pickup Deatils</h3>
               </div>
               <div className="modal-body">
@@ -378,7 +380,6 @@ export default class ReturnProducts extends Component{
             </div>
           </div>
         </div>
-
         <div className="modal" id="pickupproductModal" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">
