@@ -150,7 +150,6 @@ class SectionManagement extends Component {
       axios.post('/api/sections/post', formValues)
         .then((response) => {
           swal({
-            text: response.data.message,
             title: response.data.message,
           });
           this.setState({

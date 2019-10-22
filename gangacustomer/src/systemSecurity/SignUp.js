@@ -175,7 +175,7 @@ Closepagealert(event){
 	       break;
 
 	       case 'mobileV' : 
-	       formerrors.mobileV = mobileRegex.test(value) ? '' : "Please Enter Numbers only";
+	       formerrors.mobileV = mobileRegex.test(value) ? '' : "Please Enter Valid Mobile Number";
 	       break;
 
 	       case 'emailIDV' : 

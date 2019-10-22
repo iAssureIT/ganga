@@ -428,9 +428,9 @@ searchProducts(){
                                           </div>
                                         </div></a>
                                       </li>
-                                      <li className="col-lg-12 NOpadding"><a href="/account">Your Profile</a></li>
-                                      <li className="col-lg-12 NOpadding"><a href="/wishlist">Your Wishlist</a></li>
-                                      <li className="col-lg-12 NOpadding"><a href="/my-orders">Your Orders</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/account">My Profile</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/wishlist">My Wishlist</a></li>
+                                      <li className="col-lg-12 NOpadding"><a href="/my-orders">My Orders</a></li>
                                       <li className="col-lg-12 NOpadding" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>
                                     </ul> 
                                   </li>

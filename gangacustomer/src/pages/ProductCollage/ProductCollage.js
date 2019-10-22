@@ -453,6 +453,11 @@ class ProductCollage extends Component {
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
+				    	{ this.state.categoryDetails[0] ? 
+				    		<li><a  href={"/section/"+this.state.categoryDetails[0].section.replace(/\s+/g, '-').toLowerCase()+'/'+this.state.categoryDetails[0].section_ID}>
+				    		{this.state.categoryDetails[0].section}</a></li>
+				    		: ""
+				    	}
 				    	{
 				    	/*<li><a href={"/product-collage/"+this.state.categoryDetails._id}>{this.state.categoryDetails && this.state.categoryDetails.category}</a></li>*/
 				  		}

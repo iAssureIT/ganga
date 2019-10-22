@@ -100,10 +100,8 @@ class CartProducts extends Component{
         axios.patch("/api/carts/remove" ,formValues)
         .then((response)=>{
             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-            .then((obj)=>{
                 this.props.fetchCartData();
-            });
-        this.getCompanyDetails();
+                this.getCompanyDetails();
         })
         .catch((error)=>{
         console.log('error', error);
@@ -184,7 +182,7 @@ class CartProducts extends Component{
     }
     
     render(){
-        
+        console.log('recentCartData',this.props.recentCartData);
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">

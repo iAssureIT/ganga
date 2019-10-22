@@ -165,12 +165,12 @@ class ProductViewEcommerceBestSellers extends Component {
 
   }
   render() {
-    // console.log('Product', this.props.title,this.props.newProducts);
-          const token = localStorage.getItem("user_ID") ;
-          // console.log("user_ID:",localStorage.getItem("user_ID"))
+    const token = localStorage.getItem("user_ID") ;
     return (
 
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
+          {
+            this.state.Products && this.state.Products.length > 0 ?
             <div className="row">
             <div className="pagealertnone">
               <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
@@ -198,9 +198,9 @@ class ProductViewEcommerceBestSellers extends Component {
                         autoplayHoverPause={true}
                     >
                     {
-                    this.state.Products && this.state.Products.length > 0 ?
+                   
                     this.state.Products.map((data, index)=>{
-                        // console.log('ididid ',data._id);
+                    // console.log('ididid ',data._id);
                     return (
                       <div className="item col-lg-12 col-md-12 col-sm-12 col-xs-12" key={index}>
                         <div className="">
@@ -257,14 +257,19 @@ class ProductViewEcommerceBestSellers extends Component {
                       </div>
                     );
                     })
-                    : ''  
-                }  
+                    
+                    }  
                   </OwlCarousel>
                   </div>                
                 </div>                
               </div>
             </div>
           </div>
+          : ''  
+          }  
+
+
+
           <div className="modal " id="productviewmodal" role="dialog">
               <div className="modal-dialog modal-lg dialog">
                 <div className="modal-content">  

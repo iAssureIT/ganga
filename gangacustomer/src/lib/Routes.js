@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React,{Component}                          from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/collapse.js';
@@ -47,57 +47,136 @@ import ContactPage                               from '../pages/ContactPage/Cont
 import SiteMap                                   from '../pages/SiteMap/SiteMap.js';
 
 
-const WebLayout = () => (
-  <div className="skin-blue fixed sidebar-mini">    
-    <Route path="/" exact strict component={ HomePage } /> 
-    <Route path="/login"                    exact strict component={ Login } />
-    <Route path="/signup"                   exact strict component={ SignUp } />
-    <Route path="/forgotpassword"               exact strict component={ ForgotPassword } />
-    <Route path="/resetpassword/:user_ID"                exact strict component={ ResetPassword } />
-    <Route path="/verify-account"           exact strict component={ VerifyAccount } />
-    <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
-    <Route path="/cart"                     exact strict component={ Cart } />
-    <Route path="/checkout"                 exact strict component={ Checkout } />
-    <Route path="/my-orders"                exact strict component={ MyOrders } />
-    <Route path="/view-order/:order_ID"                exact strict component={ ViewOrder } />
-    <Route path="/shipment-tracking"        exact strict component={ ShipmentTracking } />
-    <Route path="/productdetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
-    <Route path="/searchProducts"           exact strict component={ SearchProduct } />
-    <Route path="/section/:url/:sectionID"  exact strict component={ ProductCollage } />
-    <Route path="/category/:url/:sectionID/:categoryID"            exact strict component={ ProductCollage } />
-    <Route path="/subcategory/:sectionID/:categoryID/:subcategoryID"            exact strict component={ ProductCollage } />
-    <Route path="/product-collage/:categoryID/:subcategoryID"   exact strict component={ ProductCollage } />
-    
-    <Route path="/profile"            exact strict component={ Edituser } />
-    <Route path="/payment/:order_ID"            exact strict component={ Payment } />
-    <Route path="/wishlist"            exact strict component={ Wishlist } />
-    <Route path="/productreview"            exact strict component={ Productreview } />
-    <Route path="/account"            exact strict component={ Account } />
-    <Route path="/edit"            exact strict component={ EditAccount } />
-    <Route path="/address-book"            exact strict component={ AddressBook } />
-    <Route path="/address/:deliveryAddressID"            exact strict component={ Address } />
-    <Route path="/address"            exact strict component={ Address } />
-    <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
-    <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
-    <Route path="/about-us"             exact strict component={Aboutuspage}  />
-    <Route path="/sitemap" exact strict component={SiteMap}  />
-    <Route path="/contact-us" exact strict component={ContactPage}  />
-  </div>
-);
+class Routes extends Component{
+    constructor(props) {
+       super(props);
+        this.state = {
+          loggedIn : false,
+        }
+      }
+       
+      componentDidMount(){
+        var user_ID = localStorage.getItem("user_ID");
+        console.log('props',this.props);
+        if (user_ID && user_ID !='') {
+            this.setState({
+            loggedIn : true
+            })
+        }else{
+            this.setState({
+            loggedIn : false
+            })
+        }
+      }
+    render(){ 
+    if(this.state.loggedIn ===true){
+
+        const WebLayout = () => (
+          <div className="skin-blue fixed sidebar-mini">    
+            <Route path="/" exact strict component={ HomePage } /> 
+            <Route path="/login"                    exact strict component={ Login } />
+            <Route path="/signup"                   exact strict component={ SignUp } />
+            <Route path="/forgotpassword"           exact strict component={ ForgotPassword } />
+            <Route path="/resetpassword/:user_ID"   exact strict component={ ResetPassword } />
+            <Route path="/verify-account"           exact strict component={ VerifyAccount } />
+            <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
+            <Route path="/cart"                     exact strict component={ Cart } />
+            <Route path="/checkout"                 exact strict component={ Checkout } />
+            <Route path="/my-orders"                exact strict component={ MyOrders } />
+            <Route path="/view-order/:order_ID"     exact strict component={ ViewOrder } />
+            <Route path="/shipment-tracking"        exact strict component={ ShipmentTracking } />
+            <Route path="/productdetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
+            <Route path="/searchProducts"           exact strict component={ SearchProduct } />
+            <Route path="/section/:url/:sectionID"  exact strict component={ ProductCollage } />
+            <Route path="/category/:url/:sectionID/:categoryID"            exact strict component={ ProductCollage } />
+            <Route path="/subcategory/:sectionID/:categoryID/:subcategoryID"            exact strict component={ ProductCollage } />
+            <Route path="/product-collage/:categoryID/:subcategoryID"   exact strict component={ ProductCollage } />
+            
+            <Route path="/profile"              exact strict component={ Edituser } />
+            <Route path="/payment/:order_ID"            exact strict component={ Payment } />
+            <Route path="/wishlist"            exact strict component={ Wishlist } />
+            <Route path="/productreview"            exact strict component={ Productreview } />
+            <Route path="/account"            exact strict component={ Account } />
+            <Route path="/edit"            exact strict component={ EditAccount } />
+            <Route path="/address-book"            exact strict component={ AddressBook } />
+            <Route path="/address/:deliveryAddressID"            exact strict component={ Address } />
+            <Route path="/address"            exact strict component={ Address } />
+            <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
+            <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
+            <Route path="/about-us"             exact strict component={Aboutuspage}  />
+            <Route path="/sitemap" exact strict component={SiteMap}  />
+            <Route path="/contact-us" exact strict component={ContactPage}  />
+          </div>
+        );
+        return (
+        <div>
+          <Router>
+            <Header />
+            <Switch>
+              <Route path="/" component={ WebLayout } />
+            </Switch>
+            <Footer />
+          </Router>
+        </div>
+        );
+    }  
+    else{
+        //const weburls = new Array('cart','checkout','my-orders','view-order','shipment-tracking','profile',);
 
 
-function Routes() {
-  return (
-    <div>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/" component={ WebLayout } />
-        </Switch>
-        <Footer />
-      </Router>
-    </div>
-  );
+        const WebLayout = () => (
+          <div className="skin-blue fixed sidebar-mini">    
+            <Route path="/" exact strict component={ HomePage } /> 
+            <Route path="/login"                    exact strict component={ Login } />
+            <Route path="/signup"                   exact strict component={ SignUp } />
+            <Route path="/forgotpassword"           exact strict component={ ForgotPassword } />
+            <Route path="/resetpassword/:user_ID"   exact strict component={ ResetPassword } />
+            <Route path="/verify-account"           exact strict component={ VerifyAccount } />
+            <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
+            <Route path="/productdetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
+            <Route path="/searchProducts"           exact strict component={ SearchProduct } />
+            <Route path="/section/:url/:sectionID"  exact strict component={ ProductCollage } />
+            <Route path="/category/:url/:sectionID/:categoryID"            exact strict component={ ProductCollage } />
+            <Route path="/subcategory/:sectionID/:categoryID/:subcategoryID"            exact strict component={ ProductCollage } />
+            <Route path="/product-collage/:categoryID/:subcategoryID"   exact strict component={ ProductCollage } />
+            <Route path="/productreview"            exact strict component={ Productreview } />
+            <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
+            <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
+            <Route path="/about-us"             exact strict component={Aboutuspage}  />
+            <Route path="/sitemap" exact strict component={SiteMap}  />
+            <Route path="/contact-us" exact strict component={ContactPage}  />
+
+
+            <Route path="/cart"                     exact strict component={ Login } />
+            <Route path="/checkout"                 exact strict component={ Login } />
+            <Route path="/my-orders"                exact strict component={ Login } />
+            <Route path="/view-order/:order_ID"     exact strict component={ Login } />
+            <Route path="/shipment-tracking"        exact strict component={ Login } />
+            <Route path="/profile"              exact strict component={ Login } />
+            <Route path="/payment/:order_ID"            exact strict component={ Login } />
+            
+            <Route path="/wishlist"            exact strict component={ Login } />
+            <Route path="/account"            exact strict component={ Login } />
+            <Route path="/edit"            exact strict component={ Login } />
+            <Route path="/address-book"            exact strict component={ Login } />
+            <Route path="/address/:deliveryAddressID"            exact strict component={ Login } />
+            <Route path="/address"            exact strict component={ Login } />
+            
+          </div>
+        );
+        return (
+        <div>
+          <Router>
+            <Header />
+            <Switch>
+              <Route path="/" component={ WebLayout } />
+            </Switch>
+            <Footer />
+          </Router>
+        </div>
+        );
+    }
+    }
 }
 
 export default Routes;
