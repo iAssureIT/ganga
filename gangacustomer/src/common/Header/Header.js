@@ -76,7 +76,6 @@ componentDidMount(){
                   options.push({label: data.category, value: data._id}); 
               });  
               
-              
               this.setState({
                   options : options
               })
@@ -404,8 +403,13 @@ searchProducts(){
                           <div className="col-lg-6 header1list2">
                             <div className="row">
                               <ul>
-                                <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
-                                {
+                              {
+                                  user_ID ? "" 
+                                : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
+                                
+                              }
+                              {
+                                 
                                   user_ID? 
                                   <li className="dropdown"><a href="/"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
