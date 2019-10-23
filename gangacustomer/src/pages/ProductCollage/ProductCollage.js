@@ -505,7 +505,8 @@ class ProductCollage extends Component {
 					        </ul>
 					      	</li>
 
-					      	
+					      	{
+					      		this.state.categoryDetails[0] && this.state.categoryDetails[0].section != "Grocery" &&
 						    <li className="dropdown-submenu">
 						        <a className="test" tabindex="-1" href="#">COLOR <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
@@ -523,23 +524,26 @@ class ProductCollage extends Component {
 						          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
 						          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
 						        </ul>
-						    </li>
-						     
-					       	<li className="dropdown-submenu">
-					        <a className="test" tabindex="-1" href="#">SIZE <span className="caret"></span></a>
-					        <ul className="dropdown-menu">
-					         <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
-					          {this.state.sizes ? 
-						      	this.state.sizes.map((data,index)=>{
-						      		return(<option value={data}>{data}</option>);
-						      	  })
-						      	: ''}
-						      	</select>
+						    </li> 
+						    }
+						    {
+					      	this.state.categoryDetails[0] && this.state.categoryDetails[0].section != "Grocery" &&
+						       	<li className="dropdown-submenu">
+						        <a className="test" tabindex="-1" href="#">SIZE <span className="caret"></span></a>
+						        <ul className="dropdown-menu">
+						         <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
+						          {this.state.sizes ? 
+							      	this.state.sizes.map((data,index)=>{
+							      		return(<option value={data}>{data}</option>);
+							      	  })
+							      	: ''}
+							      	</select>
 
-					          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-					          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
-					        </ul>
-					      	</li>
+						          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+						          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
+						        </ul>
+						      	</li>
+					      }
 					    </ul>
 					  </div>		
 			          </div> 
@@ -621,8 +625,9 @@ class ProductCollage extends Component {
 								}
 						      </div>
 						    </div>
-						
-						    <div className="card-header" id="headingTwo">
+							{
+								this.state.categoryDetails[0] && this.state.categoryDetails[0].section != "Grocery" &&
+								<div className="card-header" id="headingTwo">
 						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" >	
 						        <button className="btn btn-link" type="button" >
 						          COLOR 
@@ -630,6 +635,8 @@ class ProductCollage extends Component {
 						        <span className="expand"><i className="fa fa-plus"></i></span>
 						     </div>
 						    </div>
+							}
+						    
 
 						    <div id="collapseTwo" className="collapse" >
 						      <div className="card-body">
@@ -646,7 +653,8 @@ class ProductCollage extends Component {
 						      </div>
 						    </div>
 						
-						
+							{
+					      	this.state.categoryDetails[0] && this.state.categoryDetails[0].section != "Grocery" &&
 						    <div className="card-header" id="headingFour">
 						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour" >	
 						        <button className="btn btn-link" type="button" >
@@ -655,6 +663,7 @@ class ProductCollage extends Component {
 						        <span className="expand"><i className="fa fa-plus"></i></span>
 						      </div>
 						    </div>
+							}
 						    <div id="collapseFour" className="collapse" >
 						      <br/>
 						      <div className="card-body">

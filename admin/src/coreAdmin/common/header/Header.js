@@ -74,10 +74,10 @@ logout(){
                     </div>*/}
                   
                 </div>
-                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right text-right">
-                { localStorage.getItem('userName') != 'undefined' ?  localStorage.getItem('userName') : ""}
+                <div className="col-lg-2 col-md-2 col-sm-1 col-xs-1 pull-right text-right">
+                 <i className="fa fa-user  headicon "></i>&nbsp;{ localStorage.getItem('userName') != 'undefined' ?  localStorage.getItem('userName') : ""}
                   &nbsp;
-                    <i className="fa fa-user  headicon "></i>{localStorage.getItem('userName')}
+                   
                 </div>
                   {
                   /*<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right ">
@@ -85,8 +85,6 @@ logout(){
                   </div>*/
                   }
                 </div>
-                
-                
               </div>
             </div>
             </header>
