@@ -2,3 +2,6 @@ admin/node_modules
 customer/node_modules
 ba/node_modules
 gangacustomer/node_modules
+
+
+admin/src/coreAdmin/dashboard

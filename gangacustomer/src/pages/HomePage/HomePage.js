@@ -98,7 +98,6 @@ class HomePage extends Component {
     getCategories(){
       axios.get("/api/category/get/list")
       .then((response)=>{
-        console.log('cate', response.data);
         this.setState({
           categories : response.data
         })
@@ -108,15 +107,12 @@ class HomePage extends Component {
       })
     }
     changeProductCateWise(categoryID, type){
-      console.log(categoryID, type)
       axios.get("/api/products/get/listbytypeNcategory/"+categoryID+"/"+type)
       .then((response)=>{
-        console.log('res', response.data);
         this.setState({
           [type+"Products"] : response.data
         },()=>{
           this.forceUpdate();
-          console.log(type+"Products", this.state[type+"Products"])
         })
       })
       .catch((error)=>{
@@ -134,7 +130,6 @@ class HomePage extends Component {
         this.setState({
           wishList : response.data
         },()=>{
-          console.log('wishList', this.state.wishList);
         })
       })
       .catch((error)=>{
@@ -142,7 +137,6 @@ class HomePage extends Component {
       })
     }
   render() {
-    console.log('this.state.exclusiveProducts', this.state.exclusiveProducts);
 		return (
       <div className="">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorGray">

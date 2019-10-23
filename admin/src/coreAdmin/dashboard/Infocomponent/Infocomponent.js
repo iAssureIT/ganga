@@ -31,21 +31,18 @@ export default class Infocomponent extends Component{
   render(){
     return(
           <div className="col-lg-4 box3">     
-            <div className="col-lg-12 box3a" style={{backgroundColor:this.props.stats.contcolor}}>
+            <div className="col-lg-12 box3a">
               <div className="row">
-                  <div className="col-lg-4 box3aicon"style={{backgroundColor:this.props.stats.color}}>
-                    <i className={"fa fa-"+this.props.stats.icon}></i>
+                  <div className="col-lg-4 box3aicon">
+                    <i className={"fa fa-user"}></i>
                   </div>
-                  <div className="col-lg-8">
-                    {this.props.stats.heading}
-                    <br/>
-                    <strong>{this.props.stats.value}</strong>
-                    <div className="row">
-                      <div className="progress prog ">
-                        <div className="progress-bar progbar1" ></div>
-                      </div>
+                  <div className="col-lg-8 innerbox">
+                    <div className="col-lg-12">
+                      <label>Total Users</label>  <span>1500</span>                    
                     </div>
-                    <div className="increase">{this.props.stats.per} Increase in 30 Days</div>
+                    <div className="col-lg-12">
+                      <label>Online Users</label>  <span>1000</span>                    
+                    </div>
                   </div>
               </div>
             </div>

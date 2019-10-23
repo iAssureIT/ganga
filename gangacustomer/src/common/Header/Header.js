@@ -53,7 +53,7 @@ componentWillMount() {
               this.setState({
                 cartProduct : response.data[0].cartItems
               });
-                this.props.initialCartData(response.data[0].cartItems);
+                this.props.initialCartData(response.data[0].cartItems, response.data[0].cartTotal);
           })
           .catch((error)=>{
                 console.log('error', error);
@@ -61,7 +61,6 @@ componentWillMount() {
     }
 
 componentDidMount(){
-  console.log('comp');
   document.getElementsByTagName("DIV")[0].removeAttribute("style"); 
   this.getCartCount();
   this.getWishlistCount();
@@ -138,7 +137,6 @@ unique(arr, prop) {
 getCategoryDetails(category_ID, categoryDetails){
     axios.get("/api/category/get/one/"+category_ID)
         .then((response)=>{ 
-            console.log('response',response.data);
             categoryDetails.push(response.data);
 
             this.setState({categoryDetails: categoryDetails}, () =>{
@@ -338,6 +336,7 @@ searchProducts(){
     })
   }
   render() { 
+    console.log('cartTotal',this.props.cartTotal);
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
@@ -492,7 +491,7 @@ searchProducts(){
                                     <li className="col-lg-12">
                                       <div className="">
                                         <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> items</p>
-                                        <div className="col-lg-9 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartData && this.props.cartData.length>0 ? this.props.cartData[0].totalForQantity : ""}</div>
+                                        <div className="col-lg-9 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : ""}</div>
                                         <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
@@ -570,6 +569,7 @@ const mapStateToProps = (state)=>{
   return {
     cartCount      : state.cartCount,
     cartData       : state.cartData,
+    cartTotal      : state.cartTotal,
     wishlistCount  : state.wishlistCount,
     searchResult   : state.searchResult,
     searchCriteria : state.searchCriteria
@@ -581,9 +581,10 @@ const mapDispachToProps = (dispach) =>{
       type:'CART_COUNT_INITIALLY',
       cartCount : cartCount
     }),
-    initialCartData : (cartData)=> dispach({
+    initialCartData : (cartData, cartTotal)=> dispach({
       type:'CART_DATA',
-      cartData : cartData 
+      cartData : cartData,
+      cartTotal : cartTotal 
     }),
     initialWishlist : (wishlistCount)=> dispach({
       type:'WISHLIST_COUNT_INITIALLY',

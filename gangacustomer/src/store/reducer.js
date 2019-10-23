@@ -3,6 +3,7 @@
 const initialState = {
 	cartCount	 	: 0,
 	cartData	 	: [],
+	cartTotal 		: 0,
 	recentCartData  : [],
 	wishlistCount 	: 0,
 	featuredProductData : {},
@@ -21,6 +22,7 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === "CART_DATA"){
 		newState.cartData 		= action.cartData;
+		newState.cartTotal 		= action.cartTotal;
 	}
 	if(action.type === "FETCH_CART_DATA"){
 		newState.recentCartData 		= action.cartData;
@@ -44,7 +46,6 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "GET_CATEGORY_DETAILS"){
 		newState.categoryDetails 		= action.categoryDetails;
 	}
-	
 	return newState;
 }
 
