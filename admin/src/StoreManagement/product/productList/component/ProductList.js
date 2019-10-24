@@ -12,7 +12,7 @@ class ProductList extends Component{
         super(props);
         this.state = {
             tableHeading :{
-                "productCode" : 'Product Code',
+                "itemCode" : 'Item Code',
                 "productName" : 'Product Name',
             },
             tableObjects : {
@@ -69,6 +69,17 @@ class ProductList extends Component{
         axios.post('/api/products/get/list', data)
         .then((response)=>{
             console.log('response', response.data)
+            var tableData = response.data.map((a, i)=>{
+                return{
+                    "itemCode"      : a.itemCode        ? a.itemCode    : '-',
+                    "productName"   : a.productName     ? a.productName : '-',
+                    "newProduct"    : a.newProduct      ? a.newProduct  : '-',
+                    "exclusive"     : a.exclusive       ? a.exclusive   : '-',
+                    "featured"      : a.featured        ? a.featured    : '-',
+                    "offeredPrice"  : a.offeredPrice    ? a.offeredPrice: '-',
+                    "bestSeller"    : a.bestSeller      ? a.bestSeller  : '-',
+                }
+            })
             this.setState({
                 tableData : response.data
             })

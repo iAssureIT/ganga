@@ -327,3 +327,12 @@ padding: 0.87rem .85rem !important;
 .marginTopp{
     margin-top: 3%;
 }
+.img-progress{
+    height: 25px;
+}
+.img-percent{
+    padding: 2px;
+    color: #333;
+    font-weight: 600;
+    font-size: 15px;
+}

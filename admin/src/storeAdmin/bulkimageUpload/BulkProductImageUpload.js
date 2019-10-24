@@ -10,7 +10,8 @@ class BulkProductImageUpload extends Component{
       this.state = {
         notuploadedImages : [],
         allshopproductimages : [],
-        productImageArray : []
+        productImageArray : [],
+        progressLength : 0
       }
   }
 
@@ -57,37 +58,51 @@ class BulkProductImageUpload extends Component{
                 },()=>{
                   console.log('productImage', this.state.productImage)
                 });  
-                main().then(formValues=>{
-                    console.log('formValues.productImage', formValues);
-                    var newImages = this.state.productImageArray;
-                    newImages.push(formValues.productImage);
-                    this.setState({
-                        productImageArray : _.flatten(newImages)
-                    },()=>{
-                        console.log('form', this.state.productImageArray);
-                    })
-                });
-                async function main(){
+                
+                // const foo = async () => {
+                //   // do something
+                // }
+                const main = async ()=>{
                     var config = await getConfig();
                     
                     var s3urlArray = [];
+                    var imageLength = 100;
+                    console.log('imageLength',imageLength);
+                    var z = 0;
                     for (var i = 0; i<productImage.length; i++) {
-                        var s3url = await s3upload(productImage[i].fileInfo, config, this);
-                        console.log('s3url', s3url);
-                        s3urlArray.push({
-                          productImage : s3url,
-                          itemCode : productImage[i].itemCode
-                        });
+                      var s3url = await s3upload(productImage[i].fileInfo, config, this);
+                      var x = i + 1;
+                      var progressLength = (x/productImage.length) * 100;
+                      console.log('progressLength', progressLength, z);
+                      this.setState({
+                        progressLength : progressLength
+                      })
+                      console.log('s3url', s3url);
+                      s3urlArray.push({
+                        productImage : s3url,
+                        itemCode : productImage[i].itemCode
+                      });
                     }
+                    console.log('progressLength', progressLength, imageLength);
                     const formValues = {
                         "product_ID"        : "fhfgf",
                         "productImage"      : s3urlArray,
                         "status"            : "New"
                     };
-        
+                    
                     // console.log("1 formValues = ",formValues);
                     return Promise.resolve(formValues);
                 }
+                main().then(formValues=>{
+                  console.log('formValues.productImage', formValues);
+                  var newImages = this.state.productImageArray;
+                  newImages.push(formValues.productImage);
+                  this.setState({
+                      productImageArray : _.flatten(newImages)
+                  },()=>{
+                      console.log('form', this.state.productImageArray);
+                  })
+              });
                 function s3upload(image,configuration){
         
                     return new Promise(function(resolve,reject){
@@ -105,7 +120,7 @@ class BulkProductImageUpload extends Component{
                 function getConfig(){
                     return new Promise(function(resolve,reject){
                         axios
-                           .get('/api/projectSettings/get/one/s3')
+                           .get('http://qaapi.gangaexpress.in/api/projectSettings/get/one/s3')
                            .then((response)=>{
                                 // console.log("proj set res = ",response.data);
                                 const config = {
@@ -128,7 +143,6 @@ class BulkProductImageUpload extends Component{
     
   }
   getData(){
-    
     axios.get('/api/products/get/list')
     .then((response)=>{
         console.log('response', response.data)
@@ -151,13 +165,16 @@ class BulkProductImageUpload extends Component{
       axios.patch('/api/products/patch/bulkimages/', formValue)
       .then((response)=>{
         console.log('res', response);
+        this.getData();
         swal(response.data.message);
+        $(':input').val('');
       })
       .catch((error)=>{
         console.log('error', error);
       })
     }
   }
+  
   getUploadBulUSPercentage(){
   }
   deleteproductImages(event){
@@ -171,6 +188,7 @@ class BulkProductImageUpload extends Component{
     console.log('id', id, image);
     axios.patch('/api/products/remove/image', formValues)
     .then((res)=>{
+      this.getData();
       console.log('res', res);
     })
     .catch((error)=>{
@@ -190,8 +208,7 @@ class BulkProductImageUpload extends Component{
                    <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
                         <h4 className="NOpadding-right">  Product Image Bulk Upload</h4>
                   </div>
-                  </div>
-                          
+                  </div>  
                   <form className="addRolesInWrap newTemplateForm">
                     <div className="">
                       <div className="col-lg-4 col-lg-offset-3  col-md-4 col-md-offset-3 col-sm-12 col-xs-12">
@@ -203,19 +220,36 @@ class BulkProductImageUpload extends Component{
                           <div>{this.getUploadBulUSPercentage()}</div>
                         </div>
                       </div>
-                      <div className="col-lg-4  col-md-4 col-sm-12 col-xs-12">
-                        <div className="form-group">
-                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">&nbsp; </label>
-                          <button className="btn btn-primary" onClick={this.saveImages.bind(this)}>Save Images</button>
+                      {
+                        this.state.progressLength == 100 ?
+                        <div className="col-lg-4  col-md-4 col-sm-12 col-xs-12">
+                          <div className="form-group">
+                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">&nbsp; </label>
+                            <button className="btn btn-primary" onClick={this.saveImages.bind(this)}>Save Images</button>
+                          </div>
                         </div>
-                      </div>
+                      :
+                      null
+                      }
+                      
                     </div>
                   </form>
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 upldImgTextColor">
+                    <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12 col-sm-12 upldImgTextColor">
                       Image name must be saved in format <span className="upldImgTextColor1">Your Product Code</span> - <span className="upldImgTextColor2">Image Number for that product. </span>
                       eg. ItemCode0-1, ItemCode0-2, ItemCode0-3, ... etc.
                     </div>
+                    {
+                      this.state.progressLength == 0 || this.state.progressLength == 100 ?
+                      null
+                      :
+                      <div className="progress img-progress col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12 col-sm-12 NOpadding">
+                        <div className="progress-bar col-lg-12 col-md-12 col-xs-12 col-sm-12" role="progressbar" style={{width:""+this.state.progressLength+"%"}}>
+                          <span className="img-percent">{this.state.progressLength}% Complete</span>
+                        </div>
+                      </div>
+                    }
+                    
                     <div className="col-lg-12">
                       {
                         this.state.notuploadedImages.length > 0 ?

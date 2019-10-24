@@ -502,16 +502,9 @@ class IAssureTable extends Component {
 		                            { this.state.tableHeading ?
 										Object.entries(this.state.tableHeading).map( 
 											([key, value], i)=> {
-													// if(key == 'actions'){
-													// 	return(
-													// 		<th key={i} className="umDynamicHeader srpadd textAlignLeft">{value}</th>
-													// 	);	
-													// }else{
-														return(
-															<th key={i} className="umDynamicHeader srpadd textAlignLeft">{value} <span onClick={this.sort.bind(this)} id={key} className="fa fa-sort tableSort"></span></th>
-														);	
-													// }
-																							
+												return(
+													<th key={i} className="umDynamicHeader srpadd textAlignLeft">{value} <span onClick={this.sort.bind(this)} id={key} className="fa fa-sort tableSort"></span></th>
+												);								
 											}
 										) 
 										:
