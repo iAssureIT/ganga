@@ -75,7 +75,9 @@ logout(){
                   
                 </div>
                 <div className="col-lg-2 col-md-2 col-sm-1 col-xs-1 pull-right text-right">
-                { localStorage.getItem('userName') != 'undefined' ?  localStorage.getItem('userName') : ""}
+
+                  { localStorage.getItem('userName') != 'undefined' ?  localStorage.getItem('userName') : ""}
+
                   &nbsp; &nbsp;
                     <i className="fa fa-user  headicon "></i>
                 </div>
