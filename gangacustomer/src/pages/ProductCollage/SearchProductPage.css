@@ -263,3 +263,10 @@
 li{
   list-style: none
 }
+
+.searchtab>li.active>a, .searchtab>li.active>a:focus, .searchtab>li.active>a:hover{
+  color: #fbbb65 !important
+} 
+.searchtab>li >a{
+  color: #333
+}

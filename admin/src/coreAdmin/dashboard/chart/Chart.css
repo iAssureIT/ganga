@@ -64,7 +64,7 @@ border-radius: 2px 0px 0px 2px;
 .box1a{
     border-bottom:0.5px solid #eee;
 }
-h4{
+.box1a h4{
     font-weight: 700;
     color : #d71111d6;
     text-align: center;
@@ -295,7 +295,7 @@ h4{
 #dashbordid{
   position: absolute;
   width: 82%;
-  right: 10px;
+  right: 0px;
   transition: all 0.8s;
   top:50px;
   /* background-color: #eee; */
@@ -322,4 +322,33 @@ h4{
 }
 .outofstock{
     margin-bottom: 5px;
+}
+
+.dash-box{
+    display: block;
+    min-height: 90px;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+.infoboxicon{
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+    display: block;
+    float: left;
+    height: 90px;
+    width: 90px;
+    text-align: center;
+    font-size: 45px;
+    line-height: 90px;
+    background: rgba(0,0,0,0.2);
+}
+.info-box-text{
+    font-size: 12px !important
+}
+.info-box-number{
+    font-size: 15px !important
 }

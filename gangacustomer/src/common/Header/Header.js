@@ -72,7 +72,7 @@ componentDidMount(){
             .then((response)=>{
 
               response.data.map((data,index)=>{
-                  options.push({label: data.category, value: data._id}); 
+                  options.push({label: data.category, value: data._id, section_ID: data.section_ID}); 
               });  
               
               this.setState({
@@ -115,7 +115,7 @@ componentWillReceiveProps(nextProps){
       },()=>{
         {
           categoryArray = this.unique(this.state.searchResult,'category_ID');
-         
+          
           categoryArray.map((data,index)=>{
             this.getCategoryDetails(data, categoryDetails); 
           });
@@ -154,7 +154,7 @@ getCategoryDetails(category_ID, categoryDetails){
 handleChange(event){
   var catArray = []
   event.map((data,index)=>{
-    catArray.push(data.label);
+    catArray.push({id:data.value,category:data.label,section_ID:data.section_ID});
   })
 
   this.setState({catArray : catArray});
@@ -162,7 +162,7 @@ handleChange(event){
 
 searchProducts(){
     if (this.state.catArray.length > 0 && $('.headersearch').val() != '' ) {
-      
+      console.log('catArray',this.state.catArray);
       var searchstr = $('.headersearch').val()
       var formValues =  {
                       "searchstr" :  searchstr,  
@@ -199,6 +199,7 @@ searchProducts(){
     }
     
 }
+
   signOut(event){
     event.preventDefault();
     localStorage.setItem("user_ID", "");
@@ -336,7 +337,6 @@ searchProducts(){
     })
   }
   render() { 
-    console.log('cartTotal',this.props.cartTotal);
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
@@ -379,7 +379,7 @@ searchProducts(){
                                               </div>
                                               <div className="formcontent1 col-lg-12">
                                                 <label htmlFor="message">Write a Feedback<span className="redFont">*</span></label>
-                                                <textarea className="col-lg-12 inputcontenttextarea" id="message"ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)} row="5"></textarea>
+                                                <textarea className="col-lg-12 inputcontenttextarea" id="message"ref="message" name="message" value={this.state.message}  row="5"></textarea>
                                               </div>
                                               <div className="checkbox">
                                               </div>

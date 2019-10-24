@@ -593,11 +593,10 @@
     -webkit-font-smoothing: antialiased!important;
 }
 
-.nav-tabs > li.active > a:focus {
+/*.nav-tabs > li.active > a:focus {
     background-color:#7B943F !important;
     color: #fff;
-
-}
+}*/
 
 
 .product-details-tabs .nav-link {
@@ -707,14 +706,14 @@
 .img-responsiveProduct img {
     width: auto !important;
 } */
-.nav-tabs > li.active > a{
+/*.nav-tabs > li.active > a{
     background-color: #7B943F;
     color:#fff;
 }
 .nav-tabs > li.active > a:hover{
     background-color: #7B943F;
     color:#fff;
-}
+}*/
 .responsiveVideoProduct {
     width: 100%;
     max-height: 355px;

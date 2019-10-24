@@ -46,6 +46,8 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "GET_CATEGORY_DETAILS"){
 		newState.categoryDetails 		= action.categoryDetails;
 	}
+	
+
 	return newState;
 }
 

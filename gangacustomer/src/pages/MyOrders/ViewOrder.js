@@ -57,7 +57,7 @@ class ViewOrder extends Component {
                     <th scope="col" className="col id">Product Name</th>
                     <th scope="col" className="col date">Price</th>
                     <th scope="col" className="col shipping">Qty</th>
-                    <th scope="col" className="col total">Subtotal</th>
+                    <th scope="col" className="col total text-right">Subtotal</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@ class ViewOrder extends Component {
                         <td data-th="Order #" className="col id">{data.productName}</td>
                         <td data-th="Date" className="col date"><i className={"fa fa-"+data.currency}>{data.total}</i></td>
                         <td data-th="Ship To" className="col shipping">Ordered: {data.quantity}</td>
-                        <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}>{data.total}</i></span></td>
+                        <td data-th="Order Total" className="col total text-right"><span><i className={"fa fa-"+data.currency}>{data.total}</i></span></td>
                     </tr>
                     );
                 })
@@ -80,19 +80,19 @@ class ViewOrder extends Component {
             <tfoot>
               <tr className="subtotal">
                   <th colspan="3" className="mark" scope="row">Subtotal</th>
-                  <td className="amount" data-th="Subtotal"><span><i className={"fa fa-"+this.state.orderData.currency}>{this.state.orderData.totalAmount}</i></span>                    </td>
+                  <td className="amount" data-th="Subtotal" ><span><i className={"fa fa-"+this.state.orderData.currency}>{this.state.orderData.cartTotal}</i></span>                    </td>
               </tr>
               <tr className="shipping">
                   <th colspan="3" className="mark" scope="row">Shipping &amp; Handling</th>
                   <td className="amount" data-th="Shipping &amp; Handling">
-                    <span><i className={"fa fa-"+this.state.orderData.currency}>5.00</i></span> 
+                    <span><i className={"fa fa-"+this.state.orderData.currency}>100</i></span> 
                   </td>
               </tr>
               <tr className="grand_total">
 
-                  <th colspan="3" className="mark" scope="row"><strong> "Estimated Total"</strong></th>
+                  <th colspan="3" className="mark" scope="row"><strong> Estimated Total</strong></th>
                   <td className="amount" data-th=" &quot;Estimated Total&quot;">
-                      <strong><span><i className={"fa fa-"+this.state.orderData.currency}>25.00</i></span></strong>
+                      <strong><span><i className={"fa fa-"+this.state.orderData.currency}>{this.state.orderData.totalAmount}</i></span></strong>
                   </td>
               </tr>
             </tfoot>
