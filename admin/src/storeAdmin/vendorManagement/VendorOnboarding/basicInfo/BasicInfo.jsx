@@ -35,9 +35,9 @@ class BasicInfo extends Component {
     //   return regexpr.test(value);
     // }, "Please enter the valid GST number.");
 
-    $.validator.addMethod("regxA6", function(value, element, regexpr) {          
+    $.validator.addMethod("regxcategory", function(value, element, arg) {          
       // // console.log('value: ',value + element);          
-      return regexpr.test(value);
+      return arg !== value;
     }, "Please select category.");
     $.validator.addMethod("regxA7", function(value, element, regexpr) {          
       // // console.log('value: ',value + element);          
@@ -72,7 +72,7 @@ class BasicInfo extends Component {
         // },
         category: {
           required: true,
-          // regxA1: /^[A-za-z']+( [A-Za-z']+)*$|^$/,
+          regxcategory: "Select Category"
         },
         coino: {
           required: false,
@@ -92,7 +92,7 @@ class BasicInfo extends Component {
       },
         errorPlacement: function(error, element) {
               if (element.attr("name") == "companyName"){
-                error.insertAfter("#basicInfo1");
+                error.insertAfter("#companyName");
               }
               // if (element.attr("name") == "pan"){
               //   error.insertAfter("#basicInfo2");
@@ -107,7 +107,7 @@ class BasicInfo extends Component {
               //   error.insertAfter("#basicInfo5");
               // }
               if (element.attr("name") == "category"){
-                error.insertAfter("#basicInfo8");
+                error.insertAfter("#category");
               }
 
               if (element.attr("name") == "coino"){
@@ -634,9 +634,9 @@ class BasicInfo extends Component {
                                           </div>
                                           <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Category of Vendor<i className="astrick">*</i></label>
-                                            <select id="basicInfo8" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.category} ref="category" name="category" onChange={this.handleChange}>
+                                            <select id="category" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.category} ref="category" name="category" onChange={this.handleChange}>
                                                 {/* <option disabled>-- Select --</option> */}
-                                                <option value="category">Select Category</option>
+                                                <option value="Select Category">Select Category</option>
                                                 {this.state.categoryList && this.state.categoryList.length >0 ?
                                                   this.state.categoryList.map((Countrydata, index)=>{
                                                     

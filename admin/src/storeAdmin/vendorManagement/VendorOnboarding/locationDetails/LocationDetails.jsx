@@ -46,24 +46,69 @@ class LocationDetails extends Component {
 		this.edit();
 		
 		window.scrollTo(0, 0);
-
+		$.validator.addMethod("regxlocationType", function (value, element, arg) {
+			return arg !== value;
+		  }, "Please select the location type");
 		$.validator.addMethod("regxAlphaNum", function (value, element, regexpr) {
 			return regexpr.test(value);
 		}, "Name should only contain letters.");
-
+		$.validator.addMethod("regxcountry", function (value, element, arg) {
+			return arg !== value;
+		}, "Please select the country");
+		$.validator.addMethod("regxstate", function (value, element, arg) {
+			return arg !== value;
+		}, "Please select the state");
+		$.validator.addMethod("regxdistrict", function (value, element, arg) {
+			return arg !== value;
+		}, "Please select the district");
 		jQuery.validator.setDefaults({
 			debug: true,
 			success: "valid"
 		});
-		$("#LocationsDetail").validate({
+		$("#locationsDetail").validate({
 			rules: {
-
+				locationType: {
+					required: true,
+					regxlocationType: "--Select Location Type--"
+				},
+				addressLineone : {
+					required :true
+				},
+				country: {
+					required: true,
+					regxcountry: "--Select--"
+				},
+				states: {
+					required: true,
+					regxstate: "--Select--"
+				},
+				district: {
+					required: true,
+					regxdistrict: "--Select--"
+				},
 				area: {
 					required: true,
 					regxAlphaNum: /^[a-zA-Z/\s,.'-/]*$|^$/,
 				},
 
 			},
+			errorPlacement: function(error, element) {
+				if (element.attr("name") == "locationType"){
+				  error.insertAfter("#locationType");
+				}
+				if (element.attr("name") == "addressLineone"){
+					error.insertAfter("#addressLineone");
+				}
+				if (element.attr("name") == "country"){
+					error.insertAfter("#country");
+				}
+				if (element.attr("name") == "states"){
+					error.insertAfter("#states");
+				}
+				if (element.attr("name") == "district"){
+					error.insertAfter("#district");
+				}
+			}
 		})
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -206,7 +251,8 @@ class LocationDetails extends Component {
 		event.preventDefault();
 		var vendor_ID = this.props.match.params.vendor_ID;
 		var location_ID = this.props.match.params.location_ID;
-		if ($('#LocationsDetail').valid()) {
+		console.log('ghgh', $('#locationsDetail').valid());
+		if($('#locationsDetail').valid()){
 			var formValues = {
 				'locationType' 			: this.refs.locationType.value,
 				'addressLineone' 		: this.refs.addressLineone.value,
@@ -238,9 +284,6 @@ class LocationDetails extends Component {
 				.catch((error) => {
 
 				})
-
-		} else {
-			$(event.target).parent().parent().find('.inputText.error:first').focus();
 
 		}
 	}
@@ -495,7 +538,7 @@ class LocationDetails extends Component {
 											<section className="Content">
 												<div className="row">
 													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-														<form className="todaysParkingReport" >
+														<form id="locationsDetail" className="todaysParkingReport" >
 															<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">
 																<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																	<div className="col-lg-6 col-md-6 col-sm-6 col-sm-6 locationTabs">
@@ -512,12 +555,12 @@ class LocationDetails extends Component {
 																	this.state.openForm == true ? 
 																
 																	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addLocationForm" >
-																		<form id="LocationsDetail" >
+																		
 																			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 locationSupplierForm">
-																				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
+																				<div  className="col-lg-6 col-md-6 col-sm-6 col-xs-12" >
 																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Location Type <sup className="astrick">*</sup>
 																					</label>
-																					<select id="Incoterms" placeholder="Incoterms" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.locationType} ref="locationType" name="locationType" onChange={this.handleChange}>
+																					<select id="locationType" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.locationType} ref="locationType" name="locationType" onChange={this.handleChange}>
 																						<option disabled>--Select Location Type--</option>
 																						{this.state.locationTypeArry && this.state.locationTypeArry.length > 0 ?
 																							this.state.locationTypeArry.map((locationtypedata, index) => {
@@ -537,7 +580,7 @@ class LocationDetails extends Component {
 																						<a data-tip data-for='happyFace' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
 																					
 																					</label>
-																					<input id="Line1" type="text" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.addressLineone} ref="addressLineone" name="addressLineone" onChange={this.handleChange} />
+																					<input id="addressLineone" type="text" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.addressLineone} ref="addressLineone" name="addressLineone" onChange={this.handleChange} />
 																				</div>
 																				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" >
 																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Address Line 2</label>
@@ -546,7 +589,7 @@ class LocationDetails extends Component {
 																				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" >
 																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Country <sup className="astrick">*</sup>
 																					</label>
-																					<select id="datacountry" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																					<select id="country" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
 																						ref="country" name="country" value={this.state.country} onChange={this.handleChangeCountry} >
 																						<option selected={true} disabled={true}>-- Select --</option>
 																						<option value="IN">India</option>
@@ -561,9 +604,9 @@ class LocationDetails extends Component {
 																					</select>
 																				</div>
 																				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" >
-																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">State {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null}
+																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">State <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null}
 																					</label>
-																					<select id="Statedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																					<select id="states" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
 																						ref="states" value={this.state.states} name="states" onChange={this.handleChangeState} >
 																						<option selected={true} disabled={true}>-- Select --</option>
 																						{
@@ -579,9 +622,9 @@ class LocationDetails extends Component {
 
 																				</div>
 																				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" >
-																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">District {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null}
+																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">District <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null}
 																					</label>
-																					<select id="Citydata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
+																					<select id="district" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
 																						ref="district" name="district" value={this.state.district} onChange={this.handleChangeDistrict} >
 																						<option selected={true} disabled={true}>-- Select --</option>
 																						{
@@ -620,7 +663,7 @@ class LocationDetails extends Component {
 																						<button className="button3 btn-primary pull-right" onClick={this.locationdetailsAdd.bind(this)}>&nbsp;Submit</button>
 																				}
 																			</div>
-																		</form>
+																		
 																	</div>
 																	:
 																	null
@@ -686,4 +729,4 @@ class LocationDetails extends Component {
 		);
 	}
 }
-export default LocationDetails 
+export default LocationDetails;

@@ -45,9 +45,9 @@ class ContactDetails extends Component {
 		this.contactDetails();
 		this.edit();
     	window.scrollTo(0, 0);
-    	$.validator.addMethod("regxA1", function(value, element, regexpr) {          
-			return regexpr.test(value);
-		}, "Please enter valid phone number.");
+    	// $.validator.addMethod("regxA1", function(value, element, regexpr) {          
+		// 	return regexpr.test(value);
+		// }, "Please enter valid phone number.");
 		$.validator.addMethod("regxA2", function(value, element, regexpr) {          
 			return regexpr.test(value);
 		}, "Please enter valid email id.");
@@ -59,7 +59,7 @@ class ContactDetails extends Component {
 			debug: true,
 			success: "valid"
 		});
-		$("#ContactDetail").validate({
+		$("#vendorContactDetail").validate({
 			rules: {
 				Location: {
 				  required: true,
@@ -70,10 +70,10 @@ class ContactDetails extends Component {
 				ContactLevel: {
 				  required: true,
 				},
-				Phones: {
+				// Phones: {
 					// regxA1:/^[0-9+]{10}$|^$/,
-				  	required: true,
-				},
+				  	// required: true,
+				// },
 				Email: {
 					regxA2:/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
 				  	required: true,
@@ -105,9 +105,9 @@ class ContactDetails extends Component {
 			    if (element.attr("name") == "ContactLevel"){
 			      error.insertAfter("#ContactLevel");
 			    }
-			    if (element.attr("name") == "Phone"){
-			      error.insertAfter("#Phones");
-			    }
+			    // if (element.attr("name") == "Phone"){
+			    //   error.insertAfter("#Phones");
+			    // }
 			    if (element.attr("name") == "Email"){
 			      error.insertAfter("#Emails");
 			    }
@@ -272,7 +272,7 @@ class ContactDetails extends Component {
 		}else{
 		    var routerId = vendor_ID;
 		}
-		if($('#ContactDetail').valid()){
+		if($('#vendorContactDetail').valid()){
 	        var formValues = {
 	            'Location'      	: this.refs.Location.value,
 	            'Designation'       : this.refs.Designation.value,
@@ -325,7 +325,7 @@ class ContactDetails extends Component {
     	var vendor_ID 			= this.state.vendor_ID;
 		var contactDetails_ID 	= this.state.contactDetails_ID;
 
-		if($('#ContactDetail').valid()){
+		if($('#contactDetail').valid()){
 			var formValues={
 				'Location'      	: this.state.Location,
 				'Designation'       : this.state.Designation,
@@ -656,7 +656,7 @@ class ContactDetails extends Component {
 															</div>
 															<div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
 																<div className="button4  pull-right" onClick={this.openForm.bind(this)}>
-																	<i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Location
+																	<i className="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Contact
 																</div>
 															</div>	
 															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formHrTag"></div> 	
@@ -664,12 +664,12 @@ class ContactDetails extends Component {
 														{
 															this.state.openForm == true ? 
 															<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
-																<form id="ContactDetail">
+																<form id="vendorContactDetail">
 																	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
 																	<div  className="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
 																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Location Type <sup className="astrick">*</sup> 
 																		</label>
-																		<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange}>
+																		<select id="headoffice" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Location} ref="Location" name="Location" onChange={this.handleChange} required>
 																			<option selected="true" disabled="true">--Select Location Type--</option>
 																			{
 																				this.state.locationTypeArry && this.state.locationTypeArry.length>0?
@@ -689,12 +689,12 @@ class ContactDetails extends Component {
 																	<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
 																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Designation <sup className="astrick">*</sup> 
 																		</label>
-																		<input id="Designations" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Designation} ref="Designation" name="Designation" onChange={this.handleChange} />
+																		<input id="Designations" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Designation} ref="Designation" name="Designation" onChange={this.handleChange} required/>
 																	</div>
 																	<div className="col-lg-3 col-md-3 col-sm-3 col-xs-12  margin-bottomOne" > 
 																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Level <sup className="astrick">*</sup> 
 																		</label>
-																		<select id="ContactLevel" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.ContactLevel} ref="ContactLevel" name="ContactLevel" onChange={this.handleChange}>
+																		<select id="ContactLevel" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.ContactLevel} ref="ContactLevel" name="ContactLevel" onChange={this.handleChange} required>
 																			<option selected="true" disabled="true">--Select Contact Level--</option>
 																			<option value="1">First level of contact</option>
 																			<option value="2">Second level of contact</option>
@@ -709,13 +709,13 @@ class ContactDetails extends Component {
 																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
 																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
 																		</label>
-																		<input id="Emails" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
+																		<input id="Emails" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} required />
 																	</div>
 																
 																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 " > 
 																		<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
 																		</label>
-																		<input id="Names" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
+																		<input id="Names" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} required />
 																	</div>
 																	<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
 																		<label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Reporting Manager
