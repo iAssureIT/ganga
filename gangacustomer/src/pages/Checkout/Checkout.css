@@ -106,6 +106,7 @@
     color: #333 !important;
 }
 .productPrize{
+    white-space: nowrap;
     color: #333 !important;
 }
 .couponCode{
@@ -139,4 +140,13 @@
 }
 .checkoutAddressModal{
     /* overflow: hidden; */
+}
+.termsNconditionsmodal{
+    cursor: pointer;
+}
+.listStyle li{
+    list-style: disc;
+}
+.termsNconditionsmodal:hover{
+    color: #fbbb65;   
 }

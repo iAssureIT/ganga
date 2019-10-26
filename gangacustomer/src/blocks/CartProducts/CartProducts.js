@@ -216,10 +216,10 @@ class CartProducts extends Component{
                                                     <td>
                                                         <tr>
                                                             <td>
-                                                                <img className="img img-responsive cartProductImg" src={data.productImage[0]} />
+                                                            <a href={"/productdetails/" + data.product_ID}><img className="img img-responsive cartProductImg" src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} /></a>
                                                             </td>
                                                             <td className="cartProductDetail">
-                                                                <h5>{data.productName}</h5>
+                                                            <a href={"/productdetails/" + data.product_ID}><h5>{data.productName}</h5></a>
                                                                 <span className="fa fa-heart cartWishIcon"></span>
                                                             </td>
                                                         </tr>

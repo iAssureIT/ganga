@@ -13,7 +13,6 @@
 	margin-bottom: 30px;
 }
 .set_fnt{
-	font-family:'Montserrat-Regular';
 	font-size: 16px;
 	color: #333333;
 }
@@ -105,7 +104,6 @@
   text-transform: uppercase;
 }
 .pageSubheaderAc{
-	font-family: 'Montserrat',sans-serif;
     font-size: 18px;
     margin-left: 15px;
     color: #333333;
@@ -145,20 +143,11 @@
 }
 .unit{
 	margin-top: 30px;
-	font-family:'Montserrat' !important;
 }
 
 .ReactTable .rt-tbody .rt-td {
   padding: 10px;
 }
-/*.ReactTable .rt-thead .rt-th, .ReactTable .rt-thead .rt-td{
-	 font-family:'Montserrat',sans-serif !important;
-  background-color: #039BE5 !important;
-  color      :#f2f2f2 !important;
-  font-size  : 14px !important;
-  height     : 40px !important;
-}*/
-/*plus Sign css*/
 .addContainerMPV{
 	height: 30px;
 	width:30px;

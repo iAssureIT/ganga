@@ -14,7 +14,6 @@
     border-radius: 35px;
     margin-bottom: 30px;
     border-top-color: #275d8e;
-    font-family:'Relay-Regular';
     letter-spacing: 1px;
     box-shadow: 2px 2px 2px #fff;
 
@@ -54,9 +53,7 @@
    
       font-weight: 700;
       color: #000;
-      font-family:'Relay-Regular';
       line-height: 1.1;
-      /*margin-left: 15px;*/
       margin-top: 5px;
       margin-bottom: 15px;
   }
@@ -245,7 +242,6 @@
       margin-bottom: 2%;
       color: #333!important;
       border: 1px solid #ccc!important;
-      font-family:'Relay-Regular';
   }
   .companySettingMarginTop{
     margin-top: 2%;

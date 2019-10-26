@@ -64,6 +64,9 @@ class AddNewShopProduct extends Component {
     $.validator.addMethod("regxProductCode", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Code should only contain letters & number.");
+    $.validator.addMethod("regxitemcode", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Item Code should only contain letters & number.");
     $.validator.addMethod("regxProductName", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Name should only contain letters & number.");
@@ -72,22 +75,14 @@ class AddNewShopProduct extends Component {
     }, "Product Url should only contain letters & number.");
     $.validator.addMethod("regxPrice", function (value, element, regexpr) {
       return regexpr.test(value);
-    }, "Product Price should only contain letters & number.");
+    }, "Price should have positive number");
     $.validator.addMethod("regxDetails", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Details should only contain letters & number.");
     $.validator.addMethod("regxShortDesc", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Short Description should only contain letters & number.");
-    $.validator.addMethod("regxPrice", function (value, element, regexpr) {
-      return regexpr.test(value);
-    }, "Product Price should only numbers.");
-    $.validator.addMethod("regxPrice", function (value, element, regexpr) {
-      return regexpr.test(value);
-    }, "Quantity should only numbers.");
-    $.validator.addMethod("regxPrice", function (value, element, regexpr) {
-      return regexpr.test(value);
-    }, "Quantity should only numbers.");
+    
     jQuery.validator.setDefaults({
       debug: true,
       success: "valid"
@@ -102,25 +97,32 @@ class AddNewShopProduct extends Component {
         },
         brand: {
           required: true,
-          regxbrand: /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/,
+          regxbrand: /^[A-Za-z][A-Za-z0-9\-\s]/,
         },
         productCode: {
           required: true,
+          regxProductCode : /^[A-Za-z][A-Za-z0-9\-\s]/,
         },
         itemCode:{
           required: true,
+          regxitemcode : /^[A-Za-z][A-Za-z0-9\-\s]/,
         },
         productName: {
           required: true,
+          regxProductName : /^[A-Za-z][A-Za-z0-9\-\s]/,
         },
         productUrl: {
           required: true,
-          // regxUrl: /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+          regxUrl : /^[A-Za-z][A-Za-z0-9\-\s]/,
         },
         
         originalPrice: {
           required: true,
-          regxoriginalPricee: /^\d+(,\d{1,2})?$/,
+          regxPrice: /^\d+(,\d{1,2})?$/,
+        },
+        discountedPrice: {
+          required: true,
+          regxPrice: /^\d+(,\d{1,2})?$/,
         },
         discountPercent: {
           required: true,
@@ -498,27 +500,6 @@ class AddNewShopProduct extends Component {
       .catch((error) => {
         console.log('error', error);
       })
-    this.setState({
-      vendor : "Select Vendor",
-      section: "Select Section",
-      category: "Select Category",
-      subCategory: "Select Sub-Category",
-      brand: "",
-      productCode: "",
-      itemCode : "",
-      productName: "",
-      productUrl: "",
-      productDetails: "",
-      shortDescription: "",
-      originalPrice: "",
-      discountedPrice: "",
-      availableQuantity: "",
-      size: "",
-      color: "",
-      availableQuantity: "",
-      currency: "",
-      status: "",
-    });
   }
   createProductUrl(event) {
     const target = event.target;
@@ -581,7 +562,7 @@ class AddNewShopProduct extends Component {
       [event.target.name] : event.target.value,
       
     });
-    if(event.target.value){
+    if(event.target.value != 0){
       this.setState({
         showDiscount : false
       })
@@ -656,7 +637,7 @@ class AddNewShopProduct extends Component {
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                         <label>Section <i className="redFont">*</i></label>
                         <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section + '|' + this.state.section_ID} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
-                          <option defaultValue="Select Section">Select Section</option>
+                          <option disabled defaultValue="Select Section">Select Section</option>
                           {this.state.sectionArray && this.state.sectionArray.length > 0 ?
                             this.state.sectionArray.map((data, index) => {
                               return (
@@ -752,7 +733,7 @@ class AddNewShopProduct extends Component {
                     <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                     <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
                       <label>Original Price <i className="redFont">*</i></label>
-                      <input onChange={this.percentAndPrice.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="text" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
+                      <input onChange={this.percentAndPrice.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="number" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
                       <label>Currency <i className="redFont">*</i></label>
@@ -766,11 +747,11 @@ class AddNewShopProduct extends Component {
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
                       <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingRightZeroo">
                         <label>Discount Percent (%)</label>
-                        <input disabled={this.state.showDiscount}  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="number" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
+                        <input max={100} disabled={this.state.showDiscount}  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="number" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
                       </div>
                       <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingLeftZeroo">
                         <label>Discount Price </label>
-                        <input disabled={this.state.showDiscount} onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="text" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
+                        <input max={this.state.originalPrice} disabled={this.state.showDiscount} onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="number" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
                       </div>
                       <label className="error col-lg-12">{this.state.discountPercentError}</label>
                     </div>

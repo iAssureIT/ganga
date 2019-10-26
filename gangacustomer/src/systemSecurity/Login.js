@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
-// import {browserHistory} from 'react-router-dom';
-import { Redirect } from 'react-router';
-// import swal from 'sweetalert';
-import $ from "jquery";
-
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import $ from 'jquery';
 import axios from 'axios';
+import jQuery from 'jquery';
+import 'jquery-validation';
+
 class Login extends Component {
 
   constructor(){
@@ -24,7 +21,33 @@ class Login extends Component {
         }
   }
   componentDidMount(){
-    
+  
+  $.validator.addMethod("regxemail", function (value, element, regexpr) {
+      return regexpr.test(value);
+  }, "Please enter valid email.");
+  
+  jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid"
+  });
+  $("#login").validate({
+      rules: {
+          loginusername: {
+              required: true,
+          },
+          loginpassword:{
+            required:true
+          }
+      },
+      errorPlacement: function (error, element) {
+        if (element.attr("name") == "loginusername") {
+          error.insertAfter("#loginusername");
+        }
+        if (element.attr("name") == "loginpassword") {
+          error.insertAfter("#loginpassword");
+        }
+      }
+  });
   }
   userlogin(event){
     event.preventDefault();
@@ -34,7 +57,7 @@ class Login extends Component {
       password    : this.refs.loginpassword.value,
     }
     console.log("auth value",auth);
-
+  if($("#login").valid()){
     axios.post('/api/users/login',auth)
       .then((response)=> {
         // console.log("-------userData------>>",response);
@@ -81,6 +104,7 @@ class Login extends Component {
         }
         
       });
+    }
   }
   showSignPass(){
       $('.showPwd').toggleClass('showPwd1');
@@ -92,7 +116,7 @@ class Login extends Component {
       $('.hidePwd').toggleClass('hidePwd1');
       return $('.inputTextPass').attr('type', 'password');
   }
-    Closepagealert(event){
+  Closepagealert(event){
     event.preventDefault();
     $(".toast-error").html('');
     $(".toast-success").html('');
@@ -126,7 +150,7 @@ class Login extends Component {
                             <input type="email" className="mt30 form-control" onChange={this.handleChange} ref="loginusername" id="loginusername" name="loginusername" placeholder="Email" required/>
                           </span>
                           <span className="logininput">
-                            <input type="password" className="mt30 form-control" ref="loginpassword" name="loginpassword" placeholder="Password" required/>
+                            <input type="password" className="mt30 form-control" ref="loginpassword" name="loginpassword" id="loginpassword" placeholder="Password" required/>
                           </span>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30">
                             <div className="row">
@@ -154,7 +178,7 @@ class Login extends Component {
                   <li>Track wishlist and more</li>
                 </ul>
                <div className="col-lg-6 col-md-6 col-sm-6 mt30">
-                  <a id="logInBtn" href='/signup' className="btn btn-warning">Create an Account</a>
+                  <a id="logInBtn" href='/signup' className="btn btn-warning logInBtn">Create an Account</a>
                </div>
             </div>
           </div>

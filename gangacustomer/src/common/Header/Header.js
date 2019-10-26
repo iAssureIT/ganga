@@ -492,7 +492,7 @@ searchProducts(){
                                       <div className="">
                                         <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> items</p>
                                         <div className="col-lg-9 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : ""}</div>
-                                        <a href={user_ID ? "/cart" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
+                                        <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
                                       </div>
                                     </li>
                                     { 

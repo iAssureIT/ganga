@@ -75,7 +75,6 @@ border-bottom: 1px solid #aaaaaa;
 
 .listprofile{
 	font-size: 13px;
-	 font-family:'Relay-Regular';
 	white-space: nowrap;
 	color: #666666;
 }
@@ -84,12 +83,8 @@ border-bottom: 1px solid #aaaaaa;
     color: #000;
 	padding: 0px 18px;
 	font-weight: bold;
-	 font-family:'Relay-Regular';
 }
-.listfont{
-	 font-family:'Relay-Regular';
 
-}
 .brdtop{
 	border-top: 0;
 }
@@ -131,7 +126,6 @@ border-bottom: 1px solid #aaaaaa;
 .selfilter{
 	position: relative;
 	top: -7px;
-	 font-family:'Relay-Regular';
 	font-size: 13px;
 }
 .alphab:focus{
@@ -148,7 +142,6 @@ border-bottom: 1px solid #aaaaaa;
 	padding-left: 0px!important;
     padding: 10px;
     text-align: left;
-     font-family:'Relay-Regular';
     font-size: 0.9em;
 }
 .showList{

@@ -16,10 +16,16 @@ class SmallBanner extends Component{
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 banner" style={{"backgroundImage": `url(`+this.props.bannerData.backgroungImage+`)`}}>
                         <h1>{this.props.bannerData.title}</h1>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bannerText">
-                            <ul className="bannerUL">
-                                <li><a href="/">Home</a></li>&nbsp; / &nbsp;
-                                <li><strong>{this.props.bannerData.breadcrumb}</strong></li>
-                            </ul>
+                            {
+                                this.props.bannerData.breadcrumb ?
+                                    <ul className="bannerUL">
+                                        <li><a href="/">Home</a></li>&nbsp;&nbsp;
+                                        <li>/ &nbsp;<strong>{this.props.bannerData.breadcrumb}</strong></li>
+                                    </ul>
+                                :
+                                null
+                            }
+                            
                         </div>
                     </div>
                 </div>

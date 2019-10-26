@@ -59,7 +59,6 @@
     color: #fff;
     letter-spacing: 4px;
     font-size: 12px;
-    font-family: sans-serif;
     text-transform: uppercase;
 }
 .prod-details-top-left h3 {
@@ -77,7 +76,6 @@
 .prod-detail-headerText2 {
     font-size: 14px;
     line-height: 25px;
-    font-family: 'Open Sans',Arial,Helvetica,sans-serif;
     font-weight: 400;
     color: #7e8082;
     background-color: #fff;
@@ -147,7 +145,6 @@
 .product-details-tabs {
     font-size: 14px;
     line-height: 25px;
-    font-family: 'Open Sans',Arial,Helvetica,sans-serif;
     font-weight: 400;
     color: #7e8082;
     background-color: #fff;

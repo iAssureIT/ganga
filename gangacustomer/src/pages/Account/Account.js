@@ -11,7 +11,7 @@ class Account extends Component{
         this.state={
             bannerData : {
                 title : "ACCOUNT CONTROL PANEL",
-                breadcrumb : 'My Shopping Cart',
+                breadcrumb : 'Account Control Panel',
                 backgroungImage : '/images/my_account.png',
             },
         }
@@ -50,6 +50,10 @@ class Account extends Component{
     editUser(event){
         event.preventDefault();
         this.props.history.push('/edit');
+    }
+    addAddress(event){
+        event.preventDefault();
+        this.props.history.push('/address');
     }
     render(){
         console.log('user====', this.state)
@@ -120,7 +124,7 @@ class Account extends Component{
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">You have not set a default billing address.</p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                    <button className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
+                                                    <button onClick={this.addAddress.bind(this)} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
                                                 </div>
                                             </div>
                                         }
@@ -149,7 +153,7 @@ class Account extends Component{
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">You have not set a default shipping address.</p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                    <button className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
+                                                    <button onClick={this.addAddress.bind(this)} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
                                                 </div>
                                             </div>
                                         }

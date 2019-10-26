@@ -82,3 +82,6 @@
     color:red;
     margin-top: 5px;
   }
+  .logInBtn:hover{
+    color: #fff !important;
+  }
