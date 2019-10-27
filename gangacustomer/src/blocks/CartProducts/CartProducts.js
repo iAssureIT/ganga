@@ -205,6 +205,7 @@ class CartProducts extends Component{
                                     {
                                         this.props.recentCartData &&  this.props.recentCartData.length &&  this.props.recentCartData[0].cartItems.length > 0?
                                         this.props.recentCartData[0].cartItems.map((data, index)=>{
+                                            console.log('data crt', data);
                                             var x = data.discountedPrice;
                                             var discountedPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
                                             var y = data.totalForQantity;
