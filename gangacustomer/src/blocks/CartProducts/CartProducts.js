@@ -112,25 +112,42 @@ class CartProducts extends Component{
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
         const cartitemid = event.target.getAttribute('id');
+        const product_ID = event.target.getAttribute('productid');
+        console.log('product_ID', product_ID);
         const quantity = parseInt(event.target.getAttribute('dataquntity'));
-        const quantityAdded = parseInt(quantity+1);
         const proprice = event.target.getAttribute('dataprice');
-        if(quantity>0){
-           var totalIndPrice   = quantityAdded * proprice;      
-        }
-        const formValues = { 
-			"user_ID"     	: userid,
-			"cartItem_ID" 	: cartitemid,
-			"quantityAdded" : quantityAdded,
-			"totalIndPrice"	: totalIndPrice
-		}
-        axios.patch("/api/carts/quantity" ,formValues)
+        axios.get("/api/products/get/one/"+product_ID)
         .then((response)=>{
-                this.props.fetchCartData();
+            var productName = response.data.productName ;
+            var availableQuantity = response.data.availableQuantity;
+            const quantityAdded = parseInt(quantity+1);
+
+            
+            if(quantity>0){
+                var totalIndPrice   = quantityAdded * proprice;      
+            }
+            const formValues = { 
+                "user_ID"     	: userid,
+                "cartItem_ID" 	: cartitemid,
+                "quantityAdded" : quantityAdded,
+                "totalIndPrice"	: totalIndPrice
+            }
+            if(quantityAdded > availableQuantity){
+                ToastsStore.success(<div className="alertback">{'Only '+availableQuantity+' '+ productName+' left in stock.' }<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                console.log('mnmn', quantityAdded > availableQuantity);
+            }else{
+                axios.patch("/api/carts/quantity" ,formValues)
+                .then((response)=>{
+                        this.props.fetchCartData();
+                })
+                .catch((error)=>{
+                        console.log('error', error);
+                })
+            }
         })
         .catch((error)=>{
-                console.log('error', error);
-        })
+            console.log('error', error);
+        })   
     }
     Closepagealert(event){
         event.preventDefault();
@@ -205,7 +222,6 @@ class CartProducts extends Component{
                                     {
                                         this.props.recentCartData &&  this.props.recentCartData.length &&  this.props.recentCartData[0].cartItems.length > 0?
                                         this.props.recentCartData[0].cartItems.map((data, index)=>{
-                                            console.log('data crt', data);
                                             var x = data.discountedPrice;
                                             var discountedPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
                                             var y = data.totalForQantity;
@@ -229,7 +245,7 @@ class CartProducts extends Component{
                                                     <td className="nowrap">
                                                         <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
                                                         <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
-                                                        <span className="plusQuantity fa fa-plus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantityincrease.bind(this)}></span>
+                                                        <span className="plusQuantity fa fa-plus" productid={data.product_ID} id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantityincrease.bind(this)}></span>
                                                     </td>
                                                     <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
                                                     <td>
