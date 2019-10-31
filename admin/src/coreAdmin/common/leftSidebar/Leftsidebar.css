@@ -2,6 +2,21 @@
 	height: 500px;
 }
 */
+.abc::-webkit-scrollbar {
+    width: 7px;
+}
+ 
+.abc::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.abc::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border: 1px solid #333;
+  /*outline: 1px solid white;*/
+}
+
+
 .slidlogo{
   height: 30px;
 }
