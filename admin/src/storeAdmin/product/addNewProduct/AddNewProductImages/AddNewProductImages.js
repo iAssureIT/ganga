@@ -266,7 +266,7 @@ class AddNewProductImages extends Component{
                                         </div>
                                     </div>
                                     <div className="col-lg-12">
-                                        <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 marginTop17" onClick={this.saveProductImages.bind(this)} >
+                                        <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 marginTop17 pull-right" onClick={this.saveProductImages.bind(this)} >
                                             Save
                                         </button>
                                     </div>

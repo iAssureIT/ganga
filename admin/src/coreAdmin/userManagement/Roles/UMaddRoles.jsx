@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import swal                       from 'sweetalert';
+import './userManagement.css';
 
 import axios from 'axios';
 
@@ -42,7 +43,7 @@ export default class UMaddRoles extends Component {
 						<div className="form-group col-lg-6 col-lg-offset-3 col-md-6 col-lg-offset-3 col-xs-12 col-sm-8">
 							<label className="">Enter Role </label><span className="astrick">*</span>
 							<span className="blocking-span leftmar">
-								<input type="text" id= "" className="rolesField form-control UMname inputText tmsUserAccForm" ref="role"  name="roleName" id="roleName"/>
+								<input type="text" id= "" className="rolesField form-control UMname inputText tmsUserAccForm roleinputbox" ref="role"  name="roleName" id="roleName"/>
 							</span>
 						</div>
 					

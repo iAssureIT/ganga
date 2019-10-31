@@ -34,7 +34,7 @@ class UMListOfUsers extends Component {
             "startRange"        : 0,
             "limitRange"        : 10, 
             "selectUsers" : [],
-            blockActive			: "all",
+            blockActive	  :	[],	
 		}
     	this.handleChange  = this.handleChange.bind(this);
 			
@@ -137,6 +137,7 @@ class UMListOfUsers extends Component {
 		var formValues = {
 			selectedAction :event.target.value,
 			selectUsers    :this.state.selectUsers
+			// avctive    :this.state.selectUsers
 		}
 		console.log('formValues', formValues);
 		axios.patch('/api/users/perform/action',formValues)
@@ -166,7 +167,7 @@ render(){
 					</div>
 					<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding">
 						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodal">
-							<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
+							<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow adduserbtn1" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
 							<CreateUser getData={this.getData.bind(this)}/>
 						</div>
 						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodalcl">
@@ -189,19 +190,19 @@ render(){
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
 							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" >
-								<option name="roleListDDOption">-- Select --</option>
-								<option value="all" name="roleListDDOption">Show All</option>		
-								<option value="users" name="roleListDDOption">users</option>		
-								<option value="ba" name="roleListDDOption">ba</option>		
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' name="roleListDDOption">-- Select --</option>
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="all"   name="roleListDDOption">Show All</option>		
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="users" name="roleListDDOption">users</option>		
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="ba"    name="roleListDDOption">ba</option>		
 							</select>
 						</div>
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
-							<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" >
+							<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control "onChange={this.performselectaction.bind(this)} value={this.state.userListDropdown}  ref="blockActive" value={this.state.blockActive} name="blockActive" >
 								<option>-- Select --</option>	
-								<option value="all"	>Show All</option>	
-								<option value="Blocked">Blocked</option>	
-								<option value="Active">Active </option>	
+								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="all"	data-limit='37'>Show All</option>	
+								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="Blocked" data-limit='37'>Blocked</option>	
+								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="Active" data-limit='37'>Active </option>	
 							</select>
 						</div>
 					</div>

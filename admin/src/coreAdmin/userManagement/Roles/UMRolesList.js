@@ -4,7 +4,7 @@ import React, { Component } 		from 'react';
 import swal                       from 'sweetalert';
 
   import UMaddRoles 					from './UMaddRoles.jsx';
-// import { UserManagementMaster }  	from '/imports/admin/userManagement/UM/UserManagementMaster.js';
+// import { Use rManagementMaster }  	from '/imports/admin/userManagement/UM/UserManagementMaster.js';
 /*import './userManagement.css';
 */
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -126,10 +126,10 @@ export default class UMRolesList extends Component {
 										<div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<table className="table iAssureITtable-bordered table-striped table-hover">
 												<thead className="tempTableHeader">
-													<tr className="">
-														<th className="umDynamicHeader srpadd textAlignCenter"> Role </th>
-														<th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
-													</tr>
+												<tr className="">
+													<th className="umDynamicHeader srpadd textAlignCenter"> Role </th>
+													<th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
+												</tr>
 												</thead>
 												<tbody>
 												{this.state.allPosts.map( (roleData, index)=>{
