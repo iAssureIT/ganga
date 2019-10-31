@@ -220,6 +220,7 @@ export default class Leftsidebar extends Component{
                   <a href="#Report" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-line-chart" />
                     Reports
+                    <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="Report">
                     <li>
@@ -240,6 +241,7 @@ export default class Leftsidebar extends Component{
                   <a href="#productreview" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Product Review
+                    <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="productreview">
                     <li>

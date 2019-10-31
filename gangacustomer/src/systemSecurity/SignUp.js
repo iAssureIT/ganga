@@ -140,7 +140,7 @@ Closepagealert(event){
     checkUserExists(event){
     axios.get('/api/users/get/checkUserExists/'+event.target.value)
            .then((response)=>{
-                if (response.data.length>0) {
+                if (response.data.length>=0) {
                   $(".checkUserExistsError").show();
                   $('.button3').attr('disabled','disabled');
                   this.setState({checkUserExists: 1})

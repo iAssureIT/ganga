@@ -80,6 +80,7 @@ class VendorCategory extends Component {
         var formValues = {
             "categoryName" : this.refs.categoryName.value
         }
+        if(this.refs.categoryName.length>0){
         axios.post('/api/vendorCategory/post', formValues)
         .then((response)=>{
             swal(response.data.message);
@@ -90,6 +91,10 @@ class VendorCategory extends Component {
         .catch((error)=>{
             console.log('error', error);
         })
+        }else{
+          swal("Category cant be blank", "", "warning");
+         
+       } 
     }
     updateCategory(event){
         event.preventDefault();

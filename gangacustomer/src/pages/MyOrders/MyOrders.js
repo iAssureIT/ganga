@@ -12,15 +12,18 @@ import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 import ReturnStatus         from "../../common/Wizard/ReturnStatus.jsx";
+import swal                   from 'sweetalert';
 
 export default class MyOrders extends Component {
 	constructor(props) {
         super(props);
 
+      
         if(!this.props.loading){
             this.state = {
                 "orderData":[],
                 "orderID"  :"",
+                customerReview:"",
                 // "notificationData" :Meteor.subscribe("notificationTemplate"),
             };
         } else{
@@ -113,7 +116,8 @@ export default class MyOrders extends Component {
         "rating"                    : rating,
         "customerReview"            : $('.feedbackForm textarea').val()
       }
-
+      
+      if(this.state.customerReview.length>0){
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
@@ -123,6 +127,9 @@ export default class MyOrders extends Component {
             })
       
       console.log(formValues);
+    }else{
+     swal("Please Enter your feedback.","","warning")
+     }
     }
     returnProduct(event){
       $('#returnProductModal').show();
@@ -552,7 +559,7 @@ export default class MyOrders extends Component {
                       </div>
                         <div className="row inputrow">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                          <textarea rows="5" cols="60"></textarea>
+                          <textarea rows="5" cols="60" value={this.state.customerReview}></textarea>
                         </div>
                         <div className="row inputrow">
                         </div>

@@ -13,7 +13,7 @@ class Wishlist extends Component {
         this.state={
             bannerData : {
                 title : "MY WISHLIST",
-                breadcrumb : 'My Shopping Cart',
+                breadcrumb : 'My Wishlist',
                 backgroungImage : '/images/wishlist.png',
             },
             wishlist : [],

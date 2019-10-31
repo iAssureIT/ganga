@@ -7,20 +7,23 @@ import './Productreview.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 import moment                 from "moment";
+import swal                   from 'sweetalert';
 
 class Productreview extends Component {
 	constructor(props) {
         super(props);
         this.state={
-            bannerData : {
+                 reviewData:"",
+                bannerData : {
                 title : "PRODUCT REVIEW",
-                breadcrumb : 'Product revies',
+                breadcrumb : 'Product reviews',
                 backgroungImage : '/images/wishlist.png',
             },
             wishlist : [],
             products : [],
             abc :[],
             quantity : 1
+
         }
         window.scrollTo(0, 0);
     }
@@ -66,16 +69,19 @@ class Productreview extends Component {
         "rating"                    : rating,
         "customerReview"            : $('.feedbackForm textarea').val()
       }
-
+       if(this.state.reviewData.length!=null){
       axios.patch("/api/customerReview/patch",formValues)
             .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 1000)
                // swal(response.data.message);    
             })
             .catch((error)=>{
             })
       
       console.log(formValues);
+    }else{
+      swal("Blank Review cant be submitted")
+    }
     }
 
 

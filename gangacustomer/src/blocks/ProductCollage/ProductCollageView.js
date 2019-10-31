@@ -193,6 +193,10 @@ class ProductCollageView extends Component {
         modalIDNew : {productID:modalID}
       })
     }
+ 
+
+
+
   render() {
     
     return(
