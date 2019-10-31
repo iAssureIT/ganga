@@ -26,6 +26,8 @@ export default class Leftsidebar extends Component{
   }    
 
   render(){
+    console.log('nkhjh',  window.screen.height );  
+    var sidebarHeight = window.screen.height - 225;
     return(
       <div>
         <aside className="leftsidebar">
@@ -35,7 +37,7 @@ export default class Leftsidebar extends Component{
                 <h4 className="text-center"><b><img className="slidlogo1" src="/images/GangaExpress.png"/></b></h4>
                 <strong><img className="slidlogo" src="/images/Logo.png"/></strong>
               </div>
-              <ul className="list-unstyled components">
+              <ul className="list-unstyled components" style={{height:  sidebarHeight+"px"}}>
                 <li className="active sidebarMenuText">
                   <a href="/dashboard">
                     <i className="fa fa-dashboard"></i>
