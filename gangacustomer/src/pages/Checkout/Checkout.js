@@ -130,6 +130,12 @@ class Checkout extends Component {
                     required: true,
                     regxaddType: "Select Section"
                 },
+                payMethod: {
+                    required: true
+                },
+                termsNconditions: {
+                    required: true
+                }
             },
             errorPlacement: function (error, element) {
               if (element.attr("name") == "username") {
@@ -164,6 +170,12 @@ class Checkout extends Component {
               }
               if (element.attr("name") == "addType") {
                 error.insertAfter("#addType");
+              }
+              if (element.attr("name") == "payMethod") {
+                error.insertAfter("#payMethod");
+              }
+              if (element.attr("name") == "termsNconditions") {
+                error.insertAfter("#termsNconditions");
               }
             }
         });
