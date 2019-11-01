@@ -39,6 +39,7 @@ class Checkout extends Component {
         }
         this.getCartData();
         this.getCompanyDetails();
+        this.getUserAddress();
         this.camelCase = this.camelCase.bind(this)
     }
 
@@ -49,133 +50,121 @@ class Checkout extends Component {
         this.validation();
         this.modalvalidation();
     }
-    validation() {
-        $.validator.addMethod("regxname", function (value, element, regexpr) {
+    validation(){
+        $.validator.addMethod("regxusername", function (value, element, regexpr) {
             return regexpr.test(value);
-        }, "Name should only contain letters & number.");
+        }, "Name should only contain letters.");
         $.validator.addMethod("regxmobileNumber", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid mobile number.");
         $.validator.addMethod("regxemail", function (value, element, regexpr) {
             return regexpr.test(value);
-        }, "Please enter valid email address.");
-        $.validator.addMethod("regxpincode", function (value, element, regexpr) {
+        }, "Please enter valid email.");
+        $.validator.addMethod("regxaddressLine", function (value, element, regexpr) {
             return regexpr.test(value);
-        }, "Please enter valid pincode");
-        $.validator.addMethod("regxblock", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid block");
-        $.validator.addMethod("regxcity", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid city");
+        }, "Please enter valid address.");
+        $.validator.addMethod("regxcountry", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the country.");
         $.validator.addMethod("regxstate", function (value, element, arg) {
             return arg !== value;
         }, "Please select the state");
-        $.validator.addMethod("regxcountry", function (value, element, arg) {
-            return arg !== value;
-        }, "Please select the country");
+        $.validator.addMethod("regxblock", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid block name.");
+        $.validator.addMethod("regxcity", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid city name");
+        $.validator.addMethod("regxpincode", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid pincode.");
         $.validator.addMethod("regxaddType", function (value, element, arg) {
             return arg !== value;
-        }, "Please select the address type");
-
+        }, "Please select the address type.");
         jQuery.validator.setDefaults({
             debug: true,
             success: "valid"
         });
-
         $("#checkout").validate({
             rules: {
-                name: {
+                username: {
+                    regxusername : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
                     required: true,
                 },
                 mobileNumber: {
+                    regxmobileNumber : /^([7-9][0-9]{9})$/,
                     required: true,
-                    regxmobileNumber: /^\d{10}$/
                 },
                 email: {
                     required: true,
-                    regxemail: /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
                 },
                 addressLine1: {
                     required: true,
+                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
                 },
                 addressLine2: {
                     required: true,
-                },
-                pincode: {
-                    required: true,
-                },
-                block: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
-                state: {
-                    required: true,
-                    regxstate: "Select State"
+                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
                 },
                 country: {
                     required: true,
                     regxcountry: "Select Country"
                 },
+                state: {
+                    required: true,
+                    regxstate: "Select State"
+                },
+                block: {
+                    required: true,
+                    regxblock : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                },
+                city: {
+                    required: true,
+                    regxcity : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                },
+                pincode: {
+                    required: true,
+                    regxpincode : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                },
                 addType: {
                     required: true,
-                    regxaddType: "Select Type"
+                    regxaddType: "Select Section"
                 },
-                payMethod: {
-                    required: true,
-                },
-                termsNconditions: {
-                    required: true,
-                },
-                checkoutAddess: {
-                    required: true,
-                }
             },
             errorPlacement: function (error, element) {
-                if (element.attr("name") == "name") {
-                    error.insertAfter("#name");
-                }
-                if (element.attr("name") == "mobileNumber") {
-                    error.insertAfter("#mobileNumber");
-                }
-                if (element.attr("name") == "email") {
-                    error.insertAfter("#email");
-                }
-                if (element.attr("name") == "addressLine1") {
-                    error.insertAfter("#addressLine1");
-                }
-                if (element.attr("name") == "addressLine2") {
-                    error.insertAfter("#addressLine2");
-                }
-                if (element.attr("name") == "pincode") {
-                    error.insertAfter("#pincode");
-                }
-                if (element.attr("name") == "block") {
-                    error.insertAfter("#block");
-                }
-                if (element.attr("name") == "city") {
-                    error.insertAfter("#city");
-                }
-                if (element.attr("name") == "state") {
-                    error.insertAfter("#state");
-                }
-                if (element.attr("name") == "country") {
-                    error.insertAfter("#country");
-                }
-                if (element.attr("name") == "addType") {
-                    error.insertAfter("#addType");
-                }
-                if (element.attr("name") == "payMethod") {
-                    error.insertAfter("#payMethod");
-                }
-                if (element.attr("name") == "termsNconditions") {
-                    error.insertAfter("#termsNconditions");
-                }
-                if (element.attr("name") == "checkoutAddess") {
-                    error.insertAfter("#checkoutAddess");
-                }
+              if (element.attr("name") == "username") {
+                error.insertAfter("#username");
+              }
+              if (element.attr("name") == "mobileNumber") {
+                error.insertAfter("#mobileNumber");
+              }
+              if (element.attr("name") == "email") {
+                error.insertAfter("#email");
+              }
+              if (element.attr("name") == "addressLine1") {
+                error.insertAfter("#addressLine1");
+              }
+              if (element.attr("name") == "addressLine2") {
+                error.insertAfter("#addressLine2");
+              }
+              if (element.attr("name") == "country") {
+                error.insertAfter("#country");
+              }
+              if (element.attr("name") == "state") {
+                error.insertAfter("#state");
+              }
+              if (element.attr("name") == "block") {
+                error.insertAfter("#block");
+              }
+              if (element.attr("name") == "city") {
+                error.insertAfter("#city");
+              }
+              if (element.attr("name") == "pincode") {
+                error.insertAfter("#pincode");
+              }
+              if (element.attr("name") == "addType") {
+                error.insertAfter("#addType");
+              }
             }
         });
     }
@@ -217,6 +206,7 @@ class Checkout extends Component {
             rules: {
                 modalname: {
                     required: true,
+                    modalregxname : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
                 },
                 modalmobileNumber: {
                     required: true,
@@ -382,7 +372,6 @@ class Checkout extends Component {
                 console.log('error', error);
             })
     }
-
     cartquantityincrease(event) {
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
@@ -660,7 +649,7 @@ class Checkout extends Component {
             var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
                 return a._id == checkoutAddess
             })
-
+            console.log('in ifffff');
             addressValues = {
                 "user_ID": localStorage.getItem('user_ID'),
                 "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
@@ -675,10 +664,11 @@ class Checkout extends Component {
                 "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
                 "addType": deliveryAddress.length > 0 ? deliveryAddress[0].addType : "",
             }
-        } else {
+        }else{
+            console.log('in elseee');
             addressValues = {
                 "user_ID": localStorage.getItem('user_ID'),
-                "name": this.state.name,
+                "name": this.state.username,
                 "email": this.state.email,
                 "addressLine1": this.state.addressLine1,
                 "addressLine2": this.state.addressLine2,
@@ -690,6 +680,7 @@ class Checkout extends Component {
                 "mobileNumber": this.state.mobileNumber,
                 "addType": this.state.addType
             }
+            if ($('#checkout').valid()) {
             axios.patch('/api/users/patch/address', addressValues)
                 .then((response) => {
                     ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
@@ -702,6 +693,7 @@ class Checkout extends Component {
                 .catch((error) => {
                     console.log('error', error);
                 });
+            }
         }
         // console.log('pls');
         if ($('#checkout').valid()) {
@@ -721,7 +713,7 @@ class Checkout extends Component {
 
             var cartItemsMoveMain = this.state.cartProduct;
             var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
-
+            console.log('grandTotalArray', grandTotalArray);
             if (grandTotalArray) {
                 var totalAmount = grandTotalArray.finalTotal;
                 // var totalAmount       = 100;
@@ -749,7 +741,7 @@ class Checkout extends Component {
                             var productId = cartProduct.productId;
                             var productIndex = cartProduct.indexInproducts;
                             var qty = cartProduct.quantity;
-
+                            console.log('qty', qty);
                             if (cartProduct.deductedAmtAftrCoupon) {
                                 discountPrice = cartProduct.deductedAmtAftrCoupon;
                             }
@@ -762,56 +754,48 @@ class Checkout extends Component {
                             index[i] = productIndex;
                             discountedProdPrice[i] = discountPrice;
                         }
-
+                        console.log('qtys', qtys);
                         // if(grandtotalValue){
                         var inputObject = {
-                            "user_ID": userId,
-                            "productIds": productIds,
-                            "productName": cartItemsMove.productName,
-                            "prices": prices,
-                            "qtys": qtys,
-                            "totals": totals,
-                            "discountedProdPrice": discountedProdPrice,
-                            "totalAmount": (grandTotalArray.finalTotal),
-                            "index": index,
-                            "totalForQantity": cartItemsMove.totalForQantity,
-                            "productImage": cartItemsMove.productImage,
-                            // "couponUsed"          : cartItemsMove.couponUsed,
+                            "user_ID"               : userId,
+                            "productIds"            : productIds,
+                            "productName"           : cartItemsMove.productName,
+                            "prices"                : prices,
+                            "qtys"                  : qtys,
+                            "totals"                : totals,
+                            "discountedProdPrice"   : discountedProdPrice,
+                            "totalAmount"           : (grandTotalArray.finalTotal),
+                            "index"                 : index,
+                            "totalForQantity"       : cartItemsMove.totalForQantity,
+                            "productImage"          : cartItemsMove.productImage,
+                            // "couponUsed"         : cartItemsMove.couponUsed,
                         }
 
                         axios.post('/api/orders/post', inputObject)
                             .then((result) => {
-
                                 if (result) {
-
                                     axios.get('/api/orders/get/one/' + result.data.order_ID)
-                                        .then((orderStatus) => {
-                                            if (orderStatus) {
-                                                var userId = orderStatus.userId;
-                                                var orderNo = orderStatus.OrderId;
-                                                var orderDbDate = orderStatus.createdAt;
-                                                var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
-                                                var totalAmount = orderStatus.totalAmount;
+                                    .then((orderStatus) => {
+                                        if (orderStatus) {
+                                            var userId = orderStatus.userId;
+                                            var orderNo = orderStatus.OrderId;
+                                            var orderDbDate = orderStatus.createdAt;
+                                            var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
+                                            var totalAmount = orderStatus.totalAmount;
+                                            var userId = localStorage.getItem('user_ID');
+                                            // swal('Order Placed Successfully'); 
+                                            ToastsStore.success(<div className="alertback">Order Placed Successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 
-
-
-                                                var userId = localStorage.getItem('user_ID');
-                                                // swal('Order Placed Successfully'); 
-                                                ToastsStore.success(<div className="alertback">Order Placed Successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-
-
-                                                this.props.history.push('/payment/' + result.data.order_ID);
-
-
-                                            }
-                                        })
-                                        .catch((error) => {
-                                            console.log('error', error)
-                                        })
+                                            this.props.history.push('/payment/' + result.data.order_ID);
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.log('error', error)
+                                    })
                                 }
                             })
                             .catch((error) => {
-                                console.log(error)
+                                console.log(error);
                             })
 
                     } else {
@@ -823,7 +807,6 @@ class Checkout extends Component {
             }
         }
     }
-
     saveModalAddress(event) {
         event.preventDefault();
         this.modalvalidation();
@@ -897,6 +880,7 @@ class Checkout extends Component {
             .join(' ');
     }
     render() {
+        console.log('address',this.state.deliveryAddress);
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="pagealertnone">
@@ -911,7 +895,7 @@ class Checkout extends Component {
                                     this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">1 SHIPPING ADDRESS</div>
-                                            {
+                                            {   this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                                 this.state.deliveryAddress.map((data, index) => {
                                                     return (
                                                         <div key={'check' + index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
@@ -920,6 +904,8 @@ class Checkout extends Component {
                                                         </div>
                                                     );
                                                 })
+                                                :
+                                                null
                                             }
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <label id="checkoutAddess"></label>
@@ -934,7 +920,7 @@ class Checkout extends Component {
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
-                                                <input type="text" ref="name" name="name" id="name" value={this.state.name} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="text" ref="username" name="username" id="username" value={this.state.username} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
@@ -958,8 +944,6 @@ class Checkout extends Component {
                                                 <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChangeCountry.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <option value="Select Country">Select Country</option>
                                                     <option value="IN">India</option>
-                                                    <option value="USA">USA</option>
-                                                    <option value="Chaina">Chaina</option>
                                                 </select>
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">

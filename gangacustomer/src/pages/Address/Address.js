@@ -61,7 +61,7 @@ class Address extends Component {
         }, "Please select the country.");
         $.validator.addMethod("regxstate", function (value, element, arg) {
             return arg !== value;
-        }, "Please select the category");
+        }, "Please select the state");
         $.validator.addMethod("regxblock", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid block name.");
