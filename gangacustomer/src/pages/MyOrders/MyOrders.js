@@ -215,6 +215,8 @@ export default class MyOrders extends Component {
                     
                     var modal = document.getElementById('returnProductModal');
                     modal.style.display = "none";
+
+                    $('.modal-backdrop').remove();
                 })
                    
               .catch((error)=>{
