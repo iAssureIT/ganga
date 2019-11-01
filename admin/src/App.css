@@ -559,6 +559,7 @@ margin-right: 12px;
   .adminCancel-btn, .adminFinish-btn {
       margin-bottom: 15px;
       box-shadow: 2px 2px 9px -2px #2189d1;
+      font-weight: 600;
   }
   .btnUpdate{
       color: #fff;

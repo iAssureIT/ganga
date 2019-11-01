@@ -149,6 +149,9 @@
 		color: #999;
 
 }
+.header1list2 ul{
+	margin-right: 15px;
+}
 .header1list2 ul li{
 	float: right;
 	text-decoration: none;

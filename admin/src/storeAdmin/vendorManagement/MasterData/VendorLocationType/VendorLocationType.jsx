@@ -6,6 +6,7 @@ import axios                  from 'axios';
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import 'bootstrap/js/tab.js';
+import './VendorLocationType.css'
 
 class VendorLocationType extends Component {
     constructor(props) {
@@ -158,8 +159,8 @@ class VendorLocationType extends Component {
         return (
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
-                    <section className="content">
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+                    <section className="">
+                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12  minDivHeight">
                             <div className="row">
                                 <div className="">
                                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">

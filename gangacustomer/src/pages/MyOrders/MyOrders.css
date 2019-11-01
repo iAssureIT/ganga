@@ -117,3 +117,12 @@ table > tfoot > tr > td:last-of-type {
 .productnamecss{
 	/*width: 100%;*/
 }
+.astricsign{
+	color: red;
+}
+.returninputbox{
+	margin-bottom: 15px;
+}
+.tabletext{
+text-align:right ! important;
+}

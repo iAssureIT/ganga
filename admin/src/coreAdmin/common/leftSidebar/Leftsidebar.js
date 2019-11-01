@@ -23,7 +23,41 @@ export default class Leftsidebar extends Component{
          $('#sidebar').toggleClass('active');
      });
   });*/
-  }    
+  }   
+
+
+   eventclk(event){
+    event.preventDefault();
+    $(event.currentTarget).addClass('active');
+    $(event.currentTarget).siblings('li').removeClass('active');
+    // $(event.currentTarget).siblings('li').children('.treeview-menu').toggle();
+
+  }
+
+  eventclk1(event){
+    event.preventDefault();
+    $(event.currentTarget).children('.treeview-menu').toggle();
+    $(event.currentTarget).addClass('active');
+    $(event.currentTarget).siblings('li').removeClass('active');
+    // $(event.currentTarget).siblings('li').children('.treeview-menu').toggle();
+
+  }  
+
+  clickLiTree(event){
+    event.preventDefault();
+    $(event.target).parent().addClass('activeLi');
+    var checkli = $(event.target).parent().siblings('li').removeClass('activeLi');
+  }
+
+  clickTree(event){
+      event.preventDefault();
+      console.log('$(event.currentTarget)',$(event.currentTarget));
+      $(event.currentTarget).addClass('activetree');
+      $(event.currentTarget).siblings('li').removeClass('activetree');
+      $(event.currentTarget).siblings('li').removeClass('menu-open');
+      $(event.currentTarget).siblings('li').children('.treeview-menu').css('display','none');
+      $(event.currentTarget).siblings('li').children('.treeview-menu').children().removeClass('activeLi');
+  }   
 
   render(){
     console.log('nkhjh',  window.screen.height );  
@@ -38,7 +72,7 @@ export default class Leftsidebar extends Component{
                 <strong><img className="slidlogo" src="/images/Logo.png"/></strong>
               </div>
               <ul className="list-unstyled components abc" style={{height:  sidebarHeight+"px"}} >
-                <li className="active sidebarMenuText">
+                <li className="active sidebarMenuText add" onClick={this.eventclk1.bind(this)}>
                   <a href="/dashboard">
                     <i className="fa fa-dashboard"></i>
                     Dashboard

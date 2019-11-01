@@ -59,7 +59,7 @@ class SectionManagement extends Component {
     
     $.validator.addMethod("regxA1", function (value, element, regexpr) {
       return regexpr.test(value);
-    }, "Name should only contain letters and special chanracters like (@&()_+-)");
+    }, "Name should only contain letters and special characters like (@&()_+-)");
 
     $.validator.setDefaults({
       debug: true,

@@ -335,7 +335,7 @@ export default class MyOrders extends Component {
       		                    <td data-th="Status" className="col status">{ data.deliveryStatus[data.deliveryStatus.length-1].status=="Dispatch" || data.deliveryStatus[data.deliveryStatus.length-1].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[data.deliveryStatus.length-1].status }</td>
       		                    <td data-th="Actions" className="col actions">
                               {
-                                    <div className="actbtns">
+                                    <div className="actbtns NOpadding">
 
                                         <a className="btn alphab filterallalphab" href={"/view-order/"+data._id} title="View Order">
                                         <span> <i className="fa fa-eye"></i></span></a>
@@ -355,11 +355,11 @@ export default class MyOrders extends Component {
                   <thead>
                   <div className="col-lg-12">
                       <tr className="col-lg-12">
-                          <th scope="col" className="col-lg-2 id"><div className="row">Product Image</div></th>
-                          <th scope="col" className="col-lg-3 id text-center"><div className="row">Product Name</div></th>
-                          <th scope="col" className="col-lg-2 date text-center"><div className="row">Price</div></th>
-                          <th scope="col" className="col-lg-2 shipping text-center"><div className="row">Qty</div></th>
-                          <th scope="col" className="col-lg-2 total text-center"><div className="row">Subtotal</div></th>
+                          <th scope="col" className="col-lg-2 id "><div className="">Product Image</div></th>
+                          <th scope="col" className="col-lg-2 id "><div className="">Product Name</div></th>
+                          <th scope="col" className="col-lg-2 date text-center "><div className="">Price</div></th>
+                          <th scope="col" className="col-lg-2 shipping "><div className="">Qty</div></th>
+                          <th scope="col" className="col-lg-2 total"><div className="">Subtotal</div></th>
                       </tr>
                       </div>
                   </thead>
@@ -371,10 +371,10 @@ export default class MyOrders extends Component {
                           <div className={productData.status=="Returned" ? "greybg col-lg-12" : "col-lg-12"}>
                           <tr key={'id'+index} >
                               <td data-th="Order #" className="col-lg-2 id orderimgsize"><img src={productData.productImage[0]}/></td>
-                              <td data-th="Order #" className="col-lg-3 productnamecss id">{productData.productName}</td>
+                              <td data-th="Order #" className="col-lg-2 productnamecss id text-center">{productData.productName}</td>
                               <td data-th="Date" className="col-lg-2 date text-center"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
-                              <td data-th="Ship To" className="col-lg-2 shipping text-center">Ordered: {productData.quantity}</td>
-                              <td data-th="Order Total" className="col-lg-2 total text-center"><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
+                              <td data-th="Ship To" className="col-lg-2 shipping ">Ordered: {productData.quantity}</td>
+                              <td data-th="Order Total" className="col-lg-2 total  "><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
                               { data.status == "Paid" ?
                               <td data-th="Order Total" className="col-lg-1 total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
@@ -460,20 +460,23 @@ export default class MyOrders extends Component {
 
                   <form id="returnForm">
                     <div className="inputrow">
-                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Reason for Return</label>
+                      <span>
+                       <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding ">Reason for Return <label className="astricsign">*</label></label>
+                       
+                      </span>
                       <textarea rows="5" cols="55" className="reasonForReturn" name="reasonForReturn" required></textarea>
                     </div> 
                     <div className="inputrow">
-                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Bank Name</label>
-                      <input type="text" ref="bankname" name="bankname" id="bankname" value={this.state.bankname} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding  ">Bank Name<label className="astricsign">*</label></label>
+                      <input type="text" ref="bankname" name="bankname" id="bankname" value={this.state.bankname} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control returninputbox" required/>
                     </div>
                     <div className="inputrow">
-                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Bank Account No.</label>
-                      <input type="text" ref="bankacctno" name="bankacctno" id="bankacctno" value={this.state.bankacctno} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding ">Bank Account No<label className="astricsign">*</label></label>
+                      <input type="text" ref="bankacctno"  name="bankacctno" id="bankacctno" value={this.state.bankacctno} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control returninputbox" required/>
                     </div>
                     <div className="inputrow">
-                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">IFSC Code</label>
-                      <input type="text" ref="ifsccode" name="ifsccode" id="ifsccode" value={this.state.ifsccode} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control" required/>
+                      <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">IFSC Code<label className="astricsign">*</label></label>
+                      <input type="text" ref="ifsccode"  name="ifsccode" id="ifsccode" value={this.state.ifsccode} onChange={this.handleChange.bind(this)} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-control returninputbox" required/>
                     </div>
                   </form>
                 
