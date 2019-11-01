@@ -82,65 +82,67 @@ class Wishlist extends Component {
         })
 
     }
-  addtocart(event){
-    event.preventDefault();
-    var id = event.target.id;
-    var wishlist_ID = event.target.getAttribute('wishid');
-     console.log("iwishdidid", wishlist_ID);
-     console.log("ididid", id);
-    axios.get('/api/products/get/one/'+id)
-    .then((response)=>{
-      var totalForQantity   =   parseInt(this.state.quantity * response.data.discountedPrice);
-          const userid = localStorage.getItem('admin_ID');
-          // console.log("userid",response.data);
-          const formValues = { 
-              "user_ID"    : userid,
-              "product_ID" : response.data._id,
-              "currency" : response.data.currency,
-              "productCode" : response.data.productCode,
-              "productName" : response.data.productName,
+    addtocart(event) {
+      const user_ID = localStorage.getItem("user_ID");
+      var wishlist_ID = event.target.getAttribute('wishid');
+      if (user_ID) {
+        event.preventDefault();
+        var id = event.target.id;
+        // console.log('id', id);
+        axios.get('/api/products/get/one/' + id)
+          .then((response) => {
+            var totalForQantity = parseInt(1 * response.data.discountedPrice);
+            const userid = localStorage.getItem('user_ID');
+  
+            const formValues = {
+              "user_ID": userid,
+              "product_ID": response.data._id,
+              "currency": response.data.currency,
+              "productCode": response.data.productCode,
+              "productName": response.data.productName,
               "section_ID"        : response.data.section_ID,
               "section"           : response.data.section,
               "category_ID": response.data.category_ID,
               "category": response.data.category,
               "subCategory_ID": response.data.subCategory_ID,
               "subCategory": response.data.subCategory,
-              "productImage" : response.data.productImage,
-              "quantity" : this.state.quantity,
-              "discountedPrice" : parseInt(response.data.discountedPrice),
-              "originalPrice" : parseInt(response.data.originalPrice),
-              "totalForQantity" : totalForQantity,
-              
-          }
-          axios.post('/api/carts/post', formValues)
-          .then((response)=>{
-            console.log('response', response.data);
-            this.props.changeCartCount(response.data.cartCount);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-            // swal(response.data.message)
-            axios.delete('/api/wishlist/delete/'+wishlist_ID)
-            .then((response)=>{
-              this.setState({
-                products : []
-              })
-              this.getData();
-             ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-              // swal(response.data.message);
-              
-            })
-            .catch((error)=>{
-              console.log('error', error);
-            })  
+              "productImage": response.data.productImage,
+              "quantity": 1,
+              "discountedPrice": parseInt(response.data.discountedPrice),
+              "originalPrice": parseInt(response.data.originalPrice),
+              "totalForQantity": totalForQantity,
+  
+            }
+            axios.post('/api/carts/post', formValues)
+              .then((response) => {
+                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                this.props.changeCartCount(response.data.cartCount);
 
-            })
-          .catch((error)=>{
+                axios.delete('/api/wishlist/delete/'+wishlist_ID)
+                .then((response)=>{
+                  this.setState({
+                    products : []
+                  })
+                  this.getData();
+                })
+                .catch((error)=>{
+                  console.log('error', error);
+                }) 
+
+
+              })
+              .catch((error) => {
+                console.log('error', error);
+              })
+          })
+          .catch((error) => {
             console.log('error', error);
           })
-    })
-    .catch((error)=>{
-      console.log('error', error);
-    })
-  }
+      }
+      else {
+        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+      }
+    }
 
   removefromwishlist(event){
     event.preventDefault();

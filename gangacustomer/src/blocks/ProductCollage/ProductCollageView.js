@@ -96,43 +96,29 @@ class ProductCollageView extends Component {
         ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
     }
    }
-    addtowishlist(event){
-    event.preventDefault();
-    var user_ID = localStorage.getItem('user_ID'); 
-    if(user_ID){
-      var id = event.currentTarget.id;
-      axios.get('/api/products/get/one/'+id)
-      .then((response)=>{
-            const userid = localStorage.getItem('user_ID');
-            // console.log("userid",response.data);
-            const formValues = 
-            { 
-                "user_ID"    : userid,
-                "product_ID" : response.data._id,
-            }
-            axios.post('/api/wishlist/post', formValues)
-            .then((response)=>{
-              // console.log('response', response);
-              // swal(response.data.message)
-              if(response.status == 200){
-              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
-              }
-              ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-
-            })
-            .catch((error)=>{
-              console.log('error', error);
-            })
-      })
-      .catch((error)=>{
-        console.log('error', error);
-      })
-    }else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+   addtowishlist(event) {
+    if (user_ID) {
+      event.preventDefault();
+      var id = event.target.id;
+      const userid = localStorage.getItem('user_ID');
+      const formValues =
+      {
+        "user_ID": userid,
+        "product_ID": id,
+      }
+      axios.post('/api/wishlist/post', formValues)
+        .then((response) => {
+          this.props.getWishData();
+          this.props.changeWishlistCount(response.data.wishlistCount);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
     }
-    
-  
+    else {
+      ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
     }
+  }
     sortProducts(event){
       event.preventDefault(); 
       var sortBy = event.target.value;
@@ -198,7 +184,7 @@ class ProductCollageView extends Component {
 
 
   render() {
-    
+    console.log('guggggggg',this.props.wishList);
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="pagealertnone">

@@ -39,7 +39,7 @@ class ProductCollage extends Component {
   	}
 
   	componentDidMount() {
-
+		this.getWishData();
   		$('div[data-toggle="collapse"]').click(function () {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
@@ -438,7 +438,19 @@ class ProductCollage extends Component {
 	      	}); 
 	      }
 	}
-	
+	getWishData(){
+		var user_ID = localStorage.getItem('user_ID');
+		axios.get('/api/wishlist/get/userwishlist/'+user_ID)
+		.then((response)=>{
+		  this.setState({
+			wishList : response.data
+		  },()=>{
+		  })
+		})
+		.catch((error)=>{
+		  console.log('error', error);
+		})
+	  }
   	render() {
 		console.log('categoryDetails,',this.state.categoryDetails);
 
@@ -741,7 +753,7 @@ class ProductCollage extends Component {
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails}/>
+				    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}/>
 				     	</div>
 				    </div>
 				    <div id="categories" className="tab-pane fade">
