@@ -226,7 +226,6 @@ class Checkout extends Component {
                 },
                 modalemail: {
                     required: true,
-                    modalregxemail: /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
                 },
                 modaladdressLine1: {
                     required: true,
@@ -1131,7 +1130,7 @@ class Checkout extends Component {
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
-                                                <input type="modalemail" ref="modalemail" name="modalemail" id="modalemail" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="email" ref="modalemail" name="modalemail" id="modalemail" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
