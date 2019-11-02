@@ -256,86 +256,84 @@ return(
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
 	        <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12">
-				<form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
-					   		<div className="logininput">
-					   		<label>First Name</label><label className="astricsign">*</label>
-							   <input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="FirstName" onChange={this.handleChange} data-text="firstNameV" required/>
-							   {this.state.formerrors.firstNameV  && (
-		                        <span className="text-danger">{this.state.formerrors.firstNameV}</span> 
-		                      )}
-							</div>
-							<div className="logininput mt30"> 
-					   		<label>Last Name</label><label className="astricsign">*</label>
-								<input type="text" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="LastName" onChange={this.handleChange} data-text="lastNameV" required/>
-								{this.state.formerrors.lastNameV  && (
-		                        <span className="text-danger">{this.state.formerrors.lastNameV}</span> 
-		                      )}
-							</div>
-							<div className="logininput mt30"> 
-					   		<label>Mobile Number</label><label className="astricsign">*</label>
-							   <input className="form-control" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="MobileNumber" onChange={this.handleChange} data-text="mobileV" required/>
-							   {this.state.formerrors.mobileV  && (
-		                        <span className="text-danger">{this.state.formerrors.mobileV}</span> 
-		                      )}
-						    </div>
-							<div className="logininput mt30">  
-					   		<label>Email ID</label><label className="astricsign">*</label>
-							  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkUserExists.bind(this)} required/>
-                                <p className="checkUserExistsError">User already exists!!!</p>
-							  {this.state.formerrors.emailIDV  && (
-		                        <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
-		                      )}
-							</div>
-		                    <div className="logininput mt30">
-					   		<label>Password</label><label className="astricsign">*</label>
-			                    <input type="password" className="form-control" ref="signupPassword" placeholder="Password" name="signupPassword" required/>
-			                </div>
-		                    <div className="logininput mt30">
-					   		<label>Confirm Password</label><label className="astricsign">*</label>
-			                    <input type="password" className="form-control" ref="signupConfirmPassword" placeholder="Confirm Password" name="signupConfirmPassword" required/>
-			                </div>
-					    <div className="mt30 loginforgotpass">
-			                <input  id="idacceptcondition" required type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
-			            </div>
-					    <div class="modal" id="myModal" role="dialog">
-					      <div class="modal-dialog">
-					        <div class="modal-content">
-					          <div class="modal-header">
-					            <button type="button" class="close" data-dismiss="modal">&times;</button>
-					            <h2 className="modaltext">Terms & Conditions</h2>
-					          </div>
-					          <div class="modal-body">
-								{/* <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p> */}
-								<ul>
-									{
-										this.state.termsCondition && this.state.termsCondition.length>0 ?
-										this.state.termsCondition.map((data, index)=>{
-											return(
-												<li>{data}</li>
-											);
-										})
-										:
-										null
-									}
-								</ul>
-					          </div>
-					          <div class="modal-footer">
-					            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					          </div>
-					        </div>
-					      </div>
-					    </div>
-
-						<div className=" mt30">
-					    	<input id="signUpBtn" className="col-lg-10 col-md-10 col-sm-10 col-xs-10 button3  btn btn-warning  signupbtn" type="submit" value="Create an Account"/>
-					    </div>		   
-
-				    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">
-					    	<lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a> 	
-				    	</div>
-			  	</form>
-	        </div>
+		    <form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
+	   		<div className="logininput">
+	   		<label>First Name</label><label className="astricsign">*</label>
+			   <input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="FirstName" onChange={this.handleChange} data-text="firstNameV" required/>
+			   {this.state.formerrors.firstNameV  && (
+                <span className="text-danger">{this.state.formerrors.firstNameV}</span> 
+              )}
+			</div>
+			<div className="logininput mt30"> 
+	   		<label>Last Name</label><label className="astricsign">*</label>
+				<input type="text" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="LastName" onChange={this.handleChange} data-text="lastNameV" required/>
+				{this.state.formerrors.lastNameV  && (
+                <span className="text-danger">{this.state.formerrors.lastNameV}</span> 
+              )}
+			</div>
+			<div className="logininput mt30"> 
+	   		<label>Mobile Number</label><label className="astricsign">*</label>
+			   <input className="form-control" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="MobileNumber" onChange={this.handleChange} data-text="mobileV" required/>
+			   {this.state.formerrors.mobileV  && (
+                <span className="text-danger">{this.state.formerrors.mobileV}</span> 
+              )}
+		    </div>
+			<div className="logininput mt30">  
+	   		<label>Email ID</label><label className="astricsign">*</label>
+			  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkUserExists.bind(this)} required/>
+                <p className="checkUserExistsError">User already exists!!!</p>
+			  {this.state.formerrors.emailIDV.length  && (
+                <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
+              )}
+			</div>
+            <div className="logininput mt30">
+	   		<label>Password</label><label className="astricsign">*</label>
+                <input type="password" className="form-control" ref="signupPassword" placeholder="Password" name="signupPassword" required/>
+            </div>
+            <div className="logininput mt30">
+	   		<label>Confirm Password</label><label className="astricsign">*</label>
+                <input type="password" className="form-control" ref="signupConfirmPassword" placeholder="Confirm Password" name="signupConfirmPassword" required/>
+            </div>
+	    <div className="mt30 loginforgotpass">
+            <input  id="idacceptcondition" required type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
         </div>
+	    <div class="modal" id="myModal" role="dialog">
+	      <div class="modal-dialog">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal">&times;</button>
+	            <h2 className="modaltext">Terms & Conditions</h2>
+	          </div>
+	          <div class="modal-body">
+				{/* <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p> */}
+				<ul>
+				{
+					this.state.termsCondition && this.state.termsCondition.length>0 ?
+					this.state.termsCondition.map((data, index)=>{
+						return(
+							<li>{data}</li>
+						);
+					})
+					:
+					null
+				}
+				</ul>
+	          </div>
+	          <div class="modal-footer">
+	            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	          </div>
+		     </div>
+		    </div>
+		    </div>
+			<div className=" mt30">
+		    	<input id="signUpBtn" className="col-lg-10 col-md-10 col-sm-10 col-xs-10 button3  btn btn-warning  signupbtn" type="submit" value="Create an Account"/>
+		    </div>		   
+	    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">
+		     <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a> 	
+	    	</div>
+		 </form>
+	    </div>
+       </div>
       </div>
 	);
   } 

@@ -1110,8 +1110,8 @@ class Checkout extends Component {
                                 </div>
                             </div>
                         </form>
-                        <div className="modal col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal" id="checkoutAddressModal" role="dialog">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="modal col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal NOpadding" id="checkoutAddressModal" role="dialog">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                 <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <button type="button" className="close" data-dismiss="modal">&times;</button>
