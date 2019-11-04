@@ -75,7 +75,10 @@ class AddNewShopProduct extends Component {
     }, "Product Url should only contain letters & number.");
     $.validator.addMethod("regxPrice", function (value, element, regexpr) {
       return regexpr.test(value);
-    }, "Price should have positive number");
+    }, "Price should have positive decimal number followed by 1 or 2 digits");
+    $.validator.addMethod("regxDiscountPercent", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Percent should have positive decimal number followed by 1 or 2 digits");
     $.validator.addMethod("regxDetails", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Details should only contain letters & number.");
@@ -115,18 +118,18 @@ class AddNewShopProduct extends Component {
           required: true,
           regxUrl : /^[A-Za-z][A-Za-z0-9\-\s]/,
         },
-        
         originalPrice: {
           required: true,
-          regxPrice: /^\d+(,\d{1,2})?$/,
+          regxPrice: /^(?:[1-9]\d*|0)?(?:\.\d{1,2})?$/,
         },
+        // ^(10|\d)(\.\d{1,2})?$
         discountedPrice: {
           required: true,
-          regxPrice: /^\d+(,\d{1,2})?$/,
+          regxPrice: /^(?:[1-9]\d*|0)?(?:\.\d{1,2})?$/,
         },
         discountPercent: {
           required: true,
-          // regxPrice: /^\d+(,\d{1,2})?$/,
+          regxDiscountPercent: /^(?:[1-9]\d*|0)?(?:\.\d{1,2})?$/,
         },
         availableQuantity: {
           required: true,
@@ -174,6 +177,9 @@ class AddNewShopProduct extends Component {
         }
         if (element.attr("name") == "discountedPrice") {
           error.insertAfter("#discountedPrice");
+        }
+        if (element.attr("name") == "discountPercent") {
+          error.insertAfter("#discountPercent");
         }
         if (element.attr("name") == "originalPrice") {
           error.insertAfter("#originalPrice");
@@ -533,7 +539,7 @@ class AddNewShopProduct extends Component {
     var originalPrice = parseFloat(this.refs.originalPrice.value).toFixed(2);
     
     if(originalPrice != "NaN"){
-      var discountedPrice = parseFloat(originalPrice) - parseFloat((originalPrice * event.target.value)/100);
+      var discountedPrice = parseFloat(originalPrice) - parseFloat((originalPrice * event.target.value)/100).toFixed(2);
       this.setState({
         discountedPrice : discountedPrice < 0 ? 0 : discountedPrice
       })
@@ -742,7 +748,7 @@ class AddNewShopProduct extends Component {
                       </select>
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-                      <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingRightZeroo">
+                      <div  className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingRightZeroo">
                         <label>Discount Percent (%)</label>
                         <input max={100} disabled={this.state.showDiscount}  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="number" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
                       </div>
@@ -750,7 +756,7 @@ class AddNewShopProduct extends Component {
                         <label>Discount Price </label>
                         <input max={this.state.originalPrice} disabled={this.state.showDiscount} onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="number" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
                       </div>
-                      <label className="error col-lg-12">{this.state.discountPercentError}</label>
+                      <label id="discountPercent" className="error col-lg-12">{this.state.discountPercentError}</label>
                     </div>
                     
                     <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
