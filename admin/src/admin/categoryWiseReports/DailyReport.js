@@ -43,13 +43,14 @@ class DailyReport extends Component{
   getReport(event){
     event.preventDefault(); 
     
-    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val()); 
+    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val()); 
   }
        
-  getData(startDate,startRange,limitRange,category, subcategory){
+  getData(startDate,startRange,limitRange,section,category, subcategory){
     var formValues={
       "startTime" : startDate,
       "endTime"   : startDate,
+      "section"   : section,
       "category"  : category,
       "subcategory" : subcategory
     }
@@ -91,7 +92,7 @@ class DailyReport extends Component{
     })
     document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
     this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
-      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, null, null); 
+      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, null, null, null); 
     });
   }
 
@@ -102,7 +103,7 @@ class DailyReport extends Component{
     var selectedDate1 = $(".reportsDayRef").val();
 
     this.setState({currentDate: moment(selectedDate1).subtract(1, "days").format("YYYY-MM-DD")}, () => {
-        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val());
+        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val());
     }) 
   }
   nextDate(event){
@@ -111,7 +112,7 @@ class DailyReport extends Component{
     var selectedDate1 = $(".reportsDayRef").val();
 
     this.setState({currentDate: moment(selectedDate1).add(1, "days").format("YYYY-MM-DD")}, () => {
-        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val());
+        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val());
     }) 
   }
   
@@ -138,6 +139,7 @@ class DailyReport extends Component{
 
   }
   handleSection(event){
+    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null, null);
     axios.get("/api/category/get/list/"+event.target.value)
     .then((response)=>{
       this.setState({ 
@@ -149,7 +151,7 @@ class DailyReport extends Component{
     })
   }
   handleCategory(event){
-    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
     axios.get("/api/category/get/one/"+event.target.value)
     .then((response)=>{
       this.setState({ 
@@ -159,6 +161,10 @@ class DailyReport extends Component{
     .catch((error)=>{
         console.log('error', error);
     })
+  }
+
+  handleSubCategory(event){
+    this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
   }
   render() {
     
@@ -214,7 +220,7 @@ class DailyReport extends Component{
             <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
             </label>
             <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
-              ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+              ref="subcategory" name="subcategory" onChange={this.handleSubCategory.bind(this)} >
               <option selected={true} disabled={true}>-- Select --</option>
               {
                 this.state.subcategories && this.state.subcategories.map((data,index)=>{
