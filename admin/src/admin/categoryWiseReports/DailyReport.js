@@ -55,7 +55,7 @@ class DailyReport extends Component{
       "subcategory" : subcategory
     }
     console.log("formValues",formValues);
-
+ 
     axios.post("/api/orders/get/category-wise-report",formValues)
     .then((response)=>{
       this.setState({ 
@@ -139,7 +139,7 @@ class DailyReport extends Component{
 
   }
   handleSection(event){
-    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null, null);
+    this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, event.target.value, null, null);
     axios.get("/api/category/get/list/"+event.target.value)
     .then((response)=>{
       this.setState({ 
@@ -151,7 +151,7 @@ class DailyReport extends Component{
     })
   }
   handleCategory(event){
-    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
+    this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
     axios.get("/api/category/get/one/"+event.target.value)
     .then((response)=>{
       this.setState({ 
@@ -164,6 +164,7 @@ class DailyReport extends Component{
   }
 
   handleSubCategory(event){
+    event.preventDefault();
     this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
   }
   render() {

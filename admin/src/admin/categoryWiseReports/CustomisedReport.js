@@ -44,7 +44,7 @@ export default class CustomisedReport extends Component{
             startDate : moment().subtract(1, 'week').format('YYYY-MM-DD'),
             endDate   : moment().format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null )
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null, null )
         })
         
     }
@@ -66,10 +66,11 @@ export default class CustomisedReport extends Component{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange, category, subcategory){
+    getData(startDate,endDate, startRange,limitRange, section, category, subcategory){
         var formValues={
           "startTime" : startDate,
           "endTime"   : startDate,
+          "section"   : section,
           "category"  : category,
           "subcategory" : subcategory
         }
@@ -88,7 +89,7 @@ export default class CustomisedReport extends Component{
        this.setState({
             startDate : moment(event.target.value).format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )
         })
     }
     handleToChange(event){
@@ -96,12 +97,13 @@ export default class CustomisedReport extends Component{
        this.setState({
             endDate : moment(event.target.value).format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )
         })
     }
 
    
     handleSection(event){
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, event.currentTarget.value, null, null )
         axios.get("/api/category/get/list/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -113,7 +115,7 @@ export default class CustomisedReport extends Component{
         })
     }
     handleCategory(event){
-        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
         axios.get("/api/category/get/one/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -124,9 +126,11 @@ export default class CustomisedReport extends Component{
             console.log('error', error);
         })
     }
-   
+    handleSubCategory(event){ 
+      event.preventDefault();
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
+    }
     getSearchText(searchText, startRange, limitRange){
-        console.log(searchText, startRange, limitRange);
         this.setState({
             tableData : []
         });

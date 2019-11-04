@@ -53,7 +53,7 @@ export default class YearlyReport extends Component{
             endDate     : moment().endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null, null )    
         }) 
         this.handleChange = this.handleChange.bind(this);
         
@@ -76,10 +76,11 @@ export default class YearlyReport extends Component{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange, category, subcategory){
+    getData(startDate,endDate, startRange,limitRange, section, category, subcategory){
         var formValues={
           "startTime" : startDate,
           "endTime"   : startDate,
+          "section"   : section,
           "category"  : category,
           "subcategory" : subcategory
         }
@@ -114,7 +115,7 @@ export default class YearlyReport extends Component{
             endDate     : moment(startDate).endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )    
     })
 	}
 
@@ -127,7 +128,7 @@ export default class YearlyReport extends Component{
             endDate     : moment(startDate).endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )    
     })
     }
     handleSection(event){
@@ -142,7 +143,7 @@ export default class YearlyReport extends Component{
         })
     }
     handleCategory(event){
-        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
         axios.get("/api/category/get/one/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -152,6 +153,10 @@ export default class YearlyReport extends Component{
         .catch((error)=>{
             console.log('error', error);
         })
+    }
+    handleSubCategory(event){ 
+      event.preventDefault();
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
     }
     getSearchText(searchText, startRange, limitRange){
         console.log(searchText, startRange, limitRange);
@@ -205,7 +210,7 @@ export default class YearlyReport extends Component{
                         <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
                         </label>
                         <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
-                          ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+                          ref="subcategory" name="subcategory" onChange={this.handleSubCategory.bind(this)} >
                           <option selected={true} disabled={true}>-- Select --</option>
                           {
                             this.state.subcategories && this.state.subcategories.map((data,index)=>{

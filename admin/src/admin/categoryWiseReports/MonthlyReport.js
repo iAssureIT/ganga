@@ -89,10 +89,11 @@ export default class MonthlyReport extends Component{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange, category, subcategory){
+    getData(startDate,endDate, startRange,limitRange, section, category, subcategory){
         var formValues={
           "startTime" : startDate,
           "endTime"   : startDate,
+          "section"   : section,
           "category"  : category,
           "subcategory" : subcategory
         }
@@ -117,7 +118,7 @@ export default class MonthlyReport extends Component{
             endDate     : moment(startDate).endOf('month').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )    
         }) 
 	}
 
@@ -131,13 +132,11 @@ export default class MonthlyReport extends Component{
             endDate     : moment(startDate).endOf('month').format('YYYY-MM-DD')
             },
             ()=>{
-            console.log('month',this.state.selectedYearMonth);
-            console.log('startDate',this.state.startDate);
-            console.log('endDate',this.state.endDate);
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )    
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )    
         }) 
 	 }
     handleSection(event){
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, event.target.value, null, null);
         axios.get("/api/category/get/list/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -149,7 +148,7 @@ export default class MonthlyReport extends Component{
         })
     }
     handleCategory(event){
-        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
         axios.get("/api/category/get/one/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -159,6 +158,10 @@ export default class MonthlyReport extends Component{
         .catch((error)=>{
             console.log('error', error);
         })
+    }
+    handleSubCategory(event){ 
+      event.preventDefault();
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
     }
     getSearchText(searchText, startRange, limitRange){
         this.setState({
@@ -210,7 +213,7 @@ export default class MonthlyReport extends Component{
                         <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
                         </label>
                         <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
-                          ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+                          ref="subcategory" name="subcategory" onChange={this.handleSubCategory.bind(this)} >
                           <option selected={true} disabled={true}>-- Select --</option>
                           {
                             this.state.subcategories && this.state.subcategories.map((data,index)=>{
