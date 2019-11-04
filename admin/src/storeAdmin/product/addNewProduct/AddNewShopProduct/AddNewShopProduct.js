@@ -126,7 +126,7 @@ class AddNewShopProduct extends Component {
         },
         discountPercent: {
           required: true,
-          regxPrice: /^\d+(,\d{1,2})?$/,
+          // regxPrice: /^\d+(,\d{1,2})?$/,
         },
         availableQuantity: {
           required: true,
@@ -341,40 +341,38 @@ class AddNewShopProduct extends Component {
     var formValues = {
       "vendor_ID"                 : this.refs.vendor.value.split('|')[1],  
       "vendorName"                : this.refs.vendor.value.split('|')[0], 
-      "section": this.refs.section.value.split('|')[0],
-      "section_ID": this.refs.section.value.split('|')[1],
-      "category_ID": this.refs.category.value.split('|')[1],
-      "category": this.refs.category.value.split('|')[0],
-      "subCategory_ID": this.refs.subCategory.value.split('|')[1],
-      "subCategory": this.refs.subCategory.value.split('|')[0],
-      "brand": this.refs.brand.value,
-      "productCode": this.refs.productCode.value,
-      "itemCode" : this.refs.itemCode.value,
-      "productName": this.refs.productName.value,
-      "productUrl": this.refs.productUrl.value,
-      "productDetails": this.refs.productDetails.value,
-      "shortDescription": this.refs.shortDescription.value,
-      "featureList": productDimentionArray,
-      "originalPrice": this.refs.originalPrice.value,
-      "discountPercent": this.refs.discountPercent.value,
-      "discountedPrice": this.state.discountedPrice ? this.state.discountedPrice : this.state.originalPrice,
-      "availableQuantity": this.refs.availableQuantity.value,
-      "unit": this.refs.unit.value,
-      "size": this.refs.size.value,
-      "color": this.refs.color.value,
-      "currency": this.refs.currency.value,
-      "status": this.refs.status.value,
-      "featured": productFeatured,
-      "exclusive": productExclusive,
-      "fileName": "Manual",
+      "section"                   : this.refs.section.value.split('|')[0],
+      "section_ID"                : this.refs.section.value.split('|')[1],
+      "category_ID"               : this.refs.category.value.split('|')[1],
+      "category"                  : this.refs.category.value.split('|')[0],
+      "subCategory_ID"            : this.refs.subCategory.value.split('|')[1],
+      "subCategory"               : this.refs.subCategory.value.split('|')[0],
+      "brand"                     : this.refs.brand.value,
+      "productCode"               : this.refs.productCode.value,
+      "itemCode"                  : this.refs.itemCode.value,
+      "productName"               : this.refs.productName.value,
+      "productUrl"                : this.refs.productUrl.value,
+      "productDetails"            : this.refs.productDetails.value,
+      "shortDescription"          : this.refs.shortDescription.value,
+      "featureList"               : productDimentionArray,
+      "originalPrice"             : this.refs.originalPrice.value,
+      "discountPercent"           : this.refs.discountPercent.value,
+      "discountedPrice"           : this.state.discountedPrice ? this.state.discountedPrice : this.state.originalPrice,
+      "availableQuantity"         : this.refs.availableQuantity.value,
+      "unit"                      : this.refs.unit.value,
+      "size"                      : this.refs.size.value,
+      "color"                     : this.refs.color.value,
+      "currency"                  : this.refs.currency.value,
+      "status"                    : this.refs.status.value,
+      "featured"                  : productFeatured,
+      "exclusive"                 : productExclusive,
+      "fileName"                  : "Manual",
     }
     // console.log('formValues', formValues);
-    if ($('#addNewShopProduct').valid()) {
+    if($('#addNewShopProduct').valid()) {
       if(this.state.discountPercentError == ""){
-        // console.log('discountPercentError', this.state.discountPercentError);
         axios.post('/api/products/post', formValues)
         .then((response) => {
-          // console.log('response', response);
           if(response.data.message == "Item code already exists."){
             swal({
               title: response.data.message,
@@ -382,7 +380,6 @@ class AddNewShopProduct extends Component {
             });
           }else{
             this.props.history.push('/add-product/image/' + response.data.product_ID);
-            
             this.setState({
               vendor : "Select Vendor",
               section: "Select Section",
