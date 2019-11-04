@@ -30,7 +30,7 @@ class CreateUser extends Component {
       office            : null,
       allPosts          : null,
       firstname         : "",
-      role              : "--select--",
+      roles              : [],
       lastname          :"",
       signupEmail       : "",
       mobNumber         : "",
@@ -45,6 +45,7 @@ class CreateUser extends Component {
 
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
   }
     componentDidMount(){
     $(".checkUserExistsError").hide();
@@ -111,6 +112,9 @@ class CreateUser extends Component {
 
     createUser(event){
       event.preventDefault();
+      var roleArray = [];
+      roleArray.push(this.state.roles);
+      console.log(this.state.roles);
       const formValues = {
           "firstName"       : this.state.firstname,
           "lastName"        : this.state.lastname,
@@ -118,12 +122,11 @@ class CreateUser extends Component {
           "countryCode"     : "+91",
           "mobileNumber"    : this.state.mobNumber,
           "pwd"             : "user123",
-          
           "status"          : "Active",
-          "roles"           :  "User",
+          "roles"           :  roleArray,
           // "officeLocation"  : this.refs.office.value,
         }
-
+          console.log("formValues",formValues);
         if(this.state.firstname!="" && this.state.lastname !="" && this.state.signupEmail && this.state.mobNumber){
            axios.post('/api/users', formValues)
                 .then( (res)=>{
@@ -131,11 +134,11 @@ class CreateUser extends Component {
                       title: "User added successfully",
                       text: "User added successfully",
                     });
-
                     this.refs.firstname.value = '';
                     this.refs.lastname.value  = '';
                     this.refs.signupEmail.value  = '';
                     this.refs.mobNumber.value = '';
+                    this.refs.roles.value='';
                     // this.setState({show: false})
                                   
                     this.props.getData(this.state.startRange, this.state.limitRange);
@@ -166,6 +169,13 @@ class CreateUser extends Component {
 
 
     }
+    handleChangeSelect(event){
+    var selectVal = this.refs.roles.value;
+    this.setState({
+      "roles" : selectVal
+    });
+    console.log(" event.target.value", selectVal);
+  }
 
     render() {
       const {formerrors} = this.state;
@@ -275,28 +285,46 @@ class CreateUser extends Component {
                                                                 )}
 
                                                       </div>
-                                                      
+                                                    </div>
+                                                    <div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr">
+                                                     <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent">
+                                                       <label className="formLable col-lg-12 col-md-12">Role<label className="requiredsign">*</label></label>
+                                                          <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
+                                                          <div className="input-group inputBox-main   " >
+                                                           <div className="input-group-addon remove_brdr inputIcon">
+                                                            <i className="fa fa-envelope-square"></i>
+                                                          </div> 
+                                                           <select type="text" className="formFloatingLabels form-control  newinputbox" 
+                                                            ref="roles" name="signupEmail" id="roles" data-text="signupEmail"onChange={this.handleChangeSelect.bind(this)}  value={this.state.roles}
+                                                             placeholder="">
+                                                              <option >----Select Role----</option>
+                                                                <option>User</option>
+                                                                <option>BA</option>
+                                                              </select>
+                                                         </div>
+                                                          </span>
+                                                          {/* {this.state.formerrors.signupEmail &&(
+                                                                  <span className="text-danger">{this.state.formerrors.signupEmail}</span> 
+                                                                )}*/}
+
+                                                      </div>           
                                                     </div>
                                                     <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
                                                       <button data-toggle="modal" className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit topMargin outlinebox button3" type="submit" onClick={this.createUser.bind(this)} id="CreateUserModal" >Register</button>
                                                      </div>    
                                                 </form>
-                                                        </div>  
-                                                    </div>
-                                                
+                                                  </div>  
+                                              </div> 
                                           </section>
                                         </div>
                                       </div>
-                                    </div>
-                                  
+                                    </div>             
                               </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  </div>
-                      
-                </div>
-              </div>
-             
-            </div>
         );
 
     } 
