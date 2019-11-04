@@ -5,7 +5,7 @@ import $ from "jquery";
 
 import Header from '../common/header/Header.js';
 import Footer from '../common/footer/Footer.js'
-import Dashboard from '../dashboard/Dashboard.js'
+import Dashboard from '../dashboard/Dashboardnew.js'
 import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
 import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
 
