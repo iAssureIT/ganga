@@ -339,7 +339,7 @@ class AdminOrdersList extends Component{
                                                                                 <button type="button" className="adminCloseButton" data-dismiss="modal" onClick={this.closeModal.bind(this)} data-target={"openSubCatgModal"}>&times;</button>
                                                                               </div>
                                                                               </div>
-                                                                              <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                                               <form className="dispatchForm" onSubmit={this.addDispatchDetails.bind(this)} id={listData._id} data-id={listData._id}>
                                                                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                   
