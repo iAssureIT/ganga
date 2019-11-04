@@ -43,7 +43,7 @@ class Login extends Component {
         // this.setState({
         //   token : response.data.token
         // });
-        if (response.data.roles.indexOf("admin") != -1 || response.data.roles.indexOf("superAdmin") != -1) {
+        if (response.data.roles.indexOf("vendor") != -1 || response.data.roles.indexOf("superVendor") != -1) {
           localStorage.setItem("token",response.data.token);
           localStorage.setItem("admin_ID",response.data.user_ID);
           localStorage.setItem("userName",response.data.userFirstName);

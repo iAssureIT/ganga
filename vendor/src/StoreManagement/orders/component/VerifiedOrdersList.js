@@ -48,7 +48,7 @@ export default class VerifiedOrdersList extends Component{
                    
                   UserArray.push(createdAt);
                   UserArray.push({status : status, deliveryStatus : deliveryStatus});
-                  UserArray.push({_id:_id, viewOrder:viewOrder, deliveryStatus:deliveryStatus});
+                  // UserArray.push({_id:_id, viewOrder:viewOrder, deliveryStatus:deliveryStatus});
                   
                   UsersArray.push(UserArray);
                 }

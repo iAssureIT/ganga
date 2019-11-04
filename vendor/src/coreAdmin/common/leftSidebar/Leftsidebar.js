@@ -183,7 +183,7 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li> 
-                <li className="sidebarMenuText">
+                {/* <li className="sidebarMenuText">
                   <a href="#baData" data-toggle="collapse" aria-expanded="false">
                     <i className="glyphicon glyphicon-briefcase" />
                     Business Associates
@@ -203,8 +203,8 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li className="sidebarMenuText">
+                </li> */}
+                {/* <li className="sidebarMenuText">
                   <a href="#vendors" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-industry" />
                     Vendor Management
@@ -224,7 +224,7 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li>
+                </li> */}
 {/*                <li className="sidebarMenuText">
                   <a href="/">
                     <i className="fa fa-percent"></i>
@@ -271,7 +271,7 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li>
-                <li className="sidebarMenuText">
+                {/* <li className="sidebarMenuText">
                   <a href="#productreview" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Product Review
@@ -285,8 +285,8 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li>
-                <li className="sidebarMenuText">
+                </li> */}
+                {/* <li className="sidebarMenuText">
                   <a href="#MasterData" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-university" />
                     Master Data
@@ -306,17 +306,17 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                     <li>
-                        <a href="/category-management">
-                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/section-management">
-                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Master</span>
-                        </a>
-                      </li>   
+                      <a href="/category-management">
+                        <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/section-management">
+                        <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Master</span>
+                      </a>
+                    </li>   
                   </ul>
-                </li>          
+                </li>           */}
               </ul>
             </nav>
           </div>
