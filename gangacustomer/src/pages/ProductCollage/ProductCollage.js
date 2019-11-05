@@ -46,7 +46,6 @@ class ProductCollage extends Component {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
 
-  		console.log(this.props.match.params);
   		if (this.props.match.params.categoryID && this.props.match.params.subcategoryID) {
   			this.getProductsBySubCategory(this.props.match.params.categoryID, this.props.match.params.subcategoryID);
   		}
@@ -168,6 +167,7 @@ class ProductCollage extends Component {
 		}
 		if (filterType == 'category') {
 			var selector=this.state.selector;
+			delete selector.subCategory_ID;
 			selector.section_ID = this.props.match.params.sectionID;
 			selector.price = this.state.price;
 			selector.category_ID = $(selecteditems.target).data().id;
@@ -324,8 +324,14 @@ class ProductCollage extends Component {
 		}
 	}
 	getFilteredProducts(selector){
-		console.log(selector);
+		if ($('.limitProducts').val()) {
+			selector.limit = $('.limitProducts').val();
+		}else{
+			selector.limit = "10";
+		}
 		
+		console.log('selector',selector);
+
 		axios.post("/api/products/post/list/filterProducts/",selector)
 
 	      	.then((response)=>{ 
@@ -341,7 +347,7 @@ class ProductCollage extends Component {
 		console.log('selectedbrands',selectedbrands);
 		console.log('price',this.state.price);
 		
-		if (subcategoryID != '') {
+		if (subcategoryID != '') { 
 
 			var products = this.state.masterproducts.filter( (array_el)=>  {
               return subcategoryID == array_el.subCategory_ID 
@@ -770,7 +776,12 @@ class ProductCollage extends Component {
 					  <div className="tab-content">
 					    <div id="products" className="tab-pane fade in active">
 					    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-					    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}/>
+					    		<ProductCollageView products={this.state.products} 
+					    		categoryDetails={this.state.categoryDetails} 
+					    		getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}
+					    		getFilteredProductsFun = {this.getFilteredProducts.bind(this)}
+					    		parameters={this.props.match.params} 
+					    		selector={this.state.selector}/>
 					     	</div>
 					    </div>
 					    <div id="categories" className="tab-pane fade">

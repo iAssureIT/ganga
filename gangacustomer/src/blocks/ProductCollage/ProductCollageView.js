@@ -152,13 +152,33 @@ class ProductCollageView extends Component {
     }
     limitProducts(event){
       event.preventDefault();
-      var limit = $(event.target).val();   
+      /*var limit = $(event.target).val();   
       var products = this.state.masterLimitProducts.filter( (array_el, index)=>  {
-          console.log('index',index);
+       
           return index < limit ;
-      });
+      });*/
+
+      if (this.props.parameters.categoryID && this.props.parameters.subcategoryID) {
+        var selector = this.props.selector;
+        selector.category_ID = this.props.parameters.categoryID;
+        selector.subCategory_ID = this.props.parameters.subcategoryID;
+        selector.limit = $(event.target).val()
+        this.props.getFilteredProductsFun(this.props.selector);
+      }
+      else if (this.props.parameters.categoryID) {
+        var selector = this.props.selector;
+        selector.category_ID = this.props.parameters.categoryID;
+        selector.limit = $(event.target).val()
+        this.props.getFilteredProductsFun(this.props.selector);
+      }
+      else if (this.props.parameters.sectionID) {
+        var selector = this.props.selector;
+        selector.section_ID = this.props.parameters.sectionID;
+        selector.limit = $(event.target).val()
+        this.props.getFilteredProductsFun(this.props.selector);
+      }
       
-      this.setState({products : products});
+      //this.setState({products : products});
     }
   Closepagealert(event){
     event.preventDefault();
@@ -184,7 +204,6 @@ class ProductCollageView extends Component {
 
 
   render() {
-    console.log('guggggggg',this.props.wishList);
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="pagealertnone">
