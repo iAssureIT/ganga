@@ -72,7 +72,7 @@ export default class Leftsidebar extends Component{
                 <strong><img className="slidlogo" src="/images/Logo.png"/></strong>
               </div>
               <ul className="list-unstyled components abc" style={{height:  sidebarHeight+"px"}} >
-                <li className="active sidebarMenuText add" onClick={this.eventclk1.bind(this)}>
+                <li className="active sidebarMenuText add">
                   <a href="/dashboard">
                     <i className="fa fa-dashboard"></i>
                     Dashboard
