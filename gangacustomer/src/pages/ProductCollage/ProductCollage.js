@@ -28,6 +28,8 @@ class ProductCollage extends Component {
       		selectedbrands:[],
       		minPrice: 0,
       		maxPrice: 0,
+      		minPriceLmt: 0,
+      		maxPriceLmt: 0,
       		sizes : [],
       		colors: [],
       		color: '',
@@ -60,7 +62,7 @@ class ProductCollage extends Component {
   		this.getBrands();
   		this.getSize();
   		this.getColor();
-  		// this.getPriceLimits();
+  		this.getPriceLimits();
 
 		$('.dropdown-submenu a.test').on("click", function(e){
 		    $(this).next('ul').toggle();
@@ -97,9 +99,11 @@ class ProductCollage extends Component {
 	      .then((response)=>{ 
 	      		
 
-		      	/*this.setState({
-		          price: { min : Number(response.data.min),  max : Number(response.data.max)}
-		      	});*/
+		      	this.setState({
+		      		minPriceLmt : Number(response.data.min),
+		        	maxPriceLmt : Number(response.data.max),
+		        	price:{min : Number(response.data.min), max: Number(response.data.max) }
+		      	});
 	         	
 	          
 	      })
@@ -427,14 +431,24 @@ class ProductCollage extends Component {
 	      	this.setState({
 	          price: { min : Number(target.value),  max : Number(this.state.price.max)}
 	      	},()=>{
-	      		this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
-	      	}); 
+	      		var selector=this.state.selector;
+				selector.section_ID = this.props.match.params.sectionID;
+				selector.price = this.state.price;
+					this.setState({	selector: selector },()=>{
+						this.getFilteredProducts(this.state.selector);
+					})
+			}); 
 	      }
 	      if (name == 'slider_max') {
 	      	this.setState({
 	          price: { min : Number(this.state.price.min),  max : Number(target.value)}
 	      	},()=>{
-	      		this.filterProducts(this.state.subcategoryID, this.state.selectedbrands,this.state.price);
+	      		var selector=this.state.selector;
+				selector.section_ID = this.props.match.params.sectionID;
+				selector.price = this.state.price;
+					this.setState({	selector: selector },()=>{
+						this.getFilteredProducts(this.state.selector);
+					})
 	      	}); 
 	      }
 	}
@@ -460,7 +474,6 @@ class ProductCollage extends Component {
 	      	<div className="container" id="containerDiv">
 	     	 <div className="row"> 
 
-	     	 	{this.state.products.length > 0 ? 
 	     	 	<div>		
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">
@@ -593,7 +606,8 @@ class ProductCollage extends Component {
 
 
          {/*for lg and md*/}
-			 		
+			{
+			this.state.categoryDetails.length > 0	?		
               <div className="col-lg-3 col-md-3 hidden-sm hidden-xs">
               		<div className="nb-brand">
 						<div className="accordion" id="accordionExample">
@@ -702,12 +716,13 @@ class ProductCollage extends Component {
 						    <div id="collapseThree" className="collapse" >
 						      <div className="card-body">
 						      	<InputRange
-							        maxValue={1299999}
-							        minValue={10}
+							        maxValue={this.state.maxPriceLmt}
+							        minValue={this.state.minPriceLmt}
 							        value={this.state.price}
 							        onChange={ this.onSelectedItemsChange.bind(this,"price")} />
+							        <label>Min </label>
 							        <input className="input-field min-value" type="text" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
-							        <input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
+							        <label>Max </label><input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
 						      </div> 
 						    </div>
 						 </div>
@@ -747,22 +762,26 @@ class ProductCollage extends Component {
 							: ''
 						}
 					</div>
+              </div> : ""
+          	}
+              	{ this.state.products.length > 0 ? 
+	              <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12" id="productDiv">
+					<br/>
+					  <div className="tab-content">
+					    <div id="products" className="tab-pane fade in active">
+					    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
+					    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}/>
+					     	</div>
+					    </div>
+					    <div id="categories" className="tab-pane fade">
+					    	Categories 
+					    </div>
+					  </div>
+	              </div>
+              	: <div className="text-center"><img src="/images/noproducts.jpeg" /></div>
+          		}
               </div>
-              <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12" id="productDiv">
-				<br/>
-				  <div className="tab-content">
-				    <div id="products" className="tab-pane fade in active">
-				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		<ProductCollageView products={this.state.products} categoryDetails={this.state.categoryDetails} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}/>
-				     	</div>
-				    </div>
-				    <div id="categories" className="tab-pane fade">
-				    	Categories 
-				    </div>
-				  </div>
-              </div>
-              </div>
-               : <div className="text-center"><img src="/images/noproducts.jpeg" /></div>}
+            
              </div>
 	     	</div>
 	    )
