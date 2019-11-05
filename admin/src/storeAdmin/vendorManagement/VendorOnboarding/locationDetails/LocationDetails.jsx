@@ -6,7 +6,7 @@ import ReactTable from "react-table";
 import swal from 'sweetalert';
 import _ from 'underscore';
 import 'bootstrap/js/tab.js';
-import '../css/SupplierOnboardingForm.css'
+// import '../css/SupplierOnboardingForm.css'
 
 class LocationDetails extends Component {
 	constructor(props) {

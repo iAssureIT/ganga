@@ -327,14 +327,28 @@ class BasicInfo extends Component {
               'vendorID'         : Math.floor(Math.random() * 1000) + 1,
               'Owner_ID'         : localStorage.getItem('admin_ID'),
           }
-          axios.post('/api/vendors/post', formValues)
+          var userDetails = {
+            "firstName"     : this.state.companyName,
+            "lastName"      : this.state.companyName,
+            "emailId"       : this.state.emailId,
+            "mobileNumber"  : this.state.mobileNumber,
+            "status"        : "Active",
+            "roles"         : "vendor"
+          }
+          axios.post('/api/users/vendor', userDetails)
           .then((response)=>{
-            console.log('response', response.data);
-            swal(response.data.message);
-            this.props.history.push('/location-details/'+response.data.vendor_ID)
+            axios.post('/api/vendors/post', formValues)
+            .then((response)=>{
+              console.log('response', response.data);
+              swal(response.data.message);
+              this.props.history.push('/location-details/'+response.data.vendor_ID)
+            })
+            .catch((error)=>{
+              console.log('error', error);
+            })
           })
           .catch((error)=>{
-            console.log('error', error);
+
           })
       }else{
         $(event.target).parent().parent().find('.inputText.error:first').focus();

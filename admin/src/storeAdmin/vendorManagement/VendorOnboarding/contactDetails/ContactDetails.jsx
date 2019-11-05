@@ -7,7 +7,7 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import InputMask              from 'react-input-mask';
 import 'bootstrap/js/tab.js';
-import '../css/SupplierOnboardingForm.css'
+// import '../css/SupplierOnboardingForm.css'
 
 class ContactDetails extends Component {
 	constructor(props) {
