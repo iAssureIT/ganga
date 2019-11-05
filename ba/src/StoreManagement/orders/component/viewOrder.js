@@ -61,7 +61,7 @@ class viewOrder extends Component{
     render(){
       console.log('data',this.state.orderData);
       console.log('datacasj',_.isEmpty(this.state.orderData));
-        return(         
+        return(          
             <div className="container-fluid">  
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 parentDiv">   
@@ -76,11 +76,37 @@ class viewOrder extends Component{
                                   <div  className=" col-lg-12 orderButton">{"OrderId-"+(this.state.orderData.orderID)}</div>
                                   </div>
                                 </div>
-                               <div  className="col-lg-4 text-center">
+                               <div  className="col-lg-4 pull-right">
                                <div className="row">
-                               <div className="col-lg-5 col-lg-offset-3">
-                                {this.state.orderData.deliveryStatus ?
-                                 this.state.orderData.deliveryStatus.map((delivery, index)=>{
+                               <div className="col-lg-12">
+                                {
+                                  this.state.orderData.deliveryStatus ?
+
+                                  <div  className="pull-right orderButton">Current Status: &nbsp;
+                                    <i className={  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "New Order"          ? "fa fa-product-hunt admin-orders-stat-NewOrdericon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Verified"           ? "fa fa-check-square admin-orders-stat-Verifiedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Packed"             ? "fa fa-archive admin-orders-stat-Packedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Inspection"         ? "fa fa-info-circle admin-orders-stat-Inspectionicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Dispatch Approved"  ? "fa fa-angellist admin-orders-stat-OrderVerifiedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Dispatch"           ? "fa fa-truck admin-orders-stat-Dispatchedicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Delivery Initiated" ? "fa fa-check-circle admin-orders-stat-Deliveredicon" :  
+                                       this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Delivered & Paid"   ? "fa fa-check-circle" : ""
+                                    }
+                                    aria-hidden="true"></i> &nbsp;
+                                    {
+                                      this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "New Order"  ? "Order Placed" 
+                                      : this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "Dispatch"   ? "Out for Delivery" 
+                                      : this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status == "TO Deliver" ? "Order Initiated" 
+                                      : this.state.orderData.deliveryStatus[this.state.orderData.deliveryStatus.length-1].status
+                                    }
+                               
+                                  </div>
+                                 :
+                                  null
+                                
+                                  /*this.state.orderData.deliveryStatus ?
+                                  this.state.orderData.deliveryStatus.map((delivery, index)=>{
                                   return(
                                     <div className="orderfloat">
                                   <button
@@ -114,7 +140,7 @@ class viewOrder extends Component{
                                  );
                                     })
                                    :
-                                   null
+                                   null*/
                                   }
                                  </div>
                                  </div>

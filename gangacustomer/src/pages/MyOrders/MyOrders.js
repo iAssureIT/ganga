@@ -121,7 +121,11 @@ export default class MyOrders extends Component {
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-               // swal(response.data.message);    
+               // swal(response.data.message);
+              var modal = document.getElementById('feedbackProductModal');
+              modal.style.display = "none";
+
+              $('.modal-backdrop').remove();    
             })
             .catch((error)=>{
             })
@@ -564,7 +568,7 @@ export default class MyOrders extends Component {
                       </div>
                         <div className="row inputrow">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                          <textarea rows="5" cols="60" value={this.state.customerReview}></textarea>
+                          <textarea rows="5" cols="60"  onChange={this.handleChange.bind(this)} value={this.state.customerReview} name="customerReview"></textarea>
                         </div>
                         <div className="row inputrow">
                         </div>

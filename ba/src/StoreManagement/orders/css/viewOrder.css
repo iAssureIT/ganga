@@ -157,15 +157,15 @@
 }
 
 .orderButton{
-  width: 196px !important;
+  width: 100% !important;
   margin-top: 15px;
   /*margin-left: 15px;*/
-  background-color: #1c3481 !important;
+  background-color: #77777759 !important;
   text-align: center;
   padding: 5px 0px;
   border-radius: 8px;
-  color: #fff;
-}
+  color: #333;
+} 
 .orderButton2{
   width: 196px !important;
   margin-top: 15px;

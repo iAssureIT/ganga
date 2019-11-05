@@ -161,7 +161,7 @@ handleChange(event){
 }
 
 searchProducts(){
-    if (this.state.catArray.length > 0 && $('.headersearch').val() != '' ) {
+    if (this.state.catArray.length > 0 ) {
       console.log('catArray',this.state.catArray);
       var searchstr = $('.headersearch').val()
       var formValues =  {

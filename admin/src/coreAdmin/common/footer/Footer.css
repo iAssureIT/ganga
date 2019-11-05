@@ -3,7 +3,9 @@
 }
 .footerCSS{
 	/*margin-top: 48%;*/
-    z-index: 999;
+    
+    position: fixed;
+    bottom: 0
 }
 .footerRightCss {
 	color: #333;

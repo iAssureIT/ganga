@@ -138,22 +138,26 @@ Closepagealert(event){
   }
 
     checkUserExists(event){
-    axios.get('/api/users/get/checkUserExists/'+event.target.value)
-           .then((response)=>{
-                if (response.data.length>=0) {
-                  $(".checkUserExistsError").show();
-                  $('.button3').attr('disabled','disabled');
-                  this.setState({checkUserExists: 1})
-                 
-                } else{
-                  $(".checkUserExistsError").hide();
-                  $('.button3').removeAttr('disabled');
-                  this.setState({checkUserExists: 0})
-                }                        
-            })
-           .catch(function(error){
-                console.log(error);
-           })
+   	if (event.target.value != '') {
+	    axios.get('/api/users/get/checkUserExists/'+event.target.value)
+	           .then((response)=>{
+	                if (response.data.length>=0) {
+	                  $(".checkUserExistsError").show();
+	                  $('.button3').attr('disabled','disabled');
+	                  this.setState({checkUserExists: 1})
+	                 
+	                } else{
+	                  $(".checkUserExistsError").hide();
+	                  $('.button3').removeAttr('disabled');
+	                  this.setState({checkUserExists: 0})
+	                }                        
+	            })
+	           .catch(function(error){
+	                console.log(error);
+	           })
+   	}else{
+		$(".checkUserExistsError").hide();
+   	}
   }
 
  	handleChange(event){
@@ -282,9 +286,9 @@ return(
 	   		<label>Email ID</label><label className="astricsign">*</label>
 			  <input type="email" className="form-control" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkUserExists.bind(this)} required/>
                 <p className="checkUserExistsError">User already exists!!!</p>
-			  {this.state.formerrors.emailIDV.length  && (
+			  {this.state.formerrors.emailIDV.length  ? (
                 <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
-              )}
+              ) : ""}
 			</div>
             <div className="logininput mt30">
 	   		<label>Password</label><label className="astricsign">*</label>

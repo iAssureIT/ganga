@@ -19,8 +19,7 @@ export default class StepWizard extends Component{
 	componentDidMount(){
 		var pathname = window.location.pathname;
 		this.props.data.deliveryStatus.map((data,ind)=>{
-				console.log('dtattatat',data.status);
-				console.log('dtattatat date',data.Date);
+				
 				if (data.status == 'New Order') {
 					$('#orderplaceddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
@@ -34,28 +33,27 @@ export default class StepWizard extends Component{
 					$('#delivereddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
 				}
 			})
-		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='New Order'){
+		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='New Order' ||
+			this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='Verified' || 
+			this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status == 'Packed' || 
+			this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status == 'Inspection' ||
+			this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status == 'Dispatch Approved' ){
 			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
-
 		}
 		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='Dispatch'){
 			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
 			$('#outfrdelivery'+this.props.data._id).addClass('neworderstatus');
-			
 		}
 		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='Delivery Initiated'){
 			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
 			$('#outfrdelivery'+this.props.data._id).addClass('neworderstatus');
 			$('#intransit'+this.props.data._id).addClass('neworderstatus');
-
-			
 		}	
 		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='Delivered & Paid'){
 			$('#cartbg'+this.props.data._id).addClass('neworderstatus');
 			$('#outfrdelivery'+this.props.data._id).addClass('neworderstatus');
 			$('#intransit'+this.props.data._id).addClass('neworderstatus');
 			$('#paid'+this.props.data._id).addClass('neworderstatus');
-			
 		}
 	}
 
