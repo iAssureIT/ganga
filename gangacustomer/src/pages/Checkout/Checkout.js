@@ -116,7 +116,7 @@ class Checkout extends Component {
                 },
                 block: {
                     required: true,
-                    regxblock : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    // regxblock : /^[A-Za-z][A-Za-z0-9\-\s]/,
                 },
                 city: {
                     required: true,
