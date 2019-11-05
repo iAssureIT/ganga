@@ -973,7 +973,7 @@ class Checkout extends Component {
                                                 </select>
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block <span className="required">*</span></label>
+                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
                                                 <input type="text" ref="block" name="block" id="block" value={this.state.block} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
@@ -1159,7 +1159,7 @@ class Checkout extends Component {
                                                 </select>
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block <span className="required">*</span></label>
+                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
                                                 <input type="text" ref="modalblock" name="modalblock" id="modalblock" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
