@@ -178,6 +178,7 @@ class BasicInfo extends Component {
       'score': '',
       'attachedDocuments': '',
       'logo': '',
+      'vendorID' : 0,
       'edit': props.routerId ? true : false,
     };
 
@@ -200,10 +201,16 @@ class BasicInfo extends Component {
   getVendors(){
     axios.get('/api/vendors/get/greatestid')
     .then((response)=>{
-      console.log('res getVendors', parseInt(response.data.vendorID), parseInt(response.data.vendorID + 1));
-      this.setState({
-        vendorID : parseInt(response.data.vendorID + 1)
-      })
+      console.log('res getVendors', response.data, parseInt(response.data.vendorID) + 1);
+      if(response.data && response.data.vendorID){
+        this.setState({
+          vendorID : parseInt(response.data.vendorID) + 1
+        })
+      }else{
+        this.setState({
+          vendorID : 1
+        })
+      }
     })
     .catch((error)=>{
       console.log('error', error);

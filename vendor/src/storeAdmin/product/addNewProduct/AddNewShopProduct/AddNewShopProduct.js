@@ -591,7 +591,7 @@ class AddNewShopProduct extends Component {
     }
   }
   getVendorList(){
-    axios.get('/api/vendors/get/list')
+    axios.get('/api/users/vendorlist')
     .then((response)=>{
       console.log('res getVendorList', response);
       this.setState({
@@ -622,7 +622,7 @@ class AddNewShopProduct extends Component {
                       {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                         this.state.vendorArray.map((data, index) => {
                           return (
-                            <option key={index} value={data.companyName+ '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
+                            <option key={index} value={data.profile.firstName+ '|' + data._id}>{data.profile.firstName} - ({data.vendorID})</option>
                           );
                         })
                         :
