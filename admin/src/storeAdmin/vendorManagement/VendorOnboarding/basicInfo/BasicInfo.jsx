@@ -149,6 +149,8 @@ class BasicInfo extends Component {
       }
     });
     this.getVendorList();
+    this.getVendors();
+    // console.log(new Date().getTime(), Math.round(new Date().getTime()/1000));
   }
 
   componentWillUnmount() {
@@ -187,9 +189,20 @@ class BasicInfo extends Component {
   getVendorList(){
     axios.get('/api/users/vendorlist')
     .then((response)=>{
-      console.log('res', response.data);
       this.setState({
         existingVendorList : response.data
+      })
+    })
+    .catch((error)=>{
+      console.log('error', error);
+    })
+  }
+  getVendors(){
+    axios.get('/api/vendors/get/greatestid')
+    .then((response)=>{
+      console.log('res getVendors', parseInt(response.data.vendorID), parseInt(response.data.vendorID + 1));
+      this.setState({
+        vendorID : parseInt(response.data.vendorID + 1)
       })
     })
     .catch((error)=>{
@@ -381,7 +394,7 @@ class BasicInfo extends Component {
             'mfg': this.state.mfg,
             'Evaluation': this.state.Evaluation,
             'score': this.state.score,
-            'vendorID': Math.floor(Math.random() * 1000) + 1,
+            'vendorID': this.state.vendorID,
             'owner_ID': localStorage.getItem('admin_ID'),
             'vendor_ID': res.data.user_id
           }
@@ -415,7 +428,7 @@ class BasicInfo extends Component {
           'mfg': this.state.mfg,
           'Evaluation': this.state.Evaluation,
           'score': this.state.score,
-          'vendorID': Math.floor(Math.random() * 1000) + 1,
+          'vendorID': this.state.vendorID,
           'owner_ID': localStorage.getItem('admin_ID'),
           'vendor_ID': this.state.existingVendor.split('|')[1]
         }

@@ -74,7 +74,7 @@ logout(){
                     </div>*/}
                   
                 </div>
-                <div className="col-lg-2 col-md-2 col-sm-1 col-xs-1 pull-right text-right">
+                <div className="col-lg-3 col-md-3 col-sm-1 col-xs-1 pull-right text-right">
 
                   { localStorage.getItem('userName') != 'undefined' ?  localStorage.getItem('userName') : ""}
 
