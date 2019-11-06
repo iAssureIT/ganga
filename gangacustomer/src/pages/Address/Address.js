@@ -70,12 +70,12 @@ class Address extends Component {
                 },
                 addressLine1: {
                     required: true,
-                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    regxaddressLine : /^[A-Za-z0-9_@./#&+-]/,
                 },
-                addressLine2: {
-                    required: true,
-                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
-                },
+                // addressLine2: {
+                //     required: true,
+                //     regxaddressLine : /^[A-Za-z0-9_@./#&+-]/,
+                // },
                 country: {
                     required: true,
                     regxcountry: "Select Country"
@@ -86,11 +86,11 @@ class Address extends Component {
                 },
                 block: {
                     required: true,
-                    // regxblock : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    regxblock : /^[A-Za-z]+$/,
                 },
                 city: {
                     required: true,
-                    regxcity : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    regxcity : /^[A-Za-z]+$/,
                 },
                 pincode: {
                     required: true,
@@ -114,9 +114,9 @@ class Address extends Component {
               if (element.attr("name") == "addressLine1") {
                 error.insertAfter("#addressLine1");
               }
-              if (element.attr("name") == "addressLine2") {
-                error.insertAfter("#addressLine2");
-              }
+            //   if (element.attr("name") == "addressLine2") {
+            //     error.insertAfter("#addressLine2");
+            //   }
               if (element.attr("name") == "country") {
                 error.insertAfter("#country");
               }
@@ -274,12 +274,12 @@ class Address extends Component {
                             <h3 className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Information</h3>
 
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
+                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Full Name <span className="required">*</span></label>
                                 <input type="text" ref="username" name="username" id="username" value={this.state.username} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                <input type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                <input placeholder="Eg. 9876543210" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                 {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
@@ -291,7 +291,7 @@ class Address extends Component {
                                 <input type="text" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 <span className="required">*</span></label>
+                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
                                 <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                             </div>
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">

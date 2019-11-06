@@ -100,12 +100,12 @@ class Checkout extends Component {
                 },
                 addressLine1: {
                     required: true,
-                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    regxaddressLine : /^[A-Za-z0-9_@./#&+-]/,
                 },
-                addressLine2: {
-                    required: true,
-                    regxaddressLine : /^[A-Za-z][A-Za-z0-9\-\s]/,
-                },
+                // addressLine2: {
+                //     required: true,
+                //     regxaddressLine : /^[A-Za-z0-9_@./#&+-]/,
+                // },
                 country: {
                     required: true,
                     regxcountry: "Select Country"
@@ -116,11 +116,11 @@ class Checkout extends Component {
                 },
                 block: {
                     required: true,
-                    // regxblock : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    regxblock : /^[A-Za-z]+$/,
                 },
                 city: {
                     required: true,
-                    regxcity : /^[A-Za-z][A-Za-z0-9\-\s]/,
+                    regxcity : /^[A-Za-z]+$/,
                 },
                 pincode: {
                     required: true,
@@ -128,7 +128,7 @@ class Checkout extends Component {
                 },
                 addType: {
                     required: true,
-                    regxaddType: "Select Section"
+                    regxaddType: "Select Type"
                 },
                 payMethod: {
                     required: true
@@ -150,9 +150,9 @@ class Checkout extends Component {
               if (element.attr("name") == "addressLine1") {
                 error.insertAfter("#addressLine1");
               }
-              if (element.attr("name") == "addressLine2") {
-                error.insertAfter("#addressLine2");
-              }
+            //   if (element.attr("name") == "addressLine2") {
+            //     error.insertAfter("#addressLine2");
+            //   }
               if (element.attr("name") == "country") {
                 error.insertAfter("#country");
               }
@@ -190,6 +190,9 @@ class Checkout extends Component {
         $.validator.addMethod("modalregxemail", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid email address.");
+        $.validator.addMethod("regexmodaladdressLine", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid address.");
         $.validator.addMethod("modalregxpincode", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid pincode");
@@ -222,38 +225,42 @@ class Checkout extends Component {
                 },
                 modalmobileNumber: {
                     required: true,
-                    modalregxmobileNumber: /^\d{10}$/
+                    modalregxmobileNumber: /^([7-9][0-9]{9})$/,
                 },
                 modalemail: {
                     required: true,
                 },
                 modaladdressLine1: {
                     required: true,
+                    regexmodaladdressLine : /^[A-Za-z0-9_@./#&+-]/,
                 },
-                modaladdressLine2: {
-                    required: true,
-                },
+                // modaladdressLine2: {
+                //     required: true,
+                //     regexmodaladdressLine : /^[A-Za-z0-9_@./#&+-]/,
+                // },
                 modalpincode: {
                     required: true,
                     modalregxpincode : /^[1-9][0-9]{5}$/,
                 },
                 modalblock: {
                     required: true,
+                    modalregxblock : /^[A-Za-z]+$/,
                 },
                 modalcity: {
                     required: true,
+                    modalregxcity : /^[A-Za-z]+$/,
                 },
                 modalstate: {
                     required: true,
-                    regxstate: "Select State"
+                    modalregxstate: "Select State"
                 },
                 modalcountry: {
                     required: true,
-                    regxcountry: "Select Country"
+                    modalregxcountry: "Select Country"
                 },
                 modaladdType: {
                     required: true,
-                    regxaddType: "Select Type"
+                    modalregxaddType: "Select Type"
                 },
             },
             errorPlacement: function (error, element) {
@@ -269,9 +276,9 @@ class Checkout extends Component {
                 if (element.attr("name") == "modaladdressLine1") {
                     error.insertAfter("#modaladdressLine1");
                 }
-                if (element.attr("name") == "modaladdressLine2") {
-                    error.insertAfter("#modaladdressLine2");
-                }
+                // if (element.attr("name") == "modaladdressLine2") {
+                //     error.insertAfter("#modaladdressLine2");
+                // }
                 if (element.attr("name") == "modalpincode") {
                     error.insertAfter("#modalpincode");
                 }
@@ -905,7 +912,7 @@ class Checkout extends Component {
                                 {
                                     this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">1 SHIPPING ADDRESS</div>
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">SHIPPING ADDRESS</div>
                                             {   this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                                 this.state.deliveryAddress.map((data, index) => {
                                                     return (
@@ -927,7 +934,7 @@ class Checkout extends Component {
                                         </div>
                                         :
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">1 SHIPPING ADDRESS</div>
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">SHIPPING ADDRESS</div>
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Name <span className="required">*</span></label>
@@ -935,7 +942,7 @@ class Checkout extends Component {
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                                <input type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input placeholder="Eg. 9876543210" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                                 {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
@@ -947,7 +954,7 @@ class Checkout extends Component {
                                                 <input type="text" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 <span className="required">*</span></label>
+                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
                                                 <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
@@ -999,7 +1006,7 @@ class Checkout extends Component {
                             <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingLeft">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingMethod NOpadding">
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingMethodTitle">2 EXPECTED DELIVERY</div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingMethodTitle">EXPECTED DELIVERY</div>
 
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label><i className="fa fa-calendar"></i> &nbsp;&nbsp; Delivery Date</label>
@@ -1009,7 +1016,7 @@ class Checkout extends Component {
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingRight">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentMethod NOpadding">
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning paymentMethodTitle">3 PAYMENT METHOD <span className="required">*</span></div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning paymentMethodTitle">PAYMENT METHOD <span className="required">*</span></div>
 
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentInput">
                                             <input name="payMethod" type="radio" value="Cash On Delivery" className="col-lg-1 col-md-1 col-sm-2 col-xs-2" />
@@ -1125,7 +1132,7 @@ class Checkout extends Component {
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                                <input type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input placeholder="Eg. 9876543210" type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                                 {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
@@ -1137,7 +1144,7 @@ class Checkout extends Component {
                                                 <input type="text" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 <span className="required">*</span></label>
+                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
                                                 <input type="text" ref="modaladdressLine2" name="modaladdressLine2" id="modaladdressLine2" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
