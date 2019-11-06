@@ -88,6 +88,12 @@ class ViewOrder extends Component {
                     <span><i className={"fa fa-"+this.state.orderData.currency}>100</i></span> 
                   </td>
               </tr>
+              <tr className="shipping">
+                  <th colspan="3" className="mark" scope="row">GST (18%)</th>
+                  <td className="amount" data-th="Shipping &amp; Handling">
+                    <span><i className={"fa fa-"+this.state.orderData.currency}>{ (this.state.orderData.cartTotal*18)/100 } </i></span> 
+                  </td>
+              </tr>
               <tr className="grand_total">
 
                   <th colspan="3" className="mark" scope="row"><strong> Estimated Total</strong></th>

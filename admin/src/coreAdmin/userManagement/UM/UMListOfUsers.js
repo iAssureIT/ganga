@@ -4,6 +4,7 @@ import axios                        from 'axios';
 import swal                     	from 'sweetalert';
 import _                        from 'underscore';
 import './userManagement.css';
+import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
@@ -21,7 +22,7 @@ class UMListOfUsers extends Component {
                 emailId    		: 'Email',
                 mobNumber       : 'Mobile Number', 
                 status        	: 'Status',
-                 roles        	: 'Role',
+                roles        	: 'Role',
                 actions        	: 'Action',
             },
             tableObjects : {
@@ -114,10 +115,22 @@ class UMListOfUsers extends Component {
 	    }); 
     }
     getSearchText(searchText, startRange, limitRange){
-        console.log(searchText, startRange, limitRange);
-        this.setState({
-            tableData : []
-        });
+    	var formValues={ "searchText" : searchText };
+    	axios.post("/api/users/searchValue",formValues)
+        .then((response)=>{ 
+            console.log('tableData', response.data);
+            this.setState({
+                tableData : response.data,
+                dataCount : response.data.length
+            });
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+
+        // this.setState({
+        //     tableData : []
+        // });
     }
 
     adminRolesListData(){
@@ -129,7 +142,7 @@ class UMListOfUsers extends Component {
 		// return  Meteor.roles.find({"name":{ $nin: ["superAdmin"]}}).fetch();
 	}
 	performselectaction(event){
-		event.preventDefault();
+		event.preventDefault(); 
 		console.log("event.target.name",event.target.name, event.target.value);
 		this.setState({
 			[event.target.name] :event.target.value
@@ -148,6 +161,29 @@ class UMListOfUsers extends Component {
 		.catch((error)=>{
 			 console.log("error = ",error);
 
+		})
+	}
+	filterUser(filtertype, selectedvalue){
+		
+		var formValues = { }
+		if (filtertype == 'role') {
+			formValues.role = selectedvalue.currentTarget.value;
+			formValues.status = $('.selectStatus').val()
+		}
+		if (filtertype == 'status') {
+			formValues.role =  $('.selectRole').val()
+			formValues.status = selectedvalue.currentTarget.value
+		}
+		axios.post('/api/users/filterUser',formValues)
+		.then((response)=>{
+			this.setState({
+                tableData : response.data,
+                dataCount : response.data.length
+            });
+			//this.getData(this.state.startRange, this.state.limitRange);
+		})
+		.catch((error)=>{
+			 console.log("error = ",error);
 		})
 	}
 	getSelectedUserID(selectUsers){
@@ -181,7 +217,7 @@ render(){
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
 							<select onChange={this.performselectaction.bind(this)} value={this.state.userListDropdown} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" >
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" >-- Select --</option>	
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" disabled >-- Select --</option>	
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="blocked">Block Selected</option>	
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="active">Active Selected</option>
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="delete">Delete Selected Acccounts</option>	
@@ -189,17 +225,18 @@ render(){
 						</div> 
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
-							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" >
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' name="roleListDDOption">-- Select --</option>
+							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding form-control selectRole" ref="roleListDropdown" name="roleListDropdown" onChange={this.filterUser.bind(this, "role")} >
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' name="roleListDDOption" disabled>-- Select --</option>
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="all"   name="roleListDDOption">Show All</option>		
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="users" name="roleListDDOption">users</option>		
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="users" name="roleListDDOption">user</option>		
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="vendor" name="roleListDDOption">vendor</option>		
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="ba"    name="roleListDDOption">ba</option>		
 							</select>
 						</div>
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
-							<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control "onChange={this.performselectaction.bind(this)} value={this.state.userListDropdown}  ref="blockActive" value={this.state.blockActive} name="blockActive" >
-								<option>-- Select --</option>	
+							<select className="col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding form-control selectStatus" onChange={this.filterUser.bind(this, "status")} ref="blockActive" name="blockActive" >
+								<option disabled>-- Select --</option>	
 								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="all"	data-limit='37'>Show All</option>	
 								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="Blocked" data-limit='37'>Blocked</option>	
 								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="Active" data-limit='37'>Active </option>	

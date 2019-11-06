@@ -330,7 +330,6 @@ class ProductCollage extends Component {
 			selector.limit = "10";
 		}
 		
-		console.log('selector',selector);
 
 		axios.post("/api/products/post/list/filterProducts/",selector)
 
@@ -434,28 +433,43 @@ class ProductCollage extends Component {
 	      const name = target.name;
 	      
 	      if (name == 'slider_min') {
-	      	this.setState({
-	          price: { min : Number(target.value),  max : Number(this.state.price.max)}
-	      	},()=>{
-	      		var selector=this.state.selector;
-				selector.section_ID = this.props.match.params.sectionID;
-				selector.price = this.state.price;
-					this.setState({	selector: selector },()=>{
-						this.getFilteredProducts(this.state.selector);
-					})
-			}); 
+	      	
+	      		this.setState({
+		          price: { min : Number(target.value),  max : Number(this.state.price.max)}
+		      	},()=>{
+		      		console.log('target',Number(target.value))
+		      		if ( Number(target.value) < this.state.minPriceLmt) {
+		      			this.setState({
+		          		price: { min : Number(this.state.minPriceLmt), max : Number(this.state.price.max) } });
+	      			}else{
+	      				var selector=this.state.selector;
+						selector.section_ID = this.props.match.params.sectionID;
+						selector.price = this.state.price;
+							this.setState({	selector: selector },()=>{
+								this.getFilteredProducts(this.state.selector);
+							})
+	      			}
+		      		
+				});
+	      	//}
+	      	 
 	      }
 	      if (name == 'slider_max') {
-	      	this.setState({
-	          price: { min : Number(this.state.price.min),  max : Number(target.value)}
-	      	},()=>{
-	      		var selector=this.state.selector;
-				selector.section_ID = this.props.match.params.sectionID;
-				selector.price = this.state.price;
-					this.setState({	selector: selector },()=>{
-						this.getFilteredProducts(this.state.selector);
-					})
-	      	}); 
+	      	if (Number(target.value) == this.state.maxPriceLmt) {
+
+	      	}else{
+		      	this.setState({
+		          price: { min : Number(this.state.price.min),  max : Number(target.value)}
+		      	},()=>{
+		      		var selector=this.state.selector;
+					selector.section_ID = this.props.match.params.sectionID;
+					selector.price = this.state.price;
+						this.setState({	selector: selector },()=>{
+							this.getFilteredProducts(this.state.selector);
+						})
+		      	}); 
+		    }
+	      	
 	      }
 	}
 	getWishData(){
@@ -472,8 +486,7 @@ class ProductCollage extends Component {
 		})
 	  }
   	render() {
-		console.log('categoryDetails,',this.state.categoryDetails);
-
+		
 		let minPrice = this.state.price.min;
 		let maxPrice = this.state.price.max;
 		return (

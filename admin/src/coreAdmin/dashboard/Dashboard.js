@@ -38,6 +38,7 @@ export default class Dashboard extends Component{
       "mtdorders"       : 0,
       "ytdreviews"      : 0,
       "mtdreviews"      : 0,
+      "todaysorders"    : 0,
       "todaysneworders" : 0,
       "todaysReturnPendingCount" : 0,
       "todaysReturnCount" : 0,
@@ -134,6 +135,18 @@ export default class Dashboard extends Component{
     .then((response)=>{
       this.setState({ 
         mtdreviews : response.data.dataCount
+      },()=>{ 
+      })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
+
+    
+    axios.get("/api/orders/get/todaysorders")
+    .then((response)=>{
+      this.setState({ 
+        todaysorders : response.data.dataCount
       },()=>{ 
       })
     })
@@ -426,9 +439,9 @@ export default class Dashboard extends Component{
             <div className="dash-box" >
               <span className="infoboxicon bg-aqua"><i className="fa fa-user"></i></span>
               <div className="info-box-content">
-                <span className="info-box-text">Total User</span>
+                <span className="info-box-text">Total Users</span>
                 <span className="info-box-number">{this.state.userCount}</span>
-                <span className="info-box-text">Online User</span>
+                <span className="info-box-text">Online Users</span>
                 <span className="info-box-number">{this.state.onlineUserCount}</span>
               </div>
             </div>
@@ -437,9 +450,9 @@ export default class Dashboard extends Component{
             <div className="dash-box">
               <span className="infoboxicon bg-aqua"><i className="fa fa-user"></i></span>
               <div className="info-box-content">
-                <span className="info-box-text">Total Category</span>
+                <span className="info-box-text">Total Categories</span>
                 <span className="info-box-number">{this.state.categoriesCount}</span>
-                <span className="info-box-text">Total Proucts</span>
+                <span className="info-box-text">Total Products</span>
                 <span className="info-box-number">{this.state.productCount}</span>
               </div>
             </div>
@@ -508,7 +521,7 @@ export default class Dashboard extends Component{
             <div className="col-lg-12 box3" style={{marginBottom: "15px"}}>     
               <div className="box3a box1a">
                 <div className="col-lg-12">
-                    <h4>Call to Action</h4> 
+                    <h4>Todays Call to Action</h4> 
                 </div>
               </div>
               <br/>
@@ -517,7 +530,7 @@ export default class Dashboard extends Component{
               <div className="box3a">
                 <div className="col-lg-12">
                     <h4><a href="/new-orders-list">New Orders</a></h4> 
-                    <label>Todays {this.state.todaysneworders} Orders</label>  
+                    <label>{this.state.todaysneworders}/ {this.state.todaysorders} Orders</label>  
                 </div>
               </div>
               <br/>
@@ -565,7 +578,7 @@ export default class Dashboard extends Component{
                 height={'300px'}
                 chartType="GeoChart"
                 data={[
-                  ['State', 'Population'],
+                  ['State', 'Orders'],
                   ['Uttar Pradesh', 199581477],
                   ['Maharashtra', 112372972],
                   ['Bihar', 103804637],
@@ -583,7 +596,7 @@ export default class Dashboard extends Component{
                   region: 'IN',
                   displayMode: 'regions',
                   resolution: 'provinces',
-                  width: 475, 
+                 
                 }}
                 // Note: you will need to get a mapsApiKey for your project.
                 // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
