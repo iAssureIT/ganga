@@ -594,6 +594,12 @@ class AddNewShopProduct extends Component {
     axios.get('/api/users/vendorlist')
     .then((response)=>{
       console.log('res getVendorList', response);
+      var vendorArray = response.data.map((a, i)=>{
+        return {
+          _id : a._id,
+          firstName : a.firstName
+        }
+      })
       this.setState({
         vendorArray : response.data
       })

@@ -336,3 +336,14 @@ padding: 0.87rem .85rem !important;
     font-weight: 600;
     font-size: 15px;
 }
+
+DIV.redBox{
+    box-sizing: border-box;
+    border: 1px solid red;
+    float: left;
+}
+DIV.greenBox{
+    box-sizing: border-box;
+    border: 1px solid green;
+    float: left;
+}
