@@ -124,7 +124,7 @@ class Checkout extends Component {
                 },
                 pincode: {
                     required: true,
-                    // regxpincode : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                    regxpincode : /^[1-9][0-9]{5}$/,
                 },
                 addType: {
                     required: true,
@@ -235,6 +235,7 @@ class Checkout extends Component {
                 },
                 modalpincode: {
                     required: true,
+                    modalregxpincode : /^[1-9][0-9]{5}$/,
                 },
                 modalblock: {
                     required: true,
@@ -891,7 +892,6 @@ class Checkout extends Component {
             .join(' ');
     }
     render() {
-        console.log('address',this.state.deliveryAddress);
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="pagealertnone">
@@ -1115,7 +1115,7 @@ class Checkout extends Component {
                                 <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                        <h4 className="modal-title">Netbaseteam Shipping Address</h4>
+                                        <h4 className="modal-title">Shipping Address</h4>
                                     </div>
                                     <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutAddressModal">
                                         <form id="modalAddressForm">

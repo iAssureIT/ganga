@@ -117,7 +117,7 @@ class Address extends Component {
                 },
                 pincode: {
                     required: true,
-                    // regxpincode : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                    regxpincode : /^[1-9][0-9]{5}$/,
                 },
                 addType: {
                     required: true,

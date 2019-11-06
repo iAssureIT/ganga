@@ -150,3 +150,8 @@
 .termsNconditionsmodal:hover{
     color: #fbbb65;   
 }
+.close{
+    font-size: 26px;
+    font-weight: 600;
+    opacity: 1;
+}
