@@ -17,130 +17,132 @@ class Address extends Component {
         this.camelCase = this.camelCase.bind(this)
     }
     componentDidMount(){
-        this.validations();
-        this.edit();
+        this.modalvalidation();
+        this.edit(this.props.addressId);
     }
-    validations(){
-        $.validator.addMethod("regxusername", function (value, element, regexpr) {
+    modalvalidation() {
+        $.validator.addMethod("modalregxname", function (value, element, regexpr) {
             return regexpr.test(value);
-        }, "Name should only contain letters.");
-        $.validator.addMethod("regxmobileNumber", function (value, element, regexpr) {
+        }, "Name should only contain letters & number.");
+        $.validator.addMethod("modalregxmobileNumber", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid mobile number.");
-        $.validator.addMethod("regxemail", function (value, element, regexpr) {
+        $.validator.addMethod("modalregxemail", function (value, element, regexpr) {
             return regexpr.test(value);
-        }, "Please enter valid email.");
-        $.validator.addMethod("regxaddressLine", function (value, element, regexpr) {
+        }, "Please enter valid email address.");
+        $.validator.addMethod("regexmodaladdressLine", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid address.");
-        $.validator.addMethod("regxcountry", function (value, element, arg) {
-            return arg !== value;
-        }, "Please select the country.");
-        $.validator.addMethod("regxstate", function (value, element, arg) {
+        $.validator.addMethod("modalregxpincode", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid pincode");
+        $.validator.addMethod("modalregxblock", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid block");
+        $.validator.addMethod("modalregxcity", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid city");
+        $.validator.addMethod("modalregxstate", function (value, element, arg) {
             return arg !== value;
         }, "Please select the state");
-        $.validator.addMethod("regxblock", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid block name.");
-        $.validator.addMethod("regxcity", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid city name");
-        $.validator.addMethod("regxpincode", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid pincode.");
-        $.validator.addMethod("regxaddType", function (value, element, arg) {
+        $.validator.addMethod("modalregxcountry", function (value, element, arg) {
             return arg !== value;
-        }, "Please select the address type.");
+        }, "Please select the country");
+        $.validator.addMethod("modalregxaddType", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the address type");
+
         jQuery.validator.setDefaults({
             debug: true,
             success: "valid"
         });
-        $("#addressForm").validate({
+
+        $("#modalAddressForm").validate({
             rules: {
-                username: {
-                    regxusername : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                modalname: {
+                    required: true,
+                    modalregxname : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                },
+                modalmobileNumber: {
+                    required: true,
+                    modalregxmobileNumber: /^([7-9][0-9]{9})$/,
+                },
+                modalemail: {
                     required: true,
                 },
-                mobileNumber: {
-                    regxmobileNumber : /^([7-9][0-9]{9})$/,
+                modaladdressLine1: {
                     required: true,
+                    regexmodaladdressLine : /^[A-Za-z0-9_@./#&+-]/,
                 },
-                email: {
-                    required: true,
-                },
-                addressLine1: {
-                    required: true,
-                    regxaddressLine : /^[A-Za-z0-9_@./#&+-]/,
-                },
-                // addressLine2: {
+                // modaladdressLine2: {
                 //     required: true,
-                //     regxaddressLine : /^[A-Za-z0-9_@./#&+-]/,
+                //     regexmodaladdressLine : /^[A-Za-z0-9_@./#&+-]/,
                 // },
-                country: {
+                modalpincode: {
                     required: true,
-                    regxcountry: "Select Country"
+                    modalregxpincode : /^[1-9][0-9]{5}$/,
                 },
-                state: {
+                modalblock: {
                     required: true,
-                    regxstate: "Select State"
+                    modalregxblock : /^[A-Za-z][A-Za-z\-\s]*$/,
                 },
-                block: {
+                modalcity: {
                     required: true,
-                    regxblock : /^[A-Za-z]+$/,
+                    modalregxcity : /^[A-Za-z][A-Za-z\-\s]*$/,
                 },
-                city: {
+                modalstate: {
                     required: true,
-                    regxcity : /^[A-Za-z]+$/,
+                    modalregxstate: "Select State"
                 },
-                pincode: {
+                modalcountry: {
                     required: true,
-                    regxpincode : /^[1-9][0-9]{5}$/,
+                    modalregxcountry: "Select Country"
                 },
-                addType: {
+                modaladdType: {
                     required: true,
-                    regxaddType: "Select Section"
+                    modalregxaddType: "Select Type"
                 },
             },
             errorPlacement: function (error, element) {
-              if (element.attr("name") == "username") {
-                error.insertAfter("#username");
-              }
-              if (element.attr("name") == "mobileNumber") {
-                error.insertAfter("#mobileNumber");
-              }
-              if (element.attr("name") == "email") {
-                error.insertAfter("#email");
-              }
-              if (element.attr("name") == "addressLine1") {
-                error.insertAfter("#addressLine1");
-              }
-            //   if (element.attr("name") == "addressLine2") {
-            //     error.insertAfter("#addressLine2");
-            //   }
-              if (element.attr("name") == "country") {
-                error.insertAfter("#country");
-              }
-              if (element.attr("name") == "state") {
-                error.insertAfter("#state");
-              }
-              if (element.attr("name") == "block") {
-                error.insertAfter("#block");
-              }
-              if (element.attr("name") == "city") {
-                error.insertAfter("#city");
-              }
-              if (element.attr("name") == "pincode") {
-                error.insertAfter("#pincode");
-              }
-              if (element.attr("name") == "addType") {
-                error.insertAfter("#addType");
-              }
+                if (element.attr("name") == "modalname") {
+                    error.insertAfter("#modalname");
+                }
+                if (element.attr("name") == "modalmobileNumber") {
+                    error.insertAfter("#modalmobileNumber");
+                }
+                if (element.attr("name") == "modalemail") {
+                    error.insertAfter("#modalemail");
+                }
+                if (element.attr("name") == "modaladdressLine1") {
+                    error.insertAfter("#modaladdressLine1");
+                }
+                // if (element.attr("name") == "modaladdressLine2") {
+                //     error.insertAfter("#modaladdressLine2");
+                // }
+                if (element.attr("name") == "modalpincode") {
+                    error.insertAfter("#modalpincode");
+                }
+                if (element.attr("name") == "modalblock") {
+                    error.insertAfter("#modalblock");
+                }
+                if (element.attr("name") == "modalcity") {
+                    error.insertAfter("#modalcity");
+                }
+                if (element.attr("name") == "modalstate") {
+                    error.insertAfter("#modalstate");
+                }
+                if (element.attr("name") == "modalcountry") {
+                    error.insertAfter("#modalcountry");
+                }
+                if (element.attr("name") == "modaladdType") {
+                    error.insertAfter("#modaladdType");
+                }
             }
         });
     }
-    edit(){
+    edit(deliveryAddressID){
         var user_ID = localStorage.getItem("user_ID");
-        var deliveryAddressID = this.props.match.params.deliveryAddressID;
+        // var deliveryAddressID = this.props.match.params.deliveryAddressID;
         console.log('deliveryAddressID', deliveryAddressID);
         axios.get('/api/users/'+user_ID)
         .then((response)=>{
@@ -148,17 +150,17 @@ class Address extends Component {
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
             this.getStates(deliveryAddress[0].country);
             this.setState({
-                "username"        : deliveryAddress[0].name,
-                "email"           : deliveryAddress[0].email,
-                "addressLine1"    : deliveryAddress[0].addressLine1,
-                "addressLine2"    : deliveryAddress[0].addressLine2,  
-                "pincode"         : deliveryAddress[0].pincode,
-                "block"           : deliveryAddress[0].block,
-                "city"            : deliveryAddress[0].city,
-                "state"           : deliveryAddress[0].state,
-                "country"         : deliveryAddress[0].country,
-                "mobileNumber"    : deliveryAddress[0].mobileNumber,
-                "addType"         : deliveryAddress[0].addType,
+                "modalname"        : deliveryAddress[0].name,
+                "modalemail"           : deliveryAddress[0].email,
+                "modaladdressLine1"    : deliveryAddress[0].addressLine1,
+                "modaladdressLine2"    : deliveryAddress[0].addressLine2,  
+                "modalpincode"         : deliveryAddress[0].pincode,
+                "modalblock"           : deliveryAddress[0].block,
+                "modalcity"            : deliveryAddress[0].city,
+                "modalstate"           : deliveryAddress[0].state,
+                "modalcountry"         : deliveryAddress[0].country,
+                "modalmobileNumber"    : deliveryAddress[0].mobileNumber,
+                "modaladdType"         : deliveryAddress[0].addType,
             })
         })
         .catch((error)=>{
@@ -166,7 +168,7 @@ class Address extends Component {
         });
     }
     componentWillReceiveProps(nextProps){
-        this.edit();
+        this.edit(nextProps.addressId);
     }
     handleChange(event) {
         this.setState({
@@ -175,62 +177,79 @@ class Address extends Component {
     }
     handleChangeCountry(event){
       const target = event.target;
+      this.getStates(event.target.value)
       this.setState({
         [event.target.name] : event.target.value
       })
-      this.getStates($(target).val())
+      
     }
-    getStates(countryCode){
-      axios.get("http://locationapi.iassureit.com/api/states/get/list/"+countryCode)
-            .then((response)=>{
-          
-              this.setState({
-                  stateArray : response.data
-              })
-              $('#Statedata').val(this.state.states);
+    getStates(countryCode) {
+        axios.get("http://locationapi.iassureit.com/api/states/get/list/" + countryCode)
+        .then((response) => {
+            this.setState({
+                stateArray: response.data
             })
-            .catch((error)=>{
-                console.log('error', error);
-            })
+            $('#Statedata').val(this.state.states);
+        })
+        .catch((error) => {
+            console.log('error', error);
+        })
     }
     saveAddress(event){
         event.preventDefault();
-        var deliveryAddressID = this.props.match.params.deliveryAddressID;
+        var deliveryAddressID = this.props.addressId;
         var formValues = {
             "user_ID"         : localStorage.getItem("user_ID"),
             "deliveryAddressID" : deliveryAddressID,
-            "name"            : this.state.username,
-            "email"           : this.state.email,
-            "addressLine1"    : this.state.addressLine1,
-            "addressLine2"    : this.state.addressLine2,  
-            "pincode"         : this.state.pincode,
-            "block"           : this.state.block,
-            "city"            : this.state.city,
-            "state"           : this.state.state,
-            "country"         : this.state.country,
-            "mobileNumber"    : this.state.mobileNumber,
-            "addType"         : this.state.addType,
+            "name"            : this.state.modalname,
+            "email"           : this.state.modalemail,
+            "addressLine1"    : this.state.modaladdressLine1,
+            "addressLine2"    : this.state.modaladdressLine2,  
+            "pincode"         : this.state.modalpincode,
+            "block"           : this.state.modalblock,
+            "city"            : this.state.modalcity,
+            "state"           : this.state.modalstate,
+            "country"         : this.state.modalcountry,
+            "mobileNumber"    : this.state.modalmobileNumber,
+            "addType"         : this.state.modaladdType,
         }
+        console.log('formValues', formValues);
         if(deliveryAddressID){
-            if($("#addressForm").valid()){
+            if($("#modalAddressForm").valid()){
                 console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/useraddress', formValues)
                 .then((response)=>{
                 ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                     // swal(response.data);
-                    this.props.history.push('/address-book');
+                    this.props.opDone();
+                    $(".checkoutAddressModal").hide();
+                    // $(".checkoutAddressModal").css({display: 'none'});
+                    // $(".modal-header").css({display: 'block'});
+                    // $(".modal-body").css({display: 'block'});
+                    // $(".modal-footer").css({display: 'block'});
+                    // $(".checkoutAddressModal").removeClass("in");
+                    $(".modal-backdrop").hide();
+                    window.location.reload();
                 })
                 .catch((error)=>{
                     console.log('error', error)
                 });
             }
         }else{
-            if($("#addressForm").valid()){
+            if($("#modalAddressForm").valid()){
                 axios.patch('/api/users/patch/address', formValues)
                 .then((response)=>{
                 ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                     // swal(response.data.message);
-                    this.props.history.push('/address-book');
+                    this.props.opDone();
+                    $(".checkoutAddressModal").hide();
+                    // $(".checkoutAddressModal").css({display: 'none'});
+                    // $(".modal-header").css({display: 'block'});
+                    // $(".modal-body").css({display: 'block'});
+                    // $(".modal-footer").css({display: 'block'});
+                    // $(".checkoutAddressModal").removeClass("in");
+                    $(".modal-backdrop").hide();
+                    window.location.reload();
                 })
                 .catch((error)=>{
                     console.log('error', error)
@@ -260,88 +279,85 @@ class Address extends Component {
     }
     render() {
         return (
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
-                <div className="container">
-                    <br />
-                    <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
-                        <Sidebar />
-                    </div>
-                    <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8 NOpadding mt25 mb25">
-                        <form id="addressForm" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                            <h3 className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Contact Information</h3>
-
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Full Name <span className="required">*</span></label>
-                                <input type="text" ref="username" name="username" id="username" value={this.state.username} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                <input placeholder="Eg. 9876543210" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
-                                <input type="email" ref="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
-                                <input type="text" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
-                                <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChangeCountry.bind(this)}  className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <option value="Select Country">Select Country</option>
-                                    <option value="IN">India</option>
-                                    
-                                </select>
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <option value="Select State">Select State</option>
-                                     {
-                                      this.state.stateArray && this.state.stateArray.length > 0 ?
-                                      this.state.stateArray.map((stateData, index)=>{
-                                        return(      
-                                            <option key={index} value={this.camelCase(stateData.stateName)}>{this.camelCase(stateData.stateName)}</option>
-                                          );
+            <div className="modal col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal NOpadding" id="checkoutAddressModal" role="dialog">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                    <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                        <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            <h4 className="modal-title">Shipping Address</h4>
+                        </div>
+                        <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <form id="modalAddressForm">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Full Name <span className="required">*</span></label>
+                                    <input type="text" ref="modalname" name="modalname" id="modalname" value={this.state.modalname} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
+                                    <input placeholder="Eg. 9876543210" type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" value={this.state.modalmobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
+                                    <input type="email" ref="modalemail" name="modalemail" id="modalemail" value={this.state.modalemail} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
+                                    <input type="text" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1" value={this.state.modaladdressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
+                                    <input type="text" ref="modaladdressLine2" name="modaladdressLine2" id="modaladdressLine2" value={this.state.modaladdressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
+                                    <select ref="modalcountry" name="modalcountry" id="modalcountry" value={this.state.modalcountry} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" onChange={this.handleChangeCountry.bind(this)}>
+                                        <option value="Select Country">Select Country</option>
+                                        <option value="IN">India</option>
+                                    </select>
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
+                                    <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <option value="Select State">Select State</option>
+                                        {
+                                            this.state.stateArray && this.state.stateArray.length > 0 ?
+                                                this.state.stateArray.map((stateData, index) => {
+                                                    return (
+                                                        <option key={index} value={this.camelCase(stateData.stateName)}>{this.camelCase(stateData.stateName)}</option>
+                                                    );
+                                                }
+                                                ) : ''
                                         }
-                                      ) : ''
-                                    }
-                                </select>
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
-                                <input type="text" ref="block" name="block" id="block" value={this.state.block} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
-                                <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
+                                    </select>
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
+                                    <input type="text" ref="modalblock" name="modalblock" id="modalblock" value={this.state.modalblock} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
+                                    <input type="text" ref="modalcity" name="modalcity" id="modalcity" value={this.state.modalcity} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
 
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                            </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
+                                    <input type="text" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                </div>
 
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
-                                <select id="addType" name="addType" ref="addType" value={this.state.addType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <option value="Home">Home (All day delivery) </option>
-                                    <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>
-                                </select>
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                <button onClick={this.saveAddress.bind(this)} className="btn btn-warning addressSaveBtn">Save Address</button>
-                            </div>
-                        </form>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
+                                    <select id="modaladdType" name="modaladdType" ref="modaladdType" value={this.state.modaladdType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <option value="Home">Home (All day delivery) </option>
+                                        <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div className="modal-footer checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" className="btn btn-warning" data-dismiss="modal">Cancel</button>
+                            <button type="button" className="btn btn-warning" onClick={this.saveAddress.bind(this)}>{this.props.addressId ? 'Update Address' :'Save Address'}</button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $                    from 'jquery';
 import axios                from 'axios';
-import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
+import Address              from '../Address/Address.js';
 import "./AddressBook.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
@@ -77,24 +77,31 @@ class AddressBook extends Component{
             console.log('error', error);
         })
     }
+    Closepagealert(event){
+        event.preventDefault();
+        $(".toast-error").html('');
+        $(".toast-success").html('');
+        $(".toast-info").html('');
+        $(".toast-warning").html('');
+        $(".toast-error").removeClass('toast');
+        $(".toast-success").removeClass('toast');
+        $(".toast-info").removeClass('toast');
+        $(".toast-warning").removeClass('toast');
 
-      Closepagealert(event){
-    event.preventDefault();
-    $(".toast-error").html('');
-    $(".toast-success").html('');
-    $(".toast-info").html('');
-    $(".toast-warning").html('');
-    $(".toast-error").removeClass('toast');
-    $(".toast-success").removeClass('toast');
-    $(".toast-info").removeClass('toast');
-    $(".toast-warning").removeClass('toast');
-
-  }
-
-
+    }
+    getAddressId(event){
+        console.log('id', event.target.id);
+        this.setState({
+            addressId : event.target.id
+        })
+    }
+    opDone(){
+        this.getUserData();
+    }
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <Address addressId={this.state.addressId} opDone={this.opDone.bind(this)}/>
             <div className="pagealertnone">
               <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
               </div>
@@ -119,13 +126,13 @@ class AddressBook extends Component{
                                             {this.state.state}, {this.state.country} - {this.state.pincode}<br />
                                             T: {this.state.mobileNumber}
                                         </p>
-                                        <a href={'/address/'+this.state.deliveryAddressID} className="btn btn-warning mt15">Change Billing Address</a>
+                                        <div data-toggle="modal" data-target="#checkoutAddressModal" id={this.state.deliveryAddressID} onClick={this.getAddressId.bind(this)} className="btn btn-warning mt15">Change Billing Address</div>
                                     </div>
                                     :
                                     <div className="row">
                                         <label>Default Billing Address</label>
                                         <p>You have not set a default billing address.</p>
-                                        <a href={'/address'} className="btn btn-warning mt15">Add Billing Address</a>
+                                        <div data-toggle="modal" data-target="#checkoutAddressModal" className="btn btn-warning mt15">Add Billing Address</div>
                                     </div>
                                 }
                                 
@@ -136,7 +143,6 @@ class AddressBook extends Component{
                                 {this.state.addressLine1 ?
                                     <div className="row">
                                         <label>Default Shipping Address</label>
-                                        
                                         <p>
                                             {this.state.name} <br />
                                             {this.state.addressLine1} <br />
@@ -145,13 +151,13 @@ class AddressBook extends Component{
                                             {this.state.state}, {this.state.country} - {this.state.pincode}<br />
                                             T: {this.state.mobileNumber}
                                         </p>
-                                        <a href={'/address/'+this.state.deliveryAddressID} className="btn btn-warning mt15">Change Shipping Address</a>
+                                        <div data-toggle="modal" data-target="#checkoutAddressModal" id={this.state.deliveryAddressID} onClick={this.getAddressId.bind(this)} className="btn btn-warning mt15">Change Shipping Address</div>
                                     </div>
                                     :
                                     <div className="row">
                                         <label>Default Shipping Address</label>
                                         <p>You have not set a default shipping address.</p>
-                                        <a href={'/address'} className="btn btn-warning mt15">Add Shipping Address</a>
+                                        <div data-toggle="modal" data-target="#checkoutAddressModal" id={'/address'} className="btn btn-warning mt15">Add Shipping Address</div>
                                     </div>
                                 }
                                 
@@ -169,12 +175,12 @@ class AddressBook extends Component{
                                                     <p>
                                                         {address.name} <br />
                                                         {address.addressLine1} <br />
-                                                        {address.addressLine2} <br />
+                                                        {address.addressLine2}, <br />
                                                         {address.block}, {address.city},<br />
                                                         {address.state}, {address.country} - {address.pincode}<br />
                                                         T: {address.mobileNumber}
                                                     </p>
-                                                    <a href={'/address/'+address._id} className="btn btn-warning ">Edit Address</a> &nbsp;
+                                                    <div  data-toggle="modal" data-target="#checkoutAddressModal" id={address._id} onClick={this.getAddressId.bind(this)} className="btn btn-warning ">Edit Address</div> &nbsp;
                                                     <i id={address._id} onClick={this.deleteAddress.bind(this)} className="fa fa-trash btn btn-warning deleteAdd"></i>
                                                 </div>
                                             </div>
@@ -186,7 +192,7 @@ class AddressBook extends Component{
                             <p>You have no other address entries in your address book.</p>
                         }
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt25">
-                        <a href="/address" className="btn btn-warning addressSaveBtn">Add New Address</a>
+                        <div data-toggle="modal" data-target="#checkoutAddressModal" id="" className="btn btn-warning addressSaveBtn">Add New Address</div>
                         </div>
                         
                     </div>

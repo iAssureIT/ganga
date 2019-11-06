@@ -38,7 +38,7 @@ import Wishlist                                  from '../pages/Wishlist/Wishlis
 import Productreview                             from '../pages/Productreview/Productreview.js';
 import Account                                   from '../pages/Account/Account.js';
 import EditAccount                               from '../pages/EditAccount/EditAccount.js';
-import Address                                   from '../pages/Address/Address.js';
+// import Address                                   from '../pages/Address/Address.js';
 import AddressBook                               from '../pages/AddressBook/AddressBook.js';
 import PrivacyPolicy                             from "../pages/PrivacyPolicy/PrivacyPolicy.js";
 import Aboutuspage                               from "../pages/Aboutuspage/Aboutuspage.js";
@@ -99,8 +99,8 @@ class Routes extends Component{
             <Route path="/account"            exact strict component={ Account } />
             <Route path="/edit"            exact strict component={ EditAccount } />
             <Route path="/address-book"            exact strict component={ AddressBook } />
-            <Route path="/address/:deliveryAddressID"            exact strict component={ Address } />
-            <Route path="/address"            exact strict component={ Address } />
+            {/* <Route path="/address/:deliveryAddressID"            exact strict component={ Address } /> */}
+            {/* <Route path="/address"            exact strict component={ Address } /> */}
             <Route path="/returnpolicy"            exact strict component={ ReturnPolicy } />
             <Route path="/privacypolicy"             exact strict component={PrivacyPolicy}  />
             <Route path="/about-us"             exact strict component={Aboutuspage}  />
