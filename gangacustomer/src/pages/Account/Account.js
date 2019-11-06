@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $                    from 'jquery';
+import Address              from '../Address/Address.js';
 import axios                from 'axios';
 import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
 import "./Account.css";
@@ -30,10 +31,12 @@ class Account extends Component{
                 fullName        : res.data.profile.fullName,
                 emailId        : res.data.profile.emailId,
                 mobileNumber    : res.data.profile.mobileNumber,
+                name            : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].name : "",
                 deliveryAddressID : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0]._id : "",
                 addressLine1    : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].addressLine1 : "",
                 addressLine2    : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].addressLine2 : "",
                 block           : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].block : "",
+                district           : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].district : "",
                 city            : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].city : "",
                 pincode         : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].pincode : "",
                 state           : res.data.deliveryAddress.length > 0 ? res.data.deliveryAddress[0].state : "",
@@ -55,12 +58,21 @@ class Account extends Component{
         event.preventDefault();
         this.props.history.push('/address');
     }
+    getAddressId(event){
+        console.log('id', event.target.id);
+        this.setState({
+            addressId : event.target.id
+        })
+    }
+    opDone(){
+        this.getUserData();
+    }
     render(){
         console.log('user====', this.state)
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                 <SmallBanner bannerData={this.state.bannerData}/>  
-                
+                <Address addressId={this.state.addressId} opDone={this.opDone.bind(this)}/>
                 <div className="container">
                     <br/>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
@@ -108,7 +120,7 @@ class Account extends Component{
                                         <div className="accountDivHeader">Default Billing Address</div>
                                         { this.state.addressLine1 ?
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
-                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.fullName}</p>
+                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.name}</p>
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">
                                                 {this.state.addressLine1},<br />
                                                 {this.state.addressLine2},<br />
@@ -116,8 +128,9 @@ class Account extends Component{
                                                 {this.state.state}, {this.state.country} - {this.state.pincode}<br />
                                                     T: {this.state.mobileNumber}
                                                 </p>
+                                                
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                    <a href={"/address/"+this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</a>
+                                                    <div data-toggle="modal" data-target="#checkoutAddressModal" onClick={this.getAddressId.bind(this)} id={this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</div>
                                                 </div>
                                             </div>
                                             :
@@ -137,7 +150,7 @@ class Account extends Component{
                                         <div className="accountDivHeader">Default Shipping Address</div>
                                         { this.state.addressLine1 ?
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
-                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.fullName}</p>
+                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.name}</p>
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">
                                                 {this.state.addressLine1},<br />
                                                 {this.state.addressLine2},<br />
@@ -146,7 +159,7 @@ class Account extends Component{
                                                     T: {this.state.mobileNumber}
                                                 </p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                    <a href={"/address/"+this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</a>
+                                                    <div data-toggle="modal" data-target="#checkoutAddressModal" onClick={this.getAddressId.bind(this)} id={this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</div>
                                                 </div>
                                             </div>
                                             :

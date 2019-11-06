@@ -36,9 +36,12 @@ class Address extends Component {
         $.validator.addMethod("modalregxpincode", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid pincode");
-        $.validator.addMethod("modalregxblock", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid block");
+        // $.validator.addMethod("modalregxblock", function (value, element, regexpr) {
+        //     return regexpr.test(value);
+        // }, "Please enter valid block");
+        $.validator.addMethod("modalregxdistrict", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the district");
         $.validator.addMethod("modalregxcity", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid city");
@@ -82,13 +85,17 @@ class Address extends Component {
                     required: true,
                     modalregxpincode : /^[1-9][0-9]{5}$/,
                 },
-                modalblock: {
-                    required: true,
-                    modalregxblock : /^[A-Za-z][A-Za-z\-\s]*$/,
-                },
+                // modalblock: {
+                //     required: true,
+                //     modalregxblock : /^[A-Za-z][A-Za-z\-\s]*$/,
+                // },
                 modalcity: {
                     required: true,
                     modalregxcity : /^[A-Za-z][A-Za-z\-\s]*$/,
+                },
+                modaldistrict: {
+                    required: true,
+                    modalregxdistrict: "Select District"
                 },
                 modalstate: {
                     required: true,
@@ -122,8 +129,11 @@ class Address extends Component {
                 if (element.attr("name") == "modalpincode") {
                     error.insertAfter("#modalpincode");
                 }
-                if (element.attr("name") == "modalblock") {
-                    error.insertAfter("#modalblock");
+                // if (element.attr("name") == "modalblock") {
+                //     error.insertAfter("#modalblock");
+                // }
+                if (element.attr("name") == "modaldistrict") {
+                    error.insertAfter("#modaldistrict");
                 }
                 if (element.attr("name") == "modalcity") {
                     error.insertAfter("#modalcity");
@@ -149,6 +159,7 @@ class Address extends Component {
             console.log('res', response.data);
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
             this.getStates(deliveryAddress[0].country);
+            this.getDistrict(deliveryAddress[0].state,deliveryAddress[0].country)
             this.setState({
                 "modalname"        : deliveryAddress[0].name,
                 "modalemail"           : deliveryAddress[0].email,
@@ -156,6 +167,7 @@ class Address extends Component {
                 "modaladdressLine2"    : deliveryAddress[0].addressLine2,  
                 "modalpincode"         : deliveryAddress[0].pincode,
                 "modalblock"           : deliveryAddress[0].block,
+                "modaldistrict"        : deliveryAddress[0].district,
                 "modalcity"            : deliveryAddress[0].city,
                 "modalstate"           : deliveryAddress[0].state,
                 "modalcountry"         : deliveryAddress[0].country,
@@ -195,6 +207,31 @@ class Address extends Component {
             console.log('error', error);
         })
     }
+    handleChangeState(event){
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+        const target = event.target;
+        const stateCode = event.target.value;
+        const countryCode = this.state.modalcountry;
+       console.log('handleChangeState', stateCode,countryCode);
+        this.getDistrict(stateCode,countryCode);
+         
+      }
+      getDistrict(stateCode,countryCode){
+        axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
+              .then((response)=>{
+                console.log('districtArray', response.data);
+                this.setState({
+                    districtArray : response.data
+                })
+                console.log(this.state.city);
+                $('#Citydata').val(this.state.city);
+              })
+              .catch((error)=>{
+                  console.log('error', error);
+              })
+      }
     saveAddress(event){
         event.preventDefault();
         var deliveryAddressID = this.props.addressId;
@@ -207,6 +244,7 @@ class Address extends Component {
             "addressLine2"    : this.state.modaladdressLine2,  
             "pincode"         : this.state.modalpincode,
             "block"           : this.state.modalblock,
+            "district"        : this.state.modaldistrict,
             "city"            : this.state.modalcity,
             "state"           : this.state.modalstate,
             "country"         : this.state.modalcountry,
@@ -318,13 +356,13 @@ class Address extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                    <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <option value="Select State">Select State</option>
                                         {
                                             this.state.stateArray && this.state.stateArray.length > 0 ?
                                                 this.state.stateArray.map((stateData, index) => {
                                                     return (
-                                                        <option key={index} value={this.camelCase(stateData.stateName)}>{this.camelCase(stateData.stateName)}</option>
+                                                        <option key={index} value={stateData.stateCode}>{this.camelCase(stateData.stateName)}</option>
                                                     );
                                                 }
                                                 ) : ''
@@ -332,9 +370,24 @@ class Address extends Component {
                                     </select>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">District <span className="required">*</span></label>
+                                    <select ref="modaldistrict" name="modaldistrict" id="modaldistrict" value={this.state.modaldistrict} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <option value="Select District">Select District</option>
+                                        {  
+                                            this.state.districtArray && this.state.districtArray.length > 0 ?
+                                            this.state.districtArray.map((districtdata, index)=>{
+                                                return(      
+                                                    <option  key={index} value={districtdata.districtName}>{this.camelCase(districtdata.districtName)}</option>
+                                                );
+                                                }
+                                            ) : ''
+                                        }
+                                    </select>
+                                </div>
+                                {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
                                     <input type="text" ref="modalblock" name="modalblock" id="modalblock" value={this.state.modalblock} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                </div>
+                                </div> */}
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
                                     <input type="text" ref="modalcity" name="modalcity" id="modalcity" value={this.state.modalcity} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />

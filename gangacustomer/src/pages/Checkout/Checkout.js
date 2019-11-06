@@ -68,9 +68,12 @@ class Checkout extends Component {
         $.validator.addMethod("regxstate", function (value, element, arg) {
             return arg !== value;
         }, "Please select the state");
-        $.validator.addMethod("regxblock", function (value, element, regexpr) {
-            return regexpr.test(value);
-        }, "Please enter valid block name.");
+        // $.validator.addMethod("regxblock", function (value, element, regexpr) {
+        //     return regexpr.test(value);
+        // }, "Please enter valid block name.");
+        $.validator.addMethod("regxdistrict", function (value, element, arg) {
+            return arg !== value;
+        }, "Please select the district");
         $.validator.addMethod("regxcity", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid city name");
@@ -113,9 +116,13 @@ class Checkout extends Component {
                     required: true,
                     regxstate: "Select State"
                 },
-                block: {
+                // block: {
+                //     required: true,
+                //     regxblock : /^[A-Za-z][A-Za-z\-\s]*$/,
+                // },
+                district: {
                     required: true,
-                    regxblock : /^[A-Za-z][A-Za-z\-\s]*$/,
+                    regxdistrict: "Select District"
                 },
                 city: {
                     required: true,
@@ -158,9 +165,12 @@ class Checkout extends Component {
               if (element.attr("name") == "state") {
                 error.insertAfter("#state");
               }
-              if (element.attr("name") == "block") {
-                error.insertAfter("#block");
-              }
+            //   if (element.attr("name") == "block") {
+            //     error.insertAfter("#block");
+            //   }
+            if (element.attr("name") == "district") {
+                error.insertAfter("#district");
+            }
               if (element.attr("name") == "city") {
                 error.insertAfter("#city");
               }
@@ -558,6 +568,7 @@ class Checkout extends Component {
                 "pincode": deliveryAddress.length > 0 ? deliveryAddress[0].pincode : "",
                 "block": deliveryAddress.length > 0 ? deliveryAddress[0].block : "",
                 "city": deliveryAddress.length > 0 ? deliveryAddress[0].city : "",
+                "district" : deliveryAddress.length > 0 ? deliveryAddress[0].district : "",
                 "state": deliveryAddress.length > 0 ? deliveryAddress[0].state : "",
                 "country": deliveryAddress.length > 0 ? deliveryAddress[0].country : "",
                 "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
@@ -573,6 +584,7 @@ class Checkout extends Component {
                 "addressLine2": this.state.addressLine2,
                 "pincode": this.state.pincode,
                 "block": this.state.block,
+                "district" : this.state.district,
                 "city": this.state.city,
                 "state": this.state.state,
                 "country": this.state.country,
@@ -757,8 +769,9 @@ class Checkout extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
-        this.getStates($(target).val())
+        this.getStates(event.target.value);
     }
+    
     getStates(countryCode) {
         axios.get("http://locationapi.iassureit.com/api/states/get/list/" + countryCode)
             .then((response) => {
@@ -771,6 +784,32 @@ class Checkout extends Component {
                 console.log('error', error);
             })
     }
+    handleChangeState(event){
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+        const target = event.target;
+        const stateCode = event.target.value;
+        const countryCode = this.state.country;
+       console.log('handleChangeState', stateCode,countryCode);
+        this.getDistrict(stateCode,countryCode);
+         
+      }
+      getDistrict(stateCode,countryCode){
+          
+        axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
+              .then((response)=>{
+                console.log('districtArray', response.data);
+                this.setState({
+                    districtArray : response.data
+                })
+                console.log(this.state.city);
+                $('#Citydata').val(this.state.city);
+              })
+              .catch((error)=>{
+                  console.log('error', error);
+              })
+      }
     camelCase(str) {
         return str
             .toLowerCase()
@@ -850,23 +889,38 @@ class Checkout extends Component {
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                                <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <option value="Select State">Select State</option>
                                                     {
                                                         this.state.stateArray && this.state.stateArray.length > 0 ?
-                                                            this.state.stateArray.map((stateData, index) => {
-                                                                return (
-                                                                    <option key={index} value={this.camelCase(stateData.stateName)}>{this.camelCase(stateData.stateName)}</option>
-                                                                );
+                                                        this.state.stateArray.map((stateData, index)=>{
+                                                            return(      
+                                                                <option key={index} value={stateData.stateCode}>{this.camelCase(stateData.stateName)}</option>
+                                                            );
                                                             }
-                                                            ) : ''
+                                                        ) : ''
                                                     }
                                                 </select>
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">District <span className="required">*</span></label>
+                                                <select ref="district" name="district" id="district" value={this.state.district} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <option value="Select District">Select District</option>
+                                                    {  
+                                                        this.state.districtArray && this.state.districtArray.length > 0 ?
+                                                        this.state.districtArray.map((districtdata, index)=>{
+                                                            return(      
+                                                                <option  key={index} value={districtdata.districtName}>{this.camelCase(districtdata.districtName)}</option>
+                                                            );
+                                                            }
+                                                        ) : ''
+                                                        }
+                                                </select>
+                                            </div>
+                                            {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
                                                 <input type="text" ref="block" name="block" id="block" value={this.state.block} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
                                                 <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
