@@ -22,10 +22,11 @@ class Address extends Component {
         console.log('deliveryAddressID', deliveryAddressID);
         axios.get('/api/users/'+user_ID)
         .then((response)=>{
+            console.log('res', response.data);
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
             this.getStates(deliveryAddress[0].country);
             this.setState({
-                "name"            : deliveryAddress[0].name,
+                "username"        : deliveryAddress[0].name,
                 "email"           : deliveryAddress[0].email,
                 "addressLine1"    : deliveryAddress[0].addressLine1,
                 "addressLine2"    : deliveryAddress[0].addressLine2,  
