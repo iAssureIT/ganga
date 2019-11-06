@@ -98,7 +98,6 @@ export default class Footer extends Component {
                      <strong>LET US HELP YOU</strong>
                 </div>   
                 <ul>
-                    <li><a href="/signup">Join Free</a></li>
                     <li><a href="/blogs">Blog</a></li>
                     <li><a href="#">Faqs</a></li>
                     <li><a href="#">Store Location</a></li>

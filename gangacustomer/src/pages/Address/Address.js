@@ -17,32 +17,8 @@ class Address extends Component {
         this.camelCase = this.camelCase.bind(this)
     }
     componentDidMount(){
-        var user_ID = localStorage.getItem("user_ID");
-        var deliveryAddressID = this.props.match.params.deliveryAddressID;
-        console.log('deliveryAddressID', deliveryAddressID);
-        axios.get('/api/users/'+user_ID)
-        .then((response)=>{
-            console.log('res', response.data);
-            var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
-            this.getStates(deliveryAddress[0].country);
-            this.setState({
-                "username"        : deliveryAddress[0].name,
-                "email"           : deliveryAddress[0].email,
-                "addressLine1"    : deliveryAddress[0].addressLine1,
-                "addressLine2"    : deliveryAddress[0].addressLine2,  
-                "pincode"         : deliveryAddress[0].pincode,
-                "block"           : deliveryAddress[0].block,
-                "city"            : deliveryAddress[0].city,
-                "state"           : deliveryAddress[0].state,
-                "country"         : deliveryAddress[0].country,
-                "mobileNumber"    : deliveryAddress[0].mobileNumber,
-                "addType"         : deliveryAddress[0].addType,
-            })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        });
         this.validations();
+        this.edit();
     }
     validations(){
         $.validator.addMethod("regxusername", function (value, element, regexpr) {
@@ -162,8 +138,35 @@ class Address extends Component {
             }
         });
     }
+    edit(){
+        var user_ID = localStorage.getItem("user_ID");
+        var deliveryAddressID = this.props.match.params.deliveryAddressID;
+        console.log('deliveryAddressID', deliveryAddressID);
+        axios.get('/api/users/'+user_ID)
+        .then((response)=>{
+            console.log('res', response.data);
+            var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
+            this.getStates(deliveryAddress[0].country);
+            this.setState({
+                "username"        : deliveryAddress[0].name,
+                "email"           : deliveryAddress[0].email,
+                "addressLine1"    : deliveryAddress[0].addressLine1,
+                "addressLine2"    : deliveryAddress[0].addressLine2,  
+                "pincode"         : deliveryAddress[0].pincode,
+                "block"           : deliveryAddress[0].block,
+                "city"            : deliveryAddress[0].city,
+                "state"           : deliveryAddress[0].state,
+                "country"         : deliveryAddress[0].country,
+                "mobileNumber"    : deliveryAddress[0].mobileNumber,
+                "addType"         : deliveryAddress[0].addType,
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        });
+    }
     componentWillReceiveProps(nextProps){
-
+        this.edit();
     }
     handleChange(event) {
         this.setState({
