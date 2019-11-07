@@ -31,7 +31,8 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
         this.props.history.push('/login');
       })
       .catch((error)=>{
-        console.log('error', error);
+        console.log('error', error.response);
+        ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
       })
     }
     inputEffect(event){
@@ -45,14 +46,13 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
     resendOtp(event){
       event.preventDefault();
       var element = document.getElementById("resendOtpBtn");
-      element.classList.add("btn-success");
-      element.classList.remove("resendOtpColor");
+      // element.classList.add("btn-success");
+      //element.classList.remove("resendOtpColor");
 
-            const userid = this.props.match.params.user_ID;
+          const userid = this.props.match.params.user_ID;
           //  console.log("userid",userid);
           axios.get('/api/users/resendotp/'+userid)
           .then((response)=>{
-            // console.log('response', response);
             // swal(response.data.message)
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           })
@@ -99,7 +99,7 @@ return(
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 borderrightlogin"> 
                 <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
                   <h4><b>Confirm OTP</b></h4>
-                  <p>We have sent you a Verification Code to your registered mobile and Email <br/><br/></p>
+                  <p>We send you a Verification Code to your registered email <br/><br/></p>
                     <form id="OTPMobMail" onSubmit={this.confirmOTP.bind(this)}>
                       <div className="">
                         <div className="">

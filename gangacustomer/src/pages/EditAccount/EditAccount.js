@@ -23,6 +23,7 @@ class EditAccount extends Component{
     }
     componentDidMount(){
         this.getUserData();
+        window.scrollTo(0, 0);
         $.validator.setDefaults({
             debug: true,
             success: "valid"
@@ -47,7 +48,11 @@ class EditAccount extends Component{
                 },
                 newPassword2: {
                     required: true,
+                    equalTo : ".newPassword"
                 },
+            },
+            messages:{
+                newPassword2:"Password do not match"
             },
             errorPlacement: function(error, element) {
                 if (element.attr("name") == "firstName"){
@@ -108,16 +113,17 @@ class EditAccount extends Component{
             "changeEmail"   : this.state.changeEmail,
             "changePassword": this.state.changePassword
         }
-        console.log('formvalues',formvalues);
         if($('#editAccount').valid()){
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
-                // console.log(response.message);
+                console.log(response.message);
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
             })
-            .catch((error)=> {
-            console.log('error',error);
+            .catch((error,resp)=> {
+
+            ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+             
             });
         }
     }
@@ -168,11 +174,12 @@ class EditAccount extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label className="mt15">First Name <i className="requiredsign">*</i></label><br />
                                         <div id="firstName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <input type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                            <input type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required/>
                                         </div>
+                                        <br />
                                         <label className="mt15">Last Name <i className="requiredsign">*</i></label><br />
                                         <div id="lastName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <input type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                            <input type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required />
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changeEmail" checked={this.state.changeEmail} onChange={this.changeEmail.bind(this)}/> &nbsp; <span>Change Email</span>
@@ -212,7 +219,7 @@ class EditAccount extends Component{
                                             <div>
                                                 <label className="mt15">New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="password" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <input type="password" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 newPassword" />
                                                 </div>
                                                 <label className="mt15">Confirm New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword2" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">

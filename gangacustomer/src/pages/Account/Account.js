@@ -91,7 +91,8 @@ class Account extends Component{
                                             <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.fullName}</p>
                                             <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">{this.state.emailId}</p>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                <button className="btn btn-warning" onClick={this.editUser.bind(this)}><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT</button> &nbsp; &nbsp;<button className="btn btn-warning">CHANGE PASSWORD</button>
+                                                <button className="btn btn-warning" onClick={this.editUser.bind(this)}><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT</button> &nbsp; &nbsp;
+                                            {/*<button className="btn btn-warning">CHANGE PASSWORD</button>*/}
                                             </div>
                                         </div>
                                     </div>
