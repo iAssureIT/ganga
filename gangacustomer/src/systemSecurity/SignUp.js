@@ -289,7 +289,7 @@ class SignUp extends Component {
 	}
 	componentDidMount() {
 		this.validation();
-		// $(".checkUserExistsError").hide();
+		$(".checkUserExistsError").hide();
 	}
 
 	showSignPass() {
