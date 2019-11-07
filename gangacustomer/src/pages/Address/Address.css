@@ -3,5 +3,8 @@
     padding: 10px 20px;
 }
 .addressModal{
-    top: 50px;
+    top: 25px;
+}
+.addressModalBody{
+    padding: 0px 15px 15px 15px;
 }

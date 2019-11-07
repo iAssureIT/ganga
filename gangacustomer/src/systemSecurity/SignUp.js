@@ -73,7 +73,7 @@ class SignUp extends Component {
 	            
  			// console.log("-------auth------>>",auth);
 
-        document.getElementById("signUpBtn").value = 'We are processing. Please Wait...';            
+        document.getElementById("signUpBtn").innerHTML = 'We are processing. Please Wait...';            
             
         var firstname                = this.refs.firstname.value;
         var mobile                   = this.refs.mobNumber.value;
@@ -87,7 +87,7 @@ class SignUp extends Component {
                 return (passwordVar.length >= 6) ? 
                 	(true, 
                 	//  console.log("formValues= ",auth),
-		             document.getElementById("signUpBtn").value = 'Sign Up',
+		             document.getElementById("signUpBtn").innerHTML = 'Create an Account',
       				// browserHistory.push("/"),
                 	axios.post('/api/users',auth)
 			            .then((response)=> {
@@ -105,19 +105,19 @@ class SignUp extends Component {
                 	)
                 :
 	                (
-		                document.getElementById("signUpBtn").value = 'Sign Up',
+		                document.getElementById("signUpBtn").innerHTML = 'Create an Account',
        					ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 		                // swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
 	                )
 
                 
             } else {
-                document.getElementById("signUpBtn").value = 'Sign Up';
+                document.getElementById("signUpBtn").innerHTML = 'Create an Account';
        			ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 		        // return swal("Passwords does not match","Please Try Again")
             }
             }else{
-                document.getElementById("signUpBtn").value = 'Sign Up';
+                document.getElementById("signUpBtn").innerHTML = 'Create an Account';
        			ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 				// swal("Please enter mandatory fields", "", "warning");
 				// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -261,7 +261,7 @@ return(
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
 	        <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12">
-		    <form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
+		    <form id="signUpUser">
 	   		<div className="logininput">
 	   		<label>First Name</label><label className="astricsign">*</label>
 			   <input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="FirstName" onChange={this.handleChange} data-text="firstNameV" required/>
@@ -331,7 +331,7 @@ return(
 		    </div>
 		    </div>
 			<div className=" mt30">
-		    	<input id="signUpBtn" className="col-lg-10 col-md-10 col-sm-10 col-xs-10 button3  btn btn-warning  signupbtn" type="submit" value="Create an Account"/>
+		    	<button id="signUpBtn" onClick={this.usersignup.bind(this)} className="col-lg-10 col-md-10 col-sm-10 col-xs-10 button3  btn btn-warning  signupbtn" type="submit"> Create an Account</button>
 		    </div>		   
 	    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">
 		     <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a> 	

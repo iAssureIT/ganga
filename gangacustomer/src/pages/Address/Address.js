@@ -324,86 +324,95 @@ class Address extends Component {
                             <button type="button" className="close" data-dismiss="modal">&times;</button>
                             <h4 className="modal-title">Shipping Address</h4>
                         </div>
-                        <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="modal-body addressModalBody col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <form id="modalAddressForm">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Full Name <span className="required">*</span></label>
                                     <input type="text" ref="modalname" name="modalname" id="modalname" value={this.state.modalname} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                    <input placeholder="Eg. 9876543210" type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" value={this.state.modalmobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                    {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
+                                        <input placeholder="Eg. 9876543210" type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" value={this.state.modalmobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
+                                    </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
+                                        <input type="email" ref="modalemail" name="modalemail" id="modalemail" value={this.state.modalemail} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
-                                    <input type="email" ref="modalemail" name="modalemail" id="modalemail" value={this.state.modalemail} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
+                                        <input type="text" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1" value={this.state.modaladdressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
+                                        <input type="text" ref="modaladdressLine2" name="modaladdressLine2" id="modaladdressLine2" value={this.state.modaladdressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
-                                    <input type="text" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1" value={this.state.modaladdressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
+                                        <select ref="modalcountry" name="modalcountry" id="modalcountry" value={this.state.modalcountry} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" onChange={this.handleChangeCountry.bind(this)}>
+                                            <option value="Select Country">Select Country</option>
+                                            <option value="IN">India</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
+                                        <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <option value="Select State">Select State</option>
+                                            {
+                                                this.state.stateArray && this.state.stateArray.length > 0 ?
+                                                    this.state.stateArray.map((stateData, index) => {
+                                                        return (
+                                                            <option key={index} value={stateData.stateCode}>{this.camelCase(stateData.stateName)}</option>
+                                                        );
+                                                    }
+                                                    ) : ''
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
-                                    <input type="text" ref="modaladdressLine2" name="modaladdressLine2" id="modaladdressLine2" value={this.state.modaladdressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                    <select ref="modalcountry" name="modalcountry" id="modalcountry" value={this.state.modalcountry} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" onChange={this.handleChangeCountry.bind(this)}>
-                                        <option value="Select Country">Select Country</option>
-                                        <option value="IN">India</option>
-                                    </select>
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                    <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <option value="Select State">Select State</option>
-                                        {
-                                            this.state.stateArray && this.state.stateArray.length > 0 ?
-                                                this.state.stateArray.map((stateData, index) => {
-                                                    return (
-                                                        <option key={index} value={stateData.stateCode}>{this.camelCase(stateData.stateName)}</option>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">District <span className="required">*</span></label>
+                                        <select ref="modaldistrict" name="modaldistrict" id="modaldistrict" value={this.state.modaldistrict} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <option value="Select District">Select District</option>
+                                            {  
+                                                this.state.districtArray && this.state.districtArray.length > 0 ?
+                                                this.state.districtArray.map((districtdata, index)=>{
+                                                    return(      
+                                                        <option  key={index} value={districtdata.districtName}>{this.camelCase(districtdata.districtName)}</option>
                                                     );
-                                                }
+                                                    }
                                                 ) : ''
-                                        }
-                                    </select>
+                                            }
+                                        </select>
+                                    </div>
+                                    {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
+                                        <input type="text" ref="modalblock" name="modalblock" id="modalblock" value={this.state.modalblock} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    </div> */}
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
+                                        <input type="text" ref="modalcity" name="modalcity" id="modalcity" value={this.state.modalcity} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">District <span className="required">*</span></label>
-                                    <select ref="modaldistrict" name="modaldistrict" id="modaldistrict" value={this.state.modaldistrict} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <option value="Select District">Select District</option>
-                                        {  
-                                            this.state.districtArray && this.state.districtArray.length > 0 ?
-                                            this.state.districtArray.map((districtdata, index)=>{
-                                                return(      
-                                                    <option  key={index} value={districtdata.districtName}>{this.camelCase(districtdata.districtName)}</option>
-                                                );
-                                                }
-                                            ) : ''
-                                        }
-                                    </select>
-                                </div>
-                                {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
-                                    <input type="text" ref="modalblock" name="modalblock" id="modalblock" value={this.state.modalblock} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                </div> */}
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
-                                    <input type="text" ref="modalcity" name="modalcity" id="modalcity" value={this.state.modalcity} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                </div>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
+                                        <input type="text" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    </div>
 
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                    <input type="text" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                </div>
-
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                    <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
-                                    <select id="modaladdType" name="modaladdType" ref="modaladdType" value={this.state.modaladdType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <option value="Home">Home (All day delivery) </option>
-                                        <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>
-                                    </select>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
+                                        <select id="modaladdType" name="modaladdType" ref="modaladdType" value={this.state.modaladdType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <option value="Home">Home (All day delivery) </option>
+                                            <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </form>
                         </div>
