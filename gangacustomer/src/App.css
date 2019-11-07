@@ -128,4 +128,6 @@ a:hover{
 .redFont{
   color: red;
 }
-.nhb{}
+.error{
+  font-size: 10px;
+}

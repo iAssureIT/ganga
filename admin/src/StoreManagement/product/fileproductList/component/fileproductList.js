@@ -1,9 +1,6 @@
 import React, { Component }   from 'react';
-import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import IAssureTable           from "../../../../coreAdmin/IAssureTable/IAssureTable.jsx";
-import swal                   from 'sweetalert';
 import _                      from 'underscore';
 class FileWiseProductList extends Component{
     constructor(props) {
@@ -13,7 +10,7 @@ class FileWiseProductList extends Component{
           tableHeading:{
             "fileName"     : "File Name",
             "productCount" : "Product Count",
-            "actions" : "Action"
+            "actions"      : "Action"
           },
           "tableObjects"              : {
               deleteMethod              : 'delete',
@@ -28,8 +25,7 @@ class FileWiseProductList extends Component{
     }
     componentWillReceiveProps(nextProps) {
       this.getCount();
-        this.getData(this.state.startRange, this.state.limitRange);
-        
+      this.getData(this.state.startRange, this.state.limitRange);
     }
     componentDidMount() {
       this.getCount();
@@ -37,26 +33,10 @@ class FileWiseProductList extends Component{
       
     }
     deleteFileWiseProduct(event){
-        // var id = $(event.currentTarget).attr("data-productId");
-        // console.log("id",id);
-        // if(id){
-        //     Meteor.call("deleteFileWiseListShopProduct",id, (error, result)=> {
-        //         if(error){
 
-        //         } else {
-        //             swal({
-        //                 position: 'top-right',
-        //                 type: 'success',
-        //                 text: 'Product Deleted Successfully',
-        //                 title: 'Product Deleted Successfully',
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-        //             $('.modal-backdrop').hide();
+    }
+    getSearchText(event){
 
-        //         }
-        //     });
-        // }
     }
     getData(startRange, limitRange){
       var data = {
@@ -65,7 +45,7 @@ class FileWiseProductList extends Component{
       }
       axios.post('/api/products/get/files', data)
       .then((response)=>{
-        console.log(response.data)
+        console.log(response.data);
         var tableData = response.data.map((a, i)=>{
           return {
             fileName: a.fileName != null ? a.fileName : "-", 
@@ -106,7 +86,6 @@ class FileWiseProductList extends Component{
                            <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
                                 <h4 className="NOpadding-right"> File Wise Product List</h4>
                           </div>
-                          
                       </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <IAssureTable 
@@ -116,6 +95,7 @@ class FileWiseProductList extends Component{
                             tableData={this.state.tableData}
                             getData={this.getData.bind(this)}
                             tableObjects={this.state.tableObjects}
+                            getSearchText={this.getSearchText.bind(this)}
                           />
                         </div>
                       </div>
@@ -128,46 +108,3 @@ class FileWiseProductList extends Component{
     }
 }
 export default FileWiseProductList ;
-
-// = withTracker(props => {
-//     var userId = Meteor.userId();
-    
-//     // const vendorHandle = Meteor.subscribe("allSupplierList");
-//     // const VendorData = Suppliers.findOne({"OwnerId":userId});
-//     //console.log('VendorData',VendorData);
-//     // const loading = !vendorHandle.ready();
-
-//     // var VendorId = VendorData ? VendorData._id : '';
-//     //console.log('VendorId',VendorId);
-//     const productHandle     = Meteor.subscribe("productShopPublish");
-//     // if(Roles.userIsInRole(Meteor.userId(), ['Vendor'])){
-//     //     productData       = ProductShop.find({vendorId:VendorId}).fetch();
-//     // }else{
-//      const productData = ProductShop.find({},{fields:{"fileName":1}}).fetch();
-//      var fileNameNCountData = []
-     
-//      var Filename =_.pluck(productData,'fileName');
-//      if(Filename){
-//          var Data =_.uniq(Filename);
-//          if(Data){
-//             for(var i = 0 ; i < Data.length ; i++){
-//                 var fileNmNCount = {
-//                     "fileName" : Data[i],
-//                     "count" : ProductShop.find({"fileName":Data[i]},{fields:{"fileName":1}}).count()
-//                 };   
-//                 if(fileNmNCount){
-//                     fileNameNCountData.push(fileNmNCount);
-//                 }
-//             }
-//          }
-//      }
-//     // }
-//     const loading = !productHandle.ready();
-//        // const productcount = ProductShop.find({"":}).count();
-//     return {
-//         loading,
-//         productData,
-//         Data,
-//         fileNameNCountData
-//     };    
-// })(FileWiseProductList);
