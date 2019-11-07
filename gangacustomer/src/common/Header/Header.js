@@ -410,7 +410,7 @@ searchProducts(){
                               {
                                  
                                   user_ID? 
-                                  <li className="dropdown"><a href="/"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                  <li className="dropdown"><a href="#"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
                                       <li className="col-lg-12 NOpadding">
                                         <a><div className="row">

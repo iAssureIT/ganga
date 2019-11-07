@@ -218,9 +218,9 @@ render(){
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
 							<select onChange={this.performselectaction.bind(this)} value={this.state.userListDropdown} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" >
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" disabled >-- Select --</option>	
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="blocked">Block Selected</option>	
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="active">Active Selected</option>
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="delete">Delete Selected Acccounts</option>	
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="Blocked">Block Selected</option>	
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="Active">Active Selected</option>
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="Delete">Delete Selected Acccounts</option>	
 							</select>
 						</div> 
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">

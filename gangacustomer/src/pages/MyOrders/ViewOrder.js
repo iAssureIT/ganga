@@ -12,20 +12,22 @@ class ViewOrder extends Component {
         if(!this.props.loading){
             this.state = {
                 "orderData":[],
+                "companyInfo" : []
                 // "notificationData" :Meteor.subscribe("notificationTemplate"),
             };
         } else{
             this.state = {
                 "orderData":[],
+                "companyInfo" : []
             };
         }
+        this.getCompanyDetails =  this.getCompanyDetails.bind(this)
         window.scrollTo(0, 0);
     }
 
     componentDidMount() {
         //this.getMyOrders();
-        console.log(this.props.match.params.order_ID)
-
+       
         axios.get("/api/orders/get/one/"+this.props.match.params.order_ID)
             .then((response)=>{
               this.setState({ 
@@ -35,10 +37,26 @@ class ViewOrder extends Component {
             .catch((error)=>{
                 console.log('error', error);
             })
+        this.getCompanyDetails();    
+
 
     }
+    getCompanyDetails() {
+        
+        axios.get("/api/companysettings/list")
+            .then((response) => {
 
+                this.setState({
+                    companyInfo: response.data[0]
+                })
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+    }
   render() {  
+    
+    console.log("companyInfo",this.state.companyInfo);
     return (
     <div className="container"> 
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -89,7 +107,7 @@ class ViewOrder extends Component {
                   </td>
               </tr>
               <tr className="shipping">
-                  <th colspan="3" className="mark" scope="row">GST (18%)</th>
+                  <th colspan="3" className="mark" scope="row">GST ({ this.state.companyInfo.taxSettings && this.state.companyInfo.taxSettings[0].taxRating} %)</th>
                   <td className="amount" data-th="Shipping &amp; Handling">
                     <span><i className={"fa fa-"+this.state.orderData.currency}>{ (this.state.orderData.cartTotal*18)/100 } </i></span> 
                   </td>

@@ -68,7 +68,6 @@ class Account extends Component{
         this.getUserData();
     }
     render(){
-        console.log('user====', this.state)
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                 <SmallBanner bannerData={this.state.bannerData}/>  
@@ -81,10 +80,8 @@ class Account extends Component{
                     <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8 NOpadding mt25">
                         <h4 className="accountTitle">Account control panel</h4>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15">
-                            <label>Hello {this.state.fullName}</label>
-                            <p className="">From your My Account Dashboard you have the ability to view a snapshot of 
-                            your recent account activity and update your account information. Select a link 
-                            below to view or edit information.</p>
+                            <p><label>Hello {this.state.fullName}</label></p>
+                            
 
                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">

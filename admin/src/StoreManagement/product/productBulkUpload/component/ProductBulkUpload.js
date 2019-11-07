@@ -334,24 +334,24 @@ class AddNewBulkProduct extends Component{
                                 }
                             }else{
 
-                                if (header[k].startsWith("featureList")) {
-                                    if (header[k]=='featureList1') {
+                                if (header[k].startsWith("feature")) {
+                                    if (header[k]=='feature1') {
                                         if (record[k] != undefined && record[k] != '') {
                                             //featuresArray ={ feature: record[k], index:0 };
                                             featuresArray.push({ feature: record[k], index:0 });
                                         }
                                     }
-                                    if (header[k]=='featureList2') {
+                                    if (header[k]=='feature2') {
                                         if (record[k] != undefined && record[k] != '') {
                                             featuresArray.push({ feature: record[k], index:1 });
                                         }
                                     }
-                                    if (header[k]=='featureList3') {
+                                    if (header[k]=='feature3') {
                                         if (record[k] != undefined && record[k] != '') {
                                             featuresArray.push({ feature: record[k], index:2 });
                                         }
                                     }
-                                    if (header[k]=='featureList4') {
+                                    if (header[k]=='feature4') {
                                         if (record[k] != undefined && record[k] != '') {
                                             featuresArray.push({ feature: record[k], index:3 });
                                         }
