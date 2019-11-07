@@ -836,6 +836,23 @@ class Checkout extends Component {
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <form id="checkout">
                             <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div className="col-lg-12 col-md-126 col-sm-12 col-xs-12 NOpadding">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentMethod NOpadding">
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning paymentMethodTitle">PAYMENT METHOD <span className="required">*</span></div>
+
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentInput">
+                                            <input name="payMethod" type="radio" value="Cash On Delivery" className="col-lg-1 col-md-1 col-sm-2 col-xs-2" />
+                                            <span className="col-lg-11 col-md-11 col-sm-10 col-xs-10">Cash On Delivery</span>
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentInput">
+                                            <input disabled name="payMethod" type="radio" value="Credit Card Direct Post" className="col-lg-1 col-md-1 col-sm-2 col-xs-2" />
+                                            <span className="col-lg-11 col-md-11 col-sm-10 col-xs-10">Credit / Debit Card</span>
+                                        </div>
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+                                            <div id="payMethod"></div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {
                                     this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
@@ -946,7 +963,7 @@ class Checkout extends Component {
                                 }
                             </div>
                             <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingLeft">
+                                {/*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingLeft">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingMethod NOpadding">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingMethodTitle">EXPECTED DELIVERY</div>
 
@@ -955,24 +972,8 @@ class Checkout extends Component {
                                             <input type="date" name="date" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" min={moment().format('YYYY-MM-DD')} />
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingRight">
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentMethod NOpadding">
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning paymentMethodTitle">PAYMENT METHOD <span className="required">*</span></div>
-
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentInput">
-                                            <input name="payMethod" type="radio" value="Cash On Delivery" className="col-lg-1 col-md-1 col-sm-2 col-xs-2" />
-                                            <span className="col-lg-11 col-md-11 col-sm-10 col-xs-10">Cash On Delivery</span>
-                                        </div>
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paymentInput">
-                                            <input disabled name="payMethod" type="radio" value="Credit Card Direct Post" className="col-lg-1 col-md-1 col-sm-2 col-xs-2" />
-                                            <span className="col-lg-11 col-md-11 col-sm-10 col-xs-10">Credit / Debit Card</span>
-                                        </div>
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
-                                            <div id="payMethod"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>*/}
+                                
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 orderReviews NOpadding">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning orderReviewsTitle">ORDER REVIEWS</div>
                                     <table className="table table-responsive orderTable">

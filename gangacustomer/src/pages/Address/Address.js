@@ -161,7 +161,7 @@ class Address extends Component {
             this.getStates(deliveryAddress[0].country);
             this.getDistrict(deliveryAddress[0].state,deliveryAddress[0].country)
             this.setState({
-                "modalname"        : deliveryAddress[0].name,
+                "modalname"            : deliveryAddress[0].name,
                 "modalemail"           : deliveryAddress[0].email,
                 "modaladdressLine1"    : deliveryAddress[0].addressLine1,
                 "modaladdressLine2"    : deliveryAddress[0].addressLine2,  
@@ -304,16 +304,32 @@ class Address extends Component {
       .join(' ');
     }
     Closepagealert(event){
-    event.preventDefault();
-    $(".toast-error").html('');
-    $(".toast-success").html('');
-    $(".toast-info").html('');
-    $(".toast-warning").html('');
-    $(".toast-error").removeClass('toast');
-    $(".toast-success").removeClass('toast');
-    $(".toast-info").removeClass('toast');
-    $(".toast-warning").removeClass('toast');
-
+        event.preventDefault();
+        $(".toast-error").html('');
+        $(".toast-success").html('');
+        $(".toast-info").html('');
+        $(".toast-warning").html('');
+        $(".toast-error").removeClass('toast');
+        $(".toast-success").removeClass('toast');
+        $(".toast-info").removeClass('toast');
+        $(".toast-warning").removeClass('toast');
+    }
+    cancel(){
+        this.setState({
+            "modalname"            : '',
+            "modalemail"           : '',
+            "modaladdressLine1"    : '',
+            "modaladdressLine2"    : '',
+            "modalpincode"         : '',
+            "modalblock"           : '',
+            "modaldistrict"        : '',
+            "modalcity"            : '',
+            "modalstate"           : '',
+            "modalcountry"         : '',
+            "modalmobileNumber"    : '',
+            "modaladdType"         : '',
+        });
+        $("#modalAddressForm").validate().resetForm();
     }
     render() {
         return (
@@ -417,7 +433,7 @@ class Address extends Component {
                             </form>
                         </div>
                         <div className="modal-footer checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button type="button" className="btn btn-warning" data-dismiss="modal">Cancel</button>
+                            <button type="button" className="btn btn-warning" data-dismiss="modal" onClick={this.cancel.bind(this)}>Cancel</button>
                             <button type="button" className="btn btn-warning" onClick={this.saveAddress.bind(this)}>{this.props.addressId ? 'Update Address' :'Save Address'}</button>
                         </div>
                     </div>

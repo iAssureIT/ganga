@@ -23,14 +23,15 @@
   left: 3px;
 }
 .LoginWrapper{
-  border:1px solid #aaa;
-  margin-top: 70px;
+  /*border:1px solid #aaa;*/
+  margin-top: 25px;
   border-radius: 5px;
   height: auto;
 }
 
 .innloginwrap{
-  border-bottom: 1px solid #aaa;
+  text-align: center;
+  /*border-bottom: 1px solid #aaa;*/
 }
 
 .borderrightlogin{
@@ -38,7 +39,7 @@
 }
 
 .logininput input{
-  height: 50px;
+  height: 35px;
 }
 
 #logInBtn{
@@ -94,4 +95,12 @@
   .signupbtn:hover{
     color: #fff ! important;
 
+  }
+  .formShadow{
+    background: #fff;
+    padding: 15px;
+    box-shadow: 0px 1px 4px 0px #33333326;
+  }
+  .logininput label{
+    font-weight: 500;
   }

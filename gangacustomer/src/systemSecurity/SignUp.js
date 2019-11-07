@@ -90,6 +90,9 @@ class SignUp extends Component {
 				signupConfirmPassword: {
 					required: true,
 					equalTo : "#signupPassword"
+				},
+				idacceptcondition: {
+					required: true,
 				}
 			},
 			messages:{
@@ -113,6 +116,9 @@ class SignUp extends Component {
 				}
 				if (element.attr("name") == "signupConfirmPassword") {
                     error.insertAfter("#signupConfirmPassword");
+                }
+                if (element.attr("name") == "idacceptcondition") {
+                    error.insertAfter("#idacceptcondition");
                 }
             }
         });
@@ -148,7 +154,7 @@ class SignUp extends Component {
 					return (passwordVar.length >= 6) ?
 						(true,
 							//  console.log("formValues= ",auth),
-							document.getElementById("signUpBtn").innerHTML = 'Create an Account',
+							document.getElementById("signUpBtn").innerHTML = 'Sign Up',
 							// browserHistory.push("/"),
 							axios.post('/api/users', auth)
 								.then((response) => {
@@ -166,19 +172,19 @@ class SignUp extends Component {
 						)
 						:
 						(
-							document.getElementById("signUpBtn").innerHTML = 'Create an Account',
+							document.getElementById("signUpBtn").innerHTML = 'Sign Up',
 							ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 							// swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
 						)
 
 
 				} else {
-					document.getElementById("signUpBtn").innerHTML = 'Create an Account';
+					document.getElementById("signUpBtn").innerHTML = 'Sign Up';
 					ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 					// return swal("Passwords does not match","Please Try Again")
 				}
 			// } else {
-			// 	document.getElementById("signUpBtn").innerHTML = 'Create an Account';
+			// 	document.getElementById("signUpBtn").innerHTML = 'Sign Up';
 			// 	ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 			// 	// swal("Please enter mandatory fields", "", "warning");
 			// 	// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -310,52 +316,53 @@ class SignUp extends Component {
 		//       var divHeight = winHeight/4.5+'px';
 
 		return (
-			<div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
 				<div className="pagealertnone">
 					<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
 				</div>
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
-					<div className="row">
-						<h3>Create New Customer Account</h3>
-					</div>
-				</div>
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
-					<div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12">
+				
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb100">
+					<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 formShadow">
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+							<h3>Sign Up</h3>
+						</div>
 						<form id="signUpUser">
-							<div className="logininput">
+							<div className="logininput col-lg-6 col-md-6 col-sm-12 col-xs-12">
 								<label>First Name</label><label className="astricsign">*</label>
-								<input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="FirstName" onChange={this.handleChange} data-text="firstNameV" />
+								<input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="" onChange={this.handleChange} data-text="firstNameV" />
 							</div>
-							<div className="logininput mt30">
+							<div className="logininput col-lg-6 col-md-6 col-sm-12 col-xs-12">
 								<label>Last Name</label><label className="astricsign">*</label>
-								<input type="text" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="LastName" onChange={this.handleChange} data-text="lastNameV" />
+								<input type="text" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="" onChange={this.handleChange} data-text="lastNameV" />
 							</div>
-							<div className="logininput mt30">
-								<label>Mobile Number</label><label className="astricsign">*</label>
-								<input className="form-control" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="MobileNumber" onChange={this.handleChange} data-text="mobileV" />
-							</div>
-							<div className="logininput mt30">
+							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
 								<label>Email ID</label><label className="astricsign">*</label>
-								<input type="email" className="form-control" id="signupEmail" ref="signupEmail" name="signupEmail" placeholder="EmailID" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkUserExists.bind(this)} />
+								<input type="email" className="form-control" id="signupEmail" ref="signupEmail" name="signupEmail" placeholder="" onChange={this.handleChange} data-text="emailIDV" onBlur={this.checkUserExists.bind(this)} />
 								<label className="checkUserExistsError">User already exists!!!</label>
 								
 							</div>
-							<div className="logininput mt30">
-								<label>Password</label><label className="astricsign">*</label>
-								<input type="password" className="form-control" id="signupPassword" ref="signupPassword" placeholder="Password" name="signupPassword" />
-							</div>
-							<div className="logininput mt30">
-								<label>Confirm Password</label><label className="astricsign">*</label>
-								<input type="password" className="form-control" id="signupConfirmPassword" ref="signupConfirmPassword" placeholder="Confirm Password" name="signupConfirmPassword" />
-							</div>
-							<div className="mt30 loginforgotpass">
-								<input id="idacceptcondition" type="checkbox" value="acceptedconditions" onClick={this.acceptcondition.bind(this)} /><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
+							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+								<label>Mobile Number</label><label className="astricsign">*</label>
+								<input className="form-control" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="Eg. 9876543210" onChange={this.handleChange} data-text="mobileV" />
 							</div>
 							
-							<div className=" mt30">
-								<button id="signUpBtn" onClick={this.usersignup.bind(this)} className="col-lg-10 col-md-10 col-sm-10 col-xs-10 button3  btn btn-warning  signupbtn"> Create an Account</button>
+							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+								<label>Password</label><label className="astricsign">*</label>
+								<input type="password" className="form-control" id="signupPassword" ref="signupPassword" placeholder="" name="signupPassword" />
 							</div>
-							<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt30">
+							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+								<label>Confirm Password</label><label className="astricsign">*</label>
+								<input type="password" className="form-control" id="signupConfirmPassword" ref="signupConfirmPassword" placeholder="" name="signupConfirmPassword" />
+							</div>
+							<div  className="mt15 loginforgotpass col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<input name="idacceptcondition" type="checkbox" value="acceptedconditions" onClick={this.acceptcondition.bind(this)} /><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a><br/>
+								<div id="idacceptcondition"></div>
+							</div>
+							
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+								<button id="signUpBtn" onClick={this.usersignup.bind(this)} className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 button3  btn btn-warning  signupbtn">Sign Up</button>
+							</div>
+							<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt15">
 								<lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>
 							</div>
 						</form>
