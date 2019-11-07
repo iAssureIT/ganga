@@ -136,6 +136,9 @@ class Checkout extends Component {
                     required: true,
                     regxaddType: "Select Type"
                 },
+                checkoutAddess: {
+                    required: true
+                },
                 payMethod: {
                     required: true
                 },
@@ -679,6 +682,7 @@ class Checkout extends Component {
                             "index"                 : index,
                             "totalForQantity"       : cartItemsMove.totalForQantity,
                             "productImage"          : cartItemsMove.productImage,
+                            "paymentMethod"         : payMethod
                             // "couponUsed"         : cartItemsMove.couponUsed,
                         }
 

@@ -155,7 +155,7 @@ class SignUp extends Component {
 									// console.log("-------userData------>>",response.data.user_id);
 									ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 									// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
-									this.props.history.push("/confirm-otp/" + response.data.user_id);
+									//this.props.history.push("/confirm-otp/" + response.data.user_id);
 
 								})
 								.catch((error) => {

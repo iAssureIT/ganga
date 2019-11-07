@@ -88,7 +88,7 @@ class Account extends Component{
                                     <div className="row">
                                         <div className="accountDivHeader">Contact Information</div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
-                                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.fullName}</p>
+                                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textwrap">{this.state.fullName}</p>
                                             <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">{this.state.emailId}</p>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                                 <button className="btn btn-warning" onClick={this.editUser.bind(this)}><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT</button> &nbsp; &nbsp;

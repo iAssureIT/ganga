@@ -116,7 +116,7 @@ class ViewOrder extends Component {
 
                   <th colspan="3" className="mark" scope="row"><strong> Estimated Total</strong></th>
                   <td className="amount" data-th=" &quot;Estimated Total&quot;">
-                      <strong><span><i className={"fa fa-"+this.state.orderData.currency}>{this.state.orderData.totalAmount}</i></span></strong>
+                      <strong><span><i className={"fa fa-"+this.state.orderData.currency}>{ parseInt(this.state.orderData.totalAmount).toFixed(2) }</i></span></strong>
                   </td>
               </tr>
             </tfoot>
@@ -129,7 +129,7 @@ class ViewOrder extends Component {
             <strong class="box-title">
                 <span>Shipping Address</span>
             </strong>
-            <div className="box-content">
+            <div className="box-content"> 
              { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.name } <br/>
              { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 } <br/>
              { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine2 } <br/>

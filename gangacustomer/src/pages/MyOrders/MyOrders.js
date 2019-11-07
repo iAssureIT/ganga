@@ -334,7 +334,7 @@ export default class MyOrders extends Component {
       		                <tr key={index}>
       		                    <td data-th="Order #" className="col id">{data.orderID}</td>
       		                    <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY hh:mm a")}</td>
-      							          <td data-th="Ship To" className="col shipping">{data.userFullName}</td>
+      							          <td data-th="Ship To" className="col shipping textwrap">{data.userFullName}</td>
       		                    <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
       		                    <td data-th="Status" className="col status">{ data.deliveryStatus[data.deliveryStatus.length-1].status=="Dispatch" || data.deliveryStatus[data.deliveryStatus.length-1].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[data.deliveryStatus.length-1].status }</td>
       		                    <td data-th="Actions" className="col actions">
@@ -357,11 +357,11 @@ export default class MyOrders extends Component {
               	</table>
                 <table className="data table table-order-items history" id="my-orders-table">
                   <thead>
-                  <div className="col-lg-12">
-                      <tr className="col-lg-12">
+                  <div >
+                      <tr >
                           <th scope="col" className="col-lg-2 id "><div className="">Product Image</div></th>
                           <th scope="col" className="col-lg-2 id "><div className="">Product Name</div></th>
-                          <th scope="col" className="col-lg-2 date text-center "><div className="">Price</div></th>
+                          <th scope="col" className="col-lg-2 date  "><div className="">Price</div></th>
                           <th scope="col" className="col-lg-2 shipping "><div className="">Qty</div></th>
                           <th scope="col" className="col-lg-2 total"><div className="">Subtotal</div></th>
                       </tr>
@@ -374,13 +374,13 @@ export default class MyOrders extends Component {
                           return(
                           <div className={productData.status=="Returned" ? "greybg col-lg-12" : "col-lg-12"}>
                           <tr key={'id'+index} >
-                              <td data-th="Order #" className="col-lg-2 id orderimgsize"><img src={productData.productImage[0]}/></td>
-                              <td data-th="Order #" className="col-lg-2 productnamecss id text-center">{productData.productName}</td>
-                              <td data-th="Date" className="col-lg-2 date text-center"><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
-                              <td data-th="Ship To" className="col-lg-2 shipping ">Ordered: {productData.quantity}</td>
-                              <td data-th="Order Total" className="col-lg-2 total  "><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
+                              <td data-th="Order #" width="200" className=" id orderimgsize"><img src={productData.productImage[0]}/></td>
+                              <td data-th="Order #" width="300" className=" productnamecss id ">{productData.productName}</td>
+                              <td data-th="Date" width="200" className=" date "><i className={"fa fa-"+productData.currency}> {productData.total}</i></td>
+                              <td data-th="Ship To" width="200" className=" shipping ">Ordered: {productData.quantity}</td>
+                              <td data-th="Order Total" width="200" className=" total  "><span><i className={"fa fa-"+productData.currency}> {productData.total}</i></span></td>
                               { data.status == "Paid" ?
-                              <td data-th="Order Total" className="col-lg-1 total actbtns">
+                              <td data-th="Order Total"  width="100" className="total actbtns">
                                   <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)}> <i id={productData.product_ID} onClick={this.getoneproductdetails.bind(this)} className="fa fa-pencil"></i></button></a>
                                   {
                                     data.status == 'Cancelled' || productData.status == 'Returned' ? '' :
