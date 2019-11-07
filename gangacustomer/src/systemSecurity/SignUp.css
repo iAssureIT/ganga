@@ -79,6 +79,7 @@
 }
 
 .checkUserExistsError{
+  font-weight: 100;
     color:red;
     margin-top: 5px;
   }
