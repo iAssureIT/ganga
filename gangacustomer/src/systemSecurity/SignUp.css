@@ -83,6 +83,11 @@
     color:red;
     margin-top: 5px;
   }
+  .passwordError{
+    font-weight: 100;
+      color:red;
+      margin-top: 5px;
+    }
   .logInBtn:hover{
     color: #fff !important;
   }

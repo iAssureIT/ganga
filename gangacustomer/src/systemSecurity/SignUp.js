@@ -57,6 +57,9 @@ class SignUp extends Component {
         
         $.validator.addMethod("regxsignupPassword", function (value, element, regexpr) {
             return regexpr.test(value);
+		}, "Please enter valid address.");
+		$.validator.addMethod("regxsignupConfirmPassword", function (value, element, regexpr) {
+            return regexpr.test(value);
         }, "Please enter valid address.");
        
         jQuery.validator.setDefaults({
@@ -85,9 +88,13 @@ class SignUp extends Component {
                     required: true,
 				},
 				signupConfirmPassword: {
-					required: true
+					required: true,
+					equalTo : "#signupPassword"
 				}
-            },
+			},
+			messages:{
+				signupConfirmPassword:"Password do not match"
+			},
             errorPlacement: function (error, element) {
                 if (element.attr("name") == "firstname") {
                     error.insertAfter("#firstname");
@@ -340,7 +347,6 @@ class SignUp extends Component {
 							<div className="logininput mt30">
 								<label>Confirm Password</label><label className="astricsign">*</label>
 								<input type="password" className="form-control" id="signupConfirmPassword" ref="signupConfirmPassword" placeholder="Confirm Password" name="signupConfirmPassword" />
-								<label className="passwordError">Password does not match</label>
 							</div>
 							<div className="mt30 loginforgotpass">
 								<input id="idacceptcondition" type="checkbox" value="acceptedconditions" onClick={this.acceptcondition.bind(this)} /><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a>
