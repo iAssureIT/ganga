@@ -5,7 +5,6 @@ import $ from "jquery";
 import axios from 'axios';
 import Message from '../blocks/Message/Message.js';
 import './SignUp.css';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 import Loader from "../common/loader/Loader.js";
 
  class ConfirmOtp extends Component {

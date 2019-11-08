@@ -11,9 +11,7 @@ import ProductDetailsHomeView from "../../pages/ProductDetailsEcommerce/ProductD
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
-
-
+import Message from '../Message/Message.js';
 const OwlCarousel = Loadable({
   loader: () => import('react-owl-carousel'),
   loading() {
@@ -127,7 +125,14 @@ class EcommerceProductCarousel extends Component {
           axios.post('/api/carts/post', formValues)
             .then((response) => {
               this.getCartData();
-              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+              this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-check-circle",
+                  "message" : "&nbsp; "+response.data.message,
+                  "class": "success",
+                }
+              })
               this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error) => {
@@ -139,7 +144,15 @@ class EcommerceProductCarousel extends Component {
         })
     }
     else {
-      ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+      // ToastsStore.error(<div className="alertback"><a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+      this.setState({
+        messageData : {
+          "type" : "outpage",
+          "icon" : "fa fa-exclamation-circle",
+          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "class": "warning",
+        }
+      })
     }
   }
 
@@ -170,7 +183,15 @@ class EcommerceProductCarousel extends Component {
         })
     }
     else {
-      ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+      this.setState({
+        messageData : {
+          "type" : "outpage",
+          "icon" : "fa fa-exclamation-circle",
+          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "class": "warning",
+        }
+      })
+      // ToastsStore.error(<div className="alertback"><a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
     }
   }
   getCategoryID(event) {
@@ -202,9 +223,7 @@ class EcommerceProductCarousel extends Component {
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
         <div className="row">
-          <div className="pagealertnone">
-            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-          </div>
+          <Message messageData={this.state.messageData} />
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading text-center">
               <div className="producttextclass  col-lg-2">
