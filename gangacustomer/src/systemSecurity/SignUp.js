@@ -42,7 +42,6 @@ class SignUp extends Component {
 				"Products marked as 'non-returnable' on the product detail page cannot be returned.",
 				"Products may not be eligible for return in some cases, including cases of buyer's remorse such as incorrect model or color of product ordered or incorrect product ordered."]
 		}
-		// console.log("In constructor");
 		this.handleChange = this.handleChange.bind(this);
 	}
 	componentWillMount() {
@@ -149,20 +148,15 @@ class SignUp extends Component {
 			var passwordVar = this.refs.signupPassword.value;
 			var signupConfirmPasswordVar = this.refs.signupConfirmPassword.value;
 
-			// if (formValid(this.state.formerrors)) {
-				// console.log('companyName==',this.state.formerrors);
 				if (passwordVar === signupConfirmPasswordVar) {
 					return (passwordVar.length >= 6) ?
 						(true,
-							//  console.log("formValues= ",auth),
+
 							document.getElementById("signUpBtn").innerHTML = 'Sign Up',
 							// browserHistory.push("/"),
 							axios.post('/api/users', auth)
 								.then((response) => {
 									$('.fullpageloader').hide();
-									// console.log("-------userData------>>",response.data.user_id);
-									// ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-									// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
 									this.setState({
 						              messageData : {
 						                "type" : "outpage",
@@ -174,16 +168,11 @@ class SignUp extends Component {
 									this.props.history.push("/confirm-otp/" + response.data.user_id);
 								})
 								.catch((error) => {
-									// console.log(error);
-									// swal("Unable to submit data.");
-									//  ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 								})
 						)
 						:
 						(
 							document.getElementById("signUpBtn").innerHTML = 'Sign Up',
-							// ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-							// swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
 							this.setState({
 				              messageData : {
 				                "type" : "inpage",
@@ -208,12 +197,6 @@ class SignUp extends Component {
 		              }
 		            })
 				}
-			// } else {
-			// 	document.getElementById("signUpBtn").innerHTML = 'Sign Up';
-			// 	ToastsStore.error(<div className="alertback">Please enter mandatory fields<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-			// 	// swal("Please enter mandatory fields", "", "warning");
-			// 	// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-			// }
 		}
 
 	}
@@ -294,14 +277,8 @@ class SignUp extends Component {
 	}
 	acceptcondition(event) {
 		var conditionaccept = event.target.value;
-		// console.log("condition",conditionaccept);
 		if (conditionaccept == "acceptedconditions") {
 			$(".acceptinput").removeAttr('disabled');
-			// if(this.state.roletype=="Student"){
-			//     document.getElementById("lastname").removeAttribute("");
-			// }else{
-			//     null;
-			// }
 		} else {
 			$(".acceptinput").addAttr('disabled');
 		}

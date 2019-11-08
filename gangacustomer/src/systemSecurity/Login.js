@@ -23,46 +23,44 @@ class Login extends Component {
         }
   }
   componentDidMount(){
-  
-  $.validator.addMethod("regxemail", function (value, element, regexpr) {
-      return regexpr.test(value);
-  }, "Please enter valid email.");
-  
-  jQuery.validator.setDefaults({
-      debug: true,
-      success: "valid"
-  });
-  $("#login").validate({
-      rules: {
-          loginusername: {
-              required: true,
-          },
-          loginpassword:{
-            required:true
+    $.validator.addMethod("regxemail", function (value, element, regexpr) {
+        return regexpr.test(value);
+    }, "Please enter valid email.");
+    
+    jQuery.validator.setDefaults({
+        debug: true,
+        success: "valid"
+    });
+    $("#login").validate({
+        rules: {
+            loginusername: {
+                required: true,
+            },
+            loginpassword:{
+              required:true
+            }
+        },
+        errorPlacement: function (error, element) {
+          if (element.attr("name") == "loginusername") {
+            error.insertAfter("#loginusername");
           }
-      },
-      errorPlacement: function (error, element) {
-        if (element.attr("name") == "loginusername") {
-          error.insertAfter("#loginusername");
+          if (element.attr("name") == "loginpassword") {
+            error.insertAfter("#loginpassword");
+          }
         }
-        if (element.attr("name") == "loginpassword") {
-          error.insertAfter("#loginpassword");
-        }
-      }
-  });
+    });
   }
   userlogin(event){
     event.preventDefault();
-    
-    // console.log("in login mode",this.state.auth);
     var auth= {
       email       : this.refs.loginusername.value,
       password    : this.refs.loginpassword.value,
     }
-    // console.log("auth value",auth);
-  if($("#login").valid()){
-    axios.post('/api/users/login',auth)
+    if($("#login").valid()){
+      document.getElementById("logInBtn").value = 'Please Wait...';
+      axios.post('/api/users/login',auth)
       .then((response)=> {
+        document.getElementById("logInBtn").value = 'Sign In';
         if (response.data.status=="Active") {
         localStorage.setItem("token",response.data.token);
         localStorage.setItem("user_ID",response.data.user_ID);
@@ -100,7 +98,7 @@ class Login extends Component {
           }
       })
       .catch((error)=> {
-          // console.log('error==========  ', error);
+        document.getElementById("logInBtn").value = 'Sign In';
         if(localStorage!==null){
           // swal(error.message);
           this.setState({
@@ -112,7 +110,6 @@ class Login extends Component {
             }
           })
         }
-        
       });
     }
   }

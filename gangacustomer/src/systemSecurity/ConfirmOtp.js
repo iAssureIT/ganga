@@ -65,11 +65,7 @@ import Loader from "../common/loader/Loader.js";
       // event.preventDefault();
       $('.fullpageloader').show();
       document.getElementById("resendOtpBtn").innerHTML = 'Please wait...';
-      // element.classList.add("btn-success");
-      //element.classList.remove("resendOtpColor");
-
           const userid = this.props.match.params.user_ID;
-          //  console.log("userid",userid);
           axios.get('/api/users/resendotp/'+userid)
           .then((response)=>{
             $('.fullpageloader').hide();

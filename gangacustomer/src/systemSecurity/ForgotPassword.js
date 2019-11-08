@@ -19,6 +19,7 @@ class ForgotPassword extends Component {
     }
     sendLink(event) {
         event.preventDefault();
+        document.getElementById("sendlink").innerHTML = 'Please Wait...';
         var email = this.refs.emailLink.value;
         var formValues = {
             username : email
@@ -26,9 +27,6 @@ class ForgotPassword extends Component {
         if($('#resetPass').valid()){
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{
-                console.log('res', response);
-             // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                // swal(response.data.message);
                 this.setState({
                   messageData : {
                     "type" : "inpage",
@@ -37,9 +35,10 @@ class ForgotPassword extends Component {
                     "class": "success",
                   }
                 })
+                document.getElementById("sendlink").innerHTML = 'Reset My Password';
             })
             .catch((error)=>{
-                console.log('error', error);
+                // console.log('error', error);
             })
         }
     }
@@ -96,7 +95,7 @@ class ForgotPassword extends Component {
                             <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="emailLink" name="emailLink" type="text" />
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                            <button className="btn btn-warning resetBtn" onClick={this.sendLink.bind(this)}>Reset My Password</button>
+                            <button id="sendlink" className="btn btn-warning resetBtn" onClick={this.sendLink.bind(this)}>Reset My Password</button>
                         </div>
                     </form>
                 </div>

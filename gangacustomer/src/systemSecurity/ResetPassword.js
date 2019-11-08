@@ -28,11 +28,8 @@ class ResetPassword extends Component {
         if($('#resetPassword').valid()){
             axios.put('/api/users/resetpwd/'+userID, formValues)
             .then((response)=>{
-                // console.log('res', response);
-                // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                // swal(response.data.message);
                 this.setState({
-                  messageData : {
+                  "messageData" : {
                     "type" : "outpage",
                     "icon" : "fa fa-check-circle",
                     "message" : "&nbsp; "+response.data.message,
@@ -72,8 +69,11 @@ class ResetPassword extends Component {
                 },
                 confirmPassword: {
                     required: true,
+                    equalTo : "#confirmPassword"
                 },
-
+            },
+            messages:{
+                confirmPassword:"Password do not match"
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") == "newPassword") {
@@ -93,12 +93,14 @@ class ResetPassword extends Component {
                     <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>
                     <form id="resetPassword">
                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">New Password <i className="error">*</i></label>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="newPassword">
-                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" type="text" />
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" type="text" /><br/>
+                            <div id="newPassword" ></div>
                         </div>
                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Confirm Password <i className="error">*</i></label>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="confirmPassword">
-                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" type="text" />
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" type="text" /><br/>
+                            <div id="confirmPassword"></div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                             <button className="btn btn-warning resetBtn" onClick={this.resetPassword.bind(this)}>Reset My Password</button>
