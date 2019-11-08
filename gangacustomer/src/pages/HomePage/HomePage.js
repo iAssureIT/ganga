@@ -10,6 +10,8 @@ import ProductCollageView         from "../../blocks/ProductCollage/ProductColla
 import Pagealert                  from "../../common/Pagealert/Pagealert.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
+import Loader from "../../common/loader/Loader.js";
+
 var webCategory  = 'Main-Site';
 class HomePage extends Component {
 	  constructor(props){
@@ -18,6 +20,10 @@ class HomePage extends Component {
 	    	featuredProducts  : [],
         exclusiveProducts : [],
         categories        : [],
+        exclusiveprloading:true,
+        bestsellerloading :true,
+        newproductloading :true,
+        featuredproductsloading : true
 	    };
       this.featuredProductData();
       this.exclusiveProductsData();
@@ -49,6 +55,7 @@ class HomePage extends Component {
             .then((response)=>{
               // console.log('featuredProducts' , response.data)
               this.setState({
+                featuredproductsloading:false,
                 featuredProducts : response.data
               })
             })
@@ -63,7 +70,8 @@ class HomePage extends Component {
             .then((response)=>{
 
               this.setState({
-                  exclusiveProducts : response.data
+                exclusiveprloading:false,
+                exclusiveProducts : response.data
               })
             })
             .catch((error)=>{
@@ -76,7 +84,8 @@ class HomePage extends Component {
             .then((response)=>{
 
               this.setState({
-                  newProducts : response.data
+                newproductloading:false,
+                newProducts : response.data
               })
             })
             .catch((error)=>{
@@ -88,7 +97,8 @@ class HomePage extends Component {
       axios.get("/api/products/get/listbytype/"+productType4)
             .then((response)=>{
               this.setState({
-                  bestSellerProducts : response.data
+                bestsellerloading:false,
+                bestSellerProducts : response.data
               })
             })
             .catch((error)=>{
@@ -142,13 +152,39 @@ class HomePage extends Component {
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backColorGray">
 					<div className="row">
 						<EcommerceBanner/>
+
           </div>
-          <div className="homeRow">
-  					<EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <Ecommercenewproductcaro   title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <ProductDivider categories={this.state.categories} />
-            <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
-            <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            <div className="homeRow">
+            { /*new product */}
+            {
+              this.state.exclusiveprloading ?  
+              <Loader type="carouselloader" productLoaderNo = {4}/>      
+              :
+              <EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            }
+            {
+              this.state.bestsellerloading ?  
+              <Loader type="carouselloader" productLoaderNo = {4}/>      
+              :
+              <Ecommercenewproductcaro   title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            }
+
+						<ProductDivider categories={this.state.categories} />
+            
+            {
+              this.state.newproductloading ?  
+              <Loader type="carouselloader" productLoaderNo = {4}/>      
+              :
+              <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            }
+            
+            {
+              this.state.featuredproductsloading ?  
+              <Loader type="carouselloader" productLoaderNo = {4}/>      
+              :
+              <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+            }
+>>>>>>> Stashed changes
             <SaleProductDivider />
           </div>
         </div>

@@ -5,6 +5,7 @@ import moment from "moment";
 import StepWizard         from "../../common/Wizard/StepWizard.jsx";
 // import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
 import './ShipmentTracking.css';
+import Loader from "../../common/loader/Loader.js";
 
 class ShipmentTracking extends Component {
   constructor(props) {
@@ -27,6 +28,7 @@ class ShipmentTracking extends Component {
     this.getMyOrders();
   }
   getMyOrders() {
+    $('.fullpageloader').show();
     var userId = localStorage.getItem('user_ID');
     axios.get("/api/orders/get/list/" + userId)
       .then((response) => {
@@ -34,8 +36,8 @@ class ShipmentTracking extends Component {
             return  data.deliveryStatus[data.deliveryStatus.length-1].status == 'Dispatch' || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivery Initiated'
                         || data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivered & Paid'
           })
+          $('.fullpageloader').hide();
           this.setState({orderData:response.data})
-          console.log('orderData',orderData);
       })
       .catch((error) => {
         console.log('error', error);
@@ -50,9 +52,9 @@ class ShipmentTracking extends Component {
   }
 
   render() {
-    console.log('shipment', this.state.orderData);
     return (
       <div className="shiptracbg col-lg-12">
+      <Loader type="fullpageloader" />
         <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 marginTop180 ">
           <div className="col-lg-12 myorderlistheader">
             <div className="">

@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/collapse.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Loader from "../../common/loader/Loader.js";
 
 class ProductCollage extends Component {
 	constructor(props){
@@ -34,7 +35,9 @@ class ProductCollage extends Component {
       		colors: [],
       		color: '',
       		size : '',
-      		selector:{}
+      		selector:{},
+      		loading:true
+
       		//selector:{sectionID: this.props.match.params.sectionID, categoryID:'',subcategoryID:'',brands:[], size:'',color:'',price: { min: 10, max: 129999 } }
 	    };
 	    this.handlePriceChange = this.handlePriceChange.bind(this);  
@@ -111,16 +114,18 @@ class ProductCollage extends Component {
 	      })
 	}
 	getProductsBySection(sectionID){
+		
 		axios.get("/api/products/get/list/"+sectionID)
 	      .then((response)=>{ 
-	          this.setState({
+	      		
+	          	this.setState({
+	          	  loading:false,
 	              products 		 : response.data,
 	              masterproducts : response.data
-	          })
-	          
-	          
+	          	})
 	      })
 	      .catch((error)=>{
+	      	//alert();
 	            console.log('error', error);
 	      })
 	}
@@ -487,6 +492,7 @@ class ProductCollage extends Component {
 	  }
   	render() {
 		
+    	var tempdata = [1,2,3]
 		let minPrice = this.state.price.min;
 		let maxPrice = this.state.price.max;
 		return (
@@ -784,19 +790,27 @@ class ProductCollage extends Component {
 					</div>
               </div> : ""
           	}
-              	{ this.state.products.length > 0 ? 
+              	{ 
+              		this.state.loading ? 
+              		<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 col-lg-offset-3" id="productDiv">
+              			<Loader type="collageloader" productLoaderNo = {3}/>
+			        </div>  
+			          :
+              		this.state.products.length > 0 ? 
 	              <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12" id="productDiv">
 					<br/>
 					  <div className="tab-content">
 					    <div id="products" className="tab-pane fade in active">
 					    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding content">
-					    	
-					    		<ProductCollageView products={this.state.products} 
+					    	{
+					    		<ProductCollageView
+					    		products={this.state.products} 
 					    		categoryDetails={this.state.categoryDetails} 
 					    		getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}
 					    		getFilteredProductsFun = {this.getFilteredProducts.bind(this)}
 					    		parameters={this.props.match.params} 
 					    		selector={this.state.selector}/>
+					    	}		
 					     	</div>
 					    </div>
 					    <div id="categories" className="tab-pane fade">

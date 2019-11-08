@@ -13,6 +13,7 @@ import 'bootstrap/js/tab.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 import ReturnStatus         from "../../common/Wizard/ReturnStatus.jsx";
 import swal                   from 'sweetalert';
+import Loader from "../../common/loader/Loader.js";
 
 export default class MyOrders extends Component {
 	constructor(props) {
@@ -24,12 +25,14 @@ export default class MyOrders extends Component {
                 "orderData":[],
                 "orderID"  :"",
                 customerReview:"",
+                loading:true
                 // "notificationData" :Meteor.subscribe("notificationTemplate"),
             };
         } else{
             this.state = {
                 "orderData":[],
                 "orderID"  :"",
+                loading:true
             };
         }
         window.scrollTo(0, 0);
@@ -74,14 +77,16 @@ export default class MyOrders extends Component {
       });
     }
     getMyOrders(){
+      $('.fullpageloader').show();
       var userId=localStorage.getItem('user_ID');
-      console.log('userId',userId);
+     
       axios.get("/api/orders/get/list/"+userId)
             .then((response)=>{
+              $('.fullpageloader').hide();
               this.setState({ 
-                  orderData : response.data
+                  orderData : response.data,
+                  loading   : false
               },()=>{
-                console.log("orderData",this.state.orderData);
               })
             })
             .catch((error)=>{
@@ -130,7 +135,6 @@ export default class MyOrders extends Component {
             .catch((error)=>{
             })
       
-      console.log(formValues);
     }else{
      swal("Please Enter your feedback.","","warning")
      }
@@ -142,7 +146,6 @@ export default class MyOrders extends Component {
       var id = $(event.target).data('id');
       var productid = $(event.target).data('productid');
       var altorderid = $(event.target).data('altorderid');
-      console.log($(event.target));
       var str= '';
 
       axios.get("/api/products/get/one/"+productid)
@@ -150,7 +153,6 @@ export default class MyOrders extends Component {
               this.setState({ 
                 oneproductdetails : response.data
               },()=>{
-                console.log("oneproductdetails",this.state.oneproductdetails);
               })
             })
             .catch((error)=>{
@@ -183,7 +185,6 @@ export default class MyOrders extends Component {
               this.setState({ 
                 oneproductdetails : response.data
               },()=>{
-                console.log("oneproductdetails",this.state.oneproductdetails);
               })
             })
             .catch((error)=>{
@@ -197,7 +198,6 @@ export default class MyOrders extends Component {
         var productid = $(event.target).data('productid');
         var altorderid = $(event.target).data('altorderid');
         var reasonForReturn = $('.reasonForReturn').val();
-        console.log('returnForm',$('#returnForm').valid());
         
         var formValues = {
                           "orderID"   : id,  
@@ -213,7 +213,6 @@ export default class MyOrders extends Component {
         if ($('#returnForm').valid()) {
           axios.patch('/api/orders/get/returnOrder', formValues)
               .then((response)=>{
-                console.log('response',response)
                 this.getMyOrders();
                     ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                     
@@ -275,7 +274,6 @@ export default class MyOrders extends Component {
         axios.patch('/api/orders/get/cancelOrder', formValues)
                         .then((response)=>{
                          
-                          console.log('response', response);
                           this.getMyOrders();
                           const el = document.createElement('div')
                       el.innerHTML = "<a href='/CancellationPolicy' style='color:blue !important'>View Cancellation Policy</a>"
@@ -292,7 +290,6 @@ export default class MyOrders extends Component {
                                 ToastsStore.warning(<div className="alertback">Your order is cancelled. Refund will be made as per Cancellation Policy<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                         })
                         .catch((error)=>{
-                          console.log('error', error);
                         })                
     }
     handleChange(event){
@@ -303,9 +300,13 @@ export default class MyOrders extends Component {
   render() {  
     return (
     <div className="container">	
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
+      <div className="pagealertnone">
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+      </div>
+      {
+        this.state.loading ?
+        <Loader type="fullpageloader" />  :
+      
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
         <br/>
       	<div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
@@ -585,6 +586,8 @@ export default class MyOrders extends Component {
           </div>             
       	</div>
       </div>
+        
+      }
     </div>  
     );  
   }

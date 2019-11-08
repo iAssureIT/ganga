@@ -5,6 +5,7 @@ import axios                from 'axios';
 import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
 import "./Account.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
+import Loader from "../../common/loader/Loader.js";
 
 class Account extends Component{
     constructor(props) {
@@ -21,10 +22,11 @@ class Account extends Component{
         this.getUserData();
     }
     getUserData(){
+        $('.fullpageloader').show();
         var userid = localStorage.getItem("user_ID");
         axios.get('/api/users/'+ userid)
         .then( (res)=>{
-            console.log('res getUserData', res.data);
+            $('.fullpageloader').hide();
             this.setState({
                 firstName       : res.data.profile.firstName,
                 lastName        : res.data.profile.lastName,
@@ -59,7 +61,6 @@ class Account extends Component{
         this.props.history.push('/address');
     }
     getAddressId(event){
-        console.log('id', event.target.id);
         this.setState({
             addressId : event.target.id
         })
@@ -70,6 +71,7 @@ class Account extends Component{
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <Loader type="fullpageloader" />
                 <SmallBanner bannerData={this.state.bannerData}/>  
                 <Address addressId={this.state.addressId} opDone={this.opDone.bind(this)}/>
                 <div className="container">

@@ -8,7 +8,7 @@ import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import $ from 'jquery';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-import Loader from "../../common/loader/Loader.js";
+
 const user_ID = localStorage.getItem("user_ID");
 class ProductCollageView extends Component {
 	constructor(props){
@@ -204,6 +204,7 @@ class ProductCollageView extends Component {
 
 
   render() {
+    
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="pagealertnone">
@@ -238,8 +239,8 @@ class ProductCollageView extends Component {
           </div>
         </div>
         <div className="row">
-        <Loader type="blockloader"/>
-        { this.state.products && this.state.products.length > 0 ?
+        {
+          this.state.products && this.state.products.length > 0 ?
             this.state.products && this.state.products.map((data, index) =>{
               var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
               if(x && x.length > 0){
@@ -277,9 +278,7 @@ class ProductCollageView extends Component {
                                                 <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                             }
                                           </div>
-                                          {/* <div className="product-reviews-summary">
-                                            <div className="col-lg-3 col-md-3 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div>
-                                          </div> */}
+                                          
                                           <div >
                                           </div>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -302,13 +301,16 @@ class ProductCollageView extends Component {
                     );
             })
             :
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div className="wishlistNoProduct col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                      <i className="fa fa-exclamation-triangle"></i>&nbsp;  There is no items in this category.
-                  </div>
-                  <a href="/" className="pull-right mt15 wishBack">Back</a>
-              </div>
-        } 
+
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div className="wishlistNoProduct col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                    <i className="fa fa-exclamation-triangle"></i>&nbsp;  There is no items in this category.
+                </div>
+                <a href="/" className="pull-right mt15 wishBack">Back</a>
+            </div>
+        }
+       
+        
         <div id="productviewmodal" className="modal" role="dialog">
           <div className="modal-dialog modal-lg">
             <div className="modal-content">

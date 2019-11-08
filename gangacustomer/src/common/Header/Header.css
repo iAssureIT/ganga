@@ -385,6 +385,7 @@ ul.box-static-link li span {
     position: absolute;
     top: 40%;
 }
+
 /* Transparent Overlay */
 
 
@@ -403,7 +404,12 @@ ul.box-static-link li span {
   bottom: 0;
   right: 0;
 }
-
+.loaderImg{
+	overflow: hidden;
+    height: 185px;
+    width: 100%;
+    background: #eee9;
+}
 /* Transparent Overlay */
 .fullpageloader:before {
   content: '';
