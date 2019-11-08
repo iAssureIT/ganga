@@ -47,18 +47,17 @@ class ResetPassword extends Component {
         }
     }
 
-      Closepagealert(event){
-    event.preventDefault();
-    $(".toast-error").html('');
-    $(".toast-success").html('');
-    $(".toast-info").html('');
-    $(".toast-warning").html('');
-    $(".toast-error").removeClass('toast');
-    $(".toast-success").removeClass('toast');
-    $(".toast-info").removeClass('toast');
-    $(".toast-warning").removeClass('toast');
-
-  }
+    Closepagealert(event){
+        event.preventDefault();
+        $(".toast-error").html('');
+        $(".toast-success").html('');
+        $(".toast-info").html('');
+        $(".toast-warning").html('');
+        $(".toast-error").removeClass('toast');
+        $(".toast-success").removeClass('toast');
+        $(".toast-info").removeClass('toast');
+        $(".toast-warning").removeClass('toast');
+    }
 
     validation(){
         jQuery.validator.setDefaults({
