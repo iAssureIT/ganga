@@ -484,7 +484,7 @@ export default class Dashboard extends Component{
 
         <div className="row">
         <br/>
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
           <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
             <div className="box1a box2">
               <h4>Total Orders</h4>
@@ -616,7 +616,7 @@ export default class Dashboard extends Component{
 
         <div className="row">
          <br/>
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginBottomCss">
             <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
               <div className="box1a box2">
                 <h4>Section Revenue</h4> 

@@ -310,12 +310,13 @@ class AdminOrdersList extends Component{
           }
         ];
         return(         
-            <div className="container-fluid">
-              <div className="row">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div className="row"> 
+                <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                 <div className="formWrapper">
 
                   <section className="content">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent marginBottomCSS">
                     <br/>
                       <div className="row">
                           <div className="admin-orders-SubTitleRow  row">
@@ -611,6 +612,7 @@ class AdminOrdersList extends Component{
                   <div id="dispatchModal" className="modal ssmodal">
                     <button type="button" className="close dispatchModalClose">&times;</button>
                     <DispatchModal baList={this.state.baList} orderId={this.state.orderId}  />
+                  </div>
                   </div>
                 </div>
               </div>

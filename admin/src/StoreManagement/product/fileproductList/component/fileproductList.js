@@ -76,8 +76,9 @@ class FileWiseProductList extends Component{
     }
     render(){
         return(
-            <div className="container-fluid">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="formWrapper">
                   <section className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
@@ -101,6 +102,7 @@ class FileWiseProductList extends Component{
                       </div>
                     </div>
                   </section>
+                </div>
                 </div>
               </div>
             </div>

@@ -11,18 +11,18 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
 
  class CompanySetting extends Component{
     constructor(props) {
-		super(props)
+    super(props)
 
-		this.state = {
+    this.state = {
 
-			companyinformation				: "Company Information",
-			
+      companyinformation        : "Company Information",
+      
 
-		}
-		// this.handleChange = this.handleChange.bind(this);
-		// this.onChange 		= this.onChange.bind(this);
+    }
+    // this.handleChange = this.handleChange.bind(this);
+    // this.onChange    = this.onChange.bind(this);
 
-	}
+  }
   componentDidMount() {
    
 
@@ -43,20 +43,16 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
   render() {
 
     return (
-       <div>
-          <div className="">
-             <section className="">
-                <div className="">
-                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                      <div className="">
-                         <div className="boxMinHeight boxMinHeighttab">
-                         <div className="box-header with-border">
-                          
-                               <h4 className="MasterBudgetTitle">Store Management System</h4>
-
-                          </div>
-                          {/* <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact"> Company Settings </div>         */}
-
+       <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+        
+             <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 marginBottomCSS ">
+                <div className="row">
+                    <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent marginTopp">
+                      <div className="box">
+                            <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                              <h4 className="col-lg-12 col-md-12 col-xs-12 col-sm-12">Store Management System</h4>
+                            </div>
                             <div  className="col-lg-12 col-md-12 col-xs-12 col-sm-12 companySettingMarginTop NOpadding-left">
                               <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 noPadding"> 
                                 <ul className="nav nav-tabs tabs-left sideways">
@@ -83,12 +79,12 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
                             </div>
                          </div>
                       </div>
-                   </div>
+                  
                 </div>
+             </div>
              </section>
           </div>
-      </div>
-    );
+      );
 
   }
 

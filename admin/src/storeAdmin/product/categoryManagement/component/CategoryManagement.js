@@ -483,8 +483,9 @@ class CategoryManagement extends Component{
        console.log("s3url------------->",this.state.categoryImage);
       // console.log('categoryImage', this.state.categoryImage);
         return(
-            <div className="container-fluid">
+            <div className="container-fluid col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="formWrapper">
                     <section className="content">
                       <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
@@ -615,6 +616,7 @@ class CategoryManagement extends Component{
                           </div>
                         </div>
                       </section>
+                      </div>
                     </div>
                   </div>
             </div>

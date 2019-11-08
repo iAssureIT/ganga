@@ -235,7 +235,6 @@ class Layout extends Component {
 
                 </Switch>
               </Router>
-
               <div className="footerCSS col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                 <Footer />
               </div>

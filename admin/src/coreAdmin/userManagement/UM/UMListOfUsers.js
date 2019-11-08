@@ -194,7 +194,8 @@ class UMListOfUsers extends Component {
 render(){
 	// console.log('this.state.completeDataCount', this.state.completeDataCount);
      return(
-		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+     	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginBottomCSS">
 			<div className="modal-bodyuser col-lg-12 col-md-12 col-sm-12 col-xs-12 UMbackgroundWrapper NOpadding">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border nopaddingum2">
 					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  NOpadding">
@@ -258,6 +259,7 @@ render(){
 				</form>
 			</div>
 		</div>
+	</div>
      );
     }
 }

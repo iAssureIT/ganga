@@ -604,11 +604,12 @@ class AddNewShopProduct extends Component {
   }
   render() {
     return (
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <section className="content">
         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
           <div className="row">
             <div className="box">
-              <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+              <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <h4 className="NOpadding-right">Add Products</h4>
               </div>
             </div>
@@ -838,6 +839,7 @@ class AddNewShopProduct extends Component {
           </div>
         </div>
       </section>
+      </div>
     );
   }
 }

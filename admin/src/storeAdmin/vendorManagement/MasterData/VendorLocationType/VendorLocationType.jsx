@@ -157,17 +157,17 @@ class VendorLocationType extends Component {
 
     render() {
         return (
-            <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <div className="row">
-                    <section className="">
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12  minDivHeight">
-                            <div className="row">
-                                <div className="">
-                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
-                                        <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                                            <h4 className="">Vendor Location Type</h4>
-                                        </div>
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+              <section className="content col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+                  <div className="row">
+                    <div className=" col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                    <div className="box">
+                      <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                        <h4 className="NOpadding-right">Vendor Location Type</h4>
+                      </div>
+                    </div>
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                             <br/>
                                             <br/>
                                             <form className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="vendorLocationType">
@@ -197,11 +197,11 @@ class VendorLocationType extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                 
+                    </div>
                     </section>
-                </div> 
-            </div> 
+                    </div>
+
         );
     } 
 }

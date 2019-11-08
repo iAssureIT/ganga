@@ -296,10 +296,13 @@ border-radius: 2px 0px 0px 2px;
 }
 
 #dashbordid{
-  position: absolute;
-  width: 82%;
+/*  position: absolute;
+  width: 82%;*/
   right: 0px;
   transition: all 0.8s;
   top:50px;
   /* background-color: #eee; */
+  }
+  .marginBottomCss{
+    margin-bottom: 60px !important;
   }

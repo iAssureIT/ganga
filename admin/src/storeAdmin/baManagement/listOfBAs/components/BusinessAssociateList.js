@@ -318,7 +318,7 @@ export default class BusinessAssociateList extends Component {
   
   render() {
     return (
-      <div>
+      <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
       <div className="content-wrapper">
         <div className="col-lg-12 col-md-12 hidden-sm hidden-xs secdiv"></div>
         <section className="content">

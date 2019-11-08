@@ -160,6 +160,7 @@ class VendorCategory extends Component {
         return (
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <section className="content">
                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                             <div className="row">
@@ -201,6 +202,7 @@ class VendorCategory extends Component {
                             </div>
                         </div>
                     </section>
+                    </div>
                 </div> 
             </div> 
         );

@@ -470,16 +470,12 @@ class ViewTemplates extends Component{
 		  }
 		};
     return(
-   		<div>
-      <div className="">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 secdiv">
-            </div>
-               <section className="">
-                    <div className="">
-                      <div className="">
-                         <div className="">
+   	   	
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
+               <section className="marginTopp col-lg-12 col-md-12 col-xs-12 col-sm-12 marginBottomCSS">
+                   
                                     
-                    <div className="">
+                    <div className="box">
 
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border mrgntop">
 
@@ -655,13 +651,10 @@ class ViewTemplates extends Component{
 						</div>
 					</div>
 				</div>
-                   </div>
-              </div>
-                     
-                    </div>
+           
                </section>
           </div>
-      </div>
+ 
      	);
     }
 
