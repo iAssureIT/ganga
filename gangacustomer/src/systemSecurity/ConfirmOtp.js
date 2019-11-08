@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 // import swal from 'sweetalert';
 import $ from "jquery";
 import axios from 'axios';
-
+import Message from '../blocks/Message/Message.js';
 import './SignUp.css';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
@@ -27,12 +27,28 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
       
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
-        ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        this.setState({
+          messageData : {
+            "type" : "outpage",
+            "icon" : "fa fa-check-circle",
+            "message" : "&nbsp; "+response.data.message,
+            "class": "success",
+          }
+        })
         this.props.history.push('/login');
       })
       .catch((error)=>{
         console.log('error', error.response);
-        ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        // ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        this.setState({
+          messageData : {
+            "type" : "inpage",
+            "icon" : "fa fa-times-circle",
+            "message" : "&nbsp; "+error.response.data.message,
+            "class": "danger",
+          }
+        })
       })
     }
     inputEffect(event){
@@ -44,8 +60,8 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
       }
     }
     resendOtp(event){
-      event.preventDefault();
-      var element = document.getElementById("resendOtpBtn");
+      // event.preventDefault();
+      document.getElementById("resendOtpBtn").innerHTML = 'Please wait...';
       // element.classList.add("btn-success");
       //element.classList.remove("resendOtpColor");
 
@@ -53,10 +69,19 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
           //  console.log("userid",userid);
           axios.get('/api/users/resendotp/'+userid)
           .then((response)=>{
-            // swal(response.data.message)
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+            document.getElementById("resendOtpBtn").innerHTML = 'Resend OTP';
+            this.setState({
+              messageData : {
+                "type" : "inpage",
+                "icon" : "fa fa-check-circle",
+                "message" : "&nbsp; "+response.data.message,
+                "class": "success",
+              }
+            })
+            // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           })
           .catch((error)=>{
+            document.getElementById("resendOtpBtn").innerHTML = 'Resend OTP';
             console.log('error', error);
           })    
     }
@@ -82,25 +107,25 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
     // }else{
       var resendOtpWrap = "resendOtpWrap resendOtpWrapcss";
       var mobileEmail = 'Mobile Number';
-      var resendOtp = <span onClick={this.resendOtp.bind(this)}>Resend OTP</span>;
+      var resendOtp = "";
     // }
 
 return(
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
-      <div className="pagealertnone">
-        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-        </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+          
           <div className="row">
             <h3>CONFIRMOTP</h3>
           </div>
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 borderrightlogin"> 
+
                 <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                  <Message messageData={this.state.messageData} />
                   <h4><b>Confirm OTP</b></h4>
                   <p>We send you a Verification Code to your registered email <br/><br/></p>
-                    <form id="OTPMobMail" onSubmit={this.confirmOTP.bind(this)}>
+                    <form id="OTPMobMail">
                       <div className="">
                         <div className="">
                           <span>Enter six digit verification code received on <b>Email</b>.<br/></span>
@@ -115,9 +140,9 @@ return(
                         <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   
                       </div>
                       <div className="mt30 col-lg-12">
-                          <div id="resendOtpBtn" className="col-lg-6">
-                            <div id="resendOtpBtn" className="col-lg-12 btn btn-warning systemsecBtn">
-                              {resendOtp}
+                          <div className="col-lg-6">
+                            <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">
+                              Resend OTP
                             </div>
                           </div>
                           <div className="col-lg-6">

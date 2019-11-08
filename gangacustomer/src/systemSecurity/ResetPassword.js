@@ -27,9 +27,17 @@ class ResetPassword extends Component {
         if($('#resetPassword').valid()){
             axios.put('/api/users/resetpwd/'+userID, formValues)
             .then((response)=>{
-                console.log('res', response);
-                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                // console.log('res', response);
+                // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 // swal(response.data.message);
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                  }
+                })
                 this.props.history.push('/login');
             })
             .catch((error)=>{
@@ -80,10 +88,8 @@ class ResetPassword extends Component {
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
                 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
+                    <Message messageData={this.state.messageData} />
                     <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>
                     <form id="resetPassword">
                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">New Password <i className="error">*</i></label>

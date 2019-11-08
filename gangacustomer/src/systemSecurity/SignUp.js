@@ -10,8 +10,7 @@ import 'bootstrap/js/tab.js';
 import 'font-awesome/css/font-awesome.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
-
+import Message from '../blocks/Message/Message.js';
 import axios from 'axios';
 
 class SignUp extends Component {
@@ -140,7 +139,7 @@ class SignUp extends Component {
 
 			// console.log("-------auth------>>",auth);
 
-			document.getElementById("signUpBtn").innerHTML = 'We are processing. Please Wait...';
+			document.getElementById("signUpBtn").innerHTML = 'Please Wait...';
 
 			var firstname = this.refs.firstname.value;
 			var mobile = this.refs.mobNumber.value;
@@ -159,13 +158,20 @@ class SignUp extends Component {
 							axios.post('/api/users', auth)
 								.then((response) => {
 									// console.log("-------userData------>>",response.data.user_id);
-									ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+									// ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 									// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
-									//this.props.history.push("/confirm-otp/" + response.data.user_id);
-
+									this.setState({
+						              messageData : {
+						                "type" : "outpage",
+						                "icon" : "fa fa-check-circle",
+						                "message" : "&nbsp; Great, Information submitted successfully and OTP is sent to your registered Email.",
+						                "class": "success",
+						              }
+						            })
+									this.props.history.push("/confirm-otp/" + response.data.user_id);
 								})
 								.catch((error) => {
-									console.log(error);
+									// console.log(error);
 									// swal("Unable to submit data.");
 									//  ToastsStore.error(<div className="alertback">Unable to submit data<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 								})
@@ -173,15 +179,31 @@ class SignUp extends Component {
 						:
 						(
 							document.getElementById("signUpBtn").innerHTML = 'Sign Up',
-							ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+							// ToastsStore.error(<div className="alertback">Password should be at least 6 Characters Long, Please try again or create an Account<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 							// swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
+							this.setState({
+				              messageData : {
+				                "type" : "inpage",
+				                "icon" : "fa fa-exclamation-circle",
+				                "message" : "&nbsp; Password should be at least 6 Characters Long, Please try again or create an Account.",
+				                "class": "warning",
+				              }
+				            })
 						)
 
 
 				} else {
 					document.getElementById("signUpBtn").innerHTML = 'Sign Up';
-					ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+					// ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 					// return swal("Passwords does not match","Please Try Again")
+					this.setState({
+		              messageData : {
+		                "type" : "inpage",
+		                "icon" : "fa fa-times-circle",
+		                "message" : "&nbsp; Passwords does not match, Please Try Again.",
+		                "class": "danger",
+		              }
+		            })
 				}
 			// } else {
 			// 	document.getElementById("signUpBtn").innerHTML = 'Sign Up';
@@ -221,7 +243,7 @@ class SignUp extends Component {
 					}
 				})
 				.catch(function (error) {
-					console.log(error);
+					// console.log(error);
 				})
 		} else {
 			$(".checkUserExistsError").hide();
@@ -317,12 +339,10 @@ class SignUp extends Component {
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
-				<div className="pagealertnone">
-					<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-				</div>
 				
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb100">
 					<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 formShadow">
+						<Message messageData={this.state.messageData} />
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
 							<h3>Sign Up</h3>
 						</div>
