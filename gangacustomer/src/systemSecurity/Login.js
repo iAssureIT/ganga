@@ -69,7 +69,7 @@ class Login extends Component {
         
         if(localStorage==null){
           this.setState({
-            messageData : {
+            "messageData" : {
               "type" : "inpage",
               "icon" : "fa fa-times-circle",
               "message" : "&nbsp; Invalid Email or Password, Please Enter valid email and password!",
