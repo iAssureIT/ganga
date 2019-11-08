@@ -5,6 +5,7 @@ import Address              from '../Address/Address.js';
 import "./AddressBook.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Loader from "../../common/loader/Loader.js";
 
 class AddressBook extends Component{
     constructor(props) {
@@ -20,10 +21,11 @@ class AddressBook extends Component{
         this.getUserAddresses();
     }
     getUserData(){
+        $('.fullpageloader').show();
         var userid = localStorage.getItem("user_ID");
         axios.get('/api/users/'+ userid)
         .then( (res)=>{
-            console.log('res getUserData', res.data);
+            $('.fullpageloader').hide();
             this.setState({
                 name              : res.data.deliveryAddress ? res.data.deliveryAddress[0].name : "",
                 email              : res.data.deliveryAddress ? res.data.deliveryAddress[0].email : "",
@@ -48,7 +50,6 @@ class AddressBook extends Component{
         var userid = localStorage.getItem("user_ID");
         axios.get('/api/users/'+ userid)
         .then( (res)=>{
-            console.log('res getUserData', res.data);
             this.setState({
                 deliveryAddresses : res.data.deliveryAddress
             })
@@ -60,6 +61,7 @@ class AddressBook extends Component{
     }
     deleteAddress(event){
         event.preventDefault();
+        $('.fullpageloader').show();
         var user_ID = localStorage.getItem("user_ID");
         var deliveryAddressID = event.target.id; 
         var formValues = {
@@ -68,6 +70,7 @@ class AddressBook extends Component{
         }
         axios.patch('/api/users/delete/address', formValues)
         .then((response)=>{
+            $('.fullpageloader').hide();
             // console.log('response', response);
             this.getUserAddresses();
             // swal(response.data.message);
@@ -90,7 +93,6 @@ class AddressBook extends Component{
 
     }
     getAddressId(event){
-        console.log('id', event.target.id);
         this.setState({
             addressId : event.target.id
         })
@@ -101,6 +103,7 @@ class AddressBook extends Component{
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <Loader type="fullpageloader" />
             <Address addressId={this.state.addressId} opDone={this.opDone.bind(this)}/>
             <div className="pagealertnone">
               <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>

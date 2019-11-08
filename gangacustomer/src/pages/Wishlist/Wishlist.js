@@ -6,12 +6,13 @@ import SmallBanner        from '../../blocks/SmallBanner/SmallBanner.js';
 import './Wishlist.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Loader from "../../common/loader/Loader.js";
 
 class Wishlist extends Component {
 	constructor(props) {
         super(props);
         this.state={
-            bannerData : {
+            bannerData : { 
                 title : "MY WISHLIST",
                 breadcrumb : 'My Wishlist',
                 backgroungImage : '/images/wishlist.png',
@@ -34,7 +35,6 @@ class Wishlist extends Component {
      getProduct(product_ID){
       axios.get('/api/products/get/one/'+product_ID)
         .then((response)=>{
-          console.log('response', response);
         })
         .catch((error)=>{
           console.log('error', error);
@@ -42,17 +42,16 @@ class Wishlist extends Component {
      }
 
     getData(){
+      $('.fullpageloader').show();
         var user_ID = localStorage.getItem('user_ID');
-        console.log('user_ID', user_ID);
-
+        
         axios.get('/api/wishlist/get/userwishlist/'+user_ID)
         .then((response)=>{
-          console.log('userwishlist', response.data)
+          $('.fullpageloader').hide();
           response.data.map((a, i)=>{
-            console.log('a', a.product_ID);
             axios.get('/api/products/get/one/'+a.product_ID)
             .then((res)=>{
-              console.log('response getData', res.data);
+              
               var products = this.state.products;
               products.push({
                 "productName"       : res.data.productName,
@@ -83,6 +82,7 @@ class Wishlist extends Component {
 
     }
     addtocart(event) {
+      $('.fullpageloader').show();
       const user_ID = localStorage.getItem("user_ID");
       var wishlist_ID = event.target.getAttribute('wishid');
       if (user_ID) {
@@ -115,6 +115,7 @@ class Wishlist extends Component {
             }
             axios.post('/api/carts/post', formValues)
               .then((response) => {
+                $('.fullpageloader').hide();
                 ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                 this.props.changeCartCount(response.data.cartCount);
 
@@ -178,9 +179,11 @@ class Wishlist extends Component {
   }
 
     
-    render() {  
+    render() { 
+
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <Loader type="fullpageloader" /> 
             <div className="pagealertnone">
               <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
               </div>

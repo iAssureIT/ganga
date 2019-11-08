@@ -7,6 +7,8 @@ import axios from 'axios';
 import jQuery from 'jquery';
 import 'jquery-validation';
 import Message from '../blocks/Message/Message.js';
+import Loader from "../common/loader/Loader.js";
+
 class Login extends Component {
 
   constructor(){
@@ -57,9 +59,11 @@ class Login extends Component {
       password    : this.refs.loginpassword.value,
     }
     if($("#login").valid()){
+      $('.fullpageloader').show();
       document.getElementById("logInBtn").value = 'Please Wait...';
       axios.post('/api/users/login',auth)
       .then((response)=> {
+        $('.fullpageloader').hide();
         document.getElementById("logInBtn").value = 'Sign In';
         if (response.data.status=="Active") {
         localStorage.setItem("token",response.data.token);
@@ -138,6 +142,7 @@ class Login extends Component {
     return(  
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+        <Loader type="fullpageloader"/>
           <div className="row">
             <h3>Please Sign In</h3>
           </div>

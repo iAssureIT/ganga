@@ -13,6 +13,7 @@ import "./Checkout.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
+import Loader from "../../common/loader/Loader.js";
 
 class Checkout extends Component {
     constructor(props) {
@@ -194,9 +195,11 @@ class Checkout extends Component {
     }
     
     getCartData() {
+        $('.fullpageloader').show();
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/" + userid)
             .then((response) => {
+                $('.fullpageloader').hide();
                 this.setState({
                     cartProduct: response.data[0]
                 });
@@ -595,8 +598,10 @@ class Checkout extends Component {
                 "addType": this.state.addType
             }
             if ($('#checkout').valid()) {
+                $('.fullpageloader').show();
             axios.patch('/api/users/patch/address', addressValues)
                 .then((response) => {
+                    $('.fullpageloader').hide();
                     ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                     // swal(response.data.message);
                     this.getUserAddress();
@@ -831,6 +836,7 @@ class Checkout extends Component {
                     <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
                 </div>
                 <div className="row">
+                    <Loader type="fullpageloader" /> 
                     <Address opDone={this.opDone.bind(this)}/>
                     <SmallBanner bannerData={this.state.bannerData} />
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">

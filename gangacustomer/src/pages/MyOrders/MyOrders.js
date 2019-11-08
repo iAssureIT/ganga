@@ -111,6 +111,7 @@ export default class MyOrders extends Component {
       $('#feedbackFormDiv').show();
     }
     submitReview(event){
+      $('.fullpageloader').show();
       event.preventDefault();
       var rating = $('input[name="ratingReview"]:checked', '.feedbackForm').val();
       var formValues={
@@ -125,6 +126,7 @@ export default class MyOrders extends Component {
       if(this.state.customerReview.length>0){
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
+              $('.fullpageloader').hide();
              ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                // swal(response.data.message);
               var modal = document.getElementById('feedbackProductModal');
@@ -194,6 +196,7 @@ export default class MyOrders extends Component {
 
     returnProductAction(event){
       event.preventDefault();
+      
         var id = $(event.target).data('id');
         var productid = $(event.target).data('productid');
         var altorderid = $(event.target).data('altorderid');
@@ -211,8 +214,10 @@ export default class MyOrders extends Component {
         //console.log(formValues);
 
         if ($('#returnForm').valid()) {
+          $('.fullpageloader').show();
           axios.patch('/api/orders/get/returnOrder', formValues)
               .then((response)=>{
+                $('.fullpageloader').hide();
                 this.getMyOrders();
                     ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
                     
@@ -265,6 +270,7 @@ export default class MyOrders extends Component {
 
     cancelProductAction(event){
       event.preventDefault();
+      $('.fullpageloader').show();
         var id = $(event.target).data('id');
 
         var formValues = {
@@ -273,7 +279,7 @@ export default class MyOrders extends Component {
                         }
         axios.patch('/api/orders/get/cancelOrder', formValues)
                         .then((response)=>{
-                         
+                         $('.fullpageloader').hide();
                           this.getMyOrders();
                           const el = document.createElement('div')
                       el.innerHTML = "<a href='/CancellationPolicy' style='color:blue !important'>View Cancellation Policy</a>"

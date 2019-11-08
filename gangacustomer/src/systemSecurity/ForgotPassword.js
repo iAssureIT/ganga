@@ -3,6 +3,8 @@ import $ from 'jquery';
 import jQuery from 'jquery';
 import axios from 'axios';
 import Message from '../blocks/Message/Message.js';
+import Loader from "../common/loader/Loader.js";
+
 class ForgotPassword extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +27,10 @@ class ForgotPassword extends Component {
             username : email
         }
         if($('#resetPass').valid()){
+            $('.fullpageloader').show();
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{
+                $('.fullpageloader').hide();
                 this.setState({
                   messageData : {
                     "type" : "inpage",
@@ -84,6 +88,7 @@ class ForgotPassword extends Component {
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+            <Loader type="fullpageloader"/>
                 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <Message messageData={this.state.messageData} />

@@ -5,6 +5,7 @@ import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
 import "./EditAccount.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Loader from "../../common/loader/Loader.js";
 
 class EditAccount extends Component{
     constructor(props) {
@@ -80,10 +81,11 @@ class EditAccount extends Component{
         event.preventDefault();
     }
     getUserData(){
+        $('.fullpageloader').show();
         var userid = localStorage.getItem("user_ID");
         axios.get('/api/users/'+userid)
         .then( (res)=>{
-            console.log('res', res.data);
+            $('.fullpageloader').hide();
             this.setState({
                 "firstName"         : res.data.profile.firstName,
                 "lastName"          : res.data.profile.lastName,
@@ -99,10 +101,10 @@ class EditAccount extends Component{
     }
     updateUser(event){
         event.preventDefault();
+        $('.fullpageloader').show();
         var userid = localStorage.getItem("user_ID");
-        console.log('updateUser',userid);
         var field = (this.state.changeEmail == true && this.state.changePassword == true? 'all' : (this.state.changeEmail == true ? 'email' : (this.state.changePassword == true? 'password' :"name")));
-        console.log('field', field);
+        
         var formvalues = {
             "field"         : field,
             "firstName"     : this.refs.firstName.value,
@@ -114,6 +116,7 @@ class EditAccount extends Component{
             "changePassword": this.state.changePassword
         }
         if($('#editAccount').valid()){
+            $('.fullpageloader').hide();
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
                 console.log(response.message);
@@ -162,6 +165,7 @@ class EditAccount extends Component{
               <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
               </div>
                 <div className="container">
+                    <Loader type="fullpageloader" /> 
                     <br/>
                     <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
                         <Sidebar />

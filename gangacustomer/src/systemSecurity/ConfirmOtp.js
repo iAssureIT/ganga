@@ -37,7 +37,7 @@ import Loader from "../common/loader/Loader.js";
             "class": "success",
           }
         })
-        //this.props.history.push('/login');
+        this.props.history.push('/login');
       })
       .catch((error)=>{
         $('.fullpageloader').hide();

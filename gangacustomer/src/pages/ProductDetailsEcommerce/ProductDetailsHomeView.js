@@ -11,7 +11,6 @@ export default class ProductDetailsHomeView extends Component {
 	    };
   	} 
   	componentDidMount(){
-      console.log('props',this.props)
   		var productType4 = 'bestSeller';
   		var webCategory = 'Main-Site'
   		axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)

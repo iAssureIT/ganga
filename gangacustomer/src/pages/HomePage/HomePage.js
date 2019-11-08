@@ -184,7 +184,6 @@ class HomePage extends Component {
               :
               <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
             }
->>>>>>> Stashed changes
             <SaleProductDivider />
           </div>
         </div>

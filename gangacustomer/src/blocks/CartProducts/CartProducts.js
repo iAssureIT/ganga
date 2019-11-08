@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { getCartCata } from '../../actions/index';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 import IMask from 'imask';
+import Loader from "../../common/loader/Loader.js";
 
 
 class CartProducts extends Component{
@@ -42,9 +43,11 @@ class CartProducts extends Component{
        
     }
     getCartData(){
+        $('.fullpageloader').show();
         const userid = localStorage.getItem('user_ID');
         axios.get("/api/carts/get/list/"+userid)
           .then((response)=>{ 
+            $('.fullpageloader').hide();
               this.setState({
                 cartProduct : response.data[0]
               });
@@ -199,7 +202,6 @@ class CartProducts extends Component{
     }
     
     render(){
-        console.log('recentCartData',this.props.recentCartData);
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
@@ -207,6 +209,7 @@ class CartProducts extends Component{
                   <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
                   </div>
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+                        <Loader type="fullpageloader"/>
                         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
                             <table className="table table-responsive cartProductTable">
                                 <thead>

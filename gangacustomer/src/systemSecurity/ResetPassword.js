@@ -4,6 +4,7 @@ import jQuery from 'jquery';
 import Message from '../blocks/Message/Message.js';
 import axios from 'axios';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Loader from "../common/loader/Loader.js";
 
 class ResetPassword extends Component {
     constructor(props) {
@@ -26,8 +27,10 @@ class ResetPassword extends Component {
             "pwd" : this.refs.newPassword.value
         }
         if($('#resetPassword').valid()){
+            $('.fullpageloader').show();
             axios.put('/api/users/resetpwd/'+userID, formValues)
             .then((response)=>{
+                $('.fullpageloader').hide();
                 this.setState({
                   "messageData" : {
                     "type" : "outpage",
@@ -88,6 +91,7 @@ class ResetPassword extends Component {
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+            <Loader type="fullpageloader"/>
                 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
                     <Message messageData={this.state.messageData} />
                     <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>

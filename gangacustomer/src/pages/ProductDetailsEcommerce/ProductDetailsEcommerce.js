@@ -28,7 +28,6 @@ export default class ProductDetailsEcommerce extends Component {
             }) 
 
           this.bestSellerData();
-
   	} 
 
     bestSellerData(){
