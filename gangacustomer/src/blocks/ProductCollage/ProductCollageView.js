@@ -7,8 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import $ from 'jquery';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import Message from '../Message/Message.js';
 const user_ID = localStorage.getItem("user_ID");
 class ProductCollageView extends Component {
 	constructor(props){
@@ -81,8 +80,14 @@ class ProductCollageView extends Component {
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
             this.getCartData(); 
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-            // swal(response.data.message);
+            this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : "&nbsp; "+response.data.message,
+                "class": "success",
+              }
+            })
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -93,7 +98,14 @@ class ProductCollageView extends Component {
         console.log('error', error);
       })
         }else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+          this.setState({
+            messageData : {
+              "type" : "outpage",
+              "icon" : "fa fa-exclamation-circle",
+              "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+              "class": "warning",
+            }
+          })
     }
    }
    addtowishlist(event) {
@@ -116,7 +128,14 @@ class ProductCollageView extends Component {
         })
     }
     else {
-      ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+      this.setState({
+        messageData : {
+          "type" : "outpage",
+          "icon" : "fa fa-exclamation-circle",
+          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "class": "warning",
+        }
+      })
     }
   }
     sortProducts(event){
@@ -207,12 +226,9 @@ class ProductCollageView extends Component {
     
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div className="pagealertnone">
-          <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-        </div>
+        <Message messageData={this.state.messageData} />
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb20">
-
             <div className="col-lg-4 col-md-6 col-sm-8 col-xs-8 NoPadding">
               <div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
             </div>

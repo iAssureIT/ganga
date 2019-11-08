@@ -11,7 +11,6 @@ import ProductDetailsHomeView from "../../pages/ProductDetailsEcommerce/ProductD
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
 import Message from '../Message/Message.js';
 
 const OwlCarousel = Loadable({
@@ -235,9 +234,6 @@ class Ecommercenewproductcaro extends Component {
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
         <div className="row">
           <Message messageData={this.state.messageData} />
-          <div className="pagealertnone">
-            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-          </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading text-center">
               <div className="producttextclass  col-lg-2">

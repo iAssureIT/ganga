@@ -8,9 +8,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';  
 import Loadable                   from 'react-loadable';
 import { connect }                from 'react-redux';
-// import ProductDetailsEcommerceView from "../../pages/ProductDetailsEcommerce/ProductDetailsEcommerceView.js";
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import Message from '../Message/Message.js';
 const OwlCarousel = Loadable({
   loader: () => import('react-owl-carousel'),
   loading() {
@@ -108,7 +106,14 @@ class ProductViewEcommerceBestSellers extends Component {
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
             this.getCartData();  
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+            this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : "&nbsp; "+response.data.message,
+                "class": "success",
+              }
+            })
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -120,7 +125,14 @@ class ProductViewEcommerceBestSellers extends Component {
       })
     }
     else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        this.setState({
+          messageData : {
+            "type" : "outpage",
+            "icon" : "fa fa-exclamation-circle",
+            "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+            "class": "warning",
+          }
+        })
     }
   }
 
@@ -138,9 +150,21 @@ class ProductViewEcommerceBestSellers extends Component {
     .then((response)=>{
       // console.log("response",response.status);
       if(response.status == 200){
-      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
+      this.setState({
+        messageData : {
+          "type" : "outpage",
+          "icon" : "fa fa-check-circle",
+          "message" : "&nbsp; "+response.data.message,
+          "class": "success",
+        }
+      })  
       }
-      ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+      messageData : {
+            "type" : "outpage",
+            "icon" : "fa fa-exclamation-circle",
+            "message" : response.data.message,
+            "class": "warning",
+          }
       // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
@@ -149,7 +173,15 @@ class ProductViewEcommerceBestSellers extends Component {
     })
      }
       else{
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        
+        this.setState({
+        messageData : {
+          "type" : "outpage",
+          "icon" : "fa fa-exclamation-circle",
+          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "class": "warning",
+        }
+      })
     }
   }
     Closepagealert(event){
@@ -172,9 +204,7 @@ class ProductViewEcommerceBestSellers extends Component {
           {
             this.state.Products && this.state.Products.length > 0 ?
             <div className="row">
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
+              <Message messageData={this.state.messageData} />
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productcomponentheading">
                     <div className="producttextclass  col-lg-3">

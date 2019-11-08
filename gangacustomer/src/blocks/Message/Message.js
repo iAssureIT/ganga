@@ -7,28 +7,48 @@ class Message extends Component{
     constructor(props) {
         super(props);
         this.state={
-            
+            alertType        : "",
+            class       : "",
+            icon        : "",
+            message     : ""
         }
         // window.scrollTo(0, 0);
     } 
     componentWillReceiveProps(nextProps){
         // window.scrollTo(0, 0);
+        if(nextProps && nextProps.messageData){
+            this.setState({
+                "alertType"        : nextProps.messageData.type,
+                "class"       : nextProps.messageData.class,
+                "icon"        : nextProps.messageData.icon,
+                "message"     : nextProps.messageData.message
+            })
+        }
+    }
+    close(event){
+        event.preventDefault();
+        this.setState({
+            alertType        : "",
+            class       : "",
+            icon        : "",
+            message     : ""
+        })
     }
     render(){
         return(
             <div className="">
             {
-                this.props.messageData && this.props.messageData.type == 'inpage' ?
-                <div className={"alert alert-"+this.props.messageData.class} role="alert">
-                    <div className={this.props.messageData.icon+" inpagemessage"} dangerouslySetInnerHTML={{__html : ("&nbsp;"+this.props.messageData.message)}}></div>
+                this.state.alertType && this.state.alertType == 'inpage' ?
+                <div className={"alert alert-"+this.state.class} role="alert">
+                    <div className={this.state.icon+" inpagemessage"} dangerouslySetInnerHTML={{__html : ("&nbsp;"+this.state.message)}}></div>
                 </div>
                 :
-                this.props.messageData && this.props.messageData.type == 'outpage' ?
+                this.state.alertType && this.state.alertType == 'outpage' ?
                     <div className="row ml-auto pull-right outpageMessage">
                         <div className="alert-group">
-                            <div className={"alert alert-"+this.props.messageData.class+" alert-dismissable alertMessage"}>
-                                <button type="button" className="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <div className={this.props.messageData.icon+" inpagemessage"} dangerouslySetInnerHTML={{__html : ("&nbsp;"+this.props.messageData.message)}} ></div>
+                            <div className={"alert alert-"+this.state.class+" alert-dismissable alertMessage"}>
+                                <button type="button" className="close" onClick={this.close.bind(this)}>×</button>
+                                <div className={this.state.icon+" inpagemessage"} dangerouslySetInnerHTML={{__html : ("&nbsp;"+this.state.message)}} ></div>
                             </div>
                         </div>
                     </div>

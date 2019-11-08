@@ -6,11 +6,9 @@ import "./CartProducts.css";
 import { connect }        from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCartCata } from '../../actions/index';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 import IMask from 'imask';
 import Loader from "../../common/loader/Loader.js";
-
-
+import Message from '../Message/Message.js';
 class CartProducts extends Component{
     constructor(props) {
         super(props);
@@ -102,8 +100,15 @@ class CartProducts extends Component{
         }
         axios.patch("/api/carts/remove" ,formValues)
         .then((response)=>{
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                this.props.fetchCartData();
+            this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-check-circle",
+                  "message" : response.data.message,
+                  "class": "success",
+                }
+            })
+            this.props.fetchCartData();
                 this.getCompanyDetails();
         })
         .catch((error)=>{
@@ -136,7 +141,15 @@ class CartProducts extends Component{
                 "totalIndPrice"	: totalIndPrice
             }
             if(quantityAdded > availableQuantity){
-                ToastsStore.success(<div className="alertback">{'Only '+availableQuantity+' '+ productName+' left in stock.' }<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                
+                this.setState({
+                    messageData : {
+                      "type" : "outpage",
+                      "icon" : "fa fa-check-circle",
+                      "message" : response.data.message,
+                      "class": "success",
+                    }
+                })
                 console.log('mnmn', quantityAdded > availableQuantity);
             }else{
                 axios.patch("/api/carts/quantity" ,formValues)
@@ -205,9 +218,7 @@ class CartProducts extends Component{
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
-                <div className="pagealertnone">
-                  <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-                  </div>
+                    <Message messageData={this.state.messageData} />
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <Loader type="fullpageloader"/>
                         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
