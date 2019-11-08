@@ -159,12 +159,6 @@ class ProductViewEcommerceBestSellers extends Component {
         }
       })  
       }
-      messageData : {
-            "type" : "outpage",
-            "icon" : "fa fa-exclamation-circle",
-            "message" : response.data.message,
-            "class": "warning",
-          }
       // swal(response.data.message);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
