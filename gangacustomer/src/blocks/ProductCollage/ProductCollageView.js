@@ -8,7 +8,7 @@ import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import $ from 'jquery';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import Loader from "../../common/loader/Loader.js";
 const user_ID = localStorage.getItem("user_ID");
 class ProductCollageView extends Component {
 	constructor(props){
@@ -209,32 +209,36 @@ class ProductCollageView extends Component {
         <div className="pagealertnone">
           <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
         </div>
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb20">
-          <div className="col-lg-4 col-md-6 col-sm-8 col-xs-8 NoPadding">
-            <div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
-          </div>
-          <div className="col-lg-offset-2 col-md-offset-2 col-lg-4 col-md-6 col-sm-9 col-xs-9 NoPadding">
-            <label className="col-lg-3 col-md-6 col-sm-9 col-xs-9 NoPadding labeldiv">Sort By</label>
-            <select className="sortProducts col-lg-8 col-sm-9 col-md-8 col-xs-9 NoPadding" onChange={this.sortProducts.bind(this)}>
-              <option  className="hidden" >Relevence</option>
-              <option value="alphabeticallyAsc">Name A-Z</option>
-              <option value="alphabeticallyDsc">Name Z-A</option>
-              <option value="priceAsc">Price Low to High</option>
-              <option value="priceDsc">Price High to Low </option>
-          </select>
-          </div>
-         
-          <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3 pull-right NoPadding">
-            <label className="col-lg-5 col-md-5 col-sm-10 col-xs-10 NoPadding labeldiv">Show</label>
-            <select className="limitProducts col-lg-6 col-md-6 col-sm-6 col-xs-6 NoPadding" onChange={this.limitProducts.bind(this)}>
-              <option  className="10" >10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-          </select>
+        <div className="row">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb20">
+
+            <div className="col-lg-4 col-md-6 col-sm-8 col-xs-8 NoPadding">
+              <div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
+            </div>
+            <div className="col-lg-offset-2 col-md-offset-2 col-lg-4 col-md-6 col-sm-9 col-xs-9 NoPadding">
+              <label className="col-lg-3 col-md-6 col-sm-9 col-xs-9 NoPadding labeldiv">Sort By</label>
+              <select className="sortProducts col-lg-8 col-sm-9 col-md-8 col-xs-9 NoPadding" onChange={this.sortProducts.bind(this)}>
+                <option  className="hidden" >Relevence</option>
+                <option value="alphabeticallyAsc">Name A-Z</option>
+                <option value="alphabeticallyDsc">Name Z-A</option>
+                <option value="priceAsc">Price Low to High</option>
+                <option value="priceDsc">Price High to Low </option>
+            </select>
+            </div>
+           
+            <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3 pull-right NoPadding">
+              <label className="col-lg-5 col-md-5 col-sm-10 col-xs-10 NoPadding labeldiv">Show</label>
+              <select className="limitProducts col-lg-6 col-md-6 col-sm-6 col-xs-6 NoPadding" onChange={this.limitProducts.bind(this)}>
+                <option  className="10" >10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+            </select>
+            </div>
           </div>
         </div>
         <div className="row">
+        <Loader type="blockloader"/>
         { this.state.products && this.state.products.length > 0 ?
             this.state.products && this.state.products.map((data, index) =>{
               var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];

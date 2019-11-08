@@ -11,6 +11,8 @@ import 'font-awesome/css/font-awesome.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 import Message from '../blocks/Message/Message.js';
+import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
+import Loader from "../common/loader/Loader.js";
 import axios from 'axios';
 
 class SignUp extends Component {
@@ -138,7 +140,7 @@ class SignUp extends Component {
 			}
 
 			// console.log("-------auth------>>",auth);
-
+			$('.fullpageloader').show();
 			document.getElementById("signUpBtn").innerHTML = 'Please Wait...';
 
 			var firstname = this.refs.firstname.value;
@@ -157,6 +159,7 @@ class SignUp extends Component {
 							// browserHistory.push("/"),
 							axios.post('/api/users', auth)
 								.then((response) => {
+									$('.fullpageloader').hide();
 									// console.log("-------userData------>>",response.data.user_id);
 									// ToastsStore.success(<div className="alertback">Great, Information submitted successfully and OTP is sent to your registered Email and Mobile no<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
 									// swal("Great","Information submitted successfully and OTP is sent to your registered Email and Mobile no");
@@ -339,7 +342,7 @@ class SignUp extends Component {
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
-				
+			<Loader type="fullpageloader"/>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb100">
 					<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 formShadow">
 						<Message messageData={this.state.messageData} />

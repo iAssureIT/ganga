@@ -6,6 +6,7 @@ import axios from 'axios';
 import Message from '../blocks/Message/Message.js';
 import './SignUp.css';
 import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Loader from "../common/loader/Loader.js";
 
  class ConfirmOtp extends Component {
     constructor(props){
@@ -24,9 +25,10 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
         "emailOTP":  parseInt(this.refs.emailotp.value),
         "status"  :  "Active"
       }
-      
+      $('.fullpageloader').show();
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
+        $('.fullpageloader').hide();
         // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         this.setState({
           messageData : {
@@ -36,10 +38,10 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
             "class": "success",
           }
         })
-        this.props.history.push('/login');
+        //this.props.history.push('/login');
       })
       .catch((error)=>{
-        console.log('error', error.response);
+        $('.fullpageloader').hide();
         // ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         this.setState({
           messageData : {
@@ -61,6 +63,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
     }
     resendOtp(event){
       // event.preventDefault();
+      $('.fullpageloader').show();
       document.getElementById("resendOtpBtn").innerHTML = 'Please wait...';
       // element.classList.add("btn-success");
       //element.classList.remove("resendOtpColor");
@@ -69,6 +72,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
           //  console.log("userid",userid);
           axios.get('/api/users/resendotp/'+userid)
           .then((response)=>{
+            $('.fullpageloader').hide();
             document.getElementById("resendOtpBtn").innerHTML = 'Resend OTP';
             this.setState({
               messageData : {
@@ -81,8 +85,16 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
             // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           })
           .catch((error)=>{
+            $('.fullpageloader').hide();
+            this.setState({
+              messageData : {
+                "type" : "inpage",
+                "icon" : "fa fa-times-circle",
+                "message" : "&nbsp; Failed to resent OTP",
+                "class": "danger",
+              }
+            })
             document.getElementById("resendOtpBtn").innerHTML = 'Resend OTP';
-            console.log('error', error);
           })    
     }
       Closepagealert(event){
@@ -113,7 +125,7 @@ import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,clas
 return(
       <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
-          
+          <Loader type="fullpageloader"/>
           <div className="row">
             <h3>CONFIRMOTP</h3>
           </div>
@@ -146,7 +158,7 @@ return(
                             </div>
                           </div>
                           <div className="col-lg-6">
-                              <button type="submit" className="col-lg-12 btn btn-info systemsecBtn">Submit</button>
+                              <button type="submit" onClick={this.confirmOTP.bind(this)} className="col-lg-12 btn btn-info systemsecBtn">Submit</button>
                           </div>
                       </div>
                     </form>

@@ -495,6 +495,7 @@ class ProductCollage extends Component {
 
 	     	 	<div>		
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
 				    	{ this.state.categoryDetails[0] ? 
@@ -788,7 +789,8 @@ class ProductCollage extends Component {
 					<br/>
 					  <div className="tab-content">
 					    <div id="products" className="tab-pane fade in active">
-					    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
+					    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding content">
+					    	
 					    		<ProductCollageView products={this.state.products} 
 					    		categoryDetails={this.state.categoryDetails} 
 					    		getWishData={this.getWishData.bind(this)} wishList={this.state.wishList}
