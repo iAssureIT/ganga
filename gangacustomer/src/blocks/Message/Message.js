@@ -18,17 +18,25 @@ class Message extends Component{
         // window.scrollTo(0, 0);
         if(nextProps && nextProps.messageData){
             this.setState({
-                "alertType"        : nextProps.messageData.type,
+                "alertType"   : nextProps.messageData.type,
                 "class"       : nextProps.messageData.class,
                 "icon"        : nextProps.messageData.icon,
                 "message"     : nextProps.messageData.message
             })
+            setTimeout(() => {
+                this.setState({
+                alertType   : "",
+                class       : "",
+                icon        : "",
+                message     : ""
+              })
+            }, 3000);
         }
     }
     close(event){
         event.preventDefault();
         this.setState({
-            alertType        : "",
+            alertType   : "",
             class       : "",
             icon        : "",
             message     : ""
