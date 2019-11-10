@@ -8,10 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import 'font-awesome/css/font-awesome.min.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 import Message from '../blocks/Message/Message.js';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
 import Loader from "../common/loader/Loader.js";
 import axios from 'axios';
 
@@ -186,8 +184,7 @@ class SignUp extends Component {
 
 				} else {
 					document.getElementById("signUpBtn").innerHTML = 'Sign Up';
-					// ToastsStore.error(<div className="alertback">Passwords does not match, Please Try Again<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-					// return swal("Passwords does not match","Please Try Again")
+					
 					this.setState({
 		              messageData : {
 		                "type" : "inpage",

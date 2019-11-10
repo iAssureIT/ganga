@@ -4,7 +4,7 @@ import axios   from 'axios';
 import "./Edituser.css";
 import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Message from '../../blocks/Message/Message.js';
 import $                          from 'jquery';
 
 class Edituser extends Component{
@@ -44,13 +44,25 @@ class Edituser extends Component{
                         var objTitle = { fileInfo :file }
                         profileImage = objTitle ;
                         
-                    }else{          
-                        // swal("Images not uploaded","Something went wrong","error"); 
-                        ToastsStore.error(<div className="alertback">Images not uploaded, Something went wrong<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)         
+                    }else{  
+                         this.setState({
+                          messageData : {
+                            "type" : "outpage",
+                            "icon" : "fa fa-check-circle",
+                            "message" : "Images not uploaded, Something went wrong<a className='pagealerturl' href='/login'>Sign In</a>",
+                            "class": "danger",
+                          }
+                        }) 
                     }//file
                 }else{ 
-                    ToastsStore.warning(<div className="alertback">Please upload Image, Allowed images formats are (jpg,png,jpeg)<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                    // swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                     this.setState({
+                      messageData : {
+                        "type" : "outpage",
+                        "icon" : "fa fa-check-circle",
+                        "message" : "Please upload Image, Allowed images formats are (jpg,png,jpeg)",
+                        "class": "warning",
+                      }
+                    })
                 }//file types
             }//file
         // }//for 
@@ -143,12 +155,15 @@ class Edituser extends Component{
     }
     
         axios.patch('/api/users/useraddress/'+userid, formvalues)
-        .then((response)=> {   
-          ToastsStore.success(<div className="alertback">User updated successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-          // swal({
-          //   title:"User updated successfully",
-          //   text:"User updated successfully",
-          // });   
+        .then((response)=> {  
+          this.setState({
+            messageData : {
+              "type" : "outpage",
+              "icon" : "fa fa-check-circle",
+              "message" : "User updated successfully",
+              "class": "success",
+            }
+          })
         })
         .catch(function (error) {
           console.log('error============',error);
@@ -195,9 +210,7 @@ class Edituser extends Component{
         <div>
           <div>                 
               <div className="">                  
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
+              <Message messageData={this.state.messageData} />
                     <section className="content viewContent">
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">

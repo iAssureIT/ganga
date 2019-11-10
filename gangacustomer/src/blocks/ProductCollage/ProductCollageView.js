@@ -18,37 +18,37 @@ class ProductCollageView extends Component {
          categoryDetails:[],
          modalIDNew : []
 	   }
-  	}  
-  	componentDidMount() {
-      //console.log('nextProps',this.props);
-  		this.setState({
-	      products : this.props.products,
-        masterLimitProducts : this.props.products
-	    });
+  }  
+	componentDidMount() {
+    //console.log('nextProps',this.props);
+		this.setState({
+      products : this.props.products,
+      masterLimitProducts : this.props.products
+    });
 
-  	}
-    componentWillReceiveProps(nextProps){
-	    this.setState({
-        products : nextProps.products,
-        masterLimitProducts : nextProps.products,
-        categoryDetails : nextProps.categoryDetails
-	    });
-  	}
-        getCartData(){
-        // const userid = '5d5bfb3154b8276f2a4d22bf';
-        const userid = localStorage.getItem('user_ID');
-        axios.get("/api/carts/get/list/"+userid)
-          .then((response)=>{ 
-           // console.log('cartProduct=======================', response.data[0].cartItems)
-              this.setState({
-                cartProduct : response.data[0].cartItems
-              });
-                this.props.initialCartData(response.data[0].cartItems);
-          })
-          .catch((error)=>{
-                console.log('error', error);
-          })
-    }
+	}
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      products : nextProps.products,
+      masterLimitProducts : nextProps.products,
+      categoryDetails : nextProps.categoryDetails
+    });
+	}
+  getCartData(){
+    // const userid = '5d5bfb3154b8276f2a4d22bf';
+    const userid = localStorage.getItem('user_ID');
+    axios.get("/api/carts/get/list/"+userid)
+    .then((response)=>{ 
+     // console.log('cartProduct=======================', response.data[0].cartItems)
+        this.setState({
+          cartProduct : response.data[0].cartItems
+        });
+          this.props.initialCartData(response.data[0].cartItems);
+    })
+    .catch((error)=>{
+          console.log('error', error);
+    })
+  }
 
   	addtocart(event){
       if(user_ID){
@@ -84,7 +84,7 @@ class ProductCollageView extends Component {
               messageData : {
                 "type" : "outpage",
                 "icon" : "fa fa-check-circle",
-                "message" : "&nbsp; "+response.data.message,
+                "message" : response.data.message,
                 "class": "success",
               }
             })
@@ -168,37 +168,37 @@ class ProductCollageView extends Component {
           products: this.state.products.sort((a, b) => b[field] - a[field])
         });
       }
-    }
-    limitProducts(event){
-      event.preventDefault();
-      /*var limit = $(event.target).val();   
-      var products = this.state.masterLimitProducts.filter( (array_el, index)=>  {
-       
-          return index < limit ;
-      });*/
+  }
+  limitProducts(event){
+    event.preventDefault();
+    /*var limit = $(event.target).val();   
+    var products = this.state.masterLimitProducts.filter( (array_el, index)=>  {
+     
+        return index < limit ;
+    });*/
 
-      if (this.props.parameters.categoryID && this.props.parameters.subcategoryID) {
-        var selector = this.props.selector;
-        selector.category_ID = this.props.parameters.categoryID;
-        selector.subCategory_ID = this.props.parameters.subcategoryID;
-        selector.limit = $(event.target).val()
-        this.props.getFilteredProductsFun(this.props.selector);
-      }
-      else if (this.props.parameters.categoryID) {
-        var selector = this.props.selector;
-        selector.category_ID = this.props.parameters.categoryID;
-        selector.limit = $(event.target).val()
-        this.props.getFilteredProductsFun(this.props.selector);
-      }
-      else if (this.props.parameters.sectionID) {
-        var selector = this.props.selector;
-        selector.section_ID = this.props.parameters.sectionID;
-        selector.limit = $(event.target).val()
-        this.props.getFilteredProductsFun(this.props.selector);
-      }
-      
-      //this.setState({products : products});
+    if (this.props.parameters.categoryID && this.props.parameters.subcategoryID) {
+      var selector = this.props.selector;
+      selector.category_ID = this.props.parameters.categoryID;
+      selector.subCategory_ID = this.props.parameters.subcategoryID;
+      selector.limit = $(event.target).val()
+      this.props.getFilteredProductsFun(this.props.selector);
     }
+    else if (this.props.parameters.categoryID) {
+      var selector = this.props.selector;
+      selector.category_ID = this.props.parameters.categoryID;
+      selector.limit = $(event.target).val()
+      this.props.getFilteredProductsFun(this.props.selector);
+    }
+    else if (this.props.parameters.sectionID) {
+      var selector = this.props.selector;
+      selector.section_ID = this.props.parameters.sectionID;
+      selector.limit = $(event.target).val()
+      this.props.getFilteredProductsFun(this.props.selector);
+    }
+    
+    //this.setState({products : products});
+  }
   Closepagealert(event){
     event.preventDefault();
     $(".toast-error").html('');

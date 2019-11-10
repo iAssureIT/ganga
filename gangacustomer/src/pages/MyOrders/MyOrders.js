@@ -10,7 +10,7 @@ import moment                 from "moment";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Message from '../../blocks/Message/Message.js';
 import ReturnStatus         from "../../common/Wizard/ReturnStatus.jsx";
 import swal                   from 'sweetalert';
 import Loader from "../../common/loader/Loader.js";
@@ -127,8 +127,14 @@ export default class MyOrders extends Component {
       axios.post("/api/customerReview/post",formValues)
             .then((response)=>{
               $('.fullpageloader').hide();
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-               // swal(response.data.message);
+              this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-check-circle",
+                  "message" : response.data.message,
+                  "class": "success",
+                }
+              })
               var modal = document.getElementById('feedbackProductModal');
               modal.style.display = "none";
 
@@ -219,8 +225,14 @@ export default class MyOrders extends Component {
               .then((response)=>{
                 $('.fullpageloader').hide();
                 this.getMyOrders();
-                    ToastsStore.warning(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                    
+                    this.setState({
+                      messageData : {
+                        "type" : "outpage",
+                        "icon" : "fa fa-exclamation-circle",
+                        "message" : response.data.message,
+                        "class": "warning",
+                      }
+                    })
                     var modal = document.getElementById('returnProductModal');
                     modal.style.display = "none";
 
@@ -283,17 +295,15 @@ export default class MyOrders extends Component {
                           this.getMyOrders();
                           const el = document.createElement('div')
                       el.innerHTML = "<a href='/CancellationPolicy' style='color:blue !important'>View Cancellation Policy</a>"
-                      
-                          // swal({
-                          //   html:true,
-                          //   text: "Your order is cancelled. Refund will be made as per Cancellation Policy.",
-                          //   content: el,
-                          //   icon: "info",
-                          //   button: "Close",
-                          //   focusConfirm: false,
-                          //   showCloseButton: true
-                          // });
-                                ToastsStore.warning(<div className="alertback">Your order is cancelled. Refund will be made as per Cancellation Policy<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                            this.setState({
+                              messageData : {
+                                "type" : "outpage",
+                                "icon" : "fa fa-exclamation-circle",
+                                "message" : "Your order is cancelled. Refund will be made as per Cancellation Policy",
+                                "class": "warning",
+                              }
+                            })
+                                
                         })
                         .catch((error)=>{
                         })                
@@ -306,9 +316,7 @@ export default class MyOrders extends Component {
   render() {  
     return (
     <div className="container">	
-      <div className="pagealertnone">
-        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-      </div>
+      <Message messageData={this.state.messageData} />
       {
         this.state.loading ?
         <Loader type="fullpageloader" />  :

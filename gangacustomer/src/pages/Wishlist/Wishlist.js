@@ -5,7 +5,7 @@ import { connect }        from 'react-redux';
 import SmallBanner        from '../../blocks/SmallBanner/SmallBanner.js';
 import './Wishlist.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Message from '../../blocks/Message/Message.js';
 import Loader from "../../common/loader/Loader.js";
 
 class Wishlist extends Component {
@@ -116,7 +116,14 @@ class Wishlist extends Component {
             axios.post('/api/carts/post', formValues)
               .then((response) => {
                 $('.fullpageloader').hide();
-                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : response.data.message,
+                "class": "success",
+              }
+            })
                 this.props.changeCartCount(response.data.cartCount);
 
                 axios.delete('/api/wishlist/delete/'+wishlist_ID)
@@ -141,7 +148,14 @@ class Wishlist extends Component {
           })
       }
       else {
-        ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+        this.setState({
+          messageData : {
+            "type" : "outpage",
+            "icon" : "fa fa-exclamation-circle",
+            "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+            "class": "warning",
+          }
+        })
       }
     }
 
@@ -156,10 +170,14 @@ class Wishlist extends Component {
               products : []
             })
             this.getData();
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-            // swal(response.data.message);
-            
-            
+             this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : response.data.message,
+                "class": "success",
+              }
+            })
           })
           .catch((error)=>{
             console.log('error', error);
@@ -184,9 +202,7 @@ class Wishlist extends Component {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
             <Loader type="fullpageloader" /> 
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
+              <Message messageData={this.state.messageData} />
                 <SmallBanner bannerData={this.state.bannerData}/>  
                 
                 <div className="container">

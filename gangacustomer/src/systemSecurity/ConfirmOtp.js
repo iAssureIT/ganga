@@ -28,7 +28,6 @@ import Loader from "../common/loader/Loader.js";
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
         $('.fullpageloader').hide();
-        // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         this.setState({
           messageData : {
             "type" : "outpage",
@@ -41,7 +40,6 @@ import Loader from "../common/loader/Loader.js";
       })
       .catch((error)=>{
         $('.fullpageloader').hide();
-        // ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
         this.setState({
           messageData : {
             "type" : "inpage",
@@ -77,7 +75,6 @@ import Loader from "../common/loader/Loader.js";
                 "class": "success",
               }
             })
-            // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
           })
           .catch((error)=>{
             $('.fullpageloader').hide();

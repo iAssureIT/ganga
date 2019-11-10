@@ -6,8 +6,7 @@ import 'jquery-validation';
 import "./Address.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import _ from 'underscore';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import Message from '../../blocks/Message/Message.js';
 class Address extends Component {
     constructor(props) {
         super(props);
@@ -257,7 +256,14 @@ class Address extends Component {
                 console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/useraddress', formValues)
                 .then((response)=>{
-                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                  }
+                })
                     // swal(response.data);
                     this.props.opDone();
                     $(".checkoutAddressModal").hide();
@@ -277,7 +283,14 @@ class Address extends Component {
             if($("#modalAddressForm").valid()){
                 axios.patch('/api/users/patch/address', formValues)
                 .then((response)=>{
-                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                  }
+                })
                     // swal(response.data.message);
                     this.props.opDone();
                     $(".checkoutAddressModal").hide();
@@ -334,6 +347,7 @@ class Address extends Component {
     render() {
         return (
             <div className="modal addressModal col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal NOpadding" id="checkoutAddressModal" role="dialog">
+                <Message messageData={this.state.messageData} />
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                     <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                         <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">

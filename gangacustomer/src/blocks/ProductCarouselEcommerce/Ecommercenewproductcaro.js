@@ -154,7 +154,6 @@ class Ecommercenewproductcaro extends Component {
         })
     }
     else {
-      // ToastsStore.error(<div className="alertback"><a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
       this.setState({
         messageData : {
           "type" : "outpage",

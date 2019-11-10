@@ -4,7 +4,7 @@ import axios                from 'axios';
 import Address              from '../Address/Address.js';
 import "./AddressBook.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Message from '../../blocks/Message/Message.js';
 import Loader from "../../common/loader/Loader.js";
 
 class AddressBook extends Component{
@@ -73,8 +73,14 @@ class AddressBook extends Component{
             $('.fullpageloader').hide();
             // console.log('response', response);
             this.getUserAddresses();
-            // swal(response.data.message);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+            this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : "&nbsp; "+response.data.message,
+                "class": "success",
+              }
+            })
         })
         .catch((error)=>{
             console.log('error', error);
@@ -106,7 +112,7 @@ class AddressBook extends Component{
             <Loader type="fullpageloader" />
             <Address addressId={this.state.addressId} opDone={this.opDone.bind(this)}/>
             <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+              <Message messageData={this.state.messageData} />
               </div>
                 <div className="container">
                     <br/>

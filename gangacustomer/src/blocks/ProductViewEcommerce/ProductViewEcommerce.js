@@ -5,7 +5,7 @@ import axios from 'axios';
 import "./ProductViewEcommerce.css";
 import _ from 'underscore';
 import { connect } from 'react-redux';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
+import Message from '../Message/Message.js';
 import ReactImageZoom from 'react-image-zoom';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';	
@@ -125,7 +125,14 @@ class ProductViewEcommerce extends Component {
 						.then((response) => {
 							// console.log('response', response);
 							this.getCartData();
-							ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+							this.setState({
+				              messageData : {
+				                "type" : "outpage",
+				                "icon" : "fa fa-check-circle",
+				                "message" : "&nbsp; "+response.data.message,
+				                "class": "success",
+				              }
+				            })
 							// swal(response.data.message)
 							this.props.changeCartCount(response.data.cartCount);
 						})
@@ -137,7 +144,14 @@ class ProductViewEcommerce extends Component {
 					console.log('error', error);
 				})
 		} else {
-			ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+			this.setState({
+		        messageData : {
+		          "type" : "outpage",
+		          "icon" : "fa fa-exclamation-circle",
+		          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+		          "class": "warning",
+		        }
+		    })
 		}
 	}
 	addtowishlist(event) {
@@ -156,12 +170,7 @@ class ProductViewEcommerce extends Component {
 					}
 					axios.post('/api/wishlist/post', formValues)
 						.then((response) => {
-							// console.log('response', response);
-							// swal(response.data.message)
-							if (response.status == 200) {
-								ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
-							}
-							ToastsStore.warning(<div className="alertback">{response.data.messageinfo}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+							
 						})
 						.catch((error) => {
 							console.log('error', error);
@@ -171,7 +180,14 @@ class ProductViewEcommerce extends Component {
 					console.log('error', error);
 				})
 		} else {
-			ToastsStore.error(<div className="alertback">Need To Sign In, Please Sign In First<a className="pagealerturl" href="/login">Sign In >></a><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 50000)
+			this.setState({
+            messageData : {
+              "type" : "outpage",
+              "icon" : "fa fa-exclamation-circle",
+              "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+              "class": "warning",
+            }
+          })
 		}
 
 	}
@@ -224,9 +240,7 @@ class ProductViewEcommerce extends Component {
 		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1000;background-color:#fff; height:500px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/notavailable.jpg" };
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
-				<div className="pagealertnone">
-					<ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-				</div>
+				<Message messageData={this.state.messageData} />
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
 					<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer imgCont">

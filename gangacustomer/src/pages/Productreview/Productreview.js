@@ -5,7 +5,7 @@ import { connect }        from 'react-redux';
 import SmallBanner        from '../../blocks/SmallBanner/SmallBanner.js';
 import './Productreview.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Message from '../../blocks/Message/Message.js';
 import moment                 from "moment";
 import swal                   from 'sweetalert';
 
@@ -72,8 +72,14 @@ class Productreview extends Component {
        if(this.state.reviewData.length!=null){
       axios.patch("/api/customerReview/patch",formValues)
             .then((response)=>{
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 1000)
-               // swal(response.data.message);    
+              this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : response.data.message,
+                "class": "success",
+              }
+            }) 
             })
             .catch((error)=>{
             })
@@ -89,9 +95,7 @@ class Productreview extends Component {
     render() {  
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
+              <Message messageData={this.state.messageData} />
                 <SmallBanner bannerData={this.state.bannerData}/>  
                 
                 <div className="container">

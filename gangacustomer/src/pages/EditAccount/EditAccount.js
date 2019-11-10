@@ -4,7 +4,7 @@ import axios                from 'axios';
 import SmallBanner               from '../../blocks/SmallBanner/SmallBanner.js';
 import "./EditAccount.css";
 import Sidebar from '../../common/Sidebar/Sidebar.js';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+import Message from '../../blocks/Message/Message.js';
 import Loader from "../../common/loader/Loader.js";
 
 class EditAccount extends Component{
@@ -120,13 +120,24 @@ class EditAccount extends Component{
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
                 console.log(response.message);
-             ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                // swal(response.data.message);
+             this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : "&nbsp; "+response.data.message,
+                "class": "success",
+              }
+            })
             })
             .catch((error,resp)=> {
-
-            ToastsStore.success(<div className="alertback">{error.response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-             
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-times-circle",
+                    "message" : error.response.data.message,
+                    "class": "warning",
+                  }
+                })
             });
         }
     }
@@ -161,9 +172,7 @@ class EditAccount extends Component{
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-            <div className="pagealertnone">
-              <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-              </div>
+            <Message messageData={this.state.messageData} />
                 <div className="container">
                     <Loader type="fullpageloader" /> 
                     <br/>

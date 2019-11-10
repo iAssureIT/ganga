@@ -6,8 +6,7 @@ import moment from 'moment';
 import Address              from '../Address/Address.js';
 import _ from 'underscore';
 import SmallBanner from '../../blocks/SmallBanner/SmallBanner.js';
-import { ToastsContainer, ToastsStore, ToastsContainerPosition, message, timer, classNames } from 'react-toasts';
-
+import Message from '../../blocks/Message/Message.js';
 import 'jquery-validation';
 import "./Checkout.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -277,7 +276,14 @@ class Checkout extends Component {
         }
         axios.patch("/api/carts/remove", formValues)
             .then((response) => {
-                ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+               this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                  }
+                })
                 // swal(response.data.message);
                 this.getCartData();
                 this.getCompanyDetails();
@@ -602,8 +608,14 @@ class Checkout extends Component {
             axios.patch('/api/users/patch/address', addressValues)
                 .then((response) => {
                     $('.fullpageloader').hide();
-                    ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                    // swal(response.data.message);
+                    this.setState({
+                      messageData : {
+                        "type" : "outpage",
+                        "icon" : "fa fa-check-circle",
+                        "message" : "&nbsp; "+response.data.message,
+                        "class": "success",
+                      }
+                    })
                     this.getUserAddress();
                     $(".checkoutAddressModal").hide();
                     $(".modal-backdrop").hide();
@@ -704,7 +716,14 @@ class Checkout extends Component {
                                             var totalAmount = orderStatus.totalAmount;
                                             var userId = localStorage.getItem('user_ID');
                                             // swal('Order Placed Successfully'); 
-                                            ToastsStore.success(<div className="alertback">Order Placed Successfully<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+                                            this.setState({
+                                              messageData : {
+                                                "type" : "outpage",
+                                                "icon" : "fa fa-check-circle",
+                                                "message" : "&Order Placed Successfully ",
+                                                "class": "success",
+                                              }
+                                            })
 
                                             this.props.history.push('/payment/' + result.data.order_ID);
                                         }
@@ -749,8 +768,14 @@ class Checkout extends Component {
 
             axios.patch('/api/users/patch/address', addressValues)
                 .then((response) => {
-                    ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-                    // swal(response.data.message);
+                    this.setState({
+                      messageData : {
+                        "type" : "outpage",
+                        "icon" : "fa fa-check-circle",
+                        "message" : "&nbsp; "+response.data.message,
+                        "class": "success",
+                      }
+                    })
                     this.getUserAddress();
                     $(".checkoutAddressModal").hide();
                     $(".modal-backdrop").hide();
@@ -832,9 +857,7 @@ class Checkout extends Component {
     render() {
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div className="pagealertnone">
-                    <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-                </div>
+                <Message messageData={this.state.messageData} />
                 <div className="row">
                     <Loader type="fullpageloader" /> 
                     <Address opDone={this.opDone.bind(this)}/>

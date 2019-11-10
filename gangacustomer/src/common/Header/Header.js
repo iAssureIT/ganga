@@ -13,8 +13,7 @@ import ContactPage      from '../../pages/ContactPage/ContactPage.js';
 import axios                    from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import { connect }        from 'react-redux';
-import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
-
+import Message from '../../blocks/Message/Message.js';
 class Header extends Component {
 constructor(props){
     super(props);
@@ -272,7 +271,14 @@ searchProducts(){
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
             console.log('removed');
-            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
+             this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-check-circle",
+                  "message" : "&nbsp; "+response.data.message,
+                  "class": "success",
+                }
+              })
             // swal(response.data.message)           
              // .then((obj)=>{
              //      window.location.reload();
@@ -289,9 +295,14 @@ searchProducts(){
     Removefromcartwarning(event){
         const cartitemid = event.target.getAttribute('id');
          console.log("cartitemid",cartitemid);
-
-        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" removeid={cartitemid} onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
-
+         this.setState({
+            messageData : {
+              "type" : "outpage",
+              "icon" : "fa fa-exclamation-circle",
+              "message" : "Item Will be removed from the cart permanently",
+              "class": "warning",
+            }
+          })
     }
   submitQuery(){
     var formValues = {
@@ -302,8 +313,14 @@ searchProducts(){
 
     axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
-      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
-      // swal(response.data.message) 
+      this.setState({
+              messageData : {
+                "type" : "outpage",
+                "icon" : "fa fa-check-circle",
+                "message" : "&nbsp; "+response.data.message,
+                "class": "success",
+              }
+            }) 
       jQuery("#customercareModal").modal("hide");
 
       })
@@ -340,9 +357,7 @@ searchProducts(){
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
-      <div className="pagealertnone">
-        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
-        </div>
+        <Message messageData={this.state.messageData} />
           <header className="col-lg-12 headerflow"> 
             <div className="row"> 
                   <div className="col-lg-12 header1wrapper">
