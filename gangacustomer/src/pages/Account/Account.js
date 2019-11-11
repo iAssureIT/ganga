@@ -137,7 +137,7 @@ class Account extends Component{
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">You have not set a default billing address.</p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                    <button onClick={this.addAddress.bind(this)} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
+                                                    <button data-toggle="modal" data-target="#checkoutAddressModal" className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
                                                 </div>
                                             </div>
                                         }
@@ -166,7 +166,7 @@ class Account extends Component{
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">You have not set a default shipping address.</p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                                    <button onClick={this.addAddress.bind(this)} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
+                                                    <button data-toggle="modal" data-target="#checkoutAddressModal" className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
                                                 </div>
                                             </div>
                                         }

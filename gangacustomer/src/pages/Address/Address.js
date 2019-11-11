@@ -358,12 +358,12 @@ class Address extends Component {
                             <form id="modalAddressForm">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Full Name <span className="required">*</span></label>
-                                    <input type="text" ref="modalname" name="modalname" id="modalname" value={this.state.modalname} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                    <input type="text" maxlength="50" ref="modalname" name="modalname" id="modalname" value={this.state.modalname} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                        <input placeholder="Eg. 9876543210" type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" value={this.state.modalmobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        <input maxlength="10" placeholder="Eg. 9876543210" type="text" ref="modalmobileNumber" name="modalmobileNumber" id="modalmobileNumber" value={this.state.modalmobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                         {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
@@ -433,7 +433,7 @@ class Address extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                        <input type="text" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        <input type="text" maxlength="6" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                     </div>
 
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">

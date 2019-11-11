@@ -329,11 +329,11 @@ class SignUp extends Component {
 						<form id="signUpUser">
 							<div className="logininput col-lg-6 col-md-6 col-sm-12 col-xs-12">
 								<label>First Name</label><label className="astricsign">*</label>
-								<input type="text" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="" onChange={this.handleChange} data-text="firstNameV" />
+								<input type="text" maxlength="25" className="form-control" id="firstname" ref="firstname" name="firstname" placeholder="" onChange={this.handleChange} data-text="firstNameV" />
 							</div>
 							<div className="logininput col-lg-6 col-md-6 col-sm-12 col-xs-12">
 								<label>Last Name</label><label className="astricsign">*</label>
-								<input type="text" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="" onChange={this.handleChange} data-text="lastNameV" />
+								<input type="text" maxlength="25" className="form-control" id="lastname" ref="lastname" name="lastname" placeholder="" onChange={this.handleChange} data-text="lastNameV" />
 							</div>
 							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
 								<label>Email ID</label><label className="astricsign">*</label>
@@ -343,7 +343,7 @@ class SignUp extends Component {
 							</div>
 							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
 								<label>Mobile Number</label><label className="astricsign">*</label>
-								<input className="form-control" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="Eg. 9876543210" onChange={this.handleChange} data-text="mobileV" />
+								<input className="form-control" type="text" maxlength="10" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="Eg. 9876543210" onChange={this.handleChange} data-text="mobileV" />
 							</div>
 							
 							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
