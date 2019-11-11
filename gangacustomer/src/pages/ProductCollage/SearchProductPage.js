@@ -41,7 +41,6 @@ class SearchProduct extends Component {
 	        categoryDetails : nextProps.categoryDetails 
 
   		},()=>{
-  			console.log('categoryDetails',this.state.categoryDetails);
 	  		if (this.state.categoryDetails &&  this.state.categoryDetails[0]) {
 	  			this.getBrands(this.state.categoryDetails[0].section_ID);
 	  		}
@@ -214,7 +213,7 @@ class SearchProduct extends Component {
 				    	/*<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
 				    		
 				    		<select className="form-control sortProducts col-lg-3" onChange={this.sortProducts.bind(this)}>
-								<option  className="hidden" >Relevence</option>
+								<option  className="hidden" >Relevance</option>
 								<option value="alphabeticallyAsc">Name A-Z</option>
 								<option value="alphabeticallyDsc">Name Z-A</option>
 								<option value="priceAsc">Price Low to High</option>

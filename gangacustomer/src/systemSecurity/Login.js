@@ -91,6 +91,7 @@ class Login extends Component {
         window.location.reload("/");
 
       }else{
+        $('.fullpageloader').hide();
             this.setState({
               messageData : {
                 "type" : "inpage",
@@ -102,6 +103,8 @@ class Login extends Component {
           }
       })
       .catch((error)=> {
+
+        $('.fullpageloader').hide();
         document.getElementById("logInBtn").value = 'Sign In';
         if(localStorage!==null){
           // swal(error.message);
@@ -109,7 +112,7 @@ class Login extends Component {
             messageData : {
               "type" : "inpage",
               "icon" : "fa fa-times-circle",
-              "message" : "&nbsp; Invalid Email or Password, Please Enter valid email and password!",
+              "message" : "&nbsp; "+error.response.data.message,
               "class": "danger",
             }
           })

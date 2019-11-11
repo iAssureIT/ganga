@@ -235,7 +235,7 @@ class ProductCollageView extends Component {
             <div className="col-lg-offset-2 col-md-offset-2 col-lg-4 col-md-6 col-sm-9 col-xs-9 NoPadding">
               <label className="col-lg-3 col-md-6 col-sm-9 col-xs-9 NoPadding labeldiv">Sort By</label>
               <select className="sortProducts col-lg-8 col-sm-9 col-md-8 col-xs-9 NoPadding" onChange={this.sortProducts.bind(this)}>
-                <option  className="hidden" >Relevence</option>
+                <option  className="hidden" >Relevance</option>
                 <option value="alphabeticallyAsc">Name A-Z</option>
                 <option value="alphabeticallyDsc">Name Z-A</option>
                 <option value="priceAsc">Price Low to High</option>
