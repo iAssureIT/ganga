@@ -1011,9 +1011,9 @@ class Checkout extends Component {
                                                 <th></th>
                                                 <th></th>
                                                 <th>Products Name</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th>SubTotal</th>
+                                                <th className="textAlignRight">Price</th>
+                                                <th className="textAlignRight">Quantity</th>
+                                                <th className="textAlignRight">SubTotal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
