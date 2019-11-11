@@ -38,13 +38,13 @@ export default class Dashboard extends Component{
       "mtdorders"       : 0,
       "ytdreviews"      : 0,
       "mtdreviews"      : 0,
-      "todaysorders"    : 0,
-      "todaysneworders" : 0,
-      "todaysReturnPendingCount" : 0,
-      "todaysReturnCount" : 0,
+      "totalorders"     : 0,
+      "neworderscount" : 0,
+      "ReturnPendingCount" : 0,
+      "returnCount" : 0,
       "outofstock"      : 0,
-      "todaysReviewCount": 0,
-      "todaysUnpublishedReviewCount": 0,
+      "ReviewCount": 0,
+      "UnpublishedReviewCount": 0,
       "sectionLables"   : [],
       "catLables"       : [],
       "subCatLables"    : []
@@ -143,10 +143,10 @@ export default class Dashboard extends Component{
     })
 
     
-    axios.get("/api/orders/get/todaysorders")
+    axios.get("/api/orders/get/count")
     .then((response)=>{
       this.setState({ 
-        todaysorders : response.data.dataCount
+        totalorders : response.data.dataCount
       },()=>{ 
       })
     })
@@ -154,10 +154,10 @@ export default class Dashboard extends Component{
         console.log('error', error);
     })
 
-    axios.get("/api/orders/get/todaysneworders")
+    axios.get("/api/orders/get/neworderscount")
     .then((response)=>{
       this.setState({ 
-        todaysneworders : response.data.dataCount
+        neworderscount : response.data.dataCount
       },()=>{ 
       })
     })
@@ -165,10 +165,10 @@ export default class Dashboard extends Component{
         console.log('error', error);
     })
 
-    axios.get("/api/returnedProducts/get/todayscount")
+    axios.get("/api/returnedProducts/get/count")
     .then((response)=>{
       this.setState({ 
-        todaysReturnCount : response.data.dataCount
+        returnCount : response.data.dataCount
       },()=>{ 
       })
     })
@@ -177,10 +177,10 @@ export default class Dashboard extends Component{
     })
 
 
-    axios.get("/api/returnedProducts/get/todaysPendingCount")
+    axios.get("/api/returnedProducts/get/PendingCount")
     .then((response)=>{
       this.setState({ 
-        todaysReturnPendingCount : response.data.dataCount
+        ReturnPendingCount : response.data.dataCount
       },()=>{ 
       })
     })
@@ -199,10 +199,10 @@ export default class Dashboard extends Component{
         console.log('error', error);
     })
 
-    axios.get("/api/customerReview/get/todayscount")
+    axios.get("/api/customerReview/get/count")
     .then((response)=>{
       this.setState({ 
-        todaysReviewCount : response.data.dataCount
+        ReviewCount : response.data.dataCount
       },()=>{ 
       })
     })
@@ -210,10 +210,10 @@ export default class Dashboard extends Component{
         console.log('error', error);
     })
 
-    axios.get("/api/customerReview/get/todaysUnpublishedCount")
+    axios.get("/api/customerReview/get/UnpublishedCount")
     .then((response)=>{
       this.setState({ 
-        todaysUnpublishedReviewCount : response.data.dataCount
+        UnpublishedReviewCount : response.data.dataCount
       },()=>{ 
       })
     })
@@ -448,7 +448,7 @@ export default class Dashboard extends Component{
           </div>
           <div className="col-lg-3">     
             <div className="dash-box">
-              <span className="infoboxicon bg-aqua"><i className="fa fa-user"></i></span>
+              <span className="infoboxicon bg-redcolor"><i className="fa fa-tag"></i></span>
               <div className="info-box-content">
                 <span className="info-box-text">Total Categories</span>
                 <span className="info-box-number">{this.state.categoriesCount}</span>
@@ -459,7 +459,7 @@ export default class Dashboard extends Component{
           </div> 
           <div className="col-lg-3">  
             <div className="dash-box">
-                <span className="infoboxicon bg-aqua"><i className="fa fa-user"></i></span>
+                <span className="infoboxicon bg-green"><i className="fa fa-shopping-cart"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">YTD Orders</span>
                   <span className="info-box-number">{this.state.ytdorders}</span>
@@ -470,7 +470,7 @@ export default class Dashboard extends Component{
           </div>
           <div className="col-lg-3">     
             <div className="dash-box">
-                <span className="infoboxicon bg-aqua"><i className="fa fa-user"></i></span>
+                <span className="infoboxicon bg-yellow"><i className="fa fa-pencil"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">YTD Reviews</span>
                   <span className="info-box-number">{this.state.ytdreviews}</span>
@@ -521,7 +521,7 @@ export default class Dashboard extends Component{
             <div className="col-lg-12 box3" style={{marginBottom: "15px"}}>     
               <div className="box3a box1a">
                 <div className="col-lg-12">
-                    <h4>Todays Call to Action</h4> 
+                    <h4>Call to Action</h4> 
                 </div>
               </div>
               <br/>
@@ -530,7 +530,7 @@ export default class Dashboard extends Component{
               <div className="box3a">
                 <div className="col-lg-12">
                     <h4><a href="/new-orders-list">New Orders</a></h4> 
-                    <label>{this.state.todaysneworders}/ {this.state.todaysorders} Orders</label>  
+                    <label>{this.state.neworderscount}/ {this.state.totalorders} Orders</label>  
                 </div>
               </div>
               <br/>
@@ -540,7 +540,7 @@ export default class Dashboard extends Component{
               <div className="box3a">
                 <div className="col-lg-12">
                     <h4><a href="/returned-products">Return Products</a></h4> 
-                    <label>{this.state.todaysReturnPendingCount}/{this.state.todaysReturnCount}</label>  
+                    <label>{this.state.ReturnPendingCount}/{this.state.returnCount}</label>  
                 </div>
               </div>
             </div>
@@ -558,7 +558,7 @@ export default class Dashboard extends Component{
               <div className="col-lg-12 box3a">
                 <div className="col-lg-12">
                     <h4><a href="/productreview">Reviews</a></h4> 
-                    <label>{this.state.todaysUnpublishedReviewCount}/{this.state.todaysReviewCount}</label>  
+                    <label>{this.state.UnpublishedReviewCount}/{this.state.ReviewCount}</label>  
                 </div>
               </div>
             </div>

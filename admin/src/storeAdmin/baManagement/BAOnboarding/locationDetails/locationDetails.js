@@ -89,9 +89,9 @@ export default class LocationDetails extends Component{
          // area: {
          //   required: true,
          // },
-         // pincode: {
-         //   required: true,
-         // },
+         pincode: {
+           required: true,
+         },
        },
        errorPlacement: function(error, element) {
            if (element.attr("name") == "locationType"){
@@ -115,9 +115,9 @@ export default class LocationDetails extends Component{
            // if (element.attr("name") == "area"){
            //   error.insertAfter("#Areadata");
            // }
-           // if (element.attr("name") == "pincode"){
-           //   error.insertAfter("#Pincodedata");
-           // }
+           if (element.attr("name") == "pincode"){
+             error.insertAfter("#Pincodedata");
+           }
          }
      });
     
@@ -813,19 +813,7 @@ export default class LocationDetails extends Component{
                                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null } 
                                   </label>
-                                  <input type="text" id="Pincodedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode}  ref="pincode" name="pincode" onChange={this.handleChange} />
-
-                                  {/*<select id="Pincodedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode}  ref="pincode" name="pincode" onChange={this.handleChange} >
-                                    <option value="">-- Select --</option>
-                                    {
-                                      currentPincode.map((Pincodedata, index)=>{
-                                        return(      
-                                            <option  key={index}>{Pincodedata.value}</option>
-                                          );
-                                        }
-                                      )
-                                    }
-                                    </select>*/}
+                                  <input type="text" id="Pincodedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode}  ref="pincode" name="pincode" onChange={this.handleChange} required/>
                                 </div>
                                 </div>
                                 <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7  inputFields">
