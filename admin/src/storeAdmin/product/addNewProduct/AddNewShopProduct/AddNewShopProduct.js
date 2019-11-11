@@ -698,7 +698,7 @@ class AddNewShopProduct extends Component {
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                         <label>Item Code <i className="redFont">*</i></label>
-                        <input value={this.state.itemCode} name="itemCode" id="itemCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="itemCode" onChange={this.handleChange.bind(this)} />
+                        <input value={this.state.itemCode} name="itemCode" id="itemCode" type="text" className="form-control link-category newProductCode" placeholder="Item Code" aria-label="Username" aria-describedby="basic-addon1" ref="itemCode" onChange={this.handleChange.bind(this)} />
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                         <label>Product Name <i className="redFont">*</i></label>

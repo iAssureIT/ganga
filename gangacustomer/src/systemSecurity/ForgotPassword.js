@@ -95,9 +95,10 @@ class ForgotPassword extends Component {
                     </div>
                     <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>
                     <form id="resetPass">
-                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Email <i className="error">*</i></label>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="emailLink">
-                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="emailLink" name="emailLink" type="text" />
+                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+                            <label className="labelCss">Email ID</label><label className="astricsign">*</label>
+                            <input className="form-control col-lg-6 col-md-6 col-sm-12  col-xs-12" placeholder="Email ID" ref="emailLink" name="emailLink" type="text" />
+                            <div id="emailLink"></div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                             <button id="sendlink" className="btn btn-warning resetBtn" onClick={this.sendLink.bind(this)}>Reset My Password</button>

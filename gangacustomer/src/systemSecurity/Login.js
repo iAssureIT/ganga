@@ -157,12 +157,16 @@ class Login extends Component {
                   <h4><b>Registered Customers</b></h4>
                   <p>If you have an account, sign in with your email address.</p>
                     <form id="login" onSubmit={this.userlogin.bind(this)}>
+                      <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                        <label>Email ID</label><label className="astricsign">*</label>
+                        <input type="email" className="form-control" onChange={this.handleChange} ref="loginusername" id="loginusername" name="loginusername" placeholder="Email ID" required/>
+                      </div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                       <span className="logininput">
-                        <input type="email" className="mt30 form-control" onChange={this.handleChange} ref="loginusername" id="loginusername" name="loginusername" placeholder="Email" required/>
+                         <label>Password</label><label className="astricsign">*</label>
+                        <input type="password" className="form-control" ref="loginpassword" name="loginpassword" id="loginpassword" placeholder="Password" required/>
                       </span>
-                      <span className="logininput">
-                        <input type="password" className="mt30 form-control" ref="loginpassword" name="loginpassword" id="loginpassword" placeholder="Password" required/>
-                      </span>
+                      </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30">
                         <div className="row">
                           <div className="col-lg-6 col-md-6 col-sm-6 mt10">
@@ -170,7 +174,7 @@ class Login extends Component {
                                 <a href='/forgotpassword' className="">Forgot Your Password?</a>
                             </div>
                           </div>
-                          <div className="col-lg-6 col-md-6 col-sm-6">
+                          <div className="col-lg-6 col-md-6 col-sm-6 NOpaddingRight">
                             <input id="logInBtn" type="submit" className="pull-right btn btn-warning" value="Sign In"/>
                           </div>
                         </div>

@@ -474,7 +474,7 @@ class ViewTemplates extends Component{
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
                <section className="marginTopp col-lg-12 col-md-12 col-xs-12 col-sm-12 marginBottomCSS">
                    
-                                    
+                       	             
                     <div className="box">
 
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border mrgntop">

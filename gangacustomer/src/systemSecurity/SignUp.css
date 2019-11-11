@@ -33,9 +33,14 @@
   text-align: center;
   /*border-bottom: 1px solid #aaa;*/
 }
-
+.labelCss{
+  font-weight: normal !important;
+}
 .borderrightlogin{
     border-right: 1px solid #aaa;
+}
+.labelCss{
+  font-weight: normal;
 }
 
 .logininput input{
