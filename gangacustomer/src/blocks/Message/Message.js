@@ -7,10 +7,11 @@ class Message extends Component{
     constructor(props) {
         super(props);
         this.state={
-            alertType        : "",
+            alertType   : "",
             class       : "",
             icon        : "",
-            message     : ""
+            message     : "",
+            autoDismiss : false
         }
         // window.scrollTo(0, 0);
     } 
@@ -21,16 +22,20 @@ class Message extends Component{
                 "alertType"   : nextProps.messageData.type,
                 "class"       : nextProps.messageData.class,
                 "icon"        : nextProps.messageData.icon,
-                "message"     : nextProps.messageData.message
+                "message"     : nextProps.messageData.message,
+                "autoDismiss" : nextProps.messageData.autoDismiss
             })
-            setTimeout(() => {
-                this.setState({
-                alertType   : "",
-                class       : "",
-                icon        : "",
-                message     : ""
-              })
-            }, 3000);
+            if(nextProps.messageData.autoDismiss && nextProps.messageData.autoDismiss == true){
+                setTimeout(() => {
+                    this.setState({
+                    alertType   : "",
+                    class       : "",
+                    icon        : "",
+                    message     : ""
+                })
+                }, 3000);
+            }
+            
         }
     }
     close(event){

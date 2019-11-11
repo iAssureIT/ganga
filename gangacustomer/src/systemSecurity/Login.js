@@ -76,8 +76,9 @@ class Login extends Component {
             "messageData" : {
               "type" : "inpage",
               "icon" : "fa fa-times-circle",
-              "message" : "&nbsp; Invalid Email or Password, Please Enter valid email and password!",
+              "message" : response.data.message,
               "class": "danger",
+              "autoDismiss" : false
             }
           })
           // swal("Invalid Email or Password","Please Enter valid email and password");
@@ -96,8 +97,9 @@ class Login extends Component {
               messageData : {
                 "type" : "inpage",
                 "icon" : "fa fa-exclamation-circle",
-                "message" : "&nbsp; Need to Verify OTP, Please Verify Your OPT First <a href='confirm-otp/"+response.data.user_ID+"'>Click here</a>",
+                "message" : response.data.message,
                 "class": "warning",
+                "autoDismiss" : false
               }
             })
           }
@@ -114,6 +116,7 @@ class Login extends Component {
               "icon" : "fa fa-times-circle",
               "message" : "&nbsp; "+error.response.data.message,
               "class": "danger",
+              "autoDismiss" : false
             }
           })
         }
@@ -171,7 +174,7 @@ class Login extends Component {
                         <div className="row">
                           <div className="col-lg-6 col-md-6 col-sm-6 mt10">
                             <div className="row loginforgotpass">
-                                <a href='/forgotpassword' className="">Forgot Your Password?</a>
+                                <a href='/forgotpassword' className="">Forgot Password?</a>
                             </div>
                           </div>
                           <div className="col-lg-6 col-md-6 col-sm-6 NOpaddingRight">

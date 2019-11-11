@@ -37,6 +37,7 @@ class ForgotPassword extends Component {
                     "icon" : "fa fa-check-circle",
                     "message" : "&nbsp; "+response.data.message,
                     "class": "success",
+                    "autoDismiss" : false
                   }
                 })
                 document.getElementById("sendlink").innerHTML = 'Reset My Password';

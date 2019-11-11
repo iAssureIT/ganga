@@ -133,7 +133,7 @@ class SignUp extends Component {
 				pwd: this.refs.signupPassword.value,
 				signupPassword: this.refs.signupConfirmPassword.value,
 				roles: 'users',
-				status: 'Blocked'
+				status: 'Unverified'
 			}
 
 			// console.log("-------auth------>>",auth);
@@ -160,7 +160,8 @@ class SignUp extends Component {
 						                "type" : "outpage",
 						                "icon" : "fa fa-check-circle",
 						                "message" : "&nbsp; Great, Information submitted successfully and OTP is sent to your registered Email.",
-						                "class": "success",
+										"class": "success",
+										"autoDismiss" : false
 						              }
 						            })
 									this.props.history.push("/confirm-otp/" + response.data.user_id);
@@ -176,7 +177,8 @@ class SignUp extends Component {
 				                "type" : "inpage",
 				                "icon" : "fa fa-exclamation-circle",
 				                "message" : "&nbsp; Password should be at least 6 Characters Long, Please try again or create an Account.",
-				                "class": "warning",
+								"class": "warning",
+								"autoDismiss" : false
 				              }
 				            })
 						)
@@ -190,7 +192,8 @@ class SignUp extends Component {
 		                "type" : "inpage",
 		                "icon" : "fa fa-times-circle",
 		                "message" : "&nbsp; Passwords does not match, Please Try Again.",
-		                "class": "danger",
+						"class": "danger",
+						"autoDismiss" : false
 		              }
 		            })
 				}

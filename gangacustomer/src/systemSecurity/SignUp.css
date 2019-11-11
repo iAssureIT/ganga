@@ -112,3 +112,6 @@
   .fa-spinner{
     font-size: 15px;
   }
+  #logInBtn:focus{
+    outline: none;
+  }
