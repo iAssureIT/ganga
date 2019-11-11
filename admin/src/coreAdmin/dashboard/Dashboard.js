@@ -47,7 +47,8 @@ export default class Dashboard extends Component{
       "UnpublishedReviewCount": 0,
       "sectionLables"   : [],
       "catLables"       : [],
-      "subCatLables"    : []
+      "subCatLables"    : [],
+      stateData         : []
     }
   }
    
@@ -223,7 +224,19 @@ export default class Dashboard extends Component{
 
     /* totalOrdersByPeriod bar chart */
     this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
-      this.getBarChart(this.state.currentDate);
+      $('#myBarChartWeeklyDiv').hide();
+      $('#myBarChartMonthlyDiv').hide();
+      $('#myBarChartYearlyDiv').hide();
+      $('#myBarChart2YearlyDiv').hide();
+      $('#myBarChart3YearlyDiv').hide();
+      $('#myBarChart5YearlyDiv').hide();
+      this.getBarChart(this.state.currentDate, 'myBarCharDaily');
+      this.getBarChart(moment().startOf('Week').format("YYYY-MM-DD"), 'myBarChartWeekly');
+      this.getBarChart(moment().startOf('Month').format("YYYY-MM-DD"), 'myBarChartMonthly');
+      this.getBarChart(moment().startOf('Year').format("YYYY-MM-DD") , 'myBarChartYearly');
+      this.getBarChart(moment(moment().startOf('Year')).subtract(1, 'year'), 'myBarChart2Yearly');
+      this.getBarChart(moment(moment().startOf('Year')).subtract(2, 'year'), 'myBarChart3Yearly');
+      this.getBarChart(moment(moment().startOf('Year')).subtract(4, 'year'), 'myBarChart5Yearly');
     });
 
     
@@ -233,10 +246,24 @@ export default class Dashboard extends Component{
 
       var orderByStatesLables = [];
       var orderByStatesData = [];
+      var stateData = [];
+
+      stateData.push(["State","Orders"]);
+
+      
       response.data.map((data,index)=>{
-        orderByStatesLables.push(data._id);
-        orderByStatesData.push(data.count);
+        if (data._id) {
+          orderByStatesLables.push(data._id);
+          orderByStatesData.push(data.count);
+
+          stateData.push([data._id,data.count]);
+
+        }
       })
+       this.setState({stateData:stateData}) 
+      
+
+
 
       var ordersByStatesctx = document.getElementById("ordersByStates").getContext("2d");
       var ordersByStatesChartData = {
@@ -278,8 +305,10 @@ export default class Dashboard extends Component{
       var sectionLables = [];
       var sectionRevenue = [];
       response.data.map((data,index)=>{
-        sectionLables.push(data._id);
-        sectionRevenue.push(data.revenue);
+        if (data._id) {
+          sectionLables.push(data._id);
+          sectionRevenue.push(data.revenue);
+        }
       })
 
       var sectctx = document.getElementById('SectionChart');
@@ -301,8 +330,10 @@ export default class Dashboard extends Component{
       var catLables = [];
       var catRevenue = [];
       response.data.map((data,index)=>{
-        catLables.push(data._id);
-        catRevenue.push(data.revenue);
+        if (data._id) {
+          catLables.push(data._id);
+          catRevenue.push(data.revenue);
+        }
       })
 
         var CatChartctx = document.getElementById('CatChart');
@@ -325,8 +356,10 @@ export default class Dashboard extends Component{
       var subCatLables = [];
       var subCatRevenue = [];
       response.data.map((data,index)=>{
-        subCatLables.push(data._id);
-        subCatRevenue.push(data.revenue);
+        if (data._id) {
+          subCatLables.push(data._id);
+          subCatRevenue.push(data.revenue);
+        }
       })
 
       var SubcatChartctx = document.getElementById('SubcatChart');
@@ -357,58 +390,104 @@ export default class Dashboard extends Component{
     });
 
     if (currentTab == "Today") {
-      this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').show();
+        $('#myBarChartWeeklyDiv').hide();
+        $('#myBarChartMonthlyDiv').hide();
+        $('#myBarChartYearlyDiv').hide();
+        $('#myBarChart2YearlyDiv').hide();
+        $('#myBarChart3YearlyDiv').hide();
+        $('#myBarChart5YearlyDiv').hide();
     }
     else if(currentTab == "Week"){
-      this.setState({ currentDate:moment().startOf('Week').format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').hide();
+        $('#myBarChartWeeklyDiv').show();
+        $('#myBarChartMonthlyDiv').hide();
+        $('#myBarChartYearlyDiv').hide();
+        $('#myBarChart2YearlyDiv').hide();
+        $('#myBarChart3YearlyDiv').hide();
+        $('#myBarChart5YearlyDiv').hide();
     }
     else if(currentTab == "Month"){
-      this.setState({ currentDate:moment().startOf('Month').format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').hide();
+        $('#myBarChartWeeklyDiv').hide();
+        $('#myBarChartMonthlyDiv').show();
+        $('#myBarChartYearlyDiv').hide();
+        $('#myBarChart2YearlyDiv').hide();
+        $('#myBarChart3YearlyDiv').hide();
+        $('#myBarChart5YearlyDiv').hide();
     }
     else if(currentTab == "Year"){
-      this.setState({ currentDate:moment().startOf('Year').format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').hide();
+        $('#myBarChartWeeklyDiv').hide();
+        $('#myBarChartMonthlyDiv').hide();
+        $('#myBarChartYearlyDiv').show();
+        $('#myBarChart2YearlyDiv').hide();
+        $('#myBarChart3YearlyDiv').hide();
+        $('#myBarChart5YearlyDiv').hide();
     }
     else if(currentTab == "2Year"){
       var currentDate = moment(moment().startOf('Year')).subtract(1, 'year');
 
-      this.setState({ currentDate:currentDate.format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').hide();
+        $('#myBarChartWeeklyDiv').hide();
+        $('#myBarChartMonthlyDiv').hide();
+        $('#myBarChartYearlyDiv').hide();
+        $('#myBarChart2YearlyDiv').show();
+        $('#myBarChart3YearlyDiv').hide();
+        $('#myBarChart5YearlyDiv').hide();
     }
     else if(currentTab == "3Year"){
       var currentDate = moment(moment().startOf('Year')).subtract(2, 'year');
 
-      this.setState({ currentDate:currentDate.format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').hide();
+        $('#myBarChartWeeklyDiv').hide();
+        $('#myBarChartMonthlyDiv').hide();
+        $('#myBarChartYearlyDiv').hide();
+        $('#myBarChart2YearlyDiv').hide();
+        $('#myBarChart3YearlyDiv').show();
+        $('#myBarChart5YearlyDiv').hide();
     }
     else if(currentTab == "5Year"){
       var currentDate = moment(moment().startOf('Year')).subtract(4, 'year');
 
-      this.setState({ currentDate:currentDate.format("YYYY-MM-DD") },()=>{
-        this.getBarChart(this.state.currentDate);
-      });
+        $('#myBarCharDailyDiv').hide();
+        $('#myBarChartWeeklyDiv').hide();
+        $('#myBarChartMonthlyDiv').hide();
+        $('#myBarChartYearlyDiv').hide();
+        $('#myBarChart2YearlyDiv').hide();
+        $('#myBarChart3YearlyDiv').hide();
+        $('#myBarChart5YearlyDiv').show();
     }
   }
-  getBarChart(currentDate){
+  getBarChart(currentDate, chartId){
+      var ctx3 = document.getElementById(chartId);
+      /*var data3 = {
+            datasets: [
+                      {
+                        label: 'Total Orders',
+                        data: [1000,500,700]
+                      }
+                      ],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ["Electronics", "Fashion", "Grocery"]
+          };
+      var myBarChart = new Chart(ctx3, {
+              type: 'bar',
+              data: data3,  
+      });*/
       axios.get("/api/orders/get/totalOrdersByPeriod/"+currentDate)
       .then((response)=>{
 
           var barChartData = [];
           var barChartLable = [];
           response.data.map((data,index)=>{
-            barChartLable.push(data._id);
-            barChartData.push(data.count);
+            if (data._id) {
+              barChartLable.push(data._id);
+              barChartData.push(data.count);
+            }
+            
           })
-          var ctx3 = document.getElementById('myBarChart');
+          
           var data3 = {
             datasets: [
                       {
@@ -424,17 +503,32 @@ export default class Dashboard extends Component{
               type: 'bar',
               data: data3,  
           });
+          myBarChart.update();
       })
       .catch((error)=>{
           console.log('error', error);
       })
-  }    
+  }   
+ 
   render(){
+    var tempdata=[
+                  ['State', 'Orders'],
+                  ['Uttar Pradesh', 199581477],
+                  ['Maharashtra', 112372972],
+                  ['Bihar', 103804637],
+                  ['West Bengal', 91347736],
+                  ['Madhya Pradesh', 72597565]
+                ]
+    console.log('stateData',this.state.stateData);
     return(
       <div className="col-lg-12">
         <div className="row">
         <br/>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <h2>Dashboard</h2>
+          </div>
+          
           <div className="col-lg-3">     
             <div className="dash-box" >
               <span className="infoboxicon bg-aqua"><i className="fa fa-user"></i></span>
@@ -486,86 +580,124 @@ export default class Dashboard extends Component{
         <br/>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
           <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-            <div className="box1a box2">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
               <h4>Total Orders</h4>
-              <div className="commonpre">
-                <div id="Today" className= { this.state.currentTabView == "Today" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  Today
-                </div>
-                <div id="Week" className= { this.state.currentTabView == "Week" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  Week
-                </div>
-                <div id="Month" className= { this.state.currentTabView == "Month" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  Month
-                </div>
-                <div id="Year" className= { this.state.currentTabView == "Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  1 Year
-                </div>
-                <div id="2Year" className= { this.state.currentTabView == "2Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  2 Year
-                </div>
-                <div id="3Year" className= { this.state.currentTabView == "3Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  3 Year
-                </div>
-                <div id="5Year" className= { this.state.currentTabView == "5Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
-                  5 Year
+            </div> 
+            <div className="box1a box2">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div className="commonpre">
+                  <div id="Today" className= { this.state.currentTabView == "Today" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    Today
+                  </div>
+                  <div id="Week" className= { this.state.currentTabView == "Week" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    Week
+                  </div>
+                  <div id="Month" className= { this.state.currentTabView == "Month" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    Month
+                  </div>
+                  <div id="Year" className= { this.state.currentTabView == "Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    1 Year
+                  </div>
+                  <div id="2Year" className= { this.state.currentTabView == "2Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    2 Year
+                  </div>
+                  <div id="3Year" className= { this.state.currentTabView == "3Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    3 Year
+                  </div>
+                  <div id="5Year" className= { this.state.currentTabView == "5Year" ? "charttab currentlyActive" : "charttab"} onClick={this.changeTab.bind(this)}>
+                    5 Year
+                  </div>
                 </div>
               </div>
               <br/>
-              <canvas id="myBarChart"></canvas>
+              <div id="myBarCharDailyDiv">
+                <canvas id="myBarCharDaily"></canvas>
+              </div>
+              <div id="myBarChartWeeklyDiv">
+                <canvas id="myBarChartWeekly"></canvas>
+              </div>
+              <div id="myBarChartMonthlyDiv">
+              <canvas id="myBarChartMonthly" ></canvas>
+              </div>
+              <div id="myBarChartYearlyDiv">
+              <canvas id="myBarChartYearly"></canvas>
+              </div>
+              <div id="myBarChart2YearlyDiv">
+              <canvas id="myBarChart2Yearly"></canvas>
+              </div>
+              <div id="myBarChart3YearlyDiv">
+              <canvas id="myBarChart3Yearly"></canvas>
+              </div>
+              <div id="myBarChart5YearlyDiv">
+              <canvas id="myBarChart5Yearly"></canvas>
+              </div>
             </div>
           <br/>
           </div>
 
-          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            <div className="col-lg-12 box3" style={{marginBottom: "15px"}}>     
-              <div className="box3a box1a">
-                <div className="col-lg-12">
-                    <h4>Call to Action</h4> 
+          <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 NoPadding">
+          <div className="info-box bg-yellow">
+            <div className="">
+              <span className="boxicon"><i className="fa fa-shopping-cart"></i></span>
+            </div>
+            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 NoPadding">
+              <div className="boxcontent">
+                <span className="info-box-text">New Orders</span>
+                <span className="info-box-number">{this.state.neworderscount}/ {this.state.totalorders}</span>
+                <div className="progress">
+                  <div className="progress-bar" style={{ width: (this.state.neworderscount/ this.state.totalorders)*100+"%" }}></div>
                 </div>
               </div>
-              <br/>
-            </div>
-            <div className="col-lg-12 box3">     
-              <div className="box3a">
-                <div className="col-lg-12">
-                    <h4><a href="/new-orders-list">New Orders</a></h4> 
-                    <label>{this.state.neworderscount}/ {this.state.totalorders} Orders</label>  
-                </div>
-              </div>
-              <br/>
-            </div>
-
-            <div className="col-lg-12 box3 returnbox">     
-              <div className="box3a">
-                <div className="col-lg-12">
-                    <h4><a href="/returned-products">Return Products</a></h4> 
-                    <label>{this.state.ReturnPendingCount}/{this.state.returnCount}</label>  
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-12 box3 outofstock">     
-              <div className="box3a">
-                <div className="col-lg-12">
-                    <h4>Out of Stock</h4> 
-                    <label>{this.state.outofstock}/{this.state.productCount}</label>  
-                </div>
-              </div>
-            </div>
-
-            <div className="box3">     
-              <div className="col-lg-12 box3a">
-                <div className="col-lg-12">
-                    <h4><a href="/productreview">Reviews</a></h4> 
-                    <label>{this.state.UnpublishedReviewCount}/{this.state.ReviewCount}</label>  
-                </div>
-              </div>
-            </div>
+            </div>  
           </div>
 
-        </div>
+          <div className="info-box bg-green">
+            <div className="">
+              <span className="boxicon"><i className="fa fa-shopping-cart"></i></span>
+            </div>
+            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 NoPadding">
+              <div className="boxcontent">
+                <span className="info-box-text">Return Products</span>
+                <span className="info-box-number">{this.state.ReturnPendingCount}/ {this.state.returnCount}</span>
+                <div className="progress">
+                  <div className="progress-bar" style={{ width: (this.state.ReturnPendingCount/ this.state.returnCount)*100+"%" }}></div>
+                </div>
+              </div>
+            </div>  
+          </div>  
 
+          <div className="info-box bg-redcolor">
+            <div className="">
+              <span className="boxicon"><i className="fa fa-shopping-cart"></i></span>
+            </div>
+            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 NoPadding">
+              <div className="boxcontent">
+                <span className="info-box-text">Out of Stock</span>
+                <span className="info-box-number">{this.state.outofstock}/ {this.state.productCount}</span>
+                <div className="progress">
+                  <div className="progress-bar" style={{ width: (this.state.outofstock/ this.state.productCount)*100+"%" }}></div>
+                </div>
+              </div>
+            </div>  
+          </div>
+
+          <div className="info-box bg-aqua">
+            <div className="">
+              <span className="boxicon"><i className="fa fa-pencil"></i></span>
+            </div>
+            <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 NoPadding">
+              <div className="boxcontent">
+                <span className="info-box-text">Reviews</span>
+                <span className="info-box-number">{this.state.UnpublishedReviewCount}/ {this.state.ReviewCount}</span>
+                <div className="progress">
+                  <div className="progress-bar" style={{ width: (this.state.UnpublishedReviewCount/ this.state.ReviewCount)*100+"%" }}></div>
+                </div>
+              </div>
+            </div>  
+          </div>
+            
+          </div>
+        </div>
         </div>
 
         <div className="row">
@@ -577,14 +709,7 @@ export default class Dashboard extends Component{
                 width={'500px'}
                 height={'300px'}
                 chartType="GeoChart"
-                data={[
-                  ['State', 'Orders'],
-                  ['Uttar Pradesh', 199581477],
-                  ['Maharashtra', 112372972],
-                  ['Bihar', 103804637],
-                  ['West Bengal', 91347736],
-                  ['Madhya Pradesh', 72597565]
-                ]}
+                data={this.state.stateData}
                 /*data={[
                   ['City', 'Popularity'],
                   ['Pune', 700],
