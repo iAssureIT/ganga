@@ -132,6 +132,7 @@ class ProductCollage extends Component {
 		axios.get("/api/products/get/listbycategory/"+categoryID)
 	      .then((response)=>{ 
 	          this.setState({
+	          	  loading:false,
 	              products 		 : response.data,
 	              masterproducts : response.data
 	          })
@@ -147,6 +148,7 @@ class ProductCollage extends Component {
 		axios.get("/api/products/get/list/"+categoryID+'/'+subcategoryID)
 	      .then((response)=>{ 
 	          this.setState({
+	          	loading:false,
 	              products 		 : response.data,
 	              masterproducts : response.data
 	          })

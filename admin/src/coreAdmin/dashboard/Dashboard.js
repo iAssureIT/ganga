@@ -250,20 +250,22 @@ export default class Dashboard extends Component{
 
       stateData.push(["State","Orders"]);
 
-      
-      response.data.map((data,index)=>{
+      if (response.data.length > 0) {
+        response.data.map((data,index)=>{
         if (data._id) {
           orderByStatesLables.push(data._id);
           orderByStatesData.push(data.count);
-
           stateData.push([data._id,data.count]);
-
         }
-      })
-       this.setState({stateData:stateData}) 
-      
-
-
+        })
+        
+      }else{
+        orderByStatesLables = ['Maharashtra', 'Uttar Pradesh', 'Kerala'];
+        orderByStatesData = [500, 1000, 200];
+        stateData.push(['Maharashtra',500], ['Uttar Pradesh',1000], ['Kerala',200]);
+      }
+       
+      this.setState({stateData:stateData})
 
       var ordersByStatesctx = document.getElementById("ordersByStates").getContext("2d");
       var ordersByStatesChartData = {
@@ -271,9 +273,34 @@ export default class Dashboard extends Component{
           datasets: [{
               label: orderByStatesLables,
               data: orderByStatesData,
-              backgroundColor: ["#669911", "#119966"],
-              hoverBackgroundColor: ["#66A2EB", "#FCCE56"]
-          }]
+              backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+              borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
+              borderWidth: 2,
+              hoverBackgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"]
+          }],
+          options: {
+                    responsive: true,
+                    legend: {
+                        display:false
+                    },
+                    
+                    scales: {
+                    xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Total Orders'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+             
+                  } 
       };
 
       var MeSeChart = new Chart(ordersByStatesctx, {
@@ -293,6 +320,8 @@ export default class Dashboard extends Component{
 
           }
       });
+      
+
     })
     .catch((error)=>{
         console.log('error', error);
@@ -304,17 +333,25 @@ export default class Dashboard extends Component{
     .then((response)=>{
       var sectionLables = [];
       var sectionRevenue = [];
-      response.data.map((data,index)=>{
-        if (data._id) {
-          sectionLables.push(data._id);
-          sectionRevenue.push(data.revenue);
-        }
-      })
-
+      if (response.data.length > 0) {
+        response.data.map((data,index)=>{
+          if (data._id) {
+            sectionLables.push(data._id);
+            sectionRevenue.push(data.revenue);
+          }
+        })
+      }else{
+        sectionLables = ["Electronics", "Fashion", "Grocery"];
+        sectionRevenue = [1000,500,700];
+      }
+      
       var sectctx = document.getElementById('SectionChart');
       var sectdata = {
         datasets: [{
-            data: sectionRevenue
+            data: sectionRevenue,
+            backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+            borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
+            borderWidth: 2,
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: sectionLables
@@ -339,7 +376,10 @@ export default class Dashboard extends Component{
         var CatChartctx = document.getElementById('CatChart');
         var catdata = {
           datasets: [{
-              data: catRevenue
+              data: catRevenue,
+              backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+              borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
+              borderWidth: 2,
           }],
           // These labels appear in the legend and in the tooltips when hovering different arcs
           labels: catLables
@@ -365,7 +405,10 @@ export default class Dashboard extends Component{
       var SubcatChartctx = document.getElementById('SubcatChart');
       var subcatdata = {
         datasets: [{
-            data: subCatRevenue
+            data: subCatRevenue,
+            backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+            borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
+            borderWidth: 2,
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: subCatLables
@@ -461,49 +504,116 @@ export default class Dashboard extends Component{
   }
   getBarChart(currentDate, chartId){
       var ctx3 = document.getElementById(chartId);
-      /*var data3 = {
+      
+      axios.get("/api/orders/get/totalOrdersByPeriod/"+currentDate)
+      .then((response)=>{
+          console.log('response.data',response.data.length)
+          if (response.data.length > 0) {
+            var barChartData = [];
+            var barChartLable = [];
+            response.data.map((data,index)=>{
+              if (data._id) {
+                barChartLable.push(data._id);
+                barChartData.push(data.count);
+              }
+              
+            })
+            
+            var data3 = {
+              datasets: [
+                        {
+                          label: 'Total Orders',
+                          data: barChartData,
+                          backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+                          borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
+                          borderWidth: 2
+                        }
+                        ],
+              // These labels appear in the legend and in the tooltips when hovering different arcs
+              labels: barChartLable
+            };
+
+            var myBarChart = new Chart(ctx3, {
+                type: 'bar',
+                fillOpacity: .3, 
+                data: data3, 
+                options: {
+                    responsive: true,
+                    legend: {
+                        display:false
+                    },
+                    
+                    scales: {
+                    xAxes: [{
+                            display: true,
+                            barThickness: 20,  // number (pixels) or 'flex'
+                            maxBarThickness: 30,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Categories'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            barThickness: 20,  // number (pixels) or 'flex'
+                            maxBarThickness: 30, 
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+             
+                  } 
+            });
+          }
+          else{
+            var data3 = {
             datasets: [
                       {
                         label: 'Total Orders',
-                        data: [1000,500,700]
+                        data: [1000,700,900],
+                        backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+                        borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
+                        
+                        borderWidth: 2
                       }
                       ],
             // These labels appear in the legend and in the tooltips when hovering different arcs
             labels: ["Electronics", "Fashion", "Grocery"]
           };
-      var myBarChart = new Chart(ctx3, {
-              type: 'bar',
-              data: data3,  
-      });*/
-      axios.get("/api/orders/get/totalOrdersByPeriod/"+currentDate)
-      .then((response)=>{
-
-          var barChartData = [];
-          var barChartLable = [];
-          response.data.map((data,index)=>{
-            if (data._id) {
-              barChartLable.push(data._id);
-              barChartData.push(data.count);
-            }
-            
-          })
-          
-          var data3 = {
-            datasets: [
-                      {
-                        label: 'Total Orders',
-                        data: barChartData
-                      }
-                      ],
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: barChartLable
-          };
-
           var myBarChart = new Chart(ctx3, {
-              type: 'bar',
-              data: data3,  
+                  type: 'bar',
+                  // fillOpacity: .2, 
+                  data: data3, 
+                  options: {
+                    responsive: true,
+                    legend: {
+                        display:false
+                    },
+                    
+                    scales: {
+                    xAxes: [{
+                            display: true,
+                            barThickness: 20,  // number (pixels) or 'flex'
+                            maxBarThickness: 30,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Categories'
+                            }
+                        }],
+                    yAxes: [{
+                            display: true,
+                            barThickness: 20,  // number (pixels) or 'flex'
+                            maxBarThickness: 30,
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+             
+                  } 
           });
-          myBarChart.update();
+        }
       })
       .catch((error)=>{
           console.log('error', error);
@@ -511,15 +621,7 @@ export default class Dashboard extends Component{
   }   
  
   render(){
-    var tempdata=[
-                  ['State', 'Orders'],
-                  ['Uttar Pradesh', 199581477],
-                  ['Maharashtra', 112372972],
-                  ['Bihar', 103804637],
-                  ['West Bengal', 91347736],
-                  ['Madhya Pradesh', 72597565]
-                ]
-    console.log('stateData',this.state.stateData);
+    
     return(
       <div className="col-lg-12">
         <div className="row">
@@ -581,7 +683,7 @@ export default class Dashboard extends Component{
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
           <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-              <h4>Total Orders</h4>
+              <h4>Orders By Categories</h4>
             </div> 
             <div className="box1a box2">
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -608,8 +710,9 @@ export default class Dashboard extends Component{
                     5 Year
                   </div>
                 </div>
+                <br/>
               </div>
-              <br/>
+              
               <div id="myBarCharDailyDiv">
                 <canvas id="myBarCharDaily"></canvas>
               </div>
@@ -668,7 +771,7 @@ export default class Dashboard extends Component{
 
           <div className="info-box bg-redcolor">
             <div className="">
-              <span className="boxicon"><i className="fa fa-shopping-cart"></i></span>
+              <span className="boxicon"><i className="fa fa-shopping-bag"></i></span>
             </div>
             <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 NoPadding">
               <div className="boxcontent">
@@ -706,10 +809,12 @@ export default class Dashboard extends Component{
               <div className="box1a box2">
               <h4>Orders by Region</h4>
                 <GoogleChart
-                width={'500px'}
+                width={"100%"}
                 height={'300px'}
                 chartType="GeoChart"
                 data={this.state.stateData}
+                responsive= {true}
+
                 /*data={[
                   ['City', 'Popularity'],
                   ['Pune', 700],
@@ -718,9 +823,13 @@ export default class Dashboard extends Component{
                   
                 ]}*/
                 options={{
+                  responsive: true,
                   region: 'IN',
                   displayMode: 'regions',
                   resolution: 'provinces',
+                  colorAxis: {
+                    colors: ["#343a40", "#17a2b8","#6c757d", "#ffc107","#007bff", "#dd4b39", "#28a745"]
+                  } 
                  
                 }}
                 // Note: you will need to get a mapsApiKey for your project.
