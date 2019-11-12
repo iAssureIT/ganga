@@ -78,6 +78,7 @@ class Productreview extends Component {
                 "icon" : "fa fa-check-circle",
                 "message" : response.data.message,
                 "class": "success",
+                "autoDismiss" : true
               }
             }) 
             })

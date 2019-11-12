@@ -106,6 +106,7 @@ class CartProducts extends Component{
                   "icon" : "fa fa-check-circle",
                   "message" : response.data.message,
                   "class": "success",
+                  "autoDismiss" : true
                 }
             })
             this.props.fetchCartData();
@@ -148,6 +149,7 @@ class CartProducts extends Component{
                       "icon" : "fa fa-check-circle",
                       "message" : response.data.message,
                       "class": "success",
+                      "autoDismiss" : true
                     }
                 })
                 console.log('mnmn', quantityAdded > availableQuantity);

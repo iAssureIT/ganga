@@ -130,7 +130,8 @@ class ProductViewEcommerce extends Component {
 				                "type" : "outpage",
 				                "icon" : "fa fa-check-circle",
 				                "message" : "&nbsp; "+response.data.message,
-				                "class": "success",
+								"class": "success",
+								"autoDismiss" : true
 				              }
 				            })
 							// swal(response.data.message)
@@ -149,7 +150,8 @@ class ProductViewEcommerce extends Component {
 		          "type" : "outpage",
 		          "icon" : "fa fa-exclamation-circle",
 		          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
-		          "class": "warning",
+				  "class": "warning",
+				  "autoDismiss" : true
 		        }
 		    })
 		}
@@ -170,7 +172,15 @@ class ProductViewEcommerce extends Component {
 					}
 					axios.post('/api/wishlist/post', formValues)
 						.then((response) => {
-							
+							this.setState({
+								messageData : {
+								  "type" : "outpage",
+								  "icon" : "fa fa-check-circle",
+								  "message" : "&nbsp; "+response.data.message,
+								  "class": "success",
+								  "autoDismiss" : true
+								}
+							  })
 						})
 						.catch((error) => {
 							console.log('error', error);
@@ -185,7 +195,8 @@ class ProductViewEcommerce extends Component {
               "type" : "outpage",
               "icon" : "fa fa-exclamation-circle",
               "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
-              "class": "warning",
+			  "class": "warning",
+			  "autoDismiss" : true
             }
           })
 		}

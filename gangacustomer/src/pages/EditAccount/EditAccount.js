@@ -126,6 +126,7 @@ class EditAccount extends Component{
                 "icon" : "fa fa-check-circle",
                 "message" : "&nbsp; "+response.data.message,
                 "class": "success",
+                "autoDismiss" : true
               }
             })
             })
@@ -136,6 +137,7 @@ class EditAccount extends Component{
                     "icon" : "fa fa-times-circle",
                     "message" : error.response.data.message,
                     "class": "warning",
+                    "autoDismiss" : true
                   }
                 })
             });

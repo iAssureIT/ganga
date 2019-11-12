@@ -11,7 +11,6 @@ class Message extends Component{
             class       : "",
             icon        : "",
             message     : "",
-            autoDismiss : false
         }
         // window.scrollTo(0, 0);
     } 
@@ -28,14 +27,13 @@ class Message extends Component{
             if(nextProps.messageData.autoDismiss && nextProps.messageData.autoDismiss == true){
                 setTimeout(() => {
                     this.setState({
-                    alertType   : "",
-                    class       : "",
-                    icon        : "",
-                    message     : ""
-                })
+                        alertType   : "",
+                        class       : "",
+                        icon        : "",
+                        message     : ""
+                    })
                 }, 3000);
             }
-            
         }
     }
     close(event){

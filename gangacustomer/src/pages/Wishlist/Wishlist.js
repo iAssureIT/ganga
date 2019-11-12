@@ -122,6 +122,7 @@ class Wishlist extends Component {
                 "icon" : "fa fa-check-circle",
                 "message" : response.data.message,
                 "class": "success",
+                "autoDismiss" : true
               }
             })
                 this.props.changeCartCount(response.data.cartCount);
@@ -154,6 +155,7 @@ class Wishlist extends Component {
             "icon" : "fa fa-exclamation-circle",
             "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
             "class": "warning",
+            "autoDismiss" : true
           }
         })
       }
@@ -176,6 +178,7 @@ class Wishlist extends Component {
                 "icon" : "fa fa-check-circle",
                 "message" : response.data.message,
                 "class": "success",
+                "autoDismiss" : true
               }
             })
           })

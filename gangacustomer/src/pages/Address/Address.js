@@ -262,6 +262,7 @@ class Address extends Component {
                     "icon" : "fa fa-check-circle",
                     "message" : "&nbsp; "+response.data.message,
                     "class": "success",
+                    "autoDismiss" : true
                   }
                 })
                     // swal(response.data);
@@ -289,6 +290,7 @@ class Address extends Component {
                     "icon" : "fa fa-check-circle",
                     "message" : "&nbsp; "+response.data.message,
                     "class": "success",
+                    "autoDismiss" : true
                   }
                 })
                     // swal(response.data.message);

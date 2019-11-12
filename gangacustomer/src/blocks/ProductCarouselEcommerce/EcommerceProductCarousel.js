@@ -131,6 +131,7 @@ class EcommerceProductCarousel extends Component {
                   "icon" : "fa fa-check-circle",
                   "message" : "&nbsp; "+response.data.message,
                   "class": "success",
+                  "autoDismiss" : true
                 }
               })
               this.props.changeCartCount(response.data.cartCount);
@@ -150,6 +151,7 @@ class EcommerceProductCarousel extends Component {
           "icon" : "fa fa-exclamation-circle",
           "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
           "class": "warning",
+          "autoDismiss" : true
         }
       })
     }
@@ -174,8 +176,19 @@ class EcommerceProductCarousel extends Component {
       }
       axios.post('/api/wishlist/post', formValues)
         .then((response) => {
+          // console.log('res', response.data.message);
+          this.setState({
+            messageData : {
+              "type" : "outpage",
+              "icon" : "fa fa-check-circle",
+              "message" : "&nbsp; "+response.data.message,
+              "class": "success",
+              "autoDismiss" : true
+            }
+          })
           this.props.getWishData();
           this.props.changeWishlistCount(response.data.wishlistCount);
+          
         })
         .catch((error) => {
           console.log('error', error);
@@ -188,6 +201,7 @@ class EcommerceProductCarousel extends Component {
           "icon" : "fa fa-exclamation-circle",
           "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
           "class": "warning",
+          "autoDismiss" : true
         }
       })
     }

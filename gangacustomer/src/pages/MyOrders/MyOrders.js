@@ -133,6 +133,7 @@ export default class MyOrders extends Component {
                   "icon" : "fa fa-check-circle",
                   "message" : response.data.message,
                   "class": "success",
+                  "autoDismiss" : true
                 }
               })
               var modal = document.getElementById('feedbackProductModal');
@@ -231,6 +232,7 @@ export default class MyOrders extends Component {
                         "icon" : "fa fa-exclamation-circle",
                         "message" : response.data.message,
                         "class": "warning",
+                        "autoDismiss" : true
                       }
                     })
                     var modal = document.getElementById('returnProductModal');
@@ -301,6 +303,7 @@ export default class MyOrders extends Component {
                                 "icon" : "fa fa-exclamation-circle",
                                 "message" : "Your order is cancelled. Refund will be made as per Cancellation Policy",
                                 "class": "warning",
+                                "autoDismiss" : true
                               }
                             })
                                 

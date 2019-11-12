@@ -139,7 +139,8 @@ class ProductModalViewEcommerce extends Component {
               "type" : "outpage",
               "icon" : "fa fa-check-circle",
               "message" : response.data.message,
-              "class": "success",
+			  "class": "success",
+			  "autoDismiss" : true
             }
           })
           this.props.changeCartCount(response.data.cartCount);
@@ -158,7 +159,8 @@ class ProductModalViewEcommerce extends Component {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
           "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
-          "class": "warning",
+		  "class": "warning",
+		  "autoDismiss" : true
         }
       })
     }
@@ -180,8 +182,6 @@ class ProductModalViewEcommerce extends Component {
 	          }
 	          axios.post('/api/wishlist/post', formValues)
 	          .then((response)=>{
-	            // console.log('response', response);
-	            // swal(response.data.message)
               if(response.status == 200){
                 
                 this.setState({
@@ -189,7 +189,8 @@ class ProductModalViewEcommerce extends Component {
                     "type" : "outpage",
                     "icon" : "fa fa-check-circle",
                     "message" : response.data.message,
-                    "class": "success",
+					"class": "success",
+					"autoDismiss" : true
                   }
                 })
               }
@@ -198,7 +199,8 @@ class ProductModalViewEcommerce extends Component {
                   "type" : "outpage",
                   "icon" : "fa fa-exclamation-circle",
                   "message" : response.data.message,
-                  "class": "warning",
+				  "class": "warning",
+				  "autoDismiss" : true
                 }
               })
 	          })
@@ -216,7 +218,8 @@ class ProductModalViewEcommerce extends Component {
             "type" : "outpage",
             "icon" : "fa fa-exclamation-circle",
             "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
-            "class": "warning",
+			"class": "warning",
+			"autoDismiss" : true
           }
         })
       }

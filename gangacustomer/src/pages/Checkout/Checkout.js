@@ -282,6 +282,7 @@ class Checkout extends Component {
                     "icon" : "fa fa-check-circle",
                     "message" : "&nbsp; "+response.data.message,
                     "class": "success",
+                    "autoDismiss" : true
                   }
                 })
                 // swal(response.data.message);
@@ -614,6 +615,7 @@ class Checkout extends Component {
                         "icon" : "fa fa-check-circle",
                         "message" : "&nbsp; "+response.data.message,
                         "class": "success",
+                        "autoDismiss" : true
                       }
                     })
                     this.getUserAddress();
@@ -722,6 +724,7 @@ class Checkout extends Component {
                                                 "icon" : "fa fa-check-circle",
                                                 "message" : "&Order Placed Successfully ",
                                                 "class": "success",
+                                                "autoDismiss" : true
                                               }
                                             })
 

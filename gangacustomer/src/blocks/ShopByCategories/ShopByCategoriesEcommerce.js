@@ -72,8 +72,15 @@ class ShopByCategoriesEcommerce extends Component {
           }
           axios.post('/api/wishlist/post', formValues)
           .then((response)=>{
-            
-			// swal(response.data.message);
+            this.setState({
+				messageData : {
+				  "type" : "outpage",
+				  "icon" : "fa fa-check-circle",
+				  "message" : "&nbsp; "+response.data.message,
+				  "class": "success",
+				  "autoDismiss" : true
+				}
+			  })
 			this.props.changeWishlistCount(response.data.wishlistCount);
           })
           .catch((error)=>{

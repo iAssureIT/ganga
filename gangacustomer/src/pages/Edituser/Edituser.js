@@ -51,6 +51,7 @@ class Edituser extends Component{
                             "icon" : "fa fa-check-circle",
                             "message" : "Images not uploaded, Something went wrong<a className='pagealerturl' href='/login'>Sign In</a>",
                             "class": "danger",
+                            "autoDismiss" : true
                           }
                         }) 
                     }//file
@@ -61,6 +62,7 @@ class Edituser extends Component{
                         "icon" : "fa fa-check-circle",
                         "message" : "Please upload Image, Allowed images formats are (jpg,png,jpeg)",
                         "class": "warning",
+                        "autoDismiss" : true
                       }
                     })
                 }//file types
@@ -162,6 +164,7 @@ class Edituser extends Component{
               "icon" : "fa fa-check-circle",
               "message" : "User updated successfully",
               "class": "success",
+              "autoDismiss" : true
             }
           })
         })

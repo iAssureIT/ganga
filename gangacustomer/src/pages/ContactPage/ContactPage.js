@@ -29,6 +29,7 @@ class ContactPage extends Component{
           "icon" : "fa fa-check-circle",
           "message" : "&nbsp; "+response.data.message,
           "class": "success",
+          "autoDismiss" : true
         }
       })
       //jQuery("#customercareModal").modal("hide");
