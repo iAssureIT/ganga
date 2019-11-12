@@ -117,7 +117,7 @@ class ProductCollage extends Component {
 	      .then((response)=>{ 
 	      		
 	          	this.setState({
-	          	  loading:false,
+	          	  //loading:false,
 	              products 		 : response.data,
 	              masterproducts : response.data
 	          	})
@@ -793,7 +793,7 @@ class ProductCollage extends Component {
               	{ 
               		this.state.loading ? 
               		<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 col-lg-offset-3" id="productDiv">
-              			<Loader type="collageloader" productLoaderNo = {3}/>
+              			<Loader type="collageloader" productLoaderNo = {8}/> 
 			        </div>  
 			          :
               		this.state.products.length > 0 ? 

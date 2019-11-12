@@ -253,7 +253,7 @@ class CartProducts extends Component{
                                                             </td>
                                                             <td className="cartProductDetail">
                                                             <a href={"/productdetails/" + data.product_ID}><h5>{data.productName}</h5></a>
-                                                                <span className="fa fa-heart cartWishIcon"></span>
+                                                                {/*<span className="fa fa-heart cartWishIcon"></span>*/}
                                                             </td>
                                                         </tr>
                                                     </td>

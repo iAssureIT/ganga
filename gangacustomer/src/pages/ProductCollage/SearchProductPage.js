@@ -7,8 +7,9 @@ import  'react-input-range/lib/css/index.css';
 import axios 						from 'axios';
 import { connect }        from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
+import Loader from "../../common/loader/Loader.js";
 
-class SearchProduct extends Component {
+class SearchProduct extends Component { 
 	constructor(props){
     super(props);
 	    this.state = {
@@ -44,9 +45,7 @@ class SearchProduct extends Component {
 	  		if (this.state.categoryDetails &&  this.state.categoryDetails[0]) {
 	  			this.getBrands(this.state.categoryDetails[0].section_ID);
 	  		}
-	  		
-  		})
-  		
+  		})	
   	}
   	
 	onSelectedItemsChange(filterType, selecteditems){
@@ -151,6 +150,7 @@ class SearchProduct extends Component {
    //                  },[]); 
 	}
   	render() {
+  		console.log('searchCriteria',this.props.searchCriteria.loading)
 		return (
 	      	<div className="container" id="containerDiv">
 	     	<div className="row"> 
@@ -224,6 +224,7 @@ class SearchProduct extends Component {
 				    	
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
 				    		<ProductCollageView products={this.state.products}/>
+				    		{this.props.searchCriteria && this.props.searchCriteria.loading ? <Loader type="collageloader" productLoaderNo = {3}/> : null }
 				     	</div>
 				    </div>
 				    <div id="categories" className="tab-pane fade">

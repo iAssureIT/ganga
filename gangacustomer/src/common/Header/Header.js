@@ -165,11 +165,14 @@ searchProducts(){
       var searchstr = $('.headersearch').val()
       var formValues =  {
                       "searchstr" :  searchstr,  
-                      "catArray"  :  this.state.catArray
+                      "catArray"  :  this.state.catArray,
+                      "loading"   : true,
                     }
+      this.props.searchProduct(formValues,this.state.searchResult);               
       axios.post("/api/products/post/searchINCategory",formValues)
               .then((response)=>{
                 this.setState({searchResult : response.data},()=>{
+                  formValues.loading = false;
                   this.props.searchProduct(formValues,this.state.searchResult);  
                 });
               })

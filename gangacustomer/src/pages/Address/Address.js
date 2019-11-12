@@ -11,7 +11,8 @@ class Address extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stateArray:[]
+            stateArray:[],
+            pincodeExists:true
         }
         this.camelCase = this.camelCase.bind(this)
     }
@@ -186,6 +187,29 @@ class Address extends Component {
             [event.target.name]: event.target.value
         })
     }
+    handlePincode(event){
+        event.preventDefault();
+        if (event.target.value != '') {
+            axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
+            .then((response) => {
+                
+                if ($("[name='modalpincode']").valid()) {
+
+                    if (response.data[0].Status == 'Success' ) {
+                        this.setState({pincodeExists : true})
+                    }else{
+                        this.setState({pincodeExists : false})
+                    }
+                }
+                
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+        }else{
+            this.setState({pincodeExists : true})
+        }
+    }
     handleChangeCountry(event){
       const target = event.target;
       this.getStates(event.target.value)
@@ -220,11 +244,9 @@ class Address extends Component {
       getDistrict(stateCode,countryCode){
         axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
               .then((response)=>{
-                console.log('districtArray', response.data);
                 this.setState({
                     districtArray : response.data
                 })
-                console.log(this.state.city);
                 $('#Citydata').val(this.state.city);
               })
               .catch((error)=>{
@@ -250,10 +272,9 @@ class Address extends Component {
             "mobileNumber"    : this.state.modalmobileNumber,
             "addType"         : this.state.modaladdType,
         }
-        console.log('formValues', formValues);
         if(deliveryAddressID){
-            if($("#modalAddressForm").valid()){
-                console.log('form deliveryAddressID', formValues);
+            if($("#modalAddressForm").valid() && this.state.pincodeExists){
+                //console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/useraddress', formValues)
                 .then((response)=>{
                 this.setState({
@@ -281,7 +302,8 @@ class Address extends Component {
                 });
             }
         }else{
-            if($("#modalAddressForm").valid()){
+            if($("#modalAddressForm").valid() && this.state.pincodeExists){
+                //console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/patch/address', formValues)
                 .then((response)=>{
                 this.setState({
@@ -347,6 +369,7 @@ class Address extends Component {
         $("#modalAddressForm").validate().resetForm();
     }
     render() {
+        
         return (
             <div className="modal addressModal col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 checkoutAddressModal NOpadding" id="checkoutAddressModal" role="dialog">
                 <Message messageData={this.state.messageData} />
@@ -435,7 +458,8 @@ class Address extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                        <input type="text" maxlength="6" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        <input type="text" maxlength="6" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} onBlur={this.handlePincode.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        {this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
                                     </div>
 
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">

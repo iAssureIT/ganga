@@ -7,6 +7,7 @@ export default class Loader extends Component {
   	}
 
     render(){
+      
       //var tempdata = [1,2,3];
       var tempdata = [];
       

@@ -309,12 +309,15 @@ export default class Dashboard extends Component{
           options: {
               scales: {
                   xAxes: [{
+                        barThickness: 20,  // number (pixels) or 'flex'
+                        maxBarThickness: 30,
                       ticks: {
                       min: 2
                       }
                   }],
                   yAxes: [{
-                    stacked: true
+                    barThickness: 20,  // number (pixels) or 'flex'
+                    maxBarThickness: 30,
                   }]
               }
 
@@ -756,7 +759,7 @@ export default class Dashboard extends Component{
 
           <div className="info-box bg-green">
             <div className="">
-              <span className="boxicon"><i className="fa fa-shopping-cart"></i></span>
+              <span className="boxicon"><i className="fa fa-shopping-bag"></i></span>
             </div>
             <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 NoPadding">
               <div className="boxcontent">

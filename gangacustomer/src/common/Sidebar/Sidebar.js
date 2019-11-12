@@ -70,13 +70,13 @@ export default class Sidebar extends Component {
 		            </ul>
 		        </nav>
 		        <br/>
-		       	<div className="block block-compare" >
-				    <div className="block-title">
-				        <strong id="block-compare-heading" role="heading" aria-level="2">Compare Products</strong>
-				    </div>
-				    <hr/>
-				    <div className="empty">You have no items to compare.</div>
-				</div>
+		       	{/*<div className="block block-compare" >
+		       					    <div className="block-title">
+		       					        <strong id="block-compare-heading" role="heading" aria-level="2">Compare Products</strong>
+		       					    </div>
+		       					    <hr/>
+		       					    <div className="empty">You have no items to compare.</div>
+		       					</div>*/}
       		</div>
       		);
 	}
