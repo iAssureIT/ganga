@@ -286,6 +286,11 @@ class Address extends Component {
                     "autoDismiss" : true
                   }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
                     // swal(response.data);
                     this.props.opDone();
                     $(".checkoutAddressModal").hide();
@@ -315,6 +320,11 @@ class Address extends Component {
                     "autoDismiss" : true
                   }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
                     // swal(response.data.message);
                     this.props.opDone();
                     $(".checkoutAddressModal").hide();

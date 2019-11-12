@@ -136,6 +136,11 @@ export default class MyOrders extends Component {
                   "autoDismiss" : true
                 }
               })
+              setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
               var modal = document.getElementById('feedbackProductModal');
               modal.style.display = "none";
 
@@ -235,6 +240,11 @@ export default class MyOrders extends Component {
                         "autoDismiss" : true
                       }
                     })
+                    setTimeout(() => {
+                      this.setState({
+                          messageData   : {},
+                      })
+                  }, 3000);
                     var modal = document.getElementById('returnProductModal');
                     modal.style.display = "none";
 
@@ -306,6 +316,11 @@ export default class MyOrders extends Component {
                                 "autoDismiss" : true
                               }
                             })
+                            setTimeout(() => {
+                              this.setState({
+                                  messageData   : {},
+                              })
+                          }, 3000);
                                 
                         })
                         .catch((error)=>{

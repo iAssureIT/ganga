@@ -109,6 +109,11 @@ class CartProducts extends Component{
                   "autoDismiss" : true
                 }
             })
+            setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
             this.props.fetchCartData();
                 this.getCompanyDetails();
         })
@@ -152,6 +157,11 @@ class CartProducts extends Component{
                       "autoDismiss" : true
                     }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
                 console.log('mnmn', quantityAdded > availableQuantity);
             }else{
                 axios.patch("/api/carts/quantity" ,formValues)

@@ -125,6 +125,11 @@ class Wishlist extends Component {
                 "autoDismiss" : true
               }
             })
+            setTimeout(() => {
+              this.setState({
+                  messageData   : {},
+              })
+          }, 3000);
                 this.props.changeCartCount(response.data.cartCount);
 
                 axios.delete('/api/wishlist/delete/'+wishlist_ID)
@@ -158,6 +163,11 @@ class Wishlist extends Component {
             "autoDismiss" : true
           }
         })
+        setTimeout(() => {
+          this.setState({
+              messageData   : {},
+          })
+      }, 3000);
       }
     }
 
@@ -181,6 +191,11 @@ class Wishlist extends Component {
                 "autoDismiss" : true
               }
             })
+            setTimeout(() => {
+              this.setState({
+                  messageData   : {},
+              })
+          }, 3000);
           })
           .catch((error)=>{
             console.log('error', error);

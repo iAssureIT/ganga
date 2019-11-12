@@ -89,6 +89,11 @@ class ProductCollageView extends Component {
                 "autoDismiss" : true
               }
             })
+            setTimeout(() => {
+              this.setState({
+                messageData   : {},
+              })
+            }, 3000);
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -108,6 +113,11 @@ class ProductCollageView extends Component {
               "autoDismiss" : true
             }
           })
+          setTimeout(() => {
+            this.setState({
+              messageData   : {},
+            })
+          }, 3000);
     }
    }
    addtowishlist(event) {
@@ -131,6 +141,11 @@ class ProductCollageView extends Component {
               "autoDismiss" : true
             }
           })
+          setTimeout(() => {
+            this.setState({
+              messageData   : {},
+            })
+          }, 3000);
           this.props.getWishData();
           this.props.changeWishlistCount(response.data.wishlistCount);
         })
@@ -148,6 +163,11 @@ class ProductCollageView extends Component {
           "autoDismiss" : true
         }
       })
+      setTimeout(() => {
+        this.setState({
+          messageData   : {},
+        })
+      }, 3000);
     }
   }
     sortProducts(event){

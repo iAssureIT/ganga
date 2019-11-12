@@ -285,6 +285,11 @@ class Checkout extends Component {
                     "autoDismiss" : true
                   }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
                 // swal(response.data.message);
                 this.getCartData();
                 this.getCompanyDetails();
@@ -618,6 +623,11 @@ class Checkout extends Component {
                         "autoDismiss" : true
                       }
                     })
+                    setTimeout(() => {
+                        this.setState({
+                            messageData   : {},
+                        })
+                    }, 3000);
                     this.getUserAddress();
                     $(".checkoutAddressModal").hide();
                     $(".modal-backdrop").hide();
@@ -727,7 +737,11 @@ class Checkout extends Component {
                                                 "autoDismiss" : true
                                               }
                                             })
-
+                                            setTimeout(() => {
+                                                this.setState({
+                                                    messageData   : {},
+                                                })
+                                            }, 3000);
                                             this.props.history.push('/payment/' + result.data.order_ID);
                                         }
                                     })
@@ -779,6 +793,11 @@ class Checkout extends Component {
                         "class": "success",
                       }
                     })
+                    setTimeout(() => {
+                        this.setState({
+                            messageData   : {},
+                        })
+                    }, 3000);
                     this.getUserAddress();
                     $(".checkoutAddressModal").hide();
                     $(".modal-backdrop").hide();

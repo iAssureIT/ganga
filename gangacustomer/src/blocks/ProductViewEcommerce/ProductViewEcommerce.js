@@ -133,7 +133,12 @@ class ProductViewEcommerce extends Component {
 								"class": "success",
 								"autoDismiss" : true
 				              }
-				            })
+							})
+							setTimeout(() => {
+								this.setState({
+									messageData   : {},
+								})
+							}, 3000);
 							// swal(response.data.message)
 							this.props.changeCartCount(response.data.cartCount);
 						})
@@ -153,7 +158,12 @@ class ProductViewEcommerce extends Component {
 				  "class": "warning",
 				  "autoDismiss" : true
 		        }
-		    })
+			})
+			setTimeout(() => {
+				this.setState({
+					messageData   : {},
+				})
+			}, 3000);
 		}
 	}
 	addtowishlist(event) {
@@ -181,6 +191,11 @@ class ProductViewEcommerce extends Component {
 								  "autoDismiss" : true
 								}
 							  })
+							  setTimeout(() => {
+								this.setState({
+									messageData   : {},
+								})
+							}, 3000);
 						})
 						.catch((error) => {
 							console.log('error', error);
@@ -198,7 +213,12 @@ class ProductViewEcommerce extends Component {
 			  "class": "warning",
 			  "autoDismiss" : true
             }
-          })
+		  })
+		  setTimeout(() => {
+			this.setState({
+				messageData   : {},
+			})
+		}, 3000);
 		}
 
 	}

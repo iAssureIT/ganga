@@ -282,6 +282,11 @@ searchProducts(){
                   "class": "success",
                 }
               })
+              setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
             // swal(response.data.message)           
              // .then((obj)=>{
              //      window.location.reload();
@@ -306,6 +311,11 @@ searchProducts(){
               "class": "warning",
             }
           })
+          setTimeout(() => {
+            this.setState({
+                messageData   : {},
+            })
+        }, 3000);
     }
   submitQuery(){
     var formValues = {
@@ -324,6 +334,11 @@ searchProducts(){
                 "class": "success",
               }
             }) 
+            setTimeout(() => {
+              this.setState({
+                  messageData   : {},
+              })
+          }, 3000);
       jQuery("#customercareModal").modal("hide");
 
       })

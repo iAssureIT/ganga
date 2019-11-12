@@ -54,6 +54,11 @@ class Edituser extends Component{
                             "autoDismiss" : true
                           }
                         }) 
+                        setTimeout(() => {
+                          this.setState({
+                              messageData   : {},
+                          })
+                      }, 3000);
                     }//file
                 }else{ 
                      this.setState({
@@ -65,6 +70,11 @@ class Edituser extends Component{
                         "autoDismiss" : true
                       }
                     })
+                    setTimeout(() => {
+                      this.setState({
+                          messageData   : {},
+                      })
+                  }, 3000);
                 }//file types
             }//file
         // }//for 
@@ -167,6 +177,11 @@ class Edituser extends Component{
               "autoDismiss" : true
             }
           })
+          setTimeout(() => {
+            this.setState({
+                messageData   : {},
+            })
+        }, 3000);
         })
         .catch(function (error) {
           console.log('error============',error);

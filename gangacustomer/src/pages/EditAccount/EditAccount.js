@@ -129,6 +129,11 @@ class EditAccount extends Component{
                 "autoDismiss" : true
               }
             })
+            setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
             })
             .catch((error,resp)=> {
                 this.setState({
@@ -140,6 +145,11 @@ class EditAccount extends Component{
                     "autoDismiss" : true
                   }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
             });
         }
     }

@@ -39,6 +39,11 @@ class ResetPassword extends Component {
                     "autoDismiss" : false
                   }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
                 this.props.history.push('/login');
             })
             .catch((error)=>{

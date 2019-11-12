@@ -7,6 +7,7 @@ class Message extends Component{
     constructor(props) {
         super(props);
         this.state={
+            messageData : {},
             alertType   : "",
             class       : "",
             icon        : "",
@@ -14,8 +15,8 @@ class Message extends Component{
         }
         // window.scrollTo(0, 0);
     } 
+      
     componentWillReceiveProps(nextProps){
-        // window.scrollTo(0, 0);
         if(nextProps && nextProps.messageData){
             this.setState({
                 "alertType"   : nextProps.messageData.type,

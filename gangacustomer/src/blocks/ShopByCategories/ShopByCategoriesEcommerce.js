@@ -81,6 +81,11 @@ class ShopByCategoriesEcommerce extends Component {
 				  "autoDismiss" : true
 				}
 			  })
+			  setTimeout(() => {
+				this.setState({
+					messageData   : {},
+				})
+			}, 3000);
 			this.props.changeWishlistCount(response.data.wishlistCount);
           })
           .catch((error)=>{

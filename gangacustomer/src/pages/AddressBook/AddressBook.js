@@ -82,6 +82,11 @@ class AddressBook extends Component{
                 "autoDismiss" : true
               }
             })
+            setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
         })
         .catch((error)=>{
             console.log('error', error);

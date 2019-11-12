@@ -144,6 +144,11 @@ class Ecommercenewproductcaro extends Component {
                   "autoDismiss" : true
                 }
               })
+              setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
               this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error) => {
@@ -164,6 +169,11 @@ class Ecommercenewproductcaro extends Component {
           "autoDismiss" : true
         }
       })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -195,6 +205,11 @@ class Ecommercenewproductcaro extends Component {
             "autoDismiss" : true
           }
         })
+        setTimeout(() => {
+          this.setState({
+              messageData   : {},
+          })
+      }, 3000);
         this.props.getWishData();
         this.props.changeWishlistCount(response.data.wishlistCount);
       })
@@ -212,6 +227,11 @@ class Ecommercenewproductcaro extends Component {
           "autoDismiss" : true
         }
       })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
     }
   }
   getCategoryID(event) {

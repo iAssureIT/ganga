@@ -142,7 +142,12 @@ class ProductModalViewEcommerce extends Component {
 			  "class": "success",
 			  "autoDismiss" : true
             }
-          })
+		  })
+		  setTimeout(() => {
+			this.setState({
+				messageData   : {},
+			})
+		}, 3000);
           this.props.changeCartCount(response.data.cartCount);
 
           })
@@ -162,7 +167,12 @@ class ProductModalViewEcommerce extends Component {
 		  "class": "warning",
 		  "autoDismiss" : true
         }
-      })
+	  })
+	  setTimeout(() => {
+		this.setState({
+			messageData   : {},
+		})
+	}, 3000);
     }
   }
    addtowishlist(event){
@@ -192,7 +202,12 @@ class ProductModalViewEcommerce extends Component {
 					"class": "success",
 					"autoDismiss" : true
                   }
-                })
+				})
+				setTimeout(() => {
+					this.setState({
+						messageData   : {},
+					})
+				}, 3000);
               }
               this.setState({
                 messageData : {
@@ -202,7 +217,12 @@ class ProductModalViewEcommerce extends Component {
 				  "class": "warning",
 				  "autoDismiss" : true
                 }
-              })
+			  })
+			  setTimeout(() => {
+				this.setState({
+					messageData   : {},
+				})
+			}, 3000);
 	          })
 	          .catch((error)=>{
 	            console.log('error', error);
@@ -221,7 +241,12 @@ class ProductModalViewEcommerce extends Component {
 			"class": "warning",
 			"autoDismiss" : true
           }
-        })
+		})
+		setTimeout(() => {
+			this.setState({
+				messageData   : {},
+			})
+		}, 3000);
       }
     
   }

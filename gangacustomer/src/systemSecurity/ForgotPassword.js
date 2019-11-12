@@ -40,6 +40,11 @@ class ForgotPassword extends Component {
                     "autoDismiss" : false
                   }
                 })
+                setTimeout(() => {
+                    this.setState({
+                        messageData   : {},
+                    })
+                }, 3000);
                 document.getElementById("sendlink").innerHTML = 'Reset My Password';
             })
             .catch((error)=>{

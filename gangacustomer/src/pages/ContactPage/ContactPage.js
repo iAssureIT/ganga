@@ -32,6 +32,11 @@ class ContactPage extends Component{
           "autoDismiss" : true
         }
       })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
       //jQuery("#customercareModal").modal("hide");
        this.setState({message:''})
       })

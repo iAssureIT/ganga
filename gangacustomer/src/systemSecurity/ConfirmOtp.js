@@ -37,6 +37,11 @@ import Loader from "../common/loader/Loader.js";
             "autoDismiss" : false
           }
         })
+        setTimeout(() => {
+          this.setState({
+              messageData   : {},
+          })
+      }, 3000);
         this.props.history.push('/login');
       })
       .catch((error)=>{
@@ -49,6 +54,11 @@ import Loader from "../common/loader/Loader.js";
             "class": "danger",
           }
         })
+        setTimeout(() => {
+          this.setState({
+              messageData   : {},
+          })
+      }, 3000);
       })
     }
     inputEffect(event){
@@ -76,6 +86,11 @@ import Loader from "../common/loader/Loader.js";
                 "class": "success",
               }
             })
+            setTimeout(() => {
+              this.setState({
+                  messageData   : {},
+              })
+          }, 3000);
           })
           .catch((error)=>{
             $('.fullpageloader').hide();
@@ -87,6 +102,11 @@ import Loader from "../common/loader/Loader.js";
                 "class": "danger",
               }
             })
+            setTimeout(() => {
+              this.setState({
+                  messageData   : {},
+              })
+          }, 3000);
             document.getElementById("resendOtpBtn").innerHTML = 'Resend OTP';
           })    
     }

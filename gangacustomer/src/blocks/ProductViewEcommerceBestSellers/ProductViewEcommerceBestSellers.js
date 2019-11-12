@@ -115,6 +115,11 @@ class ProductViewEcommerceBestSellers extends Component {
                 "autoDismiss" : true
               }
             })
+            setTimeout(() => {
+              this.setState({
+                  messageData   : {},
+              })
+          }, 3000);
             this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
@@ -135,6 +140,11 @@ class ProductViewEcommerceBestSellers extends Component {
             "autoDismiss" : true
           }
         })
+        setTimeout(() => {
+          this.setState({
+              messageData   : {},
+          })
+      }, 3000);
     }
   }
 
@@ -159,6 +169,11 @@ class ProductViewEcommerceBestSellers extends Component {
           "autoDismiss" : true
         }
       })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
       this.props.changeWishlistCount(response.data.wishlistCount);
     })
     .catch((error)=>{
@@ -176,6 +191,11 @@ class ProductViewEcommerceBestSellers extends Component {
           "autoDismiss" : true
         }
       })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
     }
   }
     Closepagealert(event){
