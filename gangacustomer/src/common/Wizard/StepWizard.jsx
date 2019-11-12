@@ -18,19 +18,20 @@ export default class StepWizard extends Component{
 	}
 	componentDidMount(){
 		var pathname = window.location.pathname;
+		//console.log('deliveryStatus',this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status)
 		this.props.data.deliveryStatus.map((data,ind)=>{
 				
 				if (data.status == 'New Order') {
-					$('#orderplaceddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#orderplaceddate'+this.props.data._id).html(moment(data.Date).format('DD/MM/YYYY hh:mm a'))
 				}
 				if (data.status == 'Dispatch') {
-					$('#dispatchdate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#dispatchdate'+this.props.data._id).html(moment(data.Date).format('DD/MM/YYYY hh:mm a'))
 				}
 				if (data.status == 'Delivery Initiated') {
-					$('#deliveryinitdate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#deliveryinitdate'+this.props.data._id).html(moment(data.Date).format('DD/MM/YYYY hh:mm a'))
 				}
 				if (data.status == 'Delivered & Paid') {
-					$('#delivereddate'+this.props.data._id).html(moment(data.Date).format('MM/DD/YYYY hh:mm a'))
+					$('#delivereddate'+this.props.data._id).html(moment(data.Date).format('DD/MM/YYYY hh:mm a'))
 				}
 			})
 		if(this.props.data.deliveryStatus[this.props.data.deliveryStatus.length-1].status =='New Order' ||

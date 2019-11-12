@@ -53,7 +53,7 @@ class ShipmentTracking extends Component {
 
   render() {
     return (
-      <div className="shiptracbg col-lg-12">
+      <div className="col-lg-12">
       <Loader type="fullpageloader" />
         <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 marginTop180 ">
           <div className="col-lg-12 myorderlistheader">
@@ -88,11 +88,11 @@ class ShipmentTracking extends Component {
               this.state.orderData.map((data, index) => {
 
                 return (
-                  <div key={index} className="container-fluid">
+                  <div key={index} className="container-fluid " >
                     <div className="row">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  parentDiv">
-                        
-                          <div key={index} className="col-lg-12 bgwhite">
+                          
+                          <div key={index} className={data.deliveryStatus[data.deliveryStatus.length-1].status == "Cancelled" ? "col-lg-12 shiptracbg" : "col-lg-12" }>
                             <div className="col-lg-12 orderpagebox">
                               <div className="row">
                               <StepWizard data={data} />
@@ -100,14 +100,19 @@ class ShipmentTracking extends Component {
                               <hr className="hrline" />
                               <div className="row">
                                 <div className="col-lg-4">
+                                {
+                                  data.deliveryStatus[data.deliveryStatus.length-1].status == "Cancelled" ? 
+                                  <div className="col-lg-8 orderButton2"> <b>Cancelled</b></div> : null
+                                }
+                                  
                                   <div className="">
-                                    <div className=" col-lg-12 orderButton">Order-ID : <b>{data.orderID}</b></div>
+                                    <div className=" col-lg-8 orderButton">Order-ID : <b>{data.orderID}</b></div>
                                   </div>
                                 </div>
                                 {data.products ?
                                   data.products.map((products, index) => {
                                     return (
-                                      <div key={index} className="col-lg-12">
+                                      <div key={index} className={  products.status ? (products.status == "Returned" ? "col-lg-12 shiptracbg" : "col-lg-12") : "col-lg-12"} >
                                         <div className="col-lg-2 mtop10">
                                           <img className="itemImg" src={products.productImage[0]} />
                                         </div>
@@ -116,7 +121,12 @@ class ShipmentTracking extends Component {
                                         </div>
                                         <div className="col-lg-2 mtop10"><p className={"fa fa-" + products.currency}> {products.total.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </p>
                                         </div>
-                                        <div className="col-lg-2"> <h4>{data.status.charAt(0) + data.status.slice(1).toLowerCase()}</h4>
+                                        <div className="col-lg-2"> 
+                                        <h4>
+                                        { products.status ? products.status.charAt(0) + products.status.slice(1).toLowerCase()
+                                          : data.status.charAt(0) + data.status.slice(1).toLowerCase()
+                                        } 
+                                        </h4>
                                         </div>
                                       </div>
                                     );
@@ -129,7 +139,7 @@ class ShipmentTracking extends Component {
                               <div className="row">
                                 <div className="col-lg-12 mtop10">
                                   <div className="col-lg-6">
-                                    <p><span>Ordered On </span>&nbsp;{moment(data.createdAt).format("DD/MM/YYYY HH:mm")}</p>
+                                    <p><span>Ordered On </span>&nbsp;{moment(data.createdAt).format("DD/MM/YYYY hh:mm a")}</p>
                                   </div>
                                   <div className="col-lg-6 pull-right plright">
                                     <p><span>Order Total</span>&nbsp;<span className={"fa fa-" + data.currency}>&nbsp;{data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </span></p>

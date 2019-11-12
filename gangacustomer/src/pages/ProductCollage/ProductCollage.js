@@ -117,7 +117,7 @@ class ProductCollage extends Component {
 	      .then((response)=>{ 
 	      		
 	          	this.setState({
-	          	  //loading:false,
+	          	  loading:false,
 	              products 		 : response.data,
 	              masterproducts : response.data
 	          	})

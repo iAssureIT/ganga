@@ -6,6 +6,7 @@ import axios                  from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
+import moment from 'moment';
 import AdminOrdersList from './AdminOrdersList.js';
 
 
@@ -33,7 +34,7 @@ export default class AllOrders extends Component{
                   var totalQuantity = response.data[i].totalQuantity;
                   var currency = response.data[i].currency;
                   var totalAmount = response.data[i].totalAmount;
-                  var createdAt = response.data[i].createdAt;
+                  var createdAt = moment(response.data[i].createdAt).format("DD/MM/YYYY hh:mm a");
                   var status = response.data[i].status;
                   var deliveryStatus = response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1].status;
                   var viewOrder =  "/viewOrder/"+response.data[i]._id;
