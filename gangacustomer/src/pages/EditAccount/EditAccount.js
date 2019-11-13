@@ -208,10 +208,10 @@ class EditAccount extends Component{
                                         <div id="lastName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                             <input maxLength="25" type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required />
                                         </div>
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
+                                        {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changeEmail" checked={this.state.changeEmail} onChange={this.changeEmail.bind(this)}/> &nbsp; <span>Change Email</span>
-                                        </div>
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb15 NOpadding">
+                                        </div> */}
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changePassword" checked={this.state.changePassword} onChange={this.changePassword.bind(this)}/> &nbsp; <span>Change Password</span>
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
