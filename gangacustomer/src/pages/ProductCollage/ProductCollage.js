@@ -176,51 +176,25 @@ class ProductCollage extends Component {
 			selector.section_ID = this.props.match.params.sectionID;
 			selector.price = this.state.price;
 			selector.category_ID = $(selecteditems.target).data().id;
-
+			if (this.props.match.params.subcategoryID && !selector.subCategory_ID) {
+				selector.subCategory_ID = this.props.match.params.subcategoryID;
+			}
 			this.setState({	selector: selector },()=>{
 					this.getFilteredProducts(this.state.selector);
-				}) 
-			
-			/*this.setState(
-				{	selector:
-					{ 
-						sectionID 		: this.props.match.params.sectionID,
-						categoryID 		: $(selecteditems.target).data().id,
-						subcategoryID   : this.state.selector.subcategoryID,
-						brands 			: brands,
-						size 			: this.state.selector.size,	
-						color 			: this.state.selector.color,
-						price 			: this.state.selector.price		
-					}
-				},()=>{
-					this.getFilteredProducts(this.state.selector);
-				} 			
-				);*/
+				})
 		}
 		if (filterType == 'subcategory') {
 			var selector=this.state.selector;
 			selector.section_ID = this.props.match.params.sectionID;
 			selector.price = this.state.price;
 			selector.subCategory_ID = $(selecteditems.target).data().id;
-			
+
+			if (this.props.match.params.categoryID && !selector.category_ID) {
+				selector.category_ID = this.props.match.params.categoryID;
+			}
 			this.setState({	selector: selector },()=>{
 				this.getFilteredProducts(this.state.selector);
 			}) 
-			/*this.setState(
-				{	selector:
-					{ 
-						sectionID 		: this.props.match.params.sectionID,
-						categoryID 		: this.state.selector.categoryID,
-						subcategoryID   : $(selecteditems.target).data().id,
-						brands 			: brands,
-						size 			: this.state.selector.size,	
-						color 			: this.state.selector.color,
-						price 			: this.state.selector.price		
-					}
-				},()=>{
-					this.getFilteredProducts(this.state.selector);
-				} 			
-				);*/
 		}
 		if (filterType == 'brands') {
 			var selector=this.state.selector;
@@ -228,23 +202,15 @@ class ProductCollage extends Component {
 			selector.price = this.state.price;
 			selector.brands = brands;
 			
+			if (this.props.match.params.categoryID && !selector.category_ID) {
+				selector.category_ID = this.props.match.params.categoryID;
+			}
+			if (this.props.match.params.subcategoryID && !selector.subCategory_ID) {
+				selector.subCategory_ID = this.props.match.params.subcategoryID;
+			}
 			this.setState({	selector: selector },()=>{
 				this.getFilteredProducts(this.state.selector);
 			})
-			/*this.setState(
-				{	selector:
-					{ 
-						sectionID 		: this.props.match.params.sectionID,
-						categoryID 		: this.state.selector.categoryID,
-						subcategoryID   : this.state.selector.subcategoryID,
-						brands 			: brands,
-						size 			: this.state.selector.size,	
-						color 			: this.state.selector.color,
-						price 			: this.state.selector.price		
-					}
-				},()=>{
-					this.getFilteredProducts(this.state.selector);
-				});*/
 		}
 		if (filterType == 'price') {
 			var minPrice = selecteditems.min;
@@ -253,29 +219,19 @@ class ProductCollage extends Component {
 			var selector=this.state.selector;
 			selector.section_ID = this.props.match.params.sectionID;
 			
+			if (this.props.match.params.categoryID && !selector.category_ID) {
+				selector.category_ID = this.props.match.params.categoryID;
+			}
+			if (this.props.match.params.subcategoryID && !selector.subCategory_ID) {
+				selector.subCategory_ID = this.props.match.params.subcategoryID;
+			}
+
 			this.setState({price: {min: minPrice, max: maxPrice } }, ()=>{
 				selector.price = this.state.price;
 				this.setState({	selector: selector },()=>{
 					this.getFilteredProducts(this.state.selector);
 				})
 			});
-
-			
-
-			// this.setState(
-			// 	{	selector:
-			// 		{ 
-			// 			sectionID 		: this.props.match.params.sectionID,
-			// 			categoryID 		: this.state.selector.categoryID,
-			// 			subcategoryID   : this.state.selector.subcategoryID,
-			// 			brands 			: brands,
-			// 			size 			: this.state.selector.size,	
-			// 			color 			: this.state.selector.color,
-			// 			price 			: { min: minPrice, max: maxPrice } 	
-			// 		}
-			// 	},()=>{
-			// 		this.getFilteredProducts(this.state.selector);
-			// 	});
 		}
 		if (filterType == 'color') {
 			$('.color-option').css('box-shadow','0px 0px 0px 0px #888888');
@@ -285,23 +241,17 @@ class ProductCollage extends Component {
 			selector.section_ID = this.props.match.params.sectionID;
 			selector.price = this.state.price;
 			selector.color = $(selecteditems.currentTarget).find('.color-option').data('color');
+			
+			if (this.props.match.params.categoryID && !selector.category_ID) {
+				selector.category_ID = this.props.match.params.categoryID;
+			}
+			if (this.props.match.params.subcategoryID && !selector.subCategory_ID) {
+				selector.subCategory_ID = this.props.match.params.subcategoryID;
+			}
+
 			this.setState({	selector: selector },()=>{
 				this.getFilteredProducts(this.state.selector);
 			})
-			/*this.setState(
-				{	selector:
-					{ 
-						sectionID 		: this.props.match.params.sectionID,
-						categoryID 		: this.state.selector.categoryID,
-						subcategoryID   : this.state.selector.subcategoryID,
-						brands 			: brands,
-						size 			: this.state.selector.size,	
-						color 			: $(selecteditems.currentTarget).find('.color-option').data('color'),
-						price 			: this.state.selector.price	 	
-					}
-				},()=>{
-					this.getFilteredProducts(this.state.selector);
-				});*/
 		}
 		if (filterType == 'size') {
 			var selector=this.state.selector;
@@ -309,26 +259,20 @@ class ProductCollage extends Component {
 			selector.price 		= this.state.price;
 			selector.size 	= $(selecteditems.currentTarget).val();
 
+			if (this.props.match.params.categoryID && !selector.category_ID) {
+				selector.category_ID = this.props.match.params.categoryID;
+			}
+			if (this.props.match.params.subcategoryID && !selector.subCategory_ID) {
+				selector.subCategory_ID = this.props.match.params.subcategoryID;
+			}
+
 			this.setState({	selector: selector },()=>{
 				this.getFilteredProducts(this.state.selector);
 			})
-			/*this.setState(
-				{	selector:
-					{ 
-						sectionID 		: this.props.match.params.sectionID,
-						categoryID 		: this.state.selector.categoryID,
-						subcategoryID   : this.state.selector.subcategoryID,
-						brands 			: brands,
-						size 			: $(selecteditems.currentTarget).val(),	
-						color 			: this.state.selector.color,
-						price 			: this.state.selector.price	
-					}
-				},()=>{
-					this.getFilteredProducts(this.state.selector);
-				});*/
 		}
 	}
 	getFilteredProducts(selector){
+		console.log('selector',selector);
 		if ($('.limitProducts').val()) {
 			selector.limit = $('.limitProducts').val();
 		}else{
@@ -346,10 +290,6 @@ class ProductCollage extends Component {
 	      	})
 	}
 	filterProducts(subcategoryID,selectedbrands,price,color,size){
-		console.log('masterproducts',this.state.masterproducts);
-		console.log('subcategoryID',subcategoryID);
-		console.log('selectedbrands',selectedbrands);
-		console.log('price',this.state.price);
 		
 		if (subcategoryID != '') { 
 
@@ -793,7 +733,7 @@ class ProductCollage extends Component {
               	{ 
               		this.state.loading ? 
               		<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 col-lg-offset-3" id="productDiv">
-              			<Loader type="collageloader" productLoaderNo = {8}/> 
+              			<Loader type="collageloader" productLoaderNo = {6}/> 
 			        </div>  
 			          :
               		this.state.products.length > 0 ? 
