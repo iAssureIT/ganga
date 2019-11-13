@@ -164,11 +164,6 @@ class SignUp extends Component {
 										"autoDismiss" : false
 						              }
 									})
-									setTimeout(() => {
-										this.setState({
-											messageData   : {},
-										})
-									}, 3000);
 									this.props.history.push("/confirm-otp/" + response.data.user_id);
 								})
 								.catch((error) => {
@@ -186,11 +181,6 @@ class SignUp extends Component {
 								"autoDismiss" : false
 				              }
 							})
-							// setTimeout(() => {
-							// 	this.setState({
-							// 		messageData   : {},
-							// 	})
-							// }, 3000);
 						)
 
 
@@ -206,11 +196,6 @@ class SignUp extends Component {
 						"autoDismiss" : false
 		              }
 					})
-					setTimeout(() => {
-						this.setState({
-							messageData   : {},
-						})
-					}, 3000);
 				}
 		}
 

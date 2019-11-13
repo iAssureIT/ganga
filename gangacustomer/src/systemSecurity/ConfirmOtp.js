@@ -37,11 +37,6 @@ import Loader from "../common/loader/Loader.js";
             "autoDismiss" : false
           }
         })
-        setTimeout(() => {
-          this.setState({
-              messageData   : {},
-          })
-      }, 3000);
         this.props.history.push('/login');
       })
       .catch((error)=>{
@@ -54,11 +49,6 @@ import Loader from "../common/loader/Loader.js";
             "class": "danger",
           }
         })
-        setTimeout(() => {
-          this.setState({
-              messageData   : {},
-          })
-      }, 3000);
       })
     }
     inputEffect(event){
@@ -86,11 +76,6 @@ import Loader from "../common/loader/Loader.js";
                 "class": "success",
               }
             })
-            setTimeout(() => {
-              this.setState({
-                  messageData   : {},
-              })
-          }, 3000);
           })
           .catch((error)=>{
             $('.fullpageloader').hide();
@@ -102,11 +87,6 @@ import Loader from "../common/loader/Loader.js";
                 "class": "danger",
               }
             })
-            setTimeout(() => {
-              this.setState({
-                  messageData   : {},
-              })
-          }, 3000);
             document.getElementById("resendOtpBtn").innerHTML = 'Resend OTP';
           })    
     }
@@ -136,20 +116,23 @@ import Loader from "../common/loader/Loader.js";
     // }
 
 return(
-      <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
           <Loader type="fullpageloader"/>
-          <div className="row">
+          {/* <div className="row">
             <h3>CONFIRMOTP</h3>
-          </div>
+          </div> */}
         </div>
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 borderrightlogin"> 
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt100 mb100">
+            <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12 formShadow"> 
 
-                <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <Message messageData={this.state.messageData} />
-                  <h4><b>Confirm OTP</b></h4>
-                  <p>We send you a Verification Code to your registered email <br/><br/></p>
+                  
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap mb25">
+                    <h3>Confirm OTP</h3>
+                  </div>
+                  <p>We send you a Verification Code to your registered email <br/></p>
                     <form id="OTPMobMail">
                       <div className="">
                         <div className="">
@@ -161,10 +144,10 @@ return(
                         </div>
                         
                       </div>
-                      <div className="loginforgotpass mt10">
+                      <div className="loginforgotpass mt25">
                         <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   
                       </div>
-                      <div className="mt30 col-lg-12">
+                      <div className="mt30 col-lg-12 mb25">
                           <div className="col-lg-6">
                             <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">
                               Resend OTP
@@ -177,21 +160,7 @@ return(
                     </form>
                 </div>
             </div>
-          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-                <h4><b>New Customers</b></h4>
-                <p className="mt10">Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
-                <ul className="loginlistpadd">
-                  <li>Check out faster</li>
-                  <li>Keep more than one address</li>
-                  <li>Track orders</li>
-                  <li>Track wishlist and more</li>
-                </ul>
-               <div className="col-lg-6 col-md-6 col-sm-6 mt30">
-                  <a id="logInBtn" href='/signup' className="btn btn-warning">Create an Account</a>
-               </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     );

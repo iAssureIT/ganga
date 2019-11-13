@@ -81,11 +81,6 @@ class Login extends Component {
               "autoDismiss" : false
             }
           })
-          setTimeout(() => {
-            this.setState({
-                messageData   : {},
-            })
-        }, 3000);
           // swal("Invalid Email or Password","Please Enter valid email and password");
         }else{
           this.setState({
@@ -107,11 +102,6 @@ class Login extends Component {
                 "autoDismiss" : false
               }
             })
-            setTimeout(() => {
-              this.setState({
-                  messageData   : {},
-              })
-          }, 3000);
           }
       })
       .catch((error)=> {
@@ -129,11 +119,6 @@ class Login extends Component {
               "autoDismiss" : false
             }
           })
-          setTimeout(() => {
-            this.setState({
-                messageData   : {},
-            })
-        }, 3000);
         }
       });
     }
