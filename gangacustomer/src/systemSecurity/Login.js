@@ -172,7 +172,7 @@ class Login extends Component {
                         <input type="password" className="form-control" ref="loginpassword" name="loginpassword" id="loginpassword" placeholder="Password" required/>
                       </span>
                       </div>
-                      <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 NOpaddingRight mt15">
+                      <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 NOpaddingRight">
                         <input id="logInBtn" type="submit" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-warning" value="Sign In"/>
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30 mb25">

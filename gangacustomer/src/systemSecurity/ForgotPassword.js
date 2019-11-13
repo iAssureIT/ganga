@@ -41,10 +41,20 @@ class ForgotPassword extends Component {
                     "autoDismiss" : false
                   }
                 })
+                this.props.history.push('/login');
                 document.getElementById("sendlink").innerHTML = 'Reset My Password';
             })
             .catch((error)=>{
-                // console.log('error', error);
+                console.log('error', error);
+                this.setState({
+                    messageData : {
+                      "type" : "inpage",
+                      "icon" : "fa fa-check-circle",
+                      "message" : "&nbsp; ",
+                      "class": "warning",
+                      "autoDismiss" : false
+                    }
+                  })
             })
         }
     }

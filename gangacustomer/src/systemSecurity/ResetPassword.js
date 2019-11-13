@@ -77,7 +77,7 @@ class ResetPassword extends Component {
                 },
                 confirmPassword: {
                     required: true,
-                    equalTo : "#confirmPassword"
+                    equalTo : "#newPassword"
                 },
             },
             messages:{
@@ -85,7 +85,7 @@ class ResetPassword extends Component {
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") == "newPassword") {
-                    error.insertAfter("#newPassword");
+                    error.insertAfter("#newPasswordmsg");
                 }
                 if (element.attr("name") == "confirmPassword") {
                     error.insertAfter("#confirmPassword");
@@ -95,23 +95,27 @@ class ResetPassword extends Component {
     }
     render() {
         return (
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
             <Loader type="fullpageloader"/>
-                <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
+                <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12 formShadow mb100 mt100">
                     <Message messageData={this.state.messageData} />
-                    <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Please enter your email address below to receive a password reset link.</p>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+                        <h3>Reset Password</h3>
+                    </div>
+                    <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Please enter your email address below to receive a password reset link.</p>
                     <form id="resetPassword">
-                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">New Password <i className="error">*</i></label>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" type="text" /><br/>
-                            <div id="newPassword" ></div>
+                        
+                        <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label>New Password </label><label className="astricsign">*</label>
+                            <input id="newPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" type="text" /><br/>
+                            <div  id="newPasswordmsg"></div>
                         </div>
-                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Confirm Password <i className="error">*</i></label>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                            <input className="col-lg-6 col-md-6 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" type="text" /><br/>
+                        <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                            <label>Confirm Password</label><label className="astricsign">*</label>
+                            <input className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" type="text" /><br/>
                             <div id="confirmPassword"></div>
                         </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                        <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 mt25 mb25">
                             <button className="btn btn-warning resetBtn" onClick={this.resetPassword.bind(this)}>Reset My Password</button>
                         </div>
                     </form>
