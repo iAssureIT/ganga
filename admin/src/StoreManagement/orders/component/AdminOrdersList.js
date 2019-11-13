@@ -154,7 +154,9 @@ class AdminOrdersList extends Component{
       const data = this.state.data;
 
       const options = {
-        print: false,
+       
+        print: false, 
+        download: false,
         viewColumns: false,
         filter: false,
         responsive: "stacked",

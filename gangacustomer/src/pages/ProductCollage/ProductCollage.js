@@ -47,13 +47,22 @@ class ProductCollage extends Component {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
 
+  		var selector = this.state.selector;
+  		
   		if (this.props.match.params.categoryID && this.props.match.params.subcategoryID) {
+  			selector.category_ID = this.props.match.params.categoryID;
+        	selector.subCategory_ID = this.props.match.params.subcategoryID;
+        	this.setState({selector: selector});
   			this.getProductsBySubCategory(this.props.match.params.categoryID, this.props.match.params.subcategoryID);
   		}
   		else if(this.props.match.params.categoryID){
+  			selector.category_ID = this.props.match.params.categoryID;
+        	this.setState({selector: selector});
   			this.getProductsByCategory(this.props.match.params.categoryID);
   		}
   		else{
+  			selector.section_ID = this.props.match.params.sectionID;
+        	this.setState({selector: selector});
   			this.getProductsBySection(this.props.match.params.sectionID);
   		}
   		this.getSectionDetails(this.props.match.params.sectionID);
@@ -112,14 +121,21 @@ class ProductCollage extends Component {
 	      })
 	}
 	getProductsBySection(sectionID){
-		
+		var limit;
+		if ($('.limitProducts').val()) {
+			limit = $('.limitProducts').val();
+		}else{
+			limit = "10";
+		}
 		axios.get("/api/products/get/list/"+sectionID)
 	      .then((response)=>{ 
-	      		
+
+	      		var products = response.data.filter( (array_el, index)=>  {
+			        return index < limit ;
+			    });
 	          	this.setState({
 	          	  loading:false,
-	              products 		 : response.data,
-	              masterproducts : response.data
+	              products 		 : products
 	          	})
 	      })
 	      .catch((error)=>{
@@ -129,13 +145,21 @@ class ProductCollage extends Component {
 	}
 	
 	getProductsByCategory(categoryID){
+		var limit;
+		if ($('.limitProducts').val()) {
+			limit = $('.limitProducts').val();
+		}else{
+			limit = "10";
+		}
 		axios.get("/api/products/get/listbycategory/"+categoryID)
-	      .then((response)=>{ 
-	          this.setState({
+	      .then((response)=>{
+	      		var products = response.data.filter( (array_el, index)=>  {
+			        return index < limit ;
+			    });
+	          	this.setState({
 	          	  loading:false,
-	              products 		 : response.data,
-	              masterproducts : response.data
-	          })
+	              products 		 : products
+	          	})
 	          
 	          
 	      })
@@ -145,12 +169,20 @@ class ProductCollage extends Component {
 	}
 	
 	getProductsBySubCategory(categoryID, subcategoryID){
+		var limit;
+		if ($('.limitProducts').val()) {
+			limit = $('.limitProducts').val();
+		}else{
+			limit = "10";
+		}
 		axios.get("/api/products/get/list/"+categoryID+'/'+subcategoryID)
 	      .then((response)=>{ 
+	      		var products = response.data.filter( (array_el, index)=>  {
+			        return index < limit ;
+			    });
 	          this.setState({
 	          	loading:false,
-	              products 		 : response.data,
-	              masterproducts : response.data
+	            products 		 : products
 	          })
 	          
 	          
@@ -272,14 +304,15 @@ class ProductCollage extends Component {
 		}
 	}
 	getFilteredProducts(selector){
-		console.log('selector',selector);
+		
+		console.log('limitProducts',$('.limitProducts').val());
 		if ($('.limitProducts').val()) {
 			selector.limit = $('.limitProducts').val();
 		}else{
 			selector.limit = "10";
 		}
 		
-
+		console.log('selector',selector);
 		axios.post("/api/products/post/list/filterProducts/",selector)
 
 	      	.then((response)=>{ 
@@ -430,6 +463,85 @@ class ProductCollage extends Component {
 		  console.log('error', error);
 		})
 	  }
+	
+  limitProducts(event){
+    event.preventDefault();
+    var selector = this.state.selector;
+
+    selector.limit = $(event.target).val()
+
+    this.setState({	selector: selector },()=>{
+		this.getFilteredProducts(this.state.selector);
+	})
+    /*if (this.props.parameters) {
+      if (this.props.parameters.categoryID && this.props.parameters.subcategoryID) { 
+        var selector = this.props.selector;
+        selector.category_ID = this.props.parameters.categoryID;
+        selector.subCategory_ID = this.props.parameters.subcategoryID;
+        selector.limit = $(event.target).val()
+
+        this.setState({	selector: selector },()=>{
+			this.getFilteredProducts(this.state.selector);
+		})
+        //this.props.getFilteredProductsFun(this.props.selector);
+      }
+      else if (this.props.parameters.categoryID) {
+        var selector = this.props.selector;
+        selector.category_ID = this.props.parameters.categoryID;
+        selector.limit = $(event.target).val()
+        this.setState({	selector: selector },()=>{
+			this.getFilteredProducts(this.state.selector);
+		})
+        //this.props.getFilteredProductsFun(this.props.selector);
+      }
+      else if (this.props.parameters.sectionID) {
+        var selector = this.props.selector;
+        selector.section_ID = this.props.parameters.sectionID;
+        selector.limit = $(event.target).val()
+        this.setState({	selector: selector },()=>{
+			this.getFilteredProducts(this.state.selector);
+		})
+        //this.props.getFilteredProductsFun(this.props.selector);
+      }
+    }else{
+      var limit = $(event.target).val();   
+      var products = this.state.masterLimitProducts.filter( (array_el, index)=>  {
+       
+          return index < limit ;
+      });
+      this.setState({products : products});
+    }*/
+  }  
+  sortProducts(event){
+      event.preventDefault(); 
+      var sortBy = event.target.value;
+      //console.log('products1',this.state.products);
+      if(sortBy == "alphabeticallyAsc"){
+        let field='productName';
+        this.setState({
+          products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        });
+      }
+      if(sortBy == "alphabeticallyDsc"){
+        let field='productName';
+        this.setState({
+          products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        });
+        
+      }
+      if(sortBy == "priceAsc"){
+        let field='discountedPrice';
+        this.setState({
+          products: this.state.products.sort((a, b) => a[field] - b[field])
+        });
+      }
+      if(sortBy == "priceDsc"){
+        let field='discountedPrice';
+        this.setState({
+          products: this.state.products.sort((a, b) => b[field] - a[field])
+        });
+      }
+    }
   	render() {
 		
     	var tempdata = [1,2,3]
@@ -522,16 +634,13 @@ class ProductCollage extends Component {
 						       	<li className="dropdown-submenu">
 						        <a className="test" tabindex="-1" href="#">SIZE <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
-						         <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
+						         <select onChange={ this.onSelectedItemsChange.bind(this,"size")}>
 						          {this.state.sizes ? 
 							      	this.state.sizes.map((data,index)=>{
 							      		return(<option value={data}>{data}</option>);
 							      	  })
 							      	: ''}
 							      	</select>
-
-						          {/*<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
-						          <li><a tabindex="-1" href="#">2nd level dropdown</a></li>*/}
 						        </ul>
 						      	</li>
 					      }
@@ -659,7 +768,7 @@ class ProductCollage extends Component {
 						    <div id="collapseFour" className="collapse" >
 						      <br/>
 						      <div className="card-body">
-							    <select className="sortProducts" onChange={ this.onSelectedItemsChange.bind(this,"size")}>
+							    <select  onChange={ this.onSelectedItemsChange.bind(this,"size")}>
 							      {this.state.sizes ? 
 							      	this.state.sizes.map((data,index)=>{
 							      		return(<option value={data}>{data}</option>);
@@ -742,6 +851,35 @@ class ProductCollage extends Component {
 					  <div className="tab-content">
 					    <div id="products" className="tab-pane fade in active">
 					    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding content">
+					    	
+					    	<div className="row">
+					          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding mb20">
+					            <div className="col-lg-4 col-md-6 col-sm-8 col-xs-8 NoPadding">
+					              <div className="categoryName">{this.state.categoryDetails && this.state.categoryDetails.category}</div>
+					            </div>
+					            
+					            <div className="col-lg-offset-2 col-md-offset-2 col-lg-4 col-md-6 col-sm-9 col-xs-9 NoPadding">
+					              <label className="col-lg-3 col-md-6 col-sm-9 col-xs-9 NoPadding labeldiv">Sort By</label>
+					              <select className="sortProducts col-lg-8 col-sm-9 col-md-8 col-xs-9 NoPadding" onChange={this.sortProducts.bind(this)}>
+					                <option  className="hidden" >Relevance</option>
+					                <option value="alphabeticallyAsc">Name A-Z</option>
+					                <option value="alphabeticallyDsc">Name Z-A</option>
+					                <option value="priceAsc">Price Low to High</option>
+					                <option value="priceDsc">Price High to Low </option>
+					            </select>
+					            </div> 
+					           
+					            <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3 pull-right NoPadding">
+					              <label className="col-lg-5 col-md-5 col-sm-10 col-xs-10 NoPadding labeldiv">Show</label>
+					              <select className="limitProducts col-lg-6 col-md-6 col-sm-6 col-xs-6 NoPadding" onChange={this.limitProducts.bind(this)}>
+					                <option  value="10" >10</option>
+					                <option value="20">20</option>
+					                <option value="30">30</option>
+					                <option value="40">40</option>
+					            </select>
+					            </div>
+					          </div>
+						    </div>
 					    	{
 					    		<ProductCollageView
 					    		products={this.state.products} 

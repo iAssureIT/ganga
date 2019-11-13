@@ -11,7 +11,7 @@ import Message from '../Message/Message.js';
 
 const user_ID = localStorage.getItem("user_ID");
 
-class ProductCollageView extends Component {
+class SearchProductCollage extends Component {
 	constructor(props){
     super(props);
 	   this.state = {
@@ -22,6 +22,7 @@ class ProductCollageView extends Component {
 	   }
   }  
 	componentDidMount() {
+    console.log('nextProps',this.props);
 		this.setState({
       products : this.props.products,
       masterLimitProducts : this.props.products
@@ -29,6 +30,7 @@ class ProductCollageView extends Component {
 
 	}
   componentWillReceiveProps(nextProps){
+    console.log('nextProps22',nextProps);
     this.setState({
       products : nextProps.products,
       masterLimitProducts : nextProps.products,
@@ -192,14 +194,55 @@ class ProductCollageView extends Component {
         modalIDNew : {productID:modalID}
       })
     }
-    
+    sortProducts(event){
+      event.preventDefault(); 
+      var sortBy = event.target.value;
+      
+      if(sortBy == "alphabeticallyAsc"){
+        let field='productName';
+        this.setState({
+          products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        });
+      }
+      if(sortBy == "alphabeticallyDsc"){
+        let field='productName';
+        this.setState({
+          products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
+        });
+        
+      }
+      if(sortBy == "priceAsc"){
+        let field='discountedPrice';
+        this.setState({
+          products: this.state.products.sort((a, b) => a[field] - b[field])
+        });
+      }
+      if(sortBy == "priceDsc"){
+        let field='discountedPrice';
+        this.setState({
+          products: this.state.products.sort((a, b) => b[field] - a[field])
+        });
+      }
+    }
 
   render() {
     
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <Message messageData={this.state.messageData} />
-        
+        <div className="row">
+          <div className="col-lg-4 col-md-6 col-sm-9 col-xs-9 pull-right NoPadding">
+            <label className="col-lg-3 col-md-6 col-sm-9 col-xs-9 NoPadding labeldiv">Sort By</label>
+            <select className="sortProducts col-lg-8 col-sm-9 col-md-8 col-xs-9 NoPadding" onChange={this.sortProducts.bind(this)}>
+              <option  className="hidden" >Relevance</option>
+              <option value="alphabeticallyAsc">Name A-Z</option>
+              <option value="alphabeticallyDsc">Name Z-A</option>
+              <option value="priceAsc">Price Low to High</option>
+              <option value="priceDsc">Price High to Low </option>
+          </select>
+          </div>
+        </div>
+
         <div className="row">
         {
           this.state.products && this.state.products.length > 0 ?
@@ -314,4 +357,4 @@ const mapDispachToProps = (dispach) =>{
     }),
   }
 }
-export default connect(mapStateToProps, mapDispachToProps)(ProductCollageView);
+export default connect(mapStateToProps, mapDispachToProps)(SearchProductCollage);

@@ -1,5 +1,5 @@
 import React, { Component } 		from 'react';
-import ProductCollageView 			from '../../blocks/ProductCollage/ProductCollageView.js';
+import SearchProductCollage 			from '../../blocks/ProductCollage/SearchProductCollage.js';
 import SearchProductPage  			from  './SearchProductPage.css';
 import $                    		from 'jquery';
 import InputRange 					from 'react-input-range';
@@ -42,9 +42,15 @@ class SearchProduct extends Component {
 	        categoryDetails : nextProps.categoryDetails 
 
   		},()=>{
-	  		if (this.state.categoryDetails &&  this.state.categoryDetails[0]) {
-	  			this.getBrands(this.state.categoryDetails[0].section_ID);
-	  		}
+  			var catArray = [];
+  			if (nextProps.searchCriteria.catArray) {
+  				nextProps.searchCriteria.catArray.map((data,index)=>{
+	  				catArray.push(data.id)
+		        })
+  			}
+  			console.log('catArray',catArray)
+  			this.getBrands(catArray);
+	  		
   		})	
   	}
   	
@@ -81,13 +87,14 @@ class SearchProduct extends Component {
 			this.setState({products :this.state.masterproducts})
 		}
 	}
-	getBrands(sectionID){
-		
-
-		axios.get("/api/products/get/listBrand/"+sectionID)
+	getBrands(sectionIDArray){
+		var formValues = {
+			sectionID : sectionIDArray
+		}
+		 
+		axios.post("/api/products/get/listBrandBySections",formValues)
 
 	  	.then((response)=>{ 
-	  	
 	      this.setState({
 	          brands : response.data
 	      })
@@ -113,35 +120,7 @@ class SearchProduct extends Component {
 	      	}); 
 	      } 
 	}
-	sortProducts(event){
-		event.preventDefault();
-		var sortBy = event.target.value;
-		
-		if(sortBy == "alphabeticallyAsc"){
-			let field='productName';
-			this.setState({
-				products: this.state.products.sort((a, b) => (a[field] || "").toString().localeCompare((b[field] || "").toString()))
-			});
-		}
-		if(sortBy == "alphabeticallyDsc"){
-			let field='productName';
-			this.setState({
-				products: this.state.products.sort((a, b) => -(a[field] || "").toString().localeCompare((b[field] || "").toString()))
-			});
-		}
-		if(sortBy == "priceAsc"){
-			let field='discountedPrice';
-			this.setState({
-				products: this.state.products.sort((a, b) => a[field] - b[field])
-			});
-		}
-		if(sortBy == "priceDsc"){
-			let field='discountedPrice';
-			this.setState({
-				products: this.state.products.sort((a, b) => b[field] - a[field])
-			});
-		}
-	}
+	
 	clearAll(event){
 	  // this.props.clearAllinput(
 	  // 				{
@@ -150,7 +129,6 @@ class SearchProduct extends Component {
    //                  },[]); 
 	}
   	render() {
-  		console.log('searchCriteria',this.props.searchCriteria.loading)
 		return (
 	      	<div className="container" id="containerDiv">
 	     	<div className="row"> 
@@ -201,29 +179,12 @@ class SearchProduct extends Component {
               </div>
               <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9">
 
-              	<ul className="nav nav-tabs searchtab">
-				    <li className="active"><a data-toggle="tab" href="#products">Products</a></li>
-				    
-			    {/*<li><a data-toggle="tab" href="#categories">Categories</a></li>*/}
-				</ul>
-				<br/>
 				  <div className="tab-content">
 				    <div id="products" className="tab-pane fade in active">
-				    	{
-				    	/*<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right NoPadding">
-				    		
-				    		<select className="form-control sortProducts col-lg-3" onChange={this.sortProducts.bind(this)}>
-								<option  className="hidden" >Relevance</option>
-								<option value="alphabeticallyAsc">Name A-Z</option>
-								<option value="alphabeticallyDsc">Name Z-A</option>
-								<option value="priceAsc">Price Low to High</option>
-								<option value="priceDsc">Price High to Low </option>
-							</select>
-				    	</div>*/
-				    	}
 				    	
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
-				    		<ProductCollageView products={this.state.products}/>
+				    		
+				    		<SearchProductCollage products={this.state.products}/>
 				    		{this.props.searchCriteria && this.props.searchCriteria.loading ? <Loader type="collageloader" productLoaderNo = {3}/> : null }
 				     	</div>
 				    </div>
@@ -259,6 +220,7 @@ const mapDispachToProps = (dispach) =>{
   }
 }
 const mapStateToProps = (state)=>{
+	console.log('state',state)
   return {
     cartCount :  state.cartCount,
     wishlistCount : state.wishlistCount,

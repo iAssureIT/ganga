@@ -161,13 +161,24 @@ handleChange(event){
 
 searchProducts(){
     if (this.state.catArray.length > 0 ) {
-      console.log('catArray',this.state.catArray);
       var searchstr = $('.headersearch').val()
       var formValues =  {
                       "searchstr" :  searchstr,  
                       "catArray"  :  this.state.catArray,
                       "loading"   : true,
                     }
+
+      var catArray = [];
+      this.state.catArray && this.state.catArray.map((data,index)=>{
+        catArray.push(data.id);
+      });             
+      localStorage.setItem("catArray",  JSON.stringify(catArray));
+
+      if (searchstr != '' ) {
+        localStorage.setItem("searchstr", searchstr);
+      }
+      
+
       this.props.searchProduct(formValues,this.state.searchResult);               
       axios.post("/api/products/post/searchINCategory",formValues)
               .then((response)=>{
@@ -237,8 +248,6 @@ searchProducts(){
                 firstname: res.data.profile.firstName.substring(0, 1),
                  lastname: res.data.profile.lastName.substring(0, 1)
             },()=>{
-              console.log("useriddata-----------------------------------------",this.state.firstname,this.state.lastname);
-
             })
 
 
@@ -262,10 +271,8 @@ searchProducts(){
  Removefromcart(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
-         console.log("userid",userid);
         const cartitemremoveid = event.target.getAttribute('removeid');
-         console.log("cartitemid",cartitemremoveid);
-
+        
         const formValues = { 
               "user_ID"    : userid,
               "cartItem_ID" : cartitemremoveid,
