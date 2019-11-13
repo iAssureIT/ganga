@@ -183,6 +183,36 @@ class EditAccount extends Component{
             [event.target.name] : event.target.value
         })
     }
+    showSignPass(){
+        $('.showPwd').toggleClass('showPwd1');
+        $('.hidePwd').toggleClass('hidePwd1');
+        return $('#newPass').attr('type', 'text');
+    }
+    hideSignPass(){
+        $('.showPwd').toggleClass('showPwd1');
+        $('.hidePwd').toggleClass('hidePwd1');
+        return $('#newPass').attr('type', 'password');
+    }
+    showConfirmPass(){
+        $('.showPwd2').toggleClass('showPwd3');
+        $('.hidePwd2').toggleClass('hidePwd3');
+        return $('#newPass2').attr('type', 'text');
+    }
+    hideConfirmPass(){
+        $('.showPwd2').toggleClass('showPwd3');
+        $('.hidePwd2').toggleClass('hidePwd3');
+        return $('#newPass2').attr('type', 'password');
+    }
+    showCurrentPass(){
+        $('.showPwd4').toggleClass('showPwd5');
+        $('.hidePwd4').toggleClass('hidePwd5');
+        return $('#oldPass').attr('type', 'text');
+    }
+    hideCurrentPass(){
+        $('.showPwd4').toggleClass('showPwd5');
+        $('.hidePwd4').toggleClass('hidePwd5');
+        return $('#oldPass').attr('type', 'password');
+    }
     render(){
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -234,7 +264,11 @@ class EditAccount extends Component{
                                             <div>
                                                 <label className="mt15">Current Password <i className="requiredsign">*</i></label><br />
                                                 <div  id="oldPassword" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="text" name="oldPassword"  ref="oldPassword" value={this.state.oldPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <input type="text" id="oldPass" type="password" name="oldPassword"  ref="oldPassword" value={this.state.oldPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <div className="showHideEyeDiv">
+                                                        <i className="fa fa-eye showPwd4 showEyeupSign" aria-hidden="true" onClick={this.showCurrentPass.bind(this)}></i>
+                                                        <i className="fa fa-eye-slash hidePwd4 hideEyeSignup " aria-hidden="true" onClick={this.hideCurrentPass.bind(this)}></i>
+                                                    </div> 
                                                 </div>
                                             </div>
                                             :
@@ -246,11 +280,19 @@ class EditAccount extends Component{
                                             <div>
                                                 <label className="mt15">New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="password" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 newPassword" />
+                                                    <input type="password" id="newPass" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 newPassword" />
+                                                    <div className="showHideEyeDiv">
+                                                        <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+                                                        <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+                                                    </div> 
                                                 </div>
                                                 <label className="mt15 col-lg-12 NOpadding">Confirm New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword2" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="password" name="newPassword2"  ref="newPassword2" value={this.state.newPassword2} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <input type="password" id="newPass2" name="newPassword2"  ref="newPassword2" value={this.state.newPassword2} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <div className="showHideEyeDiv">
+                                                        <i className="fa fa-eye showPwd2 showEyeupSign" aria-hidden="true" onClick={this.showConfirmPass.bind(this)}></i>
+                                                        <i className="fa fa-eye-slash hidePwd2 hideEyeSignup " aria-hidden="true" onClick={this.hideConfirmPass.bind(this)}></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                             :

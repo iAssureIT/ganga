@@ -126,12 +126,12 @@ class Login extends Component {
   showSignPass(){
       $('.showPwd').toggleClass('showPwd1');
       $('.hidePwd').toggleClass('hidePwd1');
-      return $('.inputTextPass').attr('type', 'text');
+      return $('#loginpassword').attr('type', 'text');
   }
   hideSignPass(){
       $('.showPwd').toggleClass('showPwd1');
       $('.hidePwd').toggleClass('hidePwd1');
-      return $('.inputTextPass').attr('type', 'password');
+      return $('#loginpassword').attr('type', 'password');
   }
   Closepagealert(event){
     event.preventDefault();
@@ -170,6 +170,10 @@ class Login extends Component {
                       <span className="logininput">
                          <label>Password</label><label className="astricsign">*</label>
                         <input type="password" className="form-control" ref="loginpassword" name="loginpassword" id="loginpassword" placeholder="Password" required/>
+                        <div className="showHideSignDiv">
+                          <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+                          <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+                        </div> 
                       </span>
                       </div>
                       <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 NOpaddingRight">

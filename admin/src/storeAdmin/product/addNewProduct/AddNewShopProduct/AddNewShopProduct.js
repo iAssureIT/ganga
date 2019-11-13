@@ -620,7 +620,7 @@ class AddNewShopProduct extends Component {
                     <label>Vendor <i className="redFont">*</i></label>
                     <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                       <option disabled selected defaultValue="">Select Vendor</option>
-                      <option value={"admin|"}>Admin</option>
+                      <option value="admin|admin">Admin</option>
                       {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                         this.state.vendorArray.map((data, index) => {
                           return (

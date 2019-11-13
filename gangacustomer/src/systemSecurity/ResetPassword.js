@@ -88,11 +88,31 @@ class ResetPassword extends Component {
                 if (element.attr("name") == "newPassword") {
                     error.insertAfter("#newPasswordmsg");
                 }
-                if (element.attr("name") == "confirmPassword") {
-                    error.insertAfter("#confirmPassword");
+                if (element.attr("name") == "confirmPass") {
+                    error.insertAfter("#confirmPass");
                 }
             }
         });
+    }
+    showNewPass(){
+        $('.showPwd').toggleClass('showPwd1');
+        $('.hidePwd').toggleClass('hidePwd1');
+        return $('#newPassword').attr('type', 'text');
+    }
+    hideNewPass(){
+        $('.showPwd').toggleClass('showPwd1');
+        $('.hidePwd').toggleClass('hidePwd1');
+        return $('#newPassword').attr('type', 'password');
+    }
+    showConfirmPass(){
+        $('.showPwd2').toggleClass('showPwd3');
+        $('.hidePwd2').toggleClass('hidePwd3');
+        return $('#confirmPassword').attr('type', 'text');
+    }
+    hideConfirmPass(){
+        $('.showPwd2').toggleClass('showPwd3');
+        $('.hidePwd2').toggleClass('hidePwd3');
+        return $('#confirmPassword').attr('type', 'password');
     }
     render() {
         return (
@@ -108,13 +128,23 @@ class ResetPassword extends Component {
                         
                         <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label>New Password </label><label className="astricsign">*</label>
-                            <input id="newPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" type="text" /><br/>
+                            <input type="password" id="newPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" />
+                            <div className="showHideSignDiv">
+                                <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showNewPass.bind(this)}></i>
+                                <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideNewPass.bind(this)}></i>
+                            </div> 
+                            <br/>
                             <div  id="newPasswordmsg"></div>
                         </div>
                         <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12" >
                             <label>Confirm Password</label><label className="astricsign">*</label>
-                            <input className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" type="text" /><br/>
-                            <div id="confirmPassword"></div>
+                            <input type="password" id="confirmPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" />
+                            <div className="showHideSignDiv">
+                                <i className="fa fa-eye showPwd2 showEyeupSign" aria-hidden="true" onClick={this.showConfirmPass.bind(this)}></i>
+                                <i className="fa fa-eye-slash hidePwd2 hideEyeSignup" aria-hidden="true" onClick={this.hideConfirmPass.bind(this)}></i>
+                            </div> 
+                            <br/>
+                            <div id="confirmPass"></div>
                         </div>
                         <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 mt25 mb25">
                             <button className="btn btn-warning resetBtn" onClick={this.resetPassword.bind(this)}>Reset My Password</button>

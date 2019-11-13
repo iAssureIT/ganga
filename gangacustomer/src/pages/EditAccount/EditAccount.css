@@ -2,3 +2,35 @@
     border-radius: 25px;
     padding: 8px 25px;
 }
+.showHideEyeDiv {
+    right: 20px;
+    top: 5px;
+    float: left;
+    /* margin-right: 9px; */
+    z-index: 999;
+    position: relative;
+  }
+  .showPwd2{
+    display: block;
+  }
+  .hidePwd2{
+    display: none;
+  }
+  .showPwd3{
+    display: none;
+  }
+  .hidePwd3{
+    display: block;
+  }
+  .showPwd4{
+    display: block;
+  }
+  .hidePwd4{
+    display: none;
+  }
+  .showPwd5{
+    display: none;
+  }
+  .hidePwd5{
+    display: block;
+  }

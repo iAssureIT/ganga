@@ -69,7 +69,37 @@
 .loginlistpadd{
   padding-inline-start: 20px!important;
 }
-
+.showPwd{
+  display: block;
+}
+.hidePwd{
+  display: none;
+}
+.showPwd1{
+  display: none;
+}
+.hidePwd1{
+  display: block;
+}
+.showPwd2{
+  display: block;
+}
+.hidePwd2{
+  display: none;
+}
+.showPwd3{
+  display: none;
+}
+.hidePwd3{
+  display: block;
+}
+.showHideSignDiv {
+  top: -25px;
+  float: right;
+  margin-right: 9px;
+  z-index: 999;
+  position: relative;
+}
 /******************signup css***********************/
 
 #signUpBtn{
