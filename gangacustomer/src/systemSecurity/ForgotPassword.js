@@ -13,7 +13,8 @@ class ForgotPassword extends Component {
                 title: "MY SHOPPING CART",
                 breadcrumb: 'My Shopping Cart',
                 backgroungImage: '/images/cartBanner.png',
-            }
+            },
+            showMessage : false
         }
     }
     componentDidMount(){
@@ -21,18 +22,18 @@ class ForgotPassword extends Component {
     }
     sendLink(event) {
         event.preventDefault();
-        
         var email = this.refs.emailLink.value;
         var formValues = {
             username : email
         }
         if($('#resetPass').valid()){
-            document.getElementById("sendlink").innerHTML = 'Please Wait...';
+            // document.getElementById("sendlink").innerHTML = 'Please Wait...';
             $('.fullpageloader').show();
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{
                 $('.fullpageloader').hide();
                 this.setState({
+                  showMessage : true,
                   messageData : {
                     "type" : "inpage",
                     "icon" : "fa fa-check-circle",
@@ -40,21 +41,25 @@ class ForgotPassword extends Component {
                     "class": "success",
                     "autoDismiss" : false
                   }
+                },()=>{
+                    
                 })
-                this.props.history.push('/login');
-                document.getElementById("sendlink").innerHTML = 'Reset My Password';
+                // this.refs.emailLink.value= "";
+                // document.getElementById("sendlink").innerHTML = 'Reset My Password';
             })
             .catch((error)=>{
                 console.log('error', error);
                 this.setState({
                     messageData : {
                       "type" : "inpage",
-                      "icon" : "fa fa-check-circle",
-                      "message" : "&nbsp; ",
+                      "icon" : "fa fa-exclamation-circle",
+                      "message" : "&nbsp; This Email is not registered",
                       "class": "warning",
                       "autoDismiss" : false
                     }
-                  })
+                })
+                $('.fullpageloader').hide();
+                // document.getElementById("sendlink").innerHTML = 'Reset My Password';
             })
         }
     }
@@ -98,6 +103,7 @@ class ForgotPassword extends Component {
         });
     }
     render() {
+        console.log('st', this.state.messageData);
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
             <Loader type="fullpageloader"/>
@@ -108,17 +114,31 @@ class ForgotPassword extends Component {
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
                         <h3>Forgot Password</h3>
                     </div>
-                    <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Please enter your email address below to receive a password reset link.</p>
-                    <form id="resetPass">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25" >
-                            <label className="labelCss">Email ID</label><label className="astricsign">*</label>
-                            <input className="form-control col-lg-12 col-md-12 col-sm-12  col-xs-12" placeholder="Email ID" ref="emailLink" name="emailLink" type="text" />
-                            <div id="emailLink"></div>
+                    {
+                        this.state.showMessage == false ? 
+                        <div>
+                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Please enter your email address below to receive a password reset link.</p>
+                            <form id="resetPass">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25" >
+                                    <label className="labelCss">Email ID</label><label className="astricsign">*</label>
+                                    <input className="form-control col-lg-12 col-md-12 col-sm-12  col-xs-12" placeholder="Email ID" ref="emailLink" name="emailLink" type="text" />
+                                    <div id="emailLink"></div>
+                                </div>
+                                <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 mt25 mb25">
+                                    <button id="sendlink" className="btn btn-warning resetBtn" onClick={this.sendLink.bind(this)}>Reset My Password</button>
+                                </div>
+                            </form>
                         </div>
-                        <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 mt25 mb25">
-                            <button id="sendlink" className="btn btn-warning resetBtn" onClick={this.sendLink.bind(this)}>Reset My Password</button>
+                        :
+                        <div>
+                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">We have sent a reset password link to your email account.</p>
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10">
+                                <div className="row loginforgotpass textAlignCenter">
+                                    <a href='/login' className="">Sign In</a>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    }
                 </div>
             </div>
         )

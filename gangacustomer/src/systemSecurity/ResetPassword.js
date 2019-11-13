@@ -47,6 +47,7 @@ class ResetPassword extends Component {
                 this.props.history.push('/login');
             })
             .catch((error)=>{
+                $('.fullpageloader').hide();
                 console.log('error', error);
             })
         }
