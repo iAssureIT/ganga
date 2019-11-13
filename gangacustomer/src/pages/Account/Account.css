@@ -6,6 +6,9 @@
 .accountBox{
     border: 1px solid #dedede;
 }
+.accountBox div{
+    overflow-wrap: break-word;
+}
 .accountDivHeader{
     font-weight: 600;
     padding: 10px;

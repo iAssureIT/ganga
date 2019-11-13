@@ -101,7 +101,7 @@ class EditAccount extends Component{
     }
     updateUser(event){
         event.preventDefault();
-        $('.fullpageloader').show();
+        
         var userid = localStorage.getItem("user_ID");
         var field = (this.state.changeEmail == true && this.state.changePassword == true? 'all' : (this.state.changeEmail == true ? 'email' : (this.state.changePassword == true? 'password' :"name")));
         
@@ -116,9 +116,11 @@ class EditAccount extends Component{
             "changePassword": this.state.changePassword
         }
         if($('#editAccount').valid()){
-            $('.fullpageloader').hide();
+            // $('.fullpageloader').show();
+            
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
+                // $('.fullpageloader').hide();
                 console.log(response.message);
              this.setState({
               messageData : {
@@ -199,12 +201,12 @@ class EditAccount extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <label className="mt15">First Name <i className="requiredsign">*</i></label><br />
                                         <div id="firstName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <input type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required/>
+                                            <input maxLength="25" type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required/>
                                         </div>
                                         <br />
                                         <label className="mt15">Last Name <i className="requiredsign">*</i></label><br />
                                         <div id="lastName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <input type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required />
+                                            <input maxLength="25" type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required />
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changeEmail" checked={this.state.changeEmail} onChange={this.changeEmail.bind(this)}/> &nbsp; <span>Change Email</span>
@@ -246,7 +248,7 @@ class EditAccount extends Component{
                                                 <div id="newPassword" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                     <input type="password" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 newPassword" />
                                                 </div>
-                                                <label className="mt15">Confirm New Password <i className="requiredsign">*</i></label><br />
+                                                <label className="mt15 col-lg-12 NOpadding">Confirm New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword2" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                     <input type="password" name="newPassword2"  ref="newPassword2" value={this.state.newPassword2} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
                                                 </div>

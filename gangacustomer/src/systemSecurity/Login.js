@@ -161,60 +161,54 @@ class Login extends Component {
   }
   render(){
     return(  
-      <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
         <Loader type="fullpageloader"/>
-          <div className="row">
+          {/* <div className="row">
             <h3>Please Sign In</h3>
-          </div>
+          </div> */}
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50 mb100">
-            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 borderrightlogin"> 
-                <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+            <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12 formShadow"> 
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xs-12">
                   <Message messageData={this.state.messageData} />
-                  <h4><b>Registered Customers</b></h4>
-                  <p>If you have an account, sign in with your email address.</p>
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
+                    <h3>Sign In</h3>
+                  </div>
+                  {/* <p>If you have an account, sign in with your email address.</p> */}
                     <form id="login" onSubmit={this.userlogin.bind(this)}>
-                      <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                      <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt25">
                         <label>Email ID</label><label className="astricsign">*</label>
                         <input type="email" className="form-control" onChange={this.handleChange} ref="loginusername" id="loginusername" name="loginusername" placeholder="Email ID" required/>
                       </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mb25">
                       <span className="logininput">
                          <label>Password</label><label className="astricsign">*</label>
                         <input type="password" className="form-control" ref="loginpassword" name="loginpassword" id="loginpassword" placeholder="Password" required/>
                       </span>
                       </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30">
+                      <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 NOpaddingRight mt15">
+                        <input id="logInBtn" type="submit" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn btn-warning" value="Sign In"/>
+                      </div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt30 mb25">
                         <div className="row">
-                          <div className="col-lg-6 col-md-6 col-sm-6 mt10">
+                          <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt10">
                             <div className="row loginforgotpass">
                                 <a href='/forgotpassword' className="">Forgot Password?</a>
                             </div>
                           </div>
-                          <div className="col-lg-6 col-md-6 col-sm-6 NOpaddingRight">
-                            <input id="logInBtn" type="submit" className="pull-right btn btn-warning" value="Sign In"/>
+                          <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt10 textAlignRight">
+                            <div className="row loginforgotpass">
+                                New to GangaExpress? <a href='/signup' className="">Sign Up</a>
+                            </div>
                           </div>
+                          
                         </div>
                       </div>
                     </form> 
                 </div>
             </div>
-          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <div className="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-                <h4><b>New Customers</b></h4>
-                <p className="mt10">Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
-                <ul className="loginlistpadd">
-                  <li>Check out faster</li>
-                  <li>Keep more than one address</li>
-                  <li>Track orders</li>
-                  <li>Track wishlist and more</li>
-                </ul>
-               <div className="col-lg-6 col-md-6 col-sm-6 mt30">
-                  <a id="logInBtn" href='/signup' className="btn btn-warning logInBtn">Create an Account</a>
-               </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     );

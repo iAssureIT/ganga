@@ -21,12 +21,13 @@ class ForgotPassword extends Component {
     }
     sendLink(event) {
         event.preventDefault();
-        document.getElementById("sendlink").innerHTML = 'Please Wait...';
+        
         var email = this.refs.emailLink.value;
         var formValues = {
             username : email
         }
         if($('#resetPass').valid()){
+            document.getElementById("sendlink").innerHTML = 'Please Wait...';
             $('.fullpageloader').show();
             axios.post('/api/users/sendlink', formValues)
             .then((response)=>{

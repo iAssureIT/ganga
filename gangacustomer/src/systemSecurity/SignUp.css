@@ -24,7 +24,8 @@
 }
 .LoginWrapper{
   /*border:1px solid #aaa;*/
-  margin-top: 25px;
+  /* margin-top: 25px; */
+  background-image: url("/images/Sing-In-Sign-Up.png");
   border-radius: 5px;
   height: auto;
 }
@@ -54,12 +55,12 @@
 }
 
 .loginforgotpass a{
-  text-decoration: none;
+  text-decoration: underline;
   color: #555;
   cursor: pointer;
 }
 .loginforgotpass a:hover{
-  text-decoration: none;
+  text-decoration: underline;
   color: #FCC165;
   cursor: pointer;
 }
@@ -104,7 +105,8 @@
   .formShadow{
     background: #fff;
     padding: 15px;
-    box-shadow: 0px 1px 4px 0px #33333326;
+    margin-top: 15px;
+    box-shadow: 2px 1px 7px 6px #33333326;
   }
   .logininput label{
     font-weight: 500;

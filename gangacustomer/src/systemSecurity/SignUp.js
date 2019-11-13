@@ -336,7 +336,7 @@ class SignUp extends Component {
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 LoginWrapper">
 			<Loader type="fullpageloader"/>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb100">
-					<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 formShadow">
+					<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-12 col-xs-12 formShadow">
 						<Message messageData={this.state.messageData} />
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
 							<h3>Sign Up</h3>
@@ -369,10 +369,10 @@ class SignUp extends Component {
 								<label>Confirm Password</label><label className="astricsign">*</label>
 								<input type="password" className="form-control" id="signupConfirmPassword" ref="signupConfirmPassword" placeholder="" name="signupConfirmPassword" />
 							</div>
-							<div  className="mt15 loginforgotpass col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							{/* <div  className="mt15 loginforgotpass col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<input name="idacceptcondition" type="checkbox" value="acceptedconditions" onClick={this.acceptcondition.bind(this)} /><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a><br/>
 								<div id="idacceptcondition"></div>
-							</div>
+							</div> */}
 							
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
 								<button id="signUpBtn" onClick={this.usersignup.bind(this)} className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 button3  btn btn-warning  signupbtn">Sign Up</button>

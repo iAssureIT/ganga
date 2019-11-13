@@ -241,8 +241,8 @@ class Wishlist extends Component {
                                         <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 wishProductDetails">
                                             <h5 className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding wishProductName">{data.productName}</h5>
                                             <p className="fa fa-inr col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding wishProductPrize mb25"> {data.discountedPrice}</p>
-                                            <input className="col-lg-1 col-md-1 col-sm-2 col-xs-2 wishlistInput" value={this.state.quantity} name="quantity" onChange={this.handleChange.bind(this)}/>
-                                            <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                            {/* <input className="col-lg-1 col-md-1 col-sm-2 col-xs-2 wishlistInput" value={this.state.quantity} name="quantity" onChange={this.handleChange.bind(this)}/> */}
+                                            <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 NOpadding">
                                                 <button className="btn col-lg-4 col-md-4 col-sm-10 col-xs-10 wishAddtoCart" wishid={data.wishlist_ID} id={data.product_ID} onClick={this.addtocart.bind(this)}>ADD TO CART</button>
                                                 <span id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className="fa fa-trash col-lg-4 col-md-4 col-sm-10 col-xs-10 wishRemove"> &nbsp;Remove</span>
                                             </div>
