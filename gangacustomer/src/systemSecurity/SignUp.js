@@ -359,8 +359,8 @@ class SignUp extends Component {
 								<div id="idacceptcondition"></div>
 							</div> */}
 							
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
-								<button id="signUpBtn" onClick={this.usersignup.bind(this)} className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 button3  btn btn-warning  signupbtn">Sign Up</button>
+							<div className="col-lg-4 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12 mt15">
+								<button id="signUpBtn" onClick={this.usersignup.bind(this)} className="col-lg-12 col-md-12 col-md-offset-3 col-sm-12 col-xs-12 button3  btn btn-warning  signupbtn">Sign Up</button>
 							</div>
 							<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center loginforgotpass mt15">
 								<lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>

@@ -913,7 +913,7 @@ class Checkout extends Component {
                                                     return (
                                                         <div key={'check' + index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                                             <input type="radio" value={data._id} name="checkoutAddess" required /> &nbsp;
-                                                            <span>{data.name} {data.addressLine1} {data.addressLine2}, {data.block}, {data.city}, {data.state} {data.country} {data.pincode}</span>
+                                                            <span className="checkoutADDCss">{data.name} {data.addressLine1} {data.addressLine2}, {data.block}, {data.city}, {data.state} {data.country} {data.pincode}</span>
                                                         </div>
                                                     );
                                                 })

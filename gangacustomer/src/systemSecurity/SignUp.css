@@ -111,6 +111,13 @@
   padding: 10px 30px;
   border-radius: 20px;
 }
+.resendotbtn{
+      padding: 10px 30px;
+    border-radius: 20px;
+    border-color: #f0ad4e;
+    background: #fff;
+    color: #333;
+}
 .resetBtn{
   border-radius: 25px;
   padding: 10px 15px;

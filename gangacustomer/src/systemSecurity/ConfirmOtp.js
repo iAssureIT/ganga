@@ -149,12 +149,12 @@ return(
                       </div>
                       <div className="mt30 col-lg-12 mb25">
                           <div className="col-lg-6">
-                            <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">
+                            <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn  systemsecBtn resendotbtn">
                               Resend OTP
                             </div>
                           </div>
                           <div className="col-lg-6">
-                              <button type="submit" onClick={this.confirmOTP.bind(this)} className="col-lg-12 btn btn-info systemsecBtn">Submit</button>
+                              <button type="submit" onClick={this.confirmOTP.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">Submit</button>
                           </div>
                       </div>
                     </form>

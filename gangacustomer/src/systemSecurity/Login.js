@@ -186,10 +186,12 @@ class Login extends Component {
                                 <a href='/forgotpassword' className="">Forgot Password?</a>
                             </div>
                           </div>
+
                           <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt10 textAlignRight">
                             <div className="row loginforgotpass">
                                 New to GangaExpress? <a href='/signup' className="">Sign Up</a>
                             </div>
+
                           </div>
                           
                         </div>

@@ -134,3 +134,8 @@ a:hover{
 .error{
   font-size: 10px;
 }
+
+.checkoutADDCss{
+
+  word-break: break-all;
+}

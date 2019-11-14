@@ -526,20 +526,20 @@ searchProducts(){
                             <div className="row dropdown">
                                 <a href={user_ID ? "/cart" : "/login"}><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{ user_ID ? this.props.cartCount:0}
                                 </span></a>
+
                                 { user_ID ? 
                                   <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
-                                    <li className="col-lg-12">
-                                      <div className="">
-                                        <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> items</p>
-                                        <div className="col-lg-9 text-right">Cart Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : ""}</div>
-                                        <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>
-                                      </div>
-                                    </li>
+                                    <div className="checkoutBtn">
+                                          <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> items</p>
+                                          <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : ""}</div>
+                                          {/*<a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>*/}
+                                        </div>
                                     { 
                                       this.props.cartData && this.props.cartData.length > 0 ?
                                       this.props.cartData.map((data, index)=>{
                                           return(
                                                   <li className="col-lg-12 cartdropheight " key={index}>
+
                                                     <div className="cartdropborder">
                                                       <div className="col-lg-3 cartdropimg">
                                                         <div className="row">
@@ -568,23 +568,22 @@ searchProducts(){
                                             <div><p className="mt15 mb15 col-lg-12 col-md-12 col-sm-12 col-xs-12">You have no items in your shopping cart.</p></div>
                                         </div>
                                       }
-                                      <li className="col-lg-12 ">
-                                        <div className="cartdropborder">
-                                          <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW AND EDIT CART">VIEW AND EDIT CART</div></a>
+                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartdropborder">
+                                     
+                                        <div className=" col-lg-6">
+                                          <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW CART">VIEW CART</div></a>
                                         </div>
-                                      </li>
+                                      
+                                       
+                                        <div className=" col-lg-6">
+                                    
+                                          <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12 checkoutBtn" title="Checkout">Checkout</div></a>
+                                        </div>
+                                    
+                                    </div>
                                   </ul>
                                   :
-                                  <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
-                                    <li className="col-lg-12 text-center">
-                                    <h4>Please Sign In First</h4>
-                                    </li>
-                                      <li className="col-lg-12 ">
-                                        <div className="cartdropborder">
-                                          <a href="/login"><div className="btn cartdropbtn2 col-lg-12" title="Sign In">Sign In</div></a>
-                                        </div>
-                                      </li>
-                                  </ul>                                
+                                  null           
                                 }
                                 <a href={user_ID ? "/cart" : "/login"} className="cartitemscss">ITEM (S)</a>
                             </div> 

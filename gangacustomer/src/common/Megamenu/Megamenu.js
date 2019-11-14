@@ -81,9 +81,9 @@ componentWillMount() {}
           </a>
           <a href="javascript:void(0);" className="ic close"></a>
           <ul className="main-nav">
-            <li className="top-level-link">
+          {/*  <li className="top-level-link">
               <a href="/"><span>Home</span></a>      
-            </li> 
+            </li> */}
             
             {
               this.state.categoryData && this.state.categoryData.map((data,index)=>{

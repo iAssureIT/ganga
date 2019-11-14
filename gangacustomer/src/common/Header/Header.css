@@ -515,3 +515,6 @@ ul.box-static-link li span {
     transform: rotate(360deg);
   }
 }
+.checkoutBtn{
+  margin-top: 10px;
+}
