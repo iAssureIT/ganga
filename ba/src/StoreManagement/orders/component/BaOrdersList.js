@@ -54,7 +54,7 @@ class BaOrdersList extends Component{
                   var totalQuantity = finaldata[i].totalQuantity;
                   var currency = finaldata[i].currency;
                   var totalAmount = finaldata[i].totalAmount;
-                  var createdAt = finaldata[i].createdAt;
+                  var createdAt = moment(finaldata[i].createdAt).format("DD/MM/YYYY hh:mm a");
                   var status = finaldata[i].status;
                   var deliveryStatus = finaldata[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status;
                   var viewOrder =  "/viewOrder/"+finaldata[i]._id;

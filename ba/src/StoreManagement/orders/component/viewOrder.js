@@ -174,7 +174,7 @@ class viewOrder extends Component{
                               <div className="row">
                                 <div className="col-lg-12 mtop10">
                                 <div className="col-lg-6">
-                                  <p><span>Ordered On </span>&nbsp;{ moment(this.state.orderData.createdAt).format("DD/MM/YYYY HH:mm") }</p>
+                                  <p><span>Ordered On </span>&nbsp;{ moment(this.state.orderData.createdAt).format("DD/MM/YYYY hh:mm a") }</p>
                                 </div>
                                 <div className="col-lg-6 pull-right plright">
                                   <p><span>Order Total</span>&nbsp;<span className={"fa fa-"+this.state.orderData.currency}>&nbsp;{this.state.orderData.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </span></p>

@@ -43,13 +43,21 @@ class SearchProduct extends Component {
 
   		},()=>{
   			var catArray = [];
+  			
   			if (nextProps.searchCriteria.catArray) {
+  				
   				nextProps.searchCriteria.catArray.map((data,index)=>{
-	  				catArray.push(data.id)
+	  				catArray.push(data.category)
 		        })
+		        this.getBrands(catArray);
+  			}else{
+  				nextProps.searchResult.map((data,index)=>{
+  					catArray.push(data.category)
+  				})
+  				this.getBrands(catArray);
   			}
-  			console.log('catArray',catArray)
-  			this.getBrands(catArray);
+  			
+  			
 	  		
   		})	
   	}
@@ -87,9 +95,9 @@ class SearchProduct extends Component {
 			this.setState({products :this.state.masterproducts})
 		}
 	}
-	getBrands(sectionIDArray){
+	getBrands(categories){
 		var formValues = {
-			sectionID : sectionIDArray
+			categories : categories
 		}
 		 
 		axios.post("/api/products/get/listBrandBySections",formValues)
@@ -136,10 +144,18 @@ class SearchProduct extends Component {
 	     			<ul className="links">
 				    	<li><a  href="/">Home /</a></li>
 				    	{
-				    		this.props.searchCriteria && this.props.searchCriteria.catArray && this.props.searchCriteria.catArray.map((data,index)=>{
+				    		this.props.searchCriteria && this.props.searchCriteria.catArray 
+				    		?
+				    		this.props.searchCriteria.catArray.map((data,index)=>{
 				    			return(<li><a href={"/category/"+data.category+"/"+data.section_ID+"/"+data.id}>{data.category} / </a></li>);	
 				    		})
+				    		:
+				    		this.props.searchResult.map((data,index)=>{
+				    			console.log('datttta',data);
+				    			return(<li><a href={"/category/"+data.category+"/"+data.section_ID+"/"+data.category_ID}>{data.category} / </a></li>);	
+				    		})
 				    	}
+
 				    	
 				  	</ul>
 				</div>		
