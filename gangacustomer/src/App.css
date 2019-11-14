@@ -85,9 +85,9 @@ button:focus{
 }
 
 .modal-header{
-  background: #b83118;
+  background: #f0ad4e;
   height: 37px;
-  color:#fff;
+  color:#333;
   padding: 10px!important
 }
 .modal-header img{
@@ -102,7 +102,7 @@ button:focus{
 
 .modalclosebut{
  opacity: 10!important;
-    background: #fff!important;
+    /* background: #fff!important; */
     height: 21px;
     width: 17px;
 }

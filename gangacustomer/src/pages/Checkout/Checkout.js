@@ -189,6 +189,9 @@ class Checkout extends Component {
               if (element.attr("name") == "termsNconditions") {
                 error.insertAfter("#termsNconditions");
               }
+              if (element.attr("name") == "checkoutAddess") {
+                error.insertAfter("#checkoutAddess");
+              }
             }
         });
     }
@@ -850,22 +853,22 @@ class Checkout extends Component {
        console.log('handleChangeState', stateCode,countryCode);
         this.getDistrict(stateCode,countryCode);
          
-      }
-      getDistrict(stateCode,countryCode){
-          
-        axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
-              .then((response)=>{
-                console.log('districtArray', response.data);
-                this.setState({
-                    districtArray : response.data
-                })
-                console.log(this.state.city);
-                $('#Citydata').val(this.state.city);
-              })
-              .catch((error)=>{
-                  console.log('error', error);
-              })
-      }
+    }
+    getDistrict(stateCode,countryCode){
+        
+    axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
+            .then((response)=>{
+            console.log('districtArray', response.data);
+            this.setState({
+                districtArray : response.data
+            })
+            console.log(this.state.city);
+            $('#Citydata').val(this.state.city);
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
     camelCase(str) {
         return str
             .toLowerCase()
@@ -907,7 +910,11 @@ class Checkout extends Component {
                                 {
                                     this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">SHIPPING ADDRESS</div>
+                                            
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">SHIPPING ADDRESS <span className="required">*</span></div>
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                                <label id="checkoutAddess"></label>
+                                            </div>
                                             {   this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                                 this.state.deliveryAddress.map((data, index) => {
                                                     return (
@@ -920,9 +927,7 @@ class Checkout extends Component {
                                                 :
                                                 null
                                             }
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <label id="checkoutAddess"></label>
-                                            </div>
+                                            
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                                 <button className="btn btn-warning" data-toggle="modal" data-target="#checkoutAddressModal">Add New Address</button>
                                             </div>
@@ -1083,8 +1088,9 @@ class Checkout extends Component {
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                     <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                                        <h4 className="modal-title">Terms and Conditions</h4>
+                                                        <img src="/images/Icon.png" />
+                                                        <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
+                                                        <h4 className="modal-title modalheadingcont">TERMS AND CONDITIONS</h4>
                                                     </div>
                                                     <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutAddressModal">
                                                         <ul className="listStyle">

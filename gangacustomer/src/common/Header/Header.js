@@ -13,7 +13,8 @@ import ContactPage      from '../../pages/ContactPage/ContactPage.js';
 import axios                    from 'axios';
 import {Route, withRouter} from 'react-router-dom';
 import { connect }        from 'react-redux';
-import Message from '../../blocks/Message/Message.js';
+import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
+
 class Header extends Component {
 constructor(props){
     super(props);
@@ -161,29 +162,15 @@ handleChange(event){
 
 searchProducts(){
     if (this.state.catArray.length > 0 ) {
+      console.log('catArray',this.state.catArray);
       var searchstr = $('.headersearch').val()
       var formValues =  {
                       "searchstr" :  searchstr,  
-                      "catArray"  :  this.state.catArray,
-                      "loading"   : true,
+                      "catArray"  :  this.state.catArray
                     }
-
-      var catArray = [];
-      this.state.catArray && this.state.catArray.map((data,index)=>{
-        catArray.push(data.id);
-      });             
-      localStorage.setItem("catArray",  JSON.stringify(catArray));
-
-      if (searchstr != '' ) {
-        localStorage.setItem("searchstr", searchstr);
-      }
-      
-
-      this.props.searchProduct(formValues,this.state.searchResult);               
       axios.post("/api/products/post/searchINCategory",formValues)
               .then((response)=>{
                 this.setState({searchResult : response.data},()=>{
-                  formValues.loading = false;
                   this.props.searchProduct(formValues,this.state.searchResult);  
                 });
               })
@@ -248,6 +235,8 @@ searchProducts(){
                 firstname: res.data.profile.firstName.substring(0, 1),
                  lastname: res.data.profile.lastName.substring(0, 1)
             },()=>{
+              console.log("useriddata-----------------------------------------",this.state.firstname,this.state.lastname);
+
             })
 
 
@@ -271,8 +260,10 @@ searchProducts(){
  Removefromcart(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
+         console.log("userid",userid);
         const cartitemremoveid = event.target.getAttribute('removeid');
-        
+         console.log("cartitemid",cartitemremoveid);
+
         const formValues = { 
               "user_ID"    : userid,
               "cartItem_ID" : cartitemremoveid,
@@ -281,19 +272,7 @@ searchProducts(){
         axios.patch("/api/carts/remove" ,formValues)
           .then((response)=>{
             console.log('removed');
-             this.setState({
-                messageData : {
-                  "type" : "outpage",
-                  "icon" : "fa fa-check-circle",
-                  "message" : "&nbsp; "+response.data.message,
-                  "class": "success",
-                }
-              })
-              setTimeout(() => {
-                this.setState({
-                    messageData   : {},
-                })
-            }, 3000);
+            ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
             // swal(response.data.message)           
              // .then((obj)=>{
              //      window.location.reload();
@@ -310,19 +289,9 @@ searchProducts(){
     Removefromcartwarning(event){
         const cartitemid = event.target.getAttribute('id');
          console.log("cartitemid",cartitemid);
-         this.setState({
-            messageData : {
-              "type" : "outpage",
-              "icon" : "fa fa-exclamation-circle",
-              "message" : "Item Will be removed from the cart permanently",
-              "class": "warning",
-            }
-          })
-          setTimeout(() => {
-            this.setState({
-                messageData   : {},
-            })
-        }, 3000);
+
+        ToastsStore.warning(<div className="alertback">Item Will be removed from the cart permanently<span className="pagealerturl cursorpointer" removeid={cartitemid} onClick={this.Removefromcart.bind(this)} >Click to remove from cart</span><span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)
+
     }
   submitQuery(){
     var formValues = {
@@ -333,19 +302,8 @@ searchProducts(){
 
     axios.post("/api/customerQuery/post",formValues)
     .then((response)=>{ 
-      this.setState({
-              messageData : {
-                "type" : "outpage",
-                "icon" : "fa fa-check-circle",
-                "message" : "&nbsp; "+response.data.message,
-                "class": "success",
-              }
-            }) 
-            setTimeout(() => {
-              this.setState({
-                  messageData   : {},
-              })
-          }, 3000);
+      ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
+      // swal(response.data.message) 
       jQuery("#customercareModal").modal("hide");
 
       })
@@ -382,7 +340,9 @@ searchProducts(){
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
-        <Message messageData={this.state.messageData} />
+      <div className="pagealertnone">
+        <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT}/>
+        </div>
           <header className="col-lg-12 headerflow"> 
             <div className="row"> 
                   <div className="col-lg-12 header1wrapper">
@@ -444,13 +404,13 @@ searchProducts(){
                               <ul>
                               {
                                   user_ID ? "" 
-                                : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Sign Up</a></li>
+                                : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
                                 
                               }
                               {
                                  
                                   user_ID? 
-                                  <li className="dropdown"><a href="#"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                                  <li className="dropdown"><a href="/"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul className="dropdown-menu signinmenuul">
                                       <li className="col-lg-12 NOpadding">
                                         <a><div className="row">

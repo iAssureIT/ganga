@@ -124,11 +124,11 @@ class AddNewShopProduct extends Component {
         },
         // ^(10|\d)(\.\d{1,2})?$
         discountedPrice: {
-          required: true,
+          // required: true,
           regxPrice: /^(?:[1-9]\d*|0)?(?:\.\d{1,2})?$/,
         },
         discountPercent: {
-          required: true,
+          // required: true,
           regxDiscountPercent: /^(?:[1-9]\d*|0)?(?:\.\d{1,2})?$/,
         },
         availableQuantity: {
@@ -285,6 +285,7 @@ class AddNewShopProduct extends Component {
         this.getCategories();
         this.getSubCategories(response.data.category_ID);
         this.setState({
+          showDiscount : response.data.discountedPrice ? false : true,
           vendor : response.data.vendorName+'|'+response.data.vendor_ID,
           section: response.data.section,
           section_ID: response.data.section_ID,
@@ -308,7 +309,7 @@ class AddNewShopProduct extends Component {
           currency: response.data.currency,
           status: response.data.status,
         }, () => {
-          // console.log('this', this.state);
+          console.log('this', this.state.showDiscount);
 
         })
 
@@ -471,38 +472,41 @@ class AddNewShopProduct extends Component {
       "featured": productFeatured,
       "exclusive": productExclusive,
     }
+    if($('#addNewShopProduct').valid()) {
+      if(this.state.discountPercentError == ""){
+        axios.patch('/api/products/patch', formValues)
+        .then((response) => {
 
-    axios.patch('/api/products/patch', formValues)
-      .then((response) => {
-
-        swal({
-          title: response.data.message,
-          text: response.data.message,
-        });
-        this.setState({
-          vendor : "Select Vendor",
-          section: "Select Section",
-          category: "Select Category",
-          subCategory: "Select Sub-Category",
-          brand: "",
-          productCode: "",
-          itemCode : "",
-          productName: "",
-          productUrl: "",
-          productDetails: "",
-          shortDescription: "",
-          size: "",
-          color: "",
-          discountedPrice: "",
-          availableQuantity: "",
-          currency: "",
-          status: "",
-        });
-        this.props.history.push('/add-product/image/' + this.state.editId);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
+          swal({
+            title: response.data.message,
+            text: response.data.message,
+          });
+          this.setState({
+            vendor : "Select Vendor",
+            section: "Select Section",
+            category: "Select Category",
+            subCategory: "Select Sub-Category",
+            brand: "",
+            productCode: "",
+            itemCode : "",
+            productName: "",
+            productUrl: "",
+            productDetails: "",
+            shortDescription: "",
+            size: "",
+            color: "",
+            discountedPrice: "",
+            availableQuantity: "",
+            currency: "",
+            status: "",
+          });
+          this.props.history.push('/add-product/image/' + this.state.editId);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
+      }
+    }
   }
   createProductUrl(event) {
     const target = event.target;
@@ -620,7 +624,7 @@ class AddNewShopProduct extends Component {
                     <label>Vendor <i className="redFont">*</i></label>
                     <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                       <option disabled selected defaultValue="">Select Vendor</option>
-                      <option value="admin|admin">Admin</option>
+                      <option value="admin">Admin</option>
                       {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                         this.state.vendorArray.map((data, index) => {
                           return (
@@ -642,7 +646,7 @@ class AddNewShopProduct extends Component {
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                         <label>Section <i className="redFont">*</i></label>
                         <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section + '|' + this.state.section_ID} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
-                          <option disabled defaultValue="Select Section">Select Section</option>
+                          <option defaultValue="">Select Section</option>
                           {this.state.sectionArray && this.state.sectionArray.length > 0 ?
                             this.state.sectionArray.map((data, index) => {
                               return (

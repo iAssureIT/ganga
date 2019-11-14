@@ -348,11 +348,11 @@ class SignUp extends Component {
 							
 							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
 								<label>Password</label><label className="astricsign">*</label>
-								<input type="password" className="form-control" id="signupPassword" ref="signupPassword" placeholder="" name="signupPassword" />
+								<input minLength="6" type="password" className="form-control" id="signupPassword" ref="signupPassword" placeholder="" name="signupPassword" />
 							</div>
 							<div className="logininput col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
 								<label>Confirm Password</label><label className="astricsign">*</label>
-								<input type="password" className="form-control" id="signupConfirmPassword" ref="signupConfirmPassword" placeholder="" name="signupConfirmPassword" />
+								<input minLength="6" type="password" className="form-control" id="signupConfirmPassword" ref="signupConfirmPassword" placeholder="" name="signupConfirmPassword" />
 							</div>
 							{/* <div  className="mt15 loginforgotpass col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<input name="idacceptcondition" type="checkbox" value="acceptedconditions" onClick={this.acceptcondition.bind(this)} /><a data-toggle="modal" data-target="#myModal" className="" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className=""> terms & conditions</span><label className="astricsign">*</label></a><br/>
@@ -370,8 +370,9 @@ class SignUp extends Component {
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h2 className="modaltext">Terms & Conditions</h2>
+										<img src="/images/Icon.png" />
+										<button type="button" class="close modalclosebut" data-dismiss="modal">&times;</button>
+										<h2 className="modaltext modalheadingcont">TERMS AND CONDITIONS</h2>
 									</div>
 									<div class="modal-body">
 										<ul>

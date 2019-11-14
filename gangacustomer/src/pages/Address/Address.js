@@ -386,8 +386,9 @@ class Address extends Component {
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                     <div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                         <div className="modal-header checkoutAddressModal col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button type="button" className="close" data-dismiss="modal">&times;</button>
-                            <h4 className="modal-title">Shipping Address</h4>
+                            <img src="/images/Icon.png" />
+                            <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
+                            <h4 className="modal-title modalheadingcont">ADDRESS</h4>
                         </div>
                         <div className="modal-body addressModalBody col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <form id="modalAddressForm">

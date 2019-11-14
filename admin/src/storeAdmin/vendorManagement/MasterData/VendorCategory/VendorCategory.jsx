@@ -43,7 +43,7 @@ class VendorCategory extends Component {
         debug: true,
         success: "valid"
         });
-        $("#BasicInfo").validate({
+        $("#vendorCategory").validate({
         rules: {
             categoryName: {
             required: true,
@@ -52,7 +52,7 @@ class VendorCategory extends Component {
         },
             errorPlacement: function(error, element) {
                 if (element.attr("name") == "categoryName"){
-                    error.insertAfter("#basicInfo1");
+                    error.insertAfter("#categoryName");
                 }
             }
         });
@@ -80,21 +80,18 @@ class VendorCategory extends Component {
         var formValues = {
             "categoryName" : this.refs.categoryName.value
         }
-        if(this.refs.categoryName.length>0){
-        axios.post('/api/vendorCategory/post', formValues)
-        .then((response)=>{
-            swal(response.data.message);
-            this.setState({
-                categoryName : ""
+        if($("#vendorCategory").valid()){
+            axios.post('/api/vendorCategory/post', formValues)
+            .then((response)=>{
+                swal(response.data.message);
+                this.setState({
+                    categoryName : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
-        }else{
-          swal("Category cant be blank", "", "warning");
-         
-       } 
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     updateCategory(event){
         event.preventDefault();
@@ -102,18 +99,20 @@ class VendorCategory extends Component {
             "vendorCategoryID" : this.state.editId,
             "categoryName" : this.refs.categoryName.value
         }
-        axios.patch('/api/vendorCategory/patch', formValues)
-        .then((response)=>{
-            this.props.history.push('/vendor-category');
-            swal(response.data.message);
-            this.setState({
-                categoryName : "",
-                editId : ""
+        if($("#vendorCategory").valid()){
+            axios.patch('/api/vendorCategory/patch', formValues)
+            .then((response)=>{
+                this.props.history.push('/vendor-category');
+                swal(response.data.message);
+                this.setState({
+                    categoryName : "",
+                    editId : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     getDataCount(){
         axios.get('/api/vendorCategory/get/count')

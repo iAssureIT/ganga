@@ -125,7 +125,6 @@ class ResetPassword extends Component {
                     </div>
                     <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Please enter your email address below to receive a password reset link.</p>
                     <form id="resetPassword">
-                        
                         <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label>New Password </label><label className="astricsign">*</label>
                             <input type="password" id="newPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" />

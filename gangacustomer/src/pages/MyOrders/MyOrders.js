@@ -467,7 +467,7 @@ export default class MyOrders extends Component {
                 <div className="modal-header">
                   <img src="/images/Icon.png" />
                   <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
-                  <h4 className="modal-title modalheadingcont">Return Product</h4>
+                  <h4 className="modal-title modalheadingcont">RETURN PRODUCT</h4>
                 </div> 
                   <h4 className="modaltext"></h4>
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -536,8 +536,8 @@ export default class MyOrders extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <img src="/images/Icon.png" />
-                  <button type="button" className="close" data-dismiss="modal">&times;</button>
-                  <h4 className="modalTitle">Cancel Order</h4>
+                  <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
+                  <h4 className="modalTitle modalheadingcont">CANCEL ORDER</h4>
                 </div>
                 <div className="modal-body">
                   <h4 className="modaltext"></h4>
@@ -564,7 +564,7 @@ export default class MyOrders extends Component {
                 <div className="modal-header">
                   <img src="/images/Icon.png" />
                   <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
-                  <h4 className="modal-title modalheadingcont">PRODUCT- REVIEW</h4>
+                  <h4 className="modal-title modalheadingcont">PRODUCT REVIEW</h4>
                 </div> 
                 <div className="modal-body">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

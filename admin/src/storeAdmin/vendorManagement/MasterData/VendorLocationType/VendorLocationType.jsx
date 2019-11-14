@@ -80,18 +80,20 @@ class VendorLocationType extends Component {
         var formValues = {
             "locationType" : this.refs.locationType.value
         }
-        axios.post('/api/vendorLocationType/post', formValues)
-        .then((response)=>{
-            console.log('response', response);
-            this.getData(this.state.startRange, this.state.limitRange);
-            swal(response.data.message);
-            this.setState({
-                locationType : ""
+        if($('#vendorLocationType').valid()) {
+            axios.post('/api/vendorLocationType/post', formValues)
+            .then((response)=>{
+                console.log('response', response);
+                this.getData(this.state.startRange, this.state.limitRange);
+                swal(response.data.message);
+                this.setState({
+                    locationType : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     updateType(event){
         event.preventDefault();
@@ -99,18 +101,20 @@ class VendorLocationType extends Component {
             "vendorCategoryID" : this.state.editId,
             "locationType" : this.refs.locationType.value
         }
-        axios.patch('/api/vendorLocationType/patch', formValues)
-        .then((response)=>{
-            this.props.history.push('/vendor-location-type');
-            this.getData(this.state.startRange, this.state.limitRange);
-            swal(response.data.message);
-            this.setState({
-                locationType : ""
+        if($('#vendorLocationType').valid()) {
+            axios.patch('/api/vendorLocationType/patch', formValues)
+            .then((response)=>{
+                this.props.history.push('/vendor-location-type');
+                this.getData(this.state.startRange, this.state.limitRange);
+                swal(response.data.message);
+                this.setState({
+                    locationType : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     getDataCount(){
         axios.get('/api/vendorLocationType/get/count')

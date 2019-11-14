@@ -20,7 +20,7 @@ table > tfoot > tr > td:last-of-type {
    text-align: right;
 }
 .box-content{
-	height: 150px;
+	/* height: 150px; */
 }
 .subtotal{
 	border-top: 1px solid #ddd !important;
