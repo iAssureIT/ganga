@@ -43,8 +43,8 @@ class Login extends Component {
         //   token : response.data.token
         // });
         console.log(response.data.roles.indexOf("ba"));
-        //if (response.data.roles.indexOf("ba") != -1) {
-          if (true) {
+        if (response.data.roles.indexOf("ba") != -1) {
+          
           localStorage.setItem("token",response.data.token);
           localStorage.setItem("admin_ID",response.data.user_ID);
           localStorage.setItem("user_ID",response.data.user_ID);

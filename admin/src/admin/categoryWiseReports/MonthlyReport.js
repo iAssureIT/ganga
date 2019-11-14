@@ -49,15 +49,15 @@ export default class MonthlyReport extends Component{
             console.log('error', error);
         })
 
-        this.setState({
+        this.setState({ 
             selectedYearMonth : moment().format('Y')+'-'+moment().format('M'),
             startDate   : moment().startOf('month').format('YYYY-MM-DD'),
             endDate     : moment().endOf('month').format('YYYY-MM-DD')
             },
             ()=>{
-            console.log('month',this.state.selectedYearMonth);
-            console.log('startDate',this.state.startDate);
-            console.log('endDate',this.state.endDate);
+            //console.log('month',this.state.selectedYearMonth);
+            //console.log('startDate',this.state.startDate);
+            //console.log('endDate',this.state.endDate);
             this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange,null, null )    
         })  
         
@@ -92,11 +92,12 @@ export default class MonthlyReport extends Component{
     getData(startDate,endDate, startRange,limitRange, section, category, subcategory){
         var formValues={
           "startTime" : startDate,
-          "endTime"   : startDate,
+          "endTime"   : endDate,
           "section"   : section,
           "category"  : category,
           "subcategory" : subcategory
         }
+        console.log('formValues',formValues);
         axios.post("/api/orders/get/category-wise-report",formValues)
         .then((response)=>{
           this.setState({ 
