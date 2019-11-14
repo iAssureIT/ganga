@@ -143,22 +143,6 @@ class ConfirmOtp extends Component {
                         <div className="loginforgotpass mt25">
                           <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   
                         </div>
-<<<<<<< Updated upstream
-                        
-                      </div>
-                      <div className="loginforgotpass mt25">
-                        <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   
-                      </div>
-                      <div className="mt30 col-lg-12 mb25">
-                          <div className="col-lg-6">
-                            <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn  systemsecBtn resendotbtn">
-                              Resend OTP
-                            </div>
-                          </div>
-                          <div className="col-lg-6">
-                              <button type="submit" onClick={this.confirmOTP.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">Submit</button>
-                          </div>
-=======
                         <div className="mt30 col-lg-12 mb25">
                             <div className="col-lg-6">
                               <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">
@@ -176,7 +160,6 @@ class ConfirmOtp extends Component {
                       <p className="textAlignCenter">Your Account is verified successfully! Please Sign In to access your account.<br/></p>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                         <a href="/login" className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 button3  btn btn-warning  signupbtn">Sign In</a>
->>>>>>> Stashed changes
                       </div>
                     </div>
                   }
