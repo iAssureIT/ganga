@@ -573,7 +573,7 @@ export default class MyOrders extends Component {
                       <tr>
                           <th scope="col" className="col id">Product Image</th>
                           <th scope="col" className="col id">Product Name</th>
-                          <th scope="col" className="col date">Price</th>
+                          <th scope="col" className="col date textAlignRight">Price</th>
                       </tr>
                   </thead>
                   <tbody>{
@@ -581,7 +581,7 @@ export default class MyOrders extends Component {
                           <tr>
                               <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]}/></td>
                               <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
-                              <td data-th="Order Total" className="col total"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
+                              <td data-th="Order Total" className="col total textAlignRight"><span><i className={"fa fa-"+this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
                           </tr>
                           :
                          null
@@ -600,8 +600,10 @@ export default class MyOrders extends Component {
                           <div className="clearfix "></div>
                       </div>
                         <div className="row inputrow">
-                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                          <textarea rows="5" cols="60"  onChange={this.handleChange.bind(this)} value={this.state.customerReview} name="customerReview"></textarea>
+                          <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">Write review</label>
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                            <textarea rows="5" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " onChange={this.handleChange.bind(this)} value={this.state.customerReview} name="customerReview"></textarea>
+                          </div>
                         </div>
                         <div className="row inputrow">
                         </div>
@@ -610,8 +612,10 @@ export default class MyOrders extends Component {
                     
                 </div>
                 <div className="modal-footer modalfooterborder ">
-                     <button className="btn btn-warning" onClick={this.submitReview.bind(this)} data-productid={this.state.oneproductdetails && this.state.oneproductdetails._id}
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                     <button className="btn btn-warning mt15" onClick={this.submitReview.bind(this)} data-productid={this.state.oneproductdetails && this.state.oneproductdetails._id}
                      >Submit</button>
+                    </div>
                 </div>
               </div>
             </div>

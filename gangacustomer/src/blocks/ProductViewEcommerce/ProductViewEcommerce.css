@@ -224,7 +224,8 @@
     margin-top:10px;
 }
 .tealColorfnt{
-    font-size:8px;
+    color: #fbbb65;
+    font-size:9px;
     font-weight:900;
 }
 .qty{
@@ -929,4 +930,8 @@ position:relative;
 
 .aboutclientmb{
   margin-bottom: 50px;
+}
+.stickyDiv{
+    position: sticky;
+    top: 0px;
 }

@@ -8,31 +8,32 @@ import { connect } from 'react-redux';
 import Message from '../Message/Message.js';
 import ReactImageZoom from 'react-image-zoom';
 import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';	
-import Loadable                   from 'react-loadable';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+import Loadable from 'react-loadable';
+import ProductViewEcommerceDetailsReviewFAQ from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
 
 const OwlCarousel = Loadable({
-  loader: () => import('react-owl-carousel'),
-  loading() {
-    return <div className="col-sm-12 col-xs-12 col-lg-2 col-lg-offset-5 col-md-12 loadingImg"><img src="../images/loadersglms.gif" className="img-responsive" alt="loading"/></div>
-  }
+	loader: () => import('react-owl-carousel'),
+	loading() {
+		return <div className="col-sm-12 col-xs-12 col-lg-2 col-lg-offset-5 col-md-12 loadingImg"><img src="../images/loadersglms.gif" className="img-responsive" alt="loading" /></div>
+	}
 });
 const user_ID = localStorage.getItem("user_ID");
 class ProductViewEcommerce extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-	    responsive:{
-            0:{
-                items:1
-            },
-            600:{
-                items:2
-            },
-            1000:{
-                items:5 
-            }
-          },
+			responsive: {
+				0: {
+					items: 1
+				},
+				600: {
+					items: 2
+				},
+				1000: {
+					items: 5
+				}
+			},
 			"productData": [],
 			"subImgArray": [],
 			"totalQuanity": 1,
@@ -48,7 +49,7 @@ class ProductViewEcommerce extends Component {
 				// console.log("product info---->", response);
 				this.setState({
 					productData: response.data,
-					selectedImage : response.data.productImage[0],
+					selectedImage: response.data.productImage[0],
 					quanityLimit: response.data.availableQuantity
 				})
 				this.forceUpdate();
@@ -58,11 +59,11 @@ class ProductViewEcommerce extends Component {
 			})
 	}
 	changeImage = (event) => {
-		
+
 		this.setState({
-			
-			selectedImage : event.target.src
-		},() => {
+
+			selectedImage: event.target.src
+		}, () => {
 			console.log('this.state.imgsrc', this.state.imgsrc);
 		});
 	}
@@ -108,8 +109,8 @@ class ProductViewEcommerce extends Component {
 						"currency": response.data.currency,
 						"productCode": response.data.productCode,
 						"productName": response.data.productName,
-						"section_ID"        : response.data.section_ID,
-						"section"           : response.data.section,
+						"section_ID": response.data.section_ID,
+						"section": response.data.section,
 						"category_ID": response.data.category_ID,
 						"category": response.data.category,
 						"subCategory_ID": response.data.subCategory_ID,
@@ -126,17 +127,17 @@ class ProductViewEcommerce extends Component {
 							// console.log('response', response);
 							this.getCartData();
 							this.setState({
-				              messageData : {
-				                "type" : "outpage",
-				                "icon" : "fa fa-check-circle",
-				                "message" : "&nbsp; "+response.data.message,
-								"class": "success",
-								"autoDismiss" : true
-				              }
+								messageData: {
+									"type": "outpage",
+									"icon": "fa fa-check-circle",
+									"message": "&nbsp; " + response.data.message,
+									"class": "success",
+									"autoDismiss": true
+								}
 							})
 							setTimeout(() => {
 								this.setState({
-									messageData   : {},
+									messageData: {},
 								})
 							}, 3000);
 							// swal(response.data.message)
@@ -151,17 +152,17 @@ class ProductViewEcommerce extends Component {
 				})
 		} else {
 			this.setState({
-		        messageData : {
-		          "type" : "outpage",
-		          "icon" : "fa fa-exclamation-circle",
-		          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
-				  "class": "warning",
-				  "autoDismiss" : true
-		        }
+				messageData: {
+					"type": "outpage",
+					"icon": "fa fa-exclamation-circle",
+					"message": "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+					"class": "warning",
+					"autoDismiss": true
+				}
 			})
 			setTimeout(() => {
 				this.setState({
-					messageData   : {},
+					messageData: {},
 				})
 			}, 3000);
 		}
@@ -183,17 +184,17 @@ class ProductViewEcommerce extends Component {
 					axios.post('/api/wishlist/post', formValues)
 						.then((response) => {
 							this.setState({
-								messageData : {
-								  "type" : "outpage",
-								  "icon" : "fa fa-check-circle",
-								  "message" : "&nbsp; "+response.data.message,
-								  "class": "success",
-								  "autoDismiss" : true
+								messageData: {
+									"type": "outpage",
+									"icon": "fa fa-check-circle",
+									"message": "&nbsp; " + response.data.message,
+									"class": "success",
+									"autoDismiss": true
 								}
-							  })
-							  setTimeout(() => {
+							})
+							setTimeout(() => {
 								this.setState({
-									messageData   : {},
+									messageData: {},
 								})
 							}, 3000);
 						})
@@ -206,19 +207,19 @@ class ProductViewEcommerce extends Component {
 				})
 		} else {
 			this.setState({
-            messageData : {
-              "type" : "outpage",
-              "icon" : "fa fa-exclamation-circle",
-              "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
-			  "class": "warning",
-			  "autoDismiss" : true
-            }
-		  })
-		  setTimeout(() => {
-			this.setState({
-				messageData   : {},
+				messageData: {
+					"type": "outpage",
+					"icon": "fa fa-exclamation-circle",
+					"message": "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+					"class": "warning",
+					"autoDismiss": true
+				}
 			})
-		}, 3000);
+			setTimeout(() => {
+				this.setState({
+					messageData: {},
+				})
+			}, 3000);
 		}
 
 	}
@@ -273,48 +274,48 @@ class ProductViewEcommerce extends Component {
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
 				<Message messageData={this.state.messageData} />
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
-					<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 stickyDiv">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer imgCont">
 							<div className="prod-detail-slider prod-detail-filpCommon">
 								<div id="react-app" className={"item img-responsiveProduct"}>
-									<ReactImageZoom {...props}  />
+									<ReactImageZoom {...props} />
 								</div>
 							</div>
-						</div> 
+						</div>
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer mt50">
 							<div className="">
-										<OwlCarousel
-					                            className="owl-theme productview"
-					                            margin={0}
-					                            nav={true}
-					                            responsive={this.state.responsive} 
-					                            autoplay={true}
-					                            autoplayHoverPause={true}
-					                        >
-												{
-													this.state.productData &&  this.state.productData.productImage && this.state.productData.productImage.length>0 ?
-													this.state.productData.productImage.map((data, index) => {
-														console.log("productData=>>>>>>>>>>>>>>>",data);
-														// if (!_.isEmpty(data)) {
-															return (
-																<div key={index} className="item col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew"  >
-																	<div className="row">
-																		{
-																			data && <img data-index={index} id="change-image" onClick={this.changeImage} src={data} alt="default" />
-																		}
-																	</div>
-																</div>
-															); 
-														// }
-													})
-													:
-													null
-												}
-					          </OwlCarousel>
-					        </div>
+								<OwlCarousel
+									className="owl-theme productview"
+									margin={0}
+									nav={true}
+									responsive={this.state.responsive}
+									autoplay={true}
+									autoplayHoverPause={true}
+								>
+									{
+										this.state.productData && this.state.productData.productImage && this.state.productData.productImage.length > 0 ?
+											this.state.productData.productImage.map((data, index) => {
+												console.log("productData=>>>>>>>>>>>>>>>", data);
+												// if (!_.isEmpty(data)) {
+												return (
+													<div key={index} className="item col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew"  >
+														<div className="row">
+															{
+																data && <img data-index={index} id="change-image" onClick={this.changeImage} src={data} alt="default" />
+															}
+														</div>
+													</div>
+												);
+												// }
+											})
+											:
+											null
+									}
+								</OwlCarousel>
+							</div>
 						</div>
 					</div>
-					
+
 					<div className="col-lg-6 col-md-6  col-sm-12 col-xs-12 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
 							<div className="row">
@@ -336,7 +337,6 @@ class ProductViewEcommerce extends Component {
 										<span className="col-md-1 col-lg-1 col-sm-12 col-xs-12 paddingleftzero ttl" >
 											Price:
 										</span>
-										
 										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
 											<span className="priceEcommerceNew" ><i className={"fa fa-" + this.state.productData.currency}></i>&nbsp;{this.state.productData.discountedPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											{this.state.productData.discountPercent == true ? <span className="originalPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null}
@@ -347,14 +347,14 @@ class ProductViewEcommerce extends Component {
 									</div>
 
 									<div className="row listspace">
-									{this.state.productData.featureList ?
-										<span className="col-md-2 col-lg-2 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
-											Features
-										</span>
-										:
-										null
-									}
-										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ttllist" >
+										{this.state.productData.featureList ?
+											<span className="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
+												Features
+											</span>
+											:
+											null
+										}
+										<span className="col-md-12 col-sm-12 col-xs-12 col-lg-12 ttllist" >
 											{this.state.productData.featureList ?
 												<div className="">
 													<ul className="paddingleftzero">
@@ -381,16 +381,13 @@ class ProductViewEcommerce extends Component {
 
 									</div>
 								</div>
-
-
-
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
 
 									<div className="row spc">
 										<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
 											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 qtyInput" id="totalQuanity">
 												1
-</div>
+											</div>
 											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
 												<i className="fa fa-plus qtyIncrease" id="addQuantity" onClick={this.addQuantity.bind(this)}></i><br />
 												<i className="fa fa-minus qtyIncrease" id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}></i>
@@ -408,18 +405,20 @@ class ProductViewEcommerce extends Component {
 
 							</div>
 						</div>
-
+						{
+							this.state.productData.productDetails ? 
+							<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding topspace detailtitle">DESCRIPTION</div>
+								<div className="spcbx topspace15"></div>
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding detailtxt topspace15">{this.state.productData.productDetails}</div>
+							</div>
+							:
+							null
+						}
+						<ProductViewEcommerceDetailsReviewFAQ productID = { this.props.productID } />
 					</div>
 				</div>
-				<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 faq">
-							<div className="col-lg-12 topspace detailtitle">DETAILS</div>
-							<div className="spcbx topspace15"></div>
-							<div className="col-lg-12 detailtxt topspace15">{this.state.productData.productDetails}</div>
-						</div>
-					</div>
-				</div>
+				
 			</div>
 		);
 	}

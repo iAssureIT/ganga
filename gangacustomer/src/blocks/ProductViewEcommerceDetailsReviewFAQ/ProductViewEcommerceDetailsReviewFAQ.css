@@ -90,12 +90,25 @@
 }*/
 
 .reviewborder{
-	border:1px solid #aaa;
-	border-radius: 8px;
+	padding-top: 10px;
+	border:1px solid #dfdfdf;
+	border-radius: 2px;
 	margin-bottom: 10px;
 }
 
 .reviewuserimg img{
 	height: 30px;
 	border-radius: 50%;
+}
+.boxBor{
+	border-top: 1px solid #dfdfdf;
+}
+.allReview{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.allReviewplusSign{
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 700;
 }
