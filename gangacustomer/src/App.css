@@ -139,6 +139,7 @@ a:hover{
 
   word-break: break-all;
 }
+
 .mt45{
   margin-top: 45px;
 }
@@ -147,4 +148,7 @@ a:hover{
 }
 .CSBTn:hover{
   color:#fff !important;
+}
+p{
+  word-break: break-all;
 }

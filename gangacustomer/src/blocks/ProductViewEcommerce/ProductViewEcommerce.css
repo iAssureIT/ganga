@@ -932,6 +932,7 @@ position:relative;
   margin-bottom: 50px;
 }
 .stickyDiv{
+    z-index: 2;
     position: sticky;
     top: 0px;
 }

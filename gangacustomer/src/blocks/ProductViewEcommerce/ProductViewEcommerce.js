@@ -45,44 +45,39 @@ class ProductViewEcommerce extends Component {
 
 	componentDidMount() {
 		axios.get("/api/products/get/one/" + this.props.productID)
-			.then((response) => {
-				// console.log("product info---->", response);
-				this.setState({
-					productData: response.data,
-					selectedImage: response.data.productImage[0],
-					quanityLimit: response.data.availableQuantity
-				})
-				this.forceUpdate();
+		.then((response) => {
+			this.setState({
+				productData: response.data,
+				selectedImage: response.data.productImage[0],
+				quanityLimit: response.data.availableQuantity
 			})
-			.catch((error) => {
-				console.log('error', error);
-			})
+			this.forceUpdate();
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
 	}
 	changeImage = (event) => {
-
 		this.setState({
-
 			selectedImage: event.target.src
 		}, () => {
 			console.log('this.state.imgsrc', this.state.imgsrc);
 		});
 	}
 	getCartData() {
-		// const userid = '5d5bfb3154b8276f2a4d22bf';
 		const userid = localStorage.getItem('user_ID');
 		axios.get("/api/carts/get/list/" + userid)
-			.then((response) => {
-				// console.log('cartProduct=======================', response.data[0].cartItems)
-				this.setState({
-					cartProduct: response.data[0].cartItems
-				});
-				this.props.initialCartData(response.data[0].cartItems);
-			})
-			.catch((error) => {
-				console.log('error', error);
-			})
+		.then((response) => {
+			// console.log('cartProduct=======================', response.data[0].cartItems)
+			this.setState({
+				cartProduct: response.data[0].cartItems
+			});
+			this.props.initialCartData(response.data[0].cartItems);
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
 	}
-
 	addtocart = (event) => {
 		// const token = localStorage.getItem("token");
 		//   if(token!==null){
@@ -223,7 +218,6 @@ class ProductViewEcommerce extends Component {
 		}
 
 	}
-
 	Closepagealert(event) {
 		event.preventDefault();
 		$(".toast-error").html('');
@@ -236,7 +230,6 @@ class ProductViewEcommerce extends Component {
 		$(".toast-warning").removeClass('toast');
 
 	}
-
 	addQuantity() {
 		var totalQuanity = this.state.totalQuanity
 		totalQuanity++;
@@ -247,6 +240,20 @@ class ProductViewEcommerce extends Component {
 		if (Number(totalQuanity) > Number(this.state.quanityLimit)) {
 			$('#addQuantity').css('background-color', '#ccc');
 			$('#addQuantity').addClass('no-drop');
+			this.setState({
+				messageData: {
+					"type": "outpage",
+					"icon": "fa fa-check-circle",
+					"message": "Only "+this.state.quanityLimit+" "+this.state.productData.productName+" left in stock",
+					"class": "success",
+					"autoDismiss": true
+				}
+			})
+			setTimeout(() => {
+				this.setState({
+					messageData: {},
+				})
+			}, 3000);
 		} else {
 			this.setState({ totalQuanity: totalQuanity });
 			document.getElementById('totalQuanity').innerHTML = totalQuanity;
@@ -267,6 +274,19 @@ class ProductViewEcommerce extends Component {
 			$('#decreaseQuantity').addClass('no-drop');
 			$('#decreaseQuantity').css('background-color', '#ccc');
 		}
+	}
+	getMyReview() {
+		axios.get("/api/customerReview/get/list/" + this.state.product_id)
+		.then((response) => {
+		  this.setState({
+			reviewData: response.data,
+		  }, () => {
+			console.log("reviewData", this.state.reviewData);
+		  })
+		})
+		.catch((error) => {
+		  console.log('error', error);
+		})
 	}
 	render() {
 		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1000;background-color:#fff; height:500px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/notavailable.jpg" };
@@ -347,7 +367,7 @@ class ProductViewEcommerce extends Component {
 									</div>
 
 									<div className="row listspace">
-										{this.state.productData.featureList ?
+										{this.state.productData.featureList && this.state.productData.featureList.length>0 ?
 											<span className="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
 												Features
 											</span>

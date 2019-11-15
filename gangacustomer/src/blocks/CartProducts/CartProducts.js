@@ -6,7 +6,6 @@ import "./CartProducts.css";
 import { connect }        from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCartCata } from '../../actions/index';
-import IMask from 'imask';
 import Loader from "../../common/loader/Loader.js";
 import Message from '../Message/Message.js';
 class CartProducts extends Component{
@@ -147,12 +146,11 @@ class CartProducts extends Component{
                 "totalIndPrice"	: totalIndPrice
             }
             if(quantityAdded > availableQuantity){
-                
                 this.setState({
                     messageData : {
                       "type" : "outpage",
                       "icon" : "fa fa-check-circle",
-                      "message" : response.data.message,
+                      "message" : "Only "+availableQuantity+" "+productName+" left in stock",
                       "class": "success",
                       "autoDismiss" : true
                     }
@@ -162,7 +160,6 @@ class CartProducts extends Component{
                         messageData   : {},
                     })
                 }, 3000);
-                console.log('mnmn', quantityAdded > availableQuantity);
             }else{
                 axios.patch("/api/carts/quantity" ,formValues)
                 .then((response)=>{

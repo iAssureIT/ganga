@@ -942,7 +942,7 @@ class Checkout extends Component {
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                                <input placeholder="Eg. 9876543210" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input placeholder="Eg. 9876543210" maxLength="10" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                                 {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
