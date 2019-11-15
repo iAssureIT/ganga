@@ -300,7 +300,7 @@ class Edituser extends Component{
                                   <i className="fa fa-map-marker fa "></i>
                                 </div>  
                                  <input type="text"className="form-control UMname inputText form-control  has-content"  value={this.state.addressLine1}
-                                 id="addressLine1" ref="addressLine1" name="addressLine1" onChange={this.handleChange}  placeholder="Ex : 4, Olive Apt." />
+                                 id="addressLine1" minLength="10" ref="addressLine1" name="addressLine1" onChange={this.handleChange}  placeholder="Ex : 4, Olive Apt." />
                               </div>   
                               </span>
                           </div>

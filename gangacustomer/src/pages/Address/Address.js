@@ -410,7 +410,7 @@ class Address extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
-                                        <input type="text" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1" value={this.state.modaladdressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                        <input type="text" minLength="10" ref="modaladdressLine1" name="modaladdressLine1" id="modaladdressLine1" value={this.state.modaladdressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>

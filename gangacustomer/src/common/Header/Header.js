@@ -404,7 +404,7 @@ searchProducts(){
                               <ul>
                               {
                                   user_ID ? "" 
-                                : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Join Free</a></li>
+                                : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Sign In</a></li>
                                 
                               }
                               {

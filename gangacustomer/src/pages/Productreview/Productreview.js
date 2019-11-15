@@ -117,16 +117,17 @@ class Productreview extends Component {
                     return (
                       <div key={index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewborder topspace15">
                         <div className="row">
-                          <div className="col-lg-2 col-md-2 col-sm-4 col-xs-12 reviewProImg">
-                            <img className="img img-responsive" src={data.productDetails[0].productImage[0]} />
+                          <div className="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <img className="img img-responsive reviewProImg" src={data.productDetails[0].productImage[0]} />
                           </div>
                           <div className="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
                             <div className="row">
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewuserimg text-center">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewuserimg">
                                   <div className="row pull-right">
                                     <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn" title="Give Feedback" > <i className="fa fa-pencil"></i></button></a>
                                   </div>
-                                  <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-center">
+                                  <b><div className="col-lg-11 col-md-11 col-sm-11 col-xs-11">{data.productDetails[0].productName}</div></b>
+                                  <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 ">
                                     {
                                       data.rating == 5 ?
                                         <fieldset className="ratingReview stars givefeedback " disabled>
@@ -185,8 +186,8 @@ class Productreview extends Component {
 
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textAlignLeft">
-                                    <span>by {data.customerName} </span>
-                                    <span> {moment(data.createdAt).format('DD-MM-YYYY')}</span>
+                                    <span>By {data.customerName} </span>
+                                    
                                   </div>
                               </div>
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewuserimg">
@@ -198,7 +199,9 @@ class Productreview extends Component {
                                   </div> */}
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 topspace8">
                                       <p>{data.customerReview}</p>
+                                      <span> {moment(data.createdAt).format('DD-MM-YYYY')}</span>
                                   </div>
+                                  
                               </div>
                               <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 topspace8">
                                 

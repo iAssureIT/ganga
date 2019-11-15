@@ -134,10 +134,10 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewuserimg">
                             <div className="row">
                               {/* <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
-<div className="row">
-<h5>Review :</h5>
-</div>    
-</div>     */}
+                              <div className="row">
+                              <h5>Review :</h5>
+                              </div>    
+                              </div>     */}
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 topspace8">
                                 <div className="row">
                                   <p>{data.customerReview}</p>
