@@ -143,6 +143,7 @@ class ConfirmOtp extends Component {
                         <div className="loginforgotpass mt25">
                           <lable>Already have an account?</lable>&nbsp;<a href='/login' className="">Sign In <b>&#8702;</b></a>   
                         </div>
+                        
                         <div className="mt30 col-lg-12 mb25">
                             <div className="col-lg-6">
                               <div id="resendOtpBtn" onClick={this.resendOtp.bind(this)} className="col-lg-12 btn btn-warning systemsecBtn">

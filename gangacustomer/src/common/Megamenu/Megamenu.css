@@ -367,8 +367,9 @@ ul.main-nav > li ul.sub-menu-lists > li > a:hover {
 .sub-menu-head a{
   font-weight: 600;
   text-decoration: none;
-  color: #e39b35;
+  /*color: #e39b35;*/
   font-size: 14px;
+  color: #ee4302;
 }
 /*.sub-menu-head a:hover{
   color: #FBBD65;

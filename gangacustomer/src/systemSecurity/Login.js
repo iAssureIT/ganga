@@ -191,7 +191,6 @@ class Login extends Component {
                             <div className="row loginforgotpass">
                                 New to GangaExpress? <a href='/signup' className="">Sign Up</a>
                             </div>
-
                           </div>
                           
                         </div>
