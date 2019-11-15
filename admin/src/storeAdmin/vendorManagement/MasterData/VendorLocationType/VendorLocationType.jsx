@@ -177,7 +177,7 @@ class VendorLocationType extends Component {
                                             <form className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="vendorLocationType">
                                                 <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pdcls"> 
                                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Location Type<i className="astrick">*</i></label>
-                                                    <input type="text" id="locationType" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.locationType}  ref="locationType" name="locationType" onChange={this.handleChange.bind(this)} placeholder="Enter category name.." required/>
+                                                    <input type="text" id="locationType" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.locationType}  ref="locationType" name="locationType" onChange={this.handleChange.bind(this)} placeholder="Enter location type.." required/>
                                                 </div>
                                                 <br/>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
