@@ -121,11 +121,11 @@ export default class MyOrders extends Component {
       "rating": parseInt(rating),
       "customerReview": $('.feedbackForm textarea').val()
     }
-    // if(rating < 0 || rating == undefined){
-    //   this.setState({
-    //     reviewStarError: "Please give star rating."
-    //   })
-    // }else{
+    if(rating < 0 || rating == undefined){
+      this.setState({
+        reviewStarError: "Please give star rating."
+      })
+    }else{
       if (this.state.customerReview.length > 0) {
         axios.post("/api/customerReview/post", formValues)
         .then((response) => {
@@ -156,7 +156,7 @@ export default class MyOrders extends Component {
           reviewTextError: "Please Enter your feedback."
         })
       }
-    // }
+    }
   }
   returnProduct(event) {
     $('#returnProductModal').show();
@@ -340,6 +340,12 @@ export default class MyOrders extends Component {
     this.setState({
       [event.target.name]: event.target.value,
       reviewTextError : event.target.value ? "" : "Please Enter your feedback."
+    })
+  }
+  ratingReview(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+      reviewStarError : event.target.value ? "" : "Please give star rating."
     })
   }
   render() {
@@ -602,11 +608,11 @@ export default class MyOrders extends Component {
                           <form className="feedbackForm" id="">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                               <fieldset className="ratingReview stars givefeedback ">
-                                <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
-                                <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
-                                <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
-                                <input type="radio" id="star5" name="ratingReview" value="1" /><label htmlFor="star5"></label>
+                                <input type="radio" id="star1" name="ratingReview" onChange={this.ratingReview.bind(this)} value="5" /><label htmlFor="star1"></label>
+                                <input type="radio" id="star2" name="ratingReview" onChange={this.ratingReview.bind(this)} value="4" /><label htmlFor="star2"></label>
+                                <input type="radio" id="star3" name="ratingReview" onChange={this.ratingReview.bind(this)} value="3" /><label htmlFor="star3"></label>
+                                <input type="radio" id="star4" name="ratingReview" onChange={this.ratingReview.bind(this)} value="2" /><label htmlFor="star4"></label>
+                                <input type="radio" id="star5" name="ratingReview" onChange={this.ratingReview.bind(this)} value="1" /><label htmlFor="star5"></label>
                               </fieldset>
                               <div className="clearfix "></div>
                             </div>
