@@ -69,7 +69,7 @@ class CreateUser extends Component {
        break;
 
       case 'mobNumber' : 
-       formerrors.mobNumber = mobileRegex.test(value) && value.length>0 ? '' : "Please enter a valid Contact Number";
+       formerrors.mobNumber = mobileRegex.test(value) && value.length>0 ? '' : "Please enter a valid Mobile Number";
        break;
 
       case 'signupEmail' : 
