@@ -15,7 +15,7 @@ class DailyReport extends Component{
    
     this.state = {
       shown                 : true,
-       "twoLevelHeader"     : {
+       "twoLevelHeader"     : { 
         apply               : false,
       },
       "tableHeading"        : {
@@ -30,6 +30,7 @@ class DailyReport extends Component{
       "tableObjects"        : {
         apiLink             : '/api/annualPlans/',
         editUrl             : '/Plan/',
+        paginationApply     : true,
       },
       "startRange"          : 0,
       "limitRange"          : 10,
@@ -42,8 +43,9 @@ class DailyReport extends Component{
  
   getReport(event){
     event.preventDefault(); 
-    
+    this.setState({currentDate : event.currentTarget.value},()=>{
     this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val()); 
+    })
   }
        
   getData(startDate,startRange,limitRange,section,category, subcategory){
@@ -54,9 +56,14 @@ class DailyReport extends Component{
       "category"  : category,
       "subcategory" : subcategory
     }
-    console.log("formValues",formValues);
- 
-    axios.post("/api/orders/get/category-wise-report",formValues)
+    
+    this.setState({formValues : formValues},()=>{
+        this.getTableData(startRange,limitRange);
+    });
+  }
+  getTableData(startRange,limitRange){
+    
+    axios.post("/api/orders/get/category-wise-report/"+startRange+'/'+limitRange, this.state.formValues)
     .then((response)=>{
       this.setState({ 
         tableData : response.data
@@ -67,22 +74,22 @@ class DailyReport extends Component{
     })
   }
   getCount(){
-        axios.get('/api/orders/get/count')
-        .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+    axios.post("/api/orders/get/category-wise-report-count", this.state.formValues)
+    .then((response)=>{
+      this.setState({ 
+        dataCount : response.data.dataCount
+      })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    })
   }
   componentWillReceiveProps(nextProps){
     
   }
 
   componentDidMount() {
-    this.getCount();  
+     
     axios.get("/api/sections/get/list/")
     .then((response)=>{
       this.setState({ sections : response.data })
@@ -91,8 +98,19 @@ class DailyReport extends Component{
         console.log('error', error);
     })
     document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
+    
+    
     this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
-      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, null, null, null); 
+      var formValues={
+          "startTime" : this.state.currentDate,
+          "endTime"   : this.state.currentDate,
+          "section"   : null,
+          "category"  : null,
+          "subcategory" : null
+        }
+        this.setState({ formValues : formValues} ,()=>{ this.getCount();  });
+        
+        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange, null, null, null); 
     });
   }
 
@@ -237,7 +255,7 @@ class DailyReport extends Component{
                 twoLevelHeader={this.state.twoLevelHeader} 
                 dataCount={this.state.dataCount}
                 tableData={this.state.tableData}
-                getData={this.getData.bind(this)}
+                getData={this.getTableData.bind(this)}
                 tableObjects={this.state.tableObjects}
               />}
             </div>

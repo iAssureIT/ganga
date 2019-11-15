@@ -7,7 +7,7 @@ import axios                  from 'axios';
 
 export default class MonthlyReport extends Component{
 	constructor(props){
-        super(props);
+        super(props); 
         this.state = {
            "twoLevelHeader"     : {
             apply               : false,
@@ -24,6 +24,7 @@ export default class MonthlyReport extends Component{
           "tableObjects"        : {
             apiLink             : '/api/annualPlans/',
             editUrl             : '/Plan/',
+            paginationApply     : true,
           },
           "startRange"          : 0,
           "limitRange"          : 10,
@@ -40,9 +41,7 @@ export default class MonthlyReport extends Component{
     }
 
     componentDidMount(){
-        this.getCount();
         
-
         this.setState({
             selectedYearMonth : moment().format('Y')+'-'+moment().format('M'),
             startDate   : moment().startOf('month').format('YYYY-MM-DD'),
@@ -52,7 +51,8 @@ export default class MonthlyReport extends Component{
             console.log('month',this.state.selectedYearMonth);
             console.log('startDate',this.state.startDate);
             console.log('endDate',this.state.endDate);
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getCount();
+            this.getData(this.state.startRange, this.state.limitRange )    
         })  
         
     }
@@ -73,18 +73,27 @@ export default class MonthlyReport extends Component{
        });
     }
     getCount(){
-        axios.get('/api/orders/get/count')
+        var formvalues = {
+          startDate : this.state.startDate,
+          endDate   : this.state.endDate
+        }
+        axios.post("/api/orders/get/report-count", formvalues)
         .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
+          this.setState({ 
+            dataCount : response.data.dataCount
+          },()=>{ 
+          })
         })
         .catch((error)=>{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange){
-        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
+    getData(startRange,limitRange){
+        var formvalues = {
+          startDate : this.state.startDate,
+          endDate   : this.state.endDate
+        }
+        axios.post("/api/orders/get/report/"+startRange+'/'+limitRange, formvalues)
         .then((response)=>{
           this.setState({ 
             tableData : response.data
@@ -112,7 +121,7 @@ export default class MonthlyReport extends Component{
             endDate     : moment(startDate).endOf('month').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startRange, this.state.limitRange )    
         }) 
 	}
 
@@ -129,7 +138,7 @@ export default class MonthlyReport extends Component{
             console.log('month',this.state.selectedYearMonth);
             console.log('startDate',this.state.startDate);
             console.log('endDate',this.state.endDate);
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startRange, this.state.limitRange )    
         }) 
 	}
    

@@ -57,7 +57,6 @@ class Routes extends Component{
        
       componentDidMount(){
         var user_ID = localStorage.getItem("user_ID");
-        console.log('props',this.props);
         if (user_ID && user_ID !='') {
             this.setState({
             loggedIn : true

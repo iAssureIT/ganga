@@ -36,7 +36,8 @@ class Checkout extends Component {
             discountCode: false,
             comment: false,
             giftOption: false,
-            deliveryAddress: []
+            deliveryAddress: [],
+            pincodeExists:true
         }
         this.getCartData();
         this.getCompanyDetails();
@@ -267,6 +268,28 @@ class Checkout extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+    }
+    handlePincode(event){
+        event.preventDefault();
+        if (event.target.value != '') {
+            axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
+            .then((response) => {
+                
+                if ($("[name='pincode']").valid()) {
+                    if (response.data[0].Status == 'Success' ) {
+                        this.setState({pincodeExists : true})
+                    }else{
+                        this.setState({pincodeExists : false})
+                    }
+                }
+                
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+        }else{
+            this.setState({pincodeExists : true})
+        }
     }
     Removefromcart(event) {
         event.preventDefault();
@@ -612,7 +635,7 @@ class Checkout extends Component {
                 "mobileNumber": this.state.mobileNumber,
                 "addType": this.state.addType
             }
-            if ($('#checkout').valid()) {
+            if ($('#checkout').valid() && this.state.pincodeExists) {
                 $('.fullpageloader').show();
             axios.patch('/api/users/patch/address', addressValues)
                 .then((response) => {
@@ -642,7 +665,7 @@ class Checkout extends Component {
             }
         }
         // console.log('pls');
-        if ($('#checkout').valid()) {
+        if ($('#checkout').valid() && this.state.pincodeExists) {
             axios.patch('/api/carts/address', addressValues)
                 .then((response) => {
                 })
@@ -687,7 +710,7 @@ class Checkout extends Component {
                             var productId = cartProduct.productId;
                             var productIndex = cartProduct.indexInproducts;
                             var qty = cartProduct.quantity;
-                            console.log('qty', qty);
+
                             if (cartProduct.deductedAmtAftrCoupon) {
                                 discountPrice = cartProduct.deductedAmtAftrCoupon;
                             }
@@ -700,7 +723,6 @@ class Checkout extends Component {
                             index[i] = productIndex;
                             discountedProdPrice[i] = discountPrice;
                         }
-                        console.log('qtys', qtys);
                         // if(grandtotalValue){
                         var inputObject = {
                             "user_ID"               : userId,
@@ -717,13 +739,14 @@ class Checkout extends Component {
                             "paymentMethod"         : payMethod
                             // "couponUsed"         : cartItemsMove.couponUsed,
                         }
-
+                        $('.fullpageloader').show();
                         axios.post('/api/orders/post', inputObject)
                             .then((result) => {
                                 if (result) {
                                     axios.get('/api/orders/get/one/' + result.data.order_ID)
                                     .then((orderStatus) => {
                                         if (orderStatus) {
+                                            $('.fullpageloader').hide();
                                             var userId = orderStatus.userId;
                                             var orderNo = orderStatus.OrderId;
                                             var orderDbDate = orderStatus.createdAt;
@@ -735,7 +758,7 @@ class Checkout extends Component {
                                               messageData : {
                                                 "type" : "outpage",
                                                 "icon" : "fa fa-check-circle",
-                                                "message" : "&Order Placed Successfully ",
+                                                "message" : "Order Placed Successfully ",
                                                 "class": "success",
                                                 "autoDismiss" : true
                                               }
@@ -1005,8 +1028,9 @@ class Checkout extends Component {
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                                <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                            </div>
+                                                <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} onBlur={this.handlePincode.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                {this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
+                                            </div> 
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>

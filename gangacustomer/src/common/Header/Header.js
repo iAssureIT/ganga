@@ -30,7 +30,11 @@ constructor(props){
       cartProduct:[],
       localCategories : []
     }  
-
+    
+    if (window.location.pathname != "/searchProducts") {
+      localStorage.removeItem("catArray");
+      localStorage.removeItem("searchstr");
+    }
 }
 componentWillMount() {
       $(document).ready(function(e){

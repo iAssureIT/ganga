@@ -156,7 +156,6 @@ class Address extends Component {
         console.log('deliveryAddressID', deliveryAddressID);
         axios.get('/api/users/'+user_ID)
         .then((response)=>{
-            console.log('res', response.data);
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
             this.getStates(deliveryAddress[0].country);
             this.getDistrict(deliveryAddress[0].state,deliveryAddress[0].country)

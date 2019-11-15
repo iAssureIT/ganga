@@ -39,9 +39,11 @@ class ProductCollage extends Component {
       		//selector:{sectionID: this.props.match.params.sectionID, categoryID:'',subcategoryID:'',brands:[], size:'',color:'',price: { min: 10, max: 129999 } }
 	    };
 	    this.handlePriceChange = this.handlePriceChange.bind(this);  
+	    
   	}
 
   	componentDidMount() {
+
 		this.getWishData();
   		$('div[data-toggle="collapse"]').click(function () {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');

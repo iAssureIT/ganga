@@ -23,6 +23,7 @@ export default class WeeklyReport extends Component{
           "tableObjects"        : {
             apiLink             : '/api/annualPlans/',
             editUrl             : '/Plan/',
+            paginationApply     : true,
           },
           "startRange"          : 0,
           "limitRange"          : 10,
@@ -37,7 +38,7 @@ export default class WeeklyReport extends Component{
     }
 
     componentDidMount(){
-        this.getCount();  
+        
         
         this.setState({
             selectedWeekYear : moment().format('Y')+'-'+moment().format('w')+'W',
@@ -46,7 +47,8 @@ export default class WeeklyReport extends Component{
             endDate     : moment().year(moment().format('Y')).week(moment().format('W')).endOf('week').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getCount();  
+            this.getData(this.state.startRange, this.state.limitRange )    
         })
     }
     componentWillReceiveProps(nextProps){
@@ -57,18 +59,29 @@ export default class WeeklyReport extends Component{
         }
     }
     getCount(){
-        axios.get('/api/orders/get/count')
+        var formvalues = {
+          startDate : this.state.startDate,
+          endDate   : this.state.endDate
+        }
+
+        axios.post("/api/orders/get/report-count", formvalues)
         .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
+          this.setState({ 
+            dataCount : response.data.dataCount
+          },()=>{ 
+          })
         })
         .catch((error)=>{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange){
-        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
+    getData(startRange,limitRange){
+        var formvalues = {
+          startDate : this.state.startDate,
+          endDate   : this.state.endDate
+        }
+
+        axios.post("/api/orders/get/report/"+startRange+'/'+limitRange, formvalues)
         .then((response)=>{
           this.setState({ 
             tableData : response.data
@@ -93,7 +106,7 @@ export default class WeeklyReport extends Component{
             startDate       : startDate,
             endDate         : moment(startDate).add(1, "week").format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )   
+            this.getData(this.state.startRange, this.state.limitRange )   
         })
 	}
 
@@ -108,7 +121,7 @@ export default class WeeklyReport extends Component{
             startDate       : startDate,
             endDate         : moment(startDate).add(1, "week").format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )   
+            this.getData(this.state.startRange, this.state.limitRange )   
         })
     }
     
