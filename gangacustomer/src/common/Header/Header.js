@@ -27,7 +27,8 @@ constructor(props){
       hotProducts:[],
       categoryDetails: [],
       productCartData:[],
-      cartProduct:[]
+      cartProduct:[],
+      localCategories : []
     }  
 
 }
@@ -92,17 +93,37 @@ componentDidMount(){
               }
             );
 
+    var localcatArray = JSON.parse(localStorage.getItem("catArray"));  
+    var searchstr = localStorage.getItem("searchstr");  
+
+    if (localcatArray) {
+      this.setState({ localCategories : localcatArray })
+
+      var catArray = [];
+  
+      localcatArray.map((data,index)=>{
+        catArray.push({id:data.value,category:data.label,section_ID:data.section_ID});
+      })
+
+      this.setState({ catArray : catArray },()=>{
+        this.searchProducts();
+      });
+      
+    }
+    if (searchstr) {
+      $('.headersearch').val(searchstr);
+    }
+          
 }
 
 
 componentWillReceiveProps(nextProps){
       var categoryArray = [];
       var categoryDetails = [];
+
       this.setState({
         searchCriteria  : nextProps.searchCriteria
       },()=>{
-        $('.headersearch').val(this.state.searchCriteria.searchstr)
-
         {
           this.state.searchCriteria.catArray && this.state.searchCriteria.catArray.map((data,index)=>{
             $('option[value="'+data+'"]').attr('selected', 'selected');
@@ -110,21 +131,18 @@ componentWillReceiveProps(nextProps){
         }
       })
 
-      this.setState({
-        searchResult  : nextProps.searchResult
-      },()=>{
-        {
-          categoryArray = this.unique(this.state.searchResult,'category_ID');
+      // this.setState({
+      //   searchResult  : nextProps.searchResult
+      // },()=>{
+      //   {
+      //     categoryArray = this.unique(this.state.searchResult,'category_ID');
           
-          categoryArray.map((data,index)=>{
-            this.getCategoryDetails(data, categoryDetails); 
-          });
-          
-
-        }
-      })
-            
-      
+      //     categoryArray.map((data,index)=>{
+      //       this.getCategoryDetails(data, categoryDetails); 
+      //     });
+      //   }
+      // })
+              
 }
 
 unique(arr, prop) {
@@ -134,43 +152,63 @@ unique(arr, prop) {
 }
 
 
-getCategoryDetails(category_ID, categoryDetails){
-    axios.get("/api/category/get/one/"+category_ID)
-        .then((response)=>{ 
-            categoryDetails.push(response.data);
+// getCategoryDetails(category_ID, categoryDetails){
+//     axios.get("/api/category/get/one/"+category_ID)
+//         .then((response)=>{ 
+//             categoryDetails.push(response.data);
 
-            this.setState({categoryDetails: categoryDetails}, () =>{
-               this.props.getCategoryDetails(categoryDetails); 
-            });
+//             this.setState({categoryDetails: categoryDetails}, () =>{
+//                this.props.getCategoryDetails(categoryDetails); 
+//             });
             
             
-        })
-        .catch((error)=>{
-              console.log('error', error);
-        })
+//         })
+//         .catch((error)=>{
+//               console.log('error', error);
+//         })
 
         
-}
-handleChange(event){
-  var catArray = []
-  event.map((data,index)=>{
+// }
+handleChange(selectedOption){
+  var catArray = [];
+  
+  selectedOption.map((data,index)=>{
     catArray.push({id:data.value,category:data.label,section_ID:data.section_ID});
   })
 
+  localStorage.setItem("catArray",  JSON.stringify(selectedOption));
+
+  this.setState({ localCategories : selectedOption },
+      () => {
+    });
   this.setState({catArray : catArray});
 }
-
+handleString(event){
+  this.setState({
+    [event.target.name]: event.target.value
+  });
+  localStorage.setItem("searchstr", event.currentTarget.value);
+}  
 searchProducts(){
+  console.log('catArray',this.state.catArray);
     if (this.state.catArray.length > 0 ) {
-      console.log('catArray',this.state.catArray);
+      
       var searchstr = $('.headersearch').val()
       var formValues =  {
                       "searchstr" :  searchstr,  
-                      "catArray"  :  this.state.catArray
+                      "catArray"  :  this.state.catArray,
+                      "loading"   : true,
                     }
+
+      if (searchstr != '' ) {
+        localStorage.setItem("searchstr", searchstr);
+      }
+      this.props.searchProduct(formValues,this.state.searchResult);
+                    
       axios.post("/api/products/post/searchINCategory",formValues)
               .then((response)=>{
                 this.setState({searchResult : response.data},()=>{
+                  formValues.loading = false;
                   this.props.searchProduct(formValues,this.state.searchResult);  
                 });
               })
@@ -238,9 +276,6 @@ searchProducts(){
               console.log("useriddata-----------------------------------------",this.state.firstname,this.state.lastname);
 
             })
-
-
-     
         })
         .catch((error)=>{
           console.log("error = ",error);
@@ -260,9 +295,9 @@ searchProducts(){
  Removefromcart(event){
         event.preventDefault();
         const userid = localStorage.getItem('user_ID');
-         console.log("userid",userid);
+        console.log("userid",userid);
         const cartitemremoveid = event.target.getAttribute('removeid');
-         console.log("cartitemid",cartitemremoveid);
+        console.log("cartitemid",cartitemremoveid);
 
         const formValues = { 
               "user_ID"    : userid,
@@ -338,6 +373,9 @@ searchProducts(){
   }
   render() { 
     const user_ID = localStorage.getItem("user_ID");
+
+    console.log('localCategories',this.state.localCategories);
+
     return (
       <div className="homecontentwrapper">
       <div className="pagealertnone">
@@ -464,12 +502,17 @@ searchProducts(){
                             <div className="row">
                                 <div className="col-lg-3">
                                   <div className="row abc">
-                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" options={this.state.options} className={"customStyles"} onChange={this.handleChange.bind(this)}/>
+                                      <ReactMultiSelectCheckboxes placeholderButtonLabel="Shop by category" 
+                                      value={this.state.localCategories}
+                                      options={this.state.options} className={"customStyles"} 
+                                      onChange={this.handleChange.bind(this)}/>
                                   </div>   
                                 </div>   
                                 <div className="col-lg-7">
                                   <div className="row">
-                                      <input type="text" className="col-lg-12 headersearch" name="x" placeholder="Search by product name, category, brand..." />
+                                      <input type="text" className="col-lg-12 headersearch" 
+                                      onBlur={this.handleString.bind(this)} name="localstr" 
+                                      placeholder="Search by product name, category, brand..." />
                                   </div>   
                                 </div>   
                                 <div className="col-lg-2">
@@ -594,10 +637,10 @@ const mapDispachToProps = (dispach) =>{
       searchCriteria : searchCriteria,
       searchResult : searchResult
     }),
-    getCategoryDetails : (categoryDetails)=> dispach({
-      type:'GET_CATEGORY_DETAILS',
-      categoryDetails : categoryDetails
-    })
+    // getCategoryDetails : (categoryDetails)=> dispach({
+    //   type:'GET_CATEGORY_DETAILS',
+    //   categoryDetails : categoryDetails
+    // })
   }
 }
 export default connect(mapStateToProps, mapDispachToProps)(withRouter(Header));
