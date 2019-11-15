@@ -115,3 +115,19 @@
 .reviewDate{
 	font-size: 12px;
 }
+.activeStar::before{
+	color: #fbbb65 !important;
+}
+.reviewStarIcon{
+	overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+	color:#c7c7c7;
+	
+}
+.reviewStarIcon::before{
+	content: '★ ';
+    font-size:18px!important;
+}
