@@ -1112,7 +1112,7 @@ class Checkout extends Component {
                                         <div id="termsNconditions"></div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <button className="btn btn-warning col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-12 col-xs-12 placeOrder" onClick={this.placeOrder.bind(this)}>Place Order</button>
+                                        <button className="btn btn-warning col-lg-3 col-lg-offset-9 col-md-2 col-md-offset-10 col-sm-12 col-xs-12 placeOrder" onClick={this.placeOrder.bind(this)}>Place Order</button>
                                     </div>
                                 </div>
                             </div>

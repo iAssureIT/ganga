@@ -256,6 +256,8 @@ ul.box-static-link li span {
     left: -125px;
     border-radius: 0px;
     top:26px;
+    height: 250px;
+    overflow-y: scroll;
 }
 .cartdropborder{
 	border-top:1px solid #aaa;

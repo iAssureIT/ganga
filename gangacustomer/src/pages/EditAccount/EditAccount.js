@@ -228,15 +228,15 @@ class EditAccount extends Component{
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                             <form id="editAccount">
                                 <div className="row">
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <label className="mt15">First Name <i className="requiredsign">*</i></label><br />
                                         <div id="firstName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <input maxLength="25" type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required/>
+                                            <input maxLength="25" type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" required/>
                                         </div>
                                         <br />
                                         <label className="mt15">Last Name <i className="requiredsign">*</i></label><br />
                                         <div id="lastName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <input maxLength="25" type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" required />
+                                            <input maxLength="25" type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" required />
                                         </div>
                                         {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changeEmail" checked={this.state.changeEmail} onChange={this.changeEmail.bind(this)}/> &nbsp; <span>Change Email</span>
@@ -299,8 +299,8 @@ class EditAccount extends Component{
                                             null
                                         }
                                         
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                            <button className="btn btn-warning editAccount" onClick={this.updateUser.bind(this)}>Save</button>
+                                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 NOpaddingLeft">
+                                            <button className="btn btn-warning editAccount col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save</button>
                                         </div>
                                     </div>
                                 </div>

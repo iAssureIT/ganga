@@ -419,15 +419,15 @@ class Address extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                        <select ref="modalcountry" name="modalcountry" id="modalcountry" value={this.state.modalcountry} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" onChange={this.handleChangeCountry.bind(this)}>
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding validationError">Country <span className="required">*</span></label>
+                                        <select ref="modalcountry" name="modalcountry" id="modalcountry" value={this.state.modalcountry} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError" onChange={this.handleChangeCountry.bind(this)}>
                                             <option value="Select Country">Select Country</option>
                                             <option value="IN">India</option>
                                         </select>
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                        <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required validationError">*</span></label>
+                                        <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError">
                                             <option value="Select State">Select State</option>
                                             {
                                                 this.state.stateArray && this.state.stateArray.length > 0 ?
@@ -443,8 +443,8 @@ class Address extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
-                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">District <span className="required">*</span></label>
-                                        <select ref="modaldistrict" name="modaldistrict" id="modaldistrict" value={this.state.modaldistrict} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding validationError">District <span className="required">*</span></label>
+                                        <select ref="modaldistrict" name="modaldistrict" id="modaldistrict" value={this.state.modaldistrict} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError">
                                         <option value="Select District">Select District</option>
                                             {  
                                                 this.state.districtArray && this.state.districtArray.length > 0 ?

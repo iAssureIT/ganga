@@ -38,7 +38,7 @@ class OrderPlaced extends Component{
             <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 mt25 mb25">
                 <p>Your order number is: {this.state.orderDetails.orderID}</p>
                 <p>We'll email you an order confirmation with details and tracking info</p>
-                <a href="/" className="btn btn-warning cs">Continue Shopping</a>
+                <a href="/" className="btn btn-warning cs CSBTn">Continue Shopping</a>
             </div>
         )
     }

@@ -5,6 +5,7 @@
 }
 .accountBox{
     border: 1px solid #dedede;
+    height: 200px;
 }
 .accountBox div{
     overflow-wrap: break-word;

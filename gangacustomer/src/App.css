@@ -139,3 +139,12 @@ a:hover{
 
   word-break: break-all;
 }
+.mt45{
+  margin-top: 45px;
+}
+.validationError{
+  color:#333 !important;
+}
+.CSBTn:hover{
+  color:#fff !important;
+}
