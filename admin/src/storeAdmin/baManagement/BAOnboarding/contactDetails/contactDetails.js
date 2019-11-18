@@ -57,12 +57,12 @@ class ContactDetails extends Component {
       rules: {
         
         MobileNo: {
-           regxA1:/^(\+\d{1,3}[- ]?)?\d{10}$/,
+           regxA1:/^([7-9][0-9]{9})$/,
            required: true,
         },
         Email: {
-          regxA2:/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
-            required: true,
+          //regxA2:/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
+          required: true,
         },
         Name: {
           required: true,
@@ -70,32 +70,24 @@ class ContactDetails extends Component {
         // Reportinmanager: {
         //   required: true,
         // },
-        altMobileNo: {
-          notEqual: $('input[name="Phones"]').val(),
-        //   regxA1:/^[0-9+]{10}*$/,          
-          required: false,
-        },
-        Landings: {
-        //   regxA3:/^[0-9+]{11}*$/,    
-          maxlength: 13,
-          required: false,
-        },
+        // altMobileNo: {
+        //   notEqual: $('input[name="Phones"]').val(),
+        // //   regxA1:/^[0-9+]{10}*$/,          
+        //   required: false,
+        // },
+        // Landings: {
+        // //   regxA3:/^[0-9+]{11}*$/,    
+        //   maxlength: 13,
+        //   required: false,
+        // },
       },
       errorPlacement: function(error, element) {
-          if (element.attr("name") == "Location"){
-            error.insertAfter("#headoffice");
-          }
-          if (element.attr("name") == "Designation"){
-            error.insertAfter("#Designations");
-          }
-          if (element.attr("name") == "ContactLevel"){
-            error.insertAfter("#ContactLevel");
-          }
+          
           if (element.attr("name") == "MobileNo"){
             error.insertAfter("#MobileNo");
           }
           if (element.attr("name") == "Email"){
-            error.insertAfter("#Emails");
+            error.insertAfter("#Email");
           }
           if (element.attr("name") == "Name"){
             error.insertAfter("#Name");
@@ -103,12 +95,12 @@ class ContactDetails extends Component {
           // if (element.attr("name") == "Reportinmanager"){
           //   error.insertAfter("#Reportinmanagers");
           // }
-          if (element.attr("name") == "altMobileNo"){
-            error.insertAfter("#altMobileNo");
-          }
-          if (element.attr("name") == "Landing"){
-            error.insertAfter("#Landings");
-          }
+          // if (element.attr("name") == "altMobileNo"){
+          //   error.insertAfter("#altMobileNo");
+          // }
+          // if (element.attr("name") == "Landing"){
+          //   error.insertAfter("#Landings");
+          // }
         }
     });
     $(document).ready(function(){

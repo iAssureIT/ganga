@@ -28,7 +28,7 @@ export default class LocationDetails extends Component{
         'districtArray'    : [],
         'blocksArray'      : [],
         'areaArray'        : [],
-        'locationInfoAdded': 0,
+        'locationInfoAdded': 1,
         'locationId'       : ''
         // 'attachedDocuments'  : '',
       };

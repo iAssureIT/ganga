@@ -28,7 +28,7 @@ class BasicInfo extends Component {
       'logoUrl'             : '',
       'docsUrl'          : [],
       'edit'             : props.routerId ? true : false,
-      'basicInfoAdded'   : 0,
+      'basicInfoAdded'   : 1,
       'locationInfoAdded': 0,
       'baId'             : '',
       'updateBasic'      : 0,
@@ -131,15 +131,6 @@ class BasicInfo extends Component {
       return regexpr.test(value);
     }, "Please enter the valid GST number.");
 
-  
-    $.validator.addMethod("regxA7", function(value, element, regexpr) {          
-      // // console.log('value: ',value + element);          
-      return regexpr.test(value);
-    }, "Please enter the valid COI No.");
-    // $.validator.addMethod("regxA8", function(value, element, regexpr) {          
-    //   // // console.log('value: ',value + element);          
-    //   return regexpr.test(value);
-    // }, "Please enter the valid MFG Pro.");
           
     $.validator.setDefaults({
       debug: true,
