@@ -21,8 +21,6 @@ class BasicInfo extends Component {
       'tin'              : '',
       'website'          : '',
       'gstno'            : '',
-      'category'         : '-- Select --',
-      'coino'            : '',
       'mfg'              : '',
       'Evaluation'       : '',
       'score'            : '',
@@ -41,6 +39,7 @@ class BasicInfo extends Component {
     };
     
       this.handleChange = this.handleChange.bind(this);
+      this.checkBAExists = this.checkBAExists.bind(this);
       this.keyPress = this.keyPress.bind(this);
       this.handleOptionChange = this.handleOptionChange.bind(this);
       this.supplier = this.supplier.bind(this);
@@ -107,26 +106,32 @@ class BasicInfo extends Component {
     //     $("#upload-file").click();
     // });​
     window.scrollTo(0, 0);
+
+    $.validator.addMethod("regxmobileNumber", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Please enter valid mobile number.");
+
     $.validator.addMethod("regxA1", function(value, element, regexpr) {          
       return regexpr.test(value);
     }, "Name should only contain letters & number.");
-    // $.validator.addMethod("regxA2", function(value, element, regexpr) {          
-    //   return regexpr.test(value);
-    // }, "Please enter a valid PAN Number.");
-    $.validator.addMethod("regxA3", function(value, element, regexpr) {          
+
+    $.validator.addMethod("regxA2", function(value, element, regexpr) {          
       return regexpr.test(value);
-    }, "Please enter a valid TIN Number.");
+    }, "Please enter a valid PAN Number.");
+
     $.validator.addMethod("regxA4", function(value, element, regexpr) {          
       return regexpr.test(value);
     }, "It should be www.abcd.com");
-    // $.validator.addMethod("regxA5", function(value, element, regexpr) {          
-    //   return regexpr.test(value);
-    // }, "Please enter the valid GST number.");
 
-    $.validator.addMethod("regxA6", function(value, element, regexpr) {          
-      // // console.log('value: ',value + element);          
+    $.validator.addMethod("regxA3", function(value, element, regexpr) {          
       return regexpr.test(value);
-    }, "Please select category.");
+    }, "Please enter a valid TIN Number.");
+
+    $.validator.addMethod("regxA5", function(value, element, regexpr) {          
+      return regexpr.test(value);
+    }, "Please enter the valid GST number.");
+
+  
     $.validator.addMethod("regxA7", function(value, element, regexpr) {          
       // // console.log('value: ',value + element);          
       return regexpr.test(value);
@@ -146,37 +151,26 @@ class BasicInfo extends Component {
           required: true,
           // regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
         },
-        // pan: {
-        //   required: true,
-        //   regxA2: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        // },
+        emailID: {
+          required: true,
+          // regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
+        },
+        MobileNo: {
+          required: true,
+          regxmobileNumber: /^([7-9][0-9]{9})$/,
+        },
         website: {
           required: true,
           regxA4: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/,
         },
-        // gstno: {
-        //   required: true,
-        //   regxA5: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
-        // },
-        category: {
+        pan: {
           required: true,
-          // regxA1: /^[A-za-z']+( [A-Za-z']+)*$|^$/,
+          regxA2: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
         },
-        coino: {
-          required: false,
-          // regxA6: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        },
-        // mfg: {
-        //   required: false,
-        //   regxA8: /^[0-9]{2}[A-Za-z]{2}[0-9]{7}$/,
-
-        //   // regxA7: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        // },
-        // LogoImageUp:{
-        //   required: true,
-
-        // }
-
+        gstno: {
+          required: true,
+          regxA5: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+        }
       },
         errorPlacement: function(error, element) {
               if (element.attr("name") == "companyname"){
@@ -188,6 +182,10 @@ class BasicInfo extends Component {
               if (element.attr("name") == "MobileNo"){
                 error.insertAfter("#basicInfo3");
               }
+              if (element.attr("name") == "website"){
+                error.insertAfter("#basicInfo4");
+              }
+              
               if (element.attr("name") == "pan"){
                 error.insertAfter("#basicInfo5");
               }
@@ -220,10 +218,13 @@ class BasicInfo extends Component {
       this.setState({
           [name]: event.target.value
       });  
+      if (name=='emailID') {
+        this.checkBAExists(event.target.value)
+      }
   }
-  checkBAExists(event){
-    if (event.target.value != '' ) {
-      axios.get('/api/businessassociates/get/checkBAExists/'+event.target.value)
+  checkBAExists(email){
+    if (email != '' ) {
+      axios.get('/api/businessassociates/get/checkBAExists/'+email)
              .then((response)=>{
                   if (response.data.length>0 ) {
                     $(".checkBAExistsError").show();
@@ -266,7 +267,7 @@ class BasicInfo extends Component {
           }
           
 
-          var attachedDocuments = this.state.attachedDocuments;
+         var attachedDocuments = this.state.attachedDocuments;
           // if documents attached
           if (attachedDocuments.length>0) {
               main().then(docsUrl=>{
@@ -340,7 +341,7 @@ class BasicInfo extends Component {
                         'logo'             : this.state.logoUrl
                     }
               this.insertBA(userForm, formValues);
-          } 
+          }
       }
       else{
         // $('.inputText').addClass('addclas');
@@ -493,24 +494,7 @@ class BasicInfo extends Component {
       
   }
 
-  keyPressWeb = (e) => {
-    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13 ,190,110]) !== -1 ||
-           // Allow: Ctrl+A, Command+A
-          (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 86 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 190 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 110 && (e.ctrlKey === true || e.metaKey === true))||
-           // Allow: home, end, left, right, down, up
-          (e.keyCode >= 35 && e.keyCode <= 40) || e.keyCode===189  || e.keyCode===32) {
-               // let it happen, don't do anything
-               return;
-      }
-      // Ensure that it is a number and stop the keypress
-      if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 90) ) && (e.keyCode < 96 || e.keyCode > 105  )) {
-          e.preventDefault();
-      }
-  }
+ 
     /*======== alphanumeric  =========*/
   keyPress = (e) => {
     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
@@ -653,8 +637,6 @@ class BasicInfo extends Component {
         tin                           : nextProps.post5.tin,         
         website                       : nextProps.post5.website,         
         gstno                         : nextProps.post5.gstno,         
-        category                      : nextProps.post5.category,                  
-        coino                         : nextProps.post5.coino,         
         mfg                           : nextProps.post5.mfg,         
         score                         : nextProps.post5.score,         
         Evaluation                    : nextProps.post5.Evaluation,         
@@ -739,7 +721,7 @@ class BasicInfo extends Component {
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email Id <i className="astrick">*</i>
                                              <a title="Please enter valid Email Id" className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
-                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange} onBlur={this.checkBAExists.bind(this)}  required/>
+                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange}  required/>
                                             <p className="checkBAExistsError">Business Associate already exists!</p>
                                           </div>
                                           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
@@ -749,7 +731,7 @@ class BasicInfo extends Component {
                                             <input type="text" id="basicInfo3" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
                                           </div>
                                           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website  <i className="astrick">*</i>
                                              <a title="Please enter valid Website(www.abc.xyz)." className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
                                             <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.website} ref="website" name="website" onChange={this.handleChange} />

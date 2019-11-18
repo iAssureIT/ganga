@@ -19,6 +19,7 @@ export default class LocationDetails extends Component{
         'area'             : '-- Select --',
         'addressLinetwo'   : '',
         'pincode'          : '',
+         pincodeExists     : true,
         'country'          : '-- Select --',
         'indexOneValue'    : '',
         'uderscoreId'    : '',
@@ -32,6 +33,7 @@ export default class LocationDetails extends Component{
         // 'attachedDocuments'  : '',
       };
       this.handleChange = this.handleChange.bind(this);
+      this.handlePincode = this.handlePincode.bind(this);
       this.handleChangeCountry = this.handleChangeCountry.bind(this);
       this.handleChangeState = this.handleChangeState.bind(this);
       this.handleChangeDistrict = this.handleChangeDistrict.bind(this);
@@ -54,43 +56,33 @@ export default class LocationDetails extends Component{
       //this.locationDetails();
       // -------------- validation ------------ //
       //    if(this.props.typeOption == 'Local'){
-        $.validator.addMethod("regxAlphaNum", function(value, element, regexpr) {          
+      $.validator.addMethod("regexAddressLine", function(value, element, regexpr) {          
         return regexpr.test(value);
-      }, "Name should only contain letters.");
+      }, "Please enter valid address");
 
-      $("#LocationsDetail").validate({
-        rules: {
-          
-          area: {
-            required: true,
-            regxAlphaNum: /^[a-zA-Z/\s,.'-/]*$|^$/,
-          },       
-        },
-      })
-    //  jQuery.validator.setDefaults({
-    //    debug: true,
-    //    success: "valid"
-    //  });
+      $.validator.addMethod("regxpincode", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid pincode");
+    
        $("#LocationsDetail").validate({
        rules: {
          
          addressLineone: {
            required: true,
+           regexAddressLine : /^[A-Za-z0-9_@./#&+-]/,
          },
          country: {
            required: true,
          },
-         // states: {
-         //   required: true,
-         // },
-         // city: {
-         //   required: true,
-         // },
-         // area: {
-         //   required: true,
-         // },
+         states: {
+           required: true,
+         },
+         district: {
+           required: true,
+         },
          pincode: {
            required: true,
+           regxpincode : /^[1-9][0-9]{5}$/,
          },
        },
        errorPlacement: function(error, element) {
@@ -106,15 +98,13 @@ export default class LocationDetails extends Component{
            if (element.attr("name") == "country"){
              error.insertAfter("#datacountry");
            }
-           // if (element.attr("name") == "states"){
-           //   error.insertAfter("#Statedata");
-           // }
-           // if (element.attr("name") == "city"){
-           //   error.insertAfter("#Citydata");
-           // }
-           // if (element.attr("name") == "area"){
-           //   error.insertAfter("#Areadata");
-           // }
+           if (element.attr("name") == "states"){
+             error.insertAfter("#Statedata");
+           }
+           if (element.attr("name") == "district"){
+             error.insertAfter("#Citydata");
+           }
+           
            if (element.attr("name") == "pincode"){
              error.insertAfter("#Pincodedata");
            }
@@ -157,6 +147,9 @@ export default class LocationDetails extends Component{
                 [name]: ''
             }); 
           }
+        }
+        if (name=="pincode") {
+          this.handlePincode(event.target.value);
         }
     }
 
@@ -254,7 +247,7 @@ export default class LocationDetails extends Component{
     event.preventDefault();
     var baId = this.props.baId;
     
-    if($('#LocationsDetail').valid()){
+    if($('#LocationsDetail').valid() && this.state.pincodeExists ){
       console.log(this.props.BAInfo);
       var formValues = {
                 'baID'            : baId,
@@ -347,107 +340,9 @@ export default class LocationDetails extends Component{
         })
       }
       if(props.typeOption == 'Local'){
-        $.validator.addMethod("regxA1", function(value, element, regexpr) {          
-        return regexpr.test(value);
-      }, "Name should only contain letters & number.");
-      $.validator.addMethod("regxAlphaNum", function(value, element, regexpr) {          
-            return regexpr.test(value);
-        }, "Please enter alphabets and numbers only.");
-
-      /*jQuery.validator.setDefaults({
-        debug: true,
-        success: "valid"
-      });*/
-        $("#LocationsDetail").validate({
-      rules: {
-        locationType: {
-          required: true,
-        },
-        addressLineone: {
-          required: true,
-        },
-        country: {
-          required: true,
-        },
-        states: {
-          required: true,
-        },
-        city: {
-          required: true,
-        },
-        area: {
-          required: true,
-          regxAlphaNum: /^[a-zA-Z0-9/\s,.'-/]*$|^$/,
-        },
-        pincode: {
-          required: true,
-        },
-      },
-      errorPlacement: function(error, element) {
-          if (element.attr("name") == "locationType"){
-            error.insertAfter("#Incoterms");
-          }
-          if (element.attr("name") == "addressLineone"){
-            error.insertAfter("#Line1");
-          }
-          if (element.attr("name") == "addressLinetwo"){
-            error.insertAfter("#Line2");
-          }
-          if (element.attr("name") == "country"){
-            error.insertAfter("#datacountry");
-          }
-          if (element.attr("name") == "states"){
-            error.insertAfter("#Statedata");
-          }
-          if (element.attr("name") == "city"){
-            error.insertAfter("#city");
-          }
-          if (element.attr("name") == "area"){
-            error.insertAfter("#area");
-          }
-          if (element.attr("name") == "pincode"){
-            error.insertAfter("#Pincodedata");
-          }
-        }
-      });
+      
       }else{
-        $.validator.addMethod("regxA1", function(value, element, regexpr) {          
-        return regexpr.test(value);
-      }, "Name should only contain letters & number.");
-
-      /*jQuery.validator.setDefaults({
-        debug: true,
-        success: "valid"
-      });*/
-        $("#LocationsDetail").validate({
-      rules: {
-        locationType: {
-          required: true,
-        },
-        addressLineone: {
-          required: true,
-        },
-        country: {
-          required: true,
-        },
-        
-      },
-      errorPlacement: function(error, element) {
-          if (element.attr("name") == "locationType"){
-            error.insertAfter("#Incoterms");
-          }
-          if (element.attr("name") == "addressLineone"){
-            error.insertAfter("#Line1");
-          }
-          if (element.attr("name") == "addressLinetwo"){
-            error.insertAfter("#Line2");
-          }
-          if (element.attr("name") == "country"){
-            error.insertAfter("#datacountry");
-          }
-          
-        }
-      });
+       
       }
       this.handleChange = this.handleChange.bind(this);  
     }
@@ -577,6 +472,31 @@ export default class LocationDetails extends Component{
   admin(event){
       event.preventDefault();
       //FlowRouter.go('/adminDashboard');  
+  }
+  handlePincode(pincode){
+        //event.preventDefault();
+        if (pincode != '') {
+            axios.get("https://api.postalpincode.in/pincode/" + pincode)
+            .then((response) => {
+                
+                if ($("[name='pincode']").valid()) {
+
+                    if (response.data[0].Status == 'Success' ) {
+                        this.setState({pincodeExists : true})
+                    }else{
+                        this.setState({pincodeExists : false})
+                    }
+                }else{
+                  this.setState({pincodeExists : true})
+                }
+                
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+        }else{
+            this.setState({pincodeExists : true})
+        }
     }
   render() {
     
@@ -777,7 +697,7 @@ export default class LocationDetails extends Component{
                                     </select>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">City <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">City {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null }
                                   </label>
                                     <select id="Blocksdata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
                                      ref="block" name="block" onChange={this.handleChangeBlock} >
@@ -794,8 +714,7 @@ export default class LocationDetails extends Component{
                                     </select>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area <sup className="astrick">*</sup>
-                                  </label>
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area                                   </label>
                                     <select id="Areasdata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
                                      ref="area" name="area" onChange={this.handleChange} >
                                       <option selected="true" disabled="true">-- Select --</option>
@@ -814,6 +733,7 @@ export default class LocationDetails extends Component{
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null } 
                                   </label>
                                   <input type="text" id="Pincodedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode}  ref="pincode" name="pincode" onChange={this.handleChange} required/>
+                                  {this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
                                 </div>
                                 </div>
                                 <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7  inputFields">
