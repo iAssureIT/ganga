@@ -31,6 +31,7 @@
 .inputFields{
   height: 85px;
 }
+button:focus { outline: none !important ; }
 
 
 @keyframes App-logo-spin {

@@ -97,6 +97,7 @@
     font-size: 13px;
     line-height: 30px;
     margin-top: 20px;
+    word-break: break-all;
 }
 .summaryTable>tbody>tr>td {
     /*white-space: nowrap;*/
