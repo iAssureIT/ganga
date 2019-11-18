@@ -256,8 +256,14 @@ ul.box-static-link li span {
     left: -125px;
     border-radius: 0px;
     top:26px;
-    height: 250px;
-    overflow-y: scroll;
+    height: 400px;
+    /* overflow-y: scroll; */
+}
+.dropScroll{
+  width: 400px!important;
+  position: relative;
+  height: 285px;
+  overflow-y: scroll;
 }
 .cartdropborder{
 	border-top:1px solid #aaa;
@@ -266,9 +272,13 @@ ul.box-static-link li span {
 
 .cartdropbtn{
 	border-radius: 20px;
-	font-size: 18px;
+	font-size: 15px;
+	font-weight: 700;
+	color:#fff;
+	border:1px solid #FBBB65;
+	/* padding: 10px; */
+	margin-top: 10px;
 	margin-bottom: 10px;
-	padding: 8px;
 	cursor: pointer;
 }
 .cartdropbtn2{
@@ -277,9 +287,9 @@ ul.box-static-link li span {
 	font-weight: 700;
 	color: #FBBB65;
 	border:1px solid #FBBB65;
-	padding: 10px;
+	/* padding: 10px; */
 	margin-top: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	cursor: pointer;
 }
 .cartdropbtn2:hover{

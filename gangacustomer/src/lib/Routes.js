@@ -73,12 +73,12 @@ class Routes extends Component{
         const WebLayout = () => (
           <div className="skin-blue fixed sidebar-mini">    
             <Route path="/" exact strict component={ HomePage } /> 
-            <Route path="/login"                    exact strict component={ Login } />
-            <Route path="/signup"                   exact strict component={ SignUp } />
-            <Route path="/forgotpassword"           exact strict component={ ForgotPassword } />
-            <Route path="/resetpassword/:user_ID"   exact strict component={ ResetPassword } />
+            <Route path="/login"                    exact strict component={ HomePage } />
+            <Route path="/signup"                   exact strict component={ HomePage } />
+            <Route path="/forgotpassword"           exact strict component={ HomePage } />
+            <Route path="/resetpassword/:user_ID"   exact strict component={ HomePage } /> 
             <Route path="/verify-account"           exact strict component={ VerifyAccount } />
-            <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
+            <Route path="/confirm-otp/:user_ID"     exact strict component={ HomePage } /> 
             <Route path="/cart"                     exact strict component={ Cart } />
             <Route path="/checkout"                 exact strict component={ Checkout } />
             <Route path="/my-orders"                exact strict component={ MyOrders } />

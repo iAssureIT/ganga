@@ -6,6 +6,7 @@ import SmallBanner from '../../blocks/SmallBanner/SmallBanner.js';
 import './Productreview.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import Message from '../../blocks/Message/Message.js';
+import _                      from 'underscore';
 import moment from "moment";
 import swal from 'sweetalert';
 
@@ -128,61 +129,21 @@ class Productreview extends Component {
                                   </div>
                                   <b><div className="col-lg-11 col-md-11 col-sm-11 col-xs-11">{data.productDetails[0].productName}</div></b>
                                   <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 ">
-                                    {
-                                      data.rating == 5 ?
-                                        <fieldset className="ratingReview stars givefeedback " disabled>
-                                          <input type="radio" id="star1" name="ratingReview5" value="5" checked /><label htmlFor="star1"></label>
-                                          <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
-                                          <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                          <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
-                                          <input type="radio" id="star5" name="ratingReview" value="1" /><label htmlFor="star5"></label>
-                                        </fieldset>
-                                        :
-                                        data.rating == 4 ?
-                                          <fieldset className="ratingReview stars givefeedback " disabled>
-                                            <input type="radio" id="star1" name="ratingReview4" value="5" /><label htmlFor="star1"></label>
-                                            <input type="radio" id="star2" name="ratingReview4" value="4" checked /><label htmlFor="star2"></label>
-                                            <input type="radio" id="star3" name="ratingReview4" value="3" /><label htmlFor="star3"></label>
-                                            <input type="radio" id="star4" name="ratingReview4" value="2" /><label htmlFor="star4"></label>
-                                            <input type="radio" id="star5" name="ratingReview4" value="1" /><label htmlFor="star5"></label>
-                                          </fieldset>
-                                          :
-                                          data.rating == 3 ?
-                                            <fieldset className="ratingReview stars givefeedback " disabled>
-                                              <input type="radio" id="star1" name="ratingReview3" value="5" /><label htmlFor="star1"></label>
-                                              <input type="radio" id="star2" name="ratingReview3" value="4" /><label htmlFor="star2"></label>
-                                              <input type="radio" id="star3" name="ratingReview3" value="3" checked /><label htmlFor="star3"></label>
-                                              <input type="radio" id="star4" name="ratingReview3" value="2" /><label htmlFor="star4"></label>
-                                              <input type="radio" id="star5" name="ratingReview3" value="1" /><label htmlFor="star5"></label>
-                                            </fieldset>
-                                            :
-                                            data.rating == 2 ?
-                                              <fieldset className="ratingReview stars givefeedback " disabled>
-                                                <input type="radio" id="star1" name="ratingReview2" value="5" /><label htmlFor="star1"></label>
-                                                <input type="radio" id="star2" name="ratingReview2" value="4" /><label htmlFor="star2"></label>
-                                                <input type="radio" id="star3" name="ratingReview2" value="3" /><label htmlFor="star3"></label>
-                                                <input type="radio" id="star4" name="ratingReview2" value="2" checked /><label htmlFor="star4"></label>
-                                                <input type="radio" id="star5" name="ratingReview2" value="1" /><label htmlFor="star5"></label>
-                                              </fieldset>
-                                              :
-                                              data.rating == 1 ?
-                                                <fieldset className="ratingReview stars givefeedback " disabled>
-                                                  <input type="radio" id="star1" name="ratingReview1" value="5" /><label htmlFor="star1"></label>
-                                                  <input type="radio" id="star2" name="ratingReview1" value="4" /><label htmlFor="star2"></label>
-                                                  <input type="radio" id="star3" name="ratingReview1" value="3" /><label htmlFor="star3"></label>
-                                                  <input type="radio" id="star4" name="ratingReview1" value="2" /><label htmlFor="star4"></label>
-                                                  <input type="radio" id="star5" name="ratingReview1" value="1" checked /><label htmlFor="star5"></label>
-                                                </fieldset>
-                                                :
-                                                <fieldset className="ratingReview stars givefeedback " disabled>
-                                                  <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
-                                                  <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
-                                                  <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                                  <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
-                                                  <input type="radio" id="star5" name="ratingReview" value="1" /><label htmlFor="star5"></label>
-                                                </fieldset>
-
-                                    }
+                                  {
+                                    data.rating ?
+                                      _.times(5, (i) => {
+                                        console.log(i,'i');
+                                        if(i < data.rating){
+                                          return <label className="reviewStarIcon activeStar"></label>;
+                                        }else{
+                                          return <label className="reviewStarIcon"></label>;
+                                        }
+                                      })
+                                    :
+                                    _.times(5, (i) => {
+                                      return <label className="reviewStarIcon"></label>;
+                                    })
+                                  }
 
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textAlignLeft">

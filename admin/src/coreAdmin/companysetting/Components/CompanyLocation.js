@@ -156,7 +156,7 @@ class CompanyLocation extends Component{
     .then( (response)=> {
       // handle success
       console.log(response);
-      swal("Location Added Successfully", "", "success");
+      swal("Location Added Successfully");
 
       this.setState({
         companyLocation         :"",
@@ -180,7 +180,7 @@ class CompanyLocation extends Component{
       // always executed
     });
   }else{
-    swal("Please enter mandatory fields", "", "warning");
+    swal("Please enter mandatory fields");
     console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }
 }

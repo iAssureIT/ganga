@@ -268,7 +268,7 @@ class AnnualPlan extends Component{
       .then(function(response){
         swal({
           title : response.data.message,
-          text  : response.data.message
+          // text  : response.data.message
         });
         this.getData(this.state.startRange, this.state.limitRange);
         
