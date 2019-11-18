@@ -159,14 +159,22 @@ class HomePage extends Component {
             {
               this.state.exclusiveprloading ?  
               <Loader type="carouselloader" productLoaderNo = {4}/>      
-              :
-              <EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+              : 
+              (this.state.exclusiveProducts.length > 0 ? 
+                <EcommerceProductCarousel title={'FLASH SALE'} newProducts={this.state.exclusiveProducts} type={'exclusive'} categories={this.state.categories} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+                :
+                null
+              )
             }
             {
               this.state.bestsellerloading ?  
               <Loader type="carouselloader" productLoaderNo = {4}/>      
               :
-              <Ecommercenewproductcaro   title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+              ( this.state.bestSellerProducts.length  > 0 ? 
+                <Ecommercenewproductcaro   title={'BEST SELLERS'} newProducts={this.state.bestSellerProducts} type={'bestSeller'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+                :
+                null
+                )
             }
 
 						<ProductDivider categories={this.state.categories} />
@@ -175,14 +183,20 @@ class HomePage extends Component {
               this.state.newproductloading ?  
               <Loader type="carouselloader" productLoaderNo = {4}/>      
               :
-              <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+              (this.state.newProducts.length >0 ? 
+              <Ecommercenewproductcaro title={'NEW PRODUCTS'} newProducts={this.state.newProducts} type={'newProducts'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>                
+              :
+              null )
             }
             
             {
               this.state.featuredproductsloading ?  
               <Loader type="carouselloader" productLoaderNo = {4}/>      
               :
-              <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+              (this.state.featuredProducts.length > 0 ? 
+                <Ecommercenewproductcaro  title={'FEATURE PRODUCTS'} newProducts={this.state.featuredProducts} type={'featured'} getWishData={this.getWishData.bind(this)} wishList={this.state.wishList} categories={this.state.categories} changeProductCateWise={this.changeProductCateWise.bind(this)}/>
+                : null
+              )
             }
             <SaleProductDivider />
           </div>

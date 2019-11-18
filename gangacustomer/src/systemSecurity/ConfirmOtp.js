@@ -127,8 +127,8 @@ class ConfirmOtp extends Component {
                   </div>
                   {
                     this.state.showMessage == false ? 
-                    <div>
-                      <p>We send you a Verification Code to your registered email <br/></p>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <p>We send you a Verification Code to your registered email </p>
                       <form id="OTPMobMail">
                         <div className="">
                           <div className="">
@@ -157,7 +157,7 @@ class ConfirmOtp extends Component {
                       </form>
                     </div>
                     :
-                    <div>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       <p className="textAlignCenter">Your Account is verified successfully! Please Sign In to access your account.<br/></p>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                         <a href="/login" className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 button3  btn btn-warning  signupbtn">Sign In</a>

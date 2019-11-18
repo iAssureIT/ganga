@@ -596,12 +596,15 @@ componentWillMount() {
                             <div className=" col-lg-6">
                               <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW CART">VIEW CART</div></a>
                             </div>
+                            {
+                              this.props.cartData.length > 0 ?  
+                              <div className=" col-lg-6">
+                                <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12 checkoutBtn" title="Checkout">Checkout</div></a>
+                              </div>
+                              : null
+                            }
 
-
-                            <div className=" col-lg-6">
-
-                              <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12 checkoutBtn" title="Checkout">Checkout</div></a>
-                            </div>
+                            
 
                           </div>
                         </ul>

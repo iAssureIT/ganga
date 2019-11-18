@@ -5,7 +5,7 @@ import {Route, withRouter} from 'react-router-dom';
 import "./CartProducts.css";
 import { connect }        from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getCartCata } from '../../actions/index';
+import { getCartData } from '../../actions/index';
 import Loader from "../../common/loader/Loader.js";
 import Message from '../Message/Message.js';
 class CartProducts extends Component{
@@ -224,70 +224,70 @@ class CartProducts extends Component{
     }
     
     render(){
+        console.log(this.props.recentCartData);
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <Loader type="fullpageloader"/>
                 <div className="row">
                     <Message messageData={this.state.messageData} />
-                    <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
-                        <Loader type="fullpageloader"/>
-                        <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
-                            <table className="table table-responsive cartProductTable">
-                                <thead>
-                                    <tr>
-                                        <th>ITEMS</th>
-                                        <th>PRICE</th>
-                                        <th>QUANTITY</th>
-                                        <th>TOTAL</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        this.props.recentCartData &&  this.props.recentCartData.length &&  this.props.recentCartData[0].cartItems.length > 0?
-                                        this.props.recentCartData[0].cartItems.map((data, index)=>{
-                                            var x = data.discountedPrice;
-                                            var discountedPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
-                                            var y = data.totalForQantity;
-                                            var z = this.state.totalForQantity;
-                                            var totalForQantity = y.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
-                                            var totalForQantityState = z ?  z.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",") : "";
-                                            return(
-                                                <tr key={index}>
-                                                    <td>
-                                                        <tr>
-                                                            <td>
-                                                            <a href={"/productdetails/" + data.product_ID}><img className="img img-responsive cartProductImg" src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} /></a>
-                                                            </td>
-                                                            <td className="cartProductDetail">
-                                                            <a href={"/productdetails/" + data.product_ID}><h5>{data.productName}</h5></a>
-                                                                {/*<span className="fa fa-heart cartWishIcon"></span>*/}
-                                                            </td>
-                                                        </tr>
-                                                    </td>
-                                                    <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{discountedPrice}</span></td>
-                                                    <td className="nowrap">
-                                                        <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
-                                                        <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
-                                                        <span className="plusQuantity fa fa-plus" productid={data.product_ID} id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantityincrease.bind(this)}></span>
-                                                    </td>
-                                                    <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
-                                                    <td>
-                                                        <span className="fa fa-times cartDelete" id={data._id} onClick={this.Removefromcart.bind(this)}></span>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })
-                                        :
-                                        <tr>
-                                            <td colSpan={5}><p className="mt15 mb15 col-lg-12 col-md-12 col-sm-12 col-xs-12">You have no items in your shopping cart.</p></td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                    {
+                        this.props.recentCartData.length > 0 &&  this.props.recentCartData[0].cartItems.length > 0? 
+                        <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                             
-                        </div>
-                        {
-                            this.props.recentCartData && this.props.recentCartData.length > 0?
+                            <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
+                                <table className="table table-responsive cartProductTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ITEMS</th>
+                                            <th>PRICE</th>
+                                            <th>QUANTITY</th>
+                                            <th>TOTAL</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            
+                                            this.props.recentCartData[0].cartItems.map((data, index)=>{
+                                                var x = data.discountedPrice;
+                                                var discountedPrice = x.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
+                                                var y = data.totalForQantity;
+                                                var z = this.state.totalForQantity;
+                                                var totalForQantity = y.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
+                                                var totalForQantityState = z ?  z.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",") : "";
+                                                return(
+                                                    <tr key={index}>
+                                                        <td>
+                                                            <tr>
+                                                                <td>
+                                                                <a href={"/productdetails/" + data.product_ID}><img className="img img-responsive cartProductImg" src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} /></a>
+                                                                </td>
+                                                                <td className="cartProductDetail">
+                                                                <a href={"/productdetails/" + data.product_ID}><h5>{data.productName}</h5></a>
+                                                                    {/*<span className="fa fa-heart cartWishIcon"></span>*/}
+                                                                </td>
+                                                            </tr>
+                                                        </td>
+                                                        <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{discountedPrice}</span></td>
+                                                        <td className="nowrap">
+                                                            <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
+                                                            <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
+                                                            <span className="plusQuantity fa fa-plus" productid={data.product_ID} id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantityincrease.bind(this)}></span>
+                                                        </td>
+                                                        <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
+                                                        <td>
+                                                            <span className="fa fa-times cartDelete" id={data._id} onClick={this.Removefromcart.bind(this)}></span>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
+                                            
+                                        }
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                            
                             <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartSummary">
                                     <strong className="cartSummaryTitle">Summary</strong>
@@ -321,11 +321,13 @@ class CartProducts extends Component{
                                     </button>
                                 </div>
                             </div>
-                            :
-                            null
-                        }
-                        
-                    </div>
+                        </div>
+                        : 
+                        <div className="col-lg-12 textAlignCenter">
+                          <img src="/images/emptycart.png" />
+                        </div>   
+                    }
+                    
                 </div>
             </div>
         );
@@ -337,6 +339,6 @@ const mapStateToProps = (state)=>{
   }
 }
 const mapDispachToProps = (dispatch) =>{
-    return bindActionCreators({ fetchCartData: getCartCata }, dispatch);  
+    return bindActionCreators({ fetchCartData: getCartData }, dispatch);  
 }  
 export default connect(mapStateToProps, mapDispachToProps)(withRouter(CartProducts));
