@@ -440,8 +440,7 @@ class IAssureTable extends Component {
 			
 	    	this.props.getData(this.state.startRange, this.state.limitRange);
 		    swal({
-				text: "User deleted successfully",
-				title:"User deleted successfully",
+				text: "User is deleted successfully"
 			});
 		}).catch((error)=> {
 		    console.log(error);
@@ -811,7 +810,7 @@ class IAssureTable extends Component {
 															      		</div>
 										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-										                                 <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this User?</h4>
+										                                 <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont"> All information related to this user will be deleted. Are you sure, do you want to delete this User?</h4>
 										                              </div>
 										                              
 										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">

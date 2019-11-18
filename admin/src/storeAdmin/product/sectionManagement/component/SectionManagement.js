@@ -253,7 +253,7 @@ class SectionManagement extends Component {
                       <div className="col-lg-5">
                         <div className="col-lg-12">
                           <label>Section URL <i className="redFont">*</i></label>
-                          <input disabled value={this.state.sectionUrl} onChange={this.handleChange.bind(this)} id="sectionUrl" name="sectionUrl" type="text" className="form-control sectionUrl" placeholder="section URL" ref="sectionUrl" />
+                          <input disabled value={this.state.sectionUrl} onChange={this.handleChange.bind(this)} id="sectionUrl" name="sectionUrl" type="text" className="form-control sectionUrl" placeholder="Section URL" ref="sectionUrl" />
                         </div>
                       </div>
                     

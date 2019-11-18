@@ -284,11 +284,11 @@ class AddNewShopProduct extends Component {
         
         this.getCategories();
         this.getSubCategories(response.data.category_ID);
+        console.log('section_ID',response.data.section_ID)
         this.setState({
           showDiscount : response.data.discountedPrice ? false : true,
           vendor : response.data.vendorName+'|'+response.data.vendor_ID,
-          section: response.data.section,
-          section_ID: response.data.section_ID,
+          section: response.data.section + '|' + response.data.section_ID,
           category: response.data.category + '|' + response.data.category_ID,
           subCategory: response.data.subCategory + '|' + response.data.subCategory_ID,
           brand: response.data.brand,
@@ -645,7 +645,7 @@ class AddNewShopProduct extends Component {
                       
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                         <label>Section <i className="redFont">*</i></label>
-                        <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section + '|' + this.state.section_ID} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
+                        <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
                           <option defaultValue="">Select Section</option>
                           {this.state.sectionArray && this.state.sectionArray.length > 0 ?
                             this.state.sectionArray.map((data, index) => {

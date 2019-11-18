@@ -152,7 +152,8 @@ class BaOrdersList extends Component{
         viewColumns: false,
         filter: false,
         responsive: "stacked",
-        selectableRows: 'none'
+        selectableRows: 'none',
+        download:false
       };
       const columns = [
           { name:"Order Id" },
