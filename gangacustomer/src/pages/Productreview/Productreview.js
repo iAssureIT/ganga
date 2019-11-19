@@ -66,12 +66,18 @@ class Productreview extends Component {
     var id = $(event.target).data('dataid');
     var rating = $('input[name="ratingReview"]:checked', '.feedbackForm').val();
     var formValues = {
-      "rating": rating,
-      "customerReview": $('.feedbackForm textarea').val()
+      "rating_ID" : this.state.rating_ID,
+      "customerID": localStorage.getItem('user_ID'),
+      "customerName": this.state.customerName,
+      "orderID": this.state.orderID,
+      "productID": this.state.productID,
+      "rating": parseInt(rating),
+      "customerReview": this.state.customerReview
     }
     if (this.state.reviewData.length != null) {
       axios.patch("/api/customerReview/patch", formValues)
         .then((response) => {
+          this.getMyReview();
           this.setState({
             messageData: {
               "type": "outpage",
@@ -86,6 +92,10 @@ class Productreview extends Component {
               messageData: {},
             })
           }, 3000);
+          var modal = document.getElementById('feedbackProductModal');
+          modal.style.display = "none";
+
+          $('.modal-backdrop').remove();
         })
         .catch((error) => {
         })
@@ -130,8 +140,27 @@ class Productreview extends Component {
       console.log('error', error);
     })
   }
-
-
+  ratingReview(event){
+    this.setState({
+      [event.target.name]: event.target.value,
+      reviewStarError : event.target.value ? "" : "Please give star rating."
+    },()=>{
+      console.log('ratingReview', this.state.ratingReview);
+    })
+  }
+  handleChangeReview(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+      reviewTextError : event.target.value ? "" : "Please Enter your feedback."
+    })
+  }
+  closeModal(event){
+    this.setState({
+      rating : "",
+      ratingReview : "",
+      customerReview : ""
+    })
+  }
   render() {
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -199,13 +228,14 @@ class Productreview extends Component {
                               </div>
                               <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 topspace8">
                                 
+                        
                                 <div className="modal" id="feedbackProductModal" role="dialog">
                                   <div className="modal-dialog">
                                     <div className="modal-content">
                                       <div className="modal-header">
                                         <img src="/images/Icon.png" />
-                                        <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
-                                        <h4 className="modal-title modalheadingcont">EDIT REVIEW</h4>
+                                        <button type="button" className="close modalclosebut" onClick={this.closeModal.bind(this)} data-dismiss="modal">&times;</button>
+                                        <h4 className="modal-title modalheadingcont">PRODUCT REVIEW</h4>
                                       </div>
                                       <div className="modal-body">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -214,15 +244,15 @@ class Productreview extends Component {
                                               <tr>
                                                 <th scope="col" className="col id">Product Image</th>
                                                 <th scope="col" className="col id">Product Name</th>
-                                                <th scope="col" className="col date">Price</th>
+                                                <th scope="col" className="col date textAlignRight">Price</th>
                                               </tr>
                                             </thead>
                                             <tbody>{
                                               this.state.oneproductdetails ?
                                                 <tr>
-                                                  <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0] ? this.state.oneproductdetails.productImage[0] : "/images/notavailable.jpg"} /></td>
+                                                  <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0] ? this.state.oneproductdetails.productImage[0] : "/images/notavailable.jpg" } /></td>
                                                   <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
-                                                  <td data-th="Order Total" className="col total"><span><i className={"fa fa-" + this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
+                                                  <td data-th="Order Total" className="col total textAlignRight"><span><i className={"fa fa-" + this.state.oneproductdetails.currency}> {this.state.oneproductdetails.discountedPrice}</i></span></td>
                                                 </tr>
                                                 :
                                                 null
@@ -230,31 +260,34 @@ class Productreview extends Component {
                                             </tbody>
                                           </table>
                                           <form className="feedbackForm" id="">
-
-                                            <div className="col-lg-6 col-sm-12 col-xs-12 row">
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                               <fieldset className="ratingReview stars givefeedback ">
-                                                <input type="radio" id="star1" name="ratingReview" value="5" /><label htmlFor="star1"></label>
-                                                <input type="radio" id="star2" name="ratingReview" value="4" /><label htmlFor="star2"></label>
-                                                <input type="radio" id="star3" name="ratingReview" value="3" /><label htmlFor="star3"></label>
-                                                <input type="radio" id="star4" name="ratingReview" value="2" /><label htmlFor="star4"></label>
-                                                <input type="radio" id="star5" name="ratingReview" value="1" /><label htmlFor="star5"></label>
+                                                <input type="radio" id="star1" name="ratingReview" checked={this.state.ratingReview == 5 ? true : false} onChange={this.ratingReview.bind(this)} value="5" /><label htmlFor="star1"></label>
+                                                <input type="radio" id="star2" name="ratingReview" checked={this.state.ratingReview == 4 ? true : false} onChange={this.ratingReview.bind(this)} value="4" /><label htmlFor="star2"></label>
+                                                <input type="radio" id="star3" name="ratingReview" checked={this.state.ratingReview == 3 ? true : false} onChange={this.ratingReview.bind(this)} value="3" /><label htmlFor="star3"></label>
+                                                <input type="radio" id="star4" name="ratingReview" checked={this.state.ratingReview == 2 ? true : false} onChange={this.ratingReview.bind(this)} value="2" /><label htmlFor="star4"></label>
+                                                <input type="radio" id="star5" name="ratingReview" checked={this.state.ratingReview == 1 ? true : false} onChange={this.ratingReview.bind(this)} value="1" /><label htmlFor="star5"></label>
                                               </fieldset>
                                               <div className="clearfix "></div>
                                             </div>
+                                            <label className="error">{this.state.reviewStarError}</label>
                                             <div className="row inputrow">
-                                              <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">< textarea rows="5" cols="60" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 "></textarea></div>
+                                              <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">Write review</label>
+                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                <textarea rows="5" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " onChange={this.handleChangeReview.bind(this)} value={ this.state.customerReview} name="customerReview"></textarea>
+                                                <label className="error">{this.state.reviewTextError}</label>
+                                              </div>
                                             </div>
                                             <div className="row inputrow">
-
                                             </div>
                                           </form>
                                         </div>
 
                                       </div>
-                                      <div className="modal-footer modalfooterborder mt15 ">
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                          <button className="btn btn-warning" onClick={this.submitReview.bind(this)} dataid={data._id} >Submit</button>
+                                      <div className="modal-footer modalfooterborder ">
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                          <button className="btn btn-warning mt15" onClick={this.submitReview.bind(this)} data-productid={this.state.oneproductdetails && this.state.oneproductdetails._id}
+                                          >{this.state.rating_ID ? 'Update' :'Submit'}</button>
                                         </div>
                                       </div>
                                     </div>
