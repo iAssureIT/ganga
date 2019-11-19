@@ -404,6 +404,13 @@ export default class MyOrders extends Component {
       console.log('ratingReview', this.state.ratingReview);
     })
   }
+  closeModal(event){
+    this.setState({
+      rating : "",
+      ratingReview : "",
+      customerReview : ""
+    })
+  }
   render() {
     return (
       <div className="container">
@@ -637,7 +644,7 @@ export default class MyOrders extends Component {
                     <div className="modal-content">
                       <div className="modal-header">
                         <img src="/images/Icon.png" />
-                        <button type="button" className="close modalclosebut" data-dismiss="modal">&times;</button>
+                        <button type="button" className="close modalclosebut" onClick={this.closeModal.bind(this)} data-dismiss="modal">&times;</button>
                         <h4 className="modal-title modalheadingcont">PRODUCT REVIEW</h4>
                       </div>
                       <div className="modal-body">

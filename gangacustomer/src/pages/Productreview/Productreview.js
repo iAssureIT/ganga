@@ -95,7 +95,41 @@ class Productreview extends Component {
       swal("Blank Review cant be submitted")
     }
   }
-
+  getoneproductdetails(event) {
+    var productID = event.target.id;
+    var customerID = localStorage.getItem('user_ID');
+    var orderID = event.target.getAttribute('orderID');
+    this.setState({ orderID: orderID });
+    console.log(',n,',customerID, orderID, productID)
+    axios.get("/api/products/get/one/" + productID)
+    .then((response) => {
+      this.setState({
+        oneproductdetails: response.data
+      }, () => {
+        console.log('oneproductdetails', this.state.oneproductdetails);
+      })
+    })
+    .catch((error) => {
+      console.log('error', error);
+    })
+    
+    axios.get("/api/customerreview/get/order/list/"+customerID+"/"+orderID+"/"+productID )
+    .then((response) => {
+      this.setState({
+        rating_ID       : response.data._id,
+        customerID      : response.data.customerID,
+        customerName    : response.data.customerName,
+        customerReview  : response.data.customerReview,
+        orderID         : response.data.orderID,
+        productID       : response.data.productID,
+        rating          : response.data.rating,
+        ratingReview    : response.data.rating
+      })
+    })
+    .catch((error) => {
+      console.log('error', error);
+    })
+  }
 
 
   render() {
@@ -114,20 +148,19 @@ class Productreview extends Component {
               {
                 this.state.reviewData && this.state.reviewData.length > 0 ?
                   this.state.reviewData.map((data, index) => {
-                    console.log('data', data.productDetails[0].productImage[0])
                     return (
                       <div key={index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewborder topspace15">
                         <div className="row">
                           <div className="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                            <img className="img img-responsive reviewProImg" src={data.productDetails[0].productImage[0]} />
+                            <img className="img img-responsive reviewProImg" src={data.productDetails.length >0 ? (data.productDetails[0].productImage[0] ? data.productDetails[0].productImage[0] : "/images/notavailable.jpg") : ""} />
                           </div>
                           <div className="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
                             <div className="row">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewuserimg">
                                   <div className="row pull-right">
-                                    <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn" title="Give Feedback" > <i className="fa fa-pencil"></i></button></a>
+                                    <a><button type="button" id={data.productDetails[0]._id} orderID={data.orderID} onClick={this.getoneproductdetails.bind(this)} data-toggle="modal" data-target="#feedbackProductModal" className="btn" title="Give Feedback" > <i className="fa fa-pencil"></i></button></a>
                                   </div>
-                                  <b><div className="col-lg-11 col-md-11 col-sm-11 col-xs-11">{data.productDetails[0].productName}</div></b>
+                                  <b><div className="col-lg-11 col-md-11 col-sm-11 col-xs-11">{data.productDetails.length >0 ? data.productDetails[0].productName : ""}</div></b>
                                   <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 ">
                                   {
                                     data.rating ?
@@ -187,7 +220,7 @@ class Productreview extends Component {
                                             <tbody>{
                                               this.state.oneproductdetails ?
                                                 <tr>
-                                                  <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0]} /></td>
+                                                  <td data-th="Order #" className="col id orderimgsize"><img src={this.state.oneproductdetails.productImage[0] ? this.state.oneproductdetails.productImage[0] : "/images/notavailable.jpg"} /></td>
                                                   <td data-th="Order #" className="col id">{this.state.oneproductdetails.productName}</td>
                                                   <td data-th="Order Total" className="col total"><span><i className={"fa fa-" + this.state.oneproductdetails.currency}> {this.state.oneproductdetails.offeredPrice}</i></span></td>
                                                 </tr>
@@ -210,7 +243,7 @@ class Productreview extends Component {
                                             </div>
                                             <div className="row inputrow">
                                               <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Write review</label>
-                                              <textarea rows="5" cols="60"></textarea>
+                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">< textarea rows="5" cols="60" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 "></textarea></div>
                                             </div>
                                             <div className="row inputrow">
 
@@ -219,8 +252,10 @@ class Productreview extends Component {
                                         </div>
 
                                       </div>
-                                      <div className="modal-footer modalfooterborder ">
-                                        <button className="btn btn-warning" onClick={this.submitReview.bind(this)} dataid={data._id} >Submit</button>
+                                      <div className="modal-footer modalfooterborder mt15 ">
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                          <button className="btn btn-warning" onClick={this.submitReview.bind(this)} dataid={data._id} >Submit</button>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>

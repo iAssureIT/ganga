@@ -219,7 +219,7 @@ class AddNewShopProduct extends Component {
   showRelevantCategories(event) {
     var section = event.target.value;
     this.setState({
-      section: event.target.value.split('|')[0],
+      section: event.target.value,
       section_ID: event.target.value.split('|')[1],
     })
     axios.get('/api/category/get/list/' + event.target.value.split('|')[1])
