@@ -466,7 +466,7 @@ componentWillMount() {
                           {
 
                             user_ID ?
-                              <li className="dropdown"><a href="/"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                              <li className="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i>
                                 <ul className="dropdown-menu signinmenuul">
                                   <li className="col-lg-12 NOpadding">
                                     <a><div className="row">
@@ -565,7 +565,7 @@ componentWillMount() {
                                     <div className="cartdropborder">
                                       <div className="col-lg-3 cartdropimg">
                                         <div className="row">
-                                          <img src={data.productImage[0]} />
+                                          <img src={data.productImage[0]  ? data.productImage[0] : "/images/notavailable.jpg"} />
                                         </div>
                                       </div>
                                       <div className="col-lg-9 cartdropimg">
