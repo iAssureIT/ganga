@@ -152,3 +152,6 @@ button:focus{
 p{
   word-break: break-all;
 }
+.editCursor{
+  cursor: pointer;
+}

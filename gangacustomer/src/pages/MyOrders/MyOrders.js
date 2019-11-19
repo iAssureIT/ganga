@@ -495,7 +495,7 @@ export default class MyOrders extends Component {
                                           <td data-th="Order Total" width="200" className=" total  "><span><i className={"fa fa-" + productData.currency}> {productData.total}</i></span></td>
                                           {data.status == "Paid" ?
                                             <td data-th="Order Total" width="100" className="total actbtns">
-                                              <a><button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab" title="Give Feedback" id={productData.product_ID} orderID={data._id} onClick={this.getoneproductdetails.bind(this)}> <i className="fa fa-pencil"></i></button></a>
+                                              <button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab fa fa-pencil" title="Give Feedback" id={productData.product_ID} orderID={data._id} onClick={this.getoneproductdetails.bind(this)}> </button>
                                               {
                                                 data.status == 'Cancelled' || productData.status == 'Returned' ? '' :
                                                   data.status == 'Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return"

@@ -186,8 +186,8 @@ class Productreview extends Component {
                           <div className="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
                             <div className="row">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 reviewuserimg">
-                                  <div className="row pull-right">
-                                    <a><button type="button" id={data.productDetails[0]._id} orderID={data.orderID} onClick={this.getoneproductdetails.bind(this)} data-toggle="modal" data-target="#feedbackProductModal" className="btn" title="Give Feedback" > <i className="fa fa-pencil"></i></button></a>
+                                  <div className=" pull-right">
+                                    <span  id={data.productDetails[0]._id} orderID={data.orderID} onClick={this.getoneproductdetails.bind(this)} data-toggle="modal" data-target="#feedbackProductModal" className=" fa fa-pencil editCursor" title="Give Feedback" ></span>
                                   </div>
                                   <b><div className="col-lg-11 col-md-11 col-sm-11 col-xs-11">{data.productDetails.length >0 ? data.productDetails[0].productName : ""}</div></b>
                                   <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 ">
