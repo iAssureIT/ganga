@@ -264,7 +264,7 @@ class ProductViewEcommerceBestSellers extends Component {
                                 </div>
                               <div className="productDetails">
                                 <div className="innerDiv">
-                                    <a href={"/productdetails/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
+                                    <a href={"/productdetails/"+data.productUrl+"/"+data._id}><p className="product-item-link" title={data.productName}>{data.productName}</p></a>
                                     <div className="product-reviews-summary">
                                       <div className="rating-summary">
                                         <fieldset className="ratingReview stars ">

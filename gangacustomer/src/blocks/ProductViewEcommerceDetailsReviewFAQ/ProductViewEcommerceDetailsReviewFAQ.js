@@ -28,9 +28,6 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
     .then((response) => {
       this.setState({
         reviewData: response.data,
-      }, () => {
-        console.log("reviewData", this.state.reviewData);
-        // console.log("reviewuserid",this.state.reviewuserid);
       })
     })
     .catch((error) => {
@@ -70,7 +67,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
                                 {
                                   data.rating ?
                                     _.times(5, (i) => {
-                                      console.log(i,'i');
+                                      
                                       if(i < data.rating){
                                         return <label className="reviewStarIcon activeStar"></label>;
                                       }else{

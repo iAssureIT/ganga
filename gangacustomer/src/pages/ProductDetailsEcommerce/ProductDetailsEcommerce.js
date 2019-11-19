@@ -16,23 +16,23 @@ export default class ProductDetailsEcommerce extends Component {
   	componentDidMount(){
   		var productType4 = 'bestSeller';
   		var webCategory = 'Main-Site'
-  		axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
-            .then((response)=>{
+  		axios.get("/api/products/get/listbytype/"+productType4)
+      .then((response)=>{
+        this.setState({
+            bestSellerProducts : response.data
+        })
+      })
+      .catch((error)=>{
+          console.log('error', error);
+      }) 
 
-              this.setState({
-                  bestSellerProducts : response.data
-              })
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            }) 
-
-          this.bestSellerData();
+      this.bestSellerData();
   	} 
 
     bestSellerData(){
       var productType4 = 'bestSeller';
-      axios.get("/api/products/get/listbytype/"+webCategory+"/"+productType4)
+      var webCategory = 'Main-Site'
+      axios.get("/api/products/get/listbytype/"+productType4)
             .then((response)=>{
 
               this.setState({

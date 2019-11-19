@@ -214,7 +214,7 @@ class ProductCollageView extends Component {
               }
             return (
                       <div className="item col-lg-4 col-md-4 col-sm-4 col-xs-4" key={index}>
-                        <a href={"/productdetails/" + data._id}>
+                        <a href={"/productdetails/"+data.productUrl+"/" + data._id}>
                                 <div className="">
                                   <div className="card">
                                     <div className="item-top">

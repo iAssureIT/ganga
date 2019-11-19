@@ -263,9 +263,8 @@ class EcommerceProductCarousel extends Component {
                   <b>{this.props.title}</b>
                 </h3>
               </div>
-              <div className="col-lg-5 producttimer producttimerposition1">
-              </div>
-              <div className="col-lg-5 producttimer producttimerposition">
+              
+              {/* <div className="col-lg-5 producttimer producttimerposition">
                 <OwlCarousel
                   className="owl-theme customnNavButtoncaro1"
                   margin={0}
@@ -287,7 +286,7 @@ class EcommerceProductCarousel extends Component {
                       null
                   }
                 </OwlCarousel>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
@@ -323,15 +322,15 @@ class EcommerceProductCarousel extends Component {
                                       <div className="productImg">
                                         <button type="submit" id={data._id} title={tooltipMsg} className={"wishIcon fa fa-heart"+wishClass} onClick={this.addtowishlist.bind(this)}></button>
                                         {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
-                                        <a href={"/productdetails/" + data._id} className="product photo product-item-photo" tabIndex="-1">
+                                        <a href={"/productdetails/"+data.productUrl+"/" + data._id} className="product photo product-item-photo" tabIndex="-1">
                                           <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
                                         </a>
                                       </div>
                                       <div className="productDetails">
                                         <div className="innerDiv">
-                                          <a href={"/productdetails/" + data._id}><div className="product-brand" title={data.productName}>{data.productName}</div></a>
-                                          <a href={"/productdetails/" + data._id}><div className=" product-item-link" title={data.productName}>{data.brand}</div></a>
-                                          <a href={"/productdetails/" + data._id}><div className="col-lg-12 col-md-12 NOpadding">
+                                          <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="product-brand" title={data.productName}>{data.productName}</div></a>
+                                          <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className=" product-item-link" title={data.productName}>{data.brand}</div></a>
+                                          <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="col-lg-12 col-md-12 NOpadding">
                                             {
                                               data.discountPercent ?
                                                 <div className="col-lg-12 col-md-12 NOpadding">

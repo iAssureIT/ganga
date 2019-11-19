@@ -39,6 +39,7 @@ class ProductViewEcommerce extends Component {
 			"totalQuanity": 1,
 			"quanityLimit": 5,
 			"imgsrc": "",
+			"wishIconClass" : "viewWishList"
 		};
 		this.changeImage = this.changeImage.bind(this);
 	}
@@ -56,19 +57,34 @@ class ProductViewEcommerce extends Component {
 		.catch((error) => {
 			console.log('error', error);
 		})
+		this.getWishData();
+	}
+	getWishData(){
+		const userid = localStorage.getItem('user_ID');
+		
+		axios.get("/api/wishlist/get/one/productwish/"+userid+"/" + this.props.productID)
+		.then((response) => {
+			
+			this.setState({
+				wishIconClass : response.data ? "viewWishListActive" : "viewWishList"
+			})
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
 	}
 	changeImage = (event) => {
 		this.setState({
 			selectedImage: event.target.src
 		}, () => {
-			console.log('this.state.imgsrc', this.state.imgsrc);
+
 		});
 	}
 	getCartData() {
 		const userid = localStorage.getItem('user_ID');
 		axios.get("/api/carts/get/list/" + userid)
 		.then((response) => {
-			// console.log('cartProduct=======================', response.data[0].cartItems)
+			
 			this.setState({
 				cartProduct: response.data[0].cartItems
 			});
@@ -81,7 +97,6 @@ class ProductViewEcommerce extends Component {
 	addtocart = (event) => {
 		// const token = localStorage.getItem("token");
 		//   if(token!==null){
-		//   // console.log("Header Token = ",token);
 		//   // browserHistory.push("/");
 		//   this.props.history.push("/");
 		// }
@@ -119,7 +134,7 @@ class ProductViewEcommerce extends Component {
 					}
 					axios.post('/api/carts/post', formValues)
 						.then((response) => {
-							// console.log('response', response);
+							
 							this.getCartData();
 							this.setState({
 								messageData: {
@@ -170,7 +185,7 @@ class ProductViewEcommerce extends Component {
 			axios.get('/api/products/get/one/' + id)
 				.then((response) => {
 					const userid = localStorage.getItem('user_ID');
-					// console.log("userid",response.data);
+					
 					const formValues =
 					{
 						"user_ID": userid,
@@ -178,6 +193,7 @@ class ProductViewEcommerce extends Component {
 					}
 					axios.post('/api/wishlist/post', formValues)
 						.then((response) => {
+							this.getWishData();
 							this.setState({
 								messageData: {
 									"type": "outpage",
@@ -244,7 +260,7 @@ class ProductViewEcommerce extends Component {
 				messageData: {
 					"type": "outpage",
 					"icon": "fa fa-check-circle",
-					"message": "Only "+this.state.quanityLimit+" "+this.state.productData.productName+" left in stock",
+					"message": "Last "+this.state.quanityLimit+" items taken by you",
 					"class": "success",
 					"autoDismiss": true
 				}
@@ -280,8 +296,6 @@ class ProductViewEcommerce extends Component {
 		.then((response) => {
 		  this.setState({
 			reviewData: response.data,
-		  }, () => {
-			console.log("reviewData", this.state.reviewData);
 		  })
 		})
 		.catch((error) => {
@@ -315,7 +329,7 @@ class ProductViewEcommerce extends Component {
 									{
 										this.state.productData && this.state.productData.productImage && this.state.productData.productImage.length > 0 ?
 											this.state.productData.productImage.map((data, index) => {
-												console.log("productData=>>>>>>>>>>>>>>>", data);
+												
 												// if (!_.isEmpty(data)) {
 												return (
 													<div key={index} className="item col-lg-12 col-md-12 col-sm-12 col-xs-12 miniImagesInNew"  >
@@ -416,7 +430,7 @@ class ProductViewEcommerce extends Component {
 												<div id={this.state.productData._id} onClick={this.addtocart.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewAddtoCart"> &nbsp; Add to Cart</div>
 											</div>
 											<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-												<div id={this.state.productData._id} onClick={this.addtowishlist.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewWishList"></div>
+												<div id={this.state.productData._id} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
 											</div>
 										</div>
 									</div>

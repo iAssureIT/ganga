@@ -154,24 +154,6 @@ componentWillMount() {
     });
   }
 
-
-  // getCategoryDetails(category_ID, categoryDetails){
-  //     axios.get("/api/category/get/one/"+category_ID)
-  //         .then((response)=>{ 
-  //             categoryDetails.push(response.data);
-
-  //             this.setState({categoryDetails: categoryDetails}, () =>{
-  //                this.props.getCategoryDetails(categoryDetails); 
-  //             });
-
-
-  //         })
-  //         .catch((error)=>{
-  //               console.log('error', error);
-  //         })
-
-
-  // }
   handleChange(selectedOption) {
     var catArray = [];
 
@@ -193,7 +175,6 @@ componentWillMount() {
     localStorage.setItem("searchstr", event.currentTarget.value);
   }
   searchProducts() {
-    console.log('catArray', this.state.catArray);
     if (this.state.catArray.length > 0) {
 
       var searchstr = $('.headersearch').val()
@@ -262,27 +243,20 @@ componentWillMount() {
   }
   getUserData() {
     const userid = localStorage.getItem('user_ID');
-    // console.log("userid-----------------------------------------",userid);
     axios.get('/api/users/' + userid)
       .then((res) => {
         var FName = res.data.profile.fullName;
         var Mnob = res.data.mobileNumber;
-        // console.log("firstnameint,lastnameint-----------------------------------------",firstnameint,lastnameint);
-
         this.refs.firstName.value = FName
         this.refs.mobNumber.value = Mnob
         this.setState({
           userData: res.data,
           firstname: res.data.profile.firstName.substring(0, 1),
           lastname: res.data.profile.lastName.substring(0, 1)
-        }, () => {
-          console.log("useriddata-----------------------------------------", this.state.firstname, this.state.lastname);
-
         })
       })
       .catch((error) => {
         console.log("error = ", error);
-        // alert("Something went wrong! Please check Get URL.");
       });
   }
   getWishlistCount() {
@@ -298,9 +272,7 @@ componentWillMount() {
   Removefromcart(event) {
     event.preventDefault();
     const userid = localStorage.getItem('user_ID');
-    console.log("userid", userid);
     const cartitemremoveid = event.target.getAttribute('removeid');
-    console.log("cartitemid", cartitemremoveid);
 
     const formValues = {
       "user_ID": userid,
@@ -308,7 +280,6 @@ componentWillMount() {
     }
     axios.patch("/api/carts/remove", formValues)
       .then((response) => {
-        console.log(response.data);
         this.props.changeCartCount(response.data.cartCount);
         this.setState({
           messageData: {
@@ -382,7 +353,6 @@ componentWillMount() {
   getHotProduct() {
     axios.get("/api/products/get/hotproduct")
       .then((response) => {
-        console.log('hotProducts', response.data);
         this.setState({
           hotProducts: response.data
         })
@@ -393,9 +363,6 @@ componentWillMount() {
   }
   render() {
     const user_ID = localStorage.getItem("user_ID");
-
-    console.log('localCategories', this.state.localCategories);
-
     return (
       <div className="homecontentwrapper">
         <Message messageData={this.state.messageData} />
@@ -570,7 +537,7 @@ componentWillMount() {
                                       </div>
                                       <div className="col-lg-9 cartdropimg">
                                         <div className="row">
-                                          <a href={"/productdetails/" + data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
+                                          <a href={"/productdetails/"+data.productUrl+"/" + data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
                                           <div className="col-lg-12 text-center">
                                             <div className="row">
                                               <div className="col-lg-4"><p className="row"><b><i className="fa fa-inr"></i> {data.discountedPrice}</b></p></div>
