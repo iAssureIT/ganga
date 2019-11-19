@@ -13,6 +13,7 @@ class EditAccount extends Component{
         this.state={
             "firstName"     : "",
             "lastName"      : "",
+            "mobNumber"     : "",
             "emailId"       : "",
             "newPassword"   : "",
             "oldPassword"   : "",
@@ -29,7 +30,9 @@ class EditAccount extends Component{
             debug: true,
             success: "valid"
         });
-    
+        $.validator.addMethod("regxmobNumber", function (value, element, regexpr) {
+            return regexpr.test(value);
+        }, "Please enter valid mobile number.");
         $("#editAccount").validate({
             rules: {
                 firstName: {
@@ -37,6 +40,10 @@ class EditAccount extends Component{
                 },
                 lastName: {
                     required: true,
+                },
+                mobNumber: {
+                    required: true,
+                    regxmobNumber: /^([7-9][0-9]{9})$/,
                 },
                 emailId:{
                     required : true,
@@ -61,6 +68,9 @@ class EditAccount extends Component{
                 }
                 if (element.attr("name") == "lastName"){
                     error.insertAfter("#lastName");
+                }
+                if (element.attr("name") == "mobNumber") {
+                    error.insertAfter("#mobNumber");
                 }
                 if (element.attr("name") == "emailId"){
                     error.insertAfter("#emailId");
@@ -89,6 +99,7 @@ class EditAccount extends Component{
             this.setState({
                 "firstName"         : res.data.profile.firstName,
                 "lastName"          : res.data.profile.lastName,
+                "mobNumber"         : res.data.profile.mobileNumber,
                 "emailId"           : res.data.profile.emailId,
                 "newPassword"       : "",
                 "oldPassword"       : "",
@@ -109,6 +120,7 @@ class EditAccount extends Component{
             "field"         : field,
             "firstName"     : this.refs.firstName.value,
             "lastName"      : this.refs.lastName.value,
+            "mobileNumber"  : this.refs.mobNumber.value,
             "emailId"       : this.state.emailId,
             "newPassword"   : this.state.newPassword,
             "oldPassword"   : this.state.oldPassword,
@@ -215,6 +227,7 @@ class EditAccount extends Component{
     }
     render(){
         return(
+            <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
             <Message messageData={this.state.messageData} />
                 <div className="container">
@@ -233,26 +246,38 @@ class EditAccount extends Component{
                                         <div id="firstName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                             <input maxLength="25" type="text" name="firstName"  ref="firstName" value={this.state.firstName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" required/>
                                         </div>
-                                        <br />
+                                    </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <label className="mt15">Last Name <i className="requiredsign">*</i></label><br />
                                         <div id="lastName" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                             <input maxLength="25" type="text" name="lastName"  ref="lastName" value={this.state.lastName} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" required />
                                         </div>
-                                        {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
+                                    </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label className="mt15">Mobile Number<i className="requiredsign">*</i></label><br />
+                                        <div id="mobNumber" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                            <input className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" type="text" maxlength="10" ref="mobNumber" name="mobNumber" id="mobNumber" placeholder="Eg. 9876543210" value={this.state.mobNumber}  onChange={this.onChange.bind(this)} required/>
+                                        </div>
+                                    </div>    
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">   
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changeEmail" checked={this.state.changeEmail} onChange={this.changeEmail.bind(this)}/> &nbsp; <span>Change Email</span>
-                                        </div> */}
+                                        </div> 
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <input type="checkbox" id="changePassword" checked={this.state.changePassword} onChange={this.changePassword.bind(this)}/> &nbsp; <span>Change Password</span>
                                         </div>
+                                        <div id="credentials" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 NOpadding">
                                             <h4>{(this.state.changeEmail == true && this.state.changePassword == true? 'Change Email and Password' : (this.state.changeEmail == true ? 'Change Email' : (this.state.changePassword == true? 'Change Password' :"")))}</h4>
                                         </div>
+
                                         {
                                             this.state.changeEmail == true?
                                             <div>
                                                 <label className="mt15">Email <i className="requiredsign">*</i></label><br />
                                                 <div id="emailId" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="email" name="emailId"  ref="emailId" value={this.state.emailId} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <input type="email" name="emailId"  ref="emailId" value={this.state.emailId} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" />
                                                 </div>
                                             </div>
                                             :
@@ -264,7 +289,7 @@ class EditAccount extends Component{
                                             <div>
                                                 <label className="mt15">Current Password <i className="requiredsign">*</i></label><br />
                                                 <div  id="oldPassword" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="text" id="oldPass" type="password" name="oldPassword"  ref="oldPassword" value={this.state.oldPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <input type="text" id="oldPass" type="password" name="oldPassword"  ref="oldPassword" value={this.state.oldPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" />
                                                     <div className="showHideEyeDiv">
                                                         <i className="fa fa-eye showPwd4 showEyeupSign" aria-hidden="true" onClick={this.showCurrentPass.bind(this)}></i>
                                                         <i className="fa fa-eye-slash hidePwd4 hideEyeSignup " aria-hidden="true" onClick={this.hideCurrentPass.bind(this)}></i>
@@ -280,7 +305,7 @@ class EditAccount extends Component{
                                             <div>
                                                 <label className="mt15">New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="password" id="newPass" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 newPassword" />
+                                                    <input type="password" id="newPass" name="newPassword"  ref="newPassword" value={this.state.newPassword} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control newPassword" />
                                                     <div className="showHideEyeDiv">
                                                         <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
                                                         <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
@@ -288,7 +313,7 @@ class EditAccount extends Component{
                                                 </div>
                                                 <label className="mt15 col-lg-12 NOpadding">Confirm New Password <i className="requiredsign">*</i></label><br />
                                                 <div id="newPassword2" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                    <input type="password" id="newPass2" name="newPassword2"  ref="newPassword2" value={this.state.newPassword2} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12" />
+                                                    <input type="password" id="newPass2" name="newPassword2"  ref="newPassword2" value={this.state.newPassword2} onChange={this.onChange.bind(this)} className="col-lg-8 col-md-8 col-sm-12 col-xs-12 form-control" />
                                                     <div className="showHideEyeDiv">
                                                         <i className="fa fa-eye showPwd2 showEyeupSign" aria-hidden="true" onClick={this.showConfirmPass.bind(this)}></i>
                                                         <i className="fa fa-eye-slash hidePwd2 hideEyeSignup " aria-hidden="true" onClick={this.hideConfirmPass.bind(this)}></i>
@@ -298,10 +323,13 @@ class EditAccount extends Component{
                                             :
                                             null
                                         }
-                                        
-                                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 NOpaddingLeft">
-                                            <button className="btn btn-warning editAccount col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save</button>
                                         </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <button className="btn btn-warning editAccount" onClick={this.updateUser.bind(this)}>Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -309,6 +337,7 @@ class EditAccount extends Component{
                     </div>
                 </div>
             </div>
+        </div>    
         )
     }
 }

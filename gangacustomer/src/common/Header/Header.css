@@ -150,8 +150,19 @@
 
 }
 .header1list2 ul{
-  margin-right: 15px;
+  margin-right: 10%;
 }
+.signinmenuul:after {
+    position: absolute;
+    left: 37.5%;
+    top: -7px;
+    width: 0;
+    height: 0;
+    content:'';
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #fff;
+}  
 .header1list2 ul li{
   float: right;
   text-decoration: none;
@@ -188,10 +199,11 @@
   border-radius: 0px;
   padding: 0px;
   width: 250px;
+  border:1px solid #fff !important;
 }
 
 .signinmenuul li a{
-  font-size: 15px;
+  font-size: 12px;
   border-bottom: 1px solid #aaa;
 }
 
@@ -356,15 +368,15 @@ ul.box-static-link li span {
 .shortnamebk{
   background: #eee;
     border-radius: 50%;
-    height: 45px;
-    width: 45px;
+    height: 38px;
+    width: 38px;
     padding: 10px;
 }
 
 .userinfotext{
   color: #555;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -372,9 +384,11 @@ ul.box-static-link li span {
 }
 .userinfo{
   color: #555;
-    font-size: 16px;
-    font-weight: bold;
-
+    font-size: 12px;
+    font-weight: 600;
+}
+.useremail{
+  font-size: 12px;
 }
 
 /* Absolute Center Spinner */

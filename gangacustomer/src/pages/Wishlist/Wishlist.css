@@ -42,6 +42,7 @@
     cursor: pointer;
     font-weight: 500;
     font-size: 14px;
+    color: #333;
 }
 .wishRemove:hover{
     color: #f0ad4e; 

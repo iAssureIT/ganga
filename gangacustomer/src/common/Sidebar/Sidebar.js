@@ -44,29 +44,29 @@ export default class Sidebar extends Component {
 		            <ul className="nav items">
 		                <li className="nav item col-lg-12">
 
-		                <a href="/account"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
+		                <a href="/account" id="atag"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="/edit"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
+		                <a href="/edit" id="atag"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
 		                </li>
 		                <li className="nav item col-lg-12">
-		                <a href="/address-book"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
-
+		                <a href="/address-book" id="atag"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
 		                </li>
 		                <li className="nav item col-lg-12">
 		                <a href="/my-orders" id="atag"><i className="fa fa-download"></i>&nbsp; My Orders </a>
 		                </li>
-		                
 		                <li className="nav item col-lg-12">
-		                <a href="/" id="atag"><i className="fa fa-credit-card"></i>&nbsp; My Credit Cards</a>
+		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
 		                </li>
+		                
+		                {/*<li className="nav item col-lg-12">
+		                		                <a href="/" id="atag"><i className="fa fa-credit-card"></i>&nbsp; My Credit Cards</a>
+		                		                </li>*/}
 		               
 		                <li className="nav item col-lg-12">
 		                <a href="/productreview" id="atag"><i className="fa fa-eye"></i> &nbsp;My Product Reviews</a>
 		                </li>
-		                <li className="nav item col-lg-12">
-		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
-		                </li>          
+		                          
 		            </ul>
 		        </nav>
 		        <br/>

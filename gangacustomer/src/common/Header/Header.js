@@ -479,18 +479,18 @@ componentWillMount() {
                                       </div>
                                       <div className="col-lg-10">
                                         <div className="col-lg-12">
-                                          <div><p className="userinfotext">{this.state.userData ? this.state.userData.profile.fullName : null}</p></div>
+                                          <div><span className="userinfotext">{this.state.userData ? this.state.userData.profile.fullName : null}</span></div>
                                         </div>
                                         <div className="col-lg-12">
-                                          <div><p className="userinfotext">{this.state.userData ? this.state.userData.profile.emailId : null}</p></div>
+                                          <div><span className="useremail">{this.state.userData ? this.state.userData.profile.emailId : null}</span></div>
                                         </div>
                                       </div>
                                     </div></a>
                                   </li>
                                   <li className="col-lg-12 NOpadding"><a href="/account">My Profile</a></li>
-                                  <li className="col-lg-12 NOpadding"><a href="/wishlist">My Wishlist</a></li>
                                   <li className="col-lg-12 NOpadding"><a href="/my-orders">My Orders</a></li>
-                                  <li className="col-lg-12 NOpadding" onClick={this.signOut.bind(this)}><a href="/">Sign Out</a></li>
+                                  <li className="col-lg-12 NOpadding"><a href="/wishlist">My Wishlist</a></li>
+                                  <li className="col-lg-12 NOpadding" onClick={this.signOut.bind(this)}><a href="/" style={{ backgroundColor:"#e39b35", color:"#fff"}}>Sign Out</a></li>
                                 </ul>
                               </li>
                               :

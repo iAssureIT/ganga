@@ -1,14 +1,13 @@
 .editAccount{
     border-radius: 25px;
     padding: 8px 25px;
+    margin-top: 10px;
 }
 .showHideEyeDiv {
-    right: 20px;
-    top: 5px;
-    float: left;
-    /* margin-right: 9px; */
+    right: 10px;
+    top: 10px;
     z-index: 999;
-    position: relative;
+    position: absolute;
   }
   .showPwd2{
     display: block;

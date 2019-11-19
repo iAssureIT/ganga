@@ -114,6 +114,7 @@ class AddressBook extends Component{
     }
     render(){
         return(
+        <div className="row">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
             <Loader type="fullpageloader" />
             <Address addressId={this.state.addressId} opDone={this.opDone.bind(this)}/>
@@ -213,6 +214,7 @@ class AddressBook extends Component{
                     </div>
                 </div>
             </div>
+        </div>
         )
     }
 }

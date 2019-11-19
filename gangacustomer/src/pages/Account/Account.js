@@ -12,8 +12,8 @@ class Account extends Component{
         super(props);
         this.state={
             bannerData : {
-                title : "ACCOUNT CONTROL PANEL",
-                breadcrumb : 'Account Control Panel',
+                title : "ACCOUNT DASHBOARD",
+                breadcrumb : 'Account DASHBOARD',
                 backgroungImage : '/images/my_account.png',
             },
         }
@@ -80,7 +80,7 @@ class Account extends Component{
                         <Sidebar />
                     </div>
                     <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8 NOpadding mt25">
-                        <h4 className="accountTitle">Account control panel</h4>
+                        <h4 className="accountTitle">Account Dashboard</h4>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15">
                             <p><label>Hello {this.state.fullName}</label></p>
                             
@@ -91,7 +91,8 @@ class Account extends Component{
                                         <div className="accountDivHeader">Contact Information</div>
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                             <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textwrap">{this.state.fullName}</p>
-                                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">{this.state.emailId}</p>
+                                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{this.state.emailId}</p>
+                                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">{this.state.mobileNumber}</p>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <button className="btn btn-warning" onClick={this.editUser.bind(this)}><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT</button> &nbsp; &nbsp;
                                             {/*<button className="btn btn-warning">CHANGE PASSWORD</button>*/}
@@ -100,7 +101,8 @@ class Account extends Component{
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingRight">
+
+                            {/*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingRight">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
                                     <div className="row">
                                         <div className="accountDivHeader">Newsletters</div>
@@ -112,7 +114,8 @@ class Account extends Component{
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/}
+
                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15 row">Address Book</label>
                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
@@ -124,9 +127,9 @@ class Account extends Component{
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">
                                                 {this.state.addressLine1},<br />
                                                 {this.state.addressLine2},<br />
-                                                {this.state.block}, {this.state.city},<br />
+                                                {this.state.city},<br />
                                                 {this.state.state}, {this.state.country} - {this.state.pincode}<br />
-                                                    T: {this.state.mobileNumber}
+                                                    Contact Number: {this.state.mobileNumber}
                                                 </p>
                                                 
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
@@ -154,9 +157,9 @@ class Account extends Component{
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">
                                                 {this.state.addressLine1},<br />
                                                 {this.state.addressLine2},<br />
-                                                {this.state.block}, {this.state.city},<br />
+                                                {this.state.city},<br />
                                                 {this.state.state}, {this.state.country} - {this.state.pincode}<br />
-                                                    T: {this.state.mobileNumber}
+                                                    Contact Number: {this.state.mobileNumber}
                                                 </p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                                     <div data-toggle="modal" data-target="#checkoutAddressModal" onClick={this.getAddressId.bind(this)} id={this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</div>
