@@ -29,14 +29,17 @@
 .block:hover .figcaption{
 	opacity: 1;
 	transform: scale(1.1);
-	transition-duration: 0.5s;
+	transition-duration: 1s;
 	background-color: rgba(153,153,153,0.2);
 }
-
+.block:hover .figcaption span{
+	top:135px;
+	font-size: 0.75em;
+}
 
 .block:hover .figcaption::before{
 	opacity: 1;
-	transition-duration: 0.5s;
+	transition-duration: 1s;
 	transform: scale3d(1,1,1);
 }
 
@@ -68,7 +71,7 @@
     backface-visibility: hidden;
     display: block;
     text-align: center;
-    opacity: 0;
+    opacity: 1;
 }
 .figcaption span{
 	color: #777;

@@ -45,7 +45,7 @@ class ProductCollage extends Component {
   	componentDidMount() {
 
 		this.getWishData();
-  		$('div[data-toggle="collapse"]').click(function () {
+  		$('div[data-toggle="collapse"]').click( ()=> {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
 
@@ -106,17 +106,13 @@ class ProductCollage extends Component {
 	      })
 	}
 	getPriceLimits(){
-		axios.get("/api/products/get/minmaxprice")
+		axios.get("/api/products/get/minmaxprice/"+this.props.match.params.sectionID)
 	      .then((response)=>{ 
-	      		
-
-		      	this.setState({
+	      		this.setState({
 		      		minPriceLmt : Number(response.data.min),
 		        	maxPriceLmt : Number(response.data.max),
 		        	price:{min : Number(response.data.min), max: Number(response.data.max) }
 		      	});
-	         	
-	          
 	      })
 	      .catch((error)=>{
 	            console.log('error', error);
@@ -798,8 +794,8 @@ class ProductCollage extends Component {
 							        value={this.state.price}
 							        onChange={ this.onSelectedItemsChange.bind(this,"price")} />
 							        <label>Min </label>
-							        <input className="input-field min-value" type="text" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
-							        <label>Max </label><input className="input-field max-value" type="text" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
+							        <input className="input-field min-value" type="text" maxLength="3" id="slider_min" name="slider_min" placeholder="From" value={this.state.price.min} onChange={this.handlePriceChange} /> &nbsp;
+							        <label>Max </label><input className="input-field max-value" type="text" maxLength="5" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
 						      </div> 
 						    </div>
 						 </div>
