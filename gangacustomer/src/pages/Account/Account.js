@@ -117,7 +117,7 @@ class Account extends Component{
                             </div>*/}
 
                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15 row">Address Book</label>
-                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
+                            {/*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
                                     <div className="row">
                                         <div className="accountDivHeader">Default Billing Address</div>
@@ -146,11 +146,12 @@ class Account extends Component{
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div>*/
+                            }
                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingRight">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
                                     <div className="row">
-                                        <div className="accountDivHeader">Default Shipping Address</div>
+                                        <div className="accountDivHeader">Default Shipping/Billing Address</div>
                                         { this.state.addressLine1 ?
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.name}</p>
@@ -167,7 +168,7 @@ class Account extends Component{
                                             </div>
                                             :
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
-                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">You have not set a default shipping address.</p>
+                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{wordBreak : "break-word"}}>You have not set a default shipping/billing address.</p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
                                                     <button data-toggle="modal" data-target="#checkoutAddressModal" className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
                                                 </div>

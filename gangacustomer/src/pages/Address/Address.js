@@ -138,10 +138,10 @@ class Address extends Component {
                 if (element.attr("name") == "modalcity") {
                     error.insertAfter("#modalcity");
                 }
-                if (element.attr("name") == "modalstate") {
+                if (element.attr("name") == "modalstateCode") {
                     error.insertAfter("#modalstate");
                 }
-                if (element.attr("name") == "modalcountry") {
+                if (element.attr("name") == "modalcountryCode") {
                     error.insertAfter("#modalcountry");
                 }
                 if (element.attr("name") == "modaladdType") {
@@ -157,8 +157,8 @@ class Address extends Component {
         axios.get('/api/users/'+user_ID)
         .then((response)=>{
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
-            this.getStates(deliveryAddress[0].country);
-            this.getDistrict(deliveryAddress[0].state,deliveryAddress[0].country)
+            this.getStates(deliveryAddress[0].countryCode);
+            this.getDistrict(deliveryAddress[0].stateCode,deliveryAddress[0].countryCode)
             this.setState({
                 "modalname"            : deliveryAddress[0].name,
                 "modalemail"           : deliveryAddress[0].email,
@@ -168,7 +168,9 @@ class Address extends Component {
                 "modalblock"           : deliveryAddress[0].block,
                 "modaldistrict"        : deliveryAddress[0].district,
                 "modalcity"            : deliveryAddress[0].city,
+                "modalstateCode"       : deliveryAddress[0].stateCode,
                 "modalstate"           : deliveryAddress[0].state,
+                "modalcountryCode"     : deliveryAddress[0].countryCode,
                 "modalcountry"         : deliveryAddress[0].country,
                 "modalmobileNumber"    : deliveryAddress[0].mobileNumber,
                 "modaladdType"         : deliveryAddress[0].addType,
@@ -213,7 +215,8 @@ class Address extends Component {
       const target = event.target;
       this.getStates(event.target.value)
       this.setState({
-        [event.target.name] : event.target.value
+        [event.target.name] : event.target.value,
+        modalcountry : target.options[target.selectedIndex].innerHTML
       })
       
     }
@@ -231,12 +234,13 @@ class Address extends Component {
     }
     handleChangeState(event){
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            modalstate : event.target.options[event.target.selectedIndex].innerHTML
         })
         const target = event.target;
         const stateCode = event.target.value;
-        const countryCode = this.state.modalcountry;
-       console.log('handleChangeState', stateCode,countryCode);
+        const countryCode = this.state.modalcountryCode;
+        
         this.getDistrict(stateCode,countryCode);
          
       }
@@ -266,7 +270,9 @@ class Address extends Component {
             "block"           : this.state.modalblock,
             "district"        : this.state.modaldistrict,
             "city"            : this.state.modalcity,
+            "stateCode"       : this.state.modalstateCode,
             "state"           : this.state.modalstate,
+            "countryCode"     : this.state.modalcountryCode,
             "country"         : this.state.modalcountry,
             "mobileNumber"    : this.state.modalmobileNumber,
             "addType"         : this.state.modaladdType,
@@ -419,14 +425,14 @@ class Address extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding validationError">Country <span className="required">*</span></label>
-                                        <select ref="modalcountry" name="modalcountry" id="modalcountry" value={this.state.modalcountry} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError form-control" onChange={this.handleChangeCountry.bind(this)}>
+                                        <select ref="modalcountry" name="modalcountryCode" id="modalcountry" value={this.state.modalcountryCode} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError form-control" onChange={this.handleChangeCountry.bind(this)}>
                                             <option value="Select Country">Select Country</option>
                                             <option value="IN">India</option>
                                         </select>
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required validationError">*</span></label>
-                                        <select ref="modalstate" name="modalstate" id="modalstate" value={this.state.modalstate} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError form-control">
+                                        <select ref="modalstate" name="modalstateCode" id="modalstate" value={this.state.modalstateCode} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError form-control">
                                             <option value="Select State">Select State</option>
                                             {
                                                 this.state.stateArray && this.state.stateArray.length > 0 ?

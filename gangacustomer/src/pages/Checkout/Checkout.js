@@ -163,10 +163,10 @@ class Checkout extends Component {
             //   if (element.attr("name") == "addressLine2") {
             //     error.insertAfter("#addressLine2");
             //   }
-              if (element.attr("name") == "country") {
+              if (element.attr("name") == "countryCode") {
                 error.insertAfter("#country");
               }
-              if (element.attr("name") == "state") {
+              if (element.attr("name") == "stateCode") {
                 error.insertAfter("#state");
               }
             //   if (element.attr("name") == "block") {
@@ -602,7 +602,7 @@ class Checkout extends Component {
             var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
                 return a._id == checkoutAddess
             })
-            console.log('in ifffff');
+           
             addressValues = {
                 "user_ID": localStorage.getItem('user_ID'),
                 "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
@@ -613,7 +613,9 @@ class Checkout extends Component {
                 "block": deliveryAddress.length > 0 ? deliveryAddress[0].block : "",
                 "city": deliveryAddress.length > 0 ? deliveryAddress[0].city : "",
                 "district" : deliveryAddress.length > 0 ? deliveryAddress[0].district : "",
+                "stateCode": deliveryAddress.length > 0 ? deliveryAddress[0].stateCode : "",
                 "state": deliveryAddress.length > 0 ? deliveryAddress[0].state : "",
+                "countryCode": deliveryAddress.length > 0 ? deliveryAddress[0].countryCode : "",
                 "country": deliveryAddress.length > 0 ? deliveryAddress[0].country : "",
                 "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
                 "addType": deliveryAddress.length > 0 ? deliveryAddress[0].addType : "",
@@ -630,11 +632,14 @@ class Checkout extends Component {
                 "block": this.state.block,
                 "district" : this.state.district,
                 "city": this.state.city,
+                "stateCode": this.state.stateCode,
                 "state": this.state.state,
+                "countryCode": this.state.countryCode,
                 "country": this.state.country,
                 "mobileNumber": this.state.mobileNumber,
                 "addType": this.state.addType
             }
+            console.log('addressValues',addressValues);
             if ($('#checkout').valid() && this.state.pincodeExists) {
                 $('.fullpageloader').show();
             axios.patch('/api/users/patch/address', addressValues)
@@ -849,7 +854,8 @@ class Checkout extends Component {
     handleChangeCountry(event) {
         const target = event.target;
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            country : target.options[target.selectedIndex].innerHTML
         })
         this.getStates(event.target.value);
     }
@@ -868,16 +874,16 @@ class Checkout extends Component {
     }
     handleChangeState(event){
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            state : event.target.options[event.target.selectedIndex].innerHTML
         })
         const target = event.target;
         const stateCode = event.target.value;
-        const countryCode = this.state.country;
-       console.log('handleChangeState', stateCode,countryCode);
-        this.getDistrict(stateCode,countryCode);
+        const countryCode = this.state.countryCode;
+        this.getDistrict(countryCode,stateCode);
          
     }
-    getDistrict(stateCode,countryCode){
+    getDistrict(countryCode, stateCode){
         
     axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
             .then((response)=>{
@@ -961,35 +967,35 @@ class Checkout extends Component {
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Full Name <span className="required">*</span></label>
-                                                <input type="text" maxlength="50" ref="username" name="username" id="username" value={this.state.username} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="text" maxlength="50" ref="username" name="username" id="username" value={this.state.username} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Mobile Number <span className="required">*</span></label>
-                                                <input placeholder="Eg. 9876543210" maxLength="10" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input placeholder="Eg. 9876543210" maxLength="10" type="text" ref="mobileNumber" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                                 {/* <span className="col-lg-2 col-md-2 col-sm-1 col-xs-1  orderConfirmation fa fa-question-circle-o NOpadding" title="For delivery questions."></span> */}
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Email <span className="required">*</span></label>
-                                                <input type="email" ref="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="email" ref="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 1 <span className="required">*</span></label>
-                                                <input type="text" minLength="10" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="text" minLength="10" ref="addressLine1" name="addressLine1" id="addressLine1" value={this.state.addressLine1} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address Line 2 </label>
-                                                <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="text" ref="addressLine2" name="addressLine2" id="addressLine2" value={this.state.addressLine2} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Country <span className="required">*</span></label>
-                                                <select ref="country" name="country" id="country" value={this.state.country} onChange={this.handleChangeCountry.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <select ref="country" name="countryCode" id="country" value={this.state.countryCode} onChange={this.handleChangeCountry.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control">
                                                     <option value="Select Country">Select Country</option>
                                                     <option value="IN">India</option>
                                                 </select>
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required">*</span></label>
-                                                <select ref="state" name="state" id="state" value={this.state.state} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <select ref="state" name="stateCode" id="state" value={this.state.stateCode} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control">
                                                     <option value="Select State">Select State</option>
                                                     {
                                                         this.state.stateArray && this.state.stateArray.length > 0 ?
@@ -1004,7 +1010,7 @@ class Checkout extends Component {
                                             </div>
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">District <span className="required">*</span></label>
-                                                <select ref="district" name="district" id="district" value={this.state.district} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <select ref="district" name="district" id="district" value={this.state.district} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control">
                                                     <option value="Select District">Select District</option>
                                                     {  
                                                         this.state.districtArray && this.state.districtArray.length > 0 ?
@@ -1023,18 +1029,18 @@ class Checkout extends Component {
                                             </div> */}
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
-                                                <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                             </div>
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                                <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} onBlur={this.handlePincode.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
+                                                <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} onBlur={this.handlePincode.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                                 {this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
                                             </div> 
 
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
-                                                <select id="addType" name="addType" ref="addType" value={this.state.addType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <select id="addType" name="addType" ref="addType" value={this.state.addType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control">
                                                     <option value="Home">Home (All day delivery) </option>
                                                     <option value="Office">Office/Commercial (10 AM - 5 PM Delivery)</option>
                                                 </select>

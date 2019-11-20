@@ -133,14 +133,14 @@ class AddressBook extends Component{
                                 {
                                     this.state.addressLine1 ? 
                                     <div className="row">
-                                        <label>Default Billing Address</label>
+                                        <label>Default Shipping/Billing Address</label>
                                         <p>
                                             {this.state.name} <br />
                                             {this.state.addressLine1} <br />
                                             {this.state.addressLine2} <br />
-                                            {this.state.block}, {this.state.city},<br />
+                                            {this.state.city},<br />
                                             {this.state.state}, {this.state.country} - {this.state.pincode}<br />
-                                            T: {this.state.mobileNumber}
+                                            Contact Number: {this.state.mobileNumber}
                                         </p>
                                         <div data-toggle="modal" data-target="#checkoutAddressModal" id={this.state.deliveryAddressID} onClick={this.getAddressId.bind(this)} className="btn btn-warning mt15">Change Billing Address</div>
                                     </div>
@@ -154,7 +154,8 @@ class AddressBook extends Component{
                                 
                             </div>
                         </div>
-                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb25 NOpaddingRight">
+                        {
+                        /*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb25 NOpaddingRight">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 {this.state.addressLine1 ?
                                     <div className="row">
@@ -178,23 +179,26 @@ class AddressBook extends Component{
                                 }
                                 
                             </div>
-                        </div>
-                        <h4 className="addTitle mt25">Additional Address Entries</h4>
+                        </div>*/
+                        }
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb25 NOpaddingRight">
+                            
+                        <h4 className="addTitle">Additional Address Entries</h4>
                         {
                             this.state.deliveryAddresses && this.state.deliveryAddresses.length > 1 ?
                             this.state.deliveryAddresses.map((address , index)=>{
                                 if(index != 0){
                                     return(
-                                        <div key={'address'+index} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
+                                        <div key={'address'+index} className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb15 NOpaddingLeft">
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div className="row">
                                                     <p>
                                                         {address.name} <br />
                                                         {address.addressLine1} <br />
                                                         {address.addressLine2}, <br />
-                                                        {address.block}, {address.city},<br />
+                                                        {address.city},<br />
                                                         {address.state}, {address.country} - {address.pincode}<br />
-                                                        T: {address.mobileNumber}
+                                                        Contact Number: {address.mobileNumber}
                                                     </p>
                                                     <div  data-toggle="modal" data-target="#checkoutAddressModal" id={address._id} onClick={this.getAddressId.bind(this)} className="btn btn-warning ">Edit Address</div> &nbsp;
                                                     <i id={address._id} onClick={this.deleteAddress.bind(this)} className="fa fa-trash btn btn-warning deleteAdd"></i>
@@ -210,7 +214,7 @@ class AddressBook extends Component{
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt25">
                         <div data-toggle="modal" data-target="#checkoutAddressModal" id="" className="btn btn-warning addressSaveBtn">Add New Address</div>
                         </div>
-                        
+                    </div>
                     </div>
                 </div>
             </div>
