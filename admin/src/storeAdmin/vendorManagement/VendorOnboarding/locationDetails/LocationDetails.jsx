@@ -165,7 +165,7 @@ class LocationDetails extends Component {
 		});
 		const target = event.target;
 		const stateCode = $(target).val();
-		const countryCode = $("#datacountry").val();
+		const countryCode = $("#country").val();
 
 		this.getDistrict(stateCode, countryCode);
 
@@ -189,7 +189,7 @@ class LocationDetails extends Component {
 		const target = event.target;
 		const districtName = $(target).val();
 		const stateCode = $('#Statedata').val();
-		const countryCode = $("#datacountry").val();
+		const countryCode = $("#country").val();
 		this.getBlocks(districtName, stateCode, countryCode);
 	}
 
@@ -201,7 +201,7 @@ class LocationDetails extends Component {
 		const blockName = $(target).val();
 		const districtName = $('#Citydata').val();
 		const stateCode = $('#Statedata').val();
-		const countryCode = $("#datacountry").val();
+		const countryCode = $("#country").val();
 		this.getAreas(blockName, districtName, stateCode, countryCode);
 	}
 
