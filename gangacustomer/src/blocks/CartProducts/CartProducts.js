@@ -260,11 +260,20 @@ class CartProducts extends Component{
                                                         <td>
                                                             <tr>
                                                                 <td>
-                                                                <a href={"/productdetails/" + data.product_ID}><img className="img img-responsive cartProductImg" src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} /></a>
+                                                                    <a href={"/productdetails/" + data.product_ID}><img className="img img-responsive cartProductImg" src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} /></a>
                                                                 </td>
                                                                 <td className="cartProductDetail">
                                                                 <a href={"/productdetails/" + data.product_ID}><h5>{data.productName}</h5></a>
-                                                                    {/*<span className="fa fa-heart cartWishIcon"></span>*/}
+                                                                {
+                                                                    data.discountPercent  ?
+                                                                        <div className="col-lg-12 col-md-12 NOpadding">
+                                                                            <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span> &nbsp;
+                                                                            <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> &nbsp;
+                                                                            <span className="cartDiscountPercent">({data.discountPercent}%)</span>
+                                                                        </div>
+                                                                        :
+                                                                        <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
+                                                                }
                                                                 </td>
                                                             </tr>
                                                         </td>

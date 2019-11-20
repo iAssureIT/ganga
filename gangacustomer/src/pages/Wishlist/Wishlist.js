@@ -111,6 +111,7 @@ class Wishlist extends Component {
               "quantity": 1,
               "discountedPrice": parseInt(response.data.discountedPrice),
               "originalPrice": parseInt(response.data.originalPrice),
+              "discountPercent" :parseInt(response.data.discountPercent),
               "totalForQantity": totalForQantity,
   
             }
@@ -252,8 +253,8 @@ class Wishlist extends Component {
                                                   </div>
                                                   <div className="productDetails">
                                                     <div className="innerDiv">
-                                                      <div className="product-brand" title={data.productName}>{data.productName}</div>
-                                                      <div className=" product-item-link" title={data.productName}>{data.brand}</div>
+                                                      <div className="product-brand" title={data.brand}>{data.brand}</div>
+                                                      <div className=" product-item-link" title={data.productName}>{data.productName}</div>
                                                       <div className="col-lg-12 col-md-12 NOpadding">
                                                         {
                                                           data.discountPercent ?
@@ -270,12 +271,12 @@ class Wishlist extends Component {
                                                       </div>
                                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
-                                                          <button type="submit" id={data.product_ID} wishid={data.wishlist_ID} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-11 col-lg-offset-1">
+                                                          <button type="submit" id={data.product_ID} wishid={data.wishlist_ID} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             &nbsp;Add to Cart
                                                           </button>
                                                         </div>
                                                         <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
-                                                           <span id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className="fa fa-trash wishRemove"> &nbsp;Remove</span>
+                                                           <button id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className="fa fa-trash wishRemove col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-12 col-xs-12"> &nbsp;Remove</button>
                                                         </div>
                                                       </div>
                                                     </div>

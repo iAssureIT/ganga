@@ -138,3 +138,7 @@
 .continueShopping:focus{
     outline: none !important;
 }
+.cartDiscountPercent{
+    color: #666;
+    font-weight: 600;
+}

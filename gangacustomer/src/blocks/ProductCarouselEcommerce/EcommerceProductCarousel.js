@@ -119,6 +119,7 @@ class EcommerceProductCarousel extends Component {
             "quantity": 1,
             "discountedPrice": parseInt(response.data.discountedPrice),
             "originalPrice": parseInt(response.data.originalPrice),
+            "discountPercent" :parseInt(response.data.discountPercent),
             "totalForQantity": totalForQantity,
 
           }
@@ -328,14 +329,15 @@ class EcommerceProductCarousel extends Component {
                                       </div>
                                       <div className="productDetails">
                                         <div className="innerDiv">
-                                          <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="product-brand" title={data.productName}>{data.productName}</div></a>
-                                          <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className=" product-item-link" title={data.productName}>{data.brand}</div></a>
+                                        <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="product-brand" title={data.brand}>{data.brand}</div></a>
+                                          <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="product-item-link" title={data.productName}>{data.productName}</div></a>
+                                          
                                           <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="col-lg-12 col-md-12 NOpadding">
                                             {
                                               data.discountPercent ?
                                                 <div className="col-lg-12 col-md-12 NOpadding">
-                                                  <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> &nbsp;
-                                                  <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
+                                                  <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span> &nbsp; 
+                                                  <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span>
                                                 </div>
                                                 :
                                                 <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
@@ -346,12 +348,10 @@ class EcommerceProductCarousel extends Component {
                                           </div> */}
                                           <div >
                                           </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 NOpadding">
-                                              
-                                            </div>
-                                            <div className=" col-lg-7 col-md-7 col-sm-12 col-xs-12 NOpadding">
-                                              <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-11 col-lg-offset-1">
+                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                            
+                                            <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                              <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
                                                 &nbsp;Add to Cart
                                               </button>
                                             </div>

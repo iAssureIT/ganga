@@ -525,9 +525,6 @@ background-color: transparent !important;
     /* text-align: left; */
 }
 .innerDiv a{
-    color: #555;
-    font-size: 16px; 
-    font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -633,8 +630,8 @@ background-color: transparent !important;
 }
 
 .price{
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     color: #555 !important;
 }
 .oldprice{
@@ -665,7 +662,7 @@ background-color: transparent !important;
 
 .product-item-link{
     color: #555;
-    font-size: 13px;
+    font-size: 14px;
     /* font-weight: bold; */
     white-space: nowrap;
     overflow: hidden;
@@ -678,8 +675,8 @@ background-color: transparent !important;
 }
 .product-brand{
     color: #555;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -726,7 +723,7 @@ background-color: transparent !important;
 }
 .homeCart{
     margin-top: 5px;
-    padding: 6px 6px;
+    padding: 6px 14px;
     font-weight: bold;
     font-size: 12px;
     border: 1px solid #fbbb65;

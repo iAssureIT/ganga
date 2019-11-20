@@ -38,6 +38,7 @@ class ProductViewEcommerce extends Component {
 			"subImgArray": [],
 			"totalQuanity": 1,
 			"quanityLimit": 5,
+			"reviewData" : [],
 			"imgsrc": "",
 			"wishIconClass" : "viewWishList"
 		};
@@ -58,6 +59,8 @@ class ProductViewEcommerce extends Component {
 			console.log('error', error);
 		})
 		this.getWishData();
+		this.reviewAverage();
+		this.getMyReview();
 	}
 	getWishData(){
 		const userid = localStorage.getItem('user_ID');
@@ -66,7 +69,8 @@ class ProductViewEcommerce extends Component {
 		.then((response) => {
 			
 			this.setState({
-				wishIconClass : response.data ? "viewWishListActive" : "viewWishList"
+				wishIconClass : response.data ? "viewWishListActive" : "viewWishList",
+				wishTooltip   : response.data ? "Remove from wishlist" : "Add to wishlist",
 			})
 		})
 		.catch((error) => {
@@ -129,6 +133,7 @@ class ProductViewEcommerce extends Component {
 						"quantity": this.state.totalQuanity,
 						"discountedPrice": parseInt(response.data.discountedPrice),
 						"originalPrice": parseInt(response.data.originalPrice),
+						"discountPercent" :parseInt(response.data.discountPercent),
 						"totalForQantity": totalForQantity,
 
 					}
@@ -258,10 +263,10 @@ class ProductViewEcommerce extends Component {
 			$('#addQuantity').addClass('no-drop');
 			this.setState({
 				messageData: {
-					"type": "outpage",
+					"type": "inpage",
 					"icon": "fa fa-check-circle",
 					"message": "Last "+this.state.quanityLimit+" items taken by you",
-					"class": "success",
+					"class": "warning",
 					"autoDismiss": true
 				}
 			})
@@ -269,7 +274,7 @@ class ProductViewEcommerce extends Component {
 				this.setState({
 					messageData: {},
 				})
-			}, 3000);
+			}, 5000);
 		} else {
 			this.setState({ totalQuanity: totalQuanity });
 			document.getElementById('totalQuanity').innerHTML = totalQuanity;
@@ -292,10 +297,22 @@ class ProductViewEcommerce extends Component {
 		}
 	}
 	getMyReview() {
-		axios.get("/api/customerReview/get/list/" + this.state.product_id)
+		axios.get("/api/customerReview/get/list/" + this.props.productID)
 		.then((response) => {
 		  this.setState({
 			reviewData: response.data,
+		  })
+		})
+		.catch((error) => {
+		  console.log('error', error);
+		})
+	}
+	reviewAverage(){
+		axios.get("/api/customerReview/get/avg/" +this.props.productID)
+		.then((response) => {
+		  console.log('e', response.data);
+		  this.setState({
+			  reviewAverage : response.data[0].reviewAvg
 		  })
 		})
 		.catch((error) => {
@@ -306,7 +323,6 @@ class ProductViewEcommerce extends Component {
 		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1000;background-color:#fff; height:500px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/notavailable.jpg" };
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
-				<Message messageData={this.state.messageData} />
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt50">
 					<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 stickyDiv">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imageContainer imgCont">
@@ -351,16 +367,14 @@ class ProductViewEcommerce extends Component {
 					</div>
 
 					<div className="col-lg-6 col-md-6  col-sm-12 col-xs-12 ">
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfoEcommerce">
+						<Message messageData={this.state.messageData} />
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div className="row">
-								<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.productName} </label></div>
-								{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div className="row  productNameClassNew">{this.state.productData.productName}</div>
-								</div>*/}
-
+								<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.brand} </label></div>
+								<div ><span className="productNameClassNew"> {this.state.productData.productName}</span> <span className="productCode"> (Product Code: {this.state.productData.productCode})</span></div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div className="row">
-										<p className="orangetxt "><a href="#gotoreview" className="anchorclr">Be the first to review this product</a> (Product Code: {this.state.productData.productCode})</p>
+										 {/* <p className="">{this.state.reviewData.length>0?<a href="#gotoreview" className="anchorclr">Be the first to review this product</a>: null} </p> */}
 										{/*<span className="priceEcommerce" ><i className={"fa fa-"+this.state.productData.currency}></i>&nbsp;{this.state.productData.discountedPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										{this.state.productData.offered == true ? <span className="originalPrice"><i className={"fa fa-"+this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null}*/}
 									</div>
@@ -368,15 +382,13 @@ class ProductViewEcommerce extends Component {
 								</div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div className="row">
-										<span className="col-md-1 col-lg-1 col-sm-12 col-xs-12 paddingleftzero ttl" >
-											Price:
-										</span>
-										<span className="col-md-6 col-sm-12 col-xs-12 col-lg-6 ">
+										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mb15">
 											<span className="priceEcommerceNew" ><i className={"fa fa-" + this.state.productData.currency}></i>&nbsp;{this.state.productData.discountedPrice}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											{this.state.productData.discountPercent == true ? <span className="originalPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null}
-										</span>
+											{this.state.productData.discountPercent ? <span className="originalPrice"><i className={"fa fa-" + this.state.productData.currency}>&nbsp;{this.state.productData.originalPrice}</i></span> : null} &nbsp; &nbsp;
+											{this.state.productData.discountPercent ?<span className="discountPercent">{this.state.productData.discountPercent}% off</span>: null}
+										</div>
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-											<div className="col-lg-1 col-md-1 product-reviews-summary ratebox">4.4 &nbsp;<i class="fa fa-star"></i></div> &nbsp; 11 ratings and 1 reviews
+											{this.state.reviewAverage ?<div> <div className="col-lg-1 col-md-1 product-reviews-summary ratebox">{this.state.reviewAverage} &nbsp;<i class="fa fa-star"></i></div> &nbsp; {this.state.reviewData.length} ratings and reviews</div> : null}
 										</div>
 									</div>
 
@@ -430,7 +442,7 @@ class ProductViewEcommerce extends Component {
 												<div id={this.state.productData._id} onClick={this.addtocart.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewAddtoCart"> &nbsp; Add to Cart</div>
 											</div>
 											<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-												<div id={this.state.productData._id} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
+												<div id={this.state.productData._id} title={this.state.wishTooltip} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
 											</div>
 										</div>
 									</div>

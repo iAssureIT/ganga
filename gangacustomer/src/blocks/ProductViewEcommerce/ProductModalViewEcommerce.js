@@ -126,7 +126,8 @@ class ProductModalViewEcommerce extends Component {
               "productImage" : response.data.productImage,
               "quantity" : this.state.totalQuanity,
 			  "discountedPrice" : parseInt(response.data.discountedPrice),
-			  "originalPrice" : parseInt(response.data.originalPrice),			  
+			  "originalPrice" : parseInt(response.data.originalPrice),
+			  "discountPercent" :parseInt(response.data.discountPercent),			  
               "totalForQantity" : totalForQantity,
               
           }

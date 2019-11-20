@@ -37,7 +37,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
   addReview(event) {
     event.preventDefault();
     this.setState({
-      allReviewCount: 100
+      allReviewCount: this.state.allReviewCount + 10
     })
   }
 
@@ -49,11 +49,10 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding reviewborder">
               {
                 this.state.reviewData && this.state.reviewData.length > 0 ?
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 detailtitle">RATINGS & REVIEWS</div>
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 detailtitle">RATINGS & REVIEWS ({this.state.reviewData.length})</div>
                   :
                   null
               }
-
               <div className="topspace15"></div>
               {
                 this.state.reviewData && this.state.reviewData.length > 0 ?
@@ -84,7 +83,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textAlignLeft NOpadding">
                                 {/* <img src="/images/userImage.png"/> */}
                                 By<b><span> {data.customerName} </span></b>
-                                <span className="reviewDate"> ({moment(data.createdAt).format('DD-MM-YYYY')})</span>
+                                
                               </div>
                             </div>
                           </div>
@@ -98,6 +97,7 @@ export default class ProductViewEcommerceDetailsReviewFAQ extends Component {
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 topspace8">
                                 <div className="row">
                                   <p>{data.customerReview}</p>
+                                  <p className="reviewDate"> ({moment(data.createdAt).format('DD-MM-YYYY')})</p>
                                 </div>
                               </div>
                             </div>

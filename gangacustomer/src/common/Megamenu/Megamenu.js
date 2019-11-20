@@ -51,6 +51,7 @@ addtocart(event){
                 "quantity" : 1  ,
                 "discountedPrice" : parseInt(response.data.discountedPrice),
                 "originalPrice" : parseInt(response.data.originalPrice),
+                "discountPercent" :parseInt(response.data.discountPercent),
                 "totalForQantity" : totalForQantity,
                 
             }
