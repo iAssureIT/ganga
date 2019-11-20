@@ -472,10 +472,10 @@ export default class MyOrders extends Component {
                             <thead>
                               <div >
                                 <tr >
-                                  <th scope="col" className="col-lg-2 id "><div className="">Product Image</div></th>
-                                  <th scope="col" className="col-lg-2 id "><div className="">Product Name</div></th>
-                                  <th scope="col" className="col-lg-2 date  "><div className="">Price</div></th>
-                                  <th scope="col" className="col-lg-2 shipping "><div className="">Qty</div></th>
+                                  <th scope="col" className="col-lg-2 id NOpadding"><div className=""></div></th>
+                                  <th scope="col" className="col-lg-5 id NOpadding"><div className="">Product Name</div></th>
+                                  <th scope="col" className="col-lg-2 date NOpadding "><div className="">Price</div></th>
+                                  <th scope="col" className="col-lg-2 shipping NOpadding"><div className="">Qty</div></th>
                                   <th scope="col" className="col-lg-2 total"><div className="">Subtotal</div></th>
                                 </tr>
                               </div>
@@ -488,11 +488,11 @@ export default class MyOrders extends Component {
                                     return (
                                       <div className={productData.status == "Returned" ? "greybg col-lg-12" : "col-lg-12"}>
                                         <tr key={'id' + index} >
-                                          <td data-th="Order #" width="200" className=" id orderimgsize"><img src={productData.productImage[0] ? productData.productImage[0] : "/images/notavailable.jpg"} /></td>
-                                          <td data-th="Order #" width="300" className=" productnamecss id ">{productData.productName}</td>
-                                          <td data-th="Date" width="200" className=" date "><i className={"fa fa-" + productData.currency}> {productData.total}</i></td>
-                                          <td data-th="Ship To" width="200" className=" shipping ">Ordered: {productData.quantity}</td>
-                                          <td data-th="Order Total" width="200" className=" total  "><span><i className={"fa fa-" + productData.currency}> {productData.total}</i></span></td>
+                                          <td data-th="Order #" width="150" className=" id orderimgsize"><img src={productData.productImage[0] ? productData.productImage[0] : "/images/notavailable.jpg"} /></td>
+                                          <td data-th="Order #" width="350" className=" productnamecss id ">{productData.productName}</td>
+                                          <td data-th="Date" width="200" align="right" className=" date "><i className={"fa fa-" + productData.currency}> {productData.total}</i></td>
+                                          <td data-th="Ship To" width="200" align="right" className=" shipping ">Ordered: {productData.quantity}</td>
+                                          <td data-th="Order Total" width="200" align="right" className=" total  "><span><i className={"fa fa-" + productData.currency}> {productData.total}</i></span></td>
                                           {data.status == "Paid" ?
                                             <td data-th="Order Total" width="100" className="total actbtns">
                                               <button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab fa fa-pencil" title="Give Feedback" id={productData.product_ID} orderID={data._id} onClick={this.getoneproductdetails.bind(this)}> </button>
