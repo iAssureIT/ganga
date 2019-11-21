@@ -479,7 +479,7 @@ export default class MyOrders extends Component {
                                           ? <p>Order Placed</p> 
                                           : (data.deliveryStatus[data.deliveryStatus.length-1].status == 'Dispatch' || 
                                             data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivery Initiated'
-                                            ? <p>Out for Delivery</p> : (data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivered & Paid' ? <p>Delivered</p>: "") )
+                                            ? <p>Out for Delivery</p> : (data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivered & Paid' ? <p>Delivered on <br/>{moment(data.deliveryStatus[data.deliveryStatus.length-1].date).format("DD MMMM YYYY")}</p>: "") )
                                         }
                                         </div>
                                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6"> 
@@ -497,7 +497,10 @@ export default class MyOrders extends Component {
                                               :
                                               null
                                             }
-                                            {
+                                            
+                                          </div>
+                                        </div>
+                                        {
                                               pdata.status == "Returned" ?
                                                 data.returnProducts.map((value) => {
                                                   if (value.product_ID == pdata.product_ID) {
@@ -511,8 +514,6 @@ export default class MyOrders extends Component {
                                                 :
                                                 null
                                           }
-                                          </div>
-                                        </div>
                                       </div>
                                       );
                                   })
