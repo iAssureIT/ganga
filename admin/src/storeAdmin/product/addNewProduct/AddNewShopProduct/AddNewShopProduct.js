@@ -32,7 +32,8 @@ class AddNewShopProduct extends Component {
     var editId = nextProps.match.params.id;
     if (nextProps.match.params.id) {
       this.setState({
-        editId: editId
+        editId: editId,
+        addrows: [1],
       })
       this.edit(editId);
     }
@@ -76,6 +77,9 @@ class AddNewShopProduct extends Component {
     $.validator.addMethod("regxPrice", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Price should have positive decimal number followed by 1 or 2 digits");
+    $.validator.addMethod("regxavailableQuantity", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Quantity should have positive decimal number followed by 1 or 2 digits");
     $.validator.addMethod("regxDiscountPercent", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Percent should have positive decimal number followed by 1 or 2 digits");
@@ -133,7 +137,7 @@ class AddNewShopProduct extends Component {
         },
         availableQuantity: {
           required: true,
-          regxPrice: /^\d+(,\d{1,2})?$/,
+          regxavailableQuantity: /^\d+(,\d{1,2})?$/,
           // regxmobileNumber : /^([7-9][0-9]{9})$/,
         },
         currency: {
@@ -286,6 +290,7 @@ class AddNewShopProduct extends Component {
         this.getSubCategories(response.data.category_ID);
         console.log('section_ID',response.data.section_ID)
         this.setState({
+          addrows: [1],
           showDiscount : response.data.discountedPrice ? false : true,
           vendor : response.data.vendorName+'|'+response.data.vendor_ID,
           section: response.data.section + '|' + response.data.section_ID,
@@ -545,7 +550,7 @@ class AddNewShopProduct extends Component {
     if(originalPrice != "NaN"){
       var discountedPrice = parseFloat(originalPrice) - parseFloat((originalPrice * event.target.value)/100).toFixed(2);
       this.setState({
-        discountedPrice : discountedPrice < 0 ? 0 : discountedPrice
+        discountedPrice : discountedPrice < 0 ? 0 : parseFloat(discountedPrice).toFixed(2)
       })
     }
   }
@@ -559,7 +564,7 @@ class AddNewShopProduct extends Component {
     if(originalPrice != "NaN"){
       var discountPercent = parseFloat(((originalPrice - event.target.value)/originalPrice )*100).toFixed(2);
       this.setState({
-        discountPercent : discountPercent
+        discountPercent : parseFloat(discountPercent).toFixed(2)
       })
     }
   }
