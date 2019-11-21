@@ -226,7 +226,7 @@ class CartProducts extends Component{
     render(){
         console.log(this.props.recentCartData);
         return(
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartHeight">
                 <Loader type="fullpageloader"/>
                 <div className="row">
                     <Message messageData={this.state.messageData} />
@@ -255,6 +255,7 @@ class CartProducts extends Component{
                                                 var z = this.state.totalForQantity;
                                                 var totalForQantity = y.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
                                                 var totalForQantityState = z ?  z.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",") : "";
+                                                console.log('d', data.currency);
                                                 return(
                                                     <tr key={index}>
                                                         <td>

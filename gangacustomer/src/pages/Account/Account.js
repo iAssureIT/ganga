@@ -116,7 +116,7 @@ class Account extends Component{
                                 </div>
                             </div>*/}
 
-                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15 row">Address Book</label>
+                            {/* <label className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 row">Address Book</label> */}
                             {/*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
                                     <div className="row">
@@ -151,25 +151,26 @@ class Account extends Component{
                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingRight">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
                                     <div className="row">
-                                        <div className="accountDivHeader">Default Shipping/Billing Address</div>
+                                        <div className="accountDivHeader">Default Shipping Address</div>
                                         { this.state.addressLine1 ?
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.name}</p>
-                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">
-                                                {this.state.addressLine1},<br />
-                                                {this.state.addressLine2},<br />
-                                                {this.state.city},<br />
+                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                {this.state.addressLine1}, &nbsp;
+                                                {this.state.addressLine2}, &nbsp;
+                                                {this.state.city}, &nbsp;
                                                 {this.state.state}, {this.state.country} - {this.state.pincode}<br />
-                                                    Contact Number: {this.state.mobileNumber}
+                                                    Email: {this.state.emailId}<br />
+                                                    Contact Number: {this.state.mobileNumber} 
                                                 </p>
-                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div data-toggle="modal" data-target="#checkoutAddressModal" onClick={this.getAddressId.bind(this)} id={this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</div>
                                                 </div>
                                             </div>
                                             :
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb15">
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{wordBreak : "break-word"}}>You have not set a default shipping/billing address.</p>
-                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                                                     <button data-toggle="modal" data-target="#checkoutAddressModal" className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; ADD ADDRESS</button>
                                                 </div>
                                             </div>

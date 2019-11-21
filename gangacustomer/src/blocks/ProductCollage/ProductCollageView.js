@@ -208,7 +208,7 @@ class ProductCollageView extends Component {
               var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
               if(x && x.length > 0){
                 var wishClass = '';
-                var tooltipMsg = 'Wish listed';
+                var tooltipMsg = 'Remove from wishlist';
               }else{
                 var wishClass = '-o';
                 var tooltipMsg = 'Add to wishlist';
