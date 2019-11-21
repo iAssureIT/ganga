@@ -268,13 +268,13 @@ ul.box-static-link li span {
     left: -125px;
     border-radius: 0px;
     top:26px;
-    height: 400px;
+    max-height: 400px;
     /* overflow-y: scroll; */
 }
 .dropScroll{
   width: 400px!important;
   position: relative;
-  height: 285px;
+  max-height: 285px;
   overflow-y: scroll;
 }
 .cartdropborder{

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 // import swal from 'sweetalert';
 import $ from "jquery";
+import jQuery from 'jquery';
 import axios from 'axios';
 import Message from '../blocks/Message/Message.js';
 import './SignUp.css';
@@ -14,6 +15,30 @@ class ConfirmOtp extends Component {
       showMessage : false
     }
   }
+  componentDidMount(){
+    $.validator.addMethod("regxemailotp", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Please enter valid OTP.");
+    
+    jQuery.validator.setDefaults({
+        debug: true,
+        success: "valid"
+    });
+
+    $("#OTPMobMail").validate({
+      rules: {
+        emailotp: {
+          required: true,
+          regxemailotp : /^[1-9][0-9]{5}$/,
+        },
+      },
+      errorPlacement: function (error, element) {
+        if (element.attr("name") == "emailotp") {
+          error.insertAfter("#emailotp");
+        }
+      }
+    });
+  }
   confirmOTP(event){
     event.preventDefault();
     var url = this.props.match.params;
@@ -22,33 +47,37 @@ class ConfirmOtp extends Component {
       "emailOTP":  parseInt(this.refs.emailotp.value),
       "status"  :  "Active"
     }
-    $('.fullpageloader').show();
-    axios.put('/api/users/otpverification', formValues)
-    .then((response)=>{
-      $('.fullpageloader').hide();
-      this.setState({
-        showMessage : true,
-        messageData : {
-          "type" : "outpage",
-          "icon" : "fa fa-check-circle",
-          "message" : "&nbsp; "+response.data.message,
-          "class": "success",
-          "autoDismiss" : false
-        }
+    if($("#OTPMobMail").valid()){
+      $('.fullpageloader').show();
+      axios.put('/api/users/otpverification', formValues)
+      .then((response)=>{
+        $('.fullpageloader').hide();
+        this.setState({
+          showMessage : true,
+          messageData : {
+            "type" : "outpage",
+            "icon" : "fa fa-check-circle",
+            "message" : "&nbsp; "+response.data.message,
+            "class": "success",
+            "autoDismiss" : false
+          }
+        })
+        // this.props.history.push('/login');
       })
-      // this.props.history.push('/login');
-    })
-    .catch((error)=>{
-      $('.fullpageloader').hide();
-      this.setState({
-        messageData : {
-          "type" : "inpage",
-          "icon" : "fa fa-times-circle",
-          "message" : "&nbsp; "+error.response.data.message,
-          "class": "danger",
-        }
+      .catch((error)=>{
+        $('.fullpageloader').hide();
+        // console.log('error', error);
+        this.setState({
+          messageData : {
+            "type" : "inpage",
+            "icon" : "fa fa-times-circle",
+            "message" : "&nbsp; "+error.response.data.message,
+            "class": "danger",
+          }
+        })
       })
-    })
+    }
+    
   }
   inputEffect(event){
     event.preventDefault();
@@ -134,8 +163,8 @@ class ConfirmOtp extends Component {
                           <div className="">
                             <span>Enter six digit verification code received on <b>Email</b>.<br/></span>
                           </div>
-                          <div className="input-group">
-                            <input type="text" className="form-control" ref="emailotp" name="emailotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" title="Please enter numbers only!" maxLength="6" pattern="(0|[0-9]*)" required/>
+                          <div className="input-group" id="emailotp">
+                            <input  type="text" className="form-control" ref="emailotp" name="emailotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" maxLength="6" pattern="(0|[0-9]*)" required/>
                             <span className="input-group-addon glyphi-custommm"><i className="fa fa-key" aria-hidden="true"></i></span>
                           </div>
                           

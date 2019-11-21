@@ -13,6 +13,7 @@ class Payment extends Component{
                 backgroungImage : '/images/cartBanner.png',
             }
         }
+        window.scrollTo(0, 0);
     }
 
 
