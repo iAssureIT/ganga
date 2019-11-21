@@ -135,9 +135,13 @@ class ViewOrder extends Component {
                           <img src={data.productImage[0]} style={{width:"100%"}}/>
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                          <p> <a href="#">{data.productName}</a></p>
-                          <p><i className={"fa fa-"+this.state.orderData.currency}> {data.total}</i></p>
-                          <p>Ordered: {data.quantity}</p>
+
+                          <p> <a href={"/productdetails/"+data.product_ID} className="productname">{data.productName}</a></p>
+                          <span><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span> &nbsp;
+                          <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> 
+                                          
+                          <p>Total: &nbsp;<i className={"fa fa-"+this.state.orderData.currency}> {data.total}</i></p>
+                          <p>Quantity: {data.quantity}</p>
                         </div>
                       </div>
                       );

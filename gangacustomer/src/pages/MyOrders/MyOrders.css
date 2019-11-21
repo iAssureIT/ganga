@@ -36,6 +36,12 @@ table > tfoot > tr > td:last-of-type {
 	color:#fbbb65 !important;
 	text-decoration: none;
 }
+.actions{
+	float: right;
+}
+.actions button {
+	width: 35px;
+}
 .actions a {
     left: 0;
     bottom: 0;
@@ -50,6 +56,26 @@ table > tfoot > tr > td:last-of-type {
     background: #fff;
     color: #fbbb65;
     text-transform: uppercase;
+}
+
+
+.actionbtn .btn{
+	background-color: transparent;
+    margin: 0px 5px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 3px;
+    border: 1px solid #fbbb65;
+    color: #777;
+    float: right;
+}
+.actionbtn .btn:hover{
+	background-color: #fbbb65;
+    color: #fff;
+    float: right;
+}
+.actbtns{
+	float: right;
 }
 .actbtns button{
     left: 0;
@@ -93,10 +119,23 @@ table > tfoot > tr > td:last-of-type {
 .orderimgsize img{
 	height: 70px;
 }
+.orderIdborder{
+	border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    background : #eeeeee6b;
+}
 .orderbodyborder{
-	border:1px solid #ccc;
 	padding: 10px;
-	margin-bottom: 10px;
+	border: 1px solid #ccc;
+}
+
+.orderfooterborder{
+	padding: 10px;
+	border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 .cancelledorder{
 	border:2px solid #ccc;
@@ -135,4 +174,26 @@ text-align:right ! important;
 	border-radius: 4px;
 	padding: 14px 18px;
 	margin:10px 0;
+}
+.orderIdButton{
+	width: 196px !important;
+    background-color: #fbbb65 !important;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0px;
+}
+.orderfootertag span{
+	color : #878787
+}
+.orderfootertag2{
+	float: right;
+}
+.orderfootertag2 span{
+	color : #878787
+}
+.productname{
+	word-break: break-word;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
 }

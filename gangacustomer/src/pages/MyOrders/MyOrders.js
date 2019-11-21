@@ -431,58 +431,58 @@ export default class MyOrders extends Component {
                   this.state.orderData && this.state.orderData.length > 0 ?
                     this.state.orderData.map((data, index) => {
                       return (
-                        <div className={data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' ? "cancelledorder" : "orderbodyborder"}  >
-                          <table className="data table table-order-items history" id="my-orders-table">
-                            <thead>
-                              <tr>
-                                <th scope="col" className="col id">Order #</th>
-                                <th scope="col" className="col date">Date</th>
-                                <th scope="col" className="col shipping">Ship To</th>
-                                <th scope="col" className="col total">Order Total</th>
-                                <th scope="col" className="col status">Status</th>
-                                <th scope="col" className="col actions">&nbsp;</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr key={index}>
-                                <td data-th="Order #" className="col id">{data.orderID}</td>
-                                <td data-th="Date" className="col date">{moment(data.createdAt).format("DD/MM/YYYY hh:mm a")}</td>
-                                <td data-th="Ship To" className="col shipping textwrap">{data.userFullName}</td>
-                                <td data-th="Order Total" className="col total"><span><i className={"fa fa-" + data.currency}> {data.totalAmount.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} </i></span></td>
-                                <td data-th="Status" className="col status">{data.deliveryStatus[data.deliveryStatus.length - 1].status == "Dispatch" || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Delivery Initiated" ? "Out for Delivery" : data.deliveryStatus[data.deliveryStatus.length - 1].status}</td>
-                                <td data-th="Actions" className="col actions">
+                        <div className="row" style={{marginBottom:"10px"}}>
+                          <div className={data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' ? "col-lg-12 cancelledorder" : "col-lg-12 orderIdborder"}  >
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6">
+                                <div className="orderIdButton">{"OrderId: "+(data.orderID)}</div>
+                              </div>  
+                              <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6 NOpadding">
+                                <div className="actionbtn NOpadding">
+                                  <a className="btn filterallalphab" href={"/view-order/" + data._id} title="View Order">
+                                  <span> Track</span></a>
                                   {
-                                    <div className="actbtns NOpadding">
-
-                                      <a className="btn alphab filterallalphab" href={"/view-order/" + data._id} title="View Order">
-                                        <span> <i className="fa fa-eye"></i></span></a>
-                                      {
-                                        data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' || data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Returned' ? '' :
-                                          data.deliveryStatus[data.deliveryStatus.length - 1].status == "New Order" || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Verified"
-                                            || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Packed" ? <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)}
-                                              data-status={data.deliveryStatus[data.deliveryStatus.length - 1].status} data-id={data._id}>X</button> : ''
-                                      }
-                                    </div>
+                                    data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' || data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Returned' ? '' :
+                                      data.deliveryStatus[data.deliveryStatus.length - 1].status == "New Order" || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Verified"
+                                        || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Packed" ? <button type="button" data-toggle="modal" data-target="#cancelProductModal" className="btn filterallalphab" name="returnbtn" title="Cancel" onClick={this.cancelProduct.bind(this)}
+                                          data-status={data.deliveryStatus[data.deliveryStatus.length - 1].status} data-id={data._id}>Cancel</button> : ''
                                   }
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-
-                          <table className="data table table-order-items history" id="my-orders-table">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                          {
+                                </div>
+                              </div>
+                            </div> 
+                          </div>
+                          <div className="col-lg-12 orderbodyborder">
+                            {
                             data.products && data.products.length > 0 ?
                                   data.products.map((pdata, index)=>{
                                     return(
-                                      <div>
+                                      <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-3">
                                           <img src={pdata.productImage[0]} style={{width:"100%"}}/>
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                          <p> <a href="#">{pdata.productName}</a></p>
-                                          <p><i className={"fa fa-"+data.currency}> {pdata.total}</i></p>
-                                          <p>Ordered: {pdata.quantity}</p>
+                                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NOpadding">
+                                          <p> <a href={"/productdetails/"+pdata.product_ID} className="productname">{pdata.productName}</a></p>
+                                          <span><i className="fa fa-inr"></i>&nbsp;{pdata.discountedPrice}</span> &nbsp;
+                                          <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{pdata.originalPrice}</span> 
+                                          <p>Quantity: {pdata.quantity}</p>
+                                        </div>  
+                                        <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6 NOpadding">
+                                          <span><i className="fa fa-inr"></i>&nbsp;{pdata.total}</span> &nbsp;
+                                        </div>
+                                        <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6 NOpadding">
+                                        {
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status =='New Order' ||
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status =='Verified' || 
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status == 'Packed' || 
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status == 'Inspection' ||
+                                          data.deliveryStatus[data.deliveryStatus.length-1].status == 'Dispatch Approved' 
+                                          ? <p>Order Placed</p> 
+                                          : (data.deliveryStatus[data.deliveryStatus.length-1].status == 'Dispatch' || 
+                                            data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivery Initiated'
+                                            ? <p>Out for Delivery</p> : (data.deliveryStatus[data.deliveryStatus.length-1].status == 'Delivered & Paid' ? <p>Delivered</p>: "") )
+                                        }
+                                        </div>
+                                        <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6"> 
                                           <div>
                                             {data.status == "Paid" ?
                                               <div data-th="Order Total" width="100" className="total actbtns">
@@ -518,77 +518,21 @@ export default class MyOrders extends Component {
                                   })
                                   : null
                           }
+                         
                           </div>
-                          </table>
-                          {
-                          /*<table className="data table table-order-items history" id="my-orders-table">
-                            <thead>
-                              <div >
-                                <tr >
-                                  <th scope="col" className="col-lg-2 id NOpadding"><div className=""></div></th>
-                                  <th scope="col" className="col-lg-5 id NOpadding"><div className="">Product Name</div></th>
-                                  <th scope="col" className="col-lg-2 date NOpadding "><div className="">Price</div></th>
-                                  <th scope="col" className="col-lg-2 shipping NOpadding"><div className="">Qty</div></th>
-                                  <th scope="col" className="col-lg-2 total"><div className="">Subtotal</div></th>
-                                </tr>
-                              </div>
-                            </thead>
-                            <tbody>
-                              {
-                                data.products && data.products.length > 0 ?
-                                  data.products.map((productData, pindex) => {
-                                    
-                                    return (
-                                      <div className={productData.status == "Returned" ? "greybg col-lg-12" : "col-lg-12"}>
-                                        <tr key={'id' + index} >
-                                          <td data-th="Order #" width="150" className=" id orderimgsize"><img src={productData.productImage[0] ? productData.productImage[0] : "/images/notavailable.jpg"} /></td>
-                                          <td data-th="Order #" width="350" className=" productnamecss id ">{productData.productName}</td>
-                                          <td data-th="Date" width="200" align="right" className=" date "><i className={"fa fa-" + productData.currency}> {productData.total}</i></td>
-                                          <td data-th="Ship To" width="200" align="right" className=" shipping ">Ordered: {productData.quantity}</td>
-                                          <td data-th="Order Total" width="200" align="right" className=" total  "><span><i className={"fa fa-" + productData.currency}> {productData.total}</i></span></td>
-                                          {data.status == "Paid" ?
-                                            <td data-th="Order Total" width="100" className="total actbtns">
-                                              <button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab fa fa-pencil" title="Give Feedback" id={productData.product_ID} orderID={data._id} onClick={this.getoneproductdetails.bind(this)}> </button>
-                                              {
-                                                data.status == 'Cancelled' || productData.status == 'Returned' ? '' :
-                                                  data.status == 'Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return"
-                                                    onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-altorderid={data.orderID} data-productid={productData.product_ID}>
-                                                    <i className="fa" data-status={data.status} data-id={data._id} data-productid={productData.product_ID} >&#xf0e2;</i></button> : ''
-                                              }
-                                            </td>
-                                            :
-                                            null
-                                          }
-                                        </tr>
-
-                                        {
-                                          productData.status == "Returned" ?
-                                            data.returnProducts.map((value) => {
-                                              if (value.product_ID == productData.product_ID) {
-                                                return (
-                                                  <div className="col-lg-12">
-                                                    <ReturnStatus data={value} />
-                                                  </div>
-                                                );
-                                              }
-                                            })
-                                            :
-                                            null
-                                        }
-                                      </div>
-                                    );
-                                  })
-                                  :
-                                  ""
-                              }
-                            </tbody>
-                          </table>*/
-                        }
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 orderfooterborder">
+                            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                              <p className="orderfootertag"><span>Ordered On: </span>{moment(data.createdAt).format("DD MMMM YYYY")} </p>
+                            </div>
+                            <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                              <p className="orderfootertag2"><span>Ordered Total: </span> <i className="fa fa-inr"></i>&nbsp;{data.totalAmount} </p>
+                            </div>
+                          </div>
                         </div>
                       );
                     })
                     :
-                    <div className="col-lg-12 textAlignCenter">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 textAlignCenter">
                       <img src="/images/emptyorder.png" />
                     </div>
                 }
