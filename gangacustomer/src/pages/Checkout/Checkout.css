@@ -156,3 +156,6 @@
     font-weight: 600;
     opacity: 1;
 }
+.checkoutADDCss{
+    word-break: break-word;
+}

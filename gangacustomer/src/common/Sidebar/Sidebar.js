@@ -42,20 +42,20 @@ export default class Sidebar extends Component {
 		    <br/>        
       			<nav className="account-nav">
 		            <ul className="nav items">
-		                <li className="nav item col-lg-12">
+		                <li className="nav item col-lg-12 NOpadding">
 
 		                <a href="/account" id="atag"><i className="fa fa-user" aria-hidden="true"></i>&nbsp; Account Dashboard</a>
 		                </li>
-		                <li className="nav item col-lg-12">
+		                <li className="nav item col-lg-12 NOpadding">
 		                <a href="/edit" id="atag"><i className="fa fa-info" aria-hidden="true"></i>&nbsp; Account Information</a>
 		                </li>
-		                <li className="nav item col-lg-12">
+		                <li className="nav item col-lg-12 NOpadding">
 		                <a href="/address-book" id="atag"><i className="fa fa-location-arrow"></i>&nbsp; Address Book</a>
 		                </li>
-		                <li className="nav item col-lg-12">
+		                <li className="nav item col-lg-12 NOpadding">
 		                <a href="/my-orders" id="atag"><i className="fa fa-download"></i>&nbsp; My Orders </a>
 		                </li>
-		                <li className="nav item col-lg-12">
+		                <li className="nav item col-lg-12 NOpadding">
 		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
 		                </li>
 		                

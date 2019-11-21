@@ -421,7 +421,7 @@ export default class MyOrders extends Component {
 
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
               <br />
-              <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
+              <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NOpadding mr20">
                 <Sidebar />
               </div>
 
@@ -468,7 +468,60 @@ export default class MyOrders extends Component {
                               </tr>
                             </tbody>
                           </table>
+
                           <table className="data table table-order-items history" id="my-orders-table">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                          {
+                            data.products && data.products.length > 0 ?
+                                  data.products.map((pdata, index)=>{
+                                    return(
+                                      <div>
+                                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                                          <img src={pdata.productImage[0]} style={{width:"100%"}}/>
+                                        </div>
+                                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                          <p> <a href="#">{pdata.productName}</a></p>
+                                          <p><i className={"fa fa-"+data.currency}> {pdata.total}</i></p>
+                                          <p>Ordered: {pdata.quantity}</p>
+                                          <div>
+                                            {data.status == "Paid" ?
+                                              <div data-th="Order Total" width="100" className="total actbtns">
+                                                <button type="button" data-toggle="modal" data-target="#feedbackProductModal" className="btn alphab filterallalphab fa fa-pencil" title="Give Feedback" id={pdata.product_ID} orderID={data._id} onClick={this.getoneproductdetails.bind(this)}> </button>
+                                                {
+                                                  data.status == 'Cancelled' || pdata.status == 'Returned' ? '' :
+                                                    data.status == 'Paid' ? <button type="button" data-toggle="modal" data-target="#returnProductModal" className="btn alphab filterallalphab" name="returnbtn" title="Return"
+                                                      onClick={this.returnProduct.bind(this)} data-status={data.status} data-id={data._id} data-altorderid={data.orderID} data-productid={pdata.product_ID}>
+                                                      <i className="fa" data-status={data.status} data-id={data._id} data-productid={pdata.product_ID} >&#xf0e2;</i></button> : ''
+                                                }
+                                              </div>
+                                              :
+                                              null
+                                            }
+                                            {
+                                              pdata.status == "Returned" ?
+                                                data.returnProducts.map((value) => {
+                                                  if (value.product_ID == pdata.product_ID) {
+                                                    return (
+                                                      <div className="col-lg-12">
+                                                        <ReturnStatus data={value} />
+                                                      </div>
+                                                    );
+                                                  }
+                                                })
+                                                :
+                                                null
+                                          }
+                                          </div>
+                                        </div>
+                                      </div>
+                                      );
+                                  })
+                                  : null
+                          }
+                          </div>
+                          </table>
+                          {
+                          /*<table className="data table table-order-items history" id="my-orders-table">
                             <thead>
                               <div >
                                 <tr >
@@ -529,7 +582,8 @@ export default class MyOrders extends Component {
                                   ""
                               }
                             </tbody>
-                          </table>
+                          </table>*/
+                        }
                         </div>
                       );
                     })

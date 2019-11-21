@@ -94,9 +94,8 @@ table > tfoot > tr > td:last-of-type {
 	height: 70px;
 }
 .orderbodyborder{
-	border:2px solid #ccc;
+	border:1px solid #ccc;
 	padding: 10px;
-	border-radius: 5px;
 	margin-bottom: 10px;
 }
 .cancelledorder{
@@ -127,6 +126,13 @@ table > tfoot > tr > td:last-of-type {
 text-align:right ! important;
 }
 
-.table{
-	table-layout: fixed;
+
+.table-caption{
+	font-weight: 600;
+}
+.outerbox{
+	border : 1px solid #ddd;
+	border-radius: 4px;
+	padding: 14px 18px;
+	margin:10px 0;
 }

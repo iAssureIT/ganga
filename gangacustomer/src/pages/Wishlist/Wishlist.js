@@ -228,7 +228,7 @@ class Wishlist extends Component {
                 <div className="container">
 
                     <br/>
-                    <div className="col-lg-3 col-md-3 col-sm-4 col-xs-4 NOpadding">
+                    <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NOpadding mr20">
                         <Sidebar />
                     </div>
                     <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8 NOpadding">

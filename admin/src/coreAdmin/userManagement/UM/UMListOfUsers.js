@@ -118,9 +118,19 @@ class UMListOfUsers extends Component {
     	var formValues={ "searchText" : searchText };
     	axios.post("/api/users/searchValue",formValues)
         .then((response)=>{ 
-            console.log('tableData', response.data);
+            //console.log('tableData', response.data);
+            var tableData = response.data.map((a, i)=>{
+				return {
+					_id 			: a._id,
+					fullName        : a.fullName,
+	                emailId    		: a.emailId,
+	                mobNumber       : a.mobileNumber, 
+	                status        	: a.status,	
+	                roles        	: a.roles,	
+				}
+			})
             this.setState({
-                tableData : response.data,
+                tableData : tableData,
                 dataCount : response.data.length
             });
         })
@@ -176,8 +186,18 @@ class UMListOfUsers extends Component {
 		}
 		axios.post('/api/users/filterUser',formValues)
 		.then((response)=>{
+			var tableData = response.data.map((a, i)=>{
+				return {
+					_id 			: a._id,
+					fullName        : a.fullName,
+	                emailId    		: a.emailId,
+	                mobNumber       : a.mobileNumber, 
+	                status        	: a.status,	
+	                roles        	: a.roles,	
+				}
+			})
 			this.setState({
-                tableData : response.data,
+                tableData : tableData,
                 dataCount : response.data.length
             });
 			//this.getData(this.state.startRange, this.state.limitRange);

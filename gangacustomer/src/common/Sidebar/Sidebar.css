@@ -2,7 +2,10 @@
 
 
 .sidebar{
-	width: 85%;
+	/*width: 85%;*/
+}
+.mr20{
+    margin-right: 20px;
 }
 .account-nav li a{
 	text-transform: none;
