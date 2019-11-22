@@ -273,9 +273,13 @@ render(){
 							<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow adduserbtn1" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
 							<CreateUser getData={this.getData.bind(this)} rolesArray={this.state.rolesArray}/>
 						</div>
-						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodalcl">
-							<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
-						</div>
+						{
+							localStorage.getItem('role') == 'superAdmin' ? 
+							<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodalcl">
+								<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
+							</div>
+							: null
+						}
 					</div>
 
 				</div>
