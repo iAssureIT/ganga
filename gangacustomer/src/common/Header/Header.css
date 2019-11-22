@@ -1,7 +1,7 @@
 .headerflow{
   /*z-index: 10000;*/
   background-color: transparent;
-  height: 100px;
+  /* height: 100px; */
   background-color: #fff;
 }
 .headerpaddingtop{
@@ -204,11 +204,16 @@
   border:1px solid #fff !important;
 }
 
-.signinmenuul li a{
-  font-size: 12px;
+.signinmenuul li {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  /* font-size: 12px; */
   border-bottom: 1px solid #aaa;
 }
-
+.signoutmenu li{
+  padding-top: 10px !important;
+  padding-bottom: 5px !important;
+}
 .megabars{
   font-size: 25px;
 
@@ -545,4 +550,19 @@ ul.box-static-link li span {
 }
 .checkoutBtn{
   margin-top: 10px;
+}
+.dropBtn a{
+  margin-top: 14px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 10px;
+    color: #f0ad4e !important;
+    font-weight: 600;
+}
+.dropBtn{
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+.borderTop{
+  border-top: 1px solid #eee;
 }

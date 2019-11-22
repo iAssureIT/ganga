@@ -368,7 +368,7 @@ componentWillMount() {
         <Message messageData={this.state.messageData} />
         <header className="col-lg-12 headerflow">
           <div className="row">
-            <div className="col-lg-12 header1wrapper">
+            {/* <div className="col-lg-12 header1wrapper">
               <div className="row">
                 <div className="col-lg-10 col-lg-offset-1">
                   <div className="row">
@@ -426,7 +426,7 @@ componentWillMount() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="col-lg-10 col-lg-offset-1">
               <div className="row">
                 <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
@@ -475,8 +475,8 @@ componentWillMount() {
                       {user_ID ?
                         <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                           <div className="checkoutBtn">
-                            <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> items</p>
-                            <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : ""}</div>
+                            <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> item(s)</p>
+                            <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : 0}</div>
                             {/*<a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>*/}
                           </div>
                           <div className="dropScroll">
@@ -543,11 +543,11 @@ componentWillMount() {
                 <div className="col-lg-6 header1list2">
                       <div className="row">
                         <ul>
-                          {
+                          {/*
                             user_ID ? ""
                               : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Sign Up</a></li>
 
-                          }
+                          */}
                           {
 
                             user_ID ?
@@ -579,7 +579,17 @@ componentWillMount() {
                                 </ul>
                               </li>
                               :
-                              <li><a href="/login"><i className="fa fa-pencil"></i> Sign In</a></li>
+                              <li className="dropdown"><i className="fa fa-user-o headercarticon" aria-hidden="true"></i>
+                                <ul className="dropdown-menu signinmenuul signoutmenu">
+                                  <li className="col-lg-12">
+                                    <label>Welcome</label>
+                                    <p>To access account and manage orders</p>
+                                    <div className="borderTop"></div>
+                                    <span className="col-lg-6 dropBtn"><a href="/login"> SIGN IN </a></span>
+                                    <span className="col-lg-6 dropBtn"><a href="/signup">SIGN UP</a></span>
+                                  </li>
+                                </ul>
+                              </li>
                           }
                         </ul>
                       </div>
