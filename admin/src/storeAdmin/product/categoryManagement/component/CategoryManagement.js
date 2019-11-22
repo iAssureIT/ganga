@@ -1,11 +1,9 @@
 import React, { Component }   from 'react';
 import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
-// import validator              from 'validator';
 import IAssureTable           from '../../../../coreAdmin/IAssureTable/IAssureTable.jsx';
 import 'jquery-validation';
 import 'bootstrap/js/tab.js';
@@ -239,7 +237,6 @@ class CategoryManagement extends Component{
 
             swal({
               text  : response.data.message,
-              title : response.data.message,
             });
 
             this.setState({
@@ -299,7 +296,6 @@ class CategoryManagement extends Component{
 
             swal({
               text  : response.data.message,
-              title : response.data.message,
             });
             this.getData(this.state.startRange, this.state.limitRange);
             this.setState({
@@ -377,10 +373,10 @@ class CategoryManagement extends Component{
                           categoryImage = objTitle ;
                           
                       }else{          
-                          swal("Images not uploaded","Something went wrong","error");  
+                          swal("Images not uploaded");  
                       }//file
                   }else{ 
-                      swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                      swal("Allowed images formats are (jpg,png,jpeg)");   
                   }//file types
               }//file
           // }//for 

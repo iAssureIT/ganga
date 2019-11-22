@@ -75,27 +75,30 @@ class CompanyTaxDetails extends Component{
         //       });
         if(response.status == 200)
         {
-        console.log("this is response===>>>",response);
-        swal("Good job!", "Tax Information Added Successfully!", "success")
-
+        
+        swal({
+          title : "Tax Information Added Successfully!",
+        });
         // this.refs.taxrating.value = "";
         // this.refs.taxtype.value   = "";
         
          }   
       })
       .catch(function (error) {
-        // handle error
-        console.log(error);
-        swal("", "Tax Information Added Successfully!!", "Danger")
-  
+        
+        swal({
+          title : "Tax Information Added Successfully!!",
+        });
       })
       .finally(function () {
         // always executed
       });
   
     }else{
-      swal("Please enter mandatory fields", "", "warning");
-      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      
+      swal({
+        title : "Please enter mandatory fields"
+      });
     }
     // axios.post('https://jsonplaceholder.typicode.com/posts',{companytaxinfo})
     // .then(function (response) {

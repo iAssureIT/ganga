@@ -158,7 +158,6 @@ class CreateUser extends Component {
                 .then( (res)=>{
                     swal({
                       title: "User added successfully",
-                      text: "User added successfully",
                     });
                     this.refs.firstname.value = '';
                     this.refs.lastname.value  = '';

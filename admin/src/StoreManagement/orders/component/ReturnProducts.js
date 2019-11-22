@@ -74,7 +74,6 @@ export default class ReturnProducts extends Component{
             this.getOrders();
             swal({
                   title : response.data.message,
-                  text  : response.data.message,
                 });
 
             
@@ -103,7 +102,6 @@ export default class ReturnProducts extends Component{
             this.getOrders();
             swal({
                   title : response.data.message,
-                  text  : response.data.message,
                 });
             $('#pickupdetailsModal').hide();
             $('.modal-backdrop').remove();
@@ -131,7 +129,6 @@ export default class ReturnProducts extends Component{
             this.getOrders();
             swal({
                   title : response.data.message,
-                  text  : response.data.message,
                 });
             $('#pickupproductModal').hide();
             $('.modal-backdrop').remove();
@@ -158,7 +155,6 @@ export default class ReturnProducts extends Component{
             this.getOrders();
             swal({
                   title : response.data.message,
-                  text  : response.data.message,
                 });
             $('#approveProductModal').hide();
             $('.modal-backdrop').remove();

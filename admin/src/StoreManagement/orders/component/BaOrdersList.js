@@ -95,7 +95,6 @@ class AdminOrdersList extends Component{
                           console.log('response', response);
                           swal({
                             title : response.data.message,
-                            text  : response.data.message,
                           });
                         })
                         .catch((error)=>{
@@ -138,7 +137,6 @@ class AdminOrdersList extends Component{
                           this.getOrders();
                           swal({
                             title : response.data.message,
-                            text  : response.data.message,
                           });
                         })
                         .catch((error)=>{
@@ -174,14 +172,12 @@ class AdminOrdersList extends Component{
             console.log('response', response);
             swal({
               title : response.data.message,
-              text  : response.data.message,
             });
              if(response.status == 200){
                 //$('#dispatchDetails'+id).modal('hide');
                 
                     swal({
                         title: 'Order is dispatched Successflly',
-                        text: response.data.message,
                         showConfirmButton: false
                     });
                     this.getOrders();
@@ -196,10 +192,6 @@ class AdminOrdersList extends Component{
         }else{
             swal({
                 title: 'Please fill all fields',
-                text: "Please fill all fields",
-                type: 'error',
-                showConfirmButton: false,
-                timer: 1500
             });
         } 
   

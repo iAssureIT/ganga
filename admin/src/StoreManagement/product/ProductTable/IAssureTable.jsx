@@ -74,7 +74,6 @@ class IAssureTable extends Component {
 	    	this.props.getData(this.state.startRange, this.state.limitRange);
 	        swal({
 	        	text : response.data.message,
-	        	title : response.data.message
 	        });
 	    }).catch(function (error) {
 	        console.log('error', error);
@@ -434,7 +433,6 @@ class IAssureTable extends Component {
         .then((response)=>{
         	this.props.getData(this.state.startRange, this.state.limitRange);
         	swal({
-                text: 'Product '+changingStat+'ed Successfully',
                 title: 'Product '+changingStat+'ed Successfully',
             });
         })

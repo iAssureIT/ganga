@@ -126,11 +126,6 @@ class EditNotificationModal extends Component{
 			if(templateType === '-- Select --' || templateName === '--Select Template Name--'){
 				swal({
 					title: 'This field is required.',
-					text:"This field is required.",
-					type: 'success',
-					showCancelButton: false,
-					confirmButtonColor: '#666',
-					confirmButtonText: 'Ok'
 				});
 			}else{	
 				var formValues = {
@@ -143,7 +138,9 @@ class EditNotificationModal extends Component{
 				
 				axios.put('/api/masternotifications/'+editId, formValues)
 				.then((response)=> {		
-					swal("Template updated successfully","", "success");			
+					swal({
+						title : "Template updated successfully",
+					  });			
 					this.setState({
 						shown : false,
 					});
@@ -168,8 +165,9 @@ class EditNotificationModal extends Component{
                    
 				})
 				.catch((error)=> {
-					
-					swal(" Sorry! Template can't update successfully","", "error");
+					swal({
+						title : " Sorry! Template can't update successfully"
+					  });
 					this.setState({
 						shown : false,
 					});

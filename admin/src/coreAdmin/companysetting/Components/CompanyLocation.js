@@ -154,9 +154,9 @@ class CompanyLocation extends Component{
     if(formValid(this.state.formerrors)){
     axios.patch('/api/companysettings/location/add',companyLocationFormValue)
     .then( (response)=> {
-      // handle success
-      console.log(response);
-      swal("Location Added Successfully");
+      swal({
+        title : "Location Added Successfully",
+      });
 
       this.setState({
         companyLocation         :"",
@@ -180,8 +180,9 @@ class CompanyLocation extends Component{
       // always executed
     });
   }else{
-    swal("Please enter mandatory fields");
-    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+    swal({
+      title : "Please enter mandatory fields"
+    });
   }
 }
 

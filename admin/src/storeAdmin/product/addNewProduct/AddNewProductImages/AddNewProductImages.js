@@ -57,10 +57,10 @@ class AddNewProductImages extends Component{
                             productImage.push(objTitle);
                             
                         }else{          
-                            swal("Images not uploaded","Something went wrong","error");  
+                            swal("Images not uploaded");  
                         }//file
                     }else{ 
-                        swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                        swal("Allowed images formats are (jpg,png,jpeg)");   
                     }//file types
                 }//file
             }//for 

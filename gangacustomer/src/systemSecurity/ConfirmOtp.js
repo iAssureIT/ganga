@@ -52,17 +52,17 @@ class ConfirmOtp extends Component {
       axios.put('/api/users/otpverification', formValues)
       .then((response)=>{
         $('.fullpageloader').hide();
-        this.setState({
-          showMessage : true,
-          messageData : {
-            "type" : "outpage",
-            "icon" : "fa fa-check-circle",
-            "message" : "&nbsp; "+response.data.message,
-            "class": "success",
-            "autoDismiss" : false
-          }
-        })
-        // this.props.history.push('/login');
+        // this.setState({
+        //   showMessage : true,
+        //   messageData : {
+        //     "type" : "outpage",
+        //     "icon" : "fa fa-check-circle",
+        //     "message" : "&nbsp; "+response.data.message,
+        //     "class": "success",
+        //     "autoDismiss" : false
+        //   }
+        // })
+        this.props.history.push('/login');
       })
       .catch((error)=>{
         $('.fullpageloader').hide();

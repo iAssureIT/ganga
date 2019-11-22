@@ -1,10 +1,7 @@
 import React, { Component }   from 'react';
 import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import moment                 from "moment";
-// import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
-import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import '../css/viewOrder.css';
 

@@ -50,14 +50,11 @@ class dispatchModal extends Component{
             console.log('response', response);
             swal({
               title : response.data.message,
-              text  : response.data.message,
             });
              if(response.status == 200){
                 
                     swal({
                         title: 'Order is dispatched Successflly',
-                        text: response.data.message,
-                        showConfirmButton: false
                     });
                     // this.getOrders();
                     var modal = document.getElementById('adminModal');
@@ -75,10 +72,6 @@ class dispatchModal extends Component{
         }else{
             swal({
                 title: 'Please fill all fields',
-                text: "Please fill all fields",
-                type: 'error',
-                showConfirmButton: false,
-                timer: 1500
             });
         } 
   

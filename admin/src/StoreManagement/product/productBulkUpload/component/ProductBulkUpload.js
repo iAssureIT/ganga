@@ -401,7 +401,6 @@ class AddNewBulkProduct extends Component{
             window.location.reload();
             swal({
                     title : response.data.message,
-                    text  : response.data.message,
                   });
         })
         .catch((error)=>{

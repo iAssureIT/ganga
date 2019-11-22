@@ -388,7 +388,6 @@ class AddNewShopProduct extends Component {
           if(response.data.message == "Item code already exists."){
             swal({
               title: response.data.message,
-              text: response.data.message,
             });
           }else{
             this.props.history.push('/add-product/image/' + response.data.product_ID);
@@ -484,7 +483,6 @@ class AddNewShopProduct extends Component {
 
           swal({
             title: response.data.message,
-            text: response.data.message,
           });
           this.setState({
             vendor : "Select Vendor",

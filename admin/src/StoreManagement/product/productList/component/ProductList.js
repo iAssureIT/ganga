@@ -101,7 +101,6 @@ class ProductList extends Component{
         .then((response)=>{
             swal({
                 text: 'Product published successfully',
-                title: 'Product published successfully',
             });
         })
         .catch((error)=>{

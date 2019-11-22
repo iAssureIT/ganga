@@ -2,7 +2,6 @@ import React, { Component }   from 'react';
 import $                      from 'jquery';
 import jQuery                 from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import InputMask              from 'react-input-mask';

@@ -1,9 +1,6 @@
 import React, { Component }   from 'react';
-import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import IAssureTable           from "./ProductReviewTable/IAssureTable.jsx";
-import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import "./Productreview.css";
 

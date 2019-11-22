@@ -475,7 +475,6 @@ class IAssureTable extends Component {
 				        // if(res.status == 200){
 				          swal({
 				          	title:"Password has been changed successfully!",
-				          	text:"Password has been changed successfully!",
 				          	});
 
 				              // $('.modal-backdrop').remove();
@@ -499,16 +498,15 @@ class IAssureTable extends Component {
 
 				      });
 				}else{
-					swal( "Password should be at least 6 characters long",
-						  "Password should be at least 6 characters long",
-						  "error"
-						);				
+					
+						swal({
+							title : "Password should be at least 6 characters long",
+						  });			
 				}
 			}else{
-				swal( "Password doesn't match with confirm password",
-					  "Password doesn't match with confirm password",
-					  "error"
-					);
+					swal({
+						title : "Password doesn't match with confirm password"
+					  });		
 			}
 	}
 

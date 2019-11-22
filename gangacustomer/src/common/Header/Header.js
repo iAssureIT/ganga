@@ -7,12 +7,10 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/dropdown.js';
 import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Megamenu from '../Megamenu/Megamenu.js';
-import ContactPage from '../../pages/ContactPage/ContactPage.js';
 import axios from 'axios';
-import { Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Message from '../../blocks/Message/Message.js';
 import { connect } from 'react-redux';
-// import {ToastsContainer, ToastsStore ,ToastsContainerPosition,message,timer,classNames} from 'react-toasts';
 
 class Header extends Component {
   constructor(props){
@@ -245,6 +243,7 @@ componentWillMount() {
     const userid = localStorage.getItem('user_ID');
     axios.get('/api/users/' + userid)
       .then((res) => {
+        console.log('res', res);
         var FName = res.data.profile.fullName;
         var Mnob = res.data.mobileNumber;
         this.refs.firstName.value = FName
@@ -314,8 +313,7 @@ componentWillMount() {
 
     axios.post("/api/customerQuery/post", formValues)
       .then((response) => {
-        // ToastsStore.success(<div className="alertback">{response.data.message}<span className="pull-right pagealertclose" onClick={this.Closepagealert.bind(this)}>X</span></div>, 10000)  
-        // swal(response.data.message) 
+        
         this.setState({
           messageData: {
             "type": "outpage",
@@ -337,19 +335,7 @@ componentWillMount() {
         console.log('error', error);
       })
   }
-  Closepagealert(event) {
-    event.preventDefault();
-    $(".toast-error").html('');
-    $(".toast-success").html('');
-    $(".toast-info").html('');
-    $(".toast-warning").html('');
-    $(".toast-error").removeClass('toast');
-    $(".toast-success").removeClass('toast');
-    $(".toast-info").removeClass('toast');
-    $(".toast-warning").removeClass('toast');
-
-  }
-
+  
   getHotProduct() {
     axios.get("/api/products/get/hotproduct")
       .then((response) => {

@@ -89,7 +89,6 @@ class AdminOrdersList extends Component{
                           //console.log('response', response);
                           swal({
                             title : response.data.message,
-                            text  : response.data.message,
                           });
                         })
                         .catch((error)=>{
@@ -132,7 +131,6 @@ class AdminOrdersList extends Component{
                       this.props.getOrdersFun();
                       swal({
                         title : response.data.message,
-                        text  : response.data.message,
                       });
                     })
                     .catch((error)=>{

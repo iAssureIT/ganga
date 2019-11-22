@@ -320,13 +320,18 @@ class ViewTemplates extends Component{
 			console.log("here value of templatetype", this.state.templateType);
 			console.log("here value of templateName", this.state.templateName);
 			if( cketext === null || cketext == "" || templateType === '-- Select --' || templateName === '--Select Template Name--'){
-				swal("Please enter mandatory fields", "", "warning");
-          		// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				
+				  swal({
+					title : "Please enter mandatory fields",
+				  });
 			}else{	
 
 				if(templateType === 'Email' && (subject === null || subject == ""))
 				{
-					swal("Please enter mandatory fields", "", "warning");
+					
+					swal({
+						title : "Please enter mandatory fields",
+					  });
 				}else{
 
 					var formValues = {   
@@ -344,7 +349,10 @@ class ViewTemplates extends Component{
 							console.log('response here of add --------------',response);	
 								if(response.data.message== "Master Notification Template Name already exists")
 								{
-									swal("This template already exists","", "error");
+									
+									swal({
+										title : "This template already exists",
+									  });
 									 this.setState({
 									    	templateType 	: '-- Select --',
 									    	templateName 	: '--Select Template Name--',
@@ -352,7 +360,10 @@ class ViewTemplates extends Component{
 									    	content 		: null
 									    });   
 								}else{
-									swal("Template added successfully","", "success");
+									
+									swal({
+										title : "Template added successfully",
+									  });
 								}			
 									axios({
 										method: 'get',
@@ -393,8 +404,10 @@ class ViewTemplates extends Component{
 								})
 						}else
 						{
-						    swal("Please enter mandatory fields", "", "warning");
-						    // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+							
+							swal({
+								title : "Please enter mandatory fields",
+							});
 						}
 
 				}

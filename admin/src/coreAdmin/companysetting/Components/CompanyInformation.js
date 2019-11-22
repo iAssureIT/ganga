@@ -204,8 +204,7 @@ class CompanyInformation extends Component{
       // handle success
       console.log("this is response===>>>",response);
       swal({
-            title:"Good job!", 
-            text:"Company Information Submited!",
+            title:"Company Information Submited!", 
           });
       this.setState({
     
@@ -233,7 +232,6 @@ class CompanyInformation extends Component{
       console.log(error);
       swal({
             title:"Company Information submition failed!",
-            text :"Company Information submition failed!",
            });
 
     })
@@ -244,7 +242,6 @@ class CompanyInformation extends Component{
   }else{
     swal({
           title:"Please enter mandatory fields", 
-          text:"Please enter mandatory fields",
         });
     // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }

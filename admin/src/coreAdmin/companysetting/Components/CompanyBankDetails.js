@@ -1,8 +1,5 @@
 import React, { Component }     from 'react';
-import { render }               from 'react-dom';
-import $ from "jquery";
 import swal from 'sweetalert';
-import InputMask      		from 'react-input-mask';
 import axios from 'axios';
 
 
@@ -99,13 +96,15 @@ class CompanyBankDetails extends Component{
       axios.patch('/api/companysettings/bank/add',companyBankDetailsFormValue)
       .then(function (response) {
         // handle success
-        console.log("this is response===>>>",response);
-        swal("Good job!", "Bank Details Added Successfully!", "success")
+        // console.log("this is response===>>>",response);
+        swal({
+          title : "Bank Details Added Successfully!",
+        });
       })
       .catch(function (error) {
         // handle error
         console.log(error);
-        swal("", "Bank Details Added Successfully!!", "Danger")
+        
   
       })
       .finally(function () {
@@ -113,8 +112,9 @@ class CompanyBankDetails extends Component{
       });
   
     }else{
-      swal("Please enter mandatory fields", "", "warning");
-      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+      swal({
+        title : "Please enter mandatory fields!",
+      });
     }
 }
 // handleChange(event){

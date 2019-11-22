@@ -156,10 +156,10 @@ var imgTitleArray = [];
 							// }
 					  //   	reader.readAsDataURL(file)
 		    			}else{          
-						    swal("Images not uploaded","Something went wrong","error");  
+						    swal("Images not uploaded");  
 				        }//file
 		            }else{ 
-		                swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+		                swal("Allowed images formats are (jpg,png,jpeg)");   
 		            }//file types
 		   		}//file
 
@@ -189,10 +189,10 @@ var imgTitleArray = [];
 	                	});
 	                	console.log("video = ", file);
 	    			}else{          
-					    swal("Video not uploaded","Something went wrong","error");  
+					    swal("Video not uploaded");  
 			        }//file
 	            }else{ 
-	                swal("Please upload Correct Video","Allowed Formats are .mp4, .avi, .ogv","warning");   
+	                swal("Allowed Formats are .mp4, .avi, .ogv");   
 	            }//file types
 	   		}//file
 		}

@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
-// import {browserHistory} from 'react-router-dom';
-import { Redirect } from 'react-router';
 import swal from 'sweetalert';
 import $ from "jquery";
 
@@ -55,7 +52,10 @@ class Login extends Component {
           window.location.reload();
 
           if(localStorage==null){
-            swal("Invalid Email Id or Password","Please Enter valid email id and password");
+            
+            swal({
+              title : "Please Enter valid email id and password",
+            });
           }else{
             this.setState({
                 loggedIn  :   true
@@ -63,13 +63,19 @@ class Login extends Component {
           }
         }
         else{
-          swal("Invalid Email or Password","Please Enter valid email and password"); 
+
+          swal({
+            title : "Please Enter valid email and password",
+          }); 
         }
       })
       .catch(function (error) {
           console.log(error);
         if(localStorage!==null){
-          swal("Invalid Email Id or Password","Please Enter valid email id and password");
+          
+          swal({
+            title : "Please Enter valid email id and password",
+          });
         }
       });
   }
