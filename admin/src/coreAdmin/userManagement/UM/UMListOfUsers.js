@@ -36,6 +36,7 @@ class UMListOfUsers extends Component {
             "limitRange"        : 10, 
             "selectUsers" : [],
             blockActive	  :	[],	
+            rolesArray 	  : []
 		}
     	this.handleChange  = this.handleChange.bind(this);
 			
@@ -50,10 +51,22 @@ class UMListOfUsers extends Component {
 		this.getCount();
 		this.getUser();
 		this.getData(this.state.startRange, this.state.limitRange);
-
+		this.getRole();
 	}
 	componentWillReceiveProps(){
 		this.getCount();
+	}
+	getRole(){
+		axios.get('/api/roles/list')
+        .then((response)=>{
+            this.setState({
+                rolesArray : response.data
+            },()=>{
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
 	}
 	getCount(){
         axios.get('/api/users/get/count')
@@ -258,7 +271,7 @@ render(){
 					<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding">
 						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodal">
 							<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow adduserbtn1" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
-							<CreateUser getData={this.getData.bind(this)}/>
+							<CreateUser getData={this.getData.bind(this)} rolesArray={this.state.rolesArray}/>
 						</div>
 						<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right paddingright"  id="createmodalcl">
 							<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
@@ -280,17 +293,19 @@ render(){
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
 							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding form-control selectRole" ref="roleListDropdown" name="roleListDropdown" onChange={this.filterUser.bind(this, "role")} >
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' name="roleListDDOption" disabled>-- Select --</option>
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' name="roleListDDOption" disabled selected>-- Select --</option>
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="all"   name="roleListDDOption">Show All</option>		
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="users" name="roleListDDOption">User</option>		
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="vendor" name="roleListDDOption">vendor</option>		
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="ba"    name="roleListDDOption">ba</option>		
+								{
+                                  this.state.rolesArray.map((data,index)=>{
+                                    return (<option key={index} value={data.role}>{data.role}</option>);
+                                  })
+                               }
 							</select>
 						</div>
 						<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 							<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
 							<select className="col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding form-control selectStatus" onChange={this.filterUser.bind(this, "status")} ref="blockActive" name="blockActive" >
-								<option disabled>-- Select --</option>	
+								<option disabled selected>-- Select --</option>	
 								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="all"	data-limit='37'>Show All</option>	
 								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="Blocked" data-limit='37'>Blocked</option>	
 								<option  className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37'  value="Active" data-limit='37'>Active </option>	

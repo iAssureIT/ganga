@@ -132,7 +132,7 @@ class SignUp extends Component {
 				emailId: this.refs.signupEmail.value,
 				pwd: this.refs.signupPassword.value,
 				signupPassword: this.refs.signupConfirmPassword.value,
-				roles: 'users',
+				roles: 'user',
 				status: 'Unverified'
 			}
 
