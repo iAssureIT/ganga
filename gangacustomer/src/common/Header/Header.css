@@ -210,6 +210,10 @@
   /* font-size: 12px; */
   border-bottom: 1px solid #aaa;
 }
+.signoutmenuul li {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
 .signoutmenu li{
   padding-top: 10px !important;
   padding-bottom: 5px !important;
@@ -276,12 +280,14 @@ ul.box-static-link li span {
     border-radius: 0px;
     top:26px;
     max-height: 400px;
+
     /* overflow-y: scroll; */
 }
 .dropScroll{
   width: 400px!important;
   position: relative;
   max-height: 285px;
+
   overflow-y: scroll;
 }
 .cartdropborder{
@@ -290,6 +296,7 @@ ul.box-static-link li span {
 }
 
 .cartdropbtn{
+  
   border-radius: 20px;
   font-size: 15px;
   font-weight: 700;
@@ -310,6 +317,7 @@ ul.box-static-link li span {
   margin-top: 10px;
   margin-bottom: 10px;
   cursor: pointer;
+
 }
 .cartdropbtn2:hover{
   color:#fff;
