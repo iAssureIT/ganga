@@ -290,7 +290,7 @@ class AddNewShopProduct extends Component {
         this.getSubCategories(response.data.category_ID);
         console.log('section_ID',response.data.section_ID)
         this.setState({
-          addrows: [1],
+          // addrows: [1],
           showDiscount : response.data.discountedPrice ? false : true,
           vendor : response.data.vendorName+'|'+response.data.vendor_ID,
           section: response.data.section + '|' + response.data.section_ID,
@@ -303,7 +303,7 @@ class AddNewShopProduct extends Component {
           productUrl: response.data.productUrl,
           productDetails: response.data.productDetails,
           shortDescription: response.data.shortDescription,
-          addrows: response.data.featureList,
+          addrows: response.data.featureList ?response.data.featureList : [1],
           discountPercent: response.data.discountPercent,
           discountedPrice: response.data.discountedPrice == response.data.originalPrice ? "": response.data.discountedPrice,
           originalPrice: response.data.originalPrice,
