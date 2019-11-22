@@ -28,7 +28,7 @@ class BasicInfo extends Component {
       'logoUrl'             : '',
       'docsUrl'          : [],
       'edit'             : props.routerId ? true : false,
-      'basicInfoAdded'   : 1,
+      'basicInfoAdded'   : 0,
       'locationInfoAdded': 0,
       'baId'             : '',
       'updateBasic'      : 0,
