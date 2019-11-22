@@ -90,7 +90,7 @@ class CreateUser extends Component {
     } );
   }
 
-      checkUserExists(event){
+  checkUserExists(event){
     axios.get('/api/users/get/checkUserExists/'+event.target.value)
            .then((response)=>{
                 if (response.data.length>0) {
@@ -160,10 +160,7 @@ class CreateUser extends Component {
                 this.setState({show: false})
               });
         }else{
-          swal({
-            title: "Please enter mandatory fields",
-            text: "Please enter mandatory fields"
-          });
+          
           console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
 
@@ -295,11 +292,10 @@ class CreateUser extends Component {
                                                             <i className="fa fa-envelope-square"></i>
                                                           </div> 
                                                            <select type="text" className="formFloatingLabels form-control  newinputbox" 
-                                                            ref="roles" name="signupEmail" id="roles" data-text="signupEmail"onChange={this.handleChangeSelect.bind(this)}  value={this.state.roles}
+                                                            ref="roles" name="signupEmail" id="roles" data-text="signupEmail" onChange={this.handleChangeSelect.bind(this)}  value={this.state.roles}
                                                              placeholder="">
                                                               <option >----Select Role----</option>
                                                                 <option>User</option>
-                                                                <option>BA</option>
                                                               </select>
                                                          </div>
                                                           </span>

@@ -58,11 +58,9 @@ class UMListOfUsers extends Component {
 	getCount(){
         axios.get('/api/users/get/count')
         .then((response)=>{
-            // console.log('dataCount', response.data.dataCount);
             this.setState({
                 dataCount : response.data.dataCount
             },()=>{
-            	// console.log('dataCount', this.state.dataCount)
             })
         })
         .catch((error)=>{
@@ -95,13 +93,14 @@ class UMListOfUsers extends Component {
         .then( (res)=>{  
         	// console.log('res userData============================>', res.data)
         	var tableData = res.data.map((a, i)=>{
+        		console.log('roles',a.roles);
 				return {
 					_id 			: a._id,
 					fullName        : a.fullName,
 	                emailId    		: a.emailId,
 	                mobNumber       : a.mobileNumber, 
 	                status        	: a.status,	
-	                roles        	: a.roles,	
+	                roles        	: a.roles == "users" ? "User" : a.roles,	
 				}
 			})
           	this.setState({
@@ -115,7 +114,12 @@ class UMListOfUsers extends Component {
 	    }); 
     }
     getSearchText(searchText, startRange, limitRange){
-    	var formValues={ "searchText" : searchText };
+    	this.getSearchCount(searchText);
+    	var formValues={ 
+    		"searchText" 		: searchText,
+    		"startRange"        : startRange,
+            "limitRange"        : limitRange
+    	};
     	axios.post("/api/users/searchValue",formValues)
         .then((response)=>{ 
             //console.log('tableData', response.data);
@@ -126,23 +130,34 @@ class UMListOfUsers extends Component {
 	                emailId    		: a.emailId,
 	                mobNumber       : a.mobileNumber, 
 	                status        	: a.status,	
-	                roles        	: a.roles,	
+	                roles        	: a.roles == "users" ? "User" : a.roles,	
 				}
 			})
             this.setState({
                 tableData : tableData,
-                dataCount : response.data.length
+                //dataCount : response.data.length
             });
         })
         .catch((error)=>{
               console.log('error', error);
         })
-
-        // this.setState({
-        //     tableData : []
-        // });
     }
+    getSearchCount(searchText){
 
+    	var formValues={ 
+    		"searchText" 		: searchText
+    	};
+    	axios.post("/api/users/searchValueCount",formValues)
+        .then((response)=>{ 
+            this.setState({
+                dataCount : response.data.dataCount
+            },()=>{
+            })
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+    }
     adminRolesListData(){
 		// return  Meteor.roles.find({"name":{ $nin: ["superAdmin"] }}).fetch();
 	}
@@ -166,7 +181,7 @@ class UMListOfUsers extends Component {
 		axios.patch('/api/users/perform/action',formValues)
 		.then((result)=>{
 			swal(result.data.msg);
-		this.getData(this.state.startRange, this.state.limitRange);
+			this.getData(this.state.startRange, this.state.limitRange);
 		})
 		.catch((error)=>{
 			 console.log("error = ",error);
@@ -175,7 +190,7 @@ class UMListOfUsers extends Component {
 	}
 	filterUser(filtertype, selectedvalue){
 		
-		var formValues = { }
+		var formValues = {}
 		if (filtertype == 'role') {
 			formValues.role = selectedvalue.currentTarget.value;
 			formValues.status = $('.selectStatus').val()
@@ -184,6 +199,11 @@ class UMListOfUsers extends Component {
 			formValues.role =  $('.selectRole').val()
 			formValues.status = selectedvalue.currentTarget.value
 		}
+		formValues.startRange       = this.state.startRange;
+        formValues.limitRange       = this.state.limitRange;
+
+        this.filterUserCount(formValues);
+        
 		axios.post('/api/users/filterUser',formValues)
 		.then((response)=>{
 			var tableData = response.data.map((a, i)=>{
@@ -193,7 +213,7 @@ class UMListOfUsers extends Component {
 	                emailId    		: a.emailId,
 	                mobNumber       : a.mobileNumber, 
 	                status        	: a.status,	
-	                roles        	: a.roles,	
+	                roles        	: a.roles == "users" ? "User" : a.roles,	
 				}
 			})
 			this.setState({
@@ -201,6 +221,19 @@ class UMListOfUsers extends Component {
                 dataCount : response.data.length
             });
 			//this.getData(this.state.startRange, this.state.limitRange);
+		})
+		.catch((error)=>{
+			 console.log("error = ",error);
+		})
+	}
+	filterUserCount(formValues){
+		
+		axios.post('/api/users/filterUserCount',formValues)
+		.then((response)=>{
+			this.setState({
+                dataCount : response.data.dataCount
+            },()=>{
+            })
 		})
 		.catch((error)=>{
 			 console.log("error = ",error);
@@ -249,7 +282,7 @@ render(){
 							<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPadding form-control selectRole" ref="roleListDropdown" name="roleListDropdown" onChange={this.filterUser.bind(this, "role")} >
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' name="roleListDDOption" disabled>-- Select --</option>
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="all"   name="roleListDDOption">Show All</option>		
-								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="users" name="roleListDDOption">user</option>		
+								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="users" name="roleListDDOption">User</option>		
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="vendor" name="roleListDDOption">vendor</option>		
 								<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="ba"    name="roleListDDOption">ba</option>		
 							</select>
