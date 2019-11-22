@@ -351,8 +351,7 @@ class BasicInfo extends Component {
                 .then((response)=>{
                   this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
                   swal({
-                        title : response.data.message,
-                        text  : response.data.message,
+                        text : 'Business Associate basic info is added successfully! You can also add location and contact details.',
                       });
 
                   // $("#BasicInfo").validate().reset();
@@ -448,15 +447,12 @@ class BasicInfo extends Component {
           .then((response)=>{
             this.setState({'basicInfoAdded':1, 'baId' : this.state.baId, 'BAInfo':formValues});
             swal({
-                  title : response.data.message,
-                  text  : response.data.message,
+                  text  : "Business Associate basic info is updated.",
                 });
             
             $('.inputText').removeClass('addclas');
           })
           .catch((error)=>{
-            
-              console.log('error', error);
               swal({
                   title : 'No Information Modified!',
                 });
@@ -642,7 +638,8 @@ class BasicInfo extends Component {
   render() {
     let locationDetailsForm = <LocationDetails baId={this.state.baId} BAInfo={this.state.BAInfo} 
     updateBasic={this.state.updateBasic} locationEdit={this.state.locationEdit} contactEdit={this.state.contactEdit}/>
-    
+    console.log('logoUrl',this.state.logoUrl);
+
       return (
         <div>
             {/* Content Wrapper. Contains page content */}
@@ -712,14 +709,14 @@ class BasicInfo extends Component {
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email Id <i className="astrick">*</i>
                                              <a title="Please enter valid Email Id" className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
-                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange}  required/>
+                                            <input type="email" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange}  required/>
                                             <p className="checkBAExistsError">Business Associate already exists!</p>
                                           </div>
                                           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Mobile No <i className="astrick">*</i>
                                              <a title="Please enter valid Mobile No" className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
-                                            <input type="text" id="basicInfo3" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
+                                            <input type="text" id="basicInfo3" maxLength="10" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
                                           </div>
                                           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website  <i className="astrick">*</i>
@@ -746,7 +743,7 @@ class BasicInfo extends Component {
                                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZeroo"> {this.state.logoUrl != "" ? "Change Logo" : "Add Logo"} </label>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
                                             
-                                            <img src={this.state.logoUrl} className="img-responsive logoStyle" />
+                                            <img src={this.state.logoUrl != '' ? this.state.logoUrl : "/images/uploadimg.png"} className="img-responsive logoStyle" />
                                               <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" onChange={this.uploadLogo.bind(this)}  name="upload-logo"/>
                                           </div>
                                         </div>

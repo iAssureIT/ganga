@@ -16,7 +16,7 @@ export default class LocationDetails extends Component{
         'city'             : '-- Select --',
         'block'            : '-- Select --',
         'states'           : '-- Select --',
-        'area'             : '-- Select --',
+        'area'             : '',
         'addressLinetwo'   : '',
         'pincode'          : '',
          pincodeExists     : true,
@@ -27,7 +27,6 @@ export default class LocationDetails extends Component{
         'stateArray'       : [],
         'districtArray'    : [],
         'blocksArray'      : [],
-        'areaArray'        : [],
         'locationInfoAdded': 0,
         'locationId'       : ''
         // 'attachedDocuments'  : '',
@@ -80,6 +79,9 @@ export default class LocationDetails extends Component{
          district: {
            required: true,
          },
+         area:{
+          required: true,
+        },
          pincode: {
            required: true,
            regxpincode : /^[1-9][0-9]{5}$/,
@@ -104,7 +106,10 @@ export default class LocationDetails extends Component{
            if (element.attr("name") == "district"){
              error.insertAfter("#Citydata");
            }
-           
+           if (element.attr("name") == "area"){
+             error.insertAfter("#Areasdata");
+           }
+                       
            if (element.attr("name") == "pincode"){
              error.insertAfter("#Pincodedata");
            }
@@ -136,18 +141,6 @@ export default class LocationDetails extends Component{
             [name]: event.target.value
         });   
 
-        if(name=='area'){
-          var currentVal = event.currentTarget.value;
-          if(currentVal.match('[a-zA-Z ]+')){
-            this.setState({
-                [name]: event.target.value
-            }); 
-          }else{
-            this.setState({
-                [name]: ''
-            }); 
-          }
-        }
         if (name=="pincode") {
           this.handlePincode(event.target.value);
         }
@@ -205,7 +198,7 @@ export default class LocationDetails extends Component{
       const districtName = $('#Citydata').val();
       const stateCode = $('#Statedata').val();
       const countryCode = $("#datacountry").val();
-      this.getAreas(blockName,districtName,stateCode,countryCode);
+      //this.getAreas(blockName,districtName,stateCode,countryCode);
     }
     
     getBlocks(districtName,stateCode,countryCode){
@@ -270,7 +263,6 @@ export default class LocationDetails extends Component{
               console.log(response);        
               swal({
                     title : 'Location details are added successfully',
-                    text  : 'Location details are added successfully'
                   });
               this.locationDetails();
               $(".addLocationForm").hide();
@@ -372,7 +364,6 @@ export default class LocationDetails extends Component{
               console.log(response);         
               swal({
                     title : 'Location is removed successfully',
-                    text  : 'Location is removed successfully'
                   });
               
               this.locationDetails();
@@ -449,8 +440,7 @@ export default class LocationDetails extends Component{
             .then((response)=>{
               console.log(response);        
               swal({
-                    title : 'Location details are updated successfully',
-                    text  : 'Location details are updated successfully'
+                    title : 'Location details are updated successfully'
                   });
               this.locationDetails();
               $(".addLocationForm").hide();
@@ -634,10 +624,8 @@ export default class LocationDetails extends Component{
                                 
                                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Address Line 1 <sup className="astrick">*</sup>
-                                    <a data-tip data-for='happyFace' className="pull-right"> <i className="fa fa-question-circle"></i> </a>
-                                    <ReactTooltip id='happyFace' type='error'>
-                                      <span>Enter alphanumeric only..</span>
-                                    </ReactTooltip>
+                                    <a title="Enter alphanumeric only" className="pull-right"> <i className="fa fa-question-circle"></i> </a>
+                                    
                                   </label>
                                   <input id="Line1" type="text" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo"  value={this.state.addressLineone} ref="addressLineone" name="addressLineone" onChange={this.handleChange} required/>
                                 </div>
@@ -714,20 +702,9 @@ export default class LocationDetails extends Component{
                                     </select>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
-                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area                                   </label>
-                                    <select id="Areasdata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" 
-                                     ref="area" name="area" onChange={this.handleChange} >
-                                      <option selected="true" disabled="true">-- Select --</option>
-                                      {
-                                        this.state.areasArray && this.state.areasArray.length > 0 ?
-                                        this.state.areasArray.map((areasArray, index)=>{
-                                          return(      
-                                              <option  key={index} value={areasArray.areaName}>{this.camelCase(areasArray.areaName)}</option>
-                                            );
-                                          }
-                                        ) : ''
-                                      }
-                                    </select>
+                                  <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Area</label>
+                                  <input type="text" id="Areasdata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                     value={this.state.area} ref="area" name="area" onChange={this.handleChange}  required/>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  inputFields" > 
                                   <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode <sup className="astrick">*</sup> {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null } 
@@ -750,14 +727,11 @@ export default class LocationDetails extends Component{
                                   <button className="button1 pull-right" onClick={this.locationdetailBtn.bind(this)}>Next&nbsp;<i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                 </div>
                           </div> 
-                            
                         </form>
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 foothd">
-                             <h4 className="MasterBudgetTitle">Location Details</h4>
-                          </div>
+                          
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
                             { 
 

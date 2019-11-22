@@ -222,7 +222,6 @@ class ContactDetails extends Component {
         event.preventDefault();
         if(this.state.Location != "--Select Location Type--" || this.state.Designation != '' || this.state.Phone != '' || this.state.Email != '' || this.state.Name != '' || this.state.Reportinmanager != '' || this.state.AltPhone != '' || this.state.Landing != ''){
       swal({
-        title: "abc",
         text: "It seem that you are trying to enter a location. Click 'Cancel' to continue entering location. Click 'Ok' to go to next page.But you may lose values allready entered in the location form",
         // type: "warning",
         buttons: {
@@ -308,8 +307,7 @@ class ContactDetails extends Component {
             .then((response)=>{
               console.log(response);        
               swal({
-                    title : 'Contact details are added successfully',
-                    text  : 'Contact details are added successfully'
+                    title : 'Contact details are added successfully'
                   });
               this.setState({
                 'MobileNo'             : '',
@@ -321,6 +319,8 @@ class ContactDetails extends Component {
               
               //$("#LocationsDetail").resetForm();
              this.levelOneContact();
+
+             this.props.history.push('/ba-list');
             })
             .catch((error)=>{
                 console.log('error', error);
@@ -396,13 +396,12 @@ class ContactDetails extends Component {
                           }
                           ]
                       }
-       console.log(formValues);               
+                    
       axios.patch("/api/businessassociates/patch/updateOneBaContact",formValues)
             .then((response)=>{
               console.log(response);        
               swal({
-                    title : 'Contact details are updated successfully',
-                    text  : 'Contact details are updated successfully'
+                    title : 'Contact details are updated successfully'
                   });
               this.locationDetails();
               $(".addContactForm").hide();
@@ -636,8 +635,7 @@ class ContactDetails extends Component {
             .then((response)=>{
               console.log(response);         
               swal({
-                    title : 'Contact is removed successfully',
-                    text  : 'Contact is removed successfully'
+                    title : 'Contact is removed successfully'
                   });
               //$("#LocationsDetail").reset();
               this.levelOneContact();
@@ -721,7 +719,6 @@ class ContactDetails extends Component {
                                <h4 className="MasterBudgetTitle"><i className="fa fa-phone" aria-hidden="true"></i> Contact Details</h4>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-sm-6 ">
-                               <h4 className="noteSupplier">Note: Please start adding contacts from 1st point of contact to higher authority.</h4>
                             </div>
                             <div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
                               <div className="button4  pull-right">
@@ -733,29 +730,28 @@ class ContactDetails extends Component {
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
                             <form id="ContactDetail">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne" > 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
                                 </label>
                                 <input id="Name" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
                               </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne"> 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields"> 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
                                 </label>
                                 <input id="MobileNo" name="MobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.MobileNo} ref="MobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
-                      
-                                </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
+                              </div>
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
                                 </label>
                                 <input id="Email" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
                               </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne" > 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
                                 </label>
                                 <input id="altMobileNo" name="altMobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.altMobileNo} ref="altMobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
                       
                               </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne" > 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12" > 
                                 <label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Office Landline No. 
                                 </label>
                                 <input id="Landings" name="Landings" type="text" onKeyDown={this.keyPressNumber} className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" minLength="6" maxLength="13" value={this.state.Landing} ref="Landing" name="Landing" onChange={this.handleChange} />
@@ -778,9 +774,7 @@ class ContactDetails extends Component {
                       
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 foothd">
-                             <h4 className="MasterBudgetTitle">Contacts</h4>
-                          </div>
+                          
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bxht pdcls">
                             {this.state.contactarray && this.state.contactarray.length?
                               this.state.contactarray.map((contactArr,index)=>{
