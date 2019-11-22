@@ -174,7 +174,7 @@
 
 }
 .header1list2{
-  /* padding-top: 10px; */
+  padding-top: 5px;
 }
 .borderLeft{
   border-left:1px solid #ccc;
@@ -573,4 +573,10 @@ ul.box-static-link li span {
 }
 .borderTop{
   border-top: 1px solid #eee;
+}
+.svgUser{
+  height: 25px;
+}
+.avatar{
+  fill: #fbbb65;
 }

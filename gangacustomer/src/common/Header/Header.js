@@ -579,14 +579,14 @@ componentWillMount() {
                                 </ul>
                               </li>
                               :
-                              <li className="dropdown"><i className="fa fa-user-o headercarticon" aria-hidden="true"></i>
+                              <li className="dropdown"><img src="/images/avatar.svg" className="svgUser"/>
                                 <ul className="dropdown-menu signinmenuul signoutmenuul">
                                   <li className="col-lg-12">
                                     <label>Welcome</label>
                                     <p>To access account and manage orders</p>
                                     <div className="borderTop"></div>
-                                    <span className="col-lg-6 dropBtn"><a href=""> SIGN IN </a></span>
-                                    <span className="col-lg-6 dropBtn"><a href="">SIGN UP</a></span>
+                                    <span className="col-lg-6 dropBtn"><a href="/login"> SIGN IN </a></span>
+                                    <span className="col-lg-6 dropBtn"><a href="/signup">SIGN UP</a></span>
                                   </li>
                                 </ul>
                               </li>
