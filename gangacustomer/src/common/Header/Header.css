@@ -174,7 +174,7 @@
 
 }
 .header1list2{
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 .borderLeft{
   border-left:1px solid #ccc;
@@ -195,6 +195,8 @@
   height: 40px;
 }
 .signinmenuul{
+  /* right: -140px !important; */
+  left: -91px !important;
   font-size: 20px!important;
   border-radius: 0px;
   padding: 0px;
