@@ -5,6 +5,7 @@ import swal         from 'sweetalert';
 import $            from 'jquery';
 import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
+import {Route, withRouter} from 'react-router-dom';
 
 class ContactDetails extends Component {
   constructor(props) {
@@ -815,4 +816,4 @@ class ContactDetails extends Component {
 
 }
 
-export default ContactDetails;
+export default withRouter(ContactDetails);

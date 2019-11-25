@@ -52,6 +52,7 @@ class UMListOfUsers extends Component {
 		this.getUser();
 		this.getData(this.state.startRange, this.state.limitRange);
 		this.getRole();
+		
 	}
 	componentWillReceiveProps(){
 		this.getCount();
