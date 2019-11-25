@@ -28,7 +28,7 @@ class Header extends Component {
       productCartData:[],
       cartProduct:[],
       localCategories : [],
-      recentCartData : []
+      // userData : {}
     }  
     
     if (window.location.pathname != "/searchProducts") {
@@ -49,10 +49,14 @@ componentWillMount() {
     });
 
 }
+
    async componentDidMount(){
     await this.props.fetchCartData(); 
     console.log(this.props.recentCartData);
+
     document.getElementsByTagName("DIV")[0].removeAttribute("style");
+    this.getCartCount();
+    this.getWishlistCount();
     this.getHotProduct();
     // this.getCartData();
     this.getUserData();
@@ -106,7 +110,8 @@ componentWillMount() {
 
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.recentCartData);
+    var categoryArray = [];
+    var categoryDetails = [];
 
     this.setState({
       searchCriteria: nextProps.searchCriteria
@@ -117,6 +122,18 @@ componentWillMount() {
         });
       }
     })
+
+    // this.setState({
+    //   searchResult  : nextProps.searchResult
+    // },()=>{
+    //   {
+    //     categoryArray = this.unique(this.state.searchResult,'category_ID');
+
+    //     categoryArray.map((data,index)=>{
+    //       this.getCategoryDetails(data, categoryDetails); 
+    //     });
+    //   }
+    // })
 
   }
 
@@ -201,7 +218,20 @@ componentWillMount() {
     localStorage.setItem("user_ID", "");
     this.props.history.push('/');
   }
-  
+  getCartCount() {
+    const userid = localStorage.getItem('user_ID');
+    axios.get("/api/carts/get/count/" + userid)
+      .then((response) => {
+        this.setState({
+          count: response.data
+        })
+        this.props.initialCart(response.data);
+      })
+      .catch((error) => {
+        // console.log('error', error);
+      })
+
+  }
   getUserData() {
     const userid = localStorage.getItem('user_ID');
     axios.get('/api/users/' + userid)
@@ -220,6 +250,16 @@ componentWillMount() {
       .catch((error) => {
         // console.log("error = ", error);
       });
+  }
+  getWishlistCount() {
+    const userid = localStorage.getItem('user_ID');
+    axios.get("/api/wishlist/get/wishlistcount/" + userid)
+      .then((response) => {
+        this.props.initialWishlist(response.data);
+      })
+      .catch((error) => {
+        // console.log('error', error);
+      })
   }
   Removefromcart(event) {
     event.preventDefault();
@@ -429,7 +469,7 @@ componentWillMount() {
                                     <div className="cartdropborder">
                                       <div className="col-lg-3 cartdropimg">
                                         <div className="row">
-                                          <img className="img-responsive" src={data.productImage &&  data.productImage[0] ? data.productImage[0] : "/images/notavailable.jpg"} />
+                                          <img src={data.productImage &&  data.productImage[0] ? data.productImage[0] : "/images/notavailable.jpg"} />
                                         </div>
                                       </div>
                                       <div className="col-lg-9 cartdropimg">
@@ -555,6 +595,7 @@ const mapStateToProps = (state) => {
     searchResult: state.searchResult,
     searchCriteria: state.searchCriteria,
     recentCartData :  state.recentCartData
+
   }
 }
 const mapDispachToProps = (dispatch) => {

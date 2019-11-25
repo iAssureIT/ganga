@@ -168,11 +168,11 @@ export default class Footer extends Component {
                         </div>    
                             <div className="col-lg-12 socialMedia">  
                                 <ul>
-                                    <li><a className="circle spin" href="https://www.facebook.com/"> <i className="fa fa-facebook-f icon-facebook"></i></a></li>
-                                    <li><a className="circle spin" href="https://twitter.com/"> <i className="fa fa-twitter icon-twitter icon-twitter"></i> </a></li>
-                                    <li><a className="circle spin" href="https://plus.google.com/"> <i className="fa fa-google-plus icon-gplus"></i></a></li>
-                                    <li className="ic-pinterest"><a className="circle spin" href="https://www.pinterest.com/"> <i className="fa fa-pinterest-square icon-pinterest"></i></a></li>
-                                    <li><a className="circle spin" href="http://www.linkercreative.com/"> <i className="fa fa-linkedin icon-linkedin"></i></a></li>
+                                    <li><a className="circle spin" target="_blank" href="https://www.facebook.com/"> <i className="fa fa-facebook-f icon-facebook"></i></a></li>
+                                    <li><a className="circle spin" target="_blank" href="https://twitter.com/"> <i className="fa fa-twitter icon-twitter icon-twitter"></i> </a></li>
+                                    <li><a className="circle spin" target="_blank" href="https://plus.google.com/"> <i className="fa fa-google-plus icon-gplus"></i></a></li>
+                                    <li className="ic-pinterest"><a className="circle spin" target="_blank" href="https://www.pinterest.com/"> <i className="fa fa-pinterest-square icon-pinterest"></i></a></li>
+                                    <li><a className="circle spin" target="_blank" href="http://www.linkercreative.com/"> <i className="fa fa-linkedin icon-linkedin"></i></a></li>
                                 </ul>
                             </div>
                         </div> 

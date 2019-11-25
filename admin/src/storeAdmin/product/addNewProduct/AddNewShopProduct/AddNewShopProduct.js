@@ -108,11 +108,11 @@ class AddNewShopProduct extends Component {
         },
         productCode: {
           required: true,
-          regxProductCode : /^[A-Za-z][A-Za-z0-9\-\s]/,
+          regxProductCode : /^[a-zA-Z0-9@&()_+-]*$/i,
         },
         itemCode:{
           required: true,
-          regxitemcode : /^[A-Za-z][A-Za-z0-9\-\s]/,
+          regxitemcode : /^[a-zA-Z0-9@&()_+-]*$/i,
         },
         productName: {
           required: true,

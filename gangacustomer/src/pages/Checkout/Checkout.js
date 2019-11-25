@@ -941,15 +941,15 @@ class Checkout extends Component {
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
                                             
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">SHIPPING ADDRESS <span className="required">*</span></div>
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                                                 <label id="checkoutAddess"></label>
                                             </div>
                                             {   this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
                                                 this.state.deliveryAddress.map((data, index) => {
                                                     return (
-                                                        <div key={'check' + index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                                        <div key={'check' + index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <input type="radio" value={data._id} name="checkoutAddess" required /> &nbsp;
-                                                            <span className="checkoutADDCss">{data.name} {data.addressLine1} {data.addressLine2}, {data.city}, {data.district}, {data.state},{data.pincode} {data.country}.  <br/>Email: {data.email} <br/>Mobile: {data.mobileNumber}</span>
+                                                            <span className="checkoutADDCss"><b>{data.name}</b> <br/> {data.addressLine1} {data.addressLine2}, {data.city}, {data.district}, {data.state},{data.pincode} {data.country}.  <br/>Email: {data.email} <br/>Mobile: {data.mobileNumber}</span>
                                                         </div>
                                                     );
                                                 })
