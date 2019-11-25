@@ -118,6 +118,7 @@ class Account extends Component{
 
                             {/* <label className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 row">Address Book</label> */}
                             {/*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
+
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountBox">
                                     <div className="row">
                                         <div className="accountDivHeader">Default Billing Address</div>
@@ -154,7 +155,7 @@ class Account extends Component{
                                         <div className="accountDivHeader">Default Shipping Address</div>
                                         { this.state.addressLine1 ?
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 mb25">
-                                                <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">{this.state.name}</p>
+
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 {this.state.addressLine1}, &nbsp;
                                                 {this.state.addressLine2}, &nbsp;
@@ -162,6 +163,7 @@ class Account extends Component{
                                                 {this.state.state}, {this.state.country} - {this.state.pincode}<br />
                                                     Email: {this.state.emailId}<br />
                                                     Contact Number: {this.state.mobileNumber} 
+
                                                 </p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div data-toggle="modal" data-target="#checkoutAddressModal" onClick={this.getAddressId.bind(this)} id={this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</div>

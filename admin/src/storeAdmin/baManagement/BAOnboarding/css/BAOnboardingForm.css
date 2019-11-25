@@ -207,16 +207,17 @@
     top: 6em;
     left: 14.7em;
 }
-.logoStyle{
+.logoStyle{ 
     height: 200px !important;
     padding: 0;
     width: 100%;
+    border : 1px dashed #ddd;
 }
 .brdlogos{
     /*background-image: url(/images/CSLogo.png);*/
     background-repeat: no-repeat;
     background: #ebebeb;
-    border: 0px dashed #ddd;
+    border: 0px dashed #ddd !important;
     
 }
 .camicon{

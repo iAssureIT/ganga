@@ -432,6 +432,7 @@ class Address extends Component {
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">State <span className="required validationError">*</span></label>
+
                                         <select ref="modalstate" name="modalstateCode" id="modalstate" value={this.state.modalstateCode} onChange={this.handleChangeState.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 validationError form-control">
                                             <option value="Select State">Select State</option>
                                             {
