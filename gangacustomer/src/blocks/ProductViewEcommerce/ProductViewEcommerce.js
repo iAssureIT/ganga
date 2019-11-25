@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import { Route, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 import axios from 'axios';
 import "./ProductViewEcommerce.css";
 import _ from 'underscore';
@@ -45,7 +46,8 @@ class ProductViewEcommerce extends Component {
 		this.changeImage = this.changeImage.bind(this);
 	}
 
-	componentDidMount() {
+	async componentDidMount(){
+		await this.props.fetchCartData(); 
 		axios.get("/api/products/get/one/" + this.props.productID)
 		.then((response) => {
 			this.setState({
@@ -84,20 +86,7 @@ class ProductViewEcommerce extends Component {
 
 		});
 	}
-	getCartData() {
-		const userid = localStorage.getItem('user_ID');
-		axios.get("/api/carts/get/list/" + userid)
-		.then((response) => {
-			
-			this.setState({
-				cartProduct: response.data[0].cartItems
-			});
-			this.props.initialCartData(response.data[0].cartItems);
-		})
-		.catch((error) => {
-			console.log('error', error);
-		})
-	}
+	
 	addtocart = (event) => {
 		// const token = localStorage.getItem("token");
 		//   if(token!==null){
@@ -116,7 +105,7 @@ class ProductViewEcommerce extends Component {
 				.then((response) => {
 					var totalForQantity = parseInt(Number(this.state.totalQuanity) * response.data.discountedPrice);
 					const userid = localStorage.getItem('user_ID');
-
+					this.props.fetchCartData();
 					const formValues = {
 						"user_ID": userid,
 						"product_ID": response.data._id,
@@ -140,7 +129,7 @@ class ProductViewEcommerce extends Component {
 					axios.post('/api/carts/post', formValues)
 						.then((response) => {
 							
-							this.getCartData();
+							this.props.fetchCartData(); 
 							this.setState({
 								messageData: {
 									"type": "outpage",
@@ -155,8 +144,7 @@ class ProductViewEcommerce extends Component {
 									messageData: {},
 								})
 							}, 3000);
-							// swal(response.data.message)
-							this.props.changeCartCount(response.data.cartCount);
+							
 						})
 						.catch((error) => {
 							console.log('error', error);
@@ -471,23 +459,10 @@ class ProductViewEcommerce extends Component {
 }
 const mapStateToProps = (state) => {
 	return {
-		cartData: state.cartData
+	  recentCartData :  state.recentCartData
 	}
-}
-const mapDispachToProps = (dispach) => {
-	return {
-		changeCartCount: (cartCount) => dispach({
-			type: 'CART_COUNT',
-			cartCount: cartCount
-		}),
-		changeWishlistCount: (wishlistCount) => dispach({
-			type: 'WISHLIST_COUNT',
-			wishlistCount: wishlistCount
-		}),
-		initialCartData: (cartData) => dispach({
-			type: 'CART_DATA',
-			cartData: cartData
-		}),
-	}
-}
-export default connect(mapStateToProps, mapDispachToProps)(ProductViewEcommerce);
+  }
+  const mapDispachToProps = (dispatch) => {
+	return  bindActionCreators({ fetchCartData: getCartData }, dispatch)
+  }
+  export default connect(mapStateToProps, mapDispachToProps)(ProductViewEcommerce);

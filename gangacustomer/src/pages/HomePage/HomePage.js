@@ -3,11 +3,8 @@ import $                          from 'jquery';
 import EcommerceProductCarousel 	from "../../blocks/ProductCarouselEcommerce/EcommerceProductCarousel.js";
 import Ecommercenewproductcaro    from "../../blocks/ProductCarouselEcommerce/Ecommercenewproductcaro.js";
 import EcommerceBanner 				    from "../../blocks/Banner/EcommerceBanner.js";
-import ShopByCategoriesEcommerce  from "../../blocks/ShopByCategories/ShopByCategoriesEcommerce.js";
 import ProductDivider             from "../../blocks/ProductDivider/ProductDivider.js";
 import SaleProductDivider         from "../../blocks/ProductDivider/SaleProductDivider.js"
-import ProductCollageView         from "../../blocks/ProductCollage/ProductCollageView.js"
-import Pagealert                  from "../../common/Pagealert/Pagealert.js"
 // import { connect }                from 'react-redux';
 import axios                  		from 'axios';
 import Loader from "../../common/loader/Loader.js";

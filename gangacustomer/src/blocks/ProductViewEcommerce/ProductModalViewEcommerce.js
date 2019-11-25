@@ -1,6 +1,7 @@
 import React, { Component } 		from 'react';
 import $ 				 			from 'jquery';
-import {Route, withRouter} from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 import axios                  from 'axios';
 // import swal from 'sweetalert';
 import "./ProductViewEcommerce.css";
@@ -25,7 +26,8 @@ class ProductModalViewEcommerce extends Component {
     this.changeImage = this.changeImage.bind(this); 
   	}  
 
-  	componentDidMount(){
+  	async componentDidMount(){
+		await this.props.fetchCartData(); 
       	
   		var imageArray=[
 			{"image":"/images/45-home_default.jpg"},
@@ -75,21 +77,7 @@ class ProductModalViewEcommerce extends Component {
         })
 
   }
-    getCartData(){
-        // const userid = '5d5bfb3154b8276f2a4d22bf';
-        const userid = localStorage.getItem('user_ID');
-        axios.get("/api/carts/get/list/"+userid)
-          .then((response)=>{ 
-           // console.log('cartProduct=======================', response.data[0].cartItems)
-              this.setState({
-                cartProduct : response.data[0].cartItems
-              });
-                this.props.initialCartData(response.data[0].cartItems);
-          })
-          .catch((error)=>{
-                console.log('error', error);
-          })
-    }
+    
 
     addtocart =(event)=>{
     // const token = localStorage.getItem("token");
@@ -133,8 +121,7 @@ class ProductModalViewEcommerce extends Component {
           }
           axios.post('/api/carts/post', formValues)
           .then((response)=>{
-            // console.log('response', response);
-          this.getCartData(); 
+            this.props.fetchCartData(); 
           this.setState({
             messageData : {
               "type" : "outpage",
@@ -149,7 +136,6 @@ class ProductModalViewEcommerce extends Component {
 				messageData   : {},
 			})
 		}, 3000);
-          this.props.changeCartCount(response.data.cartCount);
 
           })
           .catch((error)=>{
@@ -461,24 +447,11 @@ class ProductModalViewEcommerce extends Component {
 }
 const mapStateToProps = (state)=>{
   return {
-    cartData :  state.cartData
+    recentCartData :  state.recentCartData
   }
 }
-const mapDispachToProps = (dispach) =>{
-  return {
-    changeCartCount : (cartCount)=> dispach({
-      type:'CART_COUNT',
-      cartCount : cartCount
-    }),
-    changeWishlistCount : (wishlistCount)=> dispach({
-      type:'WISHLIST_COUNT',
-      wishlistCount : wishlistCount
-    }),
-    initialCartData : (cartData)=> dispach({
-      type:'CART_DATA',
-      cartData : cartData
-    }),
-  }
+const mapDispachToProps = (dispatch) =>{
+  return bindActionCreators({ fetchCartData: getCartData }, dispatch)
 }
 export default connect(mapStateToProps, mapDispachToProps)(ProductModalViewEcommerce);
 

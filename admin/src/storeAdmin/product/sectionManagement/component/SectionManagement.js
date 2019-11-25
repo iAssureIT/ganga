@@ -59,7 +59,7 @@ class SectionManagement extends Component {
     
     $.validator.addMethod("regxA1", function (value, element, regexpr) {
       return regexpr.test(value);
-    }, "Name should only contain letters and special characters like (@&()_+-)");
+    }, "Please enter valid section title");
 
     $.validator.setDefaults({
       debug: true,
@@ -71,9 +71,9 @@ class SectionManagement extends Component {
         
         section: {
           required: true,
-          regxA1: /^[A-Z@&()_+-]*$/i,
+          regxA1: /^[a-zA-Z0-9@&()_+-\s]*$/i,
         },
-
+        // /^[^-\s][a-zA-Z0-9_\s-]+$/
       },
       errorPlacement: function (error, element) {
         if (element.attr("name") == "section") {

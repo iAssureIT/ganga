@@ -1,6 +1,7 @@
 import React, { Component }     from 'react';
 import $              from 'jquery';
-import {Route, withRouter} from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 import axios                  from 'axios';
 import "./ProductViewEcommerceBestSellers.css";
 import _                      from 'underscore';
@@ -42,7 +43,8 @@ class ProductViewEcommerceBestSellers extends Component {
             this.product();
     } 
 
-    componentDidMount() {
+    async componentDidMount(){
+      await this.props.fetchCartData(); 
       this.product();
     }  
 
@@ -106,7 +108,7 @@ class ProductViewEcommerceBestSellers extends Component {
             }
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
-            this.getCartData();  
+              this.props.fetchCartData(); 
             this.setState({
               messageData : {
                 "type" : "outpage",
@@ -121,7 +123,6 @@ class ProductViewEcommerceBestSellers extends Component {
                   messageData   : {},
               })
           }, 3000);
-            this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
               console.log('error', error);
@@ -175,7 +176,6 @@ class ProductViewEcommerceBestSellers extends Component {
             messageData   : {},
         })
     }, 3000);
-      this.props.changeWishlistCount(response.data.wishlistCount);
     })
     .catch((error)=>{
       console.log('error', error);
@@ -335,22 +335,12 @@ class ProductViewEcommerceBestSellers extends Component {
     );
   }
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
   return {
-    
+    recentCartData :  state.recentCartData
   }
 }
-const mapDispachToProps = (dispach) =>{
-  return {
-    changeCartCount : (cartCount)=> dispach({
-      type:'CART_COUNT',
-      cartCount : cartCount
-    }),
-    changeWishlistCount : (wishlistCount)=> dispach({
-      type:'WISHLIST_COUNT',
-      wishlistCount : wishlistCount
-    })
-  }
+const mapDispachToProps = (dispatch) => {
+  return  bindActionCreators({ fetchCartData: getCartData }, dispatch)
 }
-
 export default connect(mapStateToProps, mapDispachToProps)(ProductViewEcommerceBestSellers);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import jQuery from 'jquery';
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 import Loadable from 'react-loadable';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -60,48 +61,10 @@ class Ecommercenewproductcaro extends Component {
       type: nextProps.type
     })
   }
-  componentDidMount() {
-  
-
-    //   const second = 1000,
-    //   minute = second * 60,
-    //   hour = minute * 60,
-    //   day = hour * 24;
-
-    // let countDown = new Date('Sep 30, 2019 00:00:00').getTime(),
-    // x = setInterval(function() {
-
-    //   let now = new Date().getTime(),
-    //       distance = countDown - now;
-
-    //     document.getElementById('days').innerText = Math.floor(distance / (day));
-    //     document.getElementById('hours').innerText = Math.floor((distance % (day)) / (hour));
-    //     document.getElementById('minutes').innerText = Math.floor((distance % (hour)) / (minute));
-    //     document.getElementById('seconds').innerText = Math.floor((distance % (minute)) / second);
-
-    //do something later when date is reached
-    //if (distance < 0) {
-    //  clearInterval(x);
-    //  'IT'S MY BIRTHDAY!;
-    //}
-
-    // }, second)
+  async componentDidMount(){
+    await this.props.fetchCartData(); 
   }
-  getCartData() {
-    // const userid = '5d5bfb3154b8276f2a4d22bf';
-    const userid = localStorage.getItem('user_ID');
-    axios.get("/api/carts/get/list/" + userid)
-      .then((response) => {
-        // console.log('cartProduct=======================', response.data[0].cartItems)
-        this.setState({
-          cartProduct: response.data[0].cartItems
-        });
-        this.props.initialCartData(response.data[0].cartItems);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
-  }
+
 
   addtocart(event) {
     if (user_ID) {
@@ -135,7 +98,7 @@ class Ecommercenewproductcaro extends Component {
           }
           axios.post('/api/carts/post', formValues)
             .then((response) => {
-              this.getCartData();
+              this.props.fetchCartData();
               this.setState({
                 messageData : {
                   "type" : "outpage",
@@ -150,7 +113,8 @@ class Ecommercenewproductcaro extends Component {
                     messageData   : {},
                 })
             }, 3000);
-              this.props.changeCartCount(response.data.cartCount);
+              // this.props.changeCartCount(response.data.cartCount);
+              
             })
             .catch((error) => {
               console.log('error', error);
@@ -176,6 +140,7 @@ class Ecommercenewproductcaro extends Component {
         })
     }, 3000);
     }
+    
   }
   componentWillReceiveProps(nextProps) {
     // console.log('newProducts componentWillReceiveProps', nextProps.newProducts);
@@ -212,7 +177,6 @@ class Ecommercenewproductcaro extends Component {
           })
       }, 3000);
         this.props.getWishData();
-        this.props.changeWishlistCount(response.data.wishlistCount);
       })
       .catch((error) => {
         console.log('error', error);
@@ -404,25 +368,11 @@ class Ecommercenewproductcaro extends Component {
   }
 }
 const mapStateToProps = (state) => {
-
   return {
-    cartData: state.cartData
+    recentCartData :  state.recentCartData
   }
 }
-const mapDispachToProps = (dispach) => {
-  return {
-    changeCartCount: (cartCount) => dispach({
-      type: 'CART_COUNT',
-      cartCount: cartCount
-    }),
-    changeWishlistCount: (wishlistCount) => dispach({
-      type: 'WISHLIST_COUNT',
-      wishlistCount: wishlistCount
-    }),
-    initialCartData: (cartData) => dispach({
-      type: 'CART_DATA',
-      cartData: cartData
-    }),
-  }
+const mapDispachToProps = (dispatch) => {
+  return  bindActionCreators({ fetchCartData: getCartData }, dispatch)
 }
 export default connect(mapStateToProps, mapDispachToProps)(Ecommercenewproductcaro);

@@ -39,20 +39,20 @@ class CartProducts extends Component{
     componentWillReceiveProps(nextProps) { 
        
     }
-    getCartData(){
-        $('.fullpageloader').show();
-        const userid = localStorage.getItem('user_ID');
-        axios.get("/api/carts/get/list/"+userid)
-          .then((response)=>{ 
-            $('.fullpageloader').hide();
-              this.setState({
-                cartProduct : response.data[0]
-              });
-          })
-          .catch((error)=>{
-                console.log('error', error);
-          })
-    }
+    // getCartData(){
+    //     $('.fullpageloader').show();
+    //     const userid = localStorage.getItem('user_ID');
+    //     axios.get("/api/carts/get/list/"+userid)
+    //       .then((response)=>{ 
+    //         $('.fullpageloader').hide();
+    //           this.setState({
+    //             cartProduct : response.data[0]
+    //           });
+    //       })
+    //       .catch((error)=>{
+    //             console.log('error', error);
+    //       })
+    // }
     getCompanyDetails(){
         axios.get("/api/companysettings/list")
           .then((response)=>{ 
@@ -224,7 +224,7 @@ class CartProducts extends Component{
     }
     
     render(){
-        console.log(this.props.recentCartData);
+        // console.log(this.props.recentCartData);
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartHeight">
                 <Loader type="fullpageloader"/>

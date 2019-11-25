@@ -7,7 +7,8 @@ import './Wishlist.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
 import Message from '../../blocks/Message/Message.js';
 import Loader from "../../common/loader/Loader.js";
-
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 class Wishlist extends Component {
   constructor(props) {
         super(props);
@@ -29,7 +30,8 @@ class Wishlist extends Component {
             [event.target.name] : event.target.value
         })
     }
-    componentDidMount(){
+    async componentDidMount(){
+      await this.props.fetchCartData(); 
         this.getData();   
      }
      getProduct(product_ID){
@@ -117,6 +119,7 @@ class Wishlist extends Component {
             }
             axios.post('/api/carts/post', formValues)
               .then((response) => {
+                this.props.fetchCartData();
                 $('.fullpageloader').hide();
                 this.setState({
               messageData : {
@@ -132,7 +135,6 @@ class Wishlist extends Component {
                   messageData   : {},
               })
           }, 3000);
-                this.props.changeCartCount(response.data.cartCount);
 
                 axios.delete('/api/wishlist/delete/'+wishlist_ID)
                 .then((response)=>{
@@ -179,6 +181,7 @@ class Wishlist extends Component {
       console.log("ididid", id);
           axios.delete('/api/wishlist/delete/'+id)
           .then((response)=>{
+            window.scrollTo(0, 0);
             // console.log('response', response);
             this.setState({
               products : []
@@ -215,8 +218,7 @@ class Wishlist extends Component {
     $(".toast-warning").removeClass('toast');
 
   }
-
-    
+   
     render() { 
 
         return (
@@ -309,22 +311,12 @@ class Wishlist extends Component {
         );  
     }
 }
-const mapStateToProps = (state)=>{
-    return {
-      
-    }
+const mapStateToProps = (state) => {
+  return {
+    recentCartData :  state.recentCartData
   }
-  const mapDispachToProps = (dispach) =>{
-    return {
-      changeCartCount : (cartCount)=> dispach({
-        type:'CART_COUNT',
-        cartCount : cartCount
-      }),
-      changeWishlistCount : (wishlistCount)=> dispach({
-        type:'WISHLIST_COUNT',
-        wishlistCount : wishlistCount
-      })
-    }
-  }
-  
-  export default connect(mapStateToProps, mapDispachToProps)(Wishlist);
+}
+const mapDispachToProps = (dispatch) => {
+  return  bindActionCreators({ fetchCartData: getCartData }, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(Wishlist);

@@ -8,7 +8,8 @@ import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import $ from 'jquery';
 import Message from '../Message/Message.js';
-
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 const user_ID = localStorage.getItem("user_ID");
 
 class SearchProductCollage extends Component {
@@ -21,8 +22,8 @@ class SearchProductCollage extends Component {
          modalIDNew : []
 	   }
   }  
-	componentDidMount() {
-    console.log('nextProps',this.props);
+	async componentDidMount(){
+    await this.props.fetchCartData(); 
 		this.setState({
       products : this.props.products,
       masterLimitProducts : this.props.products
@@ -37,22 +38,7 @@ class SearchProductCollage extends Component {
       categoryDetails : nextProps.categoryDetails
     });
 	}
-  getCartData(){
-    // const userid = '5d5bfb3154b8276f2a4d22bf';
-    const userid = localStorage.getItem('user_ID');
-    axios.get("/api/carts/get/list/"+userid)
-    .then((response)=>{ 
-     // console.log('cartProduct=======================', response.data[0].cartItems)
-        this.setState({
-          cartProduct : response.data[0].cartItems
-        });
-          this.props.initialCartData(response.data[0].cartItems);
-    })
-    .catch((error)=>{
-          console.log('error', error);
-    })
-  }
-
+  
   	addtocart(event){
       if(user_ID){
       event.preventDefault();
@@ -83,7 +69,7 @@ class SearchProductCollage extends Component {
             }
             axios.post('/api/carts/post', formValues)
             .then((response)=>{
-            this.getCartData(); 
+              this.props.fetchCartData();
             this.setState({
               messageData : {
                 "type" : "outpage",
@@ -98,7 +84,6 @@ class SearchProductCollage extends Component {
                 messageData   : {},
               })
             }, 3000);
-            this.props.changeCartCount(response.data.cartCount);
             })
             .catch((error)=>{
               console.log('error', error);
@@ -151,7 +136,6 @@ class SearchProductCollage extends Component {
             })
           }, 3000);
           this.props.getWishData();
-          this.props.changeWishlistCount(response.data.wishlistCount);
         })
         .catch((error) => {
           console.log('error', error);
@@ -336,25 +320,12 @@ class SearchProductCollage extends Component {
     );    
 	}
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state) => {
   return {
-    cartData :  state.cartData
+    recentCartData :  state.recentCartData
   }
 }
-const mapDispachToProps = (dispach) =>{
-  return {
-    changeCartCount : (cartCount)=> dispach({
-      type:'CART_COUNT',
-      cartCount : cartCount
-    }),
-    changeWishlistCount : (wishlistCount)=> dispach({
-      type:'WISHLIST_COUNT',
-      wishlistCount : wishlistCount
-    }),
-    initialCartData : (cartData)=> dispach({
-      type:'CART_DATA',
-      cartData : cartData
-    }),
-  }
+const mapDispachToProps = (dispatch) => {
+  return  bindActionCreators({ fetchCartData: getCartData }, dispatch)
 }
 export default connect(mapStateToProps, mapDispachToProps)(SearchProductCollage);

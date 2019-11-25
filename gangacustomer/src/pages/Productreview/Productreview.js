@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import $ from 'jquery';
-import { connect } from 'react-redux';
 import SmallBanner from '../../blocks/SmallBanner/SmallBanner.js';
 import './Productreview.css';
 import Sidebar from '../../common/Sidebar/Sidebar.js';
@@ -315,17 +314,5 @@ const mapStateToProps = (state) => {
 
   }
 }
-const mapDispachToProps = (dispach) => {
-  return {
-    changeCartCount: (cartCount) => dispach({
-      type: 'CART_COUNT',
-      cartCount: cartCount
-    }),
-    changeWishlistCount: (wishlistCount) => dispach({
-      type: 'WISHLIST_COUNT',
-      wishlistCount: wishlistCount
-    })
-  }
-}
 
-export default connect(mapStateToProps, mapDispachToProps)(Productreview);
+export default Productreview;

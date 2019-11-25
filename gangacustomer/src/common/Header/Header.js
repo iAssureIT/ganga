@@ -11,7 +11,8 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import Message from '../../blocks/Message/Message.js';
 import { connect } from 'react-redux';
-
+import { bindActionCreators } from 'redux';
+import { getCartData } from '../../actions/index';
 class Header extends Component {
   constructor(props){
     super(props);
@@ -25,7 +26,8 @@ class Header extends Component {
       categoryDetails: [],
       productCartData:[],
       cartProduct:[],
-      localCategories : []
+      localCategories : [],
+      recentCartData : []
     }  
     
     if (window.location.pathname != "/searchProducts") {
@@ -46,28 +48,11 @@ componentWillMount() {
     });
 
 }
-
-  getCartData() {
-    // const userid = '5d5bfb3154b8276f2a4d22bf';
-    const userid = localStorage.getItem('user_ID');
-    axios.get("/api/carts/get/list/" + userid)
-      .then((response) => {
-        this.setState({
-          cartProduct: response.data[0].cartItems
-        });
-        this.props.initialCartData(response.data[0].cartItems, response.data[0].cartTotal);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
-  }
-
-  componentDidMount() {
+   componentDidMount(){
+    console.log(this.props.recentCartData);
     document.getElementsByTagName("DIV")[0].removeAttribute("style");
-    this.getCartCount();
-    this.getWishlistCount();
     this.getHotProduct();
-    this.getCartData();
+    // this.getCartData();
     this.getUserData();
     const options = [];
     axios.get("/api/category/get/list")
@@ -82,7 +67,7 @@ componentWillMount() {
         })
       })
       .catch((error) => {
-        console.log('error', error);
+        // console.log('error', error);
       })
 
     $(".dropdown").hover(
@@ -119,8 +104,7 @@ componentWillMount() {
 
 
   componentWillReceiveProps(nextProps) {
-    var categoryArray = [];
-    var categoryDetails = [];
+    console.log(nextProps.recentCartData);
 
     this.setState({
       searchCriteria: nextProps.searchCriteria
@@ -131,18 +115,6 @@ componentWillMount() {
         });
       }
     })
-
-    // this.setState({
-    //   searchResult  : nextProps.searchResult
-    // },()=>{
-    //   {
-    //     categoryArray = this.unique(this.state.searchResult,'category_ID');
-
-    //     categoryArray.map((data,index)=>{
-    //       this.getCategoryDetails(data, categoryDetails); 
-    //     });
-    //   }
-    // })
 
   }
 
@@ -195,7 +167,7 @@ componentWillMount() {
           });
         })
         .catch((error) => {
-          console.log('error', error);
+          // console.log('error', error);
         })
 
       this.props.history.push("/searchProducts");
@@ -212,7 +184,7 @@ componentWillMount() {
           });
         })
         .catch((error) => {
-          console.log('error', error);
+          // console.log('error', error);
         })
 
       this.props.history.push("/searchProducts");
@@ -225,48 +197,25 @@ componentWillMount() {
     localStorage.setItem("user_ID", "");
     this.props.history.push('/');
   }
-  getCartCount() {
-    const userid = localStorage.getItem('user_ID');
-    axios.get("/api/carts/get/count/" + userid)
-      .then((response) => {
-        this.setState({
-          count: response.data
-        })
-        this.props.initialCart(response.data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
-
-  }
+  
   getUserData() {
     const userid = localStorage.getItem('user_ID');
     axios.get('/api/users/' + userid)
       .then((res) => {
-        console.log('res', res);
-        var FName = res.data.profile.fullName;
-        var Mnob = res.data.mobileNumber;
-        this.refs.firstName.value = FName
-        this.refs.mobNumber.value = Mnob
+        // console.log('res', res);
         this.setState({
           userData: res.data,
           firstname: res.data.profile.firstName.substring(0, 1),
           lastname: res.data.profile.lastName.substring(0, 1)
+        },()=>{
+
         })
+        
+        
       })
       .catch((error) => {
-        console.log("error = ", error);
+        // console.log("error = ", error);
       });
-  }
-  getWishlistCount() {
-    const userid = localStorage.getItem('user_ID');
-    axios.get("/api/wishlist/get/wishlistcount/" + userid)
-      .then((response) => {
-        this.props.initialWishlist(response.data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      })
   }
   Removefromcart(event) {
     event.preventDefault();
@@ -279,7 +228,7 @@ componentWillMount() {
     }
     axios.patch("/api/carts/remove", formValues)
       .then((response) => {
-        this.props.changeCartCount(response.data.cartCount);
+        
         this.setState({
           messageData: {
             "type": "outpage",
@@ -295,12 +244,12 @@ componentWillMount() {
           })
         }, 3000);
 
-        this.getCartData();
+        // this.getCartData();
         this.getCompanyDetails();
 
       })
       .catch((error) => {
-        console.log('error', error);
+        // console.log('error', error);
       })
   }
 
@@ -332,7 +281,7 @@ componentWillMount() {
 
       })
       .catch((error) => {
-        console.log('error', error);
+        // console.log('error', error);
       })
   }
   
@@ -344,10 +293,11 @@ componentWillMount() {
         })
       })
       .catch((error) => {
-        console.log('error', error);
+        // console.log('error', error);
       })
   }
   render() {
+    // console.log('recentCartData', this.props.recentCartData);
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
@@ -502,27 +452,27 @@ componentWillMount() {
                 <div className="col-lg-1 col-md-1 headerpaddingtop text-center">
                   <div className="col-lg-12 headercart">
                     <div className="row dropdown">
-                      <a href={user_ID ? "/cart" : "/login"}><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{user_ID ? this.props.cartCount : 0}
+                      <a href={user_ID ? "/cart" : "/login"}><i className="fa fa-shopping-bag headercarticon" aria-hidden="true"></i><span className="cartvalue">{this.props.recentCartData.length>0? this.props.recentCartData[0].cartItems.length : 0}
                       </span></a>
 
                       {user_ID ?
                         <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                           <div className="checkoutBtn">
-                            <p className="col-lg-3 mb20"><b>{this.props.cartCount}</b> item(s)</p>
-                            <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.cartTotal ? this.props.cartTotal : 0}</div>
+                            <p className="col-lg-3 mb20"><b>{this.props.recentCartData.length>0? this.props.recentCartData[0].cartItems.length : 0}</b> item(s)</p>
+                            <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.recentCartData.length>0 ? this.props.recentCartData[0].cartTotal : 0}</div>
                             {/*<a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>*/}
                           </div>
                           <div className="dropScroll">
                           {
-                            this.props.cartData && this.props.cartData.length > 0 ?
-                              this.props.cartData.map((data, index) => {
+                            this.props.recentCartData && this.props.recentCartData.length > 0 ?
+                            this.props.recentCartData[0].cartItems.map((data, index) => {
                                 return (
                                   <li className="col-lg-12 cartdropheight " key={index}>
 
                                     <div className="cartdropborder">
                                       <div className="col-lg-3 cartdropimg">
                                         <div className="row">
-                                          <img src={data.productImage[0]  ? data.productImage[0] : "/images/notavailable.jpg"} />
+                                          <img className="img-responsive" src={data.productImage &&  data.productImage[0] ? data.productImage[0] : "/images/notavailable.jpg"} />
                                         </div>
                                       </div>
                                       <div className="col-lg-9 cartdropimg">
@@ -554,7 +504,7 @@ componentWillMount() {
                               <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW CART">VIEW CART</div></a>
                             </div>
                             {
-                              this.props.cartData.length > 0 ?  
+                              this.props.recentCartData.length > 0 ?  
                               <div className=" col-lg-6">
                                 <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12 checkoutBtn" title="Checkout">Checkout</div></a>
                               </div>
@@ -645,34 +595,14 @@ componentWillMount() {
 }
 const mapStateToProps = (state) => {
   return {
-    cartCount: state.cartCount,
-    cartData: state.cartData,
-    cartTotal: state.cartTotal,
-    wishlistCount: state.wishlistCount,
     searchResult: state.searchResult,
-    searchCriteria: state.searchCriteria
+    searchCriteria: state.searchCriteria,
+    recentCartData :  state.recentCartData
   }
 }
-const mapDispachToProps = (dispach) => {
+const mapDispachToProps = (dispatch) => {
   return {
-    initialCart: (cartCount) => dispach({
-      type: 'CART_COUNT_INITIALLY',
-      cartCount: cartCount
-    }),
-    changeCartCount: (cartCount) => dispach({
-      type: 'CART_COUNT',
-      cartCount: cartCount
-    }),
-    initialCartData: (cartData, cartTotal) => dispach({
-      type: 'CART_DATA',
-      cartData: cartData,
-      cartTotal: cartTotal
-    }),
-    initialWishlist: (wishlistCount) => dispach({
-      type: 'WISHLIST_COUNT_INITIALLY',
-      wishlistCount: wishlistCount
-    }),
-    searchProduct: (searchCriteria, searchResult) => dispach({
+    searchProduct: (searchCriteria, searchResult) => dispatch({
       type: 'SEARCH_PRODUCT',
       searchCriteria: searchCriteria,
       searchResult: searchResult

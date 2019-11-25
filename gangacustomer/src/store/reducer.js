@@ -25,7 +25,7 @@ const reducer = (state = initialState,action) => {
 		newState.cartTotal 		= action.cartTotal;
 	}
 	if(action.type === "FETCH_CART_DATA"){
-		newState.recentCartData 		= action.cartData;
+		newState.recentCartData = action.cartData;
 	}
 	if(action.type === "CART_COUNT"){
 		newState.cartCount 		= action.cartCount;
