@@ -275,8 +275,15 @@ export default class BusinessAssociateList extends Component {
     getBlocks(districtName,stateCode,countryCode){
       axios.get("http://locationapi.iassureit.com/api/blocks/get/list/"+countryCode+"/"+stateCode+'/'+districtName)
             .then((response)=>{
+              var flags = [], output = [], l = response.data.length, i;
+              for( i=0; i<l; i++) {
+                  if( flags[response.data[i].blockName]) continue;
+                  flags[response.data[i].blockName] = true;
+                  output.push(response.data[i]);
+              }
+              
               this.setState({
-                blocksArray : response.data
+                blocksArray : output
               })
             })
             .catch((error)=>{

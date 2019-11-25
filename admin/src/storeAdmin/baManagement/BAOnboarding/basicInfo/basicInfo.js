@@ -386,16 +386,23 @@ class BasicInfo extends Component {
               main().then(docsUrl=>{
               this.setState({docsUrl : docsUrl});
               formValues.documents  = docsUrl;
+              console.log('docsUrl',docsUrl);
               this.updateBAFunct(formValues);
               });
 
             async function main(){
               var config = await getConfig();
               var s3urlArray = [];
-
+              console.log('edit attachedDocuments1',attachedDocuments)
+              
               for (var i = 0; i < attachedDocuments.length; i++) {
+                if (attachedDocuments[i] instanceof File) {
                   var s3url = await s3upload(attachedDocuments[i], config, this);
                   s3urlArray.push(s3url);
+                }else{
+
+                  s3urlArray.push(attachedDocuments[i].name)
+                }
               }
               return Promise.resolve(s3urlArray);
             }
@@ -638,8 +645,7 @@ class BasicInfo extends Component {
   render() {
     let locationDetailsForm = <LocationDetails baId={this.state.baId} BAInfo={this.state.BAInfo} 
     updateBasic={this.state.updateBasic} locationEdit={this.state.locationEdit} contactEdit={this.state.contactEdit}/>
-    console.log('logoUrl',this.state.logoUrl);
-
+    
       return (
         <div>
             {/* Content Wrapper. Contains page content */}
@@ -763,7 +769,7 @@ class BasicInfo extends Component {
                                         <input onChange={this.docBrowse.bind(this)} type="file" multiple className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 docAttach" id="upload-file" name="upload-file"/>
                                         <i className="fa fa-upload uploadlogo uploadlogoTwo col-lg-1 col-md-1 col-sm-1 col-xs-1 clickHere" aria-hidden="true" onClick={this.clicktoattach.bind(this)}></i>
                                         <div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 drag ">
-                                        {/*Drag and drop or <a href="" onChange={this.docBrowse.bind(this)}>browse</a> your files*/}
+                                       
                                         Drag and drop your Documents or  <a onClick={this.clicktoattach.bind(this)} className="clickHere">click here</a> to select files.Attach Document such as Technical Specification , Drawings,Designs,Images,Additional information, etc.
                                         </div>
                                       </div>
@@ -771,6 +777,8 @@ class BasicInfo extends Component {
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                                       {
                                         this.state.attachedDocuments.map((data,index)=>{
+                                          // console.log('attachedDocuments',data);
+
                                           return(
                                               <div className="panel-group" key={index}>
                                                 <div className="panel panel-default">

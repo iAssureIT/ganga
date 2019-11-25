@@ -302,7 +302,7 @@ class ContactDetails extends Component {
               'officeLandlineNo'  : this.refs.Landing.value,
             }]
           }
-          console.log(formValues);
+          //console.log(formValues);
           axios.patch("/api/businessassociates/patch/updateBaContact",formValues)
             .then((response)=>{
               console.log(response);        
