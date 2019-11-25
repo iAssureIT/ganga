@@ -542,6 +542,7 @@ class ViewTemplates extends Component{
 													  <option value="Order Delivered">Order Delivered</option>
 													  <option value="Sign Up">Sign Up</option>
 													  <option value="Vendor New Registration">Vendor New Registration</option>
+													  <option value="BA New Registration">BA New Registration</option>
 													</select>
 												</div>	
 											</div>
