@@ -358,54 +358,7 @@ componentWillMount() {
                         </ul>
                       </div>
                     </div>
-<<<<<<< Updated upstream
                     
-=======
-                    <div className="col-lg-6 header1list2">
-                      <div className="row">
-                        <ul>
-                          {
-                            user_ID ? ""
-                              : <li className="borderLeft"><a href="/signup"><i className="fa fa-sign-in"></i> &nbsp;Sign Up</a></li>
-
-                          }
-                          {
-
-                            user_ID ?
-                              <li className="dropdown"><i className="fa fa-user" aria-hidden="true"></i> &nbsp;My Account <i className="fa fa-angle-down" aria-hidden="true"></i>
-                                <ul className="dropdown-menu signinmenuul">
-                                  <li className="col-lg-12 NOpadding">
-                                    <a><div className="row">
-                                      <div className="col-lg-2">
-                                        <div className="shortnamebk">
-                                          <div className="">
-                                            <div className="userinfo">{this.state.firstname}{this.state.lastname}</div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div className="col-lg-10">
-                                        <div className="col-lg-12">
-                                          <div><span className="userinfotext">{this.state.userData ? this.state.userData.profile.fullName : null}</span></div>
-                                        </div>
-                                        <div className="col-lg-12">
-                                          <div><span className="useremail">{this.state.userData ? this.state.userData.profile.emailId : null}</span></div>
-                                        </div>
-                                      </div>
-                                    </div></a>
-                                  </li>
-                                  <li className="col-lg-12 NOpadding"><a href="/account">My Profile</a></li>
-                                  <li className="col-lg-12 NOpadding"><a href="/my-orders">My Orders</a></li>
-                                  <li className="col-lg-12 NOpadding"><a href="/wishlist">My Wishlist</a></li>
-                                  <li className="col-lg-12 NOpadding" onClick={this.signOut.bind(this)}><a href="/" style={{ backgroundColor:"#e39b35", color:"#fff"}}>Sign Out</a></li>
-                                </ul>
-                              </li>
-                              :
-                              <li><a href="/login"><i className="fa fa-pencil"></i> Sign In</a></li>
-                          }
-                        </ul>
-                      </div>
-                    </div>
->>>>>>> Stashed changes
                   </div>
                 </div>
               </div>
