@@ -161,7 +161,7 @@ class SearchProduct extends Component {
 				</div>		
               <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
               		<div className="forSearchDiv">
-              			<h5 className="showingby">NOW SHOWING BY</h5>
+              			{/*<h5 className="showingby">NOW SHOWING BY</h5>*/}
               			{
               				/*<span><a href="#" onClick={this.clearAll.bind(this)}>Clear All </a></span>*/
               			}

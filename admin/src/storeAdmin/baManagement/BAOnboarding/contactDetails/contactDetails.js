@@ -55,31 +55,16 @@ class ContactDetails extends Component {
     });
     $("#ContactDetail").validate({
       rules: {
-        
-        MobileNo: {
-           regxA1:/^([7-9][0-9]{9})$/,
-           required: true,
-        },
-        Email: {
-          //regxA2:/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
-          required: true,
-        },
         Name: {
           required: true,
         },
-        // Reportinmanager: {
-        //   required: true,
-        // },
-        // altMobileNo: {
-        //   notEqual: $('input[name="Phones"]').val(),
-        // //   regxA1:/^[0-9+]{10}*$/,          
-        //   required: false,
-        // },
-        // Landings: {
-        // //   regxA3:/^[0-9+]{11}*$/,    
-        //   maxlength: 13,
-        //   required: false,
-        // },
+        MobileNo: {
+          required: true,
+          regxA1:/^([7-9][0-9]{9})$/
+        },
+        Email: {
+          required: true,
+        }
       },
       errorPlacement: function(error, element) {
           
@@ -289,6 +274,7 @@ class ContactDetails extends Component {
     }  
     contactdetailAddBtn(event){
       event.preventDefault();
+      console.log('valid',$('#ContactDetail').valid())
       if($('#ContactDetail').valid()){
         var baId = this.props.baId;
         console.log('contact',baId);
@@ -738,7 +724,7 @@ class ContactDetails extends Component {
                               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields"> 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
                                 </label>
-                                <input id="MobileNo" name="MobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.MobileNo} ref="MobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
+                                <input id="MobileNo" name="MobileNo" type="text" maxLength="10" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.MobileNo} ref="MobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
                               </div>
                               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
@@ -748,7 +734,7 @@ class ContactDetails extends Component {
                               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
                                 </label>
-                                <input id="altMobileNo" name="altMobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.altMobileNo} ref="altMobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
+                                <input id="altMobileNo" name="altMobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.altMobileNo} ref="altMobileNo" onChange={this.handleChange} pattern="[0-9]+" />
                       
                               </div>
                               <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12" > 

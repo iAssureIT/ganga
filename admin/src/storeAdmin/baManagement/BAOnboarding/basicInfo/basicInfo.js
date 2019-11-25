@@ -386,14 +386,13 @@ class BasicInfo extends Component {
               main().then(docsUrl=>{
               this.setState({docsUrl : docsUrl});
               formValues.documents  = docsUrl;
-              console.log('docsUrl',docsUrl);
+              
               this.updateBAFunct(formValues);
               });
 
             async function main(){
               var config = await getConfig();
               var s3urlArray = [];
-              console.log('edit attachedDocuments1',attachedDocuments)
               
               for (var i = 0; i < attachedDocuments.length; i++) {
                 if (attachedDocuments[i] instanceof File) {
