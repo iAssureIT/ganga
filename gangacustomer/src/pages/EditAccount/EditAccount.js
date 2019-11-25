@@ -143,6 +143,7 @@ class EditAccount extends Component{
                 "autoDismiss" : true
               }
             })
+            this.props.history.push('/account');
             setTimeout(() => {
                 this.setState({
                     messageData   : {},

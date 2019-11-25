@@ -45,7 +45,7 @@
     box-sizing: border-box;
     border-color: hsl(0,0%,80%);
     color: #515151;
-    cursor: pointer;
+    /* cursor: pointer; */
     display: inline-flex;
     margin: 0;
     max-width: 100%;
