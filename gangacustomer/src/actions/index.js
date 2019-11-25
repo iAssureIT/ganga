@@ -26,4 +26,8 @@ export const fetchcartdata = cartdata => ({
     cartData: cartdata
   });
 
-
+export const searchProductAction = (searchCriteria, searchResult )=> ({
+      type: 'SEARCH_PRODUCT',
+      searchCriteria: searchCriteria,
+      searchResult: searchResult
+});

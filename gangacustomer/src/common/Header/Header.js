@@ -9,10 +9,11 @@ import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import Megamenu from '../Megamenu/Megamenu.js';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import Message from '../../blocks/Message/Message.js';
+import Message from '../../blocks/Message/Message.js'; 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getCartData } from '../../actions/index';
+import {getCartData, searchProductAction} from '../../actions/index';
+
 class Header extends Component {
   constructor(props){
     super(props);
@@ -48,7 +49,8 @@ componentWillMount() {
     });
 
 }
-   componentDidMount(){
+   async componentDidMount(){
+    await this.props.fetchCartData(); 
     console.log(this.props.recentCartData);
     document.getElementsByTagName("DIV")[0].removeAttribute("style");
     this.getHotProduct();
@@ -157,13 +159,15 @@ componentWillMount() {
       if (searchstr != '') {
         localStorage.setItem("searchstr", searchstr);
       }
-      this.props.searchProduct(formValues, this.state.searchResult);
+      this.props.searchProductFun(formValues, this.state.searchResult)
+
+      //this.props.searchProduct();
 
       axios.post("/api/products/post/searchINCategory", formValues)
         .then((response) => {
           this.setState({ searchResult: response.data }, () => {
             formValues.loading = false;
-            this.props.searchProduct(formValues, this.state.searchResult);
+            this.props.searchProductFun(formValues, this.state.searchResult);
           });
         })
         .catch((error) => {
@@ -180,7 +184,7 @@ componentWillMount() {
       axios.get("/api/products/get/search/" + searchstr)
         .then((response) => {
           this.setState({ searchResult: response.data }, () => {
-            this.props.searchProduct(formValues, this.state.searchResult);
+            this.props.searchProductFun(formValues, this.state.searchResult);
           });
         })
         .catch((error) => {
@@ -554,12 +558,6 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispachToProps = (dispatch) => {
-  return {
-    searchProduct: (searchCriteria, searchResult) => dispatch({
-      type: 'SEARCH_PRODUCT',
-      searchCriteria: searchCriteria,
-      searchResult: searchResult
-    }),
-  }
+  return  bindActionCreators({ fetchCartData: getCartData, searchProductFun: searchProductAction }, dispatch)
 }
 export default connect(mapStateToProps, mapDispachToProps)(withRouter(Header));
