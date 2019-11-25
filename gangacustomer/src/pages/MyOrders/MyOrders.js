@@ -456,7 +456,7 @@ export default class MyOrders extends Component {
                             data.products && data.products.length > 0 ?
                                   data.products.map((pdata, index)=>{
                                     return(
-                                      <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                      <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding" style={{marginBottom:"20px"}}>
                                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-3">
                                           <img src={pdata.productImage[0]} style={{width:"100%"}}/>
                                         </div>
@@ -514,7 +514,9 @@ export default class MyOrders extends Component {
                                                 :
                                                 null
                                           }
+
                                       </div>
+
                                       );
                                   })
                                   : null
