@@ -217,10 +217,13 @@ componentWillMount() {
 
   }
 
-  signOut(event) {
+  async signOut(event) {
     event.preventDefault();
     localStorage.setItem("user_ID", "");
+    await this.props.fetchCartData(); 
     this.props.history.push('/');
+    
+
   }
   getCartCount() {
     const userid = localStorage.getItem('user_ID');
