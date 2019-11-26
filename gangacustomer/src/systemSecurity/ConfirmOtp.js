@@ -161,10 +161,11 @@ class ConfirmOtp extends Component {
                       <form id="OTPMobMail">
                         <div className="">
                           <div className="">
-                            <span>Enter six digit verification code received on <b>Email</b>.<br/></span>
+                            <span>Enter six digit verification code received on email.<br/></span>
                           </div>
+                          <br/>
                           <div className="input-group" id="emailotp">
-                            <input  type="text" className="form-control" ref="emailotp" name="emailotp" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" maxLength="6" pattern="(0|[0-9]*)" required/>
+                            <input  type="text" className="form-control" ref="emailotp" name="emailotp" placeholder="Enter OTP" onBlur={this.inputEffect.bind(this)} aria-describedby="basic-addon1" maxLength="6" pattern="(0|[0-9]*)" required/>
                             <span className="input-group-addon glyphi-custommm"><i className="fa fa-key" aria-hidden="true"></i></span>
                           </div>
                           

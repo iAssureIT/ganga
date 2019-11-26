@@ -137,7 +137,7 @@ class ProductViewEcommerceBestSellers extends Component {
           messageData : {
             "type" : "outpage",
             "icon" : "fa fa-exclamation-circle",
-            "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+            "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
             "class": "warning",
             "autoDismiss" : true
           }
@@ -187,7 +187,7 @@ class ProductViewEcommerceBestSellers extends Component {
         messageData : {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
-          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
           "class": "warning",
           "autoDismiss" : true
         }

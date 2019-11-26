@@ -4,51 +4,88 @@ import jQuery from "jquery";
 import axios                    from 'axios';
 import Message from '../../blocks/Message/Message.js';
 import $ from "jquery";
+import Loader from "../../common/loader/Loader.js";
 
 class ContactPage extends Component{
     constructor(props) {
         super(props);
         this.state={
             message:"",
-            
+            companyInfo : []
         }
     } 
 
-      submitQuery(){
+  submitQuery(){
     var formValues = {
       "customerName" : this.refs.firstName.value,
       "customerMobile" : this.refs.mobNumber.value,
       "query"        : this.refs.message.value
     }
-
-    axios.post("/api/customerQuery/post",formValues)
-    .then((response)=>{ 
-      this.setState({
-        messageData : {
-          "type" : "outpage",
-          "icon" : "fa fa-check-circle",
-          "message" : "&nbsp; "+response.data.message,
-          "class": "success",
-          "autoDismiss" : true
-        }
-      })
-      setTimeout(() => {
+    
+    if ($(".contactpageform").valid()) {
+      $('.fullpageloader').show();
+      axios.post("/api/customerQuery/post",formValues)
+      .then((response)=>{ 
+        $('.fullpageloader').hide();
         this.setState({
-            messageData   : {},
+          messageData : {
+            "type" : "outpage",
+            "icon" : "fa fa-check-circle",
+            "message" : "&nbsp; "+response.data.message,
+            "class": "success",
+            "autoDismiss" : true
+          }
         })
-    }, 3000);
-      //jQuery("#customercareModal").modal("hide");
-       this.setState({message:''})
+        setTimeout(() => {
+          this.setState({
+              messageData   : {},
+          })
+      }, 3000);
+        //jQuery("#customercareModal").modal("hide");
+         this.setState({message:''})
+        })
+      .catch((error)=>{
+            console.log('error', error);
       })
-    .catch((error)=>{
-          console.log('error', error);
-    })
+    }
   }
   componentDidMount(){
-  this.getUserData();  
-}
+    this.getUserData(); 
+    this.getCompanyDetails(); 
+    this.formValidation();
+  }
+  formValidation() {
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
 
-    getUserData(){
+        $(".contactpageform").validate({
+            rules: {
+                firstName: {
+                    required: true
+                },
+                mobNumber: {
+                    required: true,
+                },
+                message: {
+                    required: true,
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("name") == "name") {
+                    error.insertAfter("#name");
+                }
+                if (element.attr("name") == "mobileno") {
+                    error.insertAfter("#mobileno");
+                }
+                if (element.attr("name") == "message") {
+                    error.insertAfter("#message");
+                }
+            }
+        });
+    }
+  getUserData(){
     const userid = localStorage.getItem('user_ID');
      // console.log("contactuserid-----------------------------------------",userid);
      axios.get('/api/users/'+ userid)
@@ -66,7 +103,19 @@ class ContactPage extends Component{
           // alert("Something went wrong! Please check Get URL.");
         });
   }
-
+  getCompanyDetails(){
+    axios.get("/api/companysettings/list")
+      .then((response)=>{ 
+          this.setState({
+            companyInfo   : response.data[0]
+          },
+            ()=>{
+          })
+      })
+      .catch((error)=>{
+            console.log('error', error);
+      })
+    }
   handleChange(event) {
       event.preventDefault();
       const target = event.target;
@@ -103,6 +152,7 @@ class ContactPage extends Component{
                 </div>
             </div>
            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactcontent2-wrap">
+               <Loader type="fullpageloader" /> 
                <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div className="row">
@@ -136,6 +186,7 @@ class ContactPage extends Component{
                                             <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                               <div className="row">
                                                 <h5><strong>PHONE</strong></h5>
+                                                <span>{this.state.companyInfo.companyContactNumber}</span>
                                               </div>
                                             </div>
                                         </div>
@@ -165,6 +216,8 @@ class ContactPage extends Component{
                                             <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10">
                                               <div className="row">
                                                 <h5><strong>EMAIL</strong></h5>
+                                                <span>{this.state.companyInfo.companyEmail}</span>
+                                                
                                               </div>
                                             </div>
                                         </div>
@@ -219,30 +272,23 @@ class ContactPage extends Component{
 
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div className="row">
-                          <div className="contactpageform">
+                          <form className="contactpageform">
                           <div className=" contacttextmargin2 col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2">
-                                    <div className="formcontent col-lg-12">
-                                      <label htmlFor="name">Name<span className="redFont">*</span></label>
-                                      <input disabled  className="form-control" id="name" type="text"ref="firstName"/>
-                                    </div>
-                                    <div className="formcontent col-lg-12">
-                                      <label htmlFor="email">Mobile No<span className="redFont">*</span></label>
-                                      <input disabled className="form-control" id="mobileno" type="number"ref="mobNumber"/>
-                                    </div>
-                                    <div className="formcontent1 col-lg-12">
-                                      <label htmlFor="message">Message<span className="redFont">*</span></label>
-                                      <textarea className="form-control" id="message"ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)}></textarea>
-                                    </div>
-                                    <div className="checkbox">
-                                      {/*<label><input type="checkbox" name="remember"/>I agree that my submitted data is being collected and stored.
-
-                                      </label>*/}
-                                    </div>
-                                    <div onClick={this.submitQuery.bind(this)} className="btn btn-warning pull-right"> Submit</div>
-                           </div>    
-                            
-                            
-                          </div>
+                              <div className="formcontent col-lg-12">
+                                <label htmlFor="name">Name<span className="redFont">*</span></label>
+                                <input disabled  className="form-control" id="name" type="text" name="name" ref="firstName"/>
+                              </div>
+                              <div className="formcontent col-lg-12">
+                                <label htmlFor="email">Mobile No<span className="redFont">*</span></label>
+                                <input disabled className="form-control" id="mobileno" type="number" name="mobileno" ref="mobNumber"/>
+                              </div>
+                              <div className="formcontent1 col-lg-12">
+                                <label htmlFor="message">Message<span className="redFont">*</span></label>
+                                <textarea className="form-control" id="message" ref="message" name="message" value={this.state.message} onChange={this.handleChange.bind(this)}></textarea>
+                              </div>
+                              <div onClick={this.submitQuery.bind(this)} className="btn btn-warning pull-right"> Submit</div>
+                          </div>    
+                        </form>
                       </div>
                     </div>
 

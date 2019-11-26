@@ -31,7 +31,12 @@ class SearchProduct extends Component {
   		$('div[data-toggle="collapse"]').click(function () {
   			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
   		});
-  		
+  		this.setState({
+  			products 		: this.props.searchResult,
+	        masterproducts 	: this.props.searchResult,
+	        searchCriteria  : this.props.searchCriteria,
+	        categoryDetails : this.props.categoryDetails 
+	    },()=>{});
   	}
   	componentWillReceiveProps(nextProps){
   		
@@ -137,6 +142,7 @@ class SearchProduct extends Component {
    //                  },[]); 
 	}
   	render() {
+  		console.log('products',this.state.products)
 		return (
 	      	<div className="container" id="containerDiv">
 	     	<div className="row"> 
@@ -151,7 +157,6 @@ class SearchProduct extends Component {
 				    		})
 				    		:
 				    		this.props.searchResult.map((data,index)=>{
-				    			console.log('datttta',data);
 				    			return(<li><a href={"/category/"+data.category+"/"+data.section_ID+"/"+data.category_ID}>{data.category} / </a></li>);	
 				    		})
 				    	}
@@ -200,13 +205,17 @@ class SearchProduct extends Component {
 				    	
 				    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
 				    		
-				    		<SearchProductCollage products={this.state.products}/>
-				    		{this.props.searchCriteria && this.props.searchCriteria.loading ? <Loader type="collageloader" productLoaderNo = {3}/> : null }
+				    		{
+				    			this.props.searchCriteria.loading == undefined || this.props.searchCriteria.loading ? 
+				    			<Loader type="collageloader" productLoaderNo = {3}/> 
+				    			: 
+				    			<SearchProductCollage products={this.state.products} loading ={this.props.searchCriteria.loading}/>
+				    		}
 				     	</div>
 				    </div>
 				    <div id="categories" className="tab-pane fade">
 				    	<ul>
-				    	{
+				     	{
 				    		this.state.categoryDetails && this.state.categoryDetails[0] && this.state.categoryDetails.map((data, index)=>{
 				    			return(
 				    				<li key={index}><a href={"/product-collage/"+data._id}>{data.category}</a>
@@ -236,7 +245,6 @@ const mapDispachToProps = (dispach) =>{
   }
 }
 const mapStateToProps = (state)=>{
-	console.log('state',state)
   return {
     cartCount :  state.cartCount,
     wishlistCount : state.wishlistCount,

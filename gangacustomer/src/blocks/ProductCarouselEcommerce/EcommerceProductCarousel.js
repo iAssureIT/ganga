@@ -58,8 +58,9 @@ class EcommerceProductCarousel extends Component {
   }
   
   addtocart(event) {
+    event.preventDefault();
     if (user_ID) {
-      event.preventDefault();
+      
       var id = event.target.id;
       // console.log('id', id);
       axios.get('/api/products/get/one/' + id)
@@ -118,7 +119,7 @@ class EcommerceProductCarousel extends Component {
         messageData : {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
-          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
           "class": "warning",
           "autoDismiss" : true
         }
@@ -139,8 +140,9 @@ class EcommerceProductCarousel extends Component {
   }
 
   addtowishlist(event) {
+    event.preventDefault();
     if (user_ID) {
-      event.preventDefault();
+      
       var id = event.target.id;
       const userid = localStorage.getItem('user_ID');
       const formValues =
@@ -176,7 +178,7 @@ class EcommerceProductCarousel extends Component {
         messageData : {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
-          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
           "class": "warning",
           "autoDismiss" : true
         }

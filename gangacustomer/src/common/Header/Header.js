@@ -52,7 +52,7 @@ componentWillMount() {
 
    async componentDidMount(){
     await this.props.fetchCartData(); 
-    console.log(this.props.recentCartData);
+    //console.log(this.props.recentCartData);
 
     document.getElementsByTagName("DIV")[0].removeAttribute("style");
     this.getCartCount();
@@ -104,6 +104,7 @@ componentWillMount() {
     }
     if (searchstr) {
       $('.headersearch').val(searchstr);
+      this.searchProducts();
     }
 
   }
@@ -196,10 +197,13 @@ componentWillMount() {
     if (this.state.catArray.length == 0 && $('.headersearch').val() != '') {
       var searchstr = $('.headersearch').val()
       var formValues = {
-        "searchstr": searchstr
+        "searchstr": searchstr,
+        "loading": true
       }
+      this.props.searchProductFun(formValues, this.state.searchResult);
       axios.get("/api/products/get/search/" + searchstr)
         .then((response) => {
+          formValues.loading = false;
           this.setState({ searchResult: response.data }, () => {
             this.props.searchProductFun(formValues, this.state.searchResult);
           });

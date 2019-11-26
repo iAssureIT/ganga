@@ -87,7 +87,7 @@ export default class Footer extends Component {
                 </div>   
                
                 <ul>
-                    <li><a href="/about-us">Terms of Use</a></li>
+                    <li><a href="#">Terms of Use</a></li>
                     <li><a href="#">Payment Methods</a></li>
                 </ul>
                 </div>
@@ -98,7 +98,7 @@ export default class Footer extends Component {
                      <strong>LET US HELP YOU</strong>
                 </div>   
                 <ul>
-                    <li><a href="/blogs">Blog</a></li>
+                    <li><a href="#">Blog</a></li>
                     <li><a href="#">Faqs</a></li>
                     <li><a href="#">Store Location</a></li>
                     <li><a href="#">Shop By Brands</a></li>
@@ -128,7 +128,7 @@ export default class Footer extends Component {
                                         this.state.locationdata.map((data, index)=>{
                                            return(
                                                  <div key={index} className="col-lg-9 addressDetails">  
-                                                    <a>{data.location},{data.landmark}<br />{data.companytaluka},{data.companyCity},
+                                                    <a>{data.location} {data.landmark}<br />{data.companytaluka},{data.companyCity},
                                                     {data.companyState}-{this.state.companyInfo.pincode}</a>
                                                 </div>
                                             );

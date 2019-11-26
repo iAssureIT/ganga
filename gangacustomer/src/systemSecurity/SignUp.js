@@ -48,7 +48,7 @@ class SignUp extends Component {
 	validation() {
         $.validator.addMethod("regxfirstname", function (value, element, regexpr) {
             return regexpr.test(value);
-        }, "Name should only contain letters & number.");
+        }, "Name should only contain letters.");
         $.validator.addMethod("regxmobNumber", function (value, element, regexpr) {
             return regexpr.test(value);
         }, "Please enter valid mobile number.");
@@ -69,11 +69,11 @@ class SignUp extends Component {
             rules: {
                 firstname: {
                     required: true,
-                    regxfirstname : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                    regxfirstname : /^[A-Za-z]*$/,
 				},
 				lastname: {
                     required: true,
-                    regxfirstname : /^[A-Za-z][A-Za-z0-9\-\s]*$/,
+                    regxfirstname : /^[A-Za-z]*$/,
                 },
                 mobNumber: {
                     required: true,

@@ -89,11 +89,10 @@ class ProductModalViewEcommerce extends Component {
     // else{
     // 	  this.props.history.push("/login");
     // }
-    if(user_ID){
-    	
     event.preventDefault();
-    var id = event.target.id;
+    if(user_ID){
     
+    var id = event.target.id;
     axios.get('/api/products/get/one/'+id)
     .then((response)=>{
       var totalForQantity   =   parseInt(Number(this.state.totalQuanity) * response.data.discountedPrice);
@@ -150,7 +149,7 @@ class ProductModalViewEcommerce extends Component {
         messageData : {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
-          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
 		  "class": "warning",
 		  "autoDismiss" : true
         }
@@ -224,7 +223,7 @@ class ProductModalViewEcommerce extends Component {
           messageData : {
             "type" : "outpage",
             "icon" : "fa fa-exclamation-circle",
-            "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+            "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
 			"class": "warning",
 			"autoDismiss" : true
           }

@@ -25,23 +25,24 @@ class SearchProductCollage extends Component {
 	async componentDidMount(){
     await this.props.fetchCartData(); 
 		this.setState({
-      products : this.props.products,
+      //products : this.props.products,
       masterLimitProducts : this.props.products
-    });
+    },()=>{});
 
 	}
   componentWillReceiveProps(nextProps){
-    console.log('nextProps22',nextProps);
+    
     this.setState({
       products : nextProps.products,
       masterLimitProducts : nextProps.products,
       categoryDetails : nextProps.categoryDetails
-    });
+    },()=>{});
 	}
   
   	addtocart(event){
-      if(user_ID){
       event.preventDefault();
+
+      if(user_ID){
       var id = event.target.id;
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
@@ -97,7 +98,7 @@ class SearchProductCollage extends Component {
             messageData : {
               "type" : "outpage",
               "icon" : "fa fa-exclamation-circle",
-              "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+              "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
               "class": "warning",
               "autoDismiss" : true
             }
@@ -110,8 +111,9 @@ class SearchProductCollage extends Component {
     }
    }
    addtowishlist(event) {
+    event.preventDefault();
+    
     if (user_ID) {
-      event.preventDefault();
       var id = event.target.id;
       const userid = localStorage.getItem('user_ID');
       const formValues =
@@ -146,7 +148,7 @@ class SearchProductCollage extends Component {
         messageData : {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
-          "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
           "class": "warning",
           "autoDismiss" : true
         }
@@ -211,7 +213,7 @@ class SearchProductCollage extends Component {
     }
 
   render() {
-    
+    //console.log('products11',this.props.products)
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <Message messageData={this.state.messageData} />
@@ -230,8 +232,8 @@ class SearchProductCollage extends Component {
 
         <div className="row">
         {
-          this.state.products && this.state.products.length > 0 ?
-            this.state.products && this.state.products.map((data, index) =>{
+          this.props.products && this.props.products.length > 0 ?
+            this.props.products && this.props.products.map((data, index) =>{
               var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
               if(x && x.length > 0){
                 var wishClass = '';

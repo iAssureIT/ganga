@@ -85,11 +85,13 @@ class Wishlist extends Component {
 
     }
     addtocart(event) {
+      event.preventDefault();
       $('.fullpageloader').show();
       const user_ID = localStorage.getItem("user_ID");
       var wishlist_ID = event.target.getAttribute('wishid');
+
       if (user_ID) {
-        event.preventDefault();
+       
         var id = event.target.getAttribute('id');
          console.log('id', id);
         axios.get('/api/products/get/one/' + id)
@@ -162,7 +164,7 @@ class Wishlist extends Component {
           messageData : {
             "type" : "outpage",
             "icon" : "fa fa-exclamation-circle",
-            "message" : "Need To Sign In, Please Sign In First <a href='/login'>Sign In</a>",
+            "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
             "class": "warning",
             "autoDismiss" : true
           }
