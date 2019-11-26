@@ -211,9 +211,9 @@ class AddNewProductImages extends Component{
                               <hr className="hr-head container-fluid row"/>
                             </div>
                             <div className="box-body">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="addProdImgVidTitle">
+                                <div className="">
+                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 addProdImgVidTitle">
                                             Product Name : {this.state.productTitle}
                                         </div>
                                     </div>

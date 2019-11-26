@@ -463,7 +463,7 @@ componentWillMount() {
                             <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.recentCartData.length>0 ? this.props.recentCartData[0].cartTotal : 0}</div>
                             {/*<a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>*/}
                           </div>
-                          <div className="dropScroll">
+                          <div className="dropScroll abc">
                           {
                             this.props.recentCartData && this.props.recentCartData.length > 0 ?
                             this.props.recentCartData[0].cartItems.map((data, index) => {

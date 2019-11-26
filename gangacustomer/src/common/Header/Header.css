@@ -287,12 +287,22 @@ ul.box-static-link li span {
   width: 400px!important;
   position: relative;
   max-height: 285px;
-
   overflow-y: scroll;
 }
-.cartdropborder{
-  border-top:1px solid #aaa;
 
+
+.abc::-webkit-scrollbar {
+    width: 7px;
+}
+ 
+.abc::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+ 
+.abc::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border: 1px solid #333;
+  /*outline: 1px solid white;*/
 }
 
 .cartdropbtn{
@@ -325,6 +335,7 @@ ul.box-static-link li span {
 }
 .cartdropimg img{
   height: 80px;
+  width: 100%
 }
 .cartdropimg{
   margin:10px 0px;

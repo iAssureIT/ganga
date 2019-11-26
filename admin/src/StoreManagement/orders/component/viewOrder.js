@@ -58,13 +58,15 @@ class viewOrder extends Component{
       console.log('data',this.state.orderData);
       console.log('datacasj',_.isEmpty(this.state.orderData));
         return(         
-            <div className="container-fluid">  
-                <div className="row">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 parentDiv">   
+            <div className="container-fluid">
+             <section className="content">
+        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+                <div className="col-lg-12">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 parentDiv ">   
                     {
                       this.state.orderData && !(_.isEmpty(this.state.orderData)) ?
                          
-                          <div className="col-lg-12 bglight">
+                          <div className="col-lg-12 ">
                             <div className="col-lg-12 orderpagebox">
                               <div className="row">
                                 <div className="col-lg-4">
@@ -148,6 +150,9 @@ class viewOrder extends Component{
 
                 </div>
                 </div>
+                </section>
+                </div>
+
         );
     }
 }
