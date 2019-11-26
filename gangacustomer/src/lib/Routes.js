@@ -134,6 +134,7 @@ class Routes extends Component{
             <Route path="/verify-account"           exact strict component={ VerifyAccount } />
             <Route path="/confirm-otp/:user_ID"     exact strict component={ ConfirmOtp } />
             <Route path="/productdetails/:productID"             exact strict component={ ProductDetailsEcommerce } />
+            <Route path="/productdetails/:productURL/:productID"             exact strict component={ ProductDetailsEcommerce } />
             <Route path="/searchProducts"           exact strict component={ SearchProduct } />
             <Route path="/section/:url/:sectionID"  exact strict component={ ProductCollage } />
             <Route path="/category/:url/:sectionID/:categoryID"            exact strict component={ ProductCollage } />

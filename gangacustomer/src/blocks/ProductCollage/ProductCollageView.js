@@ -41,8 +41,9 @@ class ProductCollageView extends Component {
   
 
   	addtocart(event){
-      if(user_ID){
       event.preventDefault();
+      if(user_ID){
+      
       var id = event.target.id;
       axios.get('/api/products/get/one/'+id)
       .then((response)=>{
