@@ -187,11 +187,14 @@ class Address extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+        if (event.target.name == 'modalpincode') {
+            this.handlePincode(event.target.value);
+        }
+        
     }
-    handlePincode(event){
-        event.preventDefault();
-        if (event.target.value != '') {
-            axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
+    handlePincode(pincode){
+        if (pincode != '') {
+            axios.get("https://api.postalpincode.in/pincode/" + pincode)
             .then((response) => {
                 
                 if ($("[name='modalpincode']").valid()) {
@@ -475,7 +478,7 @@ class Address extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 shippingInput">
                                         <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
-                                        <input type="text" maxlength="6" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)} onBlur={this.handlePincode.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
+                                        <input type="text" maxlength="6" ref="modalpincode" name="modalpincode" id="modalpincode" value={this.state.modalpincode} onChange={this.handleChange.bind(this)}  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                         {this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
                                     </div>
 

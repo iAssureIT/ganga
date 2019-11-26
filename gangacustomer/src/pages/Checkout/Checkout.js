@@ -268,11 +268,14 @@ class Checkout extends Component {
         this.setState({
             [event.target.name]: event.target.value
         })
+        if (event.target.name == 'pincode') {
+            this.handlePincode(event.target.value);
+        }
     }
-    handlePincode(event){
-        event.preventDefault();
-        if (event.target.value != '') {
-            axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
+    handlePincode(pincode){
+        
+        if (pincode != '') {
+            axios.get("https://api.postalpincode.in/pincode/" + pincode)
             .then((response) => {
                 
                 if ($("[name='pincode']").valid()) {

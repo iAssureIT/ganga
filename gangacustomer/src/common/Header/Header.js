@@ -276,7 +276,7 @@ componentWillMount() {
     }
     axios.patch("/api/carts/remove", formValues)
       .then((response) => {
-        
+        this.props.fetchCartData(); 
         this.setState({
           messageData: {
             "type": "outpage",
@@ -345,7 +345,7 @@ componentWillMount() {
       })
   }
   render() {
-    // console.log('recentCartData', this.props.recentCartData);
+    console.log('recentCartData', this.props.recentCartData.length);
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
@@ -505,11 +505,11 @@ componentWillMount() {
                               <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW CART">VIEW CART</div></a>
                             </div>
                             {
-                              this.props.recentCartData.length > 0 ?  
+                             this.props.recentCartData[0] && this.props.recentCartData[0].cartItems.length > 0 ?  
                               <div className=" col-lg-6">
                                 <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12 checkoutBtn" title="Checkout">Checkout</div></a>
                               </div>
-                              : null
+                              : "" 
                             }
 
                             
