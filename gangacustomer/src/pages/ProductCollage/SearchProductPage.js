@@ -37,6 +37,7 @@ class SearchProduct extends Component {
 	        searchCriteria  : this.props.searchCriteria,
 	        categoryDetails : this.props.categoryDetails 
 	    },()=>{});
+	    this.getWishData();
   	}
   	componentWillReceiveProps(nextProps){
   		
@@ -66,7 +67,19 @@ class SearchProduct extends Component {
 	  		
   		})	
   	}
-  	
+  	getWishData(){
+		var user_ID = localStorage.getItem('user_ID');
+		axios.get('/api/wishlist/get/userwishlist/'+user_ID)
+		.then((response)=>{
+		  this.setState({
+			wishList : response.data
+		  },()=>{
+		  })
+		})
+		.catch((error)=>{
+		  console.log('error', error);
+		})
+	}
 	onSelectedItemsChange(filterType, selecteditems){
 		
 		if (filterType == 'brands') {
@@ -209,7 +222,11 @@ class SearchProduct extends Component {
 				    			this.props.searchCriteria.loading == undefined || this.props.searchCriteria.loading ? 
 				    			<Loader type="collageloader" productLoaderNo = {3}/> 
 				    			: 
-				    			<SearchProductCollage products={this.state.products} loading ={this.props.searchCriteria.loading}/>
+				    			<SearchProductCollage products={this.state.products} 
+				    			loading ={this.props.searchCriteria.loading}
+				    			getWishData={this.getWishData.bind(this)} 
+				    			wishList={this.state.wishList}
+				    			/>
 				    		}
 				     	</div>
 				    </div>

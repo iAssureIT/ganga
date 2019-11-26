@@ -460,7 +460,7 @@ class ProductCollage extends Component {
 		.catch((error)=>{
 		  console.log('error', error);
 		})
-	  }
+	}
 	
   limitProducts(event){
     event.preventDefault();
