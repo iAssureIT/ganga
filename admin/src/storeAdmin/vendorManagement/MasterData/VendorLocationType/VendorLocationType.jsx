@@ -38,7 +38,7 @@ class VendorLocationType extends Component {
         window.scrollTo(0, 0);
         $.validator.addMethod("regxA1", function(value, element, regexpr) {          
             return regexpr.test(value);
-        }, "Name should only contain letters & number.");
+        }, "Location Type should only contain letters & number.");
 
         jQuery.validator.setDefaults({
             debug: true,
@@ -108,7 +108,8 @@ class VendorLocationType extends Component {
                 this.getData(this.state.startRange, this.state.limitRange);
                 swal(response.data.message);
                 this.setState({
-                    locationType : ""
+                    locationType : "",
+                    editId : ""
                 })
             })
             .catch((error)=>{
@@ -136,6 +137,7 @@ class VendorLocationType extends Component {
 
     axios.post('/api/vendorLocationType/get/list', data)
     .then((response)=>{
+        this.getDataCount();
         this.setState({
         tableData : response.data
         })

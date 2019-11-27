@@ -32,12 +32,12 @@ class VendorCategory extends Component {
         var editId = this.props.match.params.vendorID;
         console.log('ven', editId);
         this.getData(this.state.startRange, this.state.limitRange);
-        this.getDataCount();
+
         this.edit(editId);
         window.scrollTo(0, 0);
         $.validator.addMethod("regxA1", function(value, element, regexpr) {          
         return regexpr.test(value);
-        }, "Name should only contain letters & number.");
+        }, "Category Name should only contain letters & number.");
         
         jQuery.validator.setDefaults({
         debug: true,
@@ -83,6 +83,7 @@ class VendorCategory extends Component {
         if($("#vendorCategory").valid()){
             axios.post('/api/vendorCategory/post', formValues)
             .then((response)=>{
+                this.getData(this.state.startRange, this.state.limitRange);
                 swal(response.data.message);
                 this.setState({
                     categoryName : ""
@@ -104,6 +105,7 @@ class VendorCategory extends Component {
             .then((response)=>{
                 this.props.history.push('/vendor-category');
                 swal(response.data.message);
+                this.getData(this.state.startRange, this.state.limitRange);
                 this.setState({
                     categoryName : "",
                     editId : ""
@@ -134,6 +136,7 @@ class VendorCategory extends Component {
 
     axios.get('/api/vendorCategory/get/list', data)
     .then((response)=>{
+        this.getDataCount();
         this.setState({
         tableData : response.data
         })

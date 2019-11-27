@@ -77,9 +77,9 @@ class CategoryManagement extends Component{
         return arg !== value;
       }, "Please select the category");
 
-      $.validator.addMethod("regxA1", function(value, element, regexpr) {          
-        return regexpr.test(value);
-      }, "Name should only contain letters & number.");
+      // $.validator.addMethod("regxA1", function(value, element, regexpr) {          
+      //   return regexpr.test(value);
+      // }, "Name should only contain letters & number.");
   
       $.validator.setDefaults({
         debug: true,
@@ -96,10 +96,10 @@ class CategoryManagement extends Component{
             required: true,
             // regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
           },
-          categoryDescription: {
-            required: true,
-            // regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
-          },
+          // categoryDescription: {
+          //   required: true,
+          //   // regxA1: /^[A-Za-z][A-Za-z0-9\-\s]/, 
+          // },
         },
         errorPlacement: function(error, element) {
           if (element.attr("name") == "section"){
@@ -108,9 +108,9 @@ class CategoryManagement extends Component{
           if (element.attr("name") == "category"){
             error.insertAfter("#category");
           }
-          if (element.attr("name") == "categoryDescription"){
-            error.insertAfter("#categoryDescription");
-          }         
+          // if (element.attr("name") == "categoryDescription"){
+          //   error.insertAfter("#categoryDescription");
+          // }         
         }
       });
       this.getSectionData();
@@ -217,43 +217,56 @@ class CategoryManagement extends Component{
                    "subCategoryCode"   : catCodeLength+'|'+i,
                    "subCategoryTitle"  : $(".newSubCatg"+i).val(),
               }
-              categoryDimentionArray.push(obj);
+              if($(".newSubCatg"+i).val()){
+                categoryDimentionArray.push(obj);
+                this.setState({
+                  allowToSubmit: true
+                })
+              }else{
+                console.log("subCategoryTitleErrora"+i, " subCategoryTitlea0Error");
+                this.setState({
+                  ["subCategoryTitleErrora"+i] : "This field is required.",
+                  allowToSubmit: false
+                })
+              }
             }
           }
+          // console.log(categoryDimentionArray);
+          if(this.state.allowToSubmit == true){
+            var formValues = {
+              "section"                   : this.state.section,
+              "section_ID"                : this.state.section_ID,
+              "category"                  : this.refs.category.value,
+              "categoryUrl"               : this.refs.categoryUrl.value,
+              "subCategory"               : categoryDimentionArray,
+              "categoryDescription"       : this.refs.categoryDescription.value,
+              "categoryImage"             : this.state.categoryImage,
+            }
 
+            axios.post('/api/category/post', formValues)
+            .then((response)=>{
 
-          var formValues = {
-            "section"                   : this.state.section,
-            "section_ID"                : this.state.section_ID,
-            "category"                  : this.refs.category.value,
-            "categoryUrl"               : this.refs.categoryUrl.value,
-            "subCategory"               : categoryDimentionArray,
-            "categoryDescription"       : this.refs.categoryDescription.value,
-            "categoryImage"             : this.state.categoryImage,
+              swal({
+                text  : response.data.message,
+              });
+
+              this.setState({
+                "section"                   : 'Select',
+                "category"                      : '',
+                "categoryUrl"                   : '',
+                "addEditModeCategory"           : '',
+                "addEditModeSubCategory"        : '',
+                "categoryDescription"           : '',
+                "subcatgArr"                    : [],
+                "categoryImage" : ""
+              });
+              $(':input').val('');
+              this.getData(this.state.startRange, this.state.limitRange);
+            })
+            .catch((error)=>{
+              console.log('error', error);
+            });
           }
-
-          axios.post('/api/category/post', formValues)
-          .then((response)=>{
-
-            swal({
-              text  : response.data.message,
-            });
-
-            this.setState({
-              "section"                   : 'Select',
-              "category"                      : '',
-              "categoryUrl"                   : '',
-              "addEditModeCategory"           : '',
-              "addEditModeSubCategory"        : '',
-              "categoryDescription"           : '',
-              "subcatgArr"                    : [],
-            });
-            this.getData(this.state.startRange, this.state.limitRange);
-          })
-          .catch((error)=>{
-            console.log('error', error);
-          });
-
         })
         .catch((error)=>{
           console.log('error', error);
@@ -288,32 +301,45 @@ class CategoryManagement extends Component{
                    "subCategoryCode"   : catCodeLength+'|'+i,
                    "subCategoryTitle"  : $(".newSubCatg"+i).val(),
               }
-              categoryDimentionArray.push(obj);
+              if($(".newSubCatg"+i).val()){
+                categoryDimentionArray.push(obj);
+                this.setState({
+                  allowToUpdate: true
+                })
+              }else{
+                console.log("subCategoryTitleErrora"+i, " subCategoryTitlea0Error");
+                this.setState({
+                  ["subCategoryTitleErrora"+i] : "This field is required.",
+                  allowToUpdate: false
+                })
+              }
             }
           }
-          axios.patch('/api/category/patch', formValues)
-          .then((response)=>{
+          if(this.state.allowToUpdate == true){
+            axios.patch('/api/category/patch', formValues)
+            .then((response)=>{
 
-            swal({
-              text  : response.data.message,
+              swal({
+                text  : response.data.message,
+              });
+              this.getData(this.state.startRange, this.state.limitRange);
+              this.setState({
+                "section"                       : 'Select',
+                "category"                      : '',
+                "categoryUrl"                   : '',
+                "addEditModeCategory"           : '',
+                "addEditModeSubCategory"        : '',
+                "categoryDescription"           : '',
+                "editId"                        : '',
+                "subcatgArr"                    : [],
+                categoryImage : "",
+              });
+              this.props.history.push('/category-management');
+            })
+            .catch((error)=>{
+              console.log('error', error);
             });
-            this.getData(this.state.startRange, this.state.limitRange);
-            this.setState({
-              "section"                       : 'Select',
-              "category"                      : '',
-              "categoryUrl"                   : '',
-              "addEditModeCategory"           : '',
-              "addEditModeSubCategory"        : '',
-              "categoryDescription"           : '',
-              "editId"                        : '',
-              "subcatgArr"                    : [],
-              categoryImage : "",
-            });
-            this.props.history.push('/category-management');
-          })
-          .catch((error)=>{
-            console.log('error', error);
-          });
+          }
         })
         .catch((error)=>{
           console.log('error', error);
@@ -448,6 +474,7 @@ class CategoryManagement extends Component{
 
         productImageArray.splice(productImageArray.findIndex(v => v === id), 1);
         this.setState({
+            categoryImage : "",
             productImageArray: productImageArray
         },()=>{
             // console.log('subcatgArr', this.state.subcatgArr);
@@ -511,9 +538,13 @@ class CategoryManagement extends Component{
               console.log('error', error);
         })
     }
+    handleSubCatChange(event){
+      this.setState({
+        [event.target.name] : event.target.value,
+        ["subCategoryTitleError"+event.target.id] : event.target.value ? "" : "This field is required."
+      })
+    }
     render(){
-       console.log("s3url------------->",this.state.categoryImage);
-      // console.log('categoryImage', this.state.categoryImage);
         return(
             <div className="container-fluid col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="row">
@@ -566,17 +597,18 @@ class CategoryManagement extends Component{
                                                   <div className="col-lg-12 col-md-12 NOpadding" key={index}>                                                                                  
                                                       <div className="col-lg-12 col-md-12 NOpadding newSubCatgArr">   
                                                           <div className="col-lg-11 col-md-11 NOpadding">             
-                                                              <input type="text" id={dataRowArray.subCategoryCode} value={this.state['subCategoryTitle'+dataRowArray.subCategoryCode]} name={"subCategoryTitle"+dataRowArray.subCategoryCode} onChange={this.handleChange.bind(this)} className={"form-control newSubCatg"+index} placeholder="Category Title" aria-label="Brand" aria-describedby="basic-addon1" ref={"newSubCatg"+index} />
+                                                              <input type="text" id={dataRowArray.subCategoryCode} value={this.state['subCategoryTitle'+dataRowArray.subCategoryCode]} name={"subCategoryTitle"+dataRowArray.subCategoryCode} onChange={this.handleSubCatChange.bind(this)} className={"form-control newSubCatg"+index} placeholder="Category Title" aria-label="Brand" aria-describedby="basic-addon1" ref={"newSubCatg"+index} />
                                                           </div>
                                                           <div className="col-lg-1 col-md-1 deleteSubCategory fa fa-trash" id={dataRowArray.subCategoryCode} onClick={this.deleteSubCategory.bind(this)}>
                                                           </div>
                                                       </div>
+                                                      <div className="error" name={"subCategoryTitleError"+dataRowArray.subCategoryCode} id={"subCategoryTitle"+dataRowArray.subCategoryCode}>{this.state["subCategoryTitleError"+dataRowArray.subCategoryCode]}</div>
                                                   </div>
                                               );
                                           })
                                       }
                                   </div>
-
+                                  
                                   <div className="col-lg-12 col-md-12">
                                       <div onClick={this.addNewSubCatArray.bind(this)}  className="submitBtn btn btnSubmit col-lg-12">Add New Subcategory</div>
                                   </div>
@@ -584,7 +616,7 @@ class CategoryManagement extends Component{
                               </div>
                               <div className="col-lg-6">
                                   <div className="divideCatgRows">
-                                      <label>Category Short Description <i className="redFont">*</i></label>                                                                    
+                                      <label>Category Short Description </label>                                                                    
                                       <input type="text" value={this.state.categoryDescription} onChange={this.handleChange.bind(this)} name="categoryDescription" id="categoryDescription" className="form-control categoryShortDesc" placeholder="Category Short Description" ref="categoryDescription" />
                                   </div>
                                   {/* <div className="divideCatgRows">
@@ -597,20 +629,31 @@ class CategoryManagement extends Component{
                                       </div>
                                       </div>
                                   </div> */}
-                                  <div className="divideCatgRows">
-                                      <label>Category Image</label>                                                                    
-                                      <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="" accept=".jpg,.jpeg,.png" />
-                                  </div>
-                                  <div className="row">
-                                    <div className="col-lg-4 productImgCol">
-                                      <div className="prodImage">
+                                  {
+                                    this.state.categoryImage ?
+                                    null
+                                    :
+                                    
+                                    <div className="divideCatgRows">
+                                        <label>Category Image</label>                                                                    
+                                        <input type="file" onChange={this.uploadImage.bind(this)} title="Click to Edit Photo" className="" accept=".jpg,.jpeg,.png" />
+                                    </div>
+                                  }
+                                  {
+                                    this.state.categoryImage ? 
+                                    <div className="row">
+                                      <div className="col-lg-4 productImgCol">
+                                        <div className="prodImage">
                                           <div className="prodImageInner">
                                               <span className="prodImageCross" title="Delete" data-imageUrl={this.state.categoryImage} onClick={this.deleteImage.bind(this)} >x</span>
                                           </div>
-                                          <img title="view Image" src={this.state.categoryImage ? this.state.categoryImage : "/images/notavailable.jpg"} className="img-responsive" />
-                                      </div>    
+                                          <img title="view Image" alt="Please wait..." src={this.state.categoryImage ? this.state.categoryImage : "/images/notavailable.jpg"} className="img-responsive" />
+                                        </div>    
+                                      </div>
                                     </div>
-                                </div>
+                                    :
+                                    null
+                                  }
                               </div>
                               <div className="col-lg-12 NOpadding-right">
                                   <div className="addCategoryNewBtn col-lg-12 NOpadding-right">
