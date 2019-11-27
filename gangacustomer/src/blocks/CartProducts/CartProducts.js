@@ -232,7 +232,7 @@ class CartProducts extends Component{
                     <Message messageData={this.state.messageData} />
                     {
                         this.props.recentCartData.length > 0 &&  this.props.recentCartData[0].cartItems.length > 0? 
-                        <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+                        <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 NOpadding">
                             
                             <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
                                 <table className="table table-responsive cartProductTable">
@@ -278,13 +278,13 @@ class CartProducts extends Component{
                                                                 </td>
                                                             </tr>
                                                         </td>
-                                                        <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{discountedPrice}</span></td>
+                                                        <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-inr"}>&nbsp;{discountedPrice}</span></td>
                                                         <td className="nowrap">
                                                             <span className="minusQuantity fa fa-minus" id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
                                                             <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
                                                             <span className="plusQuantity fa fa-plus" productid={data.product_ID} id={data._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} dataprice={data.discountedPrice} onClick={this.cartquantityincrease.bind(this)}></span>
                                                         </td>
-                                                        <td className="nowrap"><span className={"cartProductPrize fa fa-"+data.currency}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
+                                                        <td className="nowrap"><span className={"cartProductPrize fa fa-inr"}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
                                                         <td>
                                                             <span className="fa fa-times cartDelete" id={data._id} onClick={this.Removefromcart.bind(this)}></span>
                                                         </td>

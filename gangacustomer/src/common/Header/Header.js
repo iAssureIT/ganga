@@ -468,7 +468,7 @@ componentWillMount() {
                           </div>
                           <div className="dropScroll abc">
                           {
-                            this.props.recentCartData && this.props.recentCartData.length > 0 ?
+                            this.props.recentCartData && this.props.recentCartData.length > 0 && this.props.recentCartData[0].cartItems.length > 0 ?
                             this.props.recentCartData[0].cartItems.map((data, index) => {
                                 return (
                                   <li className="col-lg-12 cartdropheight " key={index}>

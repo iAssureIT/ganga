@@ -155,3 +155,6 @@ p{
 .editCursor{
   cursor: pointer;
 }
+.loaderHeight{
+  height: 500px;
+}

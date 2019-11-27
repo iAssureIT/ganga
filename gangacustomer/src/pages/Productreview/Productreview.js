@@ -300,7 +300,7 @@ class Productreview extends Component {
                     );
                   })
                   :
-                  <div className="mt15 alert alert-warning"><i className="fa fa-exclamation-circle"> </i>  No Reviews Yet</div>
+                  <div className="mt15 alert alert-warning textAlignCenter"><i className="fa fa-exclamation-circle"> </i>  No Reviews Yet</div>
               }
             </div>
           </div>

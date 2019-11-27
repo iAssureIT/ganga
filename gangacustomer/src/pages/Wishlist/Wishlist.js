@@ -300,8 +300,8 @@ class Wishlist extends Component {
                             })
                             :
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div className="wishlistNoProduct col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
-                                    <i className="fa fa-exclamation-triangle"></i>&nbsp;  You have no items in your wish list.
+                                <div className="alert alert-warning textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">
+                                    <i className="fa fa-exclamation-circle"></i>&nbsp;  You have no items in your wish list.
                                 </div>
                                 <a href="/" className="pull-right mt15 wishBack">Back</a>
                             </div>

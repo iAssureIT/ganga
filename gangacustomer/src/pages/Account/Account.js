@@ -158,12 +158,11 @@ class Account extends Component{
 
                                                 <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 {this.state.addressLine1}, &nbsp;
-                                                {this.state.addressLine2}, &nbsp;
+                                                {this.state.addressLine2 ? this.state.addressLine2+"," : null} &nbsp;
                                                 {this.state.city}, &nbsp;
                                                 {this.state.state}, {this.state.country} - {this.state.pincode}<br />
                                                     Email: {this.state.emailId}<br />
                                                     Contact Number: {this.state.mobileNumber} 
-
                                                 </p>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div data-toggle="modal" data-target="#checkoutAddressModal" onClick={this.getAddressId.bind(this)} id={this.state.deliveryAddressID} className="btn btn-warning"><i className="fa fa-pencil-square-o"></i> &nbsp; EDIT ADDRESS</div>

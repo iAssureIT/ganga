@@ -54,7 +54,7 @@ import Reports from '../../admin/Reports/Reports.js';
 import CategoryWiseReports from '../../admin/categoryWiseReports/Reports.js';
 import Productreview from '../../storeAdmin/Productreview/Productreview.js';
 
-import ImageUpload from '../../ImageUpload/ImageUpload.js';
+// import ImageUpload from '../../ImageUpload/ImageUpload.js';
 
 
 // Section: 1 - SystemSecurity ******************************************************
@@ -187,7 +187,7 @@ class Layout extends Component {
                   <Route path="/product-list" exact strict component={ProductList} />
                   <Route path="/product-image-bulk-upload" exact strict component={BulkProductImageUpload} />
                   <Route path="/file-wise-product-list" exact strict component={FileWiseProductList} />
-                  <Route path="/image" exact strict component={ImageUpload} />
+                  {/* <Route path="/image" exact strict component={ImageUpload} /> */}
 
                   {/* Vendor Management */}
                   <Route path="/vendor-onboarding" exact strict component={BasicInfo} />

@@ -417,7 +417,7 @@ export default class MyOrders extends Component {
         <Message messageData={this.state.messageData} />
         {
           this.state.loading ?
-            <Loader type="fullpageloader" /> :
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 loaderHeight"><Loader type="fullpageloader" /></div> :
 
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
               <br />
@@ -434,7 +434,7 @@ export default class MyOrders extends Component {
                         <div className="row" style={{marginBottom:"10px"}}>
                           <div className={data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' ? "col-lg-12 cancelledorder" : "col-lg-12 orderIdborder"}  >
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6">
+                              <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6 NOpadding">
                                 <div className="orderIdButton">{"OrderId: "+(data.orderID)}</div>
                               </div>  
                               <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6 NOpadding">

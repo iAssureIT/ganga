@@ -133,7 +133,7 @@ class EditAccount extends Component{
             axios.patch('/api/users/userdetails/'+userid, formvalues)
             .then((response)=> {    
                 // $('.fullpageloader').hide();
-                console.log(response.message);
+                // console.log(response.message);
              this.setState({
               messageData : {
                 "type" : "outpage",
@@ -143,12 +143,14 @@ class EditAccount extends Component{
                 "autoDismiss" : true
               }
             })
-            this.props.history.push('/account');
+            
             setTimeout(() => {
                 this.setState({
                     messageData   : {},
                 })
+                // this.props.history.push('/account');
             }, 3000);
+            
             })
             .catch((error,resp)=> {
                 this.setState({

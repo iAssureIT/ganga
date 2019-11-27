@@ -128,16 +128,16 @@ class AddressBook extends Component{
                     </div>
                     <div className="col-lg-9 col-md-9 col-sm-8 col-xs-8 NOpadding mt25">
                         <h4 className="addTitle">Default Addresses</h4>
-                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15 NOpaddingLeft">
+                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt15 mb15">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 {
                                     this.state.addressLine1 ? 
                                     <div className="row">
-                                        <label>Default Shipping/Billing Address</label>
+                                        <label>Default Shipping / Billing Address</label>
                                         <p>
                                             {this.state.name} <br />
                                             {this.state.addressLine1} <br />
-                                            {this.state.addressLine2} <br />
+                                            {this.state.addressLine2 ? this.state.addressLine2+",  " : null}
                                             {this.state.city},<br />
                                             {this.state.state}, {this.state.country} - {this.state.pincode}<br />
                                             Contact Number: {this.state.mobileNumber}
@@ -151,7 +151,6 @@ class AddressBook extends Component{
                                         <div data-toggle="modal" data-target="#checkoutAddressModal" className="btn btn-warning mt15">Add Billing Address</div>
                                     </div>
                                 }
-                                
                             </div>
                         </div>
                         {

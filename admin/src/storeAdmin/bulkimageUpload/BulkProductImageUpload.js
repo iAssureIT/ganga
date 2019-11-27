@@ -120,7 +120,7 @@ class BulkProductImageUpload extends Component{
                 function getConfig(){
                     return new Promise(function(resolve,reject){
                         axios
-                           .get('http://qaapi.gangaexpress.in/api/projectSettings/get/one/s3')
+                           .get('/api/projectSettings/get/one/s3')
                            .then((response)=>{
                                 // console.log("proj set res = ",response.data);
                                 const config = {

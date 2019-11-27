@@ -13,7 +13,8 @@ class ResetPassword extends Component {
                 title: "MY SHOPPING CART",
                 breadcrumb: 'My Shopping Cart',
                 backgroungImage: '/images/cartBanner.png',
-            }
+            },
+            showMessage : false
         }
     }
     componentDidMount(){
@@ -31,20 +32,21 @@ class ResetPassword extends Component {
             .then((response)=>{
                 $('.fullpageloader').hide();
                 this.setState({
-                  "messageData" : {
-                    "type" : "outpage",
-                    "icon" : "fa fa-check-circle",
-                    "message" : "&nbsp; "+response.data.message,
-                    "class": "success",
-                    "autoDismiss" : false
-                  }
+                    "showMessage" : true,
+                //     "messageData" : {
+                //         "type" : "outpage",
+                //         "icon" : "fa fa-check-circle",
+                //         "message" : "&nbsp; "+response.data.message,
+                //         "class": "success",
+                //         "autoDismiss" : false
+                //     }
                 })
-                setTimeout(() => {
-                    this.setState({
-                        messageData   : {},
-                    })
-                }, 3000);
-                this.props.history.push('/login');
+                // setTimeout(() => {
+                //     this.setState({
+                //         messageData   : {},
+                //     })
+                // }, 3000);
+                // this.props.history.push('/login');
             })
             .catch((error)=>{
                 $('.fullpageloader').hide();
@@ -88,7 +90,7 @@ class ResetPassword extends Component {
                 if (element.attr("name") == "newPassword") {
                     error.insertAfter("#newPasswordmsg");
                 }
-                if (element.attr("name") == "confirmPass") {
+                if (element.attr("name") == "confirmPassword") {
                     error.insertAfter("#confirmPass");
                 }
             }
@@ -123,32 +125,46 @@ class ResetPassword extends Component {
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 innloginwrap">
                         <h3>Reset Password</h3>
                     </div>
-                    <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Please enter your email address below to receive a password reset link.</p>
-                    <form id="resetPassword">
-                        <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label>New Password </label><label className="astricsign">*</label>
-                            <input type="password" id="newPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" />
-                            <div className="showHideSignDiv">
-                                <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showNewPass.bind(this)}></i>
-                                <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideNewPass.bind(this)}></i>
-                            </div> 
-                            <br/>
-                            <div  id="newPasswordmsg"></div>
+                    {
+                        this.state.showMessage == false ? 
+                        <div>
+                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25">Please enter your email address below to receive a password reset link.</p>
+                            <form id="resetPassword">
+                            <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label>New Password </label><label className="astricsign">*</label>
+                                <input type="password" id="newPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="newPassword" name="newPassword" />
+                                <div className="showHideSignDiv">
+                                    <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showNewPass.bind(this)}></i>
+                                    <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideNewPass.bind(this)}></i>
+                                </div> 
+                                <br/>
+                                <div  id="newPasswordmsg"></div>
+                            </div>
+                            <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                                <label>Confirm Password</label><label className="astricsign">*</label>
+                                <input type="password" id="confirmPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" />
+                                <div className="showHideSignDiv">
+                                    <i className="fa fa-eye showPwd2 showEyeupSign" aria-hidden="true" onClick={this.showConfirmPass.bind(this)}></i>
+                                    <i className="fa fa-eye-slash hidePwd2 hideEyeSignup" aria-hidden="true" onClick={this.hideConfirmPass.bind(this)}></i>
+                                </div> 
+                                <br/>
+                                <div id="confirmPass"></div>
+                            </div>
+                            <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 mt25 mb25">
+                                <button className="btn btn-warning resetBtn" onClick={this.resetPassword.bind(this)}>Reset My Password</button>
+                            </div>
+                        </form>
                         </div>
-                        <div className="form-group logininput col-lg-12 col-md-12 col-sm-12 col-xs-12" >
-                            <label>Confirm Password</label><label className="astricsign">*</label>
-                            <input type="password" id="confirmPassword" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" ref="confirmPassword" name="confirmPassword" />
-                            <div className="showHideSignDiv">
-                                <i className="fa fa-eye showPwd2 showEyeupSign" aria-hidden="true" onClick={this.showConfirmPass.bind(this)}></i>
-                                <i className="fa fa-eye-slash hidePwd2 hideEyeSignup" aria-hidden="true" onClick={this.hideConfirmPass.bind(this)}></i>
-                            </div> 
-                            <br/>
-                            <div id="confirmPass"></div>
+                        :
+                        <div>
+                            <p className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt25 textAlignCenter">Your password has been reset successfully!</p>
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10">
+                                <div className="row loginforgotpass textAlignCenter"> Please &nbsp;
+                                    <a href='/login' className=""><b>Click here</b></a> to sign in.
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 mt25 mb25">
-                            <button className="btn btn-warning resetBtn" onClick={this.resetPassword.bind(this)}>Reset My Password</button>
-                        </div>
-                    </form>
+                    }
                 </div>
             </div>
         )
