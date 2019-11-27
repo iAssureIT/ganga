@@ -6,6 +6,7 @@ import swal                   from 'sweetalert';
 import XLSX                   from "xlsx";
 import _                      from 'underscore';
 import ProductList            from '../../productList/component/ProductList.js'; 
+import Loader                 from '../../../../coreAdmin/common/loader/Loader.js'; 
 
 class AddNewBulkProduct extends Component{
     constructor(props) {
@@ -13,7 +14,6 @@ class AddNewBulkProduct extends Component{
 
         this.state = {
             "currentProducts" : [],
-            "vendor"          : [],
             "productData"     : [],
             "file"            : props&&props.fileData&&props.fileData[0]?props.fileData[0].fileName:'',
             "finalData"       : []
@@ -45,7 +45,7 @@ class AddNewBulkProduct extends Component{
     }
 
     componentDidMount() {
-        
+        this.getVendorList();
     }
 
     componentWillUnmount() {
@@ -368,6 +368,7 @@ class AddNewBulkProduct extends Component{
                                     documentObj[count][header[k]] = record[k];
                                 }
                                 documentObj[count]['filename'] = file.name;
+                                documentObj[count]['vendor_ID'] = this.state.vendor;
                                 documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
                             }
                         }
@@ -393,12 +394,14 @@ class AddNewBulkProduct extends Component{
         $('.adminBlkUploadBtn').prop('disabled',false);
     }
     bulkUpload(){
-        
+         
         var formValues = this.state.finalData;
         console.log('formValues',formValues);
+        $('.fullpageloader').show();
         axios.post('/api/products/post/bulkUploadProduct', formValues)
         .then((response)=>{
-            window.location.reload();
+            $('.fullpageloader').hide();
+            //window.location.reload();
             swal({
                     title : response.data.message,
                   });
@@ -407,76 +410,119 @@ class AddNewBulkProduct extends Component{
             console.log('error', error);
         })
     }
+    selectVendor(event){
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+          [name]: event.target.value
+        });
+    }
+    getVendorList(){
+        axios.get('http://qagangaexpressapi.iassureit.com/api/vendors/get/list')
+        .then((response)=>{
+          console.log('res getVendorList', response);
+          this.setState({
+            vendorArray : response.data
+          })
+        })
+        .catch((error)=>{
+
+        })
+    }
     render(){
         const SheetJSFT = [
               "xlsx",
               "xls"
         ]
-
+console.log(this.state.vendor)
         return(
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
                 <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
                     <div className="content col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+                    <Loader type="fullpageloader" />
+                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                      <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields">
+                        <label>Vendor <i className="redFont">*</i></label>
+                        <select  onChange= {this.selectVendor.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
+                          <option disabled selected defaultValue="">Select Vendor</option>
+                          <option value="admin">Admin</option>
+                          {this.state.vendorArray && this.state.vendorArray.length > 0 ?
+                            this.state.vendorArray.map((data, index) => {
+                              return (
+                                <option key={index} value={data._id}>{data.companyName} - ({data.vendorID})</option>
+                              );
+                            })
+                            :
+                            <option disabled>{"No vendor added"}</option>
+                          }
+                        </select>
+                        {this.state.vendor ? null : <span>Please select a vendor to add a product</span>}
+                      </div>
+                    </div>
+
+                    {this.state.vendor ?
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="">
-                    <h4 className="weighttitle">Product Bulk Upload</h4>
-                    </div>
+                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                       
+                        <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        
+                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
+                        <h4 className="weighttitle">Product Bulk Upload</h4>
+                        <p>Please download required format for bulk upload from below.</p>
+                            <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
+                                
+                                <a className="videocard" href="/products.xlsx" title="Click to Download" download><div className="publishAllProductsClient">
+                                SAMPLE DATA FORMAT <i className="fa fa-download"></i>
+                                </div></a>
+                            </div>
 
-                    <div className="">
-                    <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
-                        <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
-                            <a className="videocard" href="/products.xlsx" title="Click to Download" download><div className="publishAllProductsClient">
-                            SAMPLE DATA FORMAT
-                            </div></a>
+                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
+                        <br/>
+                        <div className="upldProdFileHere"> Upload Your Product File Here:</div>
+
+                        <div className="input-group">
+                        <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
+                        <input className="adminBlkUpldBkg form-control adminBlkUploadBtn"
+                                                      ref={this.fileInput}
+                                                      type="file"
+                                                      accept={SheetJSFT}
+                                                      onChange={this.handleChange.bind(this)} 
+                                                    />
+
                         </div>
-                    <div className="addRolesInWrap col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
-                    <div className="upldProdFileHere"> Upload Your Product File Here:</div>
+                        <div className="upldProdFileInstPre"> 
+                         <br/>
+                        <strong className="upldProdFileInst">Instructions</strong>
+                        <ul> 
+                        <li> File Type must be CSV file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
+                        <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
+                        </ul>
+                        </div>
+                        {
+                            this.state.finalData.length > 0 ?
+                            <button className="submitBtnGo btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
+                            onClick={this.bulkUpload.bind(this)} >Submit</button>
+                            :
+                            <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
+                            disabled>Submit</button>
+                        
+                        }
+                        
+                        </div>
+                        </div>
+                        <div className="col-lg-12">
+                        {this.showProgressBar(this)}
+                        </div>
 
-                    <div className="input-group">
-                    <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
-                    <input className="adminBlkUpldBkg form-control adminBlkUploadBtn"
-                                                  ref={this.fileInput}
-                                                  type="file"
-                                                  accept={SheetJSFT}
-                                                  onChange={this.handleChange.bind(this)} 
-                                                />
+                        </div>
+                        <ProductList />
+                        </div>
                     </div>
-
-                    <div className="upldProdFileInstPre"> 
-                    <strong className="upldProdFileInst">Instructions</strong>
-                    <ul> 
-                    <li> File Type must be CSV file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
-                    <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
-                    </ul>
-                    </div>
-                    {
-                        this.state.finalData.length > 0 ?
-                        <button className="submitBtnGo btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
-                        onClick={this.bulkUpload.bind(this)} >Submit</button>
-                        :
-                        <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
-                        disabled>Submit</button>
-                    
+                    : null
                     }
-                    
-                    </div>
-                    </div>
-                    <div className="col-lg-12">
-                    {this.showProgressBar(this)}
-                    </div>
-
-                    </div>
-                    <ProductList />
-                    </div>
-                    </div>
-
-                    </div>
-
                     </div>
                     </div>
                 </section>
