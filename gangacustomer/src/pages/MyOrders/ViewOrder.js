@@ -130,7 +130,7 @@ class ViewOrder extends Component {
             this.state.orderData.products && this.state.orderData.products.length > 0 ?
                   this.state.orderData.products.map((data, index)=>{
                     return(
-                      <div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{marginBottom:"10px"}}>
                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-3">
                           <img src={data.productImage[0]} style={{width:"100%"}}/>
                         </div>

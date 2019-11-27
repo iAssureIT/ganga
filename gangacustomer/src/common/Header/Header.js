@@ -220,7 +220,7 @@ componentWillMount() {
   async signOut(event) {
     event.preventDefault();
     localStorage.setItem("user_ID", "");
-    await this.props.fetchCartData(); 
+    this.props.fetchCartData(); 
     this.props.history.push('/');
     
 

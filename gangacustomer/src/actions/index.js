@@ -19,9 +19,10 @@ export function getCartData() {
         .catch((error)=>{
               console.log('error', error);
         })
+    }else{
+      dispatch(fetchcartdata([]));
     }
-    
-    }  
+  }  
 }
 
 export const fetchcartdata = cartdata => ({
