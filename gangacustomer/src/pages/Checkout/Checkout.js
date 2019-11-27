@@ -13,6 +13,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import Loader from "../../common/loader/Loader.js";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {getCartData} from '../../actions/index';
 
 class Checkout extends Component {
     constructor(props) {
@@ -605,7 +608,8 @@ class Checkout extends Component {
             var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
                 return a._id == checkoutAddess
             })
-           
+
+            console.log('deliveryAddress',deliveryAddress)
             addressValues = {
                 "user_ID": localStorage.getItem('user_ID'),
                 "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
@@ -676,6 +680,115 @@ class Checkout extends Component {
         if ($('#checkout').valid() && this.state.pincodeExists) {
             axios.patch('/api/carts/address', addressValues)
                 .then((response) => {
+                    var cartItemsMoveMain = this.state.cartProduct;
+                    var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
+                    
+                    if (grandTotalArray) {
+                        var totalAmount = grandTotalArray.finalTotal;
+                        // var totalAmount       = 100;
+                        var selectedPayMethod = payMethod;
+                        // var userId            = Meteor.userId();
+                        if (payMethod == "Cash On Delivery" || payMethod == 'Cash Payment' || payMethod == 'cheque payment') {
+
+                            var userId = localStorage.getItem('user_ID');
+                            var i = 0;
+                            var productIds = [];
+                            var prices = [];
+                            var qtys = [];
+                            var totals = [];
+                            var index = [];
+                            var discountedProdPrice = [];
+                            var totalAmount = 0;
+                            var discountAvail = 0;
+                            var cartItemsMove = cartItemsMoveMain;
+
+                            if (cartItemsMove) {
+                                var noOfItems = cartItemsMove.cartItems.length;
+                                for (i = 0; i < noOfItems; i++) {
+                                    var discountPrice = 0;
+                                    var cartProduct = cartItemsMove.cartItems[i];
+                                    var productId = cartProduct.productId;
+                                    var productIndex = cartProduct.indexInproducts;
+                                    var qty = cartProduct.quantity;
+
+                                    if (cartProduct.deductedAmtAftrCoupon) {
+                                        discountPrice = cartProduct.deductedAmtAftrCoupon;
+                                    }
+
+                                    productIds[i] = productId;
+                                    prices[i] = (cartProduct.discountedPrice);
+                                    qtys[i] = qty;
+                                    totals[i] = (cartProduct.totalForQantity);;
+                                    totalAmount = totalAmount + totals[i];
+                                    index[i] = productIndex;
+                                    discountedProdPrice[i] = discountPrice;
+                                }
+                                // if(grandtotalValue){
+                                var inputObject = {
+                                    "user_ID"               : userId,
+                                    "productIds"            : productIds,
+                                    "productName"           : cartItemsMove.productName,
+                                    "prices"                : prices,
+                                    "qtys"                  : qtys,
+                                    "totals"                : totals,
+                                    "discountedProdPrice"   : discountedProdPrice,
+                                    "totalAmount"           : (grandTotalArray.finalTotal),
+                                    "index"                 : index,
+                                    "totalForQantity"       : cartItemsMove.totalForQantity,
+                                    "productImage"          : cartItemsMove.productImage,
+                                    "paymentMethod"         : payMethod
+                                    // "couponUsed"         : cartItemsMove.couponUsed,
+                                }
+                                $('.fullpageloader').show();
+                                axios.post('/api/orders/post', inputObject)
+                                    .then((result) => {
+                                        this.props.fetchCartData();
+                                        if (result) {
+                                            axios.get('/api/orders/get/one/' + result.data.order_ID)
+                                            .then((orderStatus) => {
+                                                if (orderStatus) {
+                                                    $('.fullpageloader').hide();
+                                                    var userId = orderStatus.userId;
+                                                    var orderNo = orderStatus.OrderId;
+                                                    var orderDbDate = orderStatus.createdAt;
+                                                    var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
+                                                    var totalAmount = orderStatus.totalAmount;
+                                                    var userId = localStorage.getItem('user_ID');
+                                                    // swal('Order Placed Successfully'); 
+                                                    this.setState({
+                                                      messageData : {
+                                                        "type" : "outpage",
+                                                        "icon" : "fa fa-check-circle",
+                                                        "message" : "Order Placed Successfully ",
+                                                        "class": "success",
+                                                        "autoDismiss" : true
+                                                      }
+                                                    })
+                                                    setTimeout(() => {
+                                                        this.setState({
+                                                            messageData   : {},
+                                                        })
+                                                    }, 3000);
+                                                    //this.props.history.push('/payment/' + result.data.order_ID);
+                                                }
+                                            })
+                                            .catch((error) => {
+                                                console.log('error', error)
+                                            })
+                                        }
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    })
+
+                            } else {
+                                if (selectedPayMethod == "Online Payment") {
+                                    //pending
+                                }
+                            }
+                        }//End of grandtotal array
+                    }
+
                 })
                 .catch((error) => {
                     console.log('error', error);
@@ -688,113 +801,7 @@ class Checkout extends Component {
                     console.log('error', error);
                 })
 
-            var cartItemsMoveMain = this.state.cartProduct;
-            var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
-            console.log('grandTotalArray', grandTotalArray);
-            if (grandTotalArray) {
-                var totalAmount = grandTotalArray.finalTotal;
-                // var totalAmount       = 100;
-                var selectedPayMethod = payMethod;
-                // var userId            = Meteor.userId();
-                if (payMethod == "Cash On Delivery" || payMethod == 'Cash Payment' || payMethod == 'cheque payment') {
-
-                    var userId = localStorage.getItem('user_ID');
-                    var i = 0;
-                    var productIds = [];
-                    var prices = [];
-                    var qtys = [];
-                    var totals = [];
-                    var index = [];
-                    var discountedProdPrice = [];
-                    var totalAmount = 0;
-                    var discountAvail = 0;
-                    var cartItemsMove = cartItemsMoveMain;
-
-                    if (cartItemsMove) {
-                        var noOfItems = cartItemsMove.cartItems.length;
-                        for (i = 0; i < noOfItems; i++) {
-                            var discountPrice = 0;
-                            var cartProduct = cartItemsMove.cartItems[i];
-                            var productId = cartProduct.productId;
-                            var productIndex = cartProduct.indexInproducts;
-                            var qty = cartProduct.quantity;
-
-                            if (cartProduct.deductedAmtAftrCoupon) {
-                                discountPrice = cartProduct.deductedAmtAftrCoupon;
-                            }
-
-                            productIds[i] = productId;
-                            prices[i] = (cartProduct.discountedPrice);
-                            qtys[i] = qty;
-                            totals[i] = (cartProduct.totalForQantity);;
-                            totalAmount = totalAmount + totals[i];
-                            index[i] = productIndex;
-                            discountedProdPrice[i] = discountPrice;
-                        }
-                        // if(grandtotalValue){
-                        var inputObject = {
-                            "user_ID"               : userId,
-                            "productIds"            : productIds,
-                            "productName"           : cartItemsMove.productName,
-                            "prices"                : prices,
-                            "qtys"                  : qtys,
-                            "totals"                : totals,
-                            "discountedProdPrice"   : discountedProdPrice,
-                            "totalAmount"           : (grandTotalArray.finalTotal),
-                            "index"                 : index,
-                            "totalForQantity"       : cartItemsMove.totalForQantity,
-                            "productImage"          : cartItemsMove.productImage,
-                            "paymentMethod"         : payMethod
-                            // "couponUsed"         : cartItemsMove.couponUsed,
-                        }
-                        $('.fullpageloader').show();
-                        axios.post('/api/orders/post', inputObject)
-                            .then((result) => {
-                                if (result) {
-                                    axios.get('/api/orders/get/one/' + result.data.order_ID)
-                                    .then((orderStatus) => {
-                                        if (orderStatus) {
-                                            $('.fullpageloader').hide();
-                                            var userId = orderStatus.userId;
-                                            var orderNo = orderStatus.OrderId;
-                                            var orderDbDate = orderStatus.createdAt;
-                                            var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
-                                            var totalAmount = orderStatus.totalAmount;
-                                            var userId = localStorage.getItem('user_ID');
-                                            // swal('Order Placed Successfully'); 
-                                            this.setState({
-                                              messageData : {
-                                                "type" : "outpage",
-                                                "icon" : "fa fa-check-circle",
-                                                "message" : "Order Placed Successfully ",
-                                                "class": "success",
-                                                "autoDismiss" : true
-                                              }
-                                            })
-                                            setTimeout(() => {
-                                                this.setState({
-                                                    messageData   : {},
-                                                })
-                                            }, 3000);
-                                            this.props.history.push('/payment/' + result.data.order_ID);
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.log('error', error)
-                                    })
-                                }
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            })
-
-                    } else {
-                        if (selectedPayMethod == "Online Payment") {
-                            //pending
-                        }
-                    }
-                }//End of grandtotal array
-            }
+            
         }
     }
     saveModalAddress(event) {
@@ -1157,4 +1164,10 @@ class Checkout extends Component {
         );
     }
 }
-export default Checkout;
+const mapDispachToProps = (dispatch) => {
+  return  bindActionCreators({ fetchCartData: getCartData}, dispatch)
+}
+
+export default connect(null, mapDispachToProps)(Checkout);
+
+//export default Checkout;

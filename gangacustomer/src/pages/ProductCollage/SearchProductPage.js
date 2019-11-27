@@ -8,6 +8,7 @@ import axios 						from 'axios';
 import { connect }        from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
 import Loader from "../../common/loader/Loader.js";
+import _ from "underscore";
 
 class SearchProduct extends Component { 
 	constructor(props){
@@ -155,7 +156,8 @@ class SearchProduct extends Component {
    //                  },[]); 
 	}
   	render() {
-  		console.log('products',this.state.products)
+  		var breadcrumb = _.unique(this.props.searchResult, "category_ID");
+
 		return (
 	      	<div className="container" id="containerDiv">
 	     	<div className="row"> 
@@ -169,7 +171,7 @@ class SearchProduct extends Component {
 				    			return(<li><a href={"/category/"+data.category+"/"+data.section_ID+"/"+data.id}>{data.category} / </a></li>);	
 				    		})
 				    		:
-				    		this.props.searchResult.map((data,index)=>{
+				    		breadcrumb.map((data,index)=>{
 				    			return(<li><a href={"/category/"+data.category+"/"+data.section_ID+"/"+data.category_ID}>{data.category} / </a></li>);	
 				    		})
 				    	}

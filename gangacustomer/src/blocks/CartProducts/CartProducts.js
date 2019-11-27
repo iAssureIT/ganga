@@ -114,7 +114,7 @@ class CartProducts extends Component{
                 })
             }, 3000);
             this.props.fetchCartData();
-                this.getCompanyDetails();
+            this.getCompanyDetails();
         })
         .catch((error)=>{
         console.log('error', error);

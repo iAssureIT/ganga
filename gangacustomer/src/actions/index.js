@@ -8,7 +8,7 @@ export function getCartData() {
 	$('.fullpageloader').show();
 
 	const userid = localStorage.getItem('user_ID');
-  console.log('userrrr',userid)
+  
     if (userid) {
       return axios.get("/api/carts/get/list/"+userid)
         .then((response)=>{
