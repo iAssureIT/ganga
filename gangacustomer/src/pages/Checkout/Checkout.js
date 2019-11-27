@@ -1148,7 +1148,7 @@ class Checkout extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div id="termsNconditions"></div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
