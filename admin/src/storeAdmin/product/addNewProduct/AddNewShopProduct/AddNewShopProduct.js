@@ -390,6 +390,9 @@ class AddNewShopProduct extends Component {
               title: response.data.message,
             });
           }else{
+            swal({
+              title: response.data.message,
+            });
             this.props.history.push('/add-product/image/' + response.data.product_ID);
             this.setState({
               vendor : "Select Vendor",

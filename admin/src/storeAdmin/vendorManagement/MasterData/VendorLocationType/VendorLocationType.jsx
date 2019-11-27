@@ -48,7 +48,7 @@ class VendorLocationType extends Component {
             rules: {
                 locationType: {
                 required: true,
-                regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
+                regxA1: /^[A-Za-z_0-9][A-Za-z\d_ ]*$/,
                 },
             },
             errorPlacement: function(error, element) {

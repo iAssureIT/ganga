@@ -318,7 +318,7 @@ componentWillMount() {
           messageData: {
             "type": "outpage",
             "icon": "fa fa-check-circle",
-            "message": "&nbsp; " + response.data.message,
+            "message": "&nbsp; Your feedback has been submitted successfully",
             "class": "success",
             "autoDismiss": true
           }
@@ -328,11 +328,13 @@ componentWillMount() {
             messageData: {},
           })
         }, 3000);
-        jQuery("#customercareModal").modal("hide");
+        $("#customercareModal").hide();
+        // $(".checkoutAddressModal").hide();
+        $(".modal-backdrop").hide();
 
       })
       .catch((error) => {
-        // console.log('error', error);
+        console.log('error', error);
       })
   }
   
@@ -355,7 +357,7 @@ componentWillMount() {
         <Message messageData={this.state.messageData} />
         <header className="col-lg-12 headerflow">
           <div className="row">
-            {/* <div className="col-lg-12 header1wrapper">
+            <div className="col-lg-12 header1wrapper">
               <div className="row">
                 <div className="col-lg-10 col-lg-offset-1">
                   <div className="row">
@@ -413,7 +415,7 @@ componentWillMount() {
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div> 
             <div className="col-lg-10 col-lg-offset-1">
               <div className="row">
                 <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
