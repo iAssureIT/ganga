@@ -769,7 +769,7 @@ class Checkout extends Component {
                                                             messageData   : {},
                                                         })
                                                     }, 3000);
-                                                    //this.props.history.push('/payment/' + result.data.order_ID);
+                                                    this.props.history.push('/payment/' + result.data.order_ID);
                                                 }
                                             })
                                             .catch((error) => {

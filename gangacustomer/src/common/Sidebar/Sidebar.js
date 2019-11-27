@@ -59,7 +59,7 @@ export default class Sidebar extends Component {
 		                </li>
 
 		                <li className="nav item col-lg-12 NOpadding">
-		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; Wishlist</a>
+		                <a href="/wishlist" id="atag"><i className="fa fa-heart"></i> &nbsp; My Wishlist</a>
 		                </li>
 		                
 		                {/*<li className="nav item col-lg-12">

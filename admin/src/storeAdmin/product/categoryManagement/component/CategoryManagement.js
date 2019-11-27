@@ -39,7 +39,7 @@ class CategoryManagement extends Component{
             "editId"                    : this.props.match.params ? this.props.match.params.categoryID : ''
         };
     }
-    handleChange(event){
+    handleChange(event){ 
         const target = event.target;
         const name   = target.name;
         this.setState({
@@ -475,6 +475,42 @@ class CategoryManagement extends Component{
         categoryImage : ""
       })
     }
+    getSearchText(searchText, startRange, limitRange){
+      this.getSearchCount(searchText);
+      var formValues={ 
+        "searchText"    : searchText,
+        "startRange"        : startRange,
+            "limitRange"        : limitRange
+      };
+      axios.post("/api/category/searchCategory",formValues)
+        .then((response)=>{ 
+            //console.log('tableData', response.data);
+       
+            this.setState({
+                tableData : response.data,
+                //dataCount : response.data.length
+            });
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+    }
+    getSearchCount(searchText){
+
+      var formValues={ 
+        "searchText"    : searchText
+      };
+      axios.post("/api/category/searchCategoryCount",formValues)
+        .then((response)=>{ 
+            this.setState({
+                dataCount : response.data.dataCount
+            },()=>{
+            })
+        })
+        .catch((error)=>{
+              console.log('error', error);
+        })
+    }
     render(){
        console.log("s3url------------->",this.state.categoryImage);
       // console.log('categoryImage', this.state.categoryImage);
@@ -607,6 +643,7 @@ class CategoryManagement extends Component{
                                 tableData={this.state.tableData}
                                 getData={this.getData.bind(this)}
                                 tableObjects={this.state.tableObjects}
+                                getSearchText={this.getSearchText.bind(this)} 
                               />
                             </div>
                           </div>
