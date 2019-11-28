@@ -113,6 +113,7 @@
 .catogeryvaluebg{
   background-color: #232f3e;
   margin-top: 25px;
+  text-align: center;
 }
 
 #menu1{
@@ -154,15 +155,26 @@
 }
 .signinmenuul:after {
     position: absolute;
-    left: 38.5%;
+    left: 37.5%;
     top: -10px;
     width: 0;
     height: 0;
     content:'';
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
-    border-bottom: 7px solid #fbbb65;
+    border-bottom: 7px solid #fff;
 }  
+.cartdropmenu:after {
+    position: absolute;
+    left: 37%;
+    top: -7px;
+    width: 0;
+    height: 0;
+    content:'';
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #fff;
+}
 .header1list2 ul li{
   float: right;
   text-decoration: none;
@@ -185,7 +197,7 @@
 }
 .header1list2 ul li a{
   text-decoration: none;
-    color: #999;
+    color: #333;
     padding: 10px;
 
 }
@@ -202,6 +214,7 @@
   padding: 0px;
   width: 250px;
   border:1px solid #fff !important;
+  margin: 0;
 }
 
 .signinmenuul li {
@@ -276,11 +289,11 @@ ul.box-static-link li span {
 .cartdropmenu{
   width: 400px!important;
     position: absolute;
-    left: -125px;
+    left: -132px;
     border-radius: 0px;
     top:26px;
-    max-height: 400px;
-
+    max-height: 500px;
+    /*border-top:1px solid #ffbb00;*/
     /* overflow-y: scroll; */
 }
 .dropScroll{
@@ -328,6 +341,12 @@ ul.box-static-link li span {
   margin-bottom: 10px;
   cursor: pointer;
 
+}
+.categoryDetails{
+  color: #777;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding: 5px;
 }
 .cartdropbtn2:hover{
   color:#fff;
@@ -567,9 +586,7 @@ ul.box-static-link li span {
     transform: rotate(360deg);
   }
 }
-.checkoutBtn{
-  margin-top: 10px;
-}
+
 .dropBtn a{
   margin-top: 14px;
     border: 1px solid #ddd;

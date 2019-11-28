@@ -182,7 +182,7 @@ export default class Footer extends Component {
                 <div className="categoryDiv row">
                     {
                        
-                        this.state.categoryDetails && this.state.categoryDetails.map((data,index)=>{
+                        /*this.state.categoryDetails && this.state.categoryDetails.map((data,index)=>{
 
                             if (index<8) {
                             var subCategoryStr = '';
@@ -205,7 +205,7 @@ export default class Footer extends Component {
                                 );
                             
                             }
-                        })
+                        })*/
                     }
                     
                 </div>

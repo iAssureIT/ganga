@@ -464,6 +464,9 @@ componentWillMount() {
                       {user_ID ?
                         <ul className="dropdown-menu cartdropmenu" role="menu" aria-labelledby="menu1">
                           <div className="checkoutBtn">
+                          <div>
+                            <p className="categoryDetails"><b>Cart Details</b></p>
+                          </div>
                             <p className="col-lg-3 mb20"><b>{this.props.recentCartData.length>0? this.props.recentCartData[0].cartItems.length : 0}</b> item(s)</p>
                             <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.recentCartData.length>0 ? this.props.recentCartData[0].cartTotal : 0}</div>
                             {/*<a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>*/}
@@ -506,12 +509,12 @@ componentWillMount() {
                           </div>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartdropborder">
 
-                            <div className=" col-lg-6">
+                            <div className="col-lg-6 NOpaddingLeft">
                               <a href="/cart"><div className="btn cartdropbtn2 col-lg-12" title="VIEW CART">VIEW CART</div></a>
                             </div>
                             {
                              this.props.recentCartData[0] && this.props.recentCartData[0].cartItems.length > 0 ?  
-                              <div className=" col-lg-6">
+                              <div className="col-lg-6 NOpaddingRight">
                                 <a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12 checkoutBtn" title="Checkout">Checkout</div></a>
                               </div>
                               : "" 
@@ -556,7 +559,7 @@ componentWillMount() {
                                           <div className="userinfotext"><span >{this.state.userData ? this.state.userData.profile.fullName : null}</span></div>
                                         </div>
                                         <div className="col-lg-12">
-                                          <div className="userinfotext"><span className="useremail">{this.state.userData ? this.state.userData.profile.emailId : null}</span></div>
+                                          <div><span className="useremail">{this.state.userData ? this.state.userData.profile.emailId : null}</span></div>
                                         </div>
                                       </div>
                                     </div></a>
@@ -568,7 +571,7 @@ componentWillMount() {
                                 </ul>
                               </li>
                               :
-                              <li className="dropdown"><img src="/images/avatar.svg" className="svgUser"/>
+                              <li className="dropdown"><i className="fa fa-user headercarticon" aria-hidden="true"></i>
                                 <ul className="dropdown-menu signinmenuul signoutmenuul">
                                   <li className="col-lg-12">
                                     <label>Welcome</label>
