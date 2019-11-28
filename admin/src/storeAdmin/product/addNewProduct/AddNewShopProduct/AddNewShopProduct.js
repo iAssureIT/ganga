@@ -613,6 +613,7 @@ class AddNewShopProduct extends Component {
     })
   }
   render() {
+    // console.log('admin',localStorage.getItem("admin_ID"));
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <section className="content">
@@ -630,7 +631,7 @@ class AddNewShopProduct extends Component {
                     <label>Vendor <i className="redFont">*</i></label>
                     <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                       <option disabled selected defaultValue="">Select Vendor</option>
-                      <option value="admin">Admin</option>
+                      <option value={localStorage.getItem("admin_ID")}>Admin</option>
                       {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                         this.state.vendorArray.map((data, index) => {
                           return (
