@@ -287,8 +287,9 @@ class Checkout extends Component {
                     }else{
                         this.setState({pincodeExists : false})
                     }
+                }else{
+                    this.setState({pincodeExists : true})
                 }
-                
             })
             .catch((error) => {
                 console.log('error', error);

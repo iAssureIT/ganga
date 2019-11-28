@@ -129,6 +129,7 @@ class Layout extends Component{
               <div id="dashbordid" className="">
                 <Router>
                   <Switch>
+                    <Route path="/" component={Dashboard} exact />
                     <Route path="/dashboard" component={Dashboard} exact />
                   {/*Admin Routes*/}
                     <Route path="/umlistofusers"        component={UMListOfUsers}   exact />
@@ -174,8 +175,6 @@ class Layout extends Component{
               <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
               <Route path="/confirm-otp/:user_ID"    exact strict component={ ConfirmOtp } />
-              
-             
             </Switch>        
           </Router>
         </div>

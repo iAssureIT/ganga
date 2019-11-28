@@ -196,7 +196,9 @@ class Address extends Component {
         if (event.target.value != '') {
             axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
             .then((response) => {
-                
+                console.log('valid', $("[name='modalpincode']").valid())
+                console.log('pincodeExists', this.state.pincodeExists);
+
                 if ($("[name='modalpincode']").valid()) {
 
                     if (response.data[0].Status == 'Success' ) {
@@ -204,6 +206,8 @@ class Address extends Component {
                     }else{
                         this.setState({pincodeExists : false})
                     }
+                }else{
+                    this.setState({pincodeExists : true})
                 }
                 
             })
@@ -387,7 +391,7 @@ class Address extends Component {
         $("#modalAddressForm").validate().resetForm();
     }
     render() {
-        console.log(this.state.messageData);
+       
         return (
             <div>
                 <Message messageData={this.state.messageData} />
