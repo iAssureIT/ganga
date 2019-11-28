@@ -216,7 +216,7 @@ class EcommerceProductCarousel extends Component {
   render() {
     const token = localStorage.getItem("user_ID");
     return (
-      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" id="flashsalediv">
         <div className="row">
           <Message messageData={this.state.messageData} />
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

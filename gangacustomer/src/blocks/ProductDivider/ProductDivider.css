@@ -128,3 +128,20 @@
 	-webkit-transform: scale3d(1.4,1.4,1);
 	transform: scale3d(1.4,1.4,1);
 }
+
+.banerbg{
+	background: url("/images/bottombaner.png");
+}
+.shopnowbtn{
+	border-radius: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    border: 1px solid #FBBB65;
+    position: absolute;
+    top: 65%;
+    left: 46%;
+    margin-top: 10px;
+    cursor: pointer;
+    z-index: 1000;
+}

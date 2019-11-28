@@ -195,9 +195,10 @@ class HomePage extends Component {
                 : null
               )
             }
-            <SaleProductDivider />
+            
           </div>
         </div>
+        <SaleProductDivider />
       </div>
 		);
 	}

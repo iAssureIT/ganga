@@ -8,15 +8,14 @@ export default class SaleProductDivider extends Component {
   	}  
   render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                <div className="block">
-	                    <a className="image" href="#" target="_blank"> 
-	                    <img src="http://demo8.cmsmart.net/mag2_amazon_themeforest/pub/media/amazon/banner/9.jpg" alt="home banner" className="divImage"/></a>
-	                	<div className="figcaption2"></div>
-	                </div>
-            	</div>
-         	</div>  	
+		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <div className="block">
+                <a className="image" href="#" target="_blank"> 
+                <img src="/images/bottombaner.png" alt="home banner" className="divImage"/></a>
+            	<a href="#flashsalediv"><div className="btn btn-warning shopnowbtn" title="Checkout">Shop Now</div></a>
+            	<div className="figcaption2"></div>
+            </div>
+    	</div> 	
 		);
 	}
 }

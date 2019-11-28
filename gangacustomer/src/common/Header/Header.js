@@ -162,7 +162,10 @@ componentWillMount() {
     this.setState({
       [event.target.name]: event.target.value
     });
-    localStorage.setItem("searchstr", event.currentTarget.value);
+    if (event.currentTarget.value != '') {
+      localStorage.setItem("searchstr", event.currentTarget.value);  
+    }
+    
   }
   searchProducts() {
     if (this.state.catArray.length > 0) {
