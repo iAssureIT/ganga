@@ -7,6 +7,7 @@ import XLSX                   from "xlsx";
 import _                      from 'underscore';
 import ProductList            from '../../productList/component/ProductList.js'; 
 import Loader                 from '../../../../coreAdmin/common/loader/Loader.js'; 
+import { withRouter } from 'react-router-dom';
 
 class AddNewBulkProduct extends Component{
     constructor(props) {
@@ -16,7 +17,8 @@ class AddNewBulkProduct extends Component{
             "currentProducts" : [],
             "productData"     : [],
             "file"            : props&&props.fileData&&props.fileData[0]?props.fileData[0].fileName:'',
-            "finalData"       : []
+            "finalData"       : [],
+            "fileWarningError" : false
         }
     }
 
@@ -46,6 +48,7 @@ class AddNewBulkProduct extends Component{
 
     componentDidMount() {
         this.getVendorList();
+        
     }
 
     componentWillUnmount() {
@@ -282,111 +285,120 @@ class AddNewBulkProduct extends Component{
         if (files && files[0]) this.handleFile(files[0]);
     }
     handleFile(file) {
-    
-        const reader = new FileReader();
-        const rABS = !!reader.readAsBinaryString;
-        reader.onload = ({ target: { result } }) => {
+        var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
+        console.log(file.name);
+        if (format.test(file.name)) {
+            this.setState({ fileWarningError: true, finalData: [] });
 
-          const wb = XLSX.read(result, { type: rABS ? "binary" : "array" });
-          const wsname = wb.SheetNames[0];
+        }else{
+            this.setState({ fileWarningError: false, finalData:[] });
+            const reader = new FileReader();
+            const rABS = !!reader.readAsBinaryString;
+            reader.onload = ({ target: { result } }) => {
 
-          const ws = wb.Sheets[wsname];
-          const data = XLSX.utils.sheet_to_json(ws, { header: 1 }); 
+              const wb = XLSX.read(result, { type: rABS ? "binary" : "array" });
+              const wsname = wb.SheetNames[0];
 
-            var documentObj = [];
-            let count = 0;    
-              this.setState({inputFileData:data},()=>{
-                /*var productCodeArray = [];
-                for (var j=1; j <= this.state.inputFileData.length; j++){
-                    var record = this.state.inputFileData[j];
-                    let header = this.state.inputFileData[0];
-                    if (record !== undefined) {
-                        productCodeArray.push(record[header.indexOf('productCode')]);
-                    }
-                } 
-                productCodeArray = productCodeArray.filter((item, i, ar) => ar.indexOf(item) === i);
-                console.log('productCodeArray',productCodeArray)*/
+              const ws = wb.Sheets[wsname];
+              const data = XLSX.utils.sheet_to_json(ws, { header: 1 }); 
 
-                var featuresArray = [];  
-                var productCode = '';
-                
-                productCode = this.state.inputFileData[1][this.state.inputFileData[0].indexOf('productCode')];
-                // loop on all the records in sheet
-                for (var j=1; j <= this.state.inputFileData.length; j++){          
-                  var record = this.state.inputFileData[j];
-                  if (j==1) {
-                    var previousRecord = this.state.inputFileData[j];
-                  }else{
-                    var previousRecord = this.state.inputFileData[j-1];
-                  }
-                  
-                  let header = this.state.inputFileData[0];
-                  
-                    if (record !== undefined) {
-                        var k;
-                        // loop on header columns
-                        for(k in header){
-                            if (!documentObj.hasOwnProperty(count)) {
-                                if (header[k]=='featureList') {
-                                    
-                                }else{
-                                    documentObj.push({[header[k]]:record[k]});
-                                }
-                            }else{
-
-                                if (header[k].startsWith("feature")) {
-                                    if (header[k]=='feature1') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            //featuresArray ={ feature: record[k], index:0 };
-                                            featuresArray.push({ feature: record[k], index:0 });
-                                        }
-                                    }
-                                    if (header[k]=='feature2') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            featuresArray.push({ feature: record[k], index:1 });
-                                        }
-                                    }
-                                    if (header[k]=='feature3') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            featuresArray.push({ feature: record[k], index:2 });
-                                        }
-                                    }
-                                    if (header[k]=='feature4') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            featuresArray.push({ feature: record[k], index:3 });
-                                        }
-                                    }
-                                    documentObj[count]['featureList'] = featuresArray;
-                                }
-                                else if(header[k]=='tags') {
-                                    if (record[k] != undefined) {
-                                        documentObj[count]['tags'] = record[k].split(','); 
-                                    }
-                                }
-                                
-                                else{
-                                    documentObj[count][header[k]] = record[k];
-                                }
-                                documentObj[count]['filename'] = file.name;
-                                documentObj[count]['vendor_ID'] = this.state.vendor;
-                                documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
-                            }
+                var documentObj = [];
+                let count = 0;    
+                  this.setState({inputFileData:data},()=>{
+                    /*var productCodeArray = [];
+                    for (var j=1; j <= this.state.inputFileData.length; j++){
+                        var record = this.state.inputFileData[j];
+                        let header = this.state.inputFileData[0];
+                        if (record !== undefined) {
+                            productCodeArray.push(record[header.indexOf('productCode')]);
                         }
-                        
-                        featuresArray = [];
-                        count++;
-                         
+                    } 
+                    productCodeArray = productCodeArray.filter((item, i, ar) => ar.indexOf(item) === i);
+                    console.log('productCodeArray',productCodeArray)*/
+
+                    var featuresArray = [];  
+                    var productCode = '';
+                    
+                    productCode = this.state.inputFileData[1][this.state.inputFileData[0].indexOf('productCode')];
+                    // loop on all the records in sheet
+                    for (var j=1; j <= this.state.inputFileData.length; j++){          
+                      var record = this.state.inputFileData[j];
+                      if (j==1) {
+                        var previousRecord = this.state.inputFileData[j];
+                      }else{
+                        var previousRecord = this.state.inputFileData[j-1];
+                      }
+                      
+                      let header = this.state.inputFileData[0];
+                      
+                        if (record !== undefined) {
+                            var k;
+                            // loop on header columns
+                            for(k in header){
+                                if (!documentObj.hasOwnProperty(count)) {
+                                    if (header[k]=='featureList') {
+                                        
+                                    }else{
+                                        documentObj.push({[header[k]]:record[k]});
+                                    }
+                                }else{
+
+                                    if (header[k].startsWith("feature")) {
+                                        if (header[k]=='feature1') {
+                                            if (record[k] != undefined && record[k] != '') {
+                                                //featuresArray ={ feature: record[k], index:0 };
+                                                featuresArray.push({ feature: record[k], index:0 });
+                                            }
+                                        }
+                                        if (header[k]=='feature2') {
+                                            if (record[k] != undefined && record[k] != '') {
+                                                featuresArray.push({ feature: record[k], index:1 });
+                                            }
+                                        }
+                                        if (header[k]=='feature3') {
+                                            if (record[k] != undefined && record[k] != '') {
+                                                featuresArray.push({ feature: record[k], index:2 });
+                                            }
+                                        }
+                                        if (header[k]=='feature4') {
+                                            if (record[k] != undefined && record[k] != '') {
+                                                featuresArray.push({ feature: record[k], index:3 });
+                                            }
+                                        }
+                                        documentObj[count]['featureList'] = featuresArray;
+                                    }
+                                    else if(header[k]=='tags') {
+                                        if (record[k] != undefined) {
+                                            documentObj[count]['tags'] = record[k].split(','); 
+                                        }
+                                    }
+                                    
+                                    else{
+                                        documentObj[count][header[k]] = record[k];
+                                    }
+                                    documentObj[count]['filename'] = file.name;
+                                    documentObj[count]['vendor_ID'] = this.state.vendor;
+                                    documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
+                                }
+                            }
+                            
+                            featuresArray = [];
+                            count++;
+                             
+                        }
                     }
-                }
-                
-                this.setState({finalData:documentObj},()=>{
-                     console.log(this.state.finalData);
+                    
+                    this.setState({finalData:documentObj},()=>{
+                         console.log(this.state.finalData);
+                    });
                 });
-            });
-        };
-        if (rABS) reader.readAsBinaryString(file);
-        else reader.readAsArrayBuffer(file);
-        //$('.submitBtn').prop('disabled',false);
+            };
+            if (rABS) reader.readAsBinaryString(file);
+            else reader.readAsArrayBuffer(file);
+            //$('.submitBtn').prop('disabled',false);
+
+        }
+        
        
     }
 
@@ -398,17 +410,27 @@ class AddNewBulkProduct extends Component{
         var formValues = this.state.finalData;
         console.log('formValues',formValues);
         $('.fullpageloader').show();
-        axios.post('/api/products/post/bulkUploadProduct', formValues)
-        .then((response)=>{
-            $('.fullpageloader').hide();
-            //window.location.reload();
-            swal({
-                    title : response.data.message,
-                  });
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+        if (!this.state.fileWarningError) {
+            axios.post('/api/products/post/bulkUploadProduct', formValues)
+            .then((response)=>{
+                $('.fullpageloader').hide();
+                
+                swal({
+                        title : response.data.message,
+                      })
+                .then((isConfirm)=>{
+                    //console.log(isConfirm);
+                    if (isConfirm) {
+                        //window.location.reload();
+                        this.props.history.push("/product-list");
+                    }
+                });
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+
+        }
     }
     selectVendor(event){
         const target = event.target;
@@ -420,7 +442,6 @@ class AddNewBulkProduct extends Component{
     getVendorList(){
         axios.get('http://qagangaexpressapi.iassureit.com/api/vendors/get/list')
         .then((response)=>{
-          console.log('res getVendorList', response);
           this.setState({
             vendorArray : response.data
           })
@@ -430,24 +451,28 @@ class AddNewBulkProduct extends Component{
         })
     }
     render(){
+        
         const SheetJSFT = [
               "xlsx",
               "xls"
         ]
-console.log(this.state.vendor)
+        
         return(
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
                 <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
-                    <div className="content col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <div className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                     <Loader type="fullpageloader" />
                     <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h4 className="weighttitle">Product Bulk Upload</h4>
+                        </div>   
                       <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields">
                         <label>Vendor <i className="redFont">*</i></label>
                         <select  onChange= {this.selectVendor.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                           <option disabled selected defaultValue="">Select Vendor</option>
-                          <option value="admin">Admin</option>
+                          <option value={localStorage.getItem("admin_ID")} >Admin</option>
                           {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                             this.state.vendorArray.map((data, index) => {
                               return (
@@ -469,7 +494,7 @@ console.log(this.state.vendor)
                         <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
                         
                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
-                        <h4 className="weighttitle">Product Bulk Upload</h4>
+                        
                         <p>Please download required format for bulk upload from below.</p>
                             <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
                                 
@@ -485,19 +510,23 @@ console.log(this.state.vendor)
                         <div className="input-group">
                         <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
                         <input className="adminBlkUpldBkg form-control adminBlkUploadBtn"
-                                                      ref={this.fileInput}
-                                                      type="file"
-                                                      accept={SheetJSFT}
-                                                      onChange={this.handleChange.bind(this)} 
-                                                    />
+                          ref={this.fileInput}
+                          type="file"
+                          accept=".xlsx, .xls, .csv"
+                          onChange={this.handleChange.bind(this)} 
+                        />
 
                         </div>
 
                         <div className="upldProdFileInstPre"> 
                          <br/>
+                        { this.state.fileWarningError ? 
+                            <p className="fileWarningError" style={{color:"red"}}>Filename should be proper. It should not contain any special character and spaces</p> 
+                        : null}
+                        
                         <strong className="upldProdFileInst">Instructions</strong>
                         <ul> 
-                        <li> File Type must be CSV file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
+                        <li> File Type must be CSV and xlsx file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
                         <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
                         </ul>
                         </div>
@@ -518,7 +547,7 @@ console.log(this.state.vendor)
                         </div>
 
                         </div>
-                        <ProductList />
+                        {/*<ProductList />*/} 
                         </div>
                     </div>
                     : null
@@ -531,7 +560,7 @@ console.log(this.state.vendor)
         );
     }
 }
-export default AddNewBulkProduct;
+export default withRouter(AddNewBulkProduct);
 
 // AddNewBulkProduct = withTracker(props => {
 //     var vendorData          = [];
