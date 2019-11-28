@@ -97,6 +97,7 @@ class Layout extends Component {
     $(document).ready(function () {
       $('#sidebarCollapse').on('click', function () {
         $('#headerid').toggleClass('headereffect');
+        $('#sidebarCollapse').toggleClass('sidebarCollapse80');
       });
     });
     $(document).ready(function () {
@@ -159,7 +160,7 @@ class Layout extends Component {
               </div>
             </div>
 
-            <div id="dashbordid" className="col-lg-10 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 NOpadding">
+            <div id="dashbordid" className=" dashcontentBox">
 
               <Router>
                 <Switch>

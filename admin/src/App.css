@@ -52,16 +52,23 @@ button:focus { outline: none !important ; }
 
 .headereffect
 {
-    width: 94%!important;
+    /* width: 94%!important; */
   }
 
 .dashboardeffect
 {
-    /* width: 94.2%!important; */
+  width: 98%!important;
+  margin-left: 4% !important;
 }
+.dashcontentBox{
+  margin-left: 14.8%;
+  width: 87%;
+  padding: 2%;
 
+}
 .leftsidebarbackgroundcolor{
   position: fixed!important;
+  top: 0;
   left: 15px;
 }
 

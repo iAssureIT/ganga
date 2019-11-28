@@ -2,7 +2,7 @@
     height: 50px;
 }
 .headicon{
-    font-size: 1.1vw;
+    font-size: 1.3em;
     font-weight: normal;
     padding-top: 20px;
     color: #333 ;
@@ -76,10 +76,15 @@
       z-index: 100;
 
 }
-
+.sidebarCollapse{
+  margin-left: 250px;
+}
+.sidebarCollapse80{
+  margin-left: 80px;
+}
 #headerid{
   position: absolute;
-  width: 83.1%;
+  width: 100%;
   right: 0px;
   transition: all 0.8s;
   }

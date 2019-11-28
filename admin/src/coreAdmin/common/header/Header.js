@@ -44,15 +44,14 @@ logout(){
     return(
     <div>
             <header className="headerPage">
-              <div className="">
-                <div className="col-lg-6 col-md-4 col-sm-4 col-xs-4 ">
-                  <div className="row">
+                <div className="">
+                  
                     <div id="sidebarCollapse" className="col-lg-1 col-md-1 col-sm-1 col-xs-1 hover sidebarCollapse ">
                     <i className="fa fa-bars headicon"></i>
-                  </div>
+                  
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 ">
+                <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 pull-right">
                   <div className="row">
                     <div onClick={this.openNav.bind(this)} className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right">
                     <i className="fa fa-cogs headicon "></i>
@@ -88,7 +87,6 @@ logout(){
                   </div>*/
                   }
                 </div>
-              </div>
             </div>
             </header>
 
