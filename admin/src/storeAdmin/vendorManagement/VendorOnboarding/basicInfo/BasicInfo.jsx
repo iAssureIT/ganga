@@ -723,10 +723,10 @@ class BasicInfo extends Component {
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 
                         {/*<div className="col-lg-12 col-md-12 col-sm-12 col-sm-12">*/}
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <h4 className="MasterBudgetTitle"><i className="fa fa-info-circle " aria-hidden="true"></i> Basic Info</h4>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formHrTag"></div>
-                        </div>
+                        </div> */}
 
                         <div className="col-lg-12 col-md-12 col-sm-12 supplierForm">
                           <div className="col-lg-12 col-md-12 col-sm-12">

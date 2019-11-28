@@ -213,7 +213,7 @@ class BulkProductImageUpload extends Component{
                   </div>  
                   <form className="addRolesInWrap newTemplateForm">
                     <div className="">
-                      <div className="col-lg-4 col-lg-offset-3  col-md-4 col-md-offset-3 col-sm-12 col-xs-12">
+                      <div className="col-lg-4 col-lg-offset-3  col-md-4 col-md-offset-3 col-sm-12 col-xs-12 marginTopp">
                         <div className="form-group">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">
                             Upload Product Images 

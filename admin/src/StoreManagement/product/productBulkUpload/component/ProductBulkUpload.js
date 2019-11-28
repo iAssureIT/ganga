@@ -1,54 +1,54 @@
-import React, { Component }   from 'react';
-import $                      from 'jquery';
-import axios                  from 'axios';
-import ReactTable             from "react-table";
-import swal                   from 'sweetalert';
-import XLSX                   from "xlsx";
-import _                      from 'underscore';
-import ProductList            from '../../productList/component/ProductList.js'; 
-import Loader                 from '../../../../coreAdmin/common/loader/Loader.js'; 
+import React, { Component } from 'react';
+import $ from 'jquery';
+import axios from 'axios';
+import ReactTable from "react-table";
+import swal from 'sweetalert';
+import XLSX from "xlsx";
+import _ from 'underscore';
+import ProductList from '../../productList/component/ProductList.js';
+import Loader from '../../../../coreAdmin/common/loader/Loader.js';
 import { withRouter } from 'react-router-dom';
 
-class AddNewBulkProduct extends Component{
+class AddNewBulkProduct extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            "currentProducts" : [],
-            "productData"     : [],
-            "file"            : props&&props.fileData&&props.fileData[0]?props.fileData[0].fileName:'',
-            "finalData"       : [],
-            "fileWarningError" : false
+            "currentProducts": [],
+            "productData": [],
+            "file": props && props.fileData && props.fileData[0] ? props.fileData[0].fileName : '',
+            "finalData": [],
+            "fileWarningError": false
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.productData){
+        if (nextProps.productData) {
             this.setState({
-                productData : nextProps.productData
-            },()=>{
+                productData: nextProps.productData
+            }, () => {
                 // console.log('productData', this.state.productData);
             });
         }
-        if(nextProps.fileData  && nextProps.fileData.length>0){
+        if (nextProps.fileData && nextProps.fileData.length > 0) {
             var file = nextProps.fileData[0].fileName;
             var productData = nextProps.productData;
 
             function checkAdult(data) {
-              return data.fileName == file;
+                return data.fileName == file;
             }
             var x = productData.filter(checkAdult);
             // console.log('x',x);
 
             this.setState({
-                productData : x
+                productData: x
             });
         }
     }
 
     componentDidMount() {
         this.getVendorList();
-        
+
     }
 
     componentWillUnmount() {
@@ -102,74 +102,74 @@ class AddNewBulkProduct extends Component{
         // }
     }
 
-    uploadBulkProduct(event){
+    uploadBulkProduct(event) {
         event.preventDefault();
-      //   UserSession.delete("progressbarSession", Meteor.userId());
-      //   UserSession.delete("allProgressbarSession", Meteor.userId());
+        //   UserSession.delete("progressbarSession", Meteor.userId());
+        //   UserSession.delete("allProgressbarSession", Meteor.userId());
 
-      //   var file = event.target.files[0];
-      //   console.log('file',file.name);
+        //   var file = event.target.files[0];
+        //   console.log('file',file.name);
 
-      //   Papa.parse( event.target.files[0], {
+        //   Papa.parse( event.target.files[0], {
         // header: true,
         // complete( results) {
-      //           console.log('results',results);
+        //           console.log('results',results);
         //  Meteor.call( 'BulkShopProductCSVUpload', results.data, file.name, ( error, result ) => {
-      //            if ( error ){
-      //                   console.log('error',error);
-      //                   swal({
-      //                       type: 'warning',
-      //                       title: 'Please check csv file format ',
-      //                       text: 'Please check csv file format',
-      //                       showConfirmButton: true,
-      //                       // timer: 5000
-      //                   });
-      //          } else {
-      //                   // // console.log("result = " + result);
-      //                   if(result.indexOf("101")>=0){
-      //                       let errcode = result.split("-");
-      //                       if(errcode[0] == "101"){
-      //                           swal({
-      //                               position: 'top-right',
-      //                               type: 'warning',
-      //                               title: 'Please remove "-" from ProductCode of Product Serial Number ' + errcode[1].trim(),
-      //                               text: 'Please remove "-" from ProductCode of Product Serial Number ' + errcode[1].trim(),
-      //                               showConfirmButton: true,
-      //                               // timer: 5000
-      //                           });
-      //                           $(".adminBlkUpldBkg").val('');
-      //                           // setTimeout(()=>{ 
-      //                           //     UserSession.delete("progressbarSession", Meteor.userId());
-      //                           //     UserSession.delete("allProgressbarSession", Meteor.userId());
-      //                           // }, 8000);
-      //                       }                            
-      //                   }else{
-      //                       swal({
-      //                           position: 'top-right',
-      //                           type: 'success',
-      //                           title: 'Products Added Successfully',
-      //                           text: 'Products Added Successfully',
-      //                           showConfirmButton: false,
-      //                           timer: 1500
-      //                       });
-    
-      //                       $(".adminBlkUpldBkg").val('');
-      //                       setTimeout(()=>{ 
-      //                           UserSession.delete("progressbarSession", Meteor.userId());
-      //                           UserSession.delete("allProgressbarSession", Meteor.userId());
-      //                       }, 8000);
-      //                   }
-                       
-      //          }
-      //      });
+        //            if ( error ){
+        //                   console.log('error',error);
+        //                   swal({
+        //                       type: 'warning',
+        //                       title: 'Please check csv file format ',
+        //                       text: 'Please check csv file format',
+        //                       showConfirmButton: true,
+        //                       // timer: 5000
+        //                   });
+        //          } else {
+        //                   // // console.log("result = " + result);
+        //                   if(result.indexOf("101")>=0){
+        //                       let errcode = result.split("-");
+        //                       if(errcode[0] == "101"){
+        //                           swal({
+        //                               position: 'top-right',
+        //                               type: 'warning',
+        //                               title: 'Please remove "-" from ProductCode of Product Serial Number ' + errcode[1].trim(),
+        //                               text: 'Please remove "-" from ProductCode of Product Serial Number ' + errcode[1].trim(),
+        //                               showConfirmButton: true,
+        //                               // timer: 5000
+        //                           });
+        //                           $(".adminBlkUpldBkg").val('');
+        //                           // setTimeout(()=>{ 
+        //                           //     UserSession.delete("progressbarSession", Meteor.userId());
+        //                           //     UserSession.delete("allProgressbarSession", Meteor.userId());
+        //                           // }, 8000);
+        //                       }                            
+        //                   }else{
+        //                       swal({
+        //                           position: 'top-right',
+        //                           type: 'success',
+        //                           title: 'Products Added Successfully',
+        //                           text: 'Products Added Successfully',
+        //                           showConfirmButton: false,
+        //                           timer: 1500
+        //                       });
+
+        //                       $(".adminBlkUpldBkg").val('');
+        //                       setTimeout(()=>{ 
+        //                           UserSession.delete("progressbarSession", Meteor.userId());
+        //                           UserSession.delete("allProgressbarSession", Meteor.userId());
+        //                       }, 8000);
+        //                   }
+
+        //          }
+        //      });
 
         // }
-      //   });
+        //   });
 
 
     }
-    publishAllProducts(event){
-        event.preventDefault();        
+    publishAllProducts(event) {
+        event.preventDefault();
         // Meteor.call("publishAllShopProducts", (error, result)=>{
         //     if(result){
         //         swal({
@@ -183,7 +183,7 @@ class AddNewBulkProduct extends Component{
         //     }
         // });
     }
-    changeProductList(event){
+    changeProductList(event) {
         var inputText = $(event.currentTarget).val();
 
         // if(inputText){
@@ -193,7 +193,7 @@ class AddNewBulkProduct extends Component{
         // }
     }
 
-    deleteProduct(event){
+    deleteProduct(event) {
         event.preventDefault();
         // var id = $(event.currentTarget).attr("data-productId");
         // if(id){
@@ -222,7 +222,7 @@ class AddNewBulkProduct extends Component{
         // browserHistory.replace(path);
     }
 
-    changeFeatured(event){
+    changeFeatured(event) {
         event.preventDefault();
         // var statusVal = $(event.currentTarget).attr('data-status');
         // var prodVal  = $(event.currentTarget).attr('data-prodVal');
@@ -239,7 +239,7 @@ class AddNewBulkProduct extends Component{
         // }
     }
 
-    changeExclusive(event){
+    changeExclusive(event) {
         event.preventDefault();
         // var statusVal = $(event.currentTarget).attr('data-status');
         // var prodVal  = $(event.currentTarget).attr('data-prodVal');
@@ -253,8 +253,8 @@ class AddNewBulkProduct extends Component{
         //     }
         // }
     }
-    
-    selectFile(event){
+
+    selectFile(event) {
         event.preventDefault();
         // const target = event.target;
         // const name   = target.name;
@@ -262,7 +262,7 @@ class AddNewBulkProduct extends Component{
         //     [name]: event.target.value,
         // });
 
-        
+
         // var selectedFile = this.refs.file.value;
         // // console.log('selectedFile',selectedFile);
 
@@ -290,90 +290,90 @@ class AddNewBulkProduct extends Component{
         if (format.test(file.name)) {
             this.setState({ fileWarningError: true, finalData: [] });
 
-        }else{
-            this.setState({ fileWarningError: false, finalData:[] });
+        } else {
+            this.setState({ fileWarningError: false, finalData: [] });
             const reader = new FileReader();
             const rABS = !!reader.readAsBinaryString;
             reader.onload = ({ target: { result } }) => {
 
-              const wb = XLSX.read(result, { type: rABS ? "binary" : "array" });
-              const wsname = wb.SheetNames[0];
+                const wb = XLSX.read(result, { type: rABS ? "binary" : "array" });
+                const wsname = wb.SheetNames[0];
 
-              const ws = wb.Sheets[wsname];
-              const data = XLSX.utils.sheet_to_json(ws, { header: 1 }); 
+                const ws = wb.Sheets[wsname];
+                const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
                 var documentObj = [];
-                let count = 0;    
-                  this.setState({inputFileData:data},()=>{
+                let count = 0;
+                this.setState({ inputFileData: data }, () => {
                     /*var productCodeArray = [];
                     for (var j=1; j <= this.state.inputFileData.length; j++){
-                        var record = this.state.inputFileData[j];
-                        let header = this.state.inputFileData[0];
-                        if (record !== undefined) {
-                            productCodeArray.push(record[header.indexOf('productCode')]);
-                        }
+                    var record = this.state.inputFileData[j];
+                    let header = this.state.inputFileData[0];
+                    if (record !== undefined) {
+                    productCodeArray.push(record[header.indexOf('productCode')]);
+                    }
                     } 
                     productCodeArray = productCodeArray.filter((item, i, ar) => ar.indexOf(item) === i);
                     console.log('productCodeArray',productCodeArray)*/
 
-                    var featuresArray = [];  
+                    var featuresArray = [];
                     var productCode = '';
-                    
+
                     productCode = this.state.inputFileData[1][this.state.inputFileData[0].indexOf('productCode')];
                     // loop on all the records in sheet
-                    for (var j=1; j <= this.state.inputFileData.length; j++){          
-                      var record = this.state.inputFileData[j];
-                      if (j==1) {
-                        var previousRecord = this.state.inputFileData[j];
-                      }else{
-                        var previousRecord = this.state.inputFileData[j-1];
-                      }
-                      
-                      let header = this.state.inputFileData[0];
-                      
+                    for (var j = 1; j <= this.state.inputFileData.length; j++) {
+                        var record = this.state.inputFileData[j];
+                        if (j == 1) {
+                            var previousRecord = this.state.inputFileData[j];
+                        } else {
+                            var previousRecord = this.state.inputFileData[j - 1];
+                        }
+
+                        let header = this.state.inputFileData[0];
+
                         if (record !== undefined) {
                             var k;
                             // loop on header columns
-                            for(k in header){
+                            for (k in header) {
                                 if (!documentObj.hasOwnProperty(count)) {
-                                    if (header[k]=='featureList') {
-                                        
-                                    }else{
-                                        documentObj.push({[header[k]]:record[k]});
+                                    if (header[k] == 'featureList') {
+
+                                    } else {
+                                        documentObj.push({ [header[k]]: record[k] });
                                     }
-                                }else{
+                                } else {
 
                                     if (header[k].startsWith("feature")) {
-                                        if (header[k]=='feature1') {
+                                        if (header[k] == 'feature1') {
                                             if (record[k] != undefined && record[k] != '') {
                                                 //featuresArray ={ feature: record[k], index:0 };
-                                                featuresArray.push({ feature: record[k], index:0 });
+                                                featuresArray.push({ feature: record[k], index: 0 });
                                             }
                                         }
-                                        if (header[k]=='feature2') {
+                                        if (header[k] == 'feature2') {
                                             if (record[k] != undefined && record[k] != '') {
-                                                featuresArray.push({ feature: record[k], index:1 });
+                                                featuresArray.push({ feature: record[k], index: 1 });
                                             }
                                         }
-                                        if (header[k]=='feature3') {
+                                        if (header[k] == 'feature3') {
                                             if (record[k] != undefined && record[k] != '') {
-                                                featuresArray.push({ feature: record[k], index:2 });
+                                                featuresArray.push({ feature: record[k], index: 2 });
                                             }
                                         }
-                                        if (header[k]=='feature4') {
+                                        if (header[k] == 'feature4') {
                                             if (record[k] != undefined && record[k] != '') {
-                                                featuresArray.push({ feature: record[k], index:3 });
+                                                featuresArray.push({ feature: record[k], index: 3 });
                                             }
                                         }
                                         documentObj[count]['featureList'] = featuresArray;
                                     }
-                                    else if(header[k]=='tags') {
+                                    else if (header[k] == 'tags') {
                                         if (record[k] != undefined) {
-                                            documentObj[count]['tags'] = record[k].split(','); 
+                                            documentObj[count]['tags'] = record[k].split(',');
                                         }
                                     }
-                                    
-                                    else{
+
+                                    else {
                                         documentObj[count][header[k]] = record[k];
                                     }
                                     documentObj[count]['filename'] = file.name;
@@ -381,15 +381,15 @@ class AddNewBulkProduct extends Component{
                                     documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
                                 }
                             }
-                            
+
                             featuresArray = [];
                             count++;
-                             
+
                         }
                     }
-                    
-                    this.setState({finalData:documentObj},()=>{
-                         console.log(this.state.finalData);
+
+                    this.setState({ finalData: documentObj }, () => {
+                        console.log(this.state.finalData);
                     });
                 });
             };
@@ -398,165 +398,165 @@ class AddNewBulkProduct extends Component{
             //$('.submitBtn').prop('disabled',false);
 
         }
-        
-       
+
+
     }
 
-    enableBulkUpload(){
-        $('.adminBlkUploadBtn').prop('disabled',false);
+    enableBulkUpload() {
+        $('.adminBlkUploadBtn').prop('disabled', false);
     }
-    bulkUpload(){
-         
+    bulkUpload() {
+
         var formValues = this.state.finalData;
-        console.log('formValues',formValues);
+        console.log('formValues', formValues);
         $('.fullpageloader').show();
         if (!this.state.fileWarningError) {
             axios.post('/api/products/post/bulkUploadProduct', formValues)
-            .then((response)=>{
-                $('.fullpageloader').hide();
-                
-                swal({
-                        title : response.data.message,
-                      })
-                .then((isConfirm)=>{
-                    //console.log(isConfirm);
-                    if (isConfirm) {
-                        //window.location.reload();
-                        this.props.history.push("/product-list");
-                    }
-                });
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            })
+                .then((response) => {
+                    $('.fullpageloader').hide();
+
+                    swal({
+                        title: response.data.message,
+                    })
+                        .then((isConfirm) => {
+                            //console.log(isConfirm);
+                            if (isConfirm) {
+                                //window.location.reload();
+                                this.props.history.push("/product-list");
+                            }
+                        });
+                })
+                .catch((error) => {
+                    console.log('error', error);
+                })
 
         }
     }
-    selectVendor(event){
+    selectVendor(event) {
         const target = event.target;
         const name = target.name;
         this.setState({
-          [name]: event.target.value
+            [name]: event.target.value
         });
     }
-    getVendorList(){
+    getVendorList() {
         axios.get('http://qagangaexpressapi.iassureit.com/api/vendors/get/list')
-        .then((response)=>{
-          this.setState({
-            vendorArray : response.data
-          })
-        })
-        .catch((error)=>{
+            .then((response) => {
+                this.setState({
+                    vendorArray: response.data
+                })
+            })
+            .catch((error) => {
 
-        })
+            })
     }
-    render(){
-        
+    render() {
+
         const SheetJSFT = [
-              "xlsx",
-              "xls"
+            "xlsx",
+            "xls"
         ]
-        
-        return(
-            <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <div className="row">
-                <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
-                    <div className="content">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
-                    <Loader type="fullpageloader" />
-                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <h4 className="weighttitle">Product Bulk Upload</h4>
-                        </div>   
-                      <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields">
-                        <label>Vendor <i className="redFont">*</i></label>
-                        <select  onChange= {this.selectVendor.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
-                          <option disabled selected defaultValue="">Select Vendor</option>
-                          <option value={localStorage.getItem("admin_ID")} >Admin</option>
-                          {this.state.vendorArray && this.state.vendorArray.length > 0 ?
-                            this.state.vendorArray.map((data, index) => {
-                              return (
-                                <option key={index} value={data._id}>{data.companyName} - ({data.vendorID})</option>
-                              );
-                            })
-                            :
-                            <option disabled>{"No vendor added"}</option>
-                          }
-                        </select>
-                        {this.state.vendor ? null : <span>Please select a vendor to add a product</span>}
-                      </div>
-                    </div>
 
-                    {this.state.vendor ?
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                       
-                        <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                        
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
-                        
-                        <p>Please download required format for bulk upload from below.</p>
-                            <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
-                                
-                                <a className="videocard" href="/products.xlsx" title="Click to Download" download><div className="publishAllProductsClient">
-                                SAMPLE DATA FORMAT <i className="fa fa-download"></i>
-                                </div></a>
+        return (
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <section className="content">
+          <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+            <div className="row">
+                                <Loader type="fullpageloader" />
+                                <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                                    <div className="box">
+                                        <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                            <h4 className="NOpadding-right">Product Bulk Upload</h4>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields marginTopp">
+                                        <label>Vendor <i className="redFont">*</i></label>
+                                        <select onChange={this.selectVendor.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
+                                            <option disabled selected defaultValue="">Select Vendor</option>
+                                            <option value={localStorage.getItem("admin_ID")} >Admin</option>
+                                            {this.state.vendorArray && this.state.vendorArray.length > 0 ?
+                                                this.state.vendorArray.map((data, index) => {
+                                                    return (
+                                                        <option key={index} value={data._id}>{data.companyName} - ({data.vendorID})</option>
+                                                    );
+                                                })
+                                                :
+                                                <option disabled>{"No vendor added"}</option>
+                                            }
+                                        </select>
+                                        {this.state.vendor ? null : <span>Please select a vendor to add a product</span>}
+                                    </div>
+                                </div>
+
+                                {this.state.vendor ?
+                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
+                                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+
+                                            <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
+
+                                                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
+
+                                                    <p>Please download required format for bulk upload from below.</p>
+                                                    <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
+
+                                                        <a className="videocard" href="/products.xlsx" title="Click to Download" download><div className="publishAllProductsClient">
+                                                            SAMPLE DATA FORMAT <i className="fa fa-download"></i>
+                                                        </div></a>
+                                                    </div>
+
+                                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
+                                                        <br />
+                                                        <div className="upldProdFileHere"> Upload Your Product File Here:</div>
+
+                                                        <div className="input-group">
+                                                            <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
+                                                            <input className="adminBlkUpldBkg form-control adminBlkUploadBtn"
+                                                                ref={this.fileInput}
+                                                                type="file"
+                                                                accept=".xlsx, .xls, .csv"
+                                                                onChange={this.handleChange.bind(this)}
+                                                            />
+
+                                                        </div>
+
+                                                        <div className="upldProdFileInstPre">
+                                                            <br />
+                                                            {this.state.fileWarningError ?
+                                                                <p className="fileWarningError" style={{ color: "red" }}>Filename should be proper. It should not contain any special character and spaces</p>
+                                                                : null}
+
+                                                            <strong className="upldProdFileInst">Instructions</strong>
+                                                            <ul>
+                                                                <li> File Type must be CSV and xlsx file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
+                                                                <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
+                                                            </ul>
+                                                        </div>
+                                                        {
+                                                            this.state.finalData.length > 0 ?
+                                                                <button className="submitBtnGo btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9"
+                                                                    onClick={this.bulkUpload.bind(this)} >Submit</button>
+                                                                :
+                                                                <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9"
+                                                                    disabled>Submit</button>
+
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-12">
+                                                    {this.showProgressBar(this)}
+                                                </div>
+
+                                            </div>
+                                            {/*<ProductList />*/}
+                                        </div>
+                                    </div>
+                                    : null
+                                }
                             </div>
-
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
-                        <br/>
-                        <div className="upldProdFileHere"> Upload Your Product File Here:</div>
-
-                        <div className="input-group">
-                        <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
-                        <input className="adminBlkUpldBkg form-control adminBlkUploadBtn"
-                          ref={this.fileInput}
-                          type="file"
-                          accept=".xlsx, .xls, .csv"
-                          onChange={this.handleChange.bind(this)} 
-                        />
-
-                        </div>
-
-                        <div className="upldProdFileInstPre"> 
-                         <br/>
-                        { this.state.fileWarningError ? 
-                            <p className="fileWarningError" style={{color:"red"}}>Filename should be proper. It should not contain any special character and spaces</p> 
-                        : null}
-                        
-                        <strong className="upldProdFileInst">Instructions</strong>
-                        <ul> 
-                        <li> File Type must be CSV and xlsx file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
-                        <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
-                        </ul>
-                        </div>
-                        {
-                            this.state.finalData.length > 0 ?
-                            <button className="submitBtnGo btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
-                            onClick={this.bulkUpload.bind(this)} >Submit</button>
-                            :
-                            <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
-                            disabled>Submit</button>
-                        
-                        }
-                        
-                        </div>
-                        </div>
-                        <div className="col-lg-12">
-                        {this.showProgressBar(this)}
-                        </div>
-
-                        </div>
-                        {/*<ProductList />*/} 
-                        </div>
-                    </div>
-                    : null
-                    }
-                    </div>
-                    </div>
-                </section>
-                </div>
-            </div>
+          </div>
+        </section>
+      </div>
         );
     }
 }

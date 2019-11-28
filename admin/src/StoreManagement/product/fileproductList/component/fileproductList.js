@@ -78,7 +78,7 @@ class FileWiseProductList extends Component{
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
                 <div className="formWrapper">
                   <section className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
@@ -88,7 +88,7 @@ class FileWiseProductList extends Component{
                                 <h4 className="NOpadding-right"> File Wise Product List</h4>
                           </div>
                       </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
                           <IAssureTable 
                             tableHeading={this.state.tableHeading}
                             twoLevelHeader={this.state.twoLevelHeader} 

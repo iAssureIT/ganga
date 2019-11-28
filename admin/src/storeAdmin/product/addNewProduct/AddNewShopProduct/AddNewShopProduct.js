@@ -616,241 +616,241 @@ class AddNewShopProduct extends Component {
    
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <section className="content">
-        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
-          <div className="row">
-            <div className="box">
-              <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <h4 className="NOpadding-right">Add Products</h4>
-              </div>
-            </div>
-            <form className="newTemplateForm" id="addNewShopProduct">
-              <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 marginTopp">
-                <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                  <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields">
-                    <label>Vendor <i className="redFont">*</i></label>
-                    <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
-                      <option disabled selected defaultValue="">Select Vendor</option>
-                      <option value={localStorage.getItem("admin_ID")}>Admin</option>
-                      {this.state.vendorArray && this.state.vendorArray.length > 0 ?
-                        this.state.vendorArray.map((data, index) => {
-                          return (
-                            <option key={index} value={data.companyName+ '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
-                          );
-                        })
-                        :
-                        <option disabled>{"No vendor added"}</option>
-                      }
-                    </select>
-                    {this.state.vendor ? null : <span>Please select a vendor to add a product</span>}
-                  </div>
+        <section className="content">
+          <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+            <div className="row">
+              <div className="box">
+                <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                  <h4 className="NOpadding-right">Add Products</h4>
                 </div>
-                {
-                  this.state.vendor ? 
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                      
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Section <i className="redFont">*</i></label>
-                        <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
-                          <option defaultValue="">Select Section</option>
-                          {this.state.sectionArray && this.state.sectionArray.length > 0 ?
-                            this.state.sectionArray.map((data, index) => {
-                              return (
-                                <option key={index} value={data.section + '|' + data._id}>{data.section}</option>
-                              );
-                            })
-                            :
-                            <option disabled>{"No section added"}</option>
-                            
-                          }
-                        </select>
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Category </label>
-                        {/*<div className="input-group" id="category">*/}
-                        <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category} name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
-                          <option disabled selected defaultValue="">Select Category</option>
-                          {this.state.categoryArray && this.state.categoryArray.length > 0 ?
-                            this.state.categoryArray.map((data, index) => {
-                              return (
-                                <option key={index} value={data.category + '|' + data._id}>{data.category}</option>
-                              );
-                            })
-                            :
-                            <option disabled>{"No category added"}</option>
-                          }
-                        </select>
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Sub Category </label>
-                        {/*<div className="input-group" id="subCategory">*/}
-                        <select className="form-control allProductSubCategories" aria-describedby="basic-addon1" name="subCategory" id="subCategory" ref="subCategory" value={this.state.subCategory} onChange={this.handleChange.bind(this)}>
-                          <option disabled selected defaultValue="">Select Sub-Category</option>
-                          {this.state.subcategoryArray && this.state.subcategoryArray.length > 0 ?
-                            this.state.subcategoryArray.map((data, index) => {
-
-                              return (
-                                <option value={data.subCategoryTitle + '|' + data._id} key={index}>{data.subCategoryTitle}</option>
-                              );
-                            })
-                            :
-                            <option disabled>{"No sub category added"}</option>
-                          }
-                        </select>
-                      </div>
-
-                    </div>
-                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Product Code <i className="redFont">*</i></label>
-                        <input value={this.state.productCode} name="productCode" id="productCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="productCode" onChange={this.handleChange.bind(this)} />
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Item Code <i className="redFont">*</i></label>
-                        <input value={this.state.itemCode} name="itemCode" id="itemCode" type="text" className="form-control link-category newProductCode" placeholder="Item Code" aria-label="Username" aria-describedby="basic-addon1" ref="itemCode" onChange={this.handleChange.bind(this)} />
-                      </div>
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Product Name <i className="redFont">*</i></label>
-                        <input value={this.state.productName} name="productName" id="productName" onChange={this.createProductUrl.bind(this)} type="text" className="form-control link-subcategory newProductName" placeholder="Product Name" aria-label="Username" aria-describedby="basic-addon1" ref="productName" />
-                      </div>
-                      
-                    </div>
-                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                      <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <label>Product URL <i className="redFont">*</i></label>
-                        <input value={this.state.productUrl} onChange={this.handleChange.bind(this)} id="productUrl" name="productUrl" type="text" className="form-control link-subcategory newProductName productUrl" placeholder="Product URL" aria-describedby="basic-addon1" ref="productUrl" />
-                      </div>
-
-                      <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                        <label>Brand Name <i className="redFont">*</i></label>
-                        <input value={this.state.brand} name="brand" id="brand" type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
-                      </div>
-
-                      <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
-                        <label>Quantity <i className="redFont">*</i></label>
-                        <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="text" className="form-control availableQuantityNew" placeholder="Quantity" aria-describedby="basic-addon1" ref="availableQuantity" />
-                      </div>
-                      <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
-                        <label>Unit <i className="redFont">*</i></label>
-                        <select className="form-control selectdropdown " ref="unit" id="unit" name="unit" value={this.state.unit} onChange={this.handleChange.bind(this)}>
-                          <option value="Single">Single</option>
-                          <option value="Dozen">Dozen</option>
-                          <option value="Kilograms">Kilograms</option>
-                          <option value="Miligrams">Miligrams</option>
-                          <option value="Liters">Liters</option>
-                          <option value="Mililiters">Mililiters</option>
-                        </select>
-                      </div>
-
-                      
-                    </div>
-                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                    <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
-                      <label>Original Price <i className="redFont">*</i></label>
-                      <input onChange={this.percentAndPrice.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="number" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
-                    </div>
-                    <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
-                      <label>Currency <i className="redFont">*</i></label>
-                      <select className="form-control selectdropdown" ref="currency" id="currency" name="currency" value={this.state.currency} onChange={this.handleChange.bind(this)}>
-                        <option value="inr">INR</option>
-                        <option value="usd">USD</option>
-                        <option value="eur">EUR</option>
-                        <option value="gbp">GBP</option>
-                      </select>
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-                      <div  className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingRightZeroo">
-                        <label>Discount Percent (%)</label>
-                        <input max={100} disabled={this.state.showDiscount}  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="number" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
-                      </div>
-                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingLeftZeroo">
-                        <label>Discount Price </label>
-                        <input max={this.state.originalPrice} disabled={this.state.showDiscount} onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="number" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
-                      </div>
-                      <label id="discountPercent" className="error col-lg-12">{this.state.discountPercentError}</label>
-                    </div>
-                    
-                    <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
-                      <label>Size</label>
-                      <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control " placeholder="Size" aria-describedby="basic-addon1" ref="size" />
-                    </div>
-                    <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12   ">
-                      <label>Color</label>
-                      <input onChange={this.handleChange.bind(this)} value={this.state.color} id="color" name="color" type="color" className="form-control" placeholder="Color" aria-describedby="basic-addon1" ref="color" />
-                    </div>
-
-                  </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive tableCss">
-                    <table className="add-new-product-table table table-bordered">
-                      <thead>
-                        <tr>
-                          <th>Add New Feature</th>
-                          <th>Delete</th>
-                        </tr>
-                      </thead>
-
-                      <tbody className="tableBodyClass">
-                        {this.state.addrows ? 
-                          this.state.addrows.map((data, index) => {
+              </div>
+              <form className="newTemplateForm" id="addNewShopProduct">
+                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 marginTopp">
+                  <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                    <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields">
+                      <label>Vendor <i className="redFont">*</i></label>
+                      <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
+                        <option disabled selected defaultValue="">Select Vendor</option>
+                        <option value={localStorage.getItem("admin_ID")}>Admin</option>
+                        {this.state.vendorArray && this.state.vendorArray.length > 0 ?
+                          this.state.vendorArray.map((data, index) => {
                             return (
-                              <AddNewTableFeature index={index} feature={data.feature} key={index} />
+                              <option key={index} value={data.companyName+ '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
                             );
                           })
                           :
-                          null
+                          <option disabled>{"No vendor added"}</option>
                         }
-                      </tbody>
-
-                    </table>
-                    <div className="marginTop17">
-                      <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right" onClick={this.addNewRow}>Add Row</button>
+                      </select>
+                      {this.state.vendor ? null : <span>Please select a vendor to add a product</span>}
                     </div>
                   </div>
+                  {
+                    this.state.vendor ? 
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                      <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                        
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Section <i className="redFont">*</i></label>
+                          <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section} name="section" className="form-control allProductCategories" aria-describedby="basic-addon1" id="section" ref="section">
+                            <option defaultValue="">Select Section</option>
+                            {this.state.sectionArray && this.state.sectionArray.length > 0 ?
+                              this.state.sectionArray.map((data, index) => {
+                                return (
+                                  <option key={index} value={data.section + '|' + data._id}>{data.section}</option>
+                                );
+                              })
+                              :
+                              <option disabled>{"No section added"}</option>
+                              
+                            }
+                          </select>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Category </label>
+                          {/*<div className="input-group" id="category">*/}
+                          <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category} name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
+                            <option disabled selected defaultValue="">Select Category</option>
+                            {this.state.categoryArray && this.state.categoryArray.length > 0 ?
+                              this.state.categoryArray.map((data, index) => {
+                                return (
+                                  <option key={index} value={data.category + '|' + data._id}>{data.category}</option>
+                                );
+                              })
+                              :
+                              <option disabled>{"No category added"}</option>
+                            }
+                          </select>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Sub Category </label>
+                          {/*<div className="input-group" id="subCategory">*/}
+                          <select className="form-control allProductSubCategories" aria-describedby="basic-addon1" name="subCategory" id="subCategory" ref="subCategory" value={this.state.subCategory} onChange={this.handleChange.bind(this)}>
+                            <option disabled selected defaultValue="">Select Sub-Category</option>
+                            {this.state.subcategoryArray && this.state.subcategoryArray.length > 0 ?
+                              this.state.subcategoryArray.map((data, index) => {
 
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                    <label>Product Detail <i className="redFont">*</i></label>
-                    <textarea value={this.state.productDetails} name="productDetails" id="productDetails" onChange={this.handleChange.bind(this)} className="form-control newProductDetails" placeholder="Product Detail..." rows="4" aria-describedby="basic-addon1" ref="productDetails" ></textarea>
-                  </div>
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol descriptionCss">
-                    <div className="row">
-                      <div className="col-lg-6">
-                        <label>Short Description <i className="redFont">*</i></label>
-                        <input value={this.state.shortDescription} name="shortDescription" id="shortDescription" onChange={this.handleChange.bind(this)} type="text" className="form-control newProductShortDesc" placeholder="Short Description" aria-label="Username" aria-describedby="basic-addon1" ref="shortDescription" />
+                                return (
+                                  <option value={data.subCategoryTitle + '|' + data._id} key={index}>{data.subCategoryTitle}</option>
+                                );
+                              })
+                              :
+                              <option disabled>{"No sub category added"}</option>
+                            }
+                          </select>
+                        </div>
+
                       </div>
-                      <div className="col-lg-6">
-                        <label>Status <i className="redFont">*</i></label>
-                        <select value={this.state.status} name="status" id="status" onChange={this.handleChange.bind(this)} className="form-control newProductStatus" aria-describedby="basic-addon1" ref="status" >
-                          <option>Draft</option>
-                          <option>Publish</option>
-                          <option>Unpublish</option>
+                      <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Product Code <i className="redFont">*</i></label>
+                          <input value={this.state.productCode} name="productCode" id="productCode" type="text" className="form-control link-category newProductCode" placeholder="Product Code" aria-label="Username" aria-describedby="basic-addon1" ref="productCode" onChange={this.handleChange.bind(this)} />
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Item Code <i className="redFont">*</i></label>
+                          <input value={this.state.itemCode} name="itemCode" id="itemCode" type="text" className="form-control link-category newProductCode" placeholder="Item Code" aria-label="Username" aria-describedby="basic-addon1" ref="itemCode" onChange={this.handleChange.bind(this)} />
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Product Name <i className="redFont">*</i></label>
+                          <input value={this.state.productName} name="productName" id="productName" onChange={this.createProductUrl.bind(this)} type="text" className="form-control link-subcategory newProductName" placeholder="Product Name" aria-label="Username" aria-describedby="basic-addon1" ref="productName" />
+                        </div>
+                        
+                      </div>
+                      <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                        <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                          <label>Product URL <i className="redFont">*</i></label>
+                          <input value={this.state.productUrl} onChange={this.handleChange.bind(this)} id="productUrl" name="productUrl" type="text" className="form-control link-subcategory newProductName productUrl" placeholder="Product URL" aria-describedby="basic-addon1" ref="productUrl" />
+                        </div>
+
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
+                          <label>Brand Name <i className="redFont">*</i></label>
+                          <input value={this.state.brand} name="brand" id="brand" type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
+                        </div>
+
+                        <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
+                          <label>Quantity <i className="redFont">*</i></label>
+                          <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="text" className="form-control availableQuantityNew" placeholder="Quantity" aria-describedby="basic-addon1" ref="availableQuantity" />
+                        </div>
+                        <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
+                          <label>Unit <i className="redFont">*</i></label>
+                          <select className="form-control selectdropdown " ref="unit" id="unit" name="unit" value={this.state.unit} onChange={this.handleChange.bind(this)}>
+                            <option value="Single">Single</option>
+                            <option value="Dozen">Dozen</option>
+                            <option value="Kilograms">Kilograms</option>
+                            <option value="Miligrams">Miligrams</option>
+                            <option value="Liters">Liters</option>
+                            <option value="Mililiters">Mililiters</option>
+                          </select>
+                        </div>
+
+                        
+                      </div>
+                      <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                      <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
+                        <label>Original Price <i className="redFont">*</i></label>
+                        <input onChange={this.percentAndPrice.bind(this)} value={this.state.originalPrice} id="originalPrice" name="originalPrice" type="number" className="form-control availableQuantityNew" placeholder="Original Price" aria-describedby="basic-addon1" ref="originalPrice" />
+                      </div>
+                      <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
+                        <label>Currency <i className="redFont">*</i></label>
+                        <select className="form-control selectdropdown" ref="currency" id="currency" name="currency" value={this.state.currency} onChange={this.handleChange.bind(this)}>
+                          <option value="inr">INR</option>
+                          <option value="usd">USD</option>
+                          <option value="eur">EUR</option>
+                          <option value="gbp">GBP</option>
                         </select>
                       </div>
+                      <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+                        <div  className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingRightZeroo">
+                          <label>Discount Percent (%)</label>
+                          <input max={100} disabled={this.state.showDiscount}  value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Discount Percent" id="discountPercent" name="discountPercent" type="number" className="form-control  availableQuantityNew"  aria-describedby="basic-addon1" ref="discountPercent" />
+                        </div>
+                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 paddingLeftZeroo">
+                          <label>Discount Price </label>
+                          <input max={this.state.originalPrice} disabled={this.state.showDiscount} onChange={this.discountPercent.bind(this)} value={this.state.discountedPrice} id="discountedPrice" name="discountedPrice" type="number" className="form-control  selectdropdown" placeholder="Discounted Price" aria-describedby="basic-addon1" ref="discountedPrice" />
+                        </div>
+                        <label id="discountPercent" className="error col-lg-12">{this.state.discountPercentError}</label>
+                      </div>
+                      
+                      <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
+                        <label>Size</label>
+                        <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control " placeholder="Size" aria-describedby="basic-addon1" ref="size" />
+                      </div>
+                      <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12   ">
+                        <label>Color</label>
+                        <input onChange={this.handleChange.bind(this)} value={this.state.color} id="color" name="color" type="color" className="form-control" placeholder="Color" aria-describedby="basic-addon1" ref="color" />
+                      </div>
+
+                    </div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive tableCss">
+                      <table className="add-new-product-table table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Add New Feature</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className="tableBodyClass">
+                          {this.state.addrows ? 
+                            this.state.addrows.map((data, index) => {
+                              return (
+                                <AddNewTableFeature index={index} feature={data.feature} key={index} />
+                              );
+                            })
+                            :
+                            null
+                          }
+                        </tbody>
+
+                      </table>
+                      <div className="marginTop17">
+                        <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right" onClick={this.addNewRow}>Add Row</button>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                      <label>Product Detail <i className="redFont">*</i></label>
+                      <textarea value={this.state.productDetails} name="productDetails" id="productDetails" onChange={this.handleChange.bind(this)} className="form-control newProductDetails" placeholder="Product Detail..." rows="4" aria-describedby="basic-addon1" ref="productDetails" ></textarea>
+                    </div>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol descriptionCss">
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <label>Short Description <i className="redFont">*</i></label>
+                          <input value={this.state.shortDescription} name="shortDescription" id="shortDescription" onChange={this.handleChange.bind(this)} type="text" className="form-control newProductShortDesc" placeholder="Short Description" aria-label="Username" aria-describedby="basic-addon1" ref="shortDescription" />
+                        </div>
+                        <div className="col-lg-6">
+                          <label>Status <i className="redFont">*</i></label>
+                          <select value={this.state.status} name="status" id="status" onChange={this.handleChange.bind(this)} className="form-control newProductStatus" aria-describedby="basic-addon1" ref="status" >
+                            <option>Draft</option>
+                            <option>Publish</option>
+                            <option>Unpublish</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <div className="">
+                      {
+                        this.state.editId ?
+                          <button onClick={this.updateProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right">Update</button>
+                          :
+                          <button onClick={this.submitProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right">Save & Next</button>
+                      }
                     </div>
                   </div>
-
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                  <div className="">
-                    {
-                      this.state.editId ?
-                        <button onClick={this.updateProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right">Update</button>
-                        :
-                        <button onClick={this.submitProduct.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right">Save & Next</button>
-                    }
-                  </div>
+                    </div>
+                    :
+                    null
+                  }
+                  
+                  
                 </div>
-                  </div>
-                  :
-                  null
-                }
-                
-                
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
     );
   }
