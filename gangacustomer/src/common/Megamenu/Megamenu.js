@@ -81,7 +81,7 @@ componentWillMount() {}
             <span className="line"></span>
           </a>
           <a href="javascript:void(0);" className="ic close"></a>
-          <ul className="main-nav">
+          <ul className="main-nav textAlignCenter">
           {/*  <li className="top-level-link">
               <a href="/"><span>Home</span></a>      
             </li> */}
@@ -93,7 +93,7 @@ componentWillMount() {}
                   return(
                     <li className="top-level-link">
                       <a className="mega-menu" href={"/section/"+data.sectionUrl+'/'+data._id}><span>{data.section}</span></a>
-                      <div className="sub-menu-block">
+                      <div className="sub-menu-block textAlignLeft">
                         <div className="row">
                           <div className="col-md-3 col-lg-3 col-sm-3 megamenusubwidth">
                             {
