@@ -73,7 +73,7 @@ class CartProducts extends Component{
             if(this.props.recentCartData[0].cartItems.length>0){
                 
                     this.setState({
-                    "shippingCharges":100.00,
+                    "shippingCharges":0,
                     "productCartData": this.props.recentCartData[0].cartItems,
                     "productData":this.props.recentCartData[0],
                     "vatPercent":companyData.taxSettings ? companyData.taxSettings[0].taxRating : 0,
