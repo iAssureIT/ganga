@@ -21,6 +21,9 @@ export default class ProductDivider extends Component {
 		return (
 		<div className="col-lg-12 col-md-12 col-ms-12 col-xs-12">	
 			<div className="col-lg-12 col-md-12 col-ms-12 col-xs-12">
+				<div className="col-lg-12 col-md-12 col-ms-12 col-xs-12">
+					<div className="col-lg-12 col-md-12 col-ms-12 col-xs-12 shopByCat mt50 mb15">SHOP BY CATEGORY</div>
+				</div>
 				{
 					this.state.categoriesImg && this.state.categoriesImg.map((data,index)=>{
 						if (index < 8 ) {

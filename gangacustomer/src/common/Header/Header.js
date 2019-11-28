@@ -562,7 +562,7 @@ componentWillMount() {
                                           <div className="userinfotext"><span >{this.state.userData ? this.state.userData.profile.fullName : null}</span></div>
                                         </div>
                                         <div className="col-lg-12">
-                                          <div><span className="useremail">{this.state.userData ? this.state.userData.profile.emailId : null}</span></div>
+                                          <div className="useremail"><span>{this.state.userData ? this.state.userData.profile.emailId : null}</span></div>
                                         </div>
                                       </div>
                                     </div></a>

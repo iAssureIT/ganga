@@ -129,6 +129,7 @@
 	transform: scale3d(1.4,1.4,1);
 }
 
+
 .banerbg{
 	background: url("/images/bottombaner.png");
 }
@@ -144,4 +145,13 @@
     margin-top: 10px;
     cursor: pointer;
     z-index: 1000;
+}
+.shopByCat{
+	background: #333;
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+
 }
