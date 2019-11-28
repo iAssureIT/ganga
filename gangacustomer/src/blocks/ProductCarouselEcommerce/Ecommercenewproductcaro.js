@@ -131,7 +131,7 @@ class Ecommercenewproductcaro extends Component {
           "type" : "outpage",
           "icon" : "fa fa-exclamation-circle",
           "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
-          "class": "warning",
+          "class": "danger",
           "autoDismiss" : true
         }
       })

@@ -118,9 +118,9 @@ class EcommerceProductCarousel extends Component {
       this.setState({
         messageData : {
           "type" : "outpage",
-          "icon" : "fa fa-exclamation-circle",
+          "icon" : "fa fa-times-circle",
           "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
-          "class": "warning",
+          "class": "danger",
           "autoDismiss" : true
         }
       })

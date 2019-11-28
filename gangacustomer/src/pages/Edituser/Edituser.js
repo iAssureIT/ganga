@@ -48,7 +48,7 @@ class Edituser extends Component{
                          this.setState({
                           messageData : {
                             "type" : "outpage",
-                            "icon" : "fa fa-check-circle",
+                            "icon" : "fa fa-times-circle",
                             "message" : "Images not uploaded, Something went wrong<a className='pagealerturl' href='/login'>Sign In</a>",
                             "class": "danger",
                             "autoDismiss" : true
