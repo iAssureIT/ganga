@@ -422,7 +422,7 @@ class AddNewBulkProduct extends Component {
                             //console.log(isConfirm);
                             if (isConfirm) {
                                 //window.location.reload();
-                                this.props.history.push("/product-list");
+                                //this.props.history.push("/product-list");
                             }
                         });
                 })

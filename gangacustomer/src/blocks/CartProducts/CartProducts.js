@@ -226,13 +226,14 @@ class CartProducts extends Component{
     render(){
         // console.log(this.props.recentCartData);
         return(
+            <div className="container">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartHeight">
                 <Loader type="fullpageloader"/>
                 <div className="row">
                     <Message messageData={this.state.messageData} />
                     {
                         this.props.recentCartData.length > 0 &&  this.props.recentCartData[0].cartItems.length > 0? 
-                        <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 NOpadding">
+                        <div className="col-lg-12 col-sm-12 col-xs-12 NOpadding">
                             
                             <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 cartProduct">
                                 <table className="table table-responsive cartProductTable">
@@ -275,7 +276,9 @@ class CartProducts extends Component{
                                                                         :
                                                                         <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                                                 }
+                                                                
                                                                 </td>
+                                                                
                                                             </tr>
                                                         </td>
                                                         <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-inr"}>&nbsp;{discountedPrice}</span></td>
@@ -286,7 +289,7 @@ class CartProducts extends Component{
                                                         </td>
                                                         <td className="nowrap"><span className={"cartProductPrize fa fa-inr"}>&nbsp;{totalForQantityState !=0 ? totalForQantityState : totalForQantity}</span></td>
                                                         <td>
-                                                            <span className="fa fa-times cartDelete" id={data._id} onClick={this.Removefromcart.bind(this)}></span>
+                                                            <span className="fa fa-trash trashIcon" id={data._id} onClick={this.Removefromcart.bind(this)}><a href="#" style={{color:"#337ab7"}} ></a></span>
                                                         </td>
                                                     </tr>
                                                 );
@@ -298,7 +301,7 @@ class CartProducts extends Component{
                                 
                             </div>
                             
-                            <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
+                            <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 NOpadding">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartSummary">
                                     <strong className="cartSummaryTitle">Summary</strong>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -339,6 +342,7 @@ class CartProducts extends Component{
                     }
                     
                 </div>
+            </div>
             </div>
         );
     }

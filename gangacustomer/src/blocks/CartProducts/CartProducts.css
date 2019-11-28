@@ -148,3 +148,9 @@
     color: #666;
     font-weight: 600;
 }
+.trashIcon{
+    color: #ff0000ab;
+    font-size: 15px;
+    margin-top: 9px;
+    cursor: pointer;
+}
