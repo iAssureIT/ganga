@@ -613,7 +613,7 @@ class AddNewShopProduct extends Component {
     })
   }
   render() {
-    // console.log('admin',localStorage.getItem("admin_ID"));
+   
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <section className="content">

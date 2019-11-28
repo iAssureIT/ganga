@@ -350,14 +350,14 @@ componentWillMount() {
       })
   }
   render() {
-    console.log('recentCartData', this.props.recentCartData.length);
+    // console.log('recentCartData', this.props.recentCartData.length);
     const user_ID = localStorage.getItem("user_ID");
     return (
       <div className="homecontentwrapper">
         <Message messageData={this.state.messageData} />
         <header className="col-lg-12 headerflow">
           <div className="row">
-            <div className="col-lg-12 header1wrapper">
+            {/* <div className="col-lg-12 header1wrapper">
               <div className="row">
                 <div className="col-lg-10 col-lg-offset-1">
                   <div className="row">
@@ -415,7 +415,7 @@ componentWillMount() {
                   </div>
                 </div>
               </div>
-            </div> 
+            </div>  */}
             <div className="col-lg-10 col-lg-offset-1">
               <div className="row">
                 <div className="col-lg-3 headerlogoimg headerpaddingtop text-center">
