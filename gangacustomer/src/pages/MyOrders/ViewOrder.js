@@ -27,7 +27,6 @@ class ViewOrder extends Component {
 
     componentDidMount() {
         //this.getMyOrders();
-       
         axios.get("/api/orders/get/one/"+this.props.match.params.order_ID)
             .then((response)=>{
               this.setState({ 
@@ -38,8 +37,6 @@ class ViewOrder extends Component {
                 console.log('error', error);
             })
         this.getCompanyDetails();    
-
-
     }
     getCompanyDetails() {
         
