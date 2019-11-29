@@ -235,7 +235,7 @@ class Checkout extends Component {
 
             if (cartData.cartItems.length > 0) {
                 this.setState({
-                    "shippingCharges": 100.00,
+                    "shippingCharges": 0,
                 });
             } else {
                 this.setState({
@@ -499,10 +499,10 @@ class Checkout extends Component {
                             var finalsubTotal = parseFloat(totalAmount) + parseFloat(totalTaxApplied);
 
                             if ((totalAmount > 0) && (totalAmount <= 500)) {
-                                var shippingCharges = 100;
+                                var shippingCharges = 0;
 
                             } else if ((totalAmount > 500) && (totalAmount <= 1000)) {
-                                var shippingCharges = 50;
+                                var shippingCharges = 0;
                             } else {
                                 var shippingCharges = 0;
                             }
