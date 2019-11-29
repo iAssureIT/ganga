@@ -314,3 +314,13 @@
 .collage img{
 	width: 100%;
 }
+.outOfStock{
+	color: red;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 4px;
+    font-size: 12px;
+    position: relative;
+	font-weight: 600;
+	margin-top: 5px;
+    margin-bottom: 1px;
+}

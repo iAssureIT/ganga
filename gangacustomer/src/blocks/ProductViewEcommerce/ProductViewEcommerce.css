@@ -958,3 +958,16 @@ position:relative;
     font-size: 15px;
     font-weight: 600;
 }
+.soldOut{
+    vertical-align: sub;
+    color: #444;
+    font-size: 16px;
+    position: relative;
+    font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 1px;
+}
+.soldOutP{
+    font-size: 13px;
+    color: #999;
+}

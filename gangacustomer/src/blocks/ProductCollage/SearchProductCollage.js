@@ -39,77 +39,106 @@ class SearchProductCollage extends Component {
     },()=>{});
 	}
   
-  	addtocart(event){
-      event.preventDefault();
-
-      if(user_ID){
+  addtocart(event) {
+    event.preventDefault();
+    if (user_ID) {
+      
       var id = event.target.id;
-      axios.get('/api/products/get/one/'+id)
-      .then((response)=>{
-        var totalForQantity   =   parseInt(1 * response.data.discountedPrice);
-            const userid = localStorage.getItem('user_ID');           
-            const formValues = { 
-                "user_ID"    : userid,
-                "product_ID" : response.data._id,
-                "currency" : response.data.currency,
-                "productCode" : response.data.productCode,
-                "productName" : response.data.productName,
-                "section_ID"        : response.data.section_ID,
-                "section"           : response.data.section,
-                "category_ID": response.data.category_ID,
-                "category": response.data.category,
-                "subCategory_ID": response.data.subCategory_ID,
-                "subCategory": response.data.subCategory,
-                "productImage" : response.data.productImage,
-                "quantity" : 1  ,
-                "discountedPrice" : parseInt(response.data.discountedPrice),
-                "originalPrice" : parseInt(response.data.originalPrice),
-                "discountPercent" :parseInt(response.data.discountPercent),
-                "totalForQantity" : totalForQantity,
-                
-            }
-            axios.post('/api/carts/post', formValues)
-            .then((response)=>{
-              this.props.fetchCartData();
+      // console.log('id', id);
+      axios.get('/api/products/get/one/' + id)
+        .then((response) => {
+          var totalForQantity = parseInt(1 * response.data.discountedPrice);
+          const userid = localStorage.getItem('user_ID');
+          var availableQuantity = response.data.availableQuantity;
+          var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+          var productCartData = recentCartData.filter((a)=>a.product_ID == id);
+          var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
+          var productName = response.data.productName;
+          // console.log('abc', availableQuantity, quantityAdded);
+
+          const formValues = {
+            "user_ID": userid,
+            "product_ID": response.data._id,
+            "currency": response.data.currency,
+            "productCode": response.data.productCode,
+            "productName": response.data.productName,
+            "section_ID"        : response.data.section_ID,
+            "section"           : response.data.section,
+            "category_ID": response.data.category_ID,
+            "category": response.data.category,
+            "subCategory_ID": response.data.subCategory_ID,
+            "subCategory": response.data.subCategory,
+            "productImage": response.data.productImage,
+            "quantity": 1,
+            "discountedPrice": parseInt(response.data.discountedPrice),
+            "originalPrice": parseInt(response.data.originalPrice),
+            "discountPercent" :parseInt(response.data.discountPercent),
+            "totalForQantity": totalForQantity,
+
+          }
+          if(quantityAdded >= availableQuantity){
             this.setState({
-              messageData : {
-                "type" : "outpage",
-                "icon" : "fa fa-check-circle",
-                "message" : response.data.message,
-                "class": "success",
-                "autoDismiss" : true
-              }
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-check-circle",
+                  "message" : "Last "+availableQuantity+" items taken by you",
+                  "class": "success",
+                  "autoDismiss" : true
+                }
             })
             setTimeout(() => {
-              this.setState({
-                messageData   : {},
-              })
+                this.setState({
+                    messageData   : {},
+                })
             }, 3000);
-            })
-            .catch((error)=>{
-              console.log('error', error);
-            })
-      })
-      .catch((error)=>{
-        console.log('error', error);
-      })
-        }else{
-          this.setState({
-            messageData : {
-              "type" : "outpage",
-              "icon" : "fa fa-times-circle",
-              "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
-              "class": "danger",
-              "autoDismiss" : true
-            }
-          })
-          setTimeout(() => {
-            this.setState({
-              messageData   : {},
-            })
-          }, 3000);
+          }else{
+            axios.post('/api/carts/post', formValues)
+              .then((response) => {
+                this.props.fetchCartData();
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                    "autoDismiss" : true
+                  }
+                })
+                setTimeout(() => {
+                  this.setState({
+                      messageData   : {},
+                  })
+              }, 3000);
+                // this.props.changeCartCount(response.data.cartCount);
+                
+              })
+              .catch((error) => {
+                console.log('error', error);
+              })
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
     }
-   }
+    else {
+      this.setState({
+        messageData : {
+          "type" : "outpage",
+          "icon" : "fa fa-exclamation-circle",
+          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
+          "class": "danger",
+          "autoDismiss" : true
+        }
+      })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
+    }
+    
+  }
    addtowishlist(event) {
     event.preventDefault();
     
@@ -276,9 +305,14 @@ class SearchProductCollage extends Component {
                                           </div>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                              <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
-                                                &nbsp;Add to Cart
-                                              </button>
+                                            {
+                                                data.availableQuantity > 0 ?
+                                                <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
+                                                  &nbsp;Add to Cart
+                                                </button>
+                                                :
+                                                <div className="outOfStock">Sold Out</div>
+                                              }
                                             </div>
                                           </div>
                                         </div>

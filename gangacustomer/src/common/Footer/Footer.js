@@ -62,7 +62,7 @@ export default class Footer extends Component {
                
                 <ul>
                     <li><a href="/about-us">About Us</a></li>
-                    <li><a href="/contact-us">Contact</a></li>
+                    <li><a href="/contact-us">Contact Us</a></li>
                     <li><a href="/privacypolicy">Privacy Policy</a></li>
                     <li><a href="/sitemap">Site Map</a></li>
                 </ul>
@@ -98,7 +98,7 @@ export default class Footer extends Component {
                      <strong>LET US HELP YOU</strong>
                 </div>   
                 <ul>
-                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Blogs</a></li>
                     <li><a href="#">Faqs</a></li>
                     <li><a href="#">Store Location</a></li>
                     <li><a href="#">Shop By Brands</a></li>
@@ -119,7 +119,7 @@ export default class Footer extends Component {
                         <div className="col-md-3 col-lg-3 col-sm-3 col-xs-6"> 
                             <div className="footer-middle-contact">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 
-                                <strong>CONTACTS</strong>
+                                <strong>CONTACT US</strong>
                             </div>    
                                 <div className="col-lg-3 icondiv">
                                     <i className="fa fa-map-marker"></i>
@@ -146,7 +146,7 @@ export default class Footer extends Component {
                                 <i className="fa fa-phone"></i>
                             </div>
                             <div className="col-lg-9 addressDetails">  
-                            <a>Phone:+91{this.state.companyInfo.companyContactNumber}<br />Mob:+91{this.state.companyInfo.companyMobileNumber}</a>
+                            <a>Mob:+91-{this.state.companyInfo.companyContactNumber}<br />Mob:+91-{this.state.companyInfo.companyMobileNumber}</a>
                             </div>
                         </div> 
 

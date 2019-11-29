@@ -1076,7 +1076,7 @@ class Checkout extends Component {
                                     <table className="table table-responsive orderTable">
                                         <thead>
                                             <tr>
-                                                <th></th>
+                                                {/* <th></th> */}
                                                 <th></th>
                                                 <th>Products Name</th>
                                                 <th className="textAlignRight">Price</th>
@@ -1091,7 +1091,7 @@ class Checkout extends Component {
                                                         console.log('data', data);
                                                         return (
                                                             <tr key={'cartData' + index}>
-                                                                <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td>
+                                                                {/* <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td> */}
                                                                 <td><img className="img img-responsive orderImg" src={data.productImage[0] ? data.productImage[0] : "/images/notavailable.jpg"} /></td>
                                                                 <td><span className="productName">{data.productName}</span></td>
                                                                 <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.currency}></i> &nbsp;{parseInt(data.discountedPrice).toFixed(2)}</span></td>

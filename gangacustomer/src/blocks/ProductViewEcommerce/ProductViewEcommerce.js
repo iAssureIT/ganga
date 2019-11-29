@@ -104,6 +104,14 @@ class ProductViewEcommerce extends Component {
 				.then((response) => {
 					var totalForQantity = parseInt(Number(this.state.totalQuanity) * response.data.discountedPrice);
 					const userid = localStorage.getItem('user_ID');
+					var availableQuantity = response.data.availableQuantity;
+					var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+					var productCartData = recentCartData.filter((a)=>a.product_ID == id);
+					var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
+					var productName = response.data.productName;
+					console.log('abc', availableQuantity, quantityAdded);
+
+
 					this.props.fetchCartData();
 					const formValues = {
 						"user_ID": userid,
@@ -125,7 +133,23 @@ class ProductViewEcommerce extends Component {
 						"totalForQantity": totalForQantity,
 
 					}
-					axios.post('/api/carts/post', formValues)
+					if(this.state.totalQuanity >= availableQuantity || quantityAdded >= availableQuantity){
+						this.setState({
+							messageData : {
+							  "type" : "outpage",
+							  "icon" : "fa fa-check-circle",
+							  "message" : "Last "+availableQuantity+" items taken by you",
+							  "class": "success",
+							  "autoDismiss" : true
+							}
+						})
+						setTimeout(() => {
+							this.setState({
+								messageData   : {},
+							})
+						}, 3000);
+					  }else{
+						axios.post('/api/carts/post', formValues)
 						.then((response) => {
 							
 							this.props.fetchCartData(); 
@@ -148,6 +172,7 @@ class ProductViewEcommerce extends Component {
 						.catch((error) => {
 							console.log('error', error);
 						})
+					}
 				})
 				.catch((error) => {
 					console.log('error', error);
@@ -245,7 +270,10 @@ class ProductViewEcommerce extends Component {
 		$('#addQuantity').css('background-color', '#fff');
 		$('#decreaseQuantity').addClass('auto');
 		$('#decreaseQuantity').css('background-color', '#fff');
-		if (Number(totalQuanity) > Number(this.state.quanityLimit)) {
+		var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+		var productCartData = recentCartData.filter((a)=>a.product_ID == this.props.productID);
+		var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
+		if (Number(totalQuanity) > Number(this.state.quanityLimit) || quantityAdded >= Number(this.state.quanityLimit)) {
 			$('#addQuantity').css('background-color', '#ccc');
 			$('#addQuantity').addClass('no-drop');
 			this.setState({
@@ -418,16 +446,27 @@ class ProductViewEcommerce extends Component {
 
 									<div className="row spc">
 										<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
-											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 qtyInput" id="totalQuanity">
-												1
-											</div>
-											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-												<i className="fa fa-plus qtyIncrease" id="addQuantity" onClick={this.addQuantity.bind(this)}></i><br />
-												<i className="fa fa-minus qtyIncrease" id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}></i>
-											</div>
-											<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 NOpadding">
-												<div id={this.state.productData._id} onClick={this.addtocart.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewAddtoCart"> &nbsp; Add to Cart</div>
-											</div>
+										{
+                                            this.state.productData.availableQuantity > 0 ?
+												<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding">
+													<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 qtyInput" id="totalQuanity">
+														1
+													</div>
+													<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+														<i className="fa fa-plus qtyIncrease" id="addQuantity" onClick={this.addQuantity.bind(this)}></i><br />
+														<i className="fa fa-minus qtyIncrease" id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}></i>
+													</div>
+													<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
+														<div id={this.state.productData._id} onClick={this.addtocart.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewAddtoCart"> &nbsp; Add to Cart</div>
+													</div>
+												</div>
+											:
+												<div className=" col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding pull-right">
+													<span className="soldOut">Sold Out</span>
+													<p className="soldOutP">This item is currently out of stock</p>
+												</div>
+											}
+
 											<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 												<div id={this.state.productData._id} title={this.state.wishTooltip} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
 											</div>

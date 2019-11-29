@@ -79,87 +79,105 @@ class ProductModalViewEcommerce extends Component {
   }
     
 
-    addtocart =(event)=>{
-    // const token = localStorage.getItem("token");
-    //   if(token!==null){
-    //   // console.log("Header Token = ",token);
-    //   // browserHistory.push("/");
-    //   this.props.history.push("/");
-    // }
-    // else{
-    // 	  this.props.history.push("/login");
-    // }
+  addtocart(event) {
     event.preventDefault();
-    if(user_ID){
-    
-    var id = event.target.id;
-    axios.get('/api/products/get/one/'+id)
-    .then((response)=>{
-      var totalForQantity   =   parseInt(Number(this.state.totalQuanity) * response.data.discountedPrice);
+    if (user_ID) {
+      
+      var id = event.target.id;
+      // console.log('id', id);
+      axios.get('/api/products/get/one/' + id)
+        .then((response) => {
+          var totalForQantity = parseInt(1 * response.data.discountedPrice);
           const userid = localStorage.getItem('user_ID');
-         
-          const formValues = { 
-              "user_ID"    : userid,
-              "product_ID" : response.data._id,
-              "currency" : response.data.currency,
-              "productCode" : response.data.productCode,
-              "productName" : response.data.productName,
-              "section_ID"        : response.data.section_ID,
+          var availableQuantity = response.data.availableQuantity;
+          var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+          var productCartData = recentCartData.filter((a)=>a.product_ID == id);
+          var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
+          var productName = response.data.productName;
+          // console.log('abc', availableQuantity, quantityAdded);
+
+          const formValues = {
+            "user_ID": userid,
+            "product_ID": response.data._id,
+            "currency": response.data.currency,
+            "productCode": response.data.productCode,
+            "productName": response.data.productName,
+            "section_ID"        : response.data.section_ID,
             "section"           : response.data.section,
             "category_ID": response.data.category_ID,
             "category": response.data.category,
             "subCategory_ID": response.data.subCategory_ID,
             "subCategory": response.data.subCategory,
-              "productImage" : response.data.productImage,
-              "quantity" : this.state.totalQuanity,
-			  "discountedPrice" : parseInt(response.data.discountedPrice),
-			  "originalPrice" : parseInt(response.data.originalPrice),
-			  "discountPercent" :parseInt(response.data.discountPercent),			  
-              "totalForQantity" : totalForQantity,
-              
-          }
-          axios.post('/api/carts/post', formValues)
-          .then((response)=>{
-            this.props.fetchCartData(); 
-          this.setState({
-            messageData : {
-              "type" : "outpage",
-              "icon" : "fa fa-check-circle",
-              "message" : response.data.message,
-			  "class": "success",
-			  "autoDismiss" : true
-            }
-		  })
-		  setTimeout(() => {
-			this.setState({
-				messageData   : {},
-			})
-		}, 3000);
+            "productImage": response.data.productImage,
+            "quantity": 1,
+            "discountedPrice": parseInt(response.data.discountedPrice),
+            "originalPrice": parseInt(response.data.originalPrice),
+            "discountPercent" :parseInt(response.data.discountPercent),
+            "totalForQantity": totalForQantity,
 
-          })
-          .catch((error)=>{
-            console.log('error', error);
-          })
-    })
-    .catch((error)=>{
-      console.log('error', error);
-    })
-    }else{
+          }
+          if(quantityAdded >= availableQuantity){
+            this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-check-circle",
+                  "message" : "Last "+availableQuantity+" items taken by you",
+                  "class": "success",
+                  "autoDismiss" : true
+                }
+            })
+            setTimeout(() => {
+                this.setState({
+                    messageData   : {},
+                })
+            }, 3000);
+          }else{
+            axios.post('/api/carts/post', formValues)
+              .then((response) => {
+                this.props.fetchCartData();
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                    "autoDismiss" : true
+                  }
+                })
+                setTimeout(() => {
+                  this.setState({
+                      messageData   : {},
+                  })
+              }, 3000);
+                // this.props.changeCartCount(response.data.cartCount);
+                
+              })
+              .catch((error) => {
+                console.log('error', error);
+              })
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
+    }
+    else {
       this.setState({
         messageData : {
           "type" : "outpage",
-          "icon" : "fa fa-times-circle",
+          "icon" : "fa fa-exclamation-circle",
           "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
-		  "class": "danger",
-		  "autoDismiss" : true
+          "class": "danger",
+          "autoDismiss" : true
         }
-	  })
-	  setTimeout(() => {
-		this.setState({
-			messageData   : {},
-		})
-	}, 3000);
+      })
+      setTimeout(() => {
+        this.setState({
+            messageData   : {},
+        })
+    }, 3000);
     }
+    
   }
    addtowishlist(event){
     event.preventDefault();
@@ -399,24 +417,35 @@ class ProductModalViewEcommerce extends Component {
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
 							<div className="row spc">
 								<div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 paddingrightzero">
-									<div className="col-lg-2 col-md-3 col-sm-3 col-xs-3 NoPadding">
-										<span className="qty" id="totalQuanity">
-										&nbsp;&nbsp;1
-										</span>
+								{
+                                            this.state.productData.availableQuantity > 0 ?
+									<div>
+										<div className="col-lg-2 col-md-3 col-sm-3 col-xs-3 NoPadding">
+											<span className="qty" id="totalQuanity">
+											&nbsp;&nbsp;1
+											</span>
+										</div>
+										<div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NoPadding">
+											<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer" id="addQuantity" onClick={this.addQuantity.bind(this)}>
+											<span >+</span>
+											</span>
+											<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
+												<span >-</span>
+											</span>
+										</div>
+										<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 NoPadding">
+											<span onClick={this.addtocart.bind(this)} id={this.state.productData._id} className="qtycart clr cursorpointer">
+												<i className="fa fa-shopping-cart " aria-hidden="true" id={this.state.productData._id}></i> Add to Cart
+											</span>
+										</div>
 									</div>
-									<div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NoPadding">
-										<span className="qty2 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer" id="addQuantity" onClick={this.addQuantity.bind(this)}>
-										 <span >+</span>
-										</span>
-										<span className="qty3 col-lg-12 col-md-12 col-sm-12 col-xs-12 cursorpointer"  id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}>
-											 <span >-</span>
-										</span>
+									:
+									<div className=" col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding pull-right">
+										<span className="soldOut">Sold Out</span>
+										<p className="soldOutP">This item is currently out of stock</p>
 									</div>
-									<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 NoPadding">
-										<span onClick={this.addtocart.bind(this)} id={this.state.productData._id} className="qtycart clr cursorpointer">
-										 	<i className="fa fa-shopping-cart " aria-hidden="true" id={this.state.productData._id}></i> Add to Cart
-										</span>
-									</div>
+								}
+
 									<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 paddingleftzero">
 										<span onClick={this.addtowishlist.bind(this)}  id={this.state.productData._id} className="icns clr cursorpointer">
 										 	<i className="fa fa-heart-o" aria-hidden="true"  id={this.state.productData._id}></i>

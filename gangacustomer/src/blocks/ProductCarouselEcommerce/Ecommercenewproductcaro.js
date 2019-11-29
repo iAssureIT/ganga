@@ -76,6 +76,12 @@ class Ecommercenewproductcaro extends Component {
         .then((response) => {
           var totalForQantity = parseInt(1 * response.data.discountedPrice);
           const userid = localStorage.getItem('user_ID');
+          var availableQuantity = response.data.availableQuantity;
+          var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+          var productCartData = recentCartData.filter((a)=>a.product_ID == id);
+          var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
+          var productName = response.data.productName;
+          // console.log('abc', availableQuantity, quantityAdded);
 
           const formValues = {
             "user_ID": userid,
@@ -97,29 +103,46 @@ class Ecommercenewproductcaro extends Component {
             "totalForQantity": totalForQantity,
 
           }
-          axios.post('/api/carts/post', formValues)
-            .then((response) => {
-              this.props.fetchCartData();
-              this.setState({
+          if(quantityAdded >= availableQuantity){
+            this.setState({
                 messageData : {
                   "type" : "outpage",
                   "icon" : "fa fa-check-circle",
-                  "message" : "&nbsp; "+response.data.message,
+                  "message" : "Last "+availableQuantity+" items taken by you",
                   "class": "success",
                   "autoDismiss" : true
                 }
-              })
-              setTimeout(() => {
+            })
+            setTimeout(() => {
                 this.setState({
                     messageData   : {},
                 })
             }, 3000);
-              // this.props.changeCartCount(response.data.cartCount);
-              
-            })
-            .catch((error) => {
-              console.log('error', error);
-            })
+          }else{
+            axios.post('/api/carts/post', formValues)
+              .then((response) => {
+                this.props.fetchCartData();
+                this.setState({
+                  messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-check-circle",
+                    "message" : "&nbsp; "+response.data.message,
+                    "class": "success",
+                    "autoDismiss" : true
+                  }
+                })
+                setTimeout(() => {
+                  this.setState({
+                      messageData   : {},
+                  })
+              }, 3000);
+                // this.props.changeCartCount(response.data.cartCount);
+                
+              })
+              .catch((error) => {
+                console.log('error', error);
+              })
+          }
         })
         .catch((error) => {
           console.log('error', error);
@@ -324,14 +347,19 @@ class Ecommercenewproductcaro extends Component {
                                           </div> */}
                                           <div >
                                           </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            
-                                            <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                              <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
-                                                &nbsp;Add to Cart
-                                              </button>
-                                            </div>
-                                          </div>
+                                          {
+                                              data.availableQuantity > 0 ?
+                                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                                  <button type="submit" id={data._id} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
+                                                      &nbsp;Add to Cart
+                                                  </button>
+                                                </div>
+                                              </div>
+                                              :
+                                              
+                                              <div className="outOfStock col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Sold Out</div>
+                                            }
                                         </div>
                                       </div>
                                     </div>

@@ -35,7 +35,7 @@ class HomePage extends Component {
       this.getCategories();
       this.getWishData();
         var refresh = window.localStorage.getItem('refresh');
-        console.log(refresh);
+        // console.log(refresh);
         if (refresh===null){
             window.location.reload();
             window.localStorage.setItem('refresh', "1");
@@ -57,7 +57,7 @@ class HomePage extends Component {
               })
             })
             .catch((error)=>{
-                console.log('error', error);
+                // console.log('error', error);
             })
 
     }
@@ -72,7 +72,7 @@ class HomePage extends Component {
               })
             })
             .catch((error)=>{
-                console.log('error', error);
+                // console.log('error', error);
             })
     }
     newProductsData(){
@@ -86,7 +86,7 @@ class HomePage extends Component {
               })
             })
             .catch((error)=>{
-                console.log('error', error);
+                // console.log('error', error);
             })    
     }
     bestSellerData(){
@@ -99,7 +99,7 @@ class HomePage extends Component {
               })
             })
             .catch((error)=>{
-                console.log('error', error);
+                // console.log('error', error);
             })    
     }
     getCategories(){
@@ -110,7 +110,7 @@ class HomePage extends Component {
         })
       })
       .catch((error)=>{
-        console.log('error', error);
+        // console.log('error', error);
       })
     }
     changeProductCateWise(categoryID, type){
@@ -123,7 +123,7 @@ class HomePage extends Component {
         })
       })
       .catch((error)=>{
-        console.log('error', error);
+        // console.log('error', error);
       })
     }
     getWishData(){
@@ -140,7 +140,7 @@ class HomePage extends Component {
         })
       })
       .catch((error)=>{
-        console.log('error', error);
+        // console.log('error', error);
       })
     }
   render() {

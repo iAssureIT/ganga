@@ -150,7 +150,7 @@ class CartProducts extends Component{
                     messageData : {
                       "type" : "outpage",
                       "icon" : "fa fa-check-circle",
-                      "message" : "Only "+availableQuantity+" "+productName+" left in stock",
+                      "message" : "Last "+availableQuantity+" items taken by you",
                       "class": "success",
                       "autoDismiss" : true
                     }
