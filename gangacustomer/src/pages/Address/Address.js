@@ -312,7 +312,7 @@ class Address extends Component {
                     // $(".modal-footer").css({display: 'block'});
                     // $(".checkoutAddressModal").removeClass("in");
                     $(".modal-backdrop").hide();
-                    // window.location.reload();
+                    window.location.reload();
                 })
                 .catch((error)=>{
                     console.log('error', error)
@@ -346,7 +346,7 @@ class Address extends Component {
                     // $(".modal-footer").css({display: 'block'});
                     // $(".checkoutAddressModal").removeClass("in");
                     $(".modal-backdrop").hide();
-                    // window.location.reload();
+                    window.location.reload();
                 })
                 .catch((error)=>{
                     console.log('error', error)
