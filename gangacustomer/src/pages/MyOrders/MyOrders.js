@@ -462,8 +462,9 @@ export default class MyOrders extends Component {
                                         </div>
                                         <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NOpadding">
                                           <p> <a href={"/productdetails/"+pdata.product_ID} className="productname">{pdata.productName}</a></p>
+                                          <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{pdata.originalPrice}</span> &nbsp; &nbsp;
                                           <span><i className="fa fa-inr"></i>&nbsp;{pdata.discountedPrice}</span> &nbsp;
-                                          <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{pdata.originalPrice}</span> 
+                                          
                                           <p>Quantity: {pdata.quantity}</p>
                                         </div>  
                                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6 NOpadding">
