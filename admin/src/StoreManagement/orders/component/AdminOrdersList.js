@@ -69,7 +69,6 @@ class AdminOrdersList extends Component{
         if(status != "Dispatch"){
             if(status!="Done"){
                 swal({
-                    title: 'Do you want to change status to '+status+ "?",
                     text: 'Do you want to change status to '+status+ "?",
                     type: 'warning',
                     showCancelButton: true,
@@ -109,7 +108,6 @@ class AdminOrdersList extends Component{
         var id = $(event.currentTarget).attr('data-id'); 
         
         swal({
-            title: 'Are you sure, do you want to change status to previous status',
             text: 'Are you sure, do you want to change status to previous status',
             type: 'warning',
             showCancelButton: true,

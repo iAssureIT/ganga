@@ -6,7 +6,7 @@ import './App.css';
 
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://qaapi.gangaexpress.in';
+axios.defaults.baseURL = 'http://qagangaexpressapi.iassureit.in';
 
 // axios.defaults.baseURL = 'http://localhost:3000';
 
