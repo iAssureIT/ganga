@@ -195,8 +195,8 @@ class AddressBook extends Component{
                                                     <p>
                                                         {address.name} <br />
                                                         {address.addressLine1} <br />
-                                                        {address.addressLine2}, <br />
-                                                        {address.city},<br />
+                                                        {this.state.addressLine2 ? this.state.addressLine2+",  " : null}
+                                                        {this.state.city},<br />
                                                         {address.state}, {address.country} - {address.pincode}<br />
                                                         Contact Number: {address.mobileNumber}
                                                     </p>
