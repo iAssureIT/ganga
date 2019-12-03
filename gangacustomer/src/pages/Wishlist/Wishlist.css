@@ -37,28 +37,23 @@
 .wishProductDetails{
     padding: 8px 15px;
 }
-/* .wishRemove{
-    margin-top: 10px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    color: #333;
-}
-.wishRemove:hover{
-    color: #f0ad4e; 
-} */
 .wishRemove{
     margin-top: 5px;
-    padding: 6px 14px;
+    padding: 6px 6px;
     font-weight: bold;
     font-size: 12px;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    color: #555;
-    background: #fff;
+    border: transparent;
+    /* border-radius: 15px; */
+    color: red;
+    background: transparent;
+    position: absolute;
+    left: 82%;
+    top: 0%;
+    font-size: 20px;
+    font-weight: 100;
 }
 .wishRemove:hover{
-    border: 1px solid #333;
+    cursor: pointer;
 }
 .wishlistNoProduct{
     padding: 10px;

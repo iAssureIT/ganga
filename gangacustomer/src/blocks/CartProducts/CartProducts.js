@@ -277,7 +277,13 @@ class CartProducts extends Component{
                                                                         :
                                                                         <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                                                 }
-                                                                
+                                                                <br/>
+                                                                {/*
+                                                                    data.discountPercent  ?
+                                                                        <span className="outOfStock">Sold Out</span>
+                                                                    :
+                                                                    null
+                                                                */}
                                                                 </td>
                                                                 
                                                             </tr>

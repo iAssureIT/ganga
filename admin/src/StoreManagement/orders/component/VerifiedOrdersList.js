@@ -70,7 +70,7 @@ export default class VerifiedOrdersList extends Component{
   render(){
     return(
       <div>
-      <AdminOrdersList data={this.state.data} getOrdersFun={this.getOrders}/>
+      <AdminOrdersList tableTitle={'Verified Order List'} data={this.state.data} getOrdersFun={this.getOrders}/>
       </div>
       );
     

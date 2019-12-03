@@ -41,7 +41,8 @@ class ProductViewEcommerce extends Component {
 			"quanityLimit": 5,
 			"reviewData" : [],
 			"imgsrc": "",
-			"wishIconClass" : "viewWishList"
+			"wishIconClass" : "viewWishList",
+			"wishTooltip"   : "Add to wishlist",
 		};
 		this.changeImage = this.changeImage.bind(this);
 	}

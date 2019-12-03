@@ -70,7 +70,7 @@ export default class ApprovedOrdersList extends Component{
   render(){
     return(
       <div>
-      <AdminOrdersList data={this.state.data} getOrdersFun={this.getOrders}/>
+      <AdminOrdersList tableTitle={'Approved Order List'} data={this.state.data} getOrdersFun={this.getOrders}/>
       </div>
       );
     

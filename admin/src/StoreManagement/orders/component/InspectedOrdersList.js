@@ -70,7 +70,7 @@ export default class InspectedOrdersList extends Component{
   render(){
     return(
       <div>
-      <AdminOrdersList data={this.state.data} getOrdersFun={this.getOrders}/>
+      <AdminOrdersList tableTitle={'Inspected Order List'} data={this.state.data} getOrdersFun={this.getOrders}/>
       </div>
       );
     

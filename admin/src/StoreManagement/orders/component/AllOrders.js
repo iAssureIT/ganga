@@ -70,7 +70,7 @@ export default class AllOrders extends Component{
   render(){
     return(
       <div>
-      <AdminOrdersList data={this.state.data} getOrdersFun={this.getOrders}/>
+      <AdminOrdersList tableTitle={'All Orders'} data={this.state.data} getOrdersFun={this.getOrders}/>
       </div>
       );
     

@@ -170,7 +170,6 @@ export default class ReturnProducts extends Component{
         {
           this.state.returnedProducts.length > 0 ? 
           this.state.returnedProducts.map((data,index)=>{
-            console.log('returnstatus',data.productsArray.length);
             var returnApprovalPending = 0, returnApproved = 0, returnApprovedOn, pickupInitiated = 0, pickupInitiatedOn,
             productPickedUp = 0,productPickedUpOn, productArrived, productAccepted, productAcceptedOn;
 
@@ -322,7 +321,18 @@ export default class ReturnProducts extends Component{
               );
           }) 
           : 
-          <div className="text-center"><img src="/images/noproducts.jpeg" style={{marginTop:"5%"}}/></div>
+          <section className="content">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  pageContent">
+              <div className="row">
+                <div className="box">
+                  <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <h4 className="NOpadding-right">Returned Products</h4>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center"><img src="/images/noproducts.jpeg" style={{marginTop:"5%"}}/></div>
+            </div>
+          </section>
         }  
         
         <br />

@@ -246,55 +246,58 @@ class Wishlist extends Component {
                                     
                                   <div className="item col-lg-4 col-md-4 col-sm-4 col-xs-4" key={index}>
                                     <a href={"/productdetails/" + data.product_ID}>
-                                            <div className="">
-                                              <div className="card">
-                                                <div className="item-top">
-                                                  <div className="productImg">
-                                                    {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
-                                                    <a className="product photo product-item-photo collage" tabIndex="-1">
-                                                      <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
-                                                    </a>
-                                                  </div>
-                                                  <div className="productDetails">
-                                                    <div className="innerDiv">
+                                      <div className="">
+                                        <div className="card">
+                                          <div className="item-top">
+                                            <div className="productImg">
+                                              <span id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className={"wishRemove fa fa-trash"}></span>
+                                              {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
+                                              <a className="product photo product-item-photo collage" tabIndex="-1">
+                                                <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />
+                                              </a>
+                                            </div>
+                                            <div className="productDetails">
+                                              <div className="innerDiv">
 
-                                                      <div className="product-brand" title={data.brand}>{data.brand}</div>
-                                                      <div className=" product-item-link" title={data.productName}>{data.productName}</div>
+                                                <div className="product-brand" title={data.brand}>{data.brand}</div>
+                                                <div className=" product-item-link" title={data.productName}>{data.productName}</div>
 
+                                                <div className="col-lg-12 col-md-12 NOpadding">
+                                                  {
+                                                    data.discountPercent ?
                                                       <div className="col-lg-12 col-md-12 NOpadding">
-                                                        {
-                                                          data.discountPercent ?
-                                                            <div className="col-lg-12 col-md-12 NOpadding">
-                                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> &nbsp;
-                                                              <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
-                                                            </div>
-                                                            :
-                                                            <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
-                                                        }
+                                                        <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> &nbsp;
+                                                        <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span>
                                                       </div>
-                                                      
-                                                      <div >
-                                                      </div>
-                                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
-
-                                                          <button type="submit" id={data.product_ID} wishid={data.wishlist_ID} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                                            &nbsp;Add to Cart
-                                                          </button>
-                                                        </div>
-                                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding">
-
-                                                           <button id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className="fa fa-trash wishRemove col-lg-11 col-lg-offset-1 col-md-11 col-md-offset-1 col-sm-12 col-xs-12"> &nbsp;Remove</button>
-
-                                                        </div>
+                                                      :
+                                                      <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
+                                                  }
+                                                </div>
+                                                
+                                                <div >
+                                                </div>
+                                                {
+                                                  data.availableQuantity > 0 ?
+                                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                      <div className="col-lg-8 col-lg-offset-2 col-md-6 col-md-offset-3 col-sm-12 col-xs-12 NOpadding">
+                                                        <button type="submit" id={data.product_ID} wishid={data.wishlist_ID} onClick={this.addtocart.bind(this)} title="Move to Cart" className="homeCart fa fa-shopping-cart col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                          &nbsp;Move to Cart
+                                                        </button>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                                </div>
+                                                  : 
+                                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                        <div className="outOfStock">Sold Out</div>
+                                                      </div>
+                                                    </div>
+                                                  }
                                               </div>
                                             </div>
-                                          </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </a>
                                   </div>
                                 );
                             })

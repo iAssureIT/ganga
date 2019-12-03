@@ -361,7 +361,7 @@ class AdminOrdersList extends Component{
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <MUIDataTable
-                            title="Shipment Tracking"
+                            title={this.props.tableTitle ? this.props.tableTitle : 'Order List'}
                             options={options}
                             data={data}
                             columns={columns}
