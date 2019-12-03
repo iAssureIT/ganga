@@ -53,17 +53,16 @@ class ViewOrder extends Component {
     }
   render() {  
     
-    console.log("companyInfo",this.state.companyInfo);
     return (
     <div className="container"> 
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-        <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NOpadding mr20" >
+        {/* <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 NOpadding mr20" >
           <div className="sidebar">
             <Sidebar />
           </div>
-        </div>
+        </div> */}
 
-        <div className="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+        <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
         <br/>
         <br/>
         <h4 className="table-caption">Order Details</h4>
@@ -131,11 +130,20 @@ class ViewOrder extends Component {
                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-3">
                           <img src={data.productImage[0]} style={{width:"100%"}}/>
                         </div>
-                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div className="col-lg-8 col-md-8 col-sm-6 col-xs-6">
 
                           <p> <a href={"/productdetails/"+data.product_ID} className="productname">{data.productName}</a></p>
-                          <span><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span> &nbsp;
-                          <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> 
+                          {
+                              data.discountPercent ?
+                              <div>
+                                <span><i className="fa fa-inr"></i>&nbsp;{data.discountedPrice}</span> &nbsp;
+                                <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.originalPrice}</span> 
+                              </div>
+                              :
+                              <div>
+                                <span className=""><i className="fa fa-inr "></i>&nbsp;{data.originalPrice}</span> 
+                              </div>
+                          }
                                           
                           <p>Total: &nbsp;<i className={"fa fa-"+this.state.orderData.currency}> {data.total}</i></p>
                           <p>Quantity: {data.quantity}</p>

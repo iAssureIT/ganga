@@ -289,6 +289,7 @@ class Address extends Component {
                 //console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/useraddress', formValues)
                 .then((response)=>{
+                    console.log(response.data.message);
                 this.setState({
                   messageData : {
                     "type" : "outpage",
@@ -312,7 +313,7 @@ class Address extends Component {
                     // $(".modal-footer").css({display: 'block'});
                     // $(".checkoutAddressModal").removeClass("in");
                     $(".modal-backdrop").hide();
-                    window.location.reload();
+                    // window.location.reload();
                 })
                 .catch((error)=>{
                     console.log('error', error)
@@ -323,6 +324,7 @@ class Address extends Component {
                 //console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/patch/address', formValues)
                 .then((response)=>{
+                    console.log(response.data.message);
                 this.setState({
                   messageData : {
                     "type" : "outpage",
@@ -346,7 +348,7 @@ class Address extends Component {
                     // $(".modal-footer").css({display: 'block'});
                     // $(".checkoutAddressModal").removeClass("in");
                     $(".modal-backdrop").hide();
-                    window.location.reload();
+                    // window.location.reload();
                 })
                 .catch((error)=>{
                     console.log('error', error)

@@ -111,6 +111,7 @@ class AddressBook extends Component{
     }
     opDone(){
         this.getUserData();
+        this.getUserAddresses();
     }
     render(){
         return(

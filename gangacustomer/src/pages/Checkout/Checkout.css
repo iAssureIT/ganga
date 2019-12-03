@@ -4,8 +4,9 @@
 .shippingAddress{
     word-break: break-all;
     margin-top: 20px;
-    padding-bottom: 50px;
-    border: 1px solid #ddd; 
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border: 1px solid #ddd;
 }
 .shippingInput{
     margin-top: 20px;

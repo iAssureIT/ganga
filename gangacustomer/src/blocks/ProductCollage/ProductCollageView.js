@@ -51,7 +51,7 @@ class ProductCollageView extends Component {
           var totalForQantity = parseInt(1 * response.data.discountedPrice);
           const userid = localStorage.getItem('user_ID');
           var availableQuantity = response.data.availableQuantity;
-          var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+          var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
           var productCartData = recentCartData.filter((a)=>a.product_ID == id);
           var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
           var productName = response.data.productName;
@@ -146,8 +146,7 @@ class ProductCollageView extends Component {
       
       var id = event.target.id;
       const userid = localStorage.getItem('user_ID');
-      const formValues =
-      {
+      const formValues = {
         "user_ID": userid,
         "product_ID": id,
       }

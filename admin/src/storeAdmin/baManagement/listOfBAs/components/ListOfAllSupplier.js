@@ -252,7 +252,7 @@ class ListOfAllSupplier extends Component {
             .then((response)=>{
               swal({
                     title : response.data.message,
-                    text  : response.data.message,
+                    
                   });
               window.location.reload();   
             })

@@ -250,7 +250,7 @@ class Wishlist extends Component {
                                         <div className="card">
                                           <div className="item-top">
                                             <div className="productImg">
-                                              <span id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className={"wishRemove fa fa-trash"}></span>
+                                              <span title="Delete" id={data.wishlist_ID} onClick={this.removefromwishlist.bind(this)} className={"wishRemove fa fa-trash"}></span>
                                               {data.discountPercent ? <div className="btn-warning discounttag">{data.discountPercent} % </div> : null} 
                                               <a className="product photo product-item-photo collage" tabIndex="-1">
                                                 <img src={data.productImage[0] ? data.productImage[0] : '/images/notavailable.jpg'} />

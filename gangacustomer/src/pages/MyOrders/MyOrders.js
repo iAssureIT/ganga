@@ -13,7 +13,7 @@ import 'bootstrap/js/tab.js';
 import Message from '../../blocks/Message/Message.js';
 import ReturnStatus from "../../common/Wizard/ReturnStatus.jsx";
 import Loader from "../../common/loader/Loader.js";
-
+import StepWizard         from "../../common/Wizard/StepWizard.jsx";
 export default class MyOrders extends Component {
   constructor(props) {
     super(props);
@@ -439,8 +439,8 @@ export default class MyOrders extends Component {
                               </div>  
                               <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6 NOpadding">
                                 <div className="actionbtn NOpadding">
-                                  <a className="btn filterallalphab" href={"/view-order/" + data._id} title="View Order">
-                                  <span> Track</span></a>
+                                  <a className="btn filterallalphab" target="_blank" href={"/view-order/" + data._id} title="View Order">
+                                  <span> Invoice</span></a>
                                   {
                                     data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' || data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Returned' ? '' :
                                       data.deliveryStatus[data.deliveryStatus.length - 1].status == "New Order" || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Verified"
@@ -450,6 +450,9 @@ export default class MyOrders extends Component {
                                 </div>
                               </div>
                             </div> 
+                          </div>
+                          <div className="col-lg-12 orderIdborder">
+                            <StepWizard data={data} />
                           </div>
                           <div className="col-lg-12 orderbodyborder">
                             {
@@ -462,8 +465,17 @@ export default class MyOrders extends Component {
                                         </div>
                                         <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 NOpadding">
                                           <p> <a href={"/productdetails/"+pdata.product_ID} className="productname">{pdata.productName}</a></p>
-                                          <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{pdata.originalPrice}</span> &nbsp; &nbsp;
-                                          <span><i className="fa fa-inr"></i>&nbsp;{pdata.discountedPrice}</span> &nbsp;
+                                          {
+                                            pdata.discountPercent ?
+                                            <div>
+                                              <span><i className="fa fa-inr"></i>&nbsp;{pdata.discountedPrice}</span> &nbsp;
+                                              <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{pdata.originalPrice}</span> 
+                                            </div>
+                                            :
+                                            <div>
+                                              <span className=""><i className="fa fa-inr "></i>&nbsp;{pdata.originalPrice}</span> 
+                                            </div>
+                                          }
                                           
                                           <p>Quantity: {pdata.quantity}</p>
                                         </div>  

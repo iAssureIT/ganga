@@ -76,7 +76,6 @@ class AdminOrdersList extends Component{
             if(status!="Done"){
                 swal({
                     title: 'Do you want to change status to '+status+ "?",
-                    text: 'Do you want to change status to '+status+ "?",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -115,7 +114,6 @@ class AdminOrdersList extends Component{
         if(status!="Nothing"){
             swal({
                 title: 'Are you sure you want to change status to '+status+ " ?",
-                text: 'Are you sure you want to change status to '+status+ " ?",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

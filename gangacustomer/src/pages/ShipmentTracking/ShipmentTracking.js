@@ -3,7 +3,6 @@ import $ from 'jquery';
 import axios from 'axios';
 import moment from "moment";
 import StepWizard         from "../../common/Wizard/StepWizard.jsx";
-// import IAssureTable           from "../../IAssureTable/IAssureTable.jsx";
 import './ShipmentTracking.css';
 import Loader from "../../common/loader/Loader.js";
 

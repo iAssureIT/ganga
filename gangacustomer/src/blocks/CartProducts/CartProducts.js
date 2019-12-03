@@ -222,7 +222,54 @@ class CartProducts extends Component{
     updateShoppingCart(){
         window.location.reload();
     }
-    
+    moveWishlist(event){
+        event.preventDefault();
+        const userid = localStorage.getItem('user_ID');
+        const cartitemid = event.target.getAttribute('id');
+        const productid = event.target.getAttribute('productid');
+        const formValues = { 
+            "user_ID"    : userid,
+            "cartItem_ID" : cartitemid,
+        }
+
+
+          const wishValues = {
+            "user_ID": userid,
+            "product_ID": productid,
+          }
+          axios.post('/api/wishlist/post', wishValues)
+            .then((response) => {
+                axios.patch("/api/carts/remove" ,formValues)
+                .then((response)=>{
+                    this.setState({
+                        messageData : {
+                          "type" : "outpage",
+                          "icon" : "fa fa-check-circle",
+                          "message" : "Product moved to wishlist successfully.",
+                          "class": "success",
+                          "autoDismiss" : true
+                        }
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            messageData   : {},
+                        })
+                    }, 3000);
+                    this.props.fetchCartData();
+                    this.getCompanyDetails();
+                })
+                .catch((error)=>{
+                    console.log('error', error);
+                })
+            })
+            .catch((error) => {
+              console.log('error', error);
+            })
+
+
+        
+
+    }
     render(){
         // console.log(this.props.recentCartData);
         return(
@@ -256,7 +303,6 @@ class CartProducts extends Component{
                                                 var z = this.state.totalForQantity;
                                                 var totalForQantity = y.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",");
                                                 var totalForQantityState = z ?  z.toString().replace(/\B(?=(\d\d)+(\d)(?!\d))/g, ",") : "";
-                                                console.log('d', data.currency);
                                                 return(
                                                     <tr key={index}>
                                                         <td>
@@ -278,12 +324,7 @@ class CartProducts extends Component{
                                                                         <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.originalPrice}</span>
                                                                 }
                                                                 <br/>
-                                                                {/*
-                                                                    data.discountPercent  ?
-                                                                        <span className="outOfStock">Sold Out</span>
-                                                                    :
-                                                                    null
-                                                                */}
+                                                                    <button productid={data.product_ID} id={data._id} onClick={this.moveWishlist.bind(this)} className="btn btn-warning moveWish">Move to Wishlist</button>
                                                                 </td>
                                                                 
                                                             </tr>

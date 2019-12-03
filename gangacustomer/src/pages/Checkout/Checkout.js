@@ -259,8 +259,12 @@ class Checkout extends Component {
         var user_ID = localStorage.getItem('user_ID');
         axios.get("/api/users/" + user_ID)
             .then((response) => {
+                console.log('res', response.data.profile);
                 this.setState({
                     "deliveryAddress": response.data.deliveryAddress,
+                    "username" : response.data.profile.fullName,
+                    "mobileNumber" : response.data.profile.mobileNumber,
+                    "email" : response.data.profile.emailId
                 });
             })
             .catch((error) => {
@@ -916,7 +920,7 @@ class Checkout extends Component {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
     }
-    opDone(){
+    opDones(){
         this.getUserAddress();
     }
     render() {
@@ -925,7 +929,7 @@ class Checkout extends Component {
                 <Message messageData={this.state.messageData} />
                 <div className="row">
                     <Loader type="fullpageloader" /> 
-                    <Address opDone={this.opDone.bind(this)}/>
+                    <Address opDone={this.opDones.bind(this)}/>
                     <SmallBanner bannerData={this.state.bannerData} />
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                         <form id="checkout">
@@ -960,7 +964,7 @@ class Checkout extends Component {
                                                     return (
                                                         <div key={'check' + index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <input type="radio" value={data._id} name="checkoutAddess" required /> &nbsp;
-                                                            <span className="checkoutADDCss"><b>{data.name}</b> <br/> {data.addressLine1} {data.addressLine2}, {data.city}, {data.district}, {data.state},{data.pincode} {data.country}.  <br/>Email: {data.email} <br/>Mobile: {data.mobileNumber}</span>
+                                                            <span className="checkoutADDCss"><b>{data.name}</b> <br/> {data.addressLine1} {data.addressLine2}, {data.city}, {data.district}, {data.state},{data.pincode} {data.country}.  <br/>Email: {data.email} <br/>Mobile: {data.mobileNumber} <br/><br/></span>
                                                         </div>
                                                     );
                                                 })
