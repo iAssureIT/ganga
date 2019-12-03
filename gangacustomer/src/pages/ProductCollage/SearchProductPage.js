@@ -159,7 +159,7 @@ class SearchProduct extends Component {
   		var breadcrumb = _.unique(this.props.searchResult, "category_ID");
 
 		return (
-	      	<div className="container" id="containerDiv">
+	      	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25" id="containerDiv">
 	     	<div className="row"> 
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">

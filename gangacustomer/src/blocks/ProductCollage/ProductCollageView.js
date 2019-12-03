@@ -215,14 +215,13 @@ class ProductCollageView extends Component {
   render() {
     
     return(
-      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
         <Message messageData={this.state.messageData} />
         
         <div className="row">
         {
           this.state.products && this.state.products.length > 0 ?
             this.state.products && this.state.products.map((data, index) =>{
-              console.log(data.availableQuantity);
               var x = this.props.wishList && this.props.wishList.length > 0 ? this.props.wishList.filter((abc) => abc.product_ID == data._id) : [];
               if(x && x.length > 0){
                 var wishClass = '';
@@ -232,7 +231,7 @@ class ProductCollageView extends Component {
                 var tooltipMsg = 'Add to wishlist';
               }
             return (
-                      <div className="item col-lg-4 col-md-4 col-sm-4 col-xs-4" key={index}>
+                      <div className="item col-lg-3 col-md-3 col-sm-3 col-xs-3" key={index}>
                         <a href={"/productdetails/"+data.productUrl+"/" + data._id}>
                                 <div className="">
                                   <div className="card">
