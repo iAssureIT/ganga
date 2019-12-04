@@ -316,13 +316,13 @@ class AddNewBulkProduct extends Component {
                     productCodeArray = productCodeArray.filter((item, i, ar) => ar.indexOf(item) === i);
                     console.log('productCodeArray',productCodeArray)*/
 
-                    var featuresArray = [];
                     var productCode = '';
 
                     productCode = this.state.inputFileData[1][this.state.inputFileData[0].indexOf('productCode')];
                     // loop on all the records in sheet
                     for (var j = 1; j <= this.state.inputFileData.length; j++) {
                         var record = this.state.inputFileData[j];
+                        var attributeArray = [];
                         if (j == 1) {
                             var previousRecord = this.state.inputFileData[j];
                         } else {
@@ -336,43 +336,40 @@ class AddNewBulkProduct extends Component {
                             // loop on header columns
                             for (k in header) {
                                 if (!documentObj.hasOwnProperty(count)) {
-                                    if (header[k] == 'featureList') {
-
-                                    } else {
-                                        documentObj.push({ [header[k]]: record[k] });
-                                    }
+                                     documentObj.push({ [header[k]]: record[k] });
                                 } else {
+                                    if (header[k].startsWith("features")) {
+                                        if (typeof record[k] !== 'undefined' && record[k].trim() != '') {
+                                            var featuresArray = record[k].split("\n")
+                                            var featuresString = "";
 
-                                    if (header[k].startsWith("feature")) {
-                                        if (header[k] == 'feature1') {
-                                            if (record[k] != undefined && record[k] != '') {
-                                                //featuresArray ={ feature: record[k], index:0 };
-                                                featuresArray.push({ feature: record[k], index: 0 });
-                                            }
+                                            featuresArray.map((data,ind)=>{
+                                                 
+                                                featuresString += "<li>"+data+"</li>"
+                                            })
+                                            
+                                            documentObj[count]['featureList'] = featuresString;
                                         }
-                                        if (header[k] == 'feature2') {
-                                            if (record[k] != undefined && record[k] != '') {
-                                                featuresArray.push({ feature: record[k], index: 1 });
-                                            }
+                                    }
+                                    else if (header[k].startsWith("attribute")) {
+                                        
+                                        if (typeof record[k] !== 'undefined' && record[k].trim() != '') {
+                                            attributeArray.push({attributeName: header[k].replace(/^attribute +/i, '').trim(), attributeValue: record[k].trim()})
+                                            documentObj[count]['attributes'] = attributeArray;
                                         }
-                                        if (header[k] == 'feature3') {
-                                            if (record[k] != undefined && record[k] != '') {
-                                                featuresArray.push({ feature: record[k], index: 2 });
-                                            }
-                                        }
-                                        if (header[k] == 'feature4') {
-                                            if (record[k] != undefined && record[k] != '') {
-                                                featuresArray.push({ feature: record[k], index: 3 });
-                                            }
-                                        }
-                                        documentObj[count]['featureList'] = featuresArray;
+                                        
                                     }
                                     else if (header[k] == 'tags') {
                                         if (record[k] != undefined) {
                                             documentObj[count]['tags'] = record[k].split(',');
                                         }
                                     }
-
+                                    else if (header[k] == 'featured' || header[k] == 'exclusive'
+                                            || header[k] == 'newProduct' || header[k] == 'bestSeller'
+                                            || header[k] == 'taxInclude') {
+                                            var tempflag = record[k] == 'yes' ? true : false
+                                            documentObj[count][header[k]] = tempflag;
+                                    }
                                     else {
                                         documentObj[count][header[k]] = record[k];
                                     }
@@ -381,10 +378,8 @@ class AddNewBulkProduct extends Component {
                                     documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
                                 }
                             }
-
-                            featuresArray = [];
+                            //attributeArray = [];
                             count++;
-
                         }
                     }
 
@@ -422,7 +417,7 @@ class AddNewBulkProduct extends Component {
                             //console.log(isConfirm);
                             if (isConfirm) {
                                 //window.location.reload();
-                                //this.props.history.push("/product-list");
+                                this.props.history.push("/product-list");
                             }
                         });
                 })
@@ -488,7 +483,7 @@ class AddNewBulkProduct extends Component {
                                     </div>
                                 </div>
 
-                                {this.state.vendor ?
+                                {true ?
                                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
                                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
