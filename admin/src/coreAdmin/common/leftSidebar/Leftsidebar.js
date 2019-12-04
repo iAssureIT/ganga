@@ -294,6 +294,18 @@ export default class Leftsidebar extends Component{
                   </a>
                   <ul className="collapse list-unstyled" id="MasterData">
                     <li>
+                      <a href="/taxname">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Tax Master</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/taxrate">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Rate Master</span>
+                      </a>
+                    </li>
+                    <li>
                       <a href="/vendor-category">
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Vendor Category</span>

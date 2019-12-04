@@ -384,7 +384,7 @@ class IAssureTable extends Component {
 		})
     }
 	render() {
-		console.log(this.state.limitRange +'>='+  this.state.dataLength);
+		// console.log(this.state.limitRange +'>='+  this.state.dataLength);
 		// var x = Object.keys(this.state.tableHeading).length ;
 		// var y = 4;
 		// var z = 2;
@@ -465,7 +465,7 @@ class IAssureTable extends Component {
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
-																console.log('value1', value1);
+																// console.log('value1', value1);
 																var regex = new RegExp(/(<([^>]+)>)/ig);
 																var value2 = value1 ? value1.replace(regex,'') : '';
 																var aN = value2.replace(this.state.reA, "");

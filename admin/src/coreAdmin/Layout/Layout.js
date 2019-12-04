@@ -74,6 +74,9 @@ import ListOfVendor from '../../storeAdmin/vendorManagement/listOfVendors/compon
 import VendorCategory from '../../storeAdmin/vendorManagement/MasterData/VendorCategory/VendorCategory.jsx';
 import VendorLocationType from '../../storeAdmin/vendorManagement/MasterData/VendorLocationType/VendorLocationType.jsx';
 
+//============ Tax Master =============
+import TaxName from '../TaxName/TaxName.js';
+import TaxRate from '../TaxRate/TaxRate.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -233,7 +236,11 @@ class Layout extends Component {
                   <Route path="/category-wise-reports" exact strict component={CategoryWiseReports} />
 
                   <Route path="/productreview" exact strict component={Productreview} />
-
+                  <Route path="/taxname" exact strict component={TaxName} />
+                  <Route path="/taxname/:preferenceID" exact strict component={TaxName} />
+                  <Route path="/taxrate" exact strict component={TaxRate} />
+                  <Route path="/taxrate/:preferenceID/:taxRateID" exact strict component={TaxRate} />
+                  
                 </Switch>
               </Router>
               <div className="footerCSS col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
