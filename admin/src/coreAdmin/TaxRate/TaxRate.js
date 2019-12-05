@@ -23,7 +23,7 @@ class TaxRate extends Component {
               },
               "tableObjects"              : {
                 deleteMethod              : 'delete',
-                apiLink                   : '/api/preference',
+                apiLink                   : '/api/preference/deleterate',
                 paginationApply           : false,
                 searchApply               : false,
                 editUrl                   : '/taxrate/'
@@ -139,6 +139,7 @@ class TaxRate extends Component {
                 swal(response.data.message);
                 this.getData(this.state.startRange, this.state.limitRange);
                 this.setState({
+                    editId          : "",
                     taxName         : "",
                     taxRate         : "",
                     effectiveFrom   : "",
@@ -173,7 +174,7 @@ class TaxRate extends Component {
             var id = response.data[0]._id;
             var tableData = response.data[0].taxDetails.map((a, i)=>{
                 return {
-                    _id             : id+"/"+a._id,
+                    _id             : id+"."+a._id,
                     taxName         : taxName,
                     taxRate         : (a.taxRate).toString(),
                     effectiveFrom   : a.effectiveFrom ? moment( a.effectiveFrom).format('DD-MMM-YYYY') : "-",
@@ -219,6 +220,8 @@ class TaxRate extends Component {
         });
     }
     render() {
+        var minEffectiveTo = moment(this.state.effectiveFrom).add(1, "days").format('YYYY-MM-DD');
+        console.log(minEffectiveTo);
         return (
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
@@ -251,7 +254,7 @@ class TaxRate extends Component {
                                                 </div>
                                                 <div className="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
                                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Effective To <i className="astrick">*</i></label>
-                                                    <input type="date" id="effectiveTo" min={moment().format('YYYY-MM-DD')} className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.effectiveTo}  ref="effectiveTo" name="effectiveTo" onChange={this.handleChange.bind(this)} placeholder="Select date.." required/>
+                                                    <input type="date" id="effectiveTo" min={minEffectiveTo} className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.effectiveTo}  ref="effectiveTo" name="effectiveTo" onChange={this.handleChange.bind(this)} placeholder="Select date.." required/>
                                                 </div>
                                                 <br/>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

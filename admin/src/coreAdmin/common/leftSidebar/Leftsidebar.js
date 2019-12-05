@@ -302,7 +302,7 @@ export default class Leftsidebar extends Component{
                     <li>
                       <a href="/taxrate">
                         <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Rate Master</span>
+                        <span className="sidebarMenuSubText">Tax Rate Master</span>
                       </a>
                     </li>
                     <li>
