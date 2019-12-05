@@ -74,8 +74,9 @@ class ViewOrder extends Component {
               </strong>
               <div className="box-content"> 
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.name } <br/>
-               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 } <br/>
-               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine2 } <br/>
+               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 }, <br/>
+               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine2 } &nbsp;
+               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.city }, <br/>
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.district + ', ' +  this.state.orderData.deliveryAddress.state +', ' + this.state.orderData.deliveryAddress.pincode } <br/>
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.country } <br/>
               </div>

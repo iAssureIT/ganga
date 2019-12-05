@@ -43,6 +43,9 @@ class ProductViewEcommerce extends Component {
 			"imgsrc": "",
 			"wishIconClass" : "viewWishList",
 			"wishTooltip"   : "Add to wishlist",
+			"productData"   : {
+				"availableQuantity" : 1
+			}
 		};
 		this.changeImage = this.changeImage.bind(this);
 	}
@@ -336,7 +339,6 @@ class ProductViewEcommerce extends Component {
 		})
 	}
 	render() {
-		console.log(this.state.productData);
 		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1000;background-color:#fff; height:500px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/notavailable.jpg" };
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 backColorWhite mb20 boxBorder">
@@ -422,7 +424,6 @@ class ProductViewEcommerce extends Component {
 									</div>
 								</div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
-
 									<div className="row spc">
 										<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
 										{

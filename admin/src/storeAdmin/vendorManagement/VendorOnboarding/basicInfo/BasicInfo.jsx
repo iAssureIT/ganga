@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import axios from 'axios';
-import ReactTable from "react-table";
 import swal from 'sweetalert';
 import _ from 'underscore';
 import 'bootstrap/js/tab.js';
@@ -24,18 +23,18 @@ class BasicInfo extends Component {
     $.validator.addMethod("regxmobileNumber", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Please enter valid mobile number.");
-    // $.validator.addMethod("regxA2", function(value, element, regexpr) {          
-    //   return regexpr.test(value);
-    // }, "Please enter a valid PAN Number.");
+    $.validator.addMethod("regxA2", function(value, element, regexpr) {          
+      return regexpr.test(value);
+    }, "Please enter a valid PAN Number.");
     $.validator.addMethod("regxA3", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Please enter a valid TIN Number.");
     $.validator.addMethod("regxA4", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "It should be www.abcd.com");
-    // $.validator.addMethod("regxA5", function(value, element, regexpr) {          
-    //   return regexpr.test(value);
-    // }, "Please enter the valid GST number.");
+    $.validator.addMethod("regxA5", function(value, element, regexpr) {          
+      return regexpr.test(value);
+    }, "Please enter the valid GST number.");
 
     $.validator.addMethod("regxcategory", function (value, element, arg) {
       return arg !== value;
@@ -47,10 +46,10 @@ class BasicInfo extends Component {
       // // console.log('value: ',value + element);          
       return regexpr.test(value);
     }, "Please enter the valid COI No.");
-    // $.validator.addMethod("regxA8", function(value, element, regexpr) {          
-    //   // // console.log('value: ',value + element);          
-    //   return regexpr.test(value);
-    // }, "Please enter the valid MFG Pro.");
+    $.validator.addMethod("regxA8", function(value, element, regexpr) {          
+      // // console.log('value: ',value + element);          
+      return regexpr.test(value);
+    }, "Please enter the valid MFG Pro.");
 
     jQuery.validator.setDefaults({
       debug: true,
@@ -62,10 +61,10 @@ class BasicInfo extends Component {
           required: true,
           // regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
         },
-        // pan: {
-        //   required: true,
-        //   regxA2: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        // },
+        pan: {
+          required: true,
+          regxA2: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
+        },
         website: {
           required: true,
           regxA4: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/,
@@ -77,10 +76,10 @@ class BasicInfo extends Component {
           required: true,
           regxmobileNumber: /^([7-9][0-9]{9})$/,
         },
-        // gstno: {
-        //   required: true,
-        //   regxA5: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
-        // },
+        gstno: {
+          required: true,
+          regxA5: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+        },
         existingVendor:{
           required: true,
           regxexistingVendor: "Select Vendor"
@@ -95,13 +94,13 @@ class BasicInfo extends Component {
         },
         vendorRadio: {
           required: true
-        }
-        // mfg: {
-        //   required: false,
-        //   regxA8: /^[0-9]{2}[A-Za-z]{2}[0-9]{7}$/,
+        },
+        mfg: {
+          required: false,
+          regxA8: /^[0-9]{2}[A-Za-z]{2}[0-9]{7}$/,
 
-        //   // regxA7: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        // },
+          // regxA7: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
+        },
         // LogoImageUp:{
         //   required: true,
 
@@ -121,18 +120,18 @@ class BasicInfo extends Component {
         if (element.attr("name") == "mobileNumber") {
           error.insertAfter("#mobileNumber");
         }
-        // if (element.attr("name") == "pan"){
-        //   error.insertAfter("#basicInfo2");
-        // }
+        if (element.attr("name") == "pan"){
+          error.insertAfter("#basicInfo2");
+        }
         if (element.attr("name") == "tin") {
           error.insertAfter("#basicInfo3");
         }
         if (element.attr("name") == "website") {
           error.insertAfter("#basicInfo4");
         }
-        // if (element.attr("name") == "gstno"){
-        //   error.insertAfter("#basicInfo5");
-        // }
+        if (element.attr("name") == "gstno"){
+          error.insertAfter("#basicInfo5");
+        }
         if (element.attr("name") == "category") {
           error.insertAfter("#category");
         }
@@ -191,12 +190,29 @@ class BasicInfo extends Component {
     axios.get('/api/users/vendorlist')
     .then((response)=>{
       this.setState({
-        existingVendorList : response.data
+        existingVendorList : response.data,
       })
     })
     .catch((error)=>{
       console.log('error', error);
     })
+  }
+  changeVendor(event){
+    this.setState({
+      [event.target.name] : event.target.value,
+    })
+    console.log(event.target.value.split('|')[1]);
+    axios.get('/api/users/' + event.target.value.split('|')[1])
+        .then((response) => {
+          console.log('eme', response.data)
+          this.setState({
+            "emailId": response.data.username,
+            "emailDisabled" : true
+          })
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
   }
   getVendors(){
     axios.get('/api/vendors/get/greatestid')
@@ -410,7 +426,10 @@ class BasicInfo extends Component {
           .then((response) => {
             console.log('response', response.data);
             swal(response.data.message);
-            this.props.history.push('/location-details/' + response.data.vendor_ID);
+            if(response.data.vendor_ID){
+              this.props.history.push('/location-details/' + response.data.vendor_ID);
+            }
+            
           })
           .catch((error) => {
             console.log('error', error);
@@ -444,7 +463,9 @@ class BasicInfo extends Component {
         .then((response) => {
           console.log('response', response.data);
           swal(response.data.message);
-          this.props.history.push('/location-details/' + response.data.vendor_ID);
+          if(response.data.vendor_ID){
+            this.props.history.push('/location-details/' + response.data.vendor_ID);
+          }
         })
         .catch((error) => {
           console.log('error', error);
@@ -661,7 +682,8 @@ class BasicInfo extends Component {
   vendorRadio(event){
     console.log(event.target.name, event.target.value);
     this.setState({
-      [event.target.name] : event.target.value
+      [event.target.name] : event.target.value,
+      "emailDisabled"     : event.target.value == 'new'? false : true
     });
   }
   render() {
@@ -757,7 +779,7 @@ class BasicInfo extends Component {
                                   this.state.vendorRadio == 'existing'?
                                   <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left NOpadding-right">
                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Existing Vendors<i className="astrick">*</i></label>
-                                    <select id="existingVendor" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.existingVendor} ref="existingVendor" name="existingVendor" onChange={this.handleChange}>
+                                    <select id="existingVendor" className="form-control subCatTab col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.existingVendor} ref="existingVendor" name="existingVendor" onChange={this.changeVendor.bind(this)}>
                                       {/* <option disabled>-- Select --</option> */}
                                       <option value="Select Vendor">Select Vendor  </option>
                                       {this.state.existingVendorList && this.state.existingVendorList.length > 0 ?
@@ -784,13 +806,13 @@ class BasicInfo extends Component {
                                 </div>
                                 <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 Websiteerror NOpadding-left NOpadding-right">
                                   <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email <i className="astrick">*</i></label>
-                                  <input type="email" id="emailId" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.emailId} ref="emailId" name="emailId" onChange={this.handleChange} placeholder="Enter email id" required />
+                                  <input disabled={this.state.emailDisabled}  type="email" id="emailId" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.emailId} ref="emailId" name="emailId" onChange={this.handleChange} placeholder="Enter email id" required />
                                 </div>
                               </div>
                               <div className="form-margin col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left NOpadding-right">
                                 <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                   <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Mobile Number <i className="astrick">*</i></label>
-                                  <input type="text" id="mobileNumber" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.mobileNumber} ref="mobileNumber" name="mobileNumber" onChange={this.handleChange} placeholder="Enter mobile no." required />
+                                  <input type="text" maxLength="10" id="mobileNumber" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.mobileNumber} ref="mobileNumber" name="mobileNumber" onChange={this.handleChange} placeholder="Enter mobile no." required />
                                 </div>
                                 <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 Websiteerror NOpadding-left NOpadding-right" >
                                   <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website <i className="astrick">*</i>
@@ -822,13 +844,11 @@ class BasicInfo extends Component {
                                   </select>
                                 </div>
                                 <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding" >
-                                  <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">MFG Pro-ERP No
+                                  <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">MFG Pro-ERP No <i className="astrick">*</i>
                                     <a data-tip data-for='basicInfo7Tooltip' className="pull-right"> <i title="Eg. MFG PRO Supplier Code" className="fa fa-question-circle"></i> </a>
-                                    {/* <ReactTooltip id='basicInfo7Tooltip' type='error'>
-                                    <span>Eg. MFG PRO Supplier Code</span>
-                                    </ReactTooltip> */}
+                                    
                                   </label>
-                                  <input type="text" id="basicInfo7" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.mfg} ref="mfg" name="mfg" onChange={this.handleChange} />
+                                  <input type="text" id="basicInfo7" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" placeholder="12AB3456789" value={this.state.mfg} ref="mfg" name="mfg" onChange={this.handleChange} />
                                 </div>
                               </div>
                             </div>
@@ -875,7 +895,7 @@ class BasicInfo extends Component {
                           {this.state.typeOptions == 'Local' ?
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                               <div className=" col-lg-6 col-md-6 col-sm-12 col-xs-12 panerror" >
-                                <label className="form-margin col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick"></i>
+                                <label className="form-margin col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">PAN <i className="astrick">*</i>
                                   <a data-tip data-for='basicInfo2Tooltip' className="pull-right"> <i title="Please enter valid PAN number (like this ABCDE1234Z)." className="fa fa-question-circle"></i> </a>
                                   {/* <ReactTooltip id='basicInfo2Tooltip' type='error'>
                                   <span>Please enter valid PAN number (like this ABCDE1234Z).</span>
@@ -895,7 +915,7 @@ class BasicInfo extends Component {
                           {this.state.typeOptions == 'Local' ?
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                               <div className="col-lg-6 col-md-6 col-sm-12 col-sm-12 ">
-                                <label className="form-margin col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick"></i>
+                                <label className="form-margin col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">GST No <i className="astrick">*</i>
                                   <a data-tip data-for='basicInfo5Tooltip' className="pull-right"> <i title="Please enter valid GST number(like this 29ABCDE1234F1Z5)" className="fa fa-question-circle"></i> </a>
                                   {/* <ReactTooltip id='basicInfo5Tooltip' type='error'>
                                     <span>Please enter valid GST number(like this 29ABCDE1234F1Z5)</span>
@@ -927,7 +947,7 @@ class BasicInfo extends Component {
                         </div>
 
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxhr"></div>
+                          {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 boxhr"></div> */}
                           {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 attachDocuments">
                             Attach Documents
                             </div> */}
@@ -996,7 +1016,7 @@ class BasicInfo extends Component {
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt">
 
                         <button className="btn button3 btn-primary pull-right" onClick={this.supplier.bind(this)} >Save & Next&nbsp;<i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
 

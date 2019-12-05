@@ -332,7 +332,7 @@ class EditAccount extends Component{
                                 </div>
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <button className="btn btn-warning editAccount" onClick={this.updateUser.bind(this)}>Save</button>
+                                        <button className="btn btn-warning editAccount" onClick={this.updateUser.bind(this)}>Submit</button>
                                     </div>
                                 </div>
                             </form>
