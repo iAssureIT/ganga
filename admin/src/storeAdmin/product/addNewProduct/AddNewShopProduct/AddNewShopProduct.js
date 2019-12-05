@@ -7,6 +7,8 @@ import _ from 'underscore';
 import AddNewTableFeature from '../addNewTableFeature/addNewTableFeature.js';
 import 'bootstrap/js/tab.js';
 import "./AddNewProduct.css";
+import CKEditor from "react-ckeditor-component";
+
 class AddNewShopProduct extends Component {
   constructor(props) {
     super(props);
@@ -23,10 +25,13 @@ class AddNewShopProduct extends Component {
       subCatFormErrors: false,
       showDiscount : true,
       discountPercentError : "",
+      placeholder: '<li>5.8-inch Super Retina display (OLED) with HDR</li><li>12MP dual cameras with dual OIS and 7MP TrueDepth front camera—Portrait mode and Portrait Lighting</li>',
+      content: '',
       editId: this.props.match.params ? this.props.match.params.productID : ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.addNewRow = this.addNewRow.bind(this);
+    this.updateContent = this.updateContent.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     var editId = nextProps.match.params.id;
@@ -38,6 +43,11 @@ class AddNewShopProduct extends Component {
       this.edit(editId);
     }
   }
+  updateContent(newContent) {
+        this.setState({
+            content: newContent
+        })
+    }
   handleChange(event) {
     const target = event.target;
     const name = target.name;
@@ -46,6 +56,7 @@ class AddNewShopProduct extends Component {
     });
   }
   componentDidMount() {
+    
     if (this.state.editId) {
       this.edit(this.state.editId);
     }
@@ -337,6 +348,7 @@ class AddNewShopProduct extends Component {
     } else {
       var productExclusive = false;
     }
+    console.log('content',this.state.content);
     if (addRowLength && addRowLength > 0) {
       var productDimentionArray = [];
       var productArr = [];
@@ -364,9 +376,9 @@ class AddNewShopProduct extends Component {
       "itemCode"                  : this.refs.itemCode.value,
       "productName"               : this.refs.productName.value,
       "productUrl"                : this.refs.productUrl.value,
-      "productDetails"            : this.refs.productDetails.value,
+      "productDetails"            : this.state.productDetails,
       "shortDescription"          : this.refs.shortDescription.value,
-      "featureList"               : productDimentionArray,
+      "featureList"               : this.state.content,
       "originalPrice"             : this.refs.originalPrice.value,
       "discountPercent"           : this.refs.discountPercent.value,
       "discountedPrice"           : this.state.discountedPrice ? this.state.discountedPrice : this.state.originalPrice,
@@ -380,7 +392,7 @@ class AddNewShopProduct extends Component {
       "exclusive"                 : productExclusive,
       "fileName"                  : "Manual",
     }
-    // console.log('formValues', formValues);
+    console.log('formValues', formValues);
     if($('#addNewShopProduct').valid()) {
       if(this.state.discountPercentError == ""){
         axios.post('/api/products/post', formValues)
@@ -393,7 +405,7 @@ class AddNewShopProduct extends Component {
             swal({
               title: response.data.message,
             });
-            this.props.history.push('/add-product/image/' + response.data.product_ID);
+            //this.props.history.push('/add-product/image/' + response.data.product_ID);
             this.setState({
               vendor : "Select Vendor",
               section: "Select Section",
@@ -465,9 +477,9 @@ class AddNewShopProduct extends Component {
       "itemCode": this.refs.itemCode.value,
       "productName": this.refs.productName.value,
       "productUrl": this.refs.productUrl.value,
-      "productDetails": this.refs.productDetails.value,
+      "productDetails": this.state.productDetails,
       "shortDescription": this.refs.shortDescription.value,
-      "featureList": productDimentionArray,
+      "featureList": this.state.content,
       "originalPrice": this.state.originalPrice,
       "discountPercent": this.state.discountPercent,
       "size": this.refs.size.value,
@@ -612,6 +624,30 @@ class AddNewShopProduct extends Component {
 
     })
   }
+  onClickCkEditor(evt){
+    this.setState({
+      placeholder : '',
+    })
+  }
+  onChangeCkEditor(evt){    
+    var newContent = evt.editor.getData();
+    this.setState({
+      content: newContent
+    }) 
+  }
+  onChangeProductDetails(evt){    
+    var newContent = evt.editor.getData();
+    this.setState({
+      productDetails: newContent
+    }) 
+  }
+  onBlurCkEditor(){
+    if(!this.state.content){
+      this.setState({
+        placeholder : '<li>5.8-inch Super Retina display (OLED) with HDR</li><li>12MP dual cameras with dual OIS and 7MP TrueDepth front camera—Portrait mode and Portrait Lighting</li>',
+      })
+    }
+  }
   render() {
    
     return (
@@ -646,7 +682,7 @@ class AddNewShopProduct extends Component {
                     </div>
                   </div>
                   {
-                    this.state.vendor ? 
+                   this.state.vendor ? 
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                       <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                         
@@ -782,11 +818,24 @@ class AddNewShopProduct extends Component {
                       </div>
 
                     </div>
+                    <div className="mt addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                      <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12   ">
+                      <label>Features</label>
+                      <a title="Please enter valid Email Id" data-toggle="modal" data-target="#instructions" > <i className="fa fa-question-circle"></i> </a>
+                      </div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <CKEditor activeClass="p15" id="editor" data-text="message" 
+                        className="templateName" 
+                        content={this.state.content} 
+                        events={{"change": this.onChangeCkEditor.bind(this)}}
+                        />
+                      </div>   
+                    </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive tableCss">
                       <table className="add-new-product-table table table-bordered">
                         <thead>
                           <tr>
-                            <th>Add New Feature</th>
+                            <th>Add Attributes</th>
                             <th>Delete</th>
                           </tr>
                         </thead>
@@ -811,7 +860,11 @@ class AddNewShopProduct extends Component {
 
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                       <label>Product Detail <i className="redFont">*</i></label>
-                      <textarea value={this.state.productDetails} name="productDetails" id="productDetails" onChange={this.handleChange.bind(this)} className="form-control newProductDetails" placeholder="Product Detail..." rows="4" aria-describedby="basic-addon1" ref="productDetails" ></textarea>
+                      <CKEditor activeClass="p15" id="editor" data-text="message" 
+                        className="templateName" 
+                        content={this.state.productDetails} 
+                        events={{"change": this.onChangeProductDetails.bind(this)}}
+                        />
                     </div>
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol descriptionCss">
                       <div className="row">
@@ -850,6 +903,28 @@ class AddNewShopProduct extends Component {
               </form>
             </div>
           </div>
+
+          <div className="modal" id="instructions" role="dialog">
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                <h3 className="modalTitle">Instructions</h3>
+              </div>
+              <div className="modal-body">
+                <label>Please add features shown as below:</label>
+                <img width="100%" src="./images/featureInstruction.png"/>
+                <br/>
+              </div>
+              <div className="modal-footer">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         </section>
       </div>
     );

@@ -338,7 +338,7 @@ class AddNewBulkProduct extends Component {
                                 if (!documentObj.hasOwnProperty(count)) {
                                      documentObj.push({ [header[k]]: record[k] });
                                 } else {
-                                    if (header[k].startsWith("features")) {
+                                    if (header[k].startsWith("feature list")) {
                                         if (typeof record[k] !== 'undefined' && record[k].trim() != '') {
                                             var featuresArray = record[k].split("\n")
                                             var featuresString = "";
@@ -464,7 +464,7 @@ class AddNewBulkProduct extends Component {
                                             <h4 className="NOpadding-right">Product Bulk Upload</h4>
                                         </div>
                                     </div>
-                                    <div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4 inputFields marginTopp">
+                                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields marginTopp">
                                         <label>Vendor <i className="redFont">*</i></label>
                                         <select onChange={this.selectVendor.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                                             <option disabled selected defaultValue="">Select Vendor</option>
@@ -483,7 +483,7 @@ class AddNewBulkProduct extends Component {
                                     </div>
                                 </div>
 
-                                {true ?
+                                {this.state.vendor  ?
                                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
                                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 

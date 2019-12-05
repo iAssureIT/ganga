@@ -34,6 +34,7 @@ export default class AddNewTableFeature extends Component{
             <tr>
                <td className="col-lg-11">
                   <input type="text" value={this.state['feature'+this.props.index]} name={"feature"+this.props.index} onChange={this.handleChange.bind(this)} className={"featuresRef"+this.props.index + " form-control featureRefMain"} ref={"featuresRef"+this.props.index} />
+                  <input type="text" value={this.state['feature'+this.props.index]} name={"feature"+this.props.index} onChange={this.handleChange.bind(this)} className={"featuresRef"+this.props.index + " form-control featureRefMain"} ref={"featuresRef"+this.props.index} />
                </td>
                <td  className="col-lg-1">
                    <div className="delete-product-table-row" onClick={this.deleteProductTableRow.bind(this)} >
