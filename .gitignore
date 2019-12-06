@@ -2,6 +2,7 @@ admin/node_modules
 ba/node_modules
 vendor/node_modules
 gangacustomer/node_modules
-
+gangacustomer/.env
+admin/.env
 
 admin/src/coreAdmin/dashboard

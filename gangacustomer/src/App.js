@@ -5,10 +5,7 @@ import './root.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-axios.defaults.baseURL = 'http://qagangaexpressapi.iassureit.com';
-
-// axios.defaults.baseURL = 'http://uatapi.gangaexpress.in';
-
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 function App() {
   return (

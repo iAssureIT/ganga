@@ -27,6 +27,8 @@ class AddNewShopProduct extends Component {
       discountPercentError: "",
       placeholder: '<li>5.8-inch Super Retina display (OLED) with HDR</li><li>12MP dual cameras with dual OIS and 7MP TrueDepth front camera—Portrait mode and Portrait Lighting</li>',
       content: '',
+      taxRateData : [],
+      taxInclude: true,
       editId: this.props.match.params ? this.props.match.params.productID : ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -94,6 +96,7 @@ class AddNewShopProduct extends Component {
     $.validator.addMethod("regxDiscountPercent", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Percent should have positive decimal number followed by 1 or 2 digits");
+    
     $.validator.addMethod("regxDetails", function (value, element, regexpr) {
       return regexpr.test(value);
     }, "Product Details should only contain letters & number.");
@@ -112,6 +115,10 @@ class AddNewShopProduct extends Component {
         section: {
           required: true,
           regxsection: "Select Section"
+        },
+        category: {
+          required: true,
+          valueNotEquals: "Select Category"
         },
         brand: {
           required: true,
@@ -193,6 +200,7 @@ class AddNewShopProduct extends Component {
         if (element.attr("name") == "discountedPrice") {
           error.insertAfter("#discountedPrice");
         }
+        
         if (element.attr("name") == "discountPercent") {
           error.insertAfter("#discountPercent");
         }
@@ -218,6 +226,7 @@ class AddNewShopProduct extends Component {
     });
     this.getSectionData();
     this.getVendorList();
+    this.getTaxData();
   }
   getSectionData() {
     axios.get('/api/sections/get/list')
@@ -319,6 +328,8 @@ class AddNewShopProduct extends Component {
           discountPercent: response.data.discountPercent,
           discountedPrice: response.data.discountedPrice == response.data.originalPrice ? "" : response.data.discountedPrice,
           originalPrice: response.data.originalPrice,
+          taxInclude : response.data.taxInclude,
+          taxRate : response.data.taxRate,
           size: response.data.size,
           color: response.data.color,
           unit: response.data.unit,
@@ -348,7 +359,6 @@ class AddNewShopProduct extends Component {
     } else {
       var productExclusive = false;
     }
-    console.log('content', this.state.content);
     if (addRowLength && addRowLength > 0) {
       var productDimentionArray = [];
       var productArr = [];
@@ -363,7 +373,6 @@ class AddNewShopProduct extends Component {
         }
       }
     }
-    console.log(productDimentionArray);
     var formValues = {
       "vendor_ID": this.refs.vendor.value.split('|')[1],
       "vendorName": this.refs.vendor.value.split('|')[0],
@@ -382,6 +391,8 @@ class AddNewShopProduct extends Component {
       "shortDescription": this.refs.shortDescription.value,
       "featureList": this.state.content,
       "attributes": productDimentionArray,
+      "taxInclude" : this.state.taxInclude,
+      "taxRate" : this.state.taxRate,
       "originalPrice": this.refs.originalPrice.value,
       "discountPercent": this.refs.discountPercent.value,
       "discountedPrice": this.state.discountedPrice ? this.state.discountedPrice : this.state.originalPrice,
@@ -395,7 +406,6 @@ class AddNewShopProduct extends Component {
       "exclusive": productExclusive,
       "fileName": "Manual",
     }
-    console.log('formValues', formValues);
     if ($('#addNewShopProduct').valid()) {
       if (this.state.discountPercentError == "") {
         axios.post('/api/products/post', formValues)
@@ -408,7 +418,6 @@ class AddNewShopProduct extends Component {
               swal({
                 title: response.data.message,
               });
-              //this.props.history.push('/add-product/image/' + response.data.product_ID);
               this.setState({
                 vendor: "Select Vendor",
                 section: "Select Section",
@@ -421,6 +430,8 @@ class AddNewShopProduct extends Component {
                 productUrl: "",
                 productDetails: "",
                 shortDescription: "",
+                taxInclude : true,
+                taxRate : "",
                 originalPrice: "",
                 discountedPrice: "",
                 size: "",
@@ -430,6 +441,7 @@ class AddNewShopProduct extends Component {
                 currency: "",
                 status: "",
               });
+              this.props.history.push('/add-product/image/' + response.data.product_ID);
             }
           })
           .catch((error) => {
@@ -485,6 +497,8 @@ class AddNewShopProduct extends Component {
       "shortDescription": this.refs.shortDescription.value,
       "featureList": this.state.content,
       "attributes": productDimentionArray,
+      "taxInclude" : this.state.taxInclude,
+      "taxRate" : this.state.taxRate,
       "originalPrice": this.state.originalPrice,
       "discountPercent": this.state.discountPercent,
       "size": this.refs.size.value,
@@ -500,7 +514,6 @@ class AddNewShopProduct extends Component {
       if (this.state.discountPercentError == "") {
         axios.patch('/api/products/patch', formValues)
           .then((response) => {
-
             swal({
               title: response.data.message,
             });
@@ -515,6 +528,8 @@ class AddNewShopProduct extends Component {
               productName: "",
               productUrl: "",
               productDetails: "",
+              taxInclude : "",
+              taxRate : "",
               shortDescription: "",
               size: "",
               color: "",
@@ -653,8 +668,24 @@ class AddNewShopProduct extends Component {
       })
     }
   }
+  getTaxData(){
+    axios.get('/api/preference/get/list')
+    .then((response)=>{
+        this.setState({
+            taxName : response.data[0].taxName,
+            taxRateData: response.data[0].taxDetails
+        })
+    })
+    .catch((error)=>{
+        console.log('error', error);
+    });
+  }
+  changeTaxInclude(event){
+    this.setState({
+      [event.target.name] : event.target.checked
+    })
+  }
   render() {
-
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <section className="content">
@@ -708,7 +739,7 @@ class AddNewShopProduct extends Component {
                             </select>
                           </div>
                           <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
-                            <label>Category </label>
+                            <label>Category <i className="redFont">*</i></label>
                             {/*<div className="input-group" id="category">*/}
                             <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.category} name="category" className="form-control allProductCategories" aria-describedby="basic-addon1" id="category" ref="category">
                               <option disabled selected defaultValue="">Select Category</option>
@@ -762,8 +793,6 @@ class AddNewShopProduct extends Component {
                           </div>
                         </div>
                         <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-
-
                           <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields">
                             <label>Brand Name <i className="redFont">*</i></label>
                             <input value={this.state.brand} name="brand" id="brand" type="text" className="form-control productBrandName" placeholder="Brand Name" aria-label="Brand" aria-describedby="basic-addon1" ref="brand" onChange={this.handleChange.bind(this)} />
@@ -823,17 +852,27 @@ class AddNewShopProduct extends Component {
                           </div>
 
                           <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                            <label>GST Rate (%)</label>
-                            <input max={100} value={this.state.discountPercent} onChange={this.discountedPrice.bind(this)} placeholder="Rate(%)" id="discountPercent" name="discountPercent" type="number" className="form-control" aria-describedby="basic-addon1" ref="discountPercent" />
+                            <label>{this.state.taxName ? this.state.taxName : 'Tax'} Rate (%) <i className="redFont">*</i></label>
+                            <select className="form-control selectdropdown" ref="taxRate" id="taxRate" name="taxRate" value={this.state.taxRate} onChange={this.handleChange.bind(this)}>
+                              <option value="0">0% </option>
+                              {this.state.taxRateData && this.state.taxRateData.length > 0?
+                                this.state.taxRateData.map((data, i)=>{
+                                  return(
+                                    <option key={i} value={data.taxRate}>{data.taxRate}% </option>
+                                  );
+                                })
+                                :
+                                null
+                              }
+                            </select>
                           </div>
                           <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">GST Included</label>
+                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">{this.state.taxName ? this.state.taxName : 'Tax'} Included <i className="redFont">*</i></label>
                             <label class="taxswitch col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <input type="checkbox" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding" />
+                              <input type="checkbox" onChange={this.changeTaxInclude.bind(this)} checked={this.state.taxInclude} id="taxInclude" name="taxInclude" ref="taxInclude" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding" />
                               <span class="taxslider taxround col-lg-12 col-md-12 col-sm-12 col-xs-12"></span>
                             </label>
                           </div>
-                          
                         </div>
                         <div className="mt addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                           <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12   ">
@@ -883,8 +922,6 @@ class AddNewShopProduct extends Component {
                             <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9 pull-right" onClick={this.addNewRow}>Add Row</button>
                           </div>
                         </div>
-
-
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol descriptionCss">
                           <div className="row">
                             <div className="col-lg-6">

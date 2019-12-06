@@ -246,7 +246,7 @@ class TaxRate extends Component {
                                                 </div>
                                                 <div className="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
                                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Tax Rate (%) <i className="astrick">*</i></label>
-                                                    <input type="number" min="0" max="99" id="taxRate" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.taxRate}  ref="taxRate" name="taxRate" onChange={this.handleChange.bind(this)} placeholder="Enter tax rate.." required/>
+                                                    <input type="number" min="1" max="99" id="taxRate" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.taxRate}  ref="taxRate" name="taxRate" onChange={this.handleChange.bind(this)} placeholder="Enter tax rate.." required/>
                                                 </div>
                                                 <div className="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12"> 
                                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Effective From<i className="astrick">*</i></label>
