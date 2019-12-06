@@ -299,7 +299,7 @@ class AddNewShopProduct extends Component {
         
         this.getCategories();
         this.getSubCategories(response.data.category_ID);
-        console.log('section_ID',response.data.section_ID)
+        console.log('attributes',response.data)
         this.setState({
           // addrows: [1],
           showDiscount : response.data.discountedPrice ? false : true,
@@ -312,9 +312,10 @@ class AddNewShopProduct extends Component {
           itemCode : response.data.itemCode,
           productName: response.data.productName,
           productUrl: response.data.productUrl,
+          content              : response.data.featureList,
           productDetails: response.data.productDetails,
           shortDescription: response.data.shortDescription,
-          addrows: response.data.featureList ?response.data.featureList : [1],
+          addrows: response.data.attributes.length>0 ?response.data.attributes : [1],
           discountPercent: response.data.discountPercent,
           discountedPrice: response.data.discountedPrice == response.data.originalPrice ? "": response.data.discountedPrice,
           originalPrice: response.data.originalPrice,
@@ -337,7 +338,6 @@ class AddNewShopProduct extends Component {
   submitProduct(event) {
     event.preventDefault();
     var addRowLength = (this.state.addrows).length;
-    // console.log('addRowLength: ', addRowLength);
     if (this.state.productFeatured) {
       var productFeatured = this.state.productFeatured;
     } else {
@@ -355,13 +355,15 @@ class AddNewShopProduct extends Component {
       for (var i = 0; i < addRowLength; i++) {
         var obj = {
           "index": i,
-          "feature": $(".featuresRef" + i).val(),
+          "attributeName": $(".attributeName" + i).val(),
+          "attributeValue": $(".attributeValue" + i).val(),
         }
-        if ($('.featureRefMain').hasClass("featuresRef" + i)) {
+        if ($('.attributeNameRef').hasClass("attributeName" + i) && $('.attributeValueRef').hasClass("attributeValue" + i)) {
           productDimentionArray.push(obj);
         }
       }
     }
+    console.log(productDimentionArray);
     var formValues = {
       "vendor_ID"                 : this.refs.vendor.value.split('|')[1],  
       "vendorName"                : this.refs.vendor.value.split('|')[0], 
@@ -379,6 +381,7 @@ class AddNewShopProduct extends Component {
       "productDetails"            : this.state.productDetails,
       "shortDescription"          : this.refs.shortDescription.value,
       "featureList"               : this.state.content,
+      "attributes"                 : productDimentionArray,
       "originalPrice"             : this.refs.originalPrice.value,
       "discountPercent"           : this.refs.discountPercent.value,
       "discountedPrice"           : this.state.discountedPrice ? this.state.discountedPrice : this.state.originalPrice,
@@ -455,9 +458,10 @@ class AddNewShopProduct extends Component {
       for (var i = 0; i < addRowLength; i++) {
         var obj = {
           "index": i,
-          "feature": $(".featuresRef" + i).val(),
+          "attributeName": $(".attributeName" + i).val(),
+          "attributeValue": $(".attributeValue" + i).val(),
         }
-        if ($('.featureRefMain').hasClass("featuresRef" + i)) {
+        if ($('.attributeNameRef').hasClass("attributeName" + i) && $('.attributeValueRef').hasClass("attributeValue" + i)) {
           productDimentionArray.push(obj);
         }
       }
@@ -480,6 +484,7 @@ class AddNewShopProduct extends Component {
       "productDetails": this.state.productDetails,
       "shortDescription": this.refs.shortDescription.value,
       "featureList": this.state.content,
+      "attributes"                 : productDimentionArray,
       "originalPrice": this.state.originalPrice,
       "discountPercent": this.state.discountPercent,
       "size": this.refs.size.value,
@@ -831,11 +836,20 @@ class AddNewShopProduct extends Component {
                         />
                       </div>   
                     </div>
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol mt">
+                      <label>Product Detail <i className="redFont">*</i></label>
+                      <CKEditor activeClass="p15" id="editor" data-text="message" 
+                        className="templateName" 
+                        content={this.state.productDetails} 
+                        events={{"change": this.onChangeProductDetails.bind(this)}}
+                        />
+                    </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol table-responsive tableCss">
                       <table className="add-new-product-table table table-bordered">
                         <thead>
                           <tr>
-                            <th>Add Attributes</th>
+                            <th>Add Attributes Name</th>
+                            <th>Add Attributes Value</th>
                             <th>Delete</th>
                           </tr>
                         </thead>
@@ -844,7 +858,7 @@ class AddNewShopProduct extends Component {
                           {this.state.addrows ? 
                             this.state.addrows.map((data, index) => {
                               return (
-                                <AddNewTableFeature index={index} feature={data.feature} key={index} />
+                                <AddNewTableFeature index={index} attributeName={data.attributeName} attributeValue={data.attributeValue} key={index} />
                               );
                             })
                             :
@@ -858,14 +872,7 @@ class AddNewShopProduct extends Component {
                       </div>
                     </div>
 
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
-                      <label>Product Detail <i className="redFont">*</i></label>
-                      <CKEditor activeClass="p15" id="editor" data-text="message" 
-                        className="templateName" 
-                        content={this.state.productDetails} 
-                        events={{"change": this.onChangeProductDetails.bind(this)}}
-                        />
-                    </div>
+                    
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol descriptionCss">
                       <div className="row">
                         <div className="col-lg-6">
