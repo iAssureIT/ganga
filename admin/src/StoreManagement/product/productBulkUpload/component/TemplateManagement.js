@@ -51,8 +51,16 @@ class TemplateManagement extends Component {
       .catch((error) => {
         console.log('error', error);
       })
-  }
-
+    }
+    docBrowse(e){
+    e.preventDefault();
+        var fileObj = e.currentTarget.files[0];
+        console.log(fileObj);
+    }
+    clicktoattach(event){
+        event.preventDefault();
+        $("#upload-file").click();
+      }
 
     render() {
 
@@ -101,7 +109,19 @@ class TemplateManagement extends Component {
                             </select>
                             {this.state.section ? null : <span>Please select a category for template upload</span>}
                         </div>
-
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt">
+                            
+                            <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 input-group">
+                                <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
+                                <input className="form-control adminBlkUploadBtn"
+                                    ref={this.fileInput}
+                                    type="file"
+                                    accept=".xlsx, .xls, .csv"
+                                    onChange={this.docBrowse.bind(this)}
+                                />
+                            </div>
+                            <div className="upldProdFileHere"> Upload Your Template File Here:</div>
+                        </div>
                         <br/>
                     </div>
  
