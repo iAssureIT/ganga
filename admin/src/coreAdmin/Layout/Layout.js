@@ -25,6 +25,7 @@ import SectionManagement from '../../storeAdmin/product/sectionManagement/compon
 
 
 import AddNewBulkProduct from '../../StoreManagement/product/productBulkUpload/component/ProductBulkUpload.js';
+import TemplateManagement from '../../StoreManagement/product/productBulkUpload/component/TemplateManagement.js';
 import ProductList from '../../StoreManagement/product/productList/component/ProductList.js';
 import BulkProductImageUpload from '../../storeAdmin/bulkimageUpload/BulkProductImageUpload.js'
 import FileWiseProductList from '../../StoreManagement/product/fileproductList/component/fileproductList.js';
@@ -188,6 +189,7 @@ class Layout extends Component {
                   <Route path="/section-management" exact strict component={SectionManagement} />
                   <Route path="/section-management/:sectionID" exact strict component={SectionManagement} />
                   <Route path="/product-upload" exact strict component={AddNewBulkProduct} />
+                  <Route path="/template-management" exact strict component={TemplateManagement} />
                   <Route path="/product-list" exact strict component={ProductList} />
                   <Route path="/product-image-bulk-upload" exact strict component={BulkProductImageUpload} />
                   <Route path="/file-wise-product-list" exact strict component={FileWiseProductList} />
