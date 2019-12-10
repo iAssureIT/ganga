@@ -18,7 +18,6 @@ class AddNewBulkProduct extends Component {
             "currentProducts": [],
             "productData": [],
             "file": props && props.fileData && props.fileData[0] ? props.fileData[0].fileName : '',
-            
         }
     }
 
@@ -213,9 +212,9 @@ class AddNewBulkProduct extends Component {
                     </div>
                     {
                        this.state.vendor ?
-                        <BulkUploadComponent url="http://localhost:5006/api/states/post/bulkinsert" 
+                        <BulkUploadComponent url="/api/states/post/bulkinsert" 
                             fileurl="./products.xlsx"
-                            fileDetailUrl="http://localhost:5006/api/products/get/filedetails/"
+                            fileDetailUrl="/api/products/get/filedetails/"
                             />   : null    
                         
                     }
