@@ -42,14 +42,14 @@ class Checkout extends Component {
             deliveryAddress: [],
             pincodeExists:true
         }
-        this.getCartData();
-        this.getCompanyDetails();
+        // this.getCartData();
+        // this.getCompanyDetails();
         this.getUserAddress();
         this.camelCase = this.camelCase.bind(this)
     }
     componentDidMount() {
-        this.getCartData();
-        this.getCompanyDetails();
+        // this.getCartData();
+        // this.getCompanyDetails();
         this.getUserAddress();
         this.validation();
     }
@@ -199,7 +199,6 @@ class Checkout extends Component {
             }
         });
     }
-    
     getCartData() {
         $('.fullpageloader').show();
         const userid = localStorage.getItem('user_ID');
@@ -259,7 +258,7 @@ class Checkout extends Component {
         var user_ID = localStorage.getItem('user_ID');
         axios.get("/api/users/" + user_ID)
             .then((response) => {
-                console.log('res', response.data.profile);
+                // console.log('res', response.data.profile);
                 this.setState({
                     "deliveryAddress": response.data.deliveryAddress,
                     "username" : response.data.profile.fullName,
@@ -336,36 +335,9 @@ class Checkout extends Component {
                 console.log('error', error);
             })
     }
-    cartquantityincrease(event) {
-        event.preventDefault();
-        const userid = localStorage.getItem('user_ID');
-        const cartitemid = event.target.getAttribute('id');
-        const quantity = parseInt(event.target.getAttribute('dataquntity'));
-
-        const quantityAdded = parseInt(quantity + 1);
-        const proprice = event.target.getAttribute('dataprice');
-        if (quantity > 0) {
-            var totalIndPrice = quantityAdded * proprice;
-        }
-
-        const formValues = {
-            "user_ID": userid,
-            "cartItem_ID": cartitemid,
-            "quantityAdded": quantityAdded,
-            "totalIndPrice": totalIndPrice
-        }
-        axios.patch("/api/carts/quantity", formValues)
-            .then((response) => {
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
-        this.getCartData();
-        this.getCompanyDetails();
-    }
+   
     grandtotalFunction(cartItemsMoveMain) {
-        console.log('cart', cartItemsMoveMain);
+        // console.log('cart', cartItemsMoveMain);
         var taxes = [];
         var calTax = [];
         var calculateTax = [];
@@ -550,36 +522,7 @@ class Checkout extends Component {
 
         return taxCalc;
     }
-    cartquantitydecrease(event) {
-        event.preventDefault();
-        const userid = localStorage.getItem('user_ID');
-        const cartitemid = event.target.getAttribute('id');
-        const quantity = parseInt(event.target.getAttribute('dataquntity'));
 
-
-        const quantityAdded = parseInt(quantity - 1) <= 0 ? 1 : parseInt(quantity - 1);
-        const proprice = event.target.getAttribute('dataprice');
-        if (quantity > 0) {
-            var totalIndPrice = quantityAdded * proprice;
-        }
-
-        const formValues = {
-            "user_ID": userid,
-            "cartItem_ID": cartitemid,
-            "quantityAdded": quantityAdded,
-            "totalIndPrice": totalIndPrice
-        }
-
-        axios.patch("/api/carts/quantity", formValues)
-            .then((response) => {
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
-        this.getCartData();
-        this.getCompanyDetails();
-    }
     discountCode(event) {
         event.preventDefault();
         this.setState({
@@ -598,7 +541,7 @@ class Checkout extends Component {
             giftOption: this.state.giftOption == true ? false : true
         })
     }
-    placeOrder(event) {
+    placeOrders(event) {
         event.preventDefault();
         var addressValues = {};
         var payMethod = $("input[name='payMethod']:checked").val();
@@ -746,45 +689,45 @@ class Checkout extends Component {
                                 }
                                 $('.fullpageloader').show();
                                 axios.post('/api/orders/post', inputObject)
-                                    .then((result) => {
-                                        this.props.fetchCartData();
-                                        if (result) {
-                                            axios.get('/api/orders/get/one/' + result.data.order_ID)
-                                            .then((orderStatus) => {
-                                                if (orderStatus) {
-                                                    $('.fullpageloader').hide();
-                                                    var userId = orderStatus.userId;
-                                                    var orderNo = orderStatus.OrderId;
-                                                    var orderDbDate = orderStatus.createdAt;
-                                                    var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
-                                                    var totalAmount = orderStatus.totalAmount;
-                                                    var userId = localStorage.getItem('user_ID');
-                                                    // swal('Order Placed Successfully'); 
+                                .then((result) => {
+                                    this.props.fetchCartData();
+                                    if (result) {
+                                        axios.get('/api/orders/get/one/' + result.data.order_ID)
+                                        .then((orderStatus) => {
+                                            if (orderStatus) {
+                                                $('.fullpageloader').hide();
+                                                var userId = orderStatus.userId;
+                                                var orderNo = orderStatus.OrderId;
+                                                var orderDbDate = orderStatus.createdAt;
+                                                var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
+                                                var totalAmount = orderStatus.totalAmount;
+                                                var userId = localStorage.getItem('user_ID');
+                                                // swal('Order Placed Successfully'); 
+                                                this.setState({
+                                                    messageData : {
+                                                    "type" : "outpage",
+                                                    "icon" : "fa fa-check-circle",
+                                                    "message" : "Order Placed Successfully ",
+                                                    "class": "success",
+                                                    "autoDismiss" : true
+                                                    }
+                                                })
+                                                setTimeout(() => {
                                                     this.setState({
-                                                      messageData : {
-                                                        "type" : "outpage",
-                                                        "icon" : "fa fa-check-circle",
-                                                        "message" : "Order Placed Successfully ",
-                                                        "class": "success",
-                                                        "autoDismiss" : true
-                                                      }
+                                                        messageData   : {},
                                                     })
-                                                    setTimeout(() => {
-                                                        this.setState({
-                                                            messageData   : {},
-                                                        })
-                                                    }, 3000);
-                                                    this.props.history.push('/payment/' + result.data.order_ID);
-                                                }
-                                            })
-                                            .catch((error) => {
-                                                console.log('error', error)
-                                            })
-                                        }
-                                    })
-                                    .catch((error) => {
-                                        console.log(error);
-                                    })
+                                                }, 3000);
+                                                this.props.history.push('/payment/' + result.data.order_ID);
+                                            }
+                                        })
+                                        .catch((error) => {
+                                            console.log('error', error)
+                                        })
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                })
 
                             } else {
                                 if (selectedPayMethod == "Online Payment") {
@@ -805,6 +748,157 @@ class Checkout extends Component {
                 .catch((error) => {
                     console.log('error', error);
                 })
+
+            
+        }
+    }
+     placeOrder(event) {
+        event.preventDefault();
+        var addressValues = {};
+        var payMethod = $("input[name='payMethod']:checked").val();
+        var checkedBox = $("input[name='termsNconditions']:checked").val();
+        var checkoutAddess = $("input[name='checkoutAddess']:checked").val();
+        var formValues = {
+            "payMethod": payMethod,
+            "user_ID": localStorage.getItem('user_ID')
+        }
+
+        if (this.state.deliveryAddress && this.state.deliveryAddress.length > 0) {
+            var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
+                return a._id == checkoutAddess
+            })
+            addressValues = {
+                "user_ID": localStorage.getItem('user_ID'),
+                "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
+                "email": deliveryAddress.length > 0 ? deliveryAddress[0].email : "",
+                "addressLine1": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine1 : "",
+                "addressLine2": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine2 : "",
+                "pincode": deliveryAddress.length > 0 ? deliveryAddress[0].pincode : "",
+                "block": deliveryAddress.length > 0 ? deliveryAddress[0].block : "",
+                "city": deliveryAddress.length > 0 ? deliveryAddress[0].city : "",
+                "district" : deliveryAddress.length > 0 ? deliveryAddress[0].district : "",
+                "stateCode": deliveryAddress.length > 0 ? deliveryAddress[0].stateCode : "",
+                "state": deliveryAddress.length > 0 ? deliveryAddress[0].state : "",
+                "countryCode": deliveryAddress.length > 0 ? deliveryAddress[0].countryCode : "",
+                "country": deliveryAddress.length > 0 ? deliveryAddress[0].country : "",
+                "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
+                "addType": deliveryAddress.length > 0 ? deliveryAddress[0].addType : "",
+            }
+        }else{
+            addressValues = {
+                "user_ID": localStorage.getItem('user_ID'),
+                "name": this.state.username,
+                "email": this.state.email,
+                "addressLine1": this.state.addressLine1,
+                "addressLine2": this.state.addressLine2,
+                "pincode": this.state.pincode,
+                "block": this.state.block,
+                "district" : this.state.district,
+                "city": this.state.city,
+                "stateCode": this.state.stateCode,
+                "state": this.state.state,
+                "countryCode": this.state.countryCode,
+                "country": this.state.country,
+                "mobileNumber": this.state.mobileNumber,
+                "addType": this.state.addType
+            }
+            
+            if ($('#checkout').valid() && this.state.pincodeExists) {
+                $('.fullpageloader').show();
+                axios.patch('/api/users/patch/address', addressValues)
+                .then((response) => {
+                    $('.fullpageloader').hide();
+                    this.setState({
+                      messageData : {
+                        "type" : "outpage",
+                        "icon" : "fa fa-check-circle",
+                        "message" : "&nbsp; "+response.data.message,
+                        "class": "success",
+                        "autoDismiss" : true
+                      }
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            messageData   : {},
+                        })
+                    }, 3000);
+                    this.getUserAddress();
+                    $(".checkoutAddressModal").hide();
+                    $(".modal-backdrop").hide();
+
+                })
+                .catch((error) => {
+                    console.log('error', error);
+                });
+            }
+        }
+        // console.log('pls');
+        axios.patch('/api/carts/payment', formValues)
+        .then((response) => {
+        })
+        .catch((error) => {
+            console.log('error', error);
+        })
+        if ($('#checkout').valid() && this.state.pincodeExists) {
+             axios.patch('/api/carts/address', addressValues)
+            .then(async (response) => {
+                await this.props.fetchCartData();
+                var cartItems = this.props.recentCartData[0].cartItems.map((a, i)=>{
+                    return{
+                        "product_ID"        : a.productDetail._id,
+                        "productName"       : a.productDetail.productName,
+                        "discountPercent"   : a.productDetail.discountPercent,
+                        "discountedPrice"   : a.productDetail.discountedPrice,
+                        "originalPrice"     : a.productDetail.originalPrice,
+                        "currency"          : a.productDetail.currency,
+                        "quantity"          : a.quantity,
+                        "subTotal"          : a.subTotal,
+                        "saving"            : a.saving,
+                        "productImage"      : a.productDetail.productImage,
+                        "section_ID"        : a.productDetail.section_ID,
+                        "section"           : a.productDetail.section,
+                        "category_ID"       : a.productDetail.category_ID,
+                        "category"          : a.productDetail.category,
+                        "subCategory_ID"    : a.productDetail.subCategory_ID,
+                        "subCategory"       : a.productDetail.subCategory,
+                    }
+                })
+                var orderData = {
+                    user_ID         : localStorage.getItem('user_ID'),
+                    cartItems       : cartItems,
+                    total           : this.props.recentCartData[0].total,
+                    cartTotal       : this.props.recentCartData[0].cartTotal,
+                    discount        : this.props.recentCartData[0].discount,
+                    cartQuantity    : this.props.recentCartData[0].cartQuantity,
+                    deliveryAddress : this.props.recentCartData[0].deliveryAddress,
+                    paymentMethod   : this.props.recentCartData[0].paymentMethod
+                }
+                axios.post('/api/orders/post', orderData)
+                .then((result) => {
+                    this.props.fetchCartData();
+                    this.setState({
+                        messageData : {
+                        "type" : "outpage",
+                        "icon" : "fa fa-check-circle",
+                        "message" : "Order Placed Successfully ",
+                        "class": "success",
+                        "autoDismiss" : true
+                        }
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            messageData   : {},
+                        })
+                    }, 3000);
+                    this.props.history.push('/payment/' + result.data.order_ID);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
 
             
         }
@@ -902,11 +996,11 @@ class Checkout extends Component {
         
     axios.get("http://locationapi.iassureit.com/api/districts/get/list/"+countryCode+"/"+stateCode)
             .then((response)=>{
-            console.log('districtArray', response.data);
+            // console.log('districtArray', response.data);
             this.setState({
                 districtArray : response.data
             })
-            console.log(this.state.city);
+            // console.log(this.state.city);
             $('#Citydata').val(this.state.city);
             })
             .catch((error)=>{
@@ -1038,21 +1132,15 @@ class Checkout extends Component {
                                                         }
                                                 </select>
                                             </div>
-                                            {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
-                                                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Block/Taluka <span className="required">*</span></label>
-                                                <input type="text" ref="block" name="block" id="block" value={this.state.block} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12" />
-                                            </div> */}
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">City <span className="required">*</span></label>
                                                 <input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                             </div>
-
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Zip/Postal Code <span className="required">*</span></label>
                                                 <input type="text" ref="pincode" name="pincode" id="pincode" value={this.state.pincode} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control" />
                                                 {this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
                                             </div> 
-
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingInput">
                                                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Address type <span className="required">*</span></label>
                                                 <select id="addType" name="addType" ref="addType" value={this.state.addType} onChange={this.handleChange.bind(this)} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control">
@@ -1064,23 +1152,11 @@ class Checkout extends Component {
                                 }
                             </div>
                             <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                {/*<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpaddingLeft">
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingMethod NOpadding">
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingMethodTitle">EXPECTED DELIVERY</div>
-
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <label><i className="fa fa-calendar"></i> &nbsp;&nbsp; Delivery Date</label>
-                                            <input type="date" name="date" className="col-lg-12 col-md-12 col-sm-12 col-xs-12" min={moment().format('YYYY-MM-DD')} />
-                                        </div>
-                                    </div>
-                                </div>*/}
-                                
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 orderReviews NOpadding">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning orderReviewsTitle">ORDER REVIEWS</div>
                                     <table className="table table-responsive orderTable">
                                         <thead>
                                             <tr>
-                                                {/* <th></th> */}
                                                 <th></th>
                                                 <th>Products Name</th>
                                                 <th className="textAlignRight">Price</th>
@@ -1090,17 +1166,17 @@ class Checkout extends Component {
                                         </thead>
                                         <tbody>
                                             {
-                                                this.state.productCartData && this.state.productCartData.length > 0 ?
-                                                    this.state.productCartData.map((data, index) => {
-                                                        console.log('data', data);
+                                                this.props.recentCartData && this.props.recentCartData.length > 0 ?
+                                                this.props.recentCartData[0].cartItems.map((data, index) => {
+                                                        
                                                         return (
                                                             <tr key={'cartData' + index}>
                                                                 {/* <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td> */}
-                                                                <td><img className="img img-responsive orderImg" src={data.productImage[0] ? data.productImage[0] : "/images/notavailable.jpg"} /></td>
-                                                                <td><span className="productName">{data.productName}</span></td>
-                                                                <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.currency}></i> &nbsp;{parseInt(data.discountedPrice).toFixed(2)}</span></td>
+                                                                <td><img className="img img-responsive orderImg" src={data.productDetail.productImage[0] ? data.productDetail.productImage[0] : "/images/notavailable.jpg"} /></td>
+                                                                <td><span className="productName">{data.productDetail.productName}</span></td>
+                                                                <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.productDetail.currency}></i> &nbsp;{parseInt(data.productDetail.discountedPrice).toFixed(2)}</span></td>
                                                                 <td className="textAlignRight"><span className=" textAlignRight">{data.quantity}</span></td>
-                                                                <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.currency}></i> &nbsp;{parseInt(data.totalForQantity).toFixed(2)}</span></td>
+                                                                <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.productDetail.currency}></i> &nbsp;{parseInt(data.subTotal).toFixed(2)}</span></td>
                                                             </tr>
                                                         );
                                                     })
@@ -1112,16 +1188,16 @@ class Checkout extends Component {
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                     </div>
-                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Subtotal:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 ? (parseInt(this.state.productData.cartTotal)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"}</span>
-                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Shipping:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {this.state.shippingCharges > 0 ? (this.state.shippingCharges).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"}</span>
-                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">GST ({this.state.vatPercent > 0 ? this.state.vatPercent : 0}%):</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {this.state.productData.cartTotal > 0 && this.state.vatPercent ? (this.state.productData.cartTotal * (this.state.vatPercent / 100)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0.00"}</span>
-                                    {/* <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Gift Wrap</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight">$5.00</span> */}
-                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Order Total:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {((parseInt(this.state.vatPercent)) / 100 * (parseInt(this.state.productData.cartTotal)) + (parseInt(this.state.productData.cartTotal)) + this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Cart Total:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {this.props.recentCartData.length > 0 ? parseInt(this.props.recentCartData[0].cartTotal) : "0.00"}</span>
+                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Discount:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight saving">- <i className={"fa fa-inr"}></i> {this.props.recentCartData.length > 0 ? parseInt(this.props.recentCartData[0].discount) : "0.00"}</span>
+                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Order Total:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight"><i className={"fa fa-inr"}></i> {this.props.recentCartData.length > 0 ? parseInt(this.props.recentCartData[0].total) : "0.00"}</span>
+                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12">Delivery Charges:</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight saving">{this.state.shippingCharges > 0 ? this.state.shippingCharges : "Free"}</span>
+                                    
 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
                                     </div>
-                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 orderTotalText">Order Total</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight orderTotalPrize"><i className={"fa fa-inr"}></i> {((parseInt(this.state.vatPercent)) / 100 * (parseInt(this.state.productData.cartTotal)) + (parseInt(this.state.productData.cartTotal)) + this.state.shippingCharges).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
+                                    <span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 orderTotalText">Order Total</span><span className="col-lg-6 col-md-6 col-sm-12 col-xs-12 textAlignRight orderTotalPrize"><i className={"fa fa-inr"}></i> {this.props.recentCartData.length > 0 ? parseInt(this.props.recentCartData[0].total) : "0.00"}</span>
 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15 mb15">
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkoutBorder"></div>
@@ -1169,10 +1245,13 @@ class Checkout extends Component {
         );
     }
 }
+const mapStateToProps = (state)=>{
+    return {
+      recentCartData :  state.recentCartData
+    }
+  }
 const mapDispachToProps = (dispatch) => {
   return  bindActionCreators({ fetchCartData: getCartData}, dispatch)
 }
 
-export default connect(null, mapDispachToProps)(Checkout);
-
-//export default Checkout;
+export default connect(mapStateToProps, mapDispachToProps)(Checkout);

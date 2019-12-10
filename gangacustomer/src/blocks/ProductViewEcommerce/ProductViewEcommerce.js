@@ -91,113 +91,78 @@ class ProductViewEcommerce extends Component {
 		});
 	}
 	
-	addtocart = (event) => {
-		// const token = localStorage.getItem("token");
-		//   if(token!==null){
-		//   // browserHistory.push("/");
-		//   this.props.history.push("/");
-		// }
-		// else{
-		// 	  this.props.history.push("/login");
-		// }
+	addtocart(event) {
 		event.preventDefault();
-		if (user_ID) {
-
-			var id = event.target.id;
-			axios.get('/api/products/get/one/' + id)
-				.then((response) => {
-					var totalForQantity = parseInt(Number(this.state.totalQuanity) * response.data.discountedPrice);
-					const userid = localStorage.getItem('user_ID');
-					var availableQuantity = response.data.availableQuantity;
-					var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
-					var productCartData = recentCartData.filter((a)=>a.product_ID == id);
-					var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
-					var productName = response.data.productName;
-					console.log('abc', availableQuantity, quantityAdded);
-
-
-					this.props.fetchCartData();
-					const formValues = {
-						"user_ID": userid,
-						"product_ID": response.data._id,
-						"currency": response.data.currency,
-						"productCode": response.data.productCode,
-						"productName": response.data.productName,
-						"section_ID": response.data.section_ID,
-						"section": response.data.section,
-						"category_ID": response.data.category_ID,
-						"category": response.data.category,
-						"subCategory_ID": response.data.subCategory_ID,
-						"subCategory": response.data.subCategory,
-						"productImage": response.data.productImage,
-						"quantity": this.state.totalQuanity,
-						"discountedPrice": parseInt(response.data.discountedPrice),
-						"originalPrice": parseInt(response.data.originalPrice),
-						"discountPercent" :parseInt(response.data.discountPercent),
-						"totalForQantity": totalForQantity,
-
-					}
-					if(this.state.totalQuanity >= availableQuantity || quantityAdded >= availableQuantity){
-						this.setState({
-							messageData : {
-							  "type" : "outpage",
-							  "icon" : "fa fa-check-circle",
-							  "message" : "Last "+availableQuantity+" items taken by you",
-							  "class": "success",
-							  "autoDismiss" : true
-							}
-						})
-						setTimeout(() => {
-							this.setState({
-								messageData   : {},
-							})
-						}, 3000);
-					  }else{
-						axios.post('/api/carts/post', formValues)
-						.then((response) => {
-							
-							this.props.fetchCartData(); 
-							this.setState({
-								messageData: {
-									"type": "outpage",
-									"icon": "fa fa-check-circle",
-									"message": "&nbsp; " + response.data.message,
-									"class": "success",
-									"autoDismiss": true
-								}
-							})
-							setTimeout(() => {
-								this.setState({
-									messageData: {},
-								})
-							}, 3000);
-							
-						})
-						.catch((error) => {
-							console.log('error', error);
-						})
-					}
-				})
-				.catch((error) => {
-					console.log('error', error);
-				})
-		} else {
+		if(user_ID){
+		  var id = event.target.id;
+		  const userid = localStorage.getItem('user_ID');
+		  var availableQuantity = event.target.getAttribute('availableQuantity');
+		  var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
+		  var productCartData = recentCartData.filter((a)=>a.product_ID == id);
+		  var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
+		  
+		  const formValues = {
+			"user_ID": userid,
+			"product_ID": event.target.id,
+			"quantity": 1,
+		  }
+		  if(quantityAdded >= availableQuantity){
 			this.setState({
-				messageData: {
-					"type": "outpage",
-					"icon": "fa fa-times-circle",
-					"message": "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
-					"class": "danger",
-					"autoDismiss": true
+				messageData : {
+				  "type" : "outpage",
+				  "icon" : "fa fa-check-circle",
+				  "message" : "Last "+availableQuantity+" items taken by you",
+				  "class": "success",
+				  "autoDismiss" : true
 				}
 			})
 			setTimeout(() => {
 				this.setState({
-					messageData: {},
+					messageData   : {},
 				})
 			}, 3000);
+		  }else{
+			axios.post('/api/carts/post', formValues)
+			  .then((response) => {
+				this.props.fetchCartData();
+				this.setState({
+				  messageData : {
+					"type" : "outpage",
+					"icon" : "fa fa-check-circle",
+					"message" : "&nbsp; "+response.data.message,
+					"class": "success",
+					"autoDismiss" : true
+				  }
+				})
+				setTimeout(() => {
+				  this.setState({
+					  messageData   : {},
+				  })
+			  }, 3000);
+				// this.props.changeCartCount(response.data.cartCount);
+				
+			  })
+			  .catch((error) => {
+				console.log('error', error);
+			  })
+		  }
+		}else{
+		  this.setState({
+			messageData : {
+			  "type" : "outpage",
+			  "icon" : "fa fa-exclamation-circle",
+			  "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
+			  "class": "danger",
+			  "autoDismiss" : true
+			}
+		  })
+		  setTimeout(() => {
+			this.setState({
+				messageData   : {},
+			})
+		  }, 3000);
 		}
-	}
+	  }
 	addtowishlist(event) {
 		event.preventDefault();
 		var user_ID = localStorage.getItem('user_ID');
@@ -437,7 +402,7 @@ class ProductViewEcommerce extends Component {
 														<i className="fa fa-minus qtyIncrease" id="decreaseQuantity" onClick={this.decreaseQuantity.bind(this)}></i>
 													</div>
 													<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
-														<div id={this.state.productData._id} onClick={this.addtocart.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewAddtoCart"> &nbsp; Add to Cart</div>
+														<div id={this.state.productData._id} availableQuantity={this.state.productData.availableQuantity} onClick={this.addtocart.bind(this)} className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 viewAddtoCart"> &nbsp; Add to Cart</div>
 													</div>
 												</div>
 											:

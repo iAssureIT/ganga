@@ -114,7 +114,7 @@ class TaxRate extends Component {
                 this.setState({
                     taxName         : "",
                     taxRate         : "",
-                    effectiveFrom   : "",
+                    effectiveFrom   : moment(newDate).format('YYYY-MM-DD'),
                     effectiveTo     : ""
                 })
             })
@@ -142,7 +142,7 @@ class TaxRate extends Component {
                     editId          : "",
                     taxName         : "",
                     taxRate         : "",
-                    effectiveFrom   : "",
+                    effectiveFrom   : moment(newDate).format('YYYY-MM-DD'),
                     effectiveTo     : ""
                 })
             })

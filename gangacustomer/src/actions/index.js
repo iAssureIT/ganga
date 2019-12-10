@@ -5,14 +5,14 @@ export function getCartData() {
 
 	return dispatch =>{
 
-	$('.fullpageloader').show();
+	// $('.fullpageloader').show();
 
 	const userid = localStorage.getItem('user_ID');
   
     if (userid) {
-      return axios.get("/api/carts/get/list/"+userid)
+      return axios.get("/api/carts/get/cartproductlist/"+userid)
         .then((response)=>{
-            $('.fullpageloader').hide();
+            // $('.fullpageloader').hide();
 
         		dispatch(fetchcartdata(response.data));
         })

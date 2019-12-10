@@ -153,7 +153,7 @@ class Address extends Component {
     edit(deliveryAddressID){
         var user_ID = localStorage.getItem("user_ID");
         // var deliveryAddressID = this.props.match.params.deliveryAddressID;
-        console.log('deliveryAddressID', deliveryAddressID);
+        // console.log('deliveryAddressID', deliveryAddressID);
         axios.get('/api/users/'+user_ID)
         .then((response)=>{
             var deliveryAddress = response.data.deliveryAddress.filter((a)=>{return a._id == deliveryAddressID});
@@ -196,8 +196,8 @@ class Address extends Component {
         if (event.target.value != '') {
             axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
             .then((response) => {
-                console.log('valid', $("[name='modalpincode']").valid())
-                console.log('pincodeExists', this.state.pincodeExists);
+                // console.log('valid', $("[name='modalpincode']").valid())
+                // console.log('pincodeExists', this.state.pincodeExists);
 
                 if ($("[name='modalpincode']").valid()) {
 
@@ -289,7 +289,7 @@ class Address extends Component {
                 //console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/useraddress', formValues)
                 .then((response)=>{
-                    console.log(response.data.message);
+                    // console.log(response.data.message);
                 this.setState({
                   messageData : {
                     "type" : "outpage",
@@ -324,7 +324,7 @@ class Address extends Component {
                 //console.log('form deliveryAddressID', formValues);
                 axios.patch('/api/users/patch/address', formValues)
                 .then((response)=>{
-                    console.log(response.data.message);
+                    // console.log(response.data.message);
                 this.setState({
                   messageData : {
                     "type" : "outpage",

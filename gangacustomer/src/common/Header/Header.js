@@ -471,7 +471,7 @@ componentWillMount() {
                             <p className="categoryDetails"><b>Cart Details</b></p>
                           </div>
                             <p className="col-lg-3 mb20"><b>{this.props.recentCartData.length>0? this.props.recentCartData[0].cartItems.length : 0}</b> item(s)</p>
-                            <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.recentCartData.length>0 ? this.props.recentCartData[0].cartTotal : 0}</div>
+                            <div className="col-lg-9 text-right">Subtotal : <i className="fa fa-inr"></i> {this.props.recentCartData.length>0 ? this.props.recentCartData[0].discountedTotal : 0}</div>
                             {/*<a href={user_ID ? "/checkout" : "/login"}><div className="btn cartdropbtn btn-warning col-lg-12" title="Go to Checkout">Go to Checkout</div></a>*/}
                           </div>
                           <div className={this.props.recentCartData.length > 0 ? "dropScroll": ""}>
@@ -484,17 +484,17 @@ componentWillMount() {
                                     <div className="cartdropborder">
                                       <div className="col-lg-3 cartdropimg">
                                         <div className="row">
-                                          <img src={data.productImage &&  data.productImage[0] ? data.productImage[0] : "/images/notavailable.jpg"} />
+                                          <img src={data.productDetail.productImage &&  data.productDetail.productImage[0] ? data.productDetail.productImage[0] : "/images/notavailable.jpg"} />
                                         </div>
                                       </div>
                                       <div className="col-lg-9 cartdropimg">
                                         <div className="row">
-                                          <a href={"/productdetails/"+data.productUrl+"/" + data.product_ID}><p className="cartdroptext col-lg-12" title={data.productName}>{data.productName}</p></a>
+                                          <a href={"/productdetails/"+data.productDetail.productUrl+"/" + data.productDetail.product_ID}><p className="cartdroptext col-lg-12" title={data.productDetail.productName}>{data.productDetail.productName}</p></a>
                                           <div className="col-lg-12 text-center">
                                             <div className="row">
-                                              <div className="col-lg-4"><p className="row"><b><i className="fa fa-inr"></i> {data.discountedPrice}</b></p></div>
+                                              <div className="col-lg-4"><p className="row"><b><i className="fa fa-inr"></i> {data.productDetail.discountedPrice}</b></p></div>
                                               <div className="col-lg-3"><p className="row"><b> {data.quantity}</b></p></div>
-                                              <div className="col-lg-3"><p className="row"><b><i className="fa fa-inr"></i> {data.totalForQantity}</b></p></div>
+                                              <div className="col-lg-3"><p className="row"><b><i className="fa fa-inr"></i> {data.subTotal}</b></p></div>
                                               <div className="col-lg-2"><div className="row"><i className="fa fa-trash-o cartdropaction" aria-hidden="true" id={data._id} removeid={data._id} onClick={this.Removefromcart.bind(this)}></i></div></div>
                                             </div>
                                           </div>

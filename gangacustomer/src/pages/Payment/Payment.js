@@ -20,7 +20,6 @@ class Payment extends Component {
                 "companyInfo" : []
             };
         }
-        this.getCompanyDetails =  this.getCompanyDetails.bind(this)
         window.scrollTo(0, 0);
     }
 
@@ -28,28 +27,16 @@ class Payment extends Component {
         //this.getMyOrders();
         axios.get("/api/orders/get/one/"+this.props.match.params.order_ID)
             .then((response)=>{
+              console.log('orderData', response.data)
               this.setState({ 
                   orderData : response.data
               })
             })
             .catch((error)=>{
                 console.log('error', error);
-            })
-        this.getCompanyDetails();    
+            })   
     }
-    getCompanyDetails() {
-        
-        axios.get("/api/companysettings/list")
-            .then((response) => {
-
-                this.setState({
-                    companyInfo: response.data[0]
-                })
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
-    }
+    
   render() {  
     
     console.log("companyInfo",this.state.companyInfo);
@@ -69,7 +56,7 @@ class Payment extends Component {
               </strong>
               <div className="box-content"> 
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.name } <br/>
-               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 } <br/>
+               { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine1 } 
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.addressLine2 } <br/>
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.district + ', ' +  this.state.orderData.deliveryAddress.state +', ' + this.state.orderData.deliveryAddress.pincode } <br/>
                { this.state.orderData.deliveryAddress && this.state.orderData.deliveryAddress.country } <br/>
@@ -91,23 +78,35 @@ class Payment extends Component {
               </strong>
               <div className="box-content"> 
                 <div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Subtotal:</span>  </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Cart Total:</span>  </div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right"><span><i className={"fa fa-"+this.state.orderData.currency}> {this.state.orderData.cartTotal}</i></span> </div> 
                 </div>
                 <div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Shipping:  </span></div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right"><span><i className={"fa fa-"+this.state.orderData.currency}> 0</i></span> </div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right"><span><i className={"fa fa-"+this.state.orderData.currency}> Free</i></span> </div>
                 </div>
                 <div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Discount: </span></div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right">
+                    <span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.discount).toFixed(2) }</i></span>
+                  </div>
+                </div>
+                <div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Order Total: </span></div>
+                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right">
+                    <span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.total).toFixed(2) }</i></span>
+                  </div>
+                </div>
+                {/* <div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>GST ({ this.state.companyInfo.taxSettings && this.state.companyInfo.taxSettings[0].taxRating} %):  </span></div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right">
                   <span><i className={"fa fa-"+this.state.orderData.currency}> { (this.state.orderData.cartTotal*18)/100 } </i></span> 
                   </div>
-                </div>
+                </div> */}
                 <div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Total: </span></div>
                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right">
-                    <span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.totalAmount).toFixed(2) }</i></span>
+                    <span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.total).toFixed(2) }</i></span>
                   </div>
                 </div>
               </div>
@@ -141,7 +140,7 @@ class Payment extends Component {
                           }
                           
                                           
-                          <p>Total: &nbsp;<i className={"fa fa-"+this.state.orderData.currency}> {data.total}</i></p>
+                          <p>Total: &nbsp;<i className={"fa fa-"+this.state.orderData.currency}> {data.subTotal}</i></p>
                           <p>Quantity: {data.quantity}</p>
                         </div>
                       </div>
@@ -151,61 +150,7 @@ class Payment extends Component {
            }
             
           </div>
-          {
-          /*<table className="data table table-order-items history" id="my-orders-table">
-            
-            <thead>
-                <tr>
-                    <th scope="col" className="col id">Product Name</th>
-                    <th scope="col" className="col date">Price</th>
-                    <th scope="col" className="col shipping">Qty</th>
-                    <th scope="col" className="col total text-right">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-              {
-              this.state.orderData.products && this.state.orderData.products.length > 0 ?
-                  this.state.orderData.products.map((data, index)=>{
-                    return(
-                    <tr>
-                        <td data-th="Order #" className="col id">{data.productName}</td>
-                        <td data-th="Date" className="col date"><i className={"fa fa-"+data.currency}> {data.total}</i></td>
-                        <td data-th="Ship To" className="col shipping">Ordered: {data.quantity}</td>
-                        <td data-th="Order Total" className="col total text-right"><span><i className={"fa fa-"+data.currency}> {data.total}</i></span></td>
-                    </tr>
-                    );
-                })
-                : ""
-              }
-            </tbody>
-
-            <tfoot>
-              <tr className="subtotal">
-                  <th colspan="3" className="mark" scope="row">Subtotal</th>
-                  <td className="amount" data-th="Subtotal" ><span><i className={"fa fa-"+this.state.orderData.currency}> {this.state.orderData.cartTotal}</i></span>                    </td>
-              </tr>
-              <tr className="shipping">
-                  <th colspan="3" className="mark" scope="row">Shipping &amp; Handling</th>
-                  <td className="amount" data-th="Shipping &amp; Handling">
-                    <span><i className={"fa fa-"+this.state.orderData.currency}> 100</i></span> 
-                  </td>
-              </tr>
-              <tr className="shipping">
-                  <th colspan="3" className="mark" scope="row">GST ({ this.state.companyInfo.taxSettings && this.state.companyInfo.taxSettings[0].taxRating} %)</th>
-                  <td className="amount" data-th="Shipping &amp; Handling">
-                    <span><i className={"fa fa-"+this.state.orderData.currency}> { (this.state.orderData.cartTotal*18)/100 } </i></span> 
-                  </td>
-              </tr>
-              <tr className="grand_total">
-
-                  <th colspan="3" className="mark" scope="row"><strong> Estimated Total</strong></th>
-                  <td className="amount" data-th=" &quot;Estimated Total&quot;">
-                      <strong><span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.totalAmount).toFixed(2) }</i></span></strong>
-                  </td>
-              </tr>
-            </tfoot>
-          </table>*/
-          }
+          
           <div className="backtoMyOrdersDiv">
             <a href="/my-orders" className="backtoMyOrders"> Back to My Orders</a>
           </div>
