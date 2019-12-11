@@ -47,6 +47,7 @@ class AddNewBulkProduct extends Component {
 
     componentDidMount() {
         this.getVendorList();
+        this.getSectionData();
         // var dbdata = [];
         // dbdata.push({name: "section", type: "string", label:"Section"})
         // dbdata.push({name: "category", type: "string", label:"Category"})
@@ -77,11 +78,37 @@ class AddNewBulkProduct extends Component {
         //console.log('dbdata',this.state.dbdata);  
     }
 
-    componentWillUnmount() {
 
+    getSectionData() {
+        axios.get('/api/sections/get/list')
+          .then((response) => {
+            // console.log('getWebCategories', response.data);
+            this.setState({
+              sectionArray: response.data
+            })
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
     }
-
-
+    showRelevantCategories(event) {
+        var section = event.target.value;
+        this.setState({
+          section: event.target.value,
+          section_ID: event.target.value.split('|')[1],
+        })
+        axios.get('/api/category/get/list/' + event.target.value.split('|')[1])
+          .then((response) => {
+            this.setState({
+              categoryArray: response.data,
+              category: "Select Category",
+              subCategory: "Select Sub-Category",
+            })
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
+    }
     showProgressBar() {
         // var getPercernt = UserSession.get("progressbarSession",Meteor.userId());
         // var allPercernt = UserSession.get("allProgressbarSession",Meteor.userId());
@@ -146,8 +173,23 @@ class AddNewBulkProduct extends Component {
 
             })
     }
+    handleChangeCategory(event){
+        event.preventDefault();
+        this.setState({
+          category: event.target.value,
+          category_ID: event.target.value.split('|')[1],
+        })
+        axios.get('/api/bulkUploadTemplate/get/' + event.target.value.split('|')[1])
+          .then((response) => {
+            console.log(response.data);
+            this.setState({fileurl:response.data.templateUrl})
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
+    }
     render() {
-
+        console.log('templateUrl',this.state.fileurl)
         const SheetJSFT = [
             "xlsx",
             "xls"
@@ -161,17 +203,21 @@ class AddNewBulkProduct extends Component {
                     <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                         <div className="box">
                             <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-left" >
                                 <h4 className="NOpadding-right">Product Bulk Upload</h4>
-                            </div>
-                        </div>
-                        {
+                                </div>
+                                {
                             localStorage.getItem('role') == 'superAdmin' ? 
                             <div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right" >
                                 <a href="/template-management"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Template</button></a>
                             </div>
                             : null
                         }
-                        <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 inputFields marginTopp">
+                            </div>
+
+                        </div>
+                        
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields marginTopp">
                             <label>Vendor <i className="redFont">*</i></label>
                             <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                                 <option disabled selected defaultValue="">Select Vendor</option>
@@ -187,6 +233,36 @@ class AddNewBulkProduct extends Component {
                                 }
                             </select>
                             {this.state.vendor ? null : <span>Please select a vendor for bulk upload</span>}
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 inputFields marginTopp">
+                            <label>Section <i className="redFont">*</i></label>
+                            <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section} name="section" className="form-control" aria-describedby="basic-addon1" id="section" ref="section">
+                                <option disabled selected defaultValue="">Select Section</option>
+                                {this.state.sectionArray && this.state.sectionArray.length > 0 ?
+                                    this.state.sectionArray.map((data, index) => {
+                                        return (
+                                            <option key={index} value={data.section + '|' + data._id} >{data.section}</option>
+                                        );
+                                    })
+                                    :
+                                    <option disabled>{"Section not available"}</option>
+                                }
+                            </select>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 inputFields marginTopp">
+                            <label>Category <i className="redFont">*</i></label>
+                            <select onChange={this.handleChangeCategory.bind(this)} value={this.state.section} name="category" value={this.state.category}  className="form-control" aria-describedby="basic-addon1" id="category" ref="category">
+                                <option disabled selected defaultValue="">Select Category</option>
+                                {this.state.categoryArray && this.state.sectionArray.length > 0 ?
+                                    this.state.categoryArray.map((data, index) => {
+                                        return (
+                                            <option key={index} value={data.category + '|' + data._id} >{data.category}</option>
+                                        );
+                                    })
+                                    :
+                                    <option disabled>{"Category not available"}</option>
+                                }
+                            </select>
                         </div>
                         {
 
@@ -211,9 +287,9 @@ class AddNewBulkProduct extends Component {
                         <br/>
                     </div>
                     {
-                       this.state.vendor ?
+                       this.state.vendor &&  this.state.fileurl ?
                         <BulkUploadComponent url="/api/states/post/bulkinsert" 
-                            fileurl="./products.xlsx"
+                            fileurl={this.state.fileurl}
                             fileDetailUrl="/api/products/get/filedetails/"
                             />   : null    
                         

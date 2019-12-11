@@ -41,3 +41,7 @@
 .aHeadMarg{margin-right: 10px;}
 .NOpadding{padding:0;}
 .marginAll{margin: 2%;}
+
+.nav-tabs>li>a:hover{
+    color: #555 !important;
+}

@@ -19,27 +19,29 @@ constructor(props) {
     tableData:[],
     failedRecordsTable:[],
     tableHeading :{
-        "section"       : 'Section',
-        "category"      : 'Category',
-        "subCategory"   : 'Subcategory',
-        "brand"         : 'Brand',
-        "productName"   : 'Product Name',
-        "productCode"   : 'Product Code',
-        "itemCode"      : 'Item Code',
-        "size"          : 'Size', 
-        "color"         : 'Color',  
+        "section"         : 'Section',
+        "category"        : 'Category',
+        "brand"           : 'Brand',
+        "productName"     : 'Product Name',
+        "productCode"     : 'Product Code',
+        "itemCode"        : 'Item Code',
+        "originalPrice"   : 'Original Price', 
+        "discountedPrice" : 'Discounted Price', 
+        "size"            : 'Size', 
+        "color"           : 'Color',  
     },
     failedtableHeading :{
-        "remark"        : 'Remark',
-        "section"       : 'Section',
-        "category"      : 'Category',
-        "subCategory"   : 'Subcategory',
-        "brand"         : 'Brand',
-        "productName"   : 'Product Name',
-        "productCode"   : 'Product Code',
-        "itemCode"      : 'Item Code',
-        "size"          : 'Size', 
-        "color"         : 'Color',  
+        "remark"          : 'Remark',
+        "section"         : 'Section',
+        "category"        : 'Category',
+        "brand"           : 'Brand',
+        "productName"     : 'Product Name',
+        "productCode"     : 'Product Code',
+        "itemCode"        : 'Item Code',
+        "originalPrice"   : 'Original Price', 
+        "discountedPrice" : 'Discounted Price', 
+        "size"            : 'Size', 
+        "color"           : 'Color',  
     },
     tableObjects : {
         paginationApply : false,
@@ -71,30 +73,32 @@ constructor(props) {
                               "remark"        : a.remark        ? a.remark    : '-',
                               "section"       : a.section        ? a.section    : '-',
                               "category"      : a.category     ? a.category : '-',
-                              "subCategory"   : a.subCategory     ? a.subCategory : '-',
                               "brand"         : a.brand     ? a.brand : '-',
+                              "productName"   : a.productName     ? a.productName : '-',
                               "productCode"   : a.productCode     ? a.productCode : '-',
                               "itemCode"      : a.itemCode     ? a.itemCode : '-',
                               "productName"   : a.productName     ? a.productName : '-',
-                              "shortDescription"   : a.shortDescription     ? a.shortDescription : '-',
+                              "originalPrice" : a.originalPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.originalPrice.toString() : '-',
+                              "discountedPrice" : a.discountedPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.discountedPrice.toString() : '-', 
                               "size"   : a.size     ? a.size : '-', 
-                              "color"   : a.color     ? a.color : '-',  
+                              "color"   : a.color     ? a.color : '-'
                           }
                         })
 
                         var failedRecordsTable = response.data.failedRecords.map((a, i)=>{
-                        return{
+                        return{ 
                             "remark"        : a.remark        ? a.remark    : '-',
                             "section"       : a.section        ? a.section    : '-',
                             "category"      : a.category     ? a.category : '-',
-                            "subCategory"   : a.subCategory     ? a.subCategory : '-',
                             "brand"         : a.brand     ? a.brand : '-',
+                            "productName"   : a.productName     ? a.productName : '-',
                             "productCode"   : a.productCode     ? a.productCode : '-',
                             "itemCode"      : a.itemCode     ? a.itemCode : '-',
                             "productName"   : a.productName     ? a.productName : '-',
-                            "shortDescription"   : a.shortDescription     ? a.shortDescription : '-',
-                            "size"   : a.size     ? a.size : '-', 
-                            "color"   : a.color     ? a.color : '-'
+                            "originalPrice" : a.originalPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.originalPrice.toString() : '-',
+                            "discountedPrice" : a.discountedPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.discountedPrice.toString() : '-',
+                            "size"          : a.size     ? a.size : '-', 
+                            "color"         : a.color     ? a.color : '-',
                         }
                         })
                         this.setState({
@@ -105,8 +109,8 @@ constructor(props) {
         })
         .catch((error)=> { 
               
-        })   */
-       
+        })   
+       */
   }
   handleChange(e) {
     const files = e.target.files;
@@ -320,14 +324,15 @@ constructor(props) {
                                 "remark"        : a.remark        ? a.remark    : '-',
                                 "section"       : a.section        ? a.section    : '-',
                                 "category"      : a.category     ? a.category : '-',
-                                "subCategory"   : a.subCategory     ? a.subCategory : '-',
                                 "brand"         : a.brand     ? a.brand : '-',
+                                "productName"   : a.productName     ? a.productName : '-',
                                 "productCode"   : a.productCode     ? a.productCode : '-',
                                 "itemCode"      : a.itemCode     ? a.itemCode : '-',
                                 "productName"   : a.productName     ? a.productName : '-',
-                                "shortDescription"   : a.shortDescription     ? a.shortDescription : '-',
+                                "originalPrice" : a.originalPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.originalPrice.toString() : '-',
+                                "discountedPrice" : a.discountedPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.discountedPrice.toString() : '-', 
                                 "size"   : a.size     ? a.size : '-', 
-                                "color"   : a.color     ? a.color : '-',  
+                                "color"   : a.color     ? a.color : '-'
                             }
                           })
 
@@ -336,14 +341,15 @@ constructor(props) {
                               "remark"        : a.remark        ? a.remark    : '-',
                               "section"       : a.section        ? a.section    : '-',
                               "category"      : a.category     ? a.category : '-',
-                              "subCategory"   : a.subCategory     ? a.subCategory : '-',
                               "brand"         : a.brand     ? a.brand : '-',
+                              "productName"   : a.productName     ? a.productName : '-',
                               "productCode"   : a.productCode     ? a.productCode : '-',
                               "itemCode"      : a.itemCode     ? a.itemCode : '-',
                               "productName"   : a.productName     ? a.productName : '-',
-                              "shortDescription"   : a.shortDescription     ? a.shortDescription : '-',
-                              "size"   : a.size     ? a.size : '-', 
-                              "color"   : a.color     ? a.color : '-'
+                              "originalPrice" : a.originalPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.originalPrice.toString() : '-',
+                              "discountedPrice" : a.discountedPrice ? "<i class='fa fa-"+a.currency.toLowerCase()+"'></i> "+a.discountedPrice.toString() : '-',
+                              "size"          : a.size     ? a.size : '-', 
+                              "color"         : a.color     ? a.color : '-',
                           }
                           })
                           this.setState({
@@ -364,7 +370,7 @@ constructor(props) {
 
 
   render() {
-    //console.log('failedRecordsTable',this.state.failedRecordsTable)  
+    //console.log('tableData',this.state.tableData)  
     const SheetJSFT = [
         "xlsx",
         "xls",
@@ -420,7 +426,7 @@ constructor(props) {
 
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 filedetailsDiv" style={{display:"none"}}>
         <br/>
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent NoPadding">
           {
             this.state.fileDetails ?
             <div className="">
@@ -558,7 +564,7 @@ constructor(props) {
                 <div id="success" className="tab-pane fade">
                   <h5>
                   Out of {this.state.fileDetails.totalRecords} {this.state.fileDetails.totalRecords > 1 ? "records" : "record"},  {this.state.fileDetails.goodrecords.length} {this.state.fileDetails.goodrecords.length > 1 ? "records are" : "record is" } added successfully. &nbsp;
-                    {this.state.fileDetails.failedRecords.length} bad {this.state.fileDetails.failedRecords.length > 1 ? "records were": "record was"} found.
+                    
                   </h5>
                       <IAssureTable 
                       tableHeading={this.state.tableHeading}

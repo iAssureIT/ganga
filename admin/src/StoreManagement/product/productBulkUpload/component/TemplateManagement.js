@@ -14,7 +14,6 @@ import S3FileUpload           from 'react-s3';
 class TemplateManagement extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             fileObj:[],
             "tableHeading"                 : {
@@ -25,13 +24,12 @@ class TemplateManagement extends Component {
             },
             "tableObjects"                 : {
                 deleteMethod               : 'delete',
-                apiLink                    : '/api/preference/deleterate',
-                paginationApply            : false,
-                searchApply                : false,
-                editUrl                    : '/taxrate/'
+                apiLink                    : '/api/bulkUploadTemplate',
+                paginationApply            : true,
+                searchApply                : false
             },
               "startRange"                 : 0,
-              "limitRange"                 : 10,
+              "limitRange"                 : 10
         }
         //this.fileInput = React.createRef();
     }
@@ -105,7 +103,6 @@ class TemplateManagement extends Component {
           category: event.target.value,
           category_ID: event.target.value.split('|')[1],
         })
-
     }
     docBrowse(e){
     e.preventDefault();
@@ -242,6 +239,7 @@ class TemplateManagement extends Component {
         });
     }
     getData(startRange, limitRange){
+        this.getDataCount();
         var data={
             startRange : startRange,
             limitRange : limitRange
@@ -250,14 +248,13 @@ class TemplateManagement extends Component {
         .then((response)=>{
 
             console.log(response.data)
-            this.getDataCount();
             
             var tableData = response.data.map((a, i)=>{
                 return {
                     _id             : a._id,
                     section         : a.section,
                     category        : a.category,
-                    templateUrl     : a.templateUrl
+                    templateUrl     : "<a href='"+a.templateUrl+"' download><img src='https://s3.ap-south-1.amazonaws.com/assureidportal/websiteImgs/filecsv.png' style='width:35px' /></a>"
                 }
             })
             // console.log('table', tableData);
@@ -269,8 +266,8 @@ class TemplateManagement extends Component {
             console.log('error', error);
         });
     }
+    
     render() {
-
         
         return (
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-right">
@@ -282,11 +279,12 @@ class TemplateManagement extends Component {
                     <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                         <div className="box">
                             <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                <h4 className="NOpadding-right">Templates</h4>
+                                <h4 className="NOpadding-right">Product Bulk Upload Template</h4>
                             </div>
                         </div>
                         <form className="newTemplateForm" id="addTemplate">
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 inputFields marginTopp">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding">
+                        <div className="col-lg-4 col-lg-offset-2  col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2  col-xs-6 inputFields marginTopp">
                             <label>Section <i className="redFont">*</i></label>
                             <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section} name="section" className="form-control" aria-describedby="basic-addon1" id="section" ref="section">
                                 <option disabled selected defaultValue="">Select Section</option>
@@ -316,7 +314,8 @@ class TemplateManagement extends Component {
                                 }
                             </select>
                         </div>
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6  inputFields marginTopp">
+                        </div>
+                        <div className="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2  col-sm-4 col-xs-6  inputFields">
                             <label>Select File <i className="redFont">*</i></label>
                             <div className="input-group">
                                 <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
@@ -330,8 +329,8 @@ class TemplateManagement extends Component {
                             <div id="templateError"></div>
                             <div className="upldProdFileHere"> Upload Your Template File Here:</div>
                         </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt">
-                            <button onClick={this.addTemplate.bind(this)} className="submitBtn btn btnSubmit col-lg-2 col-md-2 col-sm-3 col-xs-3 pull-right">Save</button>
+                        <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt">
+                            <button onClick={this.addTemplate.bind(this)} className="submitBtn btn btnSubmit col-lg-4 col-md-4 col-sm-3 col-xs-3 pull-left">Save</button>
                         </div>    
                         <br/>
                         </form>

@@ -140,10 +140,11 @@ class ProductList extends Component{
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div className="searchProductFromList  col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
+                                                 
                                             <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
                                                 <div className="publishAllProductsClient" aria-hidden="true" data-toggle="modal" data-target={"#publishProduct"}>
                                                     Publish All Products
-                                                </div>
+                                                </div> 
                                                 <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"publishProduct"} role="dialog">
                                                     <div className=" adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
