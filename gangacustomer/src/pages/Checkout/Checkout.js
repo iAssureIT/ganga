@@ -541,366 +541,173 @@ class Checkout extends Component {
             giftOption: this.state.giftOption == true ? false : true
         })
     }
-    placeOrders(event) {
-        event.preventDefault();
-        var addressValues = {};
-        var payMethod = $("input[name='payMethod']:checked").val();
-        var checkedBox = $("input[name='termsNconditions']:checked").val();
-        var checkoutAddess = $("input[name='checkoutAddess']:checked").val();
-        var formValues = {
-            "payMethod": payMethod,
-            "user_ID": localStorage.getItem('user_ID')
-        }
-
-        if (this.state.deliveryAddress && this.state.deliveryAddress.length > 0) {
-            var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
-                return a._id == checkoutAddess
-            })
-
-            console.log('deliveryAddress',deliveryAddress)
-            addressValues = {
-                "user_ID": localStorage.getItem('user_ID'),
-                "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
-                "email": deliveryAddress.length > 0 ? deliveryAddress[0].email : "",
-                "addressLine1": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine1 : "",
-                "addressLine2": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine2 : "",
-                "pincode": deliveryAddress.length > 0 ? deliveryAddress[0].pincode : "",
-                "block": deliveryAddress.length > 0 ? deliveryAddress[0].block : "",
-                "city": deliveryAddress.length > 0 ? deliveryAddress[0].city : "",
-                "district" : deliveryAddress.length > 0 ? deliveryAddress[0].district : "",
-                "stateCode": deliveryAddress.length > 0 ? deliveryAddress[0].stateCode : "",
-                "state": deliveryAddress.length > 0 ? deliveryAddress[0].state : "",
-                "countryCode": deliveryAddress.length > 0 ? deliveryAddress[0].countryCode : "",
-                "country": deliveryAddress.length > 0 ? deliveryAddress[0].country : "",
-                "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
-                "addType": deliveryAddress.length > 0 ? deliveryAddress[0].addType : "",
-            }
-        }else{
-            console.log('in elseee');
-            addressValues = {
-                "user_ID": localStorage.getItem('user_ID'),
-                "name": this.state.username,
-                "email": this.state.email,
-                "addressLine1": this.state.addressLine1,
-                "addressLine2": this.state.addressLine2,
-                "pincode": this.state.pincode,
-                "block": this.state.block,
-                "district" : this.state.district,
-                "city": this.state.city,
-                "stateCode": this.state.stateCode,
-                "state": this.state.state,
-                "countryCode": this.state.countryCode,
-                "country": this.state.country,
-                "mobileNumber": this.state.mobileNumber,
-                "addType": this.state.addType
-            }
-            console.log('addressValues',addressValues);
-            if ($('#checkout').valid() && this.state.pincodeExists) {
-                $('.fullpageloader').show();
-            axios.patch('/api/users/patch/address', addressValues)
-                .then((response) => {
-                    $('.fullpageloader').hide();
-                    this.setState({
-                      messageData : {
-                        "type" : "outpage",
-                        "icon" : "fa fa-check-circle",
-                        "message" : "&nbsp; "+response.data.message,
-                        "class": "success",
-                        "autoDismiss" : true
-                      }
-                    })
-                    setTimeout(() => {
-                        this.setState({
-                            messageData   : {},
-                        })
-                    }, 3000);
-                    this.getUserAddress();
-                    $(".checkoutAddressModal").hide();
-                    $(".modal-backdrop").hide();
-
-                })
-                .catch((error) => {
-                    console.log('error', error);
-                });
-            }
-        }
-        // console.log('pls');
-        if ($('#checkout').valid() && this.state.pincodeExists) {
-            axios.patch('/api/carts/address', addressValues)
-                .then((response) => {
-                    var cartItemsMoveMain = this.state.cartProduct;
-                    var grandTotalArray = this.grandtotalFunction(cartItemsMoveMain);
-                    
-                    if (grandTotalArray) {
-                        var totalAmount = grandTotalArray.finalTotal;
-                        // var totalAmount       = 100;
-                        var selectedPayMethod = payMethod;
-                        // var userId            = Meteor.userId();
-                        if (payMethod == "Cash On Delivery" || payMethod == 'Cash Payment' || payMethod == 'cheque payment') {
-
-                            var userId = localStorage.getItem('user_ID');
-                            var i = 0;
-                            var productIds = [];
-                            var prices = [];
-                            var qtys = [];
-                            var totals = [];
-                            var index = [];
-                            var discountedProdPrice = [];
-                            var totalAmount = 0;
-                            var discountAvail = 0;
-                            var cartItemsMove = cartItemsMoveMain;
-
-                            if (cartItemsMove) {
-                                var noOfItems = cartItemsMove.cartItems.length;
-                                for (i = 0; i < noOfItems; i++) {
-                                    var discountPrice = 0;
-                                    var cartProduct = cartItemsMove.cartItems[i];
-                                    var productId = cartProduct.productId;
-                                    var productIndex = cartProduct.indexInproducts;
-                                    var qty = cartProduct.quantity;
-
-                                    if (cartProduct.deductedAmtAftrCoupon) {
-                                        discountPrice = cartProduct.deductedAmtAftrCoupon;
-                                    }
-
-                                    productIds[i] = productId;
-                                    prices[i] = (cartProduct.discountedPrice);
-                                    qtys[i] = qty;
-                                    totals[i] = (cartProduct.totalForQantity);;
-                                    totalAmount = totalAmount + totals[i];
-                                    index[i] = productIndex;
-                                    discountedProdPrice[i] = discountPrice;
-                                }
-                                // if(grandtotalValue){
-                                var inputObject = {
-                                    "user_ID"               : userId,
-                                    "productIds"            : productIds,
-                                    "productName"           : cartItemsMove.productName,
-                                    "prices"                : prices,
-                                    "qtys"                  : qtys,
-                                    "totals"                : totals,
-                                    "discountedProdPrice"   : discountedProdPrice,
-                                    "totalAmount"           : (grandTotalArray.finalTotal),
-                                    "index"                 : index,
-                                    "totalForQantity"       : cartItemsMove.totalForQantity,
-                                    "productImage"          : cartItemsMove.productImage,
-                                    "paymentMethod"         : payMethod
-                                    // "couponUsed"         : cartItemsMove.couponUsed,
-                                }
-                                $('.fullpageloader').show();
-                                axios.post('/api/orders/post', inputObject)
-                                .then((result) => {
-                                    this.props.fetchCartData();
-                                    if (result) {
-                                        axios.get('/api/orders/get/one/' + result.data.order_ID)
-                                        .then((orderStatus) => {
-                                            if (orderStatus) {
-                                                $('.fullpageloader').hide();
-                                                var userId = orderStatus.userId;
-                                                var orderNo = orderStatus.OrderId;
-                                                var orderDbDate = orderStatus.createdAt;
-                                                var orderDate = moment(orderDbDate).format('DD/MM/YYYY');
-                                                var totalAmount = orderStatus.totalAmount;
-                                                var userId = localStorage.getItem('user_ID');
-                                                // swal('Order Placed Successfully'); 
-                                                this.setState({
-                                                    messageData : {
-                                                    "type" : "outpage",
-                                                    "icon" : "fa fa-check-circle",
-                                                    "message" : "Order Placed Successfully ",
-                                                    "class": "success",
-                                                    "autoDismiss" : true
-                                                    }
-                                                })
-                                                setTimeout(() => {
-                                                    this.setState({
-                                                        messageData   : {},
-                                                    })
-                                                }, 3000);
-                                                this.props.history.push('/payment/' + result.data.order_ID);
-                                            }
-                                        })
-                                        .catch((error) => {
-                                            console.log('error', error)
-                                        })
-                                    }
-                                })
-                                .catch((error) => {
-                                    console.log(error);
-                                })
-
-                            } else {
-                                if (selectedPayMethod == "Online Payment") {
-                                    //pending
-                                }
-                            }
-                        }//End of grandtotal array
-                    }
-
-                })
-                .catch((error) => {
-                    console.log('error', error);
-                })
-
-            axios.patch('/api/carts/payment', formValues)
-                .then((response) => {
-                })
-                .catch((error) => {
-                    console.log('error', error);
-                })
-
-            
-        }
-    }
      placeOrder(event) {
         event.preventDefault();
         var addressValues = {};
         var payMethod = $("input[name='payMethod']:checked").val();
-        var checkedBox = $("input[name='termsNconditions']:checked").val();
         var checkoutAddess = $("input[name='checkoutAddess']:checked").val();
         var formValues = {
             "payMethod": payMethod,
             "user_ID": localStorage.getItem('user_ID')
         }
-
-        if (this.state.deliveryAddress && this.state.deliveryAddress.length > 0) {
-            var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
-                return a._id == checkoutAddess
-            })
-            addressValues = {
-                "user_ID": localStorage.getItem('user_ID'),
-                "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
-                "email": deliveryAddress.length > 0 ? deliveryAddress[0].email : "",
-                "addressLine1": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine1 : "",
-                "addressLine2": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine2 : "",
-                "pincode": deliveryAddress.length > 0 ? deliveryAddress[0].pincode : "",
-                "block": deliveryAddress.length > 0 ? deliveryAddress[0].block : "",
-                "city": deliveryAddress.length > 0 ? deliveryAddress[0].city : "",
-                "district" : deliveryAddress.length > 0 ? deliveryAddress[0].district : "",
-                "stateCode": deliveryAddress.length > 0 ? deliveryAddress[0].stateCode : "",
-                "state": deliveryAddress.length > 0 ? deliveryAddress[0].state : "",
-                "countryCode": deliveryAddress.length > 0 ? deliveryAddress[0].countryCode : "",
-                "country": deliveryAddress.length > 0 ? deliveryAddress[0].country : "",
-                "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
-                "addType": deliveryAddress.length > 0 ? deliveryAddress[0].addType : "",
-            }
-        }else{
-            addressValues = {
-                "user_ID": localStorage.getItem('user_ID'),
-                "name": this.state.username,
-                "email": this.state.email,
-                "addressLine1": this.state.addressLine1,
-                "addressLine2": this.state.addressLine2,
-                "pincode": this.state.pincode,
-                "block": this.state.block,
-                "district" : this.state.district,
-                "city": this.state.city,
-                "stateCode": this.state.stateCode,
-                "state": this.state.state,
-                "countryCode": this.state.countryCode,
-                "country": this.state.country,
-                "mobileNumber": this.state.mobileNumber,
-                "addType": this.state.addType
-            }
-            
-            if ($('#checkout').valid() && this.state.pincodeExists) {
-                $('.fullpageloader').show();
-                axios.patch('/api/users/patch/address', addressValues)
-                .then((response) => {
-                    $('.fullpageloader').hide();
-                    this.setState({
-                      messageData : {
-                        "type" : "outpage",
-                        "icon" : "fa fa-check-circle",
-                        "message" : "&nbsp; "+response.data.message,
-                        "class": "success",
-                        "autoDismiss" : true
-                      }
-                    })
-                    setTimeout(() => {
-                        this.setState({
-                            messageData   : {},
-                        })
-                    }, 3000);
-                    this.getUserAddress();
-                    $(".checkoutAddressModal").hide();
-                    $(".modal-backdrop").hide();
-
-                })
-                .catch((error) => {
-                    console.log('error', error);
-                });
-            }
-        }
-        // console.log('pls');
-        axios.patch('/api/carts/payment', formValues)
-        .then((response) => {
+        var soldProducts = this.props.recentCartData[0].cartItems.filter((a, i)=>{
+            return a.productDetail.availableQuantity <= 0;
         })
-        .catch((error) => {
-            console.log('error', error);
-        })
-        if ($('#checkout').valid() && this.state.pincodeExists) {
-             axios.patch('/api/carts/address', addressValues)
-            .then(async (response) => {
-                await this.props.fetchCartData();
-                var cartItems = this.props.recentCartData[0].cartItems.map((a, i)=>{
-                    return{
-                        "product_ID"        : a.productDetail._id,
-                        "productName"       : a.productDetail.productName,
-                        "discountPercent"   : a.productDetail.discountPercent,
-                        "discountedPrice"   : a.productDetail.discountedPrice,
-                        "originalPrice"     : a.productDetail.originalPrice,
-                        "currency"          : a.productDetail.currency,
-                        "quantity"          : a.quantity,
-                        "subTotal"          : a.subTotal,
-                        "saving"            : a.saving,
-                        "productImage"      : a.productDetail.productImage,
-                        "section_ID"        : a.productDetail.section_ID,
-                        "section"           : a.productDetail.section,
-                        "category_ID"       : a.productDetail.category_ID,
-                        "category"          : a.productDetail.category,
-                        "subCategory_ID"    : a.productDetail.subCategory_ID,
-                        "subCategory"       : a.productDetail.subCategory,
-                    }
-                })
-                var orderData = {
-                    user_ID         : localStorage.getItem('user_ID'),
-                    cartItems       : cartItems,
-                    total           : this.props.recentCartData[0].total,
-                    cartTotal       : this.props.recentCartData[0].cartTotal,
-                    discount        : this.props.recentCartData[0].discount,
-                    cartQuantity    : this.props.recentCartData[0].cartQuantity,
-                    deliveryAddress : this.props.recentCartData[0].deliveryAddress,
-                    paymentMethod   : this.props.recentCartData[0].paymentMethod
+        if(soldProducts.length > 0){
+            this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-exclamation-circle",
+                  "message" : "&nbsp; Please remove sold out products from cart to proceed to checkout.",
+                  "class": "warning",
+                  "autoDismiss" : true
                 }
-                axios.post('/api/orders/post', orderData)
-                .then((result) => {
-                    this.props.fetchCartData();
-                    this.setState({
-                        messageData : {
-                        "type" : "outpage",
-                        "icon" : "fa fa-check-circle",
-                        "message" : "Order Placed Successfully ",
-                        "class": "success",
-                        "autoDismiss" : true
-                        }
-                    })
-                    setTimeout(() => {
+              })
+              setTimeout(() => {
+                  this.setState({
+                      messageData   : {},
+                  })
+              }, 6000);
+        }else{
+            if (this.state.deliveryAddress && this.state.deliveryAddress.length > 0) {
+                var deliveryAddress = this.state.deliveryAddress.filter((a, i) => {
+                    return a._id == checkoutAddess
+                })
+                addressValues = {
+                    "user_ID": localStorage.getItem('user_ID'),
+                    "name": deliveryAddress.length > 0 ? deliveryAddress[0].name : "",
+                    "email": deliveryAddress.length > 0 ? deliveryAddress[0].email : "",
+                    "addressLine1": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine1 : "",
+                    "addressLine2": deliveryAddress.length > 0 ? deliveryAddress[0].addressLine2 : "",
+                    "pincode": deliveryAddress.length > 0 ? deliveryAddress[0].pincode : "",
+                    "block": deliveryAddress.length > 0 ? deliveryAddress[0].block : "",
+                    "city": deliveryAddress.length > 0 ? deliveryAddress[0].city : "",
+                    "district" : deliveryAddress.length > 0 ? deliveryAddress[0].district : "",
+                    "stateCode": deliveryAddress.length > 0 ? deliveryAddress[0].stateCode : "",
+                    "state": deliveryAddress.length > 0 ? deliveryAddress[0].state : "",
+                    "countryCode": deliveryAddress.length > 0 ? deliveryAddress[0].countryCode : "",
+                    "country": deliveryAddress.length > 0 ? deliveryAddress[0].country : "",
+                    "mobileNumber": deliveryAddress.length > 0 ? deliveryAddress[0].mobileNumber : "",
+                    "addType": deliveryAddress.length > 0 ? deliveryAddress[0].addType : "",
+                }
+            }else{
+                addressValues = {
+                    "user_ID": localStorage.getItem('user_ID'),
+                    "name": this.state.username,
+                    "email": this.state.email,
+                    "addressLine1": this.state.addressLine1,
+                    "addressLine2": this.state.addressLine2,
+                    "pincode": this.state.pincode,
+                    "block": this.state.block,
+                    "district" : this.state.district,
+                    "city": this.state.city,
+                    "stateCode": this.state.stateCode,
+                    "state": this.state.state,
+                    "countryCode": this.state.countryCode,
+                    "country": this.state.country,
+                    "mobileNumber": this.state.mobileNumber,
+                    "addType": this.state.addType
+                }
+                
+                if ($('#checkout').valid() && this.state.pincodeExists) {
+                    $('.fullpageloader').show();
+                    axios.patch('/api/users/patch/address', addressValues)
+                    .then((response) => {
+                        $('.fullpageloader').hide();
                         this.setState({
-                            messageData   : {},
+                        messageData : {
+                            "type" : "outpage",
+                            "icon" : "fa fa-check-circle",
+                            "message" : "&nbsp; "+response.data.message,
+                            "class": "success",
+                            "autoDismiss" : true
+                        }
                         })
-                    }, 3000);
-                    this.props.history.push('/payment/' + result.data.order_ID);
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+                        setTimeout(() => {
+                            this.setState({
+                                messageData   : {},
+                            })
+                        }, 3000);
+                        this.getUserAddress();
+                        $(".checkoutAddressModal").hide();
+                        $(".modal-backdrop").hide();
+
+                    })
+                    .catch((error) => {
+                        console.log('error', error);
+                    });
+                }
+            }
+            // console.log('pls');
+            axios.patch('/api/carts/payment', formValues)
+            .then((response) => {
             })
             .catch((error) => {
                 console.log('error', error);
             })
+            if ($('#checkout').valid() && this.state.pincodeExists) {
+                axios.patch('/api/carts/address', addressValues)
+                .then(async (response) => {
+                    await this.props.fetchCartData();
+                    var cartItems = this.props.recentCartData[0].cartItems.map((a, i)=>{
+                        return{
+                            "product_ID"        : a.productDetail._id,
+                            "productName"       : a.productDetail.productName,
+                            "discountPercent"   : a.productDetail.discountPercent,
+                            "discountedPrice"   : a.productDetail.discountedPrice,
+                            "originalPrice"     : a.productDetail.originalPrice,
+                            "currency"          : a.productDetail.currency,
+                            "quantity"          : a.quantity,
+                            "subTotal"          : a.subTotal,
+                            "saving"            : a.saving,
+                            "productImage"      : a.productDetail.productImage,
+                            "section_ID"        : a.productDetail.section_ID,
+                            "section"           : a.productDetail.section,
+                            "category_ID"       : a.productDetail.category_ID,
+                            "category"          : a.productDetail.category,
+                            "subCategory_ID"    : a.productDetail.subCategory_ID,
+                            "subCategory"       : a.productDetail.subCategory,
+                        }
+                    })
+                    var orderData = {
+                        user_ID         : localStorage.getItem('user_ID'),
+                        cartItems       : cartItems,
+                        total           : this.props.recentCartData[0].total,
+                        cartTotal       : this.props.recentCartData[0].cartTotal,
+                        discount        : this.props.recentCartData[0].discount,
+                        cartQuantity    : this.props.recentCartData[0].cartQuantity,
+                        deliveryAddress : this.props.recentCartData[0].deliveryAddress,
+                        paymentMethod   : this.props.recentCartData[0].paymentMethod
+                    }
+                    axios.post('/api/orders/post', orderData)
+                    .then((result) => {
+                        this.props.fetchCartData();
+                        this.setState({
+                            messageData : {
+                            "type" : "outpage",
+                            "icon" : "fa fa-check-circle",
+                            "message" : "Order Placed Successfully ",
+                            "class": "success",
+                            "autoDismiss" : true
+                            }
+                        })
+                        setTimeout(() => {
+                            this.setState({
+                                messageData   : {},
+                            })
+                        }, 3000);
+                        this.props.history.push('/payment/' + result.data.order_ID);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                })
+                .catch((error) => {
+                    console.log('error', error);
+                })
 
-            
+                
+            }
         }
     }
     saveModalAddress(event) {
@@ -1050,7 +857,7 @@ class Checkout extends Component {
                                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 shippingAddress NOpadding">
                                             
                                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-warning shippingAddressTitle">SHIPPING ADDRESS <span className="required">*</span></div>
-                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt15">
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <label id="checkoutAddess"></label>
                                             </div>
                                             {   this.state.deliveryAddress && this.state.deliveryAddress.length > 0 ?
@@ -1174,9 +981,30 @@ class Checkout extends Component {
                                                                 {/* <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td> */}
                                                                 <td><img className="img img-responsive orderImg" src={data.productDetail.productImage[0] ? data.productDetail.productImage[0] : "/images/notavailable.jpg"} /></td>
                                                                 <td><span className="productName">{data.productDetail.productName}</span></td>
-                                                                <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.productDetail.currency}></i> &nbsp;{parseInt(data.productDetail.discountedPrice).toFixed(2)}</span></td>
-                                                                <td className="textAlignRight"><span className=" textAlignRight">{data.quantity}</span></td>
-                                                                <td className="textAlignRight"><span className="productPrize textAlignRight"><i className={"fa fa-" + data.productDetail.currency}></i> &nbsp;{parseInt(data.subTotal).toFixed(2)}</span></td>
+                                                                <td className="textAlignRight">
+                                                                {
+                                                                    data.productDetail.availableQuantity > 0 ?
+                                                                    <span className="productPrize textAlignRight"><i className={"fa fa-" + data.productDetail.currency}></i> &nbsp;{parseInt(data.productDetail.discountedPrice).toFixed(2)}</span>
+                                                                    :
+                                                                    <span>-</span>
+                                                                }
+                                                                    </td>
+                                                                <td className="textAlignRight">
+                                                                {
+                                                                data.productDetail.availableQuantity > 0 ?
+                                                                    <span className=" textAlignRight">{data.quantity}</span>
+                                                                    :
+                                                                    <span className="textAlignCenter sold">SOLD OUT</span>
+                                                                }
+                                                                </td>
+                                                                <td className="textAlignRight">
+                                                                {
+                                                                    data.productDetail.availableQuantity > 0 ?
+                                                                    <span className="productPrize textAlignRight"><i className={"fa fa-" + data.productDetail.currency}></i> &nbsp;{parseInt(data.subTotal).toFixed(2)}</span>
+                                                                    :
+                                                                    <span>-</span>
+                                                                }
+                                                                </td>
                                                             </tr>
                                                         );
                                                     })

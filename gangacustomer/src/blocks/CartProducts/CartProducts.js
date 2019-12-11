@@ -152,7 +152,28 @@ class CartProducts extends Component{
     }
     proceedToCheckout(event){
         event.preventDefault();
-        this.props.history.push('/checkout');
+        
+        var soldProducts = this.props.recentCartData[0].cartItems.filter((a, i)=>{
+            return a.productDetail.availableQuantity <= 0;
+        })
+        if(soldProducts.length > 0){
+            this.setState({
+                messageData : {
+                  "type" : "outpage",
+                  "icon" : "fa fa-exclamation-circle",
+                  "message" : "&nbsp; Please remove sold out products from cart to proceed to checkout.",
+                  "class": "warning",
+                  "autoDismiss" : true
+                }
+              })
+              setTimeout(() => {
+                  this.setState({
+                      messageData   : {},
+                  })
+              }, 6000);
+        }else{
+            this.props.history.push('/checkout');
+        }
     }
     continueShopping(event){
         event.preventDefault();
@@ -209,7 +230,6 @@ class CartProducts extends Component{
 
     }
     render(){
-        console.log(this.props.recentCartData[0]);
         return(
             <div className="container">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 cartHeight">
@@ -262,13 +282,35 @@ class CartProducts extends Component{
                                                                 
                                                             </tr>
                                                         </td>
-                                                        <td className="nowrap"><span id="productPrize" className={"cartProductPrize fa fa-inr"}>&nbsp;{data.productDetail.discountedPrice}</span></td>
                                                         <td className="nowrap">
-                                                            <span className="minusQuantity fa fa-minus" id={data.productDetail._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
-                                                            <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
-                                                            <span className="plusQuantity fa fa-plus" productid={data.product_ID} id={data.productDetail._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} availableQuantity={data.productDetail.availableQuantity}  onClick={this.cartquantityincrease.bind(this)}></span>
+                                                        {
+                                                            data.productDetail.availableQuantity > 0 ?
+                                                                <span id="productPrize" className={"cartProductPrize fa fa-inr"}>&nbsp;{data.productDetail.discountedPrice}</span>
+                                                            :
+                                                            <span>-</span>
+                                                        }
                                                         </td>
-                                                        <td className="nowrap"><span className={"cartProductPrize fa fa-inr"}>&nbsp;{data.subTotal}</span></td>
+                                                        <td className="nowrap">
+                                                            
+                                                            {
+                                                                data.productDetail.availableQuantity > 0 ?
+                                                                <div>
+                                                                    <span className="minusQuantity fa fa-minus" id={data.productDetail._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} onClick={this.cartquantitydecrease.bind(this)}></span>&nbsp;
+                                                                    <span className="inputQuantity">{this.state['quantityAdded|'+data._id] ? this.state['quantityAdded|'+data._id] : data.quantity}</span>&nbsp;
+                                                                    <span className="plusQuantity fa fa-plus" productid={data.product_ID} id={data.productDetail._id} dataquntity={this.state.quantityAdded != 0 ? this.state.quantityAdded : data.quantity} availableQuantity={data.productDetail.availableQuantity}  onClick={this.cartquantityincrease.bind(this)}></span>
+                                                                </div>
+                                                                :
+                                                                <span className="sold textAlignCenter">SOLD OUT</span>
+                                                            }
+                                                        </td>
+                                                        <td className="nowrap">
+                                                        {
+                                                            data.productDetail.availableQuantity > 0 ?
+                                                                <span className={"cartProductPrize fa fa-inr"}>&nbsp;{data.subTotal}</span>
+                                                            :
+                                                            <span>-</span>
+                                                        }    
+                                                        </td>
                                                         <td>
                                                             <span className="fa fa-trash trashIcon" id={data._id} onClick={this.Removefromcart.bind(this)}><a href="#" style={{color:"#337ab7"}} ></a></span>
                                                         </td>
