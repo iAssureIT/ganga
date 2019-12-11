@@ -510,8 +510,6 @@ class IAssureTable extends Component {
 									}
 									<th className="umDynamicHeader srpadd textAlignLeft">Featured</th>
 									<th className="umDynamicHeader srpadd textAlignLeft">Exclusive</th>
-									<th className="umDynamicHeader srpadd textAlignLeft">New Product</th>
-									<th className="umDynamicHeader srpadd textAlignLeft">Best Seller</th>
 									<th className="umDynamicHeader srpadd textAlignLeft">Status</th>
 									<th className="umDynamicHeader srpadd textAlignLeft">Action</th>
 	                            </tr>
@@ -554,18 +552,14 @@ class IAssureTable extends Component {
 															}
 														)
 													}
+													
 													<td className="col-lg-1 textAlignCenter">
                                                         <i onClick={this.changeAttribute.bind(this)} data-attribute="featured" data-ID={value._id} data-attributeValue={value.featured} title={ (value.featured == true )? "Disable It" : "Enable It" } className={'fa fa-check-circle prodCheckboxDim ' + ( value.featured == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
                                                     </td>
                                                     <td className="col-lg-1 textAlignCenter">
                                                         <i onClick={this.changeAttribute.bind(this)} data-attribute="exclusive" data-ID={value._id} data-attributeValue={value.exclusive} title={( value.exclusive == true ? "Disable It" : "Enable It" )}  className={'fa fa-check-circle prodCheckboxDim ' + ( value.exclusive == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
                                                     </td>
-													<td className="col-lg-1 textAlignCenter">
-                                                        <i onClick={this.changeAttribute.bind(this)} data-attribute="newProduct" data-ID={value._id} data-attributeValue={value.newProduct} title={( value.newProduct == true ? "Disable It" : "Enable It" )}  className={'fa fa-check-circle prodCheckboxDim ' + ( value.newProduct == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
-                                                    </td>
-													<td className="col-lg-1 textAlignCenter">
-                                                        <i onClick={this.changeAttribute.bind(this)} data-attribute="bestSeller" data-ID={value._id} data-attributeValue={value.bestSeller} title={( value.bestSeller == true ? "Disable It" : "Enable It" )}  className={'fa fa-check-circle prodCheckboxDim ' + ( value.bestSeller == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
-                                                    </td>
+													
                                                     <td className="col-lg-1">
                                                         <div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
                                                             {(value.status == ("Unpublish") ? ("Unpublished") : (value.status == ("Draft") ? ("Draft") : ("Published")))}

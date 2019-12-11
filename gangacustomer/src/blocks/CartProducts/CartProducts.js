@@ -291,16 +291,16 @@ class CartProducts extends Component{
                                                 <tbody>
                                                     <tr>
                                                         <td>Cart Total</td>
-                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].originalTotal > 0 ? parseInt(this.props.recentCartData[0].originalTotal) : 0.00} </td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].cartTotal > 0 ? parseInt(this.props.recentCartData[0].cartTotal) : 0.00} </td>
                                                     </tr>
                                                     
                                                     <tr>
                                                         <td>Discount</td>
-                                                        <td className="textAlignRight saving">&nbsp;- <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].totalSaving} </td>
+                                                        <td className="textAlignRight saving">&nbsp;- <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].discount} </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Order Total</td>
-                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].discountedTotal > 0 ? parseInt(this.props.recentCartData[0].discountedTotal) : 0.00} </td>
+                                                        <td className="textAlignRight">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].total > 0 ? parseInt(this.props.recentCartData[0].total) : 0.00} </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Delivery Charges</td>
@@ -308,7 +308,7 @@ class CartProducts extends Component{
                                                     </tr>
                                                     <tr>
                                                         <td className="cartTotal">Total</td>
-                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].discountedTotal > 0 ? parseInt(this.props.recentCartData[0].discountedTotal) : 0.00}</td>
+                                                        <td className="textAlignRight cartTotal">&nbsp; <i className={"fa fa-inr"}></i> {this.props.recentCartData[0].total > 0 ? parseInt(this.props.recentCartData[0].total) : 0.00}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

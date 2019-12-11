@@ -14,6 +14,7 @@ class ProductList extends Component{
             tableHeading :{
                 "itemCode" : 'Item Code',
                 "productName" : 'Product Name',
+                "availableQuantity":"Quantity"
             },
             tableObjects : {
                 paginationApply : true,
@@ -73,6 +74,7 @@ class ProductList extends Component{
                 return{
                     "itemCode"      : a.itemCode        ? a.itemCode    : '-',
                     "productName"   : a.productName     ? a.productName : '-',
+                    "availableQuantity" : a.availableQuantity ? a.availableQuantity : 0,
                     "newProduct"    : a.newProduct      ? a.newProduct  : '-',
                     "exclusive"     : a.exclusive       ? a.exclusive   : '-',
                     "featured"      : a.featured        ? a.featured    : '-',

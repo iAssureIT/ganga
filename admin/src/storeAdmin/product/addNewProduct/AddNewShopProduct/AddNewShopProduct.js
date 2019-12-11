@@ -703,7 +703,6 @@ class AddNewShopProduct extends Component {
                       <label>Vendor <i className="redFont">*</i></label>
                       <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                         <option disabled selected defaultValue="">Select Vendor</option>
-                        <option value={localStorage.getItem("admin_ID")}>Admin</option>
                         {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                           this.state.vendorArray.map((data, index) => {
                             return (
@@ -868,9 +867,9 @@ class AddNewShopProduct extends Component {
                           </div>
                           <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">{this.state.taxName ? this.state.taxName : 'Tax'} Included <i className="redFont">*</i></label>
-                            <label class="taxswitch col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <input type="checkbox" onChange={this.changeTaxInclude.bind(this)} checked={this.state.taxInclude} id="taxInclude" name="taxInclude" ref="taxInclude" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding" />
-                              <span class="taxslider taxround col-lg-12 col-md-12 col-sm-12 col-xs-12"></span>
+                            <label class="taxswitch">
+                              <input type="checkbox" onChange={this.changeTaxInclude.bind(this)} checked={this.state.taxInclude} id="taxInclude" name="taxInclude" ref="taxInclude" className="NOpadding" />
+                              <span class="taxslider taxround"></span>
                             </label>
                           </div>
                         </div>
