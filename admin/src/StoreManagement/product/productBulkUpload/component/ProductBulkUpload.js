@@ -9,6 +9,7 @@ import BulkUploadComponent from './BulkUploadComponent';
 import XLSX from "xlsx";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import  '../css/productBulkUpload.css'
+import Message from '../../../../coreAdmin/common/message/Message.js';
 
 class AddNewBulkProduct extends Component {
     constructor(props) {
@@ -182,7 +183,21 @@ class AddNewBulkProduct extends Component {
         axios.get('/api/bulkUploadTemplate/get/' + event.target.value.split('|')[1])
           .then((response) => {
             console.log(response.data);
-            this.setState({fileurl:response.data.templateUrl})
+            if (response.data) {
+                this.setState({fileurl:response.data.templateUrl})    
+            }else{
+                this.setState({
+                    fileurl:null,
+                        messageData : {
+                            "type" : "outpage",
+                            "icon" : "fa fa-exclamation",
+                            "message" : "Selected category does not have any template. Please upload template.",
+                            "class": "warning",
+                            "autoDismiss" : true
+                        }
+                    })
+            }
+            
           })
           .catch((error) => {
             console.log('error', error);
@@ -194,10 +209,11 @@ class AddNewBulkProduct extends Component {
             "xlsx",
             "xls"
         ]
-
+        const requiredData = {vendor: this.state.vendor};
         return (
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-right">
             <section className="content">
+            <Message messageData={this.state.messageData} />
             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                 <div className="row">
                     <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
@@ -225,7 +241,7 @@ class AddNewBulkProduct extends Component {
                                 {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                                     this.state.vendorArray.map((data, index) => {
                                         return (
-                                            <option key={index} value={data._id}>{data.companyName} - ({data.vendorID})</option>
+                                            <option key={index} value={data.vendor_ID}>{data.companyName} - ({data.vendorID})</option>
                                         );
                                     })
                                     :
@@ -291,6 +307,7 @@ class AddNewBulkProduct extends Component {
                         <BulkUploadComponent url="/api/states/post/bulkinsert" 
                             fileurl={this.state.fileurl}
                             fileDetailUrl="/api/products/get/filedetails/"
+                            requiredData={requiredData}
                             />   : null    
                         
                     }

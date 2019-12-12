@@ -139,13 +139,14 @@ constructor(props) {
   
 
   handleFile(file) {
-        $('.fullpageloader').show();
+        
         var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/;
 
         if (format.test(file.name)) {
             this.setState({ fileWarningError: true, finalData: [] });
 
         } else {
+          $('.fullpageloader').show();
             this.setState({ fileWarningError: false, finalData: [],  fileName: file.name});
             const reader = new FileReader();
             const rABS = !!reader.readAsBinaryString;
@@ -229,7 +230,7 @@ constructor(props) {
                                         documentObj[count][header[k]] = record[k];
                                     }
                                     documentObj[count]['filename'] = file.name;
-                                    documentObj[count]['vendor_ID'] = this.state.vendor;
+                                    documentObj[count]['vendor_ID'] = this.props.requiredData.vendor;
                                     documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
                                 }
                             }

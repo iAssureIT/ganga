@@ -25,7 +25,7 @@ class IAssureTable extends Component {
 		    "activeClass" 				: 'activeCircle',
 		    "paginationArray" 			: [],
 		    "startRange" 				: 0,
-		    "limitRange" 				: 10,
+		    "limitRange" 				: 100,
 		    "activeClass" 				: 'activeCircle', 		    
 		    "normalData" 				: true,
 		    "callPage" 					: true,
@@ -447,8 +447,8 @@ class IAssureTable extends Component {
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
 		       	{
 		       		this.state.tableObjects.paginationApply == true ?
-			       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-							<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
+			       		<div className="col-lg-1 col-md-1 col-sm-12 col-xs-12 NOpadding">
+							<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Show</label>
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
 								<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
 									<option value="Not Selected" disabled>Select Limit</option>
@@ -463,9 +463,7 @@ class IAssureTable extends Component {
 					:
 					null        
 		       	}
-				   <div className="col-lg-4 col-md-4 col-xs-12 col-sm-12 totalDataCount">Total Data : <b>{this.state.dataCount}</b>
-					   
-				   </div>
+				  
 				{
 		       		this.state.tableObjects.searchApply == true ? 
 			       		<div className="col-lg-4  col-md-4  col-xs-12 col-sm-12 marginTop17 NOpadding pull-right">
@@ -496,7 +494,6 @@ class IAssureTable extends Component {
 									}
 	                            </tr>
 	                            <tr className="">
-	                            <th className="umDynamicHeader srpadd textAlignLeft">Sr.No.</th>
 		                            { this.state.tableHeading ?
 										Object.entries(this.state.tableHeading).map( 
 											([key, value], i)=> {
@@ -520,7 +517,7 @@ class IAssureTable extends Component {
 										(value, i)=> {													
 											return(
 												<tr key={i} className="">
-													<td className="textAlignCenter">{this.state.startRange+1+i}</td>
+													
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
@@ -561,9 +558,10 @@ class IAssureTable extends Component {
                                                     </td>
 													
                                                     <td className="col-lg-1">
-                                                        <div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
+                                                        <div className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )}>{value.status}</div>
+                                                        {/*<div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
                                                             {(value.status == ("Unpublish") ? ("Unpublished") : (value.status == ("Draft") ? ("Draft") : ("Published")))}
-                                                        </div>
+                                                        </div>*/}
                                                     </td>
 													<td className="textAlignCenter">
 														<span>

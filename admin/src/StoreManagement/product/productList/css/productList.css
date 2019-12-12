@@ -163,3 +163,45 @@ cursor: pointer;
 .newProductDetails{
   resize: none;
 }
+.publishedBoxIcon{
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+    display: block;
+    float: left;
+    height: 41px;
+    width: 40px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 40px;
+    background: rgba(0,0,0,0.2);
+}
+.publishedBoxContent{
+    padding:0 5px;
+}
+.publishedBox{
+    display: block;
+    min-height: 40px;
+    background: #fff;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+.publishedBoxtext{
+    font-size: 12px !important;
+    margin-left:10px;
+}
+.publishedBoxNumber{
+    font-size: 15px !important;
+    margin-left:10px;
+    font-weight: 600;
+}
+.e-multiselect{
+    background-color: #fff !important; 
+    border: 1px solid #ccc !important;
+    border-radius: 3px !important;
+}
+.e-multiselect.e-checkbox .e-multi-select-wrapper{
+    padding: 0px 5px !important;
+}

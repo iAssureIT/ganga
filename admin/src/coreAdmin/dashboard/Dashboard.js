@@ -273,7 +273,7 @@ export default class Dashboard extends Component{
           datasets: [{
               label: orderByStatesLables,
               data: orderByStatesData,
-              backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+              backgroundColor: [ "rgb(40, 167, 69, 1)","rgb(221, 75, 57, 1)", "rgb(0, 123, 255, 1)", "rgb(255, 193, 7,1)", "rgb(108, 117, 125,1)", "rgb(23, 162, 184,1)","rgb(52, 58, 64,1)"],
               borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
               borderWidth: 2,
               hoverBackgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"]
@@ -352,7 +352,7 @@ export default class Dashboard extends Component{
       var sectdata = {
         datasets: [{
             data: sectionRevenue,
-            backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+            backgroundColor: [ "rgb(40, 167, 69, 1)","rgb(221, 75, 57, 1)", "rgb(0, 123, 255, 1)", "rgb(255, 193, 7, 1)", "rgb(108, 117, 125,1)", "rgb(23, 162, 184,1)","rgb(52, 58, 64,1)"],
             borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
             borderWidth: 2,
         }],
@@ -380,7 +380,7 @@ export default class Dashboard extends Component{
         var catdata = {
           datasets: [{
               data: catRevenue,
-              backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+              backgroundColor: [ "rgb(40, 167, 69, 1)","rgb(221, 75, 57, 1)", "rgb(0, 123, 255, 1)", "rgb(255, 193, 7, 1)", "rgb(108, 117, 125,1)", "rgb(23, 162, 184,1)","rgb(52, 58, 64,1)"],
               borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
               borderWidth: 2,
           }],
@@ -409,7 +409,7 @@ export default class Dashboard extends Component{
       var subcatdata = {
         datasets: [{
             data: subCatRevenue,
-            backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+            backgroundColor: [ "rgb(40, 167, 69, 1)","rgb(221, 75, 57, 1)", "rgb(0, 123, 255, 1)", "rgb(255, 193, 7, 1)", "rgb(108, 117, 125,1)", "rgb(23, 162, 184,1)","rgb(52, 58, 64,1)"],
             borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
             borderWidth: 2,
         }],
@@ -527,7 +527,7 @@ export default class Dashboard extends Component{
                         {
                           label: 'Total Orders',
                           data: barChartData,
-                          backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+                          backgroundColor: [ "rgb(40, 167, 69, 1)","rgb(221, 75, 57, 1)", "rgb(0, 123, 255,1)", "rgb(255, 193, 7, 1)", "rgb(108, 117, 125,1)", "rgb(23, 162, 184,1)","rgb(52, 58, 64,1)"],
                           borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
                           borderWidth: 2
                         }
@@ -575,9 +575,8 @@ export default class Dashboard extends Component{
                       {
                         label: 'Total Orders',
                         data: [1000,700,900],
-                        backgroundColor: [ "rgb(40, 167, 69, 0.50)","rgb(221, 75, 57, 0.5)", "rgb(0, 123, 255, 0.5)", "rgb(255, 193, 7, 0.5)", "rgb(108, 117, 125,0.5)", "rgb(23, 162, 184,0.5)","rgb(52, 58, 64,0.5)"],
+                        backgroundColor: [ "rgb(40, 167, 69, 1)","rgb(221, 75, 57, 1)", "rgb(0, 123, 255, 1)", "rgb(255, 193, 7, 1)", "rgb(108, 117, 125,1)", "rgb(23, 162, 184,1)","rgb(52, 58, 64,1)"],
                         borderColor : ['#28a745', "#dd4b39", "#007bff", "#ffc107", "#6c757d", "#17a2b8"],
-                        
                         borderWidth: 2
                       }
                       ],

@@ -4,16 +4,25 @@ import IAssureTable           from "../../ProductTable/IAssureTable.jsx";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import '../css/productList.css';
+import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
+
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-react-dropdowns/styles/material.css";
 
 class ProductList extends Component{
     constructor(props) { 
         super(props);
         this.state = {
             tableHeading :{
-                "productCode" : "Product Code",
-                "itemCode" : 'Item Code',
-                "productName" : 'Product Name',
-                "availableQuantity":"Quantity"
+                "productName" : 'Product Details',
+                "section" : 'Section',
+                "category" : 'Category',
+                "originalPrice" : 'Original Price',
+                "discountPercent" : 'Discount Percent',
+                "discountedPrice" : 'Discounted Price',
+                "availableQuantity" : 'Available Quantity',
             },
             tableObjects : {
                 paginationApply : true,
@@ -23,7 +32,8 @@ class ProductList extends Component{
                 editUrl         : '/add-product/'
             },
             startRange : 0,
-            limitRange : 10
+            limitRange : 100,
+            selector   : {}
         };
         window.scrollTo(0, 0);
     }
@@ -42,11 +52,75 @@ class ProductList extends Component{
         });
     }
 
-
     componentDidMount() {
         this.getCount();
         this.getData(this.state.startRange, this.state.limitRange);
+        this.getVendorList();
+        this.getSectionData();
+        this.getCategoryData();
 
+        axios.get('/api/products/get/productCountByStatus')
+            .then((response) => {
+                
+                this.setState({
+                    productCountByStatus: response.data
+                })
+
+            })
+            .catch((error) => {
+
+            })
+    }   
+    getVendorList() {
+        axios.get('/api/vendors/get/list')
+            .then((response) => {
+                
+                var vendorArray = [];
+                response.data.map((data,ind)=>{
+                    vendorArray.push({id: data.vendor_ID, vendor: data.companyName })
+                });
+                this.setState({
+                    vendorArray: vendorArray
+                })
+
+            })
+            .catch((error) => {
+
+            })
+    }
+    getSectionData() {
+    axios.get('/api/sections/get/list')
+      .then((response) => {
+
+        var sectionArray = [];
+        response.data.map((data,ind)=>{
+            sectionArray.push({id: data._id, section: data.section })
+        });
+        this.setState({
+          sectionArray: sectionArray
+        })
+
+      })
+      .catch((error) => {
+        console.log('error', error);
+      })
+    }
+    getCategoryData() {
+    axios.get('/api/category/get/list')
+      .then((response) => {
+
+        var categoryArray = [];
+        response.data.map((data,ind)=>{
+            categoryArray.push({id: data._id, category: data.category })
+        });
+        this.setState({
+          categoryArray: categoryArray
+        })
+        
+      })
+      .catch((error) => {
+        console.log('error', error);
+      })
     }
     getCount(){
         axios.get('/api/products/get/count')
@@ -68,19 +142,7 @@ class ProductList extends Component{
         this.getCount();
         axios.post('/api/products/get/list', data)
         .then((response)=>{
-            console.log('response', response.data)
-            var tableData = response.data.map((a, i)=>{
-                return{
-                    "itemCode"      : a.itemCode        ? a.itemCode    : '-',
-                    "productName"   : a.productName     ? a.productName : '-',
-                    "availableQuantity" : a.availableQuantity ? a.availableQuantity : 0,
-                    "newProduct"    : a.newProduct      ? a.newProduct  : '-',
-                    "exclusive"     : a.exclusive       ? a.exclusive   : '-',
-                    "featured"      : a.featured        ? a.featured    : '-',
-                    "offeredPrice"  : a.offeredPrice    ? a.offeredPrice: '-',
-                    "bestSeller"    : a.bestSeller      ? a.bestSeller  : '-',
-                }
-            })
+
             this.setState({
                 tableData : response.data
             })
@@ -93,11 +155,10 @@ class ProductList extends Component{
     publishAllProducts(event){
         event.preventDefault();        
         
-
         var data ={
             publishData:  _.pluck(this.state.tableData, '_id')
         };
-        console.log('tableData', data)
+       
         axios.put('/api/products/multiple', data)
         .then((response)=>{
             swal({
@@ -114,7 +175,6 @@ class ProductList extends Component{
     getSearchText(searchText){ 
         axios.get("/api/products/get/search/"+searchText)
         .then((response)=>{ 
-            console.log('tableData', response.data);
             this.setState({
                 tableData : response.data,
                 dataCount : response.data.length
@@ -124,8 +184,72 @@ class ProductList extends Component{
               console.log('error', error);
         })
     }
+    filterProducts(filtertype, selectedvalue){
+
+    }
+    filterProductCount(formValues){
+        axios.post('/api/products/post/adminFilterProductsCount',formValues)
+        .then((response)=>{
+            this.setState({
+                dataCount : response.data.dataCount
+            },()=>{
+            })
+        })
+        .catch((error)=>{
+             console.log("error = ",error);
+        })
+    }
+    handleChangeVendor(event){
+        
+        var currentSelection = event.element.getAttribute("id");
+        var selector = this.state.selector;
+
+        if (currentSelection == 'vendorChange') {
+            selector.vendorIds = event.value;
+        }
+        if (currentSelection == 'sectionChange') {
+            selector.sectionIds = event.value;
+        }
+        if (currentSelection == 'categoryChange') {
+            selector.categoryIds = event.value;
+        }
+        if (currentSelection == 'statusChange') {
+            selector.statusArray = event.value;
+        }
+        selector.startRange = this.state.startRange
+        selector.limitRange = this.state.limitRange
+
+
+        this.setState({selector: selector})
+        this.filterProductCount(selector);
+
+        //console.log(this.state.selector);
+        axios.post('/api/products/post/list/adminFilterProducts',selector)
+        .then((response)=>{
+            this.setState({
+                tableData : response.data
+            })
+            //this.getData(this.state.startRange, this.state.limitRange);
+        })
+        .catch((error)=>{
+             console.log("error = ",error);
+        })
+    }
 
     render(){
+    
+    // maps the appropriate column to fields property
+    const fields: object = { text: 'vendor', value: 'id' };
+    const sectionfields: object = { text: 'section', value: 'id' };
+    const categoryfields: object = { text: 'category', value: 'id' };
+
+    const statusArray = [];
+    statusArray.push({status:"Publish"})
+    statusArray.push({status:"Draft"})
+    statusArray.push({status:"Unpublish"})
+
+    const statusfields: object = { text: 'status', value: 'status' };
+        console.log(this.state.productCountByStatus)
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
@@ -133,16 +257,92 @@ class ProductList extends Component{
                         <section className="content">
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                                 <div className="row">
-                                    <div className="box">
-                                         <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                                              <h4 className="NOpadding-right"> Product List</h4>
-                                        </div>
-                                        
+                                    <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                                      <h4 className="NOpadding-right"> Product List</h4>
                                     </div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div className="searchProductFromList  col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
-                                                 
-                                            <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt">
+                                        <div className="col-lg-3">     
+                                            <div className="publishedBox" >
+                                              <span className="publishedBoxIcon bg-aqua"><i className="fa fa-shopping-cart"></i></span>
+                                              <div className="publishedBoxContent">
+                                                <span className="publishedBoxtext">Total Products</span><br/>
+                                                <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus.total : 0 }</span>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3">     
+                                            <div className="publishedBox" >
+                                              <span className="publishedBoxIcon bg-green"><i className="fa fa-shopping-cart"></i></span>
+                                              <div className="publishedBoxContent">
+                                                <span className="publishedBoxtext">Published Products</span><br/>
+                                                <span className="publishedBoxNumber">75</span>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3">     
+                                            <div className="publishedBox" >
+                                              <span className="publishedBoxIcon bg-redcolor"><i className="fa fa-shopping-cart"></i></span>
+                                              <div className="publishedBoxContent">
+                                                <span className="publishedBoxtext">Unpublished Products</span><br/>
+                                                <span className="publishedBoxNumber">15</span>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3">     
+                                            <div className="publishedBox" >
+                                              <span className="publishedBoxIcon bg-yellow"><i className="fa fa-shopping-cart"></i></span>
+                                              <div className="publishedBoxContent">
+                                                <span className="publishedBoxtext">Draft Products</span><br/>
+                                                <span className="publishedBoxNumber">10</span>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div className="searchProductFromList col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp NoPadding">
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent">
+                                                <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Bulk Action</label>
+                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown" onChange={this.filterProducts.bind(this, "status")} style={{width:'200px'}} >
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" disabled selected>-- Select --</option>   
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Publish">Publish</option>
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Draft">Draft</option>
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Unpublish</option> 
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Delete</option>     
+                                                </select>
+                                            </div>  
+                                            <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
+                                                <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Vendor</label>
+                                                <MultiSelectComponent id="vendorChange" dataSource={this.state.vendorArray}
+                                                    change={this.handleChangeVendor.bind(this)}
+                                                    fields={fields} placeholder="Select Vendor" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
+                                                    <Inject services={[CheckBoxSelection]} />
+                                                </MultiSelectComponent>
+                                            </div>
+                                            <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
+                                                <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Section</label>
+                                                <MultiSelectComponent id="sectionChange" dataSource={this.state.sectionArray}
+                                                    change={this.handleChangeVendor.bind(this)}
+                                                    fields={sectionfields} placeholder="Select Section" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
+                                                    <Inject services={[CheckBoxSelection]} />
+                                                </MultiSelectComponent>
+                                            </div>
+                                            <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
+                                                <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Category</label>
+                                                <MultiSelectComponent id="categoryChange" dataSource={this.state.categoryArray}
+                                                    change={this.handleChangeVendor.bind(this)}
+                                                    fields={categoryfields} placeholder="Select Category" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
+                                                    <Inject services={[CheckBoxSelection]} />
+                                                </MultiSelectComponent>
+                                            </div>    
+                                            <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
+                                                <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Status</label>
+                                                <MultiSelectComponent id="statusChange" dataSource={statusArray}
+                                                    change={this.handleChangeVendor.bind(this)}
+                                                    fields={statusfields} placeholder="Select Status" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
+                                                    <Inject services={[CheckBoxSelection]} />
+                                                </MultiSelectComponent>  
+                                            </div>
+                                            
+                                            {/*<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
                                                 <div className="publishAllProductsClient" aria-hidden="true" data-toggle="modal" data-target={"#publishProduct"}>
                                                     Publish All Products
                                                 </div> 
@@ -170,7 +370,8 @@ class ProductList extends Component{
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>*/
+                                        }
                                         </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
