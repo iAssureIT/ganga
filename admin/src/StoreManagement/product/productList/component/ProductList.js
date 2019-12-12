@@ -1,7 +1,5 @@
 import React, { Component }   from 'react';
-import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import IAssureTable           from "../../ProductTable/IAssureTable.jsx";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
@@ -12,6 +10,7 @@ class ProductList extends Component{
         super(props);
         this.state = {
             tableHeading :{
+                "productCode" : "Product Code",
                 "itemCode" : 'Item Code',
                 "productName" : 'Product Name',
                 "availableQuantity":"Quantity"

@@ -104,7 +104,7 @@ class ProductViewEcommerce extends Component {
 		  const formValues = {
 			"user_ID": userid,
 			"product_ID": event.target.id,
-			"quantity": 1,
+			"quantity": this.state.totalQuanity,
 		  }
 		  if(quantityAdded >= availableQuantity){
 			this.setState({
@@ -162,7 +162,7 @@ class ProductViewEcommerce extends Component {
 			})
 		  }, 3000);
 		}
-	  }
+	}
 	addtowishlist(event) {
 		event.preventDefault();
 		var user_ID = localStorage.getItem('user_ID');
@@ -239,7 +239,7 @@ class ProductViewEcommerce extends Component {
 		$('#addQuantity').css('background-color', '#fff');
 		$('#decreaseQuantity').addClass('auto');
 		$('#decreaseQuantity').css('background-color', '#fff');
-		var recentCartData = this.props.recentCartData ? this.props.recentCartData[0].cartItems : [];
+		var recentCartData = this.props.recentCartData && this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
 		var productCartData = recentCartData.filter((a)=>a.product_ID == this.props.productID);
 		var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
 		if (Number(totalQuanity) > Number(this.state.quanityLimit) || quantityAdded >= Number(this.state.quanityLimit)) {
@@ -415,6 +415,23 @@ class ProductViewEcommerce extends Component {
 											<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 												<div id={this.state.productData._id} title={this.state.wishTooltip} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
 											</div>
+											{this.state.productData.availableQuantity > 0 ?
+												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding topspace detailtitle">Size</label>
+													{
+														['XS', 'S', 'L', 'XL', 'XXL'].map((a,i)=>{
+															return(
+																<label className="size col-lg-2 col-md-2 col-sm-2 col-xs-2 NOpadding">
+																	<input name="size" type="radio" />{a}
+																</label>
+															);
+														})
+													}
+
+												</div>
+												:
+												null
+											}
 										</div>
 									</div>
 
@@ -427,7 +444,7 @@ class ProductViewEcommerce extends Component {
 							<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding topspace detailtitle">DESCRIPTION</div>
 								<div className="spcbx topspace15"></div>
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding detailtxt topspace15">{this.state.productData.productDetails}</div>
+								<div className="col-md-12 col-sm-12 col-xs-12 col-lg-12 ttllist" dangerouslySetInnerHTML={{__html: this.state.productData.productDetails}}></div>
 							</div>
 							:
 							null

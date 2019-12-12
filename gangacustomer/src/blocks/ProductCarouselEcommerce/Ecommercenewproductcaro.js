@@ -81,6 +81,7 @@ class Ecommercenewproductcaro extends Component {
         "product_ID": event.target.id,
         "quantity": 1,
       }
+      console.log('form',formValues);
       if(quantityAdded >= availableQuantity){
         this.setState({
             messageData : {

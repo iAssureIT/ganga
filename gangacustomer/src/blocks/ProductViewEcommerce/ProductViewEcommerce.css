@@ -974,3 +974,16 @@ position:relative;
 .ttllist li{
     list-style: circle;
 }
+.size{
+    border: 1px solid #3333335e;
+    padding: 12px 6px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 14px;
+    text-align: center;
+}
+.size input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}

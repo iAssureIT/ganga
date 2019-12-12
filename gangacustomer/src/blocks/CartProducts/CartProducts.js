@@ -261,7 +261,7 @@ class CartProducts extends Component{
                                                         <td>
                                                             <tr>
                                                                 <td>
-                                                                    <a href={"/productdetails/" + data.productDetail.product_ID}><img className="img img-responsive cartProductImg" src={data.productDetail.productImage[0] ? data.productDetail.productImage[0] : '/images/notavailable.jpg'} /></a>
+                                                                    <a href={"/productdetails/" + data.product_ID}><img className="img img-responsive cartProductImg" src={data.productDetail.productImage[0] ? data.productDetail.productImage[0] : '/images/notavailable.jpg'} /></a>
                                                                 </td>
                                                                 <td className="cartProductDetail">
                                                                 <a href={"/productdetails/" + data.product_ID}><h5>{data.productDetail.productName}</h5></a>
@@ -277,7 +277,7 @@ class CartProducts extends Component{
                                                                         <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.productDetail.originalPrice}</span>
                                                                 }
                                                                 <br/>
-                                                                    <button productid={data.productDetail.product_ID} id={data._id} onClick={this.moveWishlist.bind(this)} className="btn btn-warning moveWish">Move to Wishlist</button>
+                                                                    <button productid={data.productDetail._id} id={data._id} onClick={this.moveWishlist.bind(this)} className="btn btn-warning moveWish">Move to Wishlist</button>
                                                                 </td>
                                                                 
                                                             </tr>

@@ -377,37 +377,14 @@ class ProductDetails extends Component {
 									</div>
 
 									<div className="row listspace">
-										{this.state.productData.featureList && this.state.productData.featureList.length>0 ?
+										{this.state.productData.featureList ?
 											<span className="col-md-12 col-lg-12 col-sm-12 col-xs-12 paddingleftzero paddingrightzero ttl" >
 												Features
 											</span>
 											:
 											null
 										}
-										<span className="col-md-12 col-sm-12 col-xs-12 col-lg-12 ttllist" >
-											{this.state.productData.featureList ?
-												<div className="">
-													<ul className="paddingleftzero">
-														{this.state.productData.featureList &&
-															this.state.productData.featureList.map((data, index) => {
-																return (
-																	<div className="" key={index}>
-																		<div className="">
-																			<span className="fa fa-circle-o tealColorfnt "></span>
-																			<span className="blackColor ">&nbsp;&nbsp;{data.feature}</span>
-																		</div>
-																	</div>
-																);
-															})
-
-														}
-													</ul>
-												</div>
-												:
-												null
-											}
-
-										</span>
+										<div className="col-md-12 col-sm-12 col-xs-12 col-lg-12 ttllist" dangerouslySetInnerHTML={{__html: this.state.productData.featureList}}></div>
 
 									</div>
 								</div>
@@ -417,10 +394,10 @@ class ProductDetails extends Component {
 						</div>
 						{
 							this.state.productData.productDetails ? 
-							<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+							<div id="gotoreview" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding topspace detailtitle">DESCRIPTION</div>
 								<div className="spcbx topspace15"></div>
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding detailtxt topspace15">{this.state.productData.productDetails}</div>
+								<div className="col-md-12 col-sm-12 col-xs-12 col-lg-12 ttllist" dangerouslySetInnerHTML={{__html: this.state.productData.productDetails}}></div>
 							</div>
 							:
 							null
