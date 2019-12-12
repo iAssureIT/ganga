@@ -30,7 +30,8 @@ class IAssureTable extends Component {
 		    "normalData" 				: true,
 		    "callPage" 					: true,
 		    "pageCount" 				: 0,
-		    "valI" 						: 1
+		    "valI" 						: 1,
+		    allid :null,
 		}
 		this.delete = this.delete.bind(this);
 	}
@@ -52,7 +53,25 @@ class IAssureTable extends Component {
             tableData	    : nextProps.tableData,
             dataCount 		: nextProps.dataCount,
         })
-        
+        if(nextProps){
+	        this.setState({
+	            tableData     : nextProps.tableData,
+	            completeDataCount : nextProps.completeDataCount,
+	        },()=>{
+		        this.paginationFunction();
+		        if(nextProps.unCheckedUser&&this.state.tableData){
+			        $('.allSelector').prop('checked',false);
+			        this.state.tableData.map((a,i)=>{
+			        this.setState({
+			        [a._id] : false,
+			        allid : []
+			        },()=>{
+			        this.props.setunCheckedUser(false)
+			        })
+			        });
+		        }
+        	})
+		}
         
     }
 	edit(event){
@@ -441,7 +460,73 @@ class IAssureTable extends Component {
         });
         
 	}
-	
+	selectedId(event){
+		var selectedProducts = this.state.allid?this.state.allid:[];
+		var data = event.target.id;
+		var value = event.target.checked;
+		console.log("data", data,value,selectedProducts);
+		this.setState({
+		[data] : value,
+		},()=>{
+		if(this.state[data] === true ){
+		selectedProducts.push(data);
+		this.setState({
+		allid : selectedProducts
+		},()=>{
+		// console.log('length',this.state.tableData.length,this.state.allid.length)
+		if(this.state.tableData.length===this.state.allid.length){
+		        $('.allSelector').prop('checked',true);
+		}
+		this.props.selectedProducts(this.state.allid);
+		})
+		}else{
+		$('.allSelector').prop('checked',false);
+		var indexVal = selectedProducts.findIndex(x=>x == data)
+		// console.log('indexVal',indexVal)
+		selectedProducts.splice(indexVal,1)
+		this.setState({
+		allid : selectedProducts
+		},()=>{
+		this.props.selectedProducts(this.state.allid);
+		})
+		}
+		})
+	}
+	checkAll(event) {
+      	// let allid =[];
+      	console.log('event.target.checked',event.target.checked)
+      	if(event.target.checked){
+      		var allid = []
+	        this.state.tableData.map((a,i)=>{
+	        allid.push(a._id)
+	        this.setState({
+	        	[a._id] : true,
+	        },()=>{
+		        	if(this.state.tableData.length===(i+1)){
+	      				this.setState({allid:allid},()=>{
+	      					console.log("here id true=======================",this.state.allid);
+    	this.props.selectedProducts(this.state.allid);
+	      				})
+		        	}
+		        })
+	        return a._id;
+	        });
+      	}else{
+		    this.state.tableData.map((a,i)=>{
+		        this.setState({
+		        	[a._id] : false,
+		        },()=>{
+		        	if(this.state.tableData.length===(i+1)){
+	      				this.setState({allid:[]},()=>{
+	      					console.log("here id=======================",this.state.allid);
+    	this.props.selectedProducts(this.state.allid);
+	      				})
+		        	}
+		        })
+		        return a._id;
+	        });
+	    }
+    }
 	render(){
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
@@ -494,6 +579,12 @@ class IAssureTable extends Component {
 									}
 	                            </tr>
 	                            <tr className="">
+	                            <th className="umDynamicHeader srpadd textAlignLeft">
+									<div className="uMDetailContainer">
+										<input type="checkbox" className="allSelector col-lg-1 col-md-1 col-sm-3 col-xs-1" name="allSelector" onChange={this.checkAll.bind(this)}/>
+								    	<span className="uMDetailCheck"></span>
+								    </div>
+								</th>
 		                            { this.state.tableHeading ?
 										Object.entries(this.state.tableHeading).map( 
 											([key, value], i)=> {
@@ -517,6 +608,7 @@ class IAssureTable extends Component {
 										(value, i)=> {													
 											return(
 												<tr key={i} className="">
+													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name={value._id} id={value._id} checked={this.state[value._id]} className="userCheckbox" onChange={this.selectedId.bind(this)} /></td>
 													
 													{
 														Object.entries(value).map( 
@@ -549,7 +641,6 @@ class IAssureTable extends Component {
 															}
 														)
 													}
-													
 													<td className="col-lg-1 textAlignCenter">
                                                         <i onClick={this.changeAttribute.bind(this)} data-attribute="featured" data-ID={value._id} data-attributeValue={value.featured} title={ (value.featured == true )? "Disable It" : "Enable It" } className={'fa fa-check-circle prodCheckboxDim ' + ( value.featured == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
                                                     </td>

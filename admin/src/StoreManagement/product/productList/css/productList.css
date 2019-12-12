@@ -134,14 +134,12 @@ margin-top: 10px;
 color: #fff;
 margin-top: 4px;
 padding: 5px 5px;
-cursor: pointer;
 }
 .prodStatUnpublish {
     background: #dd4b39;
 color: #fff;
 margin-top: 4px;
 padding: 5px 4px;
-cursor: pointer;
 }
 
 .prodStatDraft {
@@ -149,7 +147,6 @@ cursor: pointer;
 color: #fff;
 margin-top: 4px;
 padding: 5px 5px;
-cursor: pointer;
 }
 
 .publishAllProductsClient {

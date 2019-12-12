@@ -5,7 +5,11 @@ import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import '../css/productList.css';
 import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
+import 'font-awesome/css/font-awesome.min.css';
+import $ from "jquery";
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-buttons/styles/material.css";
 import "@syncfusion/ej2-inputs/styles/material.css";
@@ -33,7 +37,8 @@ class ProductList extends Component{
             },
             startRange : 0,
             limitRange : 100,
-            selector   : {}
+            selector   : {},
+            unCheckedProducts:false
         };
         window.scrollTo(0, 0);
     }
@@ -184,9 +189,7 @@ class ProductList extends Component{
               console.log('error', error);
         })
     }
-    filterProducts(filtertype, selectedvalue){
 
-    }
     filterProductCount(formValues){
         axios.post('/api/products/post/adminFilterProductsCount',formValues)
         .then((response)=>{
@@ -235,7 +238,36 @@ class ProductList extends Component{
              console.log("error = ",error);
         })
     }
+    selectedProducts(checkedProductsList){
+        // console.log('checkedUsersList', checkedUsersList);
+        this.setState({
+        checkedProducts : checkedProductsList,
+        })
 
+        // console.log("this.state.checkedUser",this.state.checkedUser);
+    }
+    setunCheckedProducts(value){
+        this.setState({
+        unCheckedProducts : value,
+        })
+    }
+    productBulkAction(event){
+
+    }
+    bulkActionChange(event){
+        console.log(this.state.checkedProducts);
+        this.setState({unCheckedProducts:false})
+        $('#bulkActionModal').show();
+        if (this.state.checkedProducts && this.state.checkedProducts.length>0) {
+            $('.confirmmsg, #bulkActionModalbtn').show();
+            $('.selectmsg').hide();
+        }else{
+            $('.selectmsg').show();
+            $('#bulkActionModalbtn, .confirmmsg').hide();
+            
+        }
+        
+    }
     render(){
     
     // maps the appropriate column to fields property
@@ -249,7 +281,7 @@ class ProductList extends Component{
     statusArray.push({status:"Unpublish"})
 
     const statusfields: object = { text: 'status', value: 'status' };
-        console.log(this.state.productCountByStatus)
+       
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
@@ -267,7 +299,7 @@ class ProductList extends Component{
                                               <span className="publishedBoxIcon bg-aqua"><i className="fa fa-shopping-cart"></i></span>
                                               <div className="publishedBoxContent">
                                                 <span className="publishedBoxtext">Total Products</span><br/>
-                                                <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus.total : 0 }</span>
+                                                <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].total : 0 }</span>
                                               </div>
                                             </div>
                                         </div>
@@ -276,7 +308,7 @@ class ProductList extends Component{
                                               <span className="publishedBoxIcon bg-green"><i className="fa fa-shopping-cart"></i></span>
                                               <div className="publishedBoxContent">
                                                 <span className="publishedBoxtext">Published Products</span><br/>
-                                                <span className="publishedBoxNumber">75</span>
+                                                <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].totalPublish : 0 }</span>
                                               </div>
                                             </div>
                                         </div>
@@ -285,7 +317,7 @@ class ProductList extends Component{
                                               <span className="publishedBoxIcon bg-redcolor"><i className="fa fa-shopping-cart"></i></span>
                                               <div className="publishedBoxContent">
                                                 <span className="publishedBoxtext">Unpublished Products</span><br/>
-                                                <span className="publishedBoxNumber">15</span>
+                                                <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].totalUnpublish : 0 }</span>
                                               </div>
                                             </div>
                                         </div>
@@ -294,19 +326,19 @@ class ProductList extends Component{
                                               <span className="publishedBoxIcon bg-yellow"><i className="fa fa-shopping-cart"></i></span>
                                               <div className="publishedBoxContent">
                                                 <span className="publishedBoxtext">Draft Products</span><br/>
-                                                <span className="publishedBoxNumber">10</span>
+                                                <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].totalDraft : 0 }</span>
                                               </div>
                                             </div>
                                         </div>
                                         <div className="searchProductFromList col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp NoPadding">
                                             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Bulk Action</label>
-                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown" onChange={this.filterProducts.bind(this, "status")} style={{width:'200px'}} >
+                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown" data-toggle="modal" data-target="#bulkActionModal" onChange={this.bulkActionChange.bind(this, "status")} style={{width:'200px'}} >
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" disabled selected>-- Select --</option>   
-                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Publish">Publish</option>
-                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Draft">Draft</option>
-                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Unpublish</option> 
-                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Delete</option>     
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Publish">Publish selected products</option>
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Draft">Draft selected products</option>
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Unpublish selected products</option> 
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Delete selected products</option>     
                                                 </select>
                                             </div>  
                                             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
@@ -382,12 +414,40 @@ class ProductList extends Component{
                                         tableData={this.state.tableData}
                                         getData={this.getData.bind(this)}
                                         tableObjects={this.state.tableObjects}
+                                        selectedProducts={this.selectedProducts.bind(this)}
                                         getSearchText = {this.getSearchText.bind(this)}
+                                        setunCheckedProducts={this.setunCheckedProducts.bind(this)}
+                                        unCheckedProducts={this.state.unCheckedProducts}
                                         />
                                     </div>
                                 </div>
                             </div>
                         </section>
+                            </div>
+                            <div className="modal" id="bulkActionModal" role="dialog">
+                              <div className="modal-dialog">
+                                <div className="modal-content">
+                                  <div className="modal-header">
+                                    <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                    <h3 className="modalTitle">Bulk Action</h3>
+                                  </div>
+                                  <div className="modal-body">
+                                    <div className="confirmmsg" style={{display:"none"}}>
+                                        <label>Do you want to ?</label>
+                                    </div>
+                                    <div className="selectmsg" style={{display:"none"}}>
+                                        <label>Please select products to perform bulk action</label>
+                                    </div>
+                                    <br/>
+                                  </div>
+                                  <div className="modal-footer">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                      <a href="#" className="btn btn-warning" id="bulkActionModalbtn" onClick={this.productBulkAction.bind(this)} >Yes</a>
+                                      <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                     </div>
                 </div>
