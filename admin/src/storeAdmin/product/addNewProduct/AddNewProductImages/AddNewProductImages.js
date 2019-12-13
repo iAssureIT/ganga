@@ -118,7 +118,7 @@ class AddNewProductImages extends Component{
                 function getConfig(){
                     return new Promise(function(resolve,reject){
                         axios
-                           .get('/api/projectSettings/get/one/s3')
+                           .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
                            .then((response)=>{
                                 // console.log("proj set res = ",response.data);
                                 const config = {
@@ -161,7 +161,7 @@ class AddNewProductImages extends Component{
         function getConfig(){
             return new Promise(function(resolve,reject){
                 axios
-                   .get('/api/projectSettings/get/one/s3')
+                   .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
                    .then((response)=>{
                         // console.log("proj set res = ",response.data);
                         const config = {

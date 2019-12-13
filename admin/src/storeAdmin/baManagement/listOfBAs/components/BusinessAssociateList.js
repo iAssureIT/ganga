@@ -440,7 +440,7 @@ export default class BusinessAssociateList extends Component {
                                    onClick={this.ShowForm.bind(this)} name={index}  data-child={data._id+'-'+index} id={data._id}>
                                    { data.logo=="" ?
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 baLogoDiv">
-                                      <img src="images/defaultimg.jpg" className="supplierLogoImage"></img>
+                                      <img src="images/noimage.png" className="supplierLogoImage"></img>
                                     </div>
                                     :
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 baLogoDiv">

@@ -248,7 +248,7 @@ export default class LocationDetails extends Component{
     var baId = this.props.baId;
     
     if($('#LocationsDetail').valid() && this.state.pincodeExists ){
-      console.log(this.props.BAInfo);
+      $('.fullpageloader').show();
       var formValues = {
                 'baID'            : baId,
                 locationDetails   : [
@@ -267,7 +267,7 @@ export default class LocationDetails extends Component{
             }
     axios.patch("/api/businessassociates/patch/updateBaLoc",formValues)
             .then((response)=>{
-              console.log(response);        
+              $('.fullpageloader').hide();       
               swal({
                     title : 'Location details are added successfully',
                   });
@@ -383,6 +383,7 @@ export default class LocationDetails extends Component{
     locationEditUpdate(event){
       event.preventDefault();
       $(".addLocationForm").show();
+
       var idOne = $(event.currentTarget).attr('id');
       this.setState({
           "updateButton"    : true,
@@ -424,6 +425,7 @@ export default class LocationDetails extends Component{
     }
   updateLocationDetails(event){
     event.preventDefault();
+    $('.fullpageloader').show();
     var baId = this.props.baId;
     var locationId = this.state.locationId;
     var formValues = {
@@ -445,7 +447,7 @@ export default class LocationDetails extends Component{
    
     axios.patch("/api/businessassociates/patch/updateOneBaLoc",formValues)
             .then((response)=>{
-              console.log(response);        
+              $('.fullpageloader').hide();     
               swal({
                     title : 'Location details are updated successfully'
                   });

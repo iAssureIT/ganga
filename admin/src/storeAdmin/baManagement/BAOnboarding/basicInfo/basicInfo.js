@@ -7,6 +7,7 @@ import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
 import LocationDetails    from '../locationDetails/locationDetails.js';
 import S3FileUpload           from 'react-s3';
+import Loader from '../../../../coreAdmin/common/loader/Loader.js';
 
 class BasicInfo extends Component {
     
@@ -247,7 +248,7 @@ class BasicInfo extends Component {
       event.preventDefault();
       
       if($('#BasicInfo').valid() && !this.state.checkBAExists){
-
+          $('.fullpageloader').show();
           var userForm = {
             'companyName'      : this.state.companyname,
             'pwd'              : 'gangaexpress123',
@@ -349,11 +350,11 @@ class BasicInfo extends Component {
 
           axios.post("/api/businessassociates/post",formValues)
                 .then((response)=>{
+                  $('.fullpageloader').hide();
                   this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
                   swal({
                         text : 'Business Associate basic info is added successfully! You can also add location and contact details.',
                       });
-
                   // $("#BasicInfo").validate().reset();
                   // $('.inputText').removeClass('addclas');   
                 })
@@ -368,7 +369,7 @@ class BasicInfo extends Component {
   updateBA(event){
      event.preventDefault();
      if($('#BasicInfo').valid()){
-
+          $('.fullpageloader').show();
           var formValues = {
               'baID'             : this.state.baId,
               'companyName'      : this.state.companyname,
@@ -451,6 +452,7 @@ class BasicInfo extends Component {
   updateBAFunct(formValues){
      axios.patch("/api/businessassociates/patch",formValues)
           .then((response)=>{
+            $('.fullpageloader').hide();
             this.setState({'basicInfoAdded':1, 'baId' : this.state.baId, 'BAInfo':formValues});
             swal({
                   text  : "Business Associate basic info is updated.",
@@ -651,6 +653,7 @@ class BasicInfo extends Component {
             {!this.state.basicInfoAdded && <div className="">
               <div className="col-lg-12 col-md-12 hidden-sm hidden-xs secdiv"></div>
                  <section className="content">
+                  <Loader type="fullpageloader" />
                   <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                         <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
@@ -747,7 +750,6 @@ class BasicInfo extends Component {
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addpicmr marginsBottom" id="hide">
                                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZeroo"> {this.state.logoUrl != "" ? "Change Logo" : "Add Logo"} </label>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
-                                            
                                             <img src={this.state.logoUrl != '' ? this.state.logoUrl : "/images/uploadimg.png"} className="img-responsive logoStyle" />
                                               <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" onChange={this.uploadLogo.bind(this)}  name="upload-logo"/>
                                           </div>

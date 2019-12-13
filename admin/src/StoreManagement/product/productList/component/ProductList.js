@@ -271,7 +271,7 @@ class ProductList extends Component{
             this.setState({
                 messageData : {
                     "type" : "outpage",
-                    "icon" : "fa fa-exclamation",
+                    "icon" : "fa fa-correct",
                     "message" : "Selected products are "+this.state.selectedAction.toLowerCase()+" successfully.",
                     "class": "success",
                     "autoDismiss" : true
@@ -291,13 +291,20 @@ class ProductList extends Component{
             //this.getData(this.state.startRange, this.state.limitRange);
             })
             .catch((error)=>{
-                 console.log("error = ",error);
+                this.setState({
+                messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-exclamation",
+                    "message" : "Failed to perform action! ",
+                    "class": "danger",
+                    "autoDismiss" : true
+                }
+                });
             })  
     }
     bulkActionChange(event){
         console.log(event.target.value);
         if (event.target.value) {
-
             this.setState({ unCheckedProducts   : false, selectedAction: event.target.value, messageData:{} })
             $('#bulkActionModal').show();
             $('.confirmmsg label').html('');
@@ -309,8 +316,63 @@ class ProductList extends Component{
                 $('.selectmsg').show();
                 $('#bulkActionModalbtn, .confirmmsg').hide();
             }
-        }
+        }   
+    }
+    saveProductImages(productImage,productID,productImageArray){
+        var productImage    = productImage;
+        var formValues = {
+            "product_ID"        : productID,
+            "productImage"      : productImageArray,
+            "status"            : "New"
+        };
+        // console.log('formValues', formValues);
+        axios.patch('/api/products/patch/gallery',formValues)
+            .then( (res) =>{
+                this.setState({
+                messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-correct",
+                    "message" : "Product images are updated successfully",
+                    "class": "success",
+                    "autoDismiss" : true
+                    }
+                })
+                //this.props.history.push('/product-list')
+            })
+            .catch((error) =>{
+                this.setState({
+                messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-exclamation",
+                    "message" : "Failed to uppdate product images!",
+                    "class": "success",
+                    "autoDismiss" : true
+                    }
+                })
+                console.log("error = ", error);
+            });
         
+        function getConfig(){
+            return new Promise(function(resolve,reject){
+                axios
+                   .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
+                   .then((response)=>{
+                        // console.log("proj set res = ",response.data);
+                        const config = {
+                            bucketName      : response.data.bucket,
+                            dirName         : 'propertiesImages',
+                            region          : response.data.region,
+                            accessKeyId     : response.data.key,
+                            secretAccessKey : response.data.secret,
+                        }
+                        resolve(config);                           
+                    })
+                   .catch(function(error){
+                        console.log(error);
+                   })
+
+            })
+        }
     }
     render(){
     
@@ -463,6 +525,7 @@ class ProductList extends Component{
                                         getSearchText = {this.getSearchText.bind(this)}
                                         setunCheckedProducts={this.setunCheckedProducts.bind(this)}
                                         unCheckedProducts={this.state.unCheckedProducts}
+                                        saveProductImages={this.saveProductImages.bind(this)}
                                         />
                                     </div>
                                 </div>

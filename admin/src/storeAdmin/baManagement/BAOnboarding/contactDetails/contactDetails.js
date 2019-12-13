@@ -277,6 +277,7 @@ class ContactDetails extends Component {
       event.preventDefault();
       console.log('valid',$('#ContactDetail').valid())
       if($('#ContactDetail').valid()){
+        $('.fullpageloader').show();
         var baId = this.props.baId;
         console.log('contact',baId);
           var formValues = {
@@ -292,7 +293,7 @@ class ContactDetails extends Component {
           //console.log(formValues);
           axios.patch("/api/businessassociates/patch/updateBaContact",formValues)
             .then((response)=>{
-              console.log(response);        
+              $('.fullpageloader').hide();      
               swal({
                     title : 'Contact details are added successfully'
                   });
@@ -368,6 +369,7 @@ class ContactDetails extends Component {
 
     updatecontactdetailAddBtn(event){
       event.preventDefault();
+      $('.fullpageloader').show();
       var baId = this.props.baId;
       var contactId = $(event.currentTarget).attr('data-id');
       var formValues = {
@@ -386,7 +388,7 @@ class ContactDetails extends Component {
                     
       axios.patch("/api/businessassociates/patch/updateOneBaContact",formValues)
             .then((response)=>{
-              console.log(response);        
+              $('.fullpageloader').hide();        
               swal({
                     title : 'Contact details are updated successfully'
                   });
@@ -401,6 +403,7 @@ class ContactDetails extends Component {
                 
               });
              
+             this.props.history.push('/ba-list');
             })
             .catch((error)=>{
                 console.log('error', error);
