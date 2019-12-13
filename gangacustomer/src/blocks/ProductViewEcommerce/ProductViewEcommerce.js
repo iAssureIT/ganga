@@ -12,7 +12,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Loadable from 'react-loadable';
 import ProductViewEcommerceDetailsReviewFAQ from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
-
+import {ntc} from './ntc.js';
 const OwlCarousel = Loadable({
 	loader: () => import('react-owl-carousel'),
 	loading() {
@@ -57,7 +57,13 @@ class ProductViewEcommerce extends Component {
 			this.setState({
 				productData: response.data,
 				selectedImage: response.data.productImage[0],
-				quanityLimit: response.data.availableQuantity
+				quanityLimit: response.data.availableQuantity,
+				selectedColor : response.data.color,
+				selectedSize : response.data.size
+			},()=>{
+				console.log('selectedColor',this.state.selectedColor);
+				this.getProductData();
+				this.getProductSizeData();
 			})
 			this.forceUpdate();
 		})
@@ -67,6 +73,52 @@ class ProductViewEcommerce extends Component {
 		this.getWishData();
 		this.reviewAverage();
 		this.getMyReview();
+	}
+	getProductData(){
+		axios.get("/api/products/get/productcode/" + this.state.productData.productCode)
+		.then((response) => {
+			let mymap = new Map(); 
+  
+			var unique = response.data.filter(el => { 
+				const val = mymap.get(el.color); 
+				if(val) { 
+					if(el._id < val) { 
+						mymap.delete(el.color); 
+						mymap.set(el.color, el._id); 
+						return true; 
+					} else { 
+						return false; 
+					} 
+				} 
+				mymap.set(el.color, el._id); 
+				return true; 
+			}); 
+			
+			console.log('unique', unique);
+			this.setState({
+				relatedProductArray : unique,
+				productSizeArray 	: unique,
+			})
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
+	}
+	getProductSizeData(){
+		axios.get("/api/products/get/productcode/" + this.state.productData.productCode)
+		.then((response) => {
+			var x = response.data.filter((a)=>{
+				return (a.color).toUpperCase() == (this.state.selectedColor).toUpperCase()
+			})
+
+			console.log('pc', response.data);
+			this.setState({
+				productSizeArray : x
+			})
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
 	}
 	getWishData(){
 		const userid = localStorage.getItem('user_ID');
@@ -303,6 +355,48 @@ class ProductViewEcommerce extends Component {
 		  console.log('error', error);
 		})
 	}
+	setNewProduct(event){
+		var id = event.target.id;
+		this.setState({
+			selectedColor : event.target.value
+		})
+		axios.get("/api/products/get/one/" + id)
+		.then((response) => {
+			
+			this.setState({
+				productData: response.data,
+				selectedImage: response.data.productImage[0],
+				quanityLimit: response.data.availableQuantity
+			},()=>{
+				this.getProductSizeData();
+			})
+			this.forceUpdate();
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
+	}
+	setNewSizeProduct(event){
+		var id = event.target.id;
+		this.setState({
+			selectedSize : event.target.value
+		})
+		axios.get("/api/products/get/one/" + id)
+		.then((response) => {
+			
+			this.setState({
+				productData: response.data,
+				selectedImage: response.data.productImage[0],
+				quanityLimit: response.data.availableQuantity
+			},()=>{
+				this.getProductSizeData();
+			})
+			this.forceUpdate();
+		})
+		.catch((error) => {
+			console.log('error', error);
+		})
+	}
 	render() {
 		const props = { width: 400, height: 350, zoomWidth: 750, offset: { vertical: 0, horizontal: 30 }, zoomLensStyle: 'cursor: zoom-in;', zoomStyle: 'z-index:1000;background-color:#fff; height:500px;width:750px;box-shadow: 0 4px 20px 2px rgba(0,0,0,.2);border-radius: 8px;', img: this.state.selectedImage ? this.state.selectedImage : "/images/notavailable.jpg" };
 		return (
@@ -416,22 +510,52 @@ class ProductViewEcommerce extends Component {
 												<div id={this.state.productData._id} title={this.state.wishTooltip} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
 											</div>
 											{this.state.productData.availableQuantity > 0 ?
-												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-													<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding topspace detailtitle">Size</label>
-													{
-														['XS', 'S', 'L', 'XL', 'XXL'].map((a,i)=>{
+												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+													<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt15 detailtitle">Color</label>
+													{this.state.relatedProductArray && this.state.relatedProductArray.length>0?
+														this.state.relatedProductArray.map((a,i)=>{
+															var color  = ntc.name(a.color);
 															return(
-																<label className="size col-lg-2 col-md-2 col-sm-2 col-xs-2 NOpadding">
-																	<input name="size" type="radio" />{a}
-																</label>
+																<div className="col-lg-1 col-md-1 col-sm-1 col-xs-2 NOpadding">
+																	<label title={color[1]} className="colorBox">
+																		<input checked={this.state.selectedColor == a.color ? true : false} value={a.color} name="color" type="radio" id={a._id} onChange={this.setNewProduct.bind(this)}/>
+																		<span style={{'backgroundColor' : a.color}} className="color col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding"></span>
+																	</label>
+																</div>
 															);
 														})
+														:
+														null
 													}
 
 												</div>
 												:
 												null
 											}
+											{this.state.productData.availableQuantity > 0 ?
+												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+													<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt15 detailtitle">Size</label>
+													{this.state.productSizeArray && this.state.productSizeArray.length>0?
+														this.state.productSizeArray.map((a,i)=>{
+															return(
+																<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 NOpaddingLeft">
+																	<label className="size col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+																		<input checked={this.state.selectedSize == a.size ? true : false} value={a.size} name="size" type="radio" id={a._id} onChange={this.setNewSizeProduct.bind(this)}/>
+																		<span title={a.size} className="checkmark col-lg-12 col-md-12 col-sm-12 col-xs-12">{a.size}</span>
+																	</label>
+																</div>
+															);
+														})
+														:
+														null
+													}
+
+												</div>
+												:
+												null
+											}
+											
+
 										</div>
 									</div>
 

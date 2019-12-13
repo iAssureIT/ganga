@@ -480,7 +480,7 @@ export default class MyOrders extends Component {
                                           <p>Quantity: {pdata.quantity}</p>
                                         </div>  
                                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6 NOpadding">
-                                          <span><i className="fa fa-inr"></i>&nbsp;{pdata.total}</span> &nbsp;
+                                          <span><i className="fa fa-inr"></i>&nbsp;{pdata.subTotal}</span> &nbsp;
                                         </div>
                                         <div className="col-lg-2 col-md-2 col-sm-3 col-xs-6 NOpadding">
                                         {
@@ -541,7 +541,7 @@ export default class MyOrders extends Component {
                               <p className="orderfootertag"><span>Ordered On: </span>{moment(data.createdAt).format("DD MMMM YYYY")} </p>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                              <p className="orderfootertag2"><span>Ordered Total: </span> <i className="fa fa-inr"></i>&nbsp;{data.totalAmount} </p>
+                              <p className="orderfootertag2"><span>Ordered Total: </span> <i className="fa fa-inr"></i>&nbsp;{data.total} </p>
                             </div>
                           </div>
                         </div>

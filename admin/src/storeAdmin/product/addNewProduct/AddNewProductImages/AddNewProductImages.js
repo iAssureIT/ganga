@@ -120,7 +120,7 @@ class AddNewProductImages extends Component{
                         axios
                            .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
                            .then((response)=>{
-                                // console.log("proj set res = ",response.data);
+                                console.log("proj set res = ",response.data);
                                 const config = {
                                     bucketName      : response.data.bucket,
                                     dirName         : 'propertiesImages',

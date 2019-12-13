@@ -1,5 +1,4 @@
 import axios from 'axios';
-import $ from 'jquery';
 
 export function getCartData() {
 
@@ -12,8 +11,6 @@ export function getCartData() {
     if (userid) {
       return axios.get("/api/carts/get/cartproductlist/"+userid)
         .then((response)=>{
-            // $('.fullpageloader').hide();
-
         		dispatch(fetchcartdata(response.data));
         })
         .catch((error)=>{
