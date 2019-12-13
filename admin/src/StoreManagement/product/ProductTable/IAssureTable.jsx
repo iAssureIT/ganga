@@ -529,10 +529,10 @@ class IAssureTable extends Component {
     }
 	render(){
         return (
-	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
+	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NoPadding">	
 		       	{
 		       		this.state.tableObjects.paginationApply == true ?
-			       		<div className="col-lg-1 col-md-1 col-sm-12 col-xs-12 NOpadding">
+			       		<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 							<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Show</label>
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
 								<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
@@ -548,14 +548,17 @@ class IAssureTable extends Component {
 					:
 					null        
 		       	}
-				  
+				<div className="col-lg-3  col-md-3  col-xs-12 col-sm-12 text-center mt50">
+	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Filtered Products: <span >{this.state.dataCount}</span> </label>
+				</div>  
 				{
 		       		this.state.tableObjects.searchApply == true ? 
-			       		<div className="col-lg-4  col-md-4  col-xs-12 col-sm-12 marginTop17 NOpadding pull-right">
+			       		<div className="col-lg-6  col-md-6  col-xs-12 col-sm-12 marginTop17 pull-right">
 			        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
 			        		<div className="input-group">
-						        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
-						    	<span className="input-group-addon"><i className="fa fa-search"></i></span>
+						        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right form-control" 
+						        ref="tableSearch" id="tableSearch" name="tableSearch" placeholder="Search by Product Name, Brand, Section, Category, Item code"/>
+						    	<span className="input-group-addon" ><i className="fa fa-search"></i></span>
 						    </div>
 			        	</div>	
 		        	:
@@ -692,7 +695,7 @@ class IAssureTable extends Component {
 										}
 									) 	
 									:
-									<tr className="trAdmin"><td colSpan={9} className="noTempData textAlignCenter">No Record Found!</td></tr>               		
+									<tr className="trAdmin"><td colSpan={12} className="noTempData textAlignCenter">No Record Found!</td></tr>               		
 								}
 	                    	</tbody>
 	                    </table>

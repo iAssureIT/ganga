@@ -4,6 +4,7 @@ import IAssureTable           from "../../ProductTable/IAssureTable.jsx";
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import '../css/productList.css';
+import Message from '../../../../coreAdmin/common/message/Message.js';
 import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
@@ -85,7 +86,8 @@ class ProductList extends Component{
                     vendorArray.push({id: data.vendor_ID, vendor: data.companyName })
                 });
                 this.setState({
-                    vendorArray: vendorArray
+                    vendorArray: vendorArray,
+                    messageData:{}
                 })
 
             })
@@ -102,7 +104,8 @@ class ProductList extends Component{
             sectionArray.push({id: data._id, section: data.section })
         });
         this.setState({
-          sectionArray: sectionArray
+          sectionArray: sectionArray,
+          messageData:{}
         })
 
       })
@@ -119,7 +122,8 @@ class ProductList extends Component{
             categoryArray.push({id: data._id, category: data.category })
         });
         this.setState({
-          categoryArray: categoryArray
+          categoryArray: categoryArray,
+          messageData:{}
         })
         
       })
@@ -140,6 +144,7 @@ class ProductList extends Component{
         })
     }
     getData(startRange, limitRange){
+        this.setState({ messageData : {} })
         var data = {
             startRange : startRange,
             limitRange : limitRange
@@ -178,7 +183,8 @@ class ProductList extends Component{
         this.getData(this.state.startRange, this.state.limitRange);
     }
     getSearchText(searchText){ 
-        axios.get("/api/products/get/search/"+searchText)
+
+        axios.get("/api/products/get/adminsearch/"+searchText)
         .then((response)=>{ 
             this.setState({
                 tableData : response.data,
@@ -202,8 +208,8 @@ class ProductList extends Component{
              console.log("error = ",error);
         })
     }
-    handleChangeVendor(event){
-        
+    handleChangeFilter(event){
+        this.setState({messageData:{}})
         var currentSelection = event.element.getAttribute("id");
         var selector = this.state.selector;
 
@@ -230,7 +236,8 @@ class ProductList extends Component{
         axios.post('/api/products/post/list/adminFilterProducts',selector)
         .then((response)=>{
             this.setState({
-                tableData : response.data
+                tableData : response.data,
+                
             })
             //this.getData(this.state.startRange, this.state.limitRange);
         })
@@ -242,6 +249,7 @@ class ProductList extends Component{
         // console.log('checkedUsersList', checkedUsersList);
         this.setState({
         checkedProducts : checkedProductsList,
+        messageData:{}
         })
 
         // console.log("this.state.checkedUser",this.state.checkedUser);
@@ -249,22 +257,58 @@ class ProductList extends Component{
     setunCheckedProducts(value){
         this.setState({
         unCheckedProducts : value,
+        messageData:{}
         })
     }
     productBulkAction(event){
-
+        
+        var formValues= {
+            selectedProducts    : this.state.checkedProducts,
+            selectedAction      : this.state.selectedAction
+        }
+        axios.patch('/api/products/patch/productBulkAction',formValues)
+        .then((response)=>{
+            this.setState({
+                messageData : {
+                    "type" : "outpage",
+                    "icon" : "fa fa-exclamation",
+                    "message" : "Selected products are "+this.state.selectedAction.toLowerCase()+" successfully.",
+                    "class": "success",
+                    "autoDismiss" : true
+                }
+            })
+            
+            axios.post('/api/products/post/list/adminFilterProducts',this.state.selector)
+            .then((response)=>{
+                this.setState({
+                    tableData : response.data
+                })
+                //this.getData(this.state.startRange, this.state.limitRange);
+            })
+            .catch((error)=>{
+                 console.log("error = ",error);
+            })
+            //this.getData(this.state.startRange, this.state.limitRange);
+            })
+            .catch((error)=>{
+                 console.log("error = ",error);
+            })  
     }
     bulkActionChange(event){
-        console.log(this.state.checkedProducts);
-        this.setState({unCheckedProducts:false})
-        $('#bulkActionModal').show();
-        if (this.state.checkedProducts && this.state.checkedProducts.length>0) {
-            $('.confirmmsg, #bulkActionModalbtn').show();
-            $('.selectmsg').hide();
-        }else{
-            $('.selectmsg').show();
-            $('#bulkActionModalbtn, .confirmmsg').hide();
-            
+        console.log(event.target.value);
+        if (event.target.value) {
+
+            this.setState({ unCheckedProducts   : false, selectedAction: event.target.value, messageData:{} })
+            $('#bulkActionModal').show();
+            $('.confirmmsg label').html('');
+            $('.confirmmsg label').append("Do you want to "+event.target.value.toLowerCase()+" selected products ?")
+            if (this.state.checkedProducts && this.state.checkedProducts.length>0) {
+                $('.confirmmsg, #bulkActionModalbtn').show();
+                $('.selectmsg').hide();
+            }else{
+                $('.selectmsg').show();
+                $('#bulkActionModalbtn, .confirmmsg').hide();
+            }
         }
         
     }
@@ -287,6 +331,7 @@ class ProductList extends Component{
                 <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <section className="content">
+                        <Message messageData={this.state.messageData} />
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                                 <div className="row">
                                     <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
@@ -333,18 +378,18 @@ class ProductList extends Component{
                                         <div className="searchProductFromList col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp NoPadding">
                                             <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Bulk Action</label>
-                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown" data-toggle="modal" data-target="#bulkActionModal" onChange={this.bulkActionChange.bind(this, "status")} style={{width:'200px'}} >
+                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown" data-toggle="modal" data-target="#bulkActionModal" onChange={this.bulkActionChange.bind(this)} style={{width:'200px'}} >
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" disabled selected>-- Select --</option>   
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Publish">Publish selected products</option>
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Draft">Draft selected products</option>
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Unpublish selected products</option> 
-                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Delete selected products</option>     
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Delete">Delete selected products</option>     
                                                 </select>
                                             </div>  
                                             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Vendor</label>
                                                 <MultiSelectComponent id="vendorChange" dataSource={this.state.vendorArray}
-                                                    change={this.handleChangeVendor.bind(this)}
+                                                    change={this.handleChangeFilter.bind(this)}
                                                     fields={fields} placeholder="Select Vendor" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
                                                     <Inject services={[CheckBoxSelection]} />
                                                 </MultiSelectComponent>
@@ -352,7 +397,7 @@ class ProductList extends Component{
                                             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Section</label>
                                                 <MultiSelectComponent id="sectionChange" dataSource={this.state.sectionArray}
-                                                    change={this.handleChangeVendor.bind(this)}
+                                                    change={this.handleChangeFilter.bind(this)}
                                                     fields={sectionfields} placeholder="Select Section" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
                                                     <Inject services={[CheckBoxSelection]} />
                                                 </MultiSelectComponent>
@@ -360,7 +405,7 @@ class ProductList extends Component{
                                             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Category</label>
                                                 <MultiSelectComponent id="categoryChange" dataSource={this.state.categoryArray}
-                                                    change={this.handleChangeVendor.bind(this)}
+                                                    change={this.handleChangeFilter.bind(this)}
                                                     fields={categoryfields} placeholder="Select Category" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
                                                     <Inject services={[CheckBoxSelection]} />
                                                 </MultiSelectComponent>
@@ -368,7 +413,7 @@ class ProductList extends Component{
                                             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Status</label>
                                                 <MultiSelectComponent id="statusChange" dataSource={statusArray}
-                                                    change={this.handleChangeVendor.bind(this)}
+                                                    change={this.handleChangeFilter.bind(this)}
                                                     fields={statusfields} placeholder="Select Status" mode="CheckBox"  selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
                                                     <Inject services={[CheckBoxSelection]} />
                                                 </MultiSelectComponent>  
@@ -442,7 +487,7 @@ class ProductList extends Component{
                                   </div>
                                   <div className="modal-footer">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                      <a href="#" className="btn btn-warning" id="bulkActionModalbtn" onClick={this.productBulkAction.bind(this)} >Yes</a>
+                                      <a href="#" className="btn btn-warning" id="bulkActionModalbtn" data-dismiss="modal" onClick={this.productBulkAction.bind(this)} >Yes</a>
                                       <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                   </div>

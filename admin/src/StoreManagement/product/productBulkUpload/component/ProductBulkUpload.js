@@ -97,6 +97,8 @@ class AddNewBulkProduct extends Component {
         this.setState({
           section: event.target.value,
           section_ID: event.target.value.split('|')[1],
+          messageData : {},
+          fileurl:null
         })
         axios.get('/api/category/get/list/' + event.target.value.split('|')[1])
           .then((response) => {
@@ -160,7 +162,8 @@ class AddNewBulkProduct extends Component {
         const target = event.target;
         const name = target.name;
         this.setState({
-            [name]: event.target.value
+            [name]: event.target.value,
+            messageData : {}
         });
     }
     getVendorList() {
@@ -184,7 +187,7 @@ class AddNewBulkProduct extends Component {
           .then((response) => {
             console.log(response.data);
             if (response.data) {
-                this.setState({fileurl:response.data.templateUrl})    
+                this.setState({fileurl:response.data.templateUrl, messageData : {}})    
             }else{
                 this.setState({
                     fileurl:null,
@@ -248,7 +251,6 @@ class AddNewBulkProduct extends Component {
                                     <option disabled>{"No vendor added"}</option>
                                 }
                             </select>
-                            {this.state.vendor ? null : <span>Please select a vendor for bulk upload</span>}
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 inputFields marginTopp">
                             <label>Section <i className="redFont">*</i></label>

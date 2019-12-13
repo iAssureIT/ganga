@@ -202,3 +202,9 @@ padding: 5px 5px;
 .e-multiselect.e-checkbox .e-multi-select-wrapper{
     padding: 0px 5px !important;
 }
+.iAssureITtable-bordered > thead > tr > th{
+    font-size:12px;
+}
+.mt50{
+    margin-top: 50px;
+}

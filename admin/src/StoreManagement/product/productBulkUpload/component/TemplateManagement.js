@@ -84,7 +84,9 @@ class TemplateManagement extends Component {
     this.setState({
       section: event.target.value,
       section_ID: event.target.value.split('|')[1],
+      messageData : {}
     })
+
     axios.get('/api/category/get/list/' + event.target.value.split('|')[1])
       .then((response) => {
         this.setState({
@@ -102,6 +104,7 @@ class TemplateManagement extends Component {
         this.setState({
           category: event.target.value,
           category_ID: event.target.value.split('|')[1],
+          messageData : {}
         })
     }
     docBrowse(e){
@@ -114,7 +117,7 @@ class TemplateManagement extends Component {
             var ext = fileName.split('.').pop();  
             console.log('ext',ext)
             if(ext=="xlsx" || ext=="xls"){
-                this.setState({ fileObj: fileObj, validFormat: true },()=>{});
+                this.setState({ fileObj: fileObj, validFormat: true, messageData : {} },()=>{});
             }else{
 
                 this.setState({
@@ -249,6 +252,7 @@ class TemplateManagement extends Component {
         });
     }
     getData(startRange, limitRange){
+      this.setState({ messageData : {} })
         this.getDataCount();
         var data={
             startRange : startRange,

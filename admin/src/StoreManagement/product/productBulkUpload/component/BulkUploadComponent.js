@@ -119,6 +119,7 @@ constructor(props) {
       var ext = fileName.split('.').pop();
       if (ext === 'csv' || ext === 'xlsx' || ext === 'xls') {
          this.handleFile(files[0]);
+         this.setState({ messageData : {} })
       }else{
         this.fileInput.value = '';
 
@@ -304,7 +305,7 @@ constructor(props) {
                             "icon" : "fa fa-correct",
                             "message" : response.data.message,
                             "class": "success",
-                            "autoDismiss" : true
+                            "autoDismiss" : false
                           }
                     })
                     
