@@ -49,7 +49,9 @@ class EcommerceProductCarousel extends Component {
       },
       productType: props.type,
       newProducts: [],
-      modalIDNew: []
+      modalIDNew: [],
+      sizeCollage: false,
+      relatedProductArray: []
     };
   }
 
@@ -59,75 +61,154 @@ class EcommerceProductCarousel extends Component {
   
   addtocart(event) {
     event.preventDefault();
-    if(user_ID){
+    var productCode = event.target.getAttribute('productCode');
+    var clr = event.target.getAttribute('color');
+
+    if (user_ID) {
       var id = event.target.id;
       const userid = localStorage.getItem('user_ID');
       var availableQuantity = event.target.getAttribute('availableQuantity');
       var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
-      var productCartData = recentCartData.filter((a)=>a.product_ID == id);
-      var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
-      
+      var productCartData = recentCartData.filter((a) => a.product_ID == id);
+      var quantityAdded = productCartData.length > 0 ? productCartData[0].quantity : 0;
+
       const formValues = {
         "user_ID": userid,
         "product_ID": event.target.id,
         "quantity": 1,
       }
-      if(quantityAdded >= availableQuantity){
-        this.setState({
-            messageData : {
-              "type" : "outpage",
-              "icon" : "fa fa-check-circle",
-              "message" : "Last "+availableQuantity+" items taken by you",
-              "class": "success",
-              "autoDismiss" : true
-            }
-        })
-        setTimeout(() => {
-            this.setState({
-                messageData   : {},
-            })
-        }, 3000);
-      }else{
-        axios.post('/api/carts/post', formValues)
-          .then((response) => {
-            this.props.fetchCartData();
-            this.setState({
-              messageData : {
-                "type" : "outpage",
-                "icon" : "fa fa-check-circle",
-                "message" : "&nbsp; "+response.data.message,
-                "class": "success",
-                "autoDismiss" : true
+      // this.getProductData(productCode, clr);
+      axios.get("/api/products/get/productcode/" + productCode)
+        .then((response) => {
+          console.log('getProductData', response.data);
+          let mymap = new Map();
+          var colorFilter = response.data.filter(x => {
+            return x.color == clr && x.availableQuantity > 0
+          });
+          var unique = colorFilter.filter(el => {
+            const val = mymap.get(el.size);
+            if (val) {
+              if (el._id < val) {
+                mymap.delete(el.size);
+                mymap.set(el.size, el._id);
+                return true;
+              } else {
+                return false;
               }
-            })
-            setTimeout(() => {
+            }
+            mymap.set(el.size, el._id);
+            return true;
+          });
+          this.setState({
+            ['relatedProductArray' + id]: unique
+          })
+          console.log('unique', unique);
+          if (unique.length > 0) {
+            if (unique.length == 1) {
+              if (unique[0].size) {
+                this.setState({
+                  ['sizeCollage' + id]: true
+                })
+              } else {
+                this.addCart(formValues, quantityAdded, availableQuantity);
+              }
+            } else if (unique.length > 1) {
               this.setState({
-                  messageData   : {},
+                ['sizeCollage' + id]: true
               })
-          }, 3000);
-            // this.props.changeCartCount(response.data.cartCount);
-            
-          })
-          .catch((error) => {
-            console.log('error', error);
-          })
-      }
-    }else{
+            } else {
+              this.addCart(formValues, quantityAdded, availableQuantity);
+            }
+          } else {
+            this.addCart(formValues, quantityAdded, availableQuantity);
+          }
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
+    } else {
       this.setState({
-        messageData : {
-          "type" : "outpage",
-          "icon" : "fa fa-exclamation-circle",
-          "message" : "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
+        messageData: {
+          "type": "outpage",
+          "icon": "fa fa-exclamation-circle",
+          "message": "Need To Sign In, Please <a href='/login'>Sign In</a> First.",
           "class": "danger",
-          "autoDismiss" : true
+          "autoDismiss": true
         }
       })
       setTimeout(() => {
         this.setState({
-            messageData   : {},
+          messageData: {},
         })
       }, 3000);
     }
+  }
+  addCart(formValues, quantityAdded, availableQuantity) {
+    if (quantityAdded >= availableQuantity) {
+      this.setState({
+        messageData: {
+          "type": "outpage",
+          "icon": "fa fa-check-circle",
+          "message": "Last " + availableQuantity + " items taken by you",
+          "class": "success",
+          "autoDismiss": true
+        }
+      })
+      setTimeout(() => {
+        this.setState({
+          messageData: {},
+        })
+      }, 3000);
+    } else {
+      axios.post('/api/carts/post', formValues)
+        .then((response) => {
+          this.props.fetchCartData();
+          this.setState({
+            messageData: {
+              "type": "outpage",
+              "icon": "fa fa-check-circle",
+              "message": "&nbsp; " + response.data.message,
+              "class": "success",
+              "autoDismiss": true
+            }
+          })
+          setTimeout(() => {
+            this.setState({
+              messageData: {},
+            })
+          }, 3000);
+          this.props.changeCartCount(response.data.cartCount);
+
+        })
+        .catch((error) => {
+          console.log('error', error);
+        })
+    }
+  }
+  submitCart(event) {
+    var id = event.target.id;
+    const userid = localStorage.getItem('user_ID');
+    var availableQuantity = event.target.getAttribute('availableQuantity');
+    var currProId = event.target.getAttribute('currPro');
+    var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
+    var productCartData = recentCartData.filter((a) => a.product_ID == id);
+    var quantityAdded = productCartData.length > 0 ? productCartData[0].quantity : 0;
+
+    const formValues = {
+      "user_ID": userid,
+      "product_ID": event.target.id,
+      "quantity": 1,
+    }
+    this.addCart(formValues, quantityAdded, availableQuantity);
+    this.setState({
+      ['sizeCollage' + currProId]: false
+    })
+  }
+  closeSize(event) {
+    var id = event.target.id;
+    this.setState({
+      ['sizeCollage' + id]: false
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -288,6 +369,31 @@ class EcommerceProductCarousel extends Component {
                                         </a>
                                       </div>
                                       <div className="productDetails">
+                                      {
+                                        this.state['sizeCollage' + data._id] == true ?
+                                          <div className="sizeCollage col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <i className="fa fa-times pull-right" id={data._id} onClick={this.closeSize.bind(this)}></i>
+                                            {
+                                              this.state['relatedProductArray' + data._id] && this.state['relatedProductArray' + data._id].length > 0 ?
+                                                this.state['relatedProductArray' + data._id].map((a, i) => {
+                                                  if (a.size) {
+                                                    return (
+                                                      <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 NOpaddingLeft">
+                                                        <label className="collageSize col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                          <input title="Please select size first." currPro={data._id} availableQuantity={a.availableQuantity} onClick={this.submitCart.bind(this)} value={a.size} name="size" type="radio" id={a._id} />
+                                                          <span title={a.size} className="collageCheck col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">{a.size}</span>
+                                                        </label>
+                                                      </div>
+                                                    );
+                                                  }
+                                                })
+                                                :
+                                                null
+                                            }
+                                          </div>
+                                          :
+                                          null
+                                      }
                                         <div className="innerDiv">
                                         <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="product-brand" title={data.brand}>{data.brand}</div></a>
                                           <a href={"/productdetails/"+data.productUrl+"/" + data._id}><div className="product-item-link" title={data.productName}>{data.productName}</div></a>
@@ -313,7 +419,7 @@ class EcommerceProductCarousel extends Component {
                                               data.availableQuantity > 0 ?
                                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                                  <button type="submit" id={data._id} availableQuantity={data.availableQuantity} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
+                                                  <button type="submit" color={data.color} productCode={data.productCode} id={data._id} availableQuantity={data.availableQuantity} onClick={this.addtocart.bind(this)} title="Add to Cart" className="homeCart fa fa-shopping-cart">
                                                       &nbsp;Add to Cart
                                                   </button>
                                                 </div>

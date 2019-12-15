@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import jQuery                 from 'jquery';
 import $ from 'jquery';
 import { bindActionCreators } from 'redux';
 import { getCartData } from '../../actions/index';
@@ -12,7 +13,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Loadable from 'react-loadable';
 import ProductViewEcommerceDetailsReviewFAQ from "../../blocks/ProductViewEcommerceDetailsReviewFAQ/ProductViewEcommerceDetailsReviewFAQ.js";
-import {ntc} from './ntc.js';
+import {ntc} from '../../ntc/ntc.js';
 const OwlCarousel = Loadable({
 	loader: () => import('react-owl-carousel'),
 	loading() {
@@ -70,9 +71,35 @@ class ProductViewEcommerce extends Component {
 		.catch((error) => {
 			console.log('error', error);
 		})
+		this.validation();
 		this.getWishData();
 		this.reviewAverage();
 		this.getMyReview();
+	}
+	validation(){
+		
+		jQuery.validator.setDefaults({
+		debug: true,
+		success: "valid"
+		});
+		$("#productView").validate({
+		rules: {
+			color: {
+				required: true,
+			},
+			size: {
+				required: true,
+			},
+		},
+			errorPlacement: function(error, element) {
+				if (element.attr("name") == "color"){
+					error.insertAfter("#color");
+				}
+				if (element.attr("name") == "size"){
+					error.insertAfter("#size");
+				}
+			}
+		});
 	}
 	getProductData(){
 		axios.get("/api/products/get/productcode/" + this.state.productData.productCode)
@@ -145,59 +172,62 @@ class ProductViewEcommerce extends Component {
 	
 	addtocart(event) {
 		event.preventDefault();
+		
 		if(user_ID){
-		  var id = event.target.id;
-		  const userid = localStorage.getItem('user_ID');
-		  var availableQuantity = event.target.getAttribute('availableQuantity');
-		  var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
-		  var productCartData = recentCartData.filter((a)=>a.product_ID == id);
-		  var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
-		  
-		  const formValues = {
-			"user_ID": userid,
-			"product_ID": event.target.id,
-			"quantity": this.state.totalQuanity,
-		  }
-		  if(quantityAdded >= availableQuantity){
-			this.setState({
-				messageData : {
-				  "type" : "outpage",
-				  "icon" : "fa fa-check-circle",
-				  "message" : "Last "+availableQuantity+" items taken by you",
-				  "class": "success",
-				  "autoDismiss" : true
-				}
-			})
-			setTimeout(() => {
-				this.setState({
-					messageData   : {},
-				})
-			}, 3000);
-		  }else{
-			axios.post('/api/carts/post', formValues)
-			  .then((response) => {
-				this.props.fetchCartData();
-				this.setState({
-				  messageData : {
-					"type" : "outpage",
-					"icon" : "fa fa-check-circle",
-					"message" : "&nbsp; "+response.data.message,
-					"class": "success",
-					"autoDismiss" : true
-				  }
-				})
-				setTimeout(() => {
-				  this.setState({
-					  messageData   : {},
-				  })
-			  }, 3000);
-				// this.props.changeCartCount(response.data.cartCount);
+			if($("#productView").valid()){
+				var id = event.target.id;
+				const userid = localStorage.getItem('user_ID');
+				var availableQuantity = event.target.getAttribute('availableQuantity');
+				var recentCartData = this.props.recentCartData.length > 0 ? this.props.recentCartData[0].cartItems : [];
+				var productCartData = recentCartData.filter((a)=>a.product_ID == id);
+				var quantityAdded = productCartData.length>0 ? productCartData[0].quantity : 0;
 				
-			  })
-			  .catch((error) => {
-				console.log('error', error);
-			  })
-		  }
+				const formValues = {
+					"user_ID": userid,
+					"product_ID": event.target.id,
+					"quantity": this.state.totalQuanity,
+				}
+				if(quantityAdded >= availableQuantity){
+					this.setState({
+						messageData : {
+						"type" : "outpage",
+						"icon" : "fa fa-check-circle",
+						"message" : "Last "+availableQuantity+" items taken by you",
+						"class": "success",
+						"autoDismiss" : true
+						}
+					})
+					setTimeout(() => {
+						this.setState({
+							messageData   : {},
+						})
+					}, 3000);
+				}else{
+					axios.post('/api/carts/post', formValues)
+					.then((response) => {
+						this.props.fetchCartData();
+						this.setState({
+						messageData : {
+							"type" : "outpage",
+							"icon" : "fa fa-check-circle",
+							"message" : "&nbsp; "+response.data.message,
+							"class": "success",
+							"autoDismiss" : true
+						}
+						})
+						setTimeout(() => {
+						this.setState({
+							messageData   : {},
+						})
+					}, 3000);
+						// this.props.changeCartCount(response.data.cartCount);
+						
+					})
+					.catch((error) => {
+						console.log('error', error);
+					})
+				}
+			}
 		}else{
 		  this.setState({
 			messageData : {
@@ -358,7 +388,8 @@ class ProductViewEcommerce extends Component {
 	setNewProduct(event){
 		var id = event.target.id;
 		this.setState({
-			selectedColor : event.target.value
+			selectedColor : event.target.value,
+			selectedSize : ''
 		})
 		axios.get("/api/products/get/one/" + id)
 		.then((response) => {
@@ -449,7 +480,7 @@ class ProductViewEcommerce extends Component {
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div className="row">
 								<div id="brand"><label className="productNameClassNewBrand"> {this.state.productData.brand} </label></div>
-								<div ><span className="productNameClassNew"> {this.state.productData.productName}</span> <span className="productCode"> (Product Code: {this.state.productData.productCode})</span></div>
+								<div ><span className="productNameClassNew"> {this.state.productData.productName}</span> <span className="productCode"> (Product Code: {this.state.productData.productCode+'-'+this.state.productData.itemCode})</span></div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div className="row">
 										 {/* <p className="">{this.state.reviewData.length>0?<a href="#gotoreview" className="anchorclr">Be the first to review this product</a>: null} </p> */}
@@ -484,7 +515,7 @@ class ProductViewEcommerce extends Component {
 								</div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 adCart ">
 									<div className="row spc">
-										<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
+										<form id="productView" className="col-lg-7 col-md-7 col-sm-7 col-xs-7 NOpadding">
 										{
                                             this.state.productData.availableQuantity > 0 ?
 												<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 NOpadding">
@@ -509,54 +540,90 @@ class ProductViewEcommerce extends Component {
 											<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 												<div id={this.state.productData._id} title={this.state.wishTooltip} onClick={this.addtowishlist.bind(this)} className={"btn col-lg-12 col-md-12 col-sm-12 col-xs-12 "+this.state.wishIconClass }></div>
 											</div>
-											{this.state.productData.availableQuantity > 0 ?
+											{this.state.productData.availableQuantity > 0 && this.state.productData.color ?
 												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-													<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt15 detailtitle">Color</label>
 													{this.state.relatedProductArray && this.state.relatedProductArray.length>0?
 														this.state.relatedProductArray.map((a,i)=>{
-															var color  = ntc.name(a.color);
-															return(
-																<div className="col-lg-1 col-md-1 col-sm-1 col-xs-2 NOpadding">
-																	<label title={color[1]} className="colorBox">
-																		<input checked={this.state.selectedColor == a.color ? true : false} value={a.color} name="color" type="radio" id={a._id} onChange={this.setNewProduct.bind(this)}/>
-																		<span style={{'backgroundColor' : a.color}} className="color col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding"></span>
-																	</label>
-																</div>
-															);
+															if(a.color){
+																var color  = ntc.name(a.color);
+																if(i==0){
+																	return(
+																		<div>
+																			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt15 detailtitle">Color</label>
+																			<div className="col-lg-1 col-md-1 col-sm-1 col-xs-2 NOpadding">
+																				<label title={color[1]} className="colorBox">
+																					<input title="Please select color first." checked={this.state.selectedColor == a.color ? true : false} value={a.color} name="color" type="radio" id={a._id} onChange={this.setNewProduct.bind(this)}/>
+																					<span style={{'backgroundColor' : a.color}} className="color col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding"></span>
+																				</label>
+																			</div>
+																			
+																		</div>
+																	);
+																}else{
+																	return(
+																		<div className="col-lg-1 col-md-1 col-sm-1 col-xs-2 NOpadding">
+																			<label title={color[1]} className="colorBox">
+																				<input title="Please select color first." checked={this.state.selectedColor == a.color ? true : false} value={a.color} name="color" type="radio" id={a._id} onChange={this.setNewProduct.bind(this)}/>
+																				<span style={{'backgroundColor' : a.color}} className="color col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding"></span>
+																			</label>
+																		</div>
+																	);
+																}
+															}
 														})
 														:
 														null
 													}
-
+													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding colorError">
+														<label id="color"></label>
+													</div>
 												</div>
 												:
 												null
 											}
 											{this.state.productData.availableQuantity > 0 ?
 												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-													<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt15 detailtitle">Size</label>
+													
 													{this.state.productSizeArray && this.state.productSizeArray.length>0?
 														this.state.productSizeArray.map((a,i)=>{
-															return(
-																<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 NOpaddingLeft">
-																	<label className="size col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-																		<input checked={this.state.selectedSize == a.size ? true : false} value={a.size} name="size" type="radio" id={a._id} onChange={this.setNewSizeProduct.bind(this)}/>
-																		<span title={a.size} className="checkmark col-lg-12 col-md-12 col-sm-12 col-xs-12">{a.size}</span>
-																	</label>
-																</div>
-															);
+															if(a.size){		
+																if(i == 0){
+																	return(
+																		<div>
+																			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding mt15 detailtitle">Size</label>
+																			<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 NOpaddingLeft">
+																				<label className="size col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+																					<input title="Please select size first." checked={this.state.selectedSize == a.size ? true : false} value={a.size} name="size" type="radio" id={a._id} onChange={this.setNewSizeProduct.bind(this)}/>
+																					<span title={a.size} className="checkmark col-lg-12 col-md-12 col-sm-12 col-xs-12">{a.size}</span>
+																				</label>
+																			</div>
+																		</div>
+																	);
+																}else{
+																	return(
+																		<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 NOpaddingLeft">
+																			<label className="size col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+																				<input title="Please select size first." checked={this.state.selectedSize == a.size ? true : false} value={a.size} name="size" type="radio" id={a._id} onChange={this.setNewSizeProduct.bind(this)}/>
+																				<span title={a.size} className="checkmark col-lg-12 col-md-12 col-sm-12 col-xs-12">{a.size}</span>
+																			</label>
+																		</div>
+																	);
+																}	
+															}
 														})
 														:
 														null
 													}
-
+													<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding colorError">
+														<label id="size"></label>
+													</div>
 												</div>
 												:
 												null
 											}
 											
 
-										</div>
+										</form>
 									</div>
 
 								</div>

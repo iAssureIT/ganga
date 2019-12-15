@@ -52,8 +52,8 @@ export default class Footer extends Component {
        return(
         <div>
         <br/>
-        <div className="col-lg-12 footer1">
-            <div className="container">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footer1">
+            <div className="container col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div className="col-sm-12 col-sm-3">
                 <div className="footer-top">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding"> 

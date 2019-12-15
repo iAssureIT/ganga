@@ -299,7 +299,7 @@ class ProductCollage extends Component {
 		let minPrice = this.state.price.min;
 		let maxPrice = this.state.price.max;
 		return (
-	      	<div className="container" id="containerDiv">
+	      	<div className="container col-lg-12 col-md-12 col-sm-12 col-xs-12" id="containerDiv">
 	     	<div className="row"> 
 	     		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	     			<ul className="links">

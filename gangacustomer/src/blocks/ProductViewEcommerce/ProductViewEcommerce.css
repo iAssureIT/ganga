@@ -1020,3 +1020,11 @@ position:relative;
     text-align: center;
     cursor: pointer;
 }
+.NA{
+    color: #878787;
+}
+.colorError label{
+    font-size: 12px !important;
+    letter-spacing: 1px;
+    font-weight: 400;
+}

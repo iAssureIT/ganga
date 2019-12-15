@@ -29,6 +29,7 @@ class AddNewShopProduct extends Component {
       content: '',
       taxRateData : [],
       taxInclude: true,
+      color: '',
       editId: this.props.match.params ? this.props.match.params.productID : ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -399,7 +400,7 @@ class AddNewShopProduct extends Component {
       "availableQuantity": this.refs.availableQuantity.value,
       "unit": this.refs.unit.value,
       "size": this.refs.size.value,
-      "color": this.refs.color.value,
+      "color": this.state.color,
       "currency": this.refs.currency.value,
       "status": this.refs.status.value,
       "featured": productFeatured,
@@ -502,7 +503,7 @@ class AddNewShopProduct extends Component {
       "originalPrice": this.state.originalPrice,
       "discountPercent": this.state.discountPercent,
       "size": this.refs.size.value,
-      "color": this.refs.color.value,
+      "color": this.state.color,
       "discountedPrice": this.state.discountedPrice ? this.state.discountedPrice : this.state.originalPrice,
       "availableQuantity": this.refs.availableQuantity.value,
       "currency": this.refs.currency.value,
@@ -799,7 +800,7 @@ class AddNewShopProduct extends Component {
 
                           <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingRightZeroo">
                             <label>Quantity <i className="redFont">*</i></label>
-                            <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="text" className="form-control availableQuantityNew" placeholder="Quantity" aria-describedby="basic-addon1" ref="availableQuantity" />
+                            <input onChange={this.handleChange.bind(this)} value={this.state.availableQuantity} id="availableQuantity" name="availableQuantity" type="number" className="form-control availableQuantityNew" placeholder="Quantity" aria-describedby="basic-addon1" ref="availableQuantity" />
                           </div>
                           <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 paddingLeftZeroo">
                             <label>Unit <i className="redFont">*</i></label>

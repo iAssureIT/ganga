@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import $                    from 'jquery';
 import axios                from 'axios';
-import {Route, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import "./CartProducts.css";
 import { connect }        from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getCartData } from '../../actions/index';
 import Loader from "../../common/loader/Loader.js";
 import Message from '../Message/Message.js';
+import {ntc} from '../../ntc/ntc.js';
 class CartProducts extends Component{
     constructor(props) {
         super(props);
@@ -268,15 +269,17 @@ class CartProducts extends Component{
                                                                 {
                                                                     data.productDetail.discountPercent  ?
                                                                         <div className="col-lg-12 col-md-12 NOpadding">
-                                                                            
-                                                                            <span className="oldprice"><i className="fa fa-inr oldprice"></i>&nbsp;{data.productDetail.originalPrice}</span> &nbsp;
-                                                                            <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.productDetail.discountedPrice}</span> &nbsp;
+                                                                            <span className="cartOldprice"><i className="fa fa-inr cartOldprice"></i>{data.productDetail.originalPrice}</span> &nbsp; &nbsp;
+                                                                            <span className="cartPrice"><i className="fa fa-inr"></i>{data.productDetail.discountedPrice}</span> &nbsp; &nbsp;
                                                                             <span className="cartDiscountPercent">({data.productDetail.discountPercent}%)</span>
                                                                         </div>
                                                                         :
-                                                                        <span className="price"><i className="fa fa-inr"></i>&nbsp;{data.productDetail.originalPrice}</span>
+                                                                        <span className="price"><i className="fa fa-inr"></i>{data.productDetail.originalPrice}</span>
                                                                 }
-                                                                <br/>
+                                                                <div>
+                                                                    {data.productDetail.color ? <span className="cartColor">Color : <span style={{backgroundColor : data.productDetail.color, padding: '0px 5px'}}>&nbsp;</span> {ntc.name(data.productDetail.color)[1]}, </span> : null}
+                                                                    {data.productDetail.size ? <span className="cartColor">Size : {data.productDetail.size}</span>: null}
+                                                                </div>
                                                                     <button productid={data.productDetail._id} id={data._id} onClick={this.moveWishlist.bind(this)} className="btn btn-warning moveWish">Move to Wishlist</button>
                                                                 </td>
                                                                 

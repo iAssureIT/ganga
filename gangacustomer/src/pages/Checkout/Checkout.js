@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import axios from 'axios';
 import jQuery from 'jquery';
-import moment from 'moment';
+import {ntc} from '../../ntc/ntc.js';
 import Address              from '../Address/Address.js';
 import _ from 'underscore';
 import SmallBanner from '../../blocks/SmallBanner/SmallBanner.js';
@@ -656,6 +656,8 @@ class Checkout extends Component {
                             "discountPercent"   : a.productDetail.discountPercent,
                             "discountedPrice"   : a.productDetail.discountedPrice,
                             "originalPrice"     : a.productDetail.originalPrice,
+                            "color"             : a.productDetail.color,
+                            "size"              : a.productDetail.size,
                             "currency"          : a.productDetail.currency,
                             "quantity"          : a.quantity,
                             "subTotal"          : a.subTotal,
@@ -980,7 +982,23 @@ class Checkout extends Component {
                                                             <tr key={'cartData' + index}>
                                                                 {/* <td><span className="fa fa-times-circle-o crossOrder" id={data._id} onClick={this.Removefromcart.bind(this)}></span></td> */}
                                                                 <td><img className="img img-responsive orderImg" src={data.productDetail.productImage[0] ? data.productDetail.productImage[0] : "/images/notavailable.jpg"} /></td>
-                                                                <td><span className="productName">{data.productDetail.productName}</span></td>
+                                                                <td>
+                                                                    <a href={"/productdetails/" + data.product_ID}><h5 className="productName">{data.productDetail.productName}</h5></a>
+                                                                    
+                                                                    {data.productDetail.discountPercent  ?
+                                                                        <div className="col-lg-12 col-md-12 NOpadding">
+                                                                            <span className="cartOldprice"><i className="fa fa-inr cartOldprice"></i>{data.productDetail.originalPrice}</span> &nbsp; &nbsp;
+                                                                            <span className="cartPrice"><i className="fa fa-inr"></i>{data.productDetail.discountedPrice}</span> &nbsp; &nbsp;
+                                                                            <span className="cartDiscountPercent">({data.productDetail.discountPercent}%)</span>
+                                                                        </div>
+                                                                        :
+                                                                        <span className="price"><i className="fa fa-inr"></i>{data.productDetail.originalPrice}</span>
+                                                                    }
+                                                                    <div>
+                                                                    {data.productDetail.color ?<span className="cartColor">Color : <span style={{backgroundColor : data.productDetail.color, padding: '0px 5px'}}>&nbsp;</span> {ntc.name(data.productDetail.color)[1]}, </span>: null}
+                                                                        {data.productDetail.size ? <span className="cartColor">Size : {data.productDetail.size}</span>: null}
+                                                                    </div>
+                                                                </td>
                                                                 <td className="textAlignRight">
                                                                 {
                                                                     data.productDetail.availableQuantity > 0 ?

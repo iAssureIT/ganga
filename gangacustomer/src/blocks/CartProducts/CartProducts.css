@@ -145,8 +145,8 @@
     outline: none !important;
 }
 .cartDiscountPercent{
-    color: #666;
-    font-weight: 600;
+    color: #878787;
+    
 }
 .trashIcon{
     color: #ff0000ab;
@@ -171,4 +171,18 @@
     font-weight: 600 !important;
     margin-top: 5px;
     margin-bottom: 1px;
+}
+.cartColor{
+    color: #878787;
+    font-size: 12px;
+    font-weight: 500;
+}
+.cartPrice{
+    color:  #878787 !important;
+    font-weight: 600;
+}
+.cartOldprice{
+    font-size: 13px;
+    color: #878787;
+    text-decoration: line-through;
 }
