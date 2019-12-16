@@ -5,16 +5,16 @@ import swal from 'sweetalert';
 import _ from 'underscore';
 import '../css/productList.css';
 import Message from '../../../../coreAdmin/common/message/Message.js';
-// import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
+import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 import 'bootstrap/js/tab.js';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
-// import "@syncfusion/ej2-base/styles/material.css";
-// import "@syncfusion/ej2-buttons/styles/material.css";
-// import "@syncfusion/ej2-inputs/styles/material.css";
-// import "@syncfusion/ej2-react-dropdowns/styles/material.css";
+import "@syncfusion/ej2-base/styles/material.css";
+import "@syncfusion/ej2-buttons/styles/material.css";
+import "@syncfusion/ej2-inputs/styles/material.css";
+import "@syncfusion/ej2-react-dropdowns/styles/material.css";
 
 class ProductList extends Component {
     constructor(props) {
@@ -390,7 +390,7 @@ class ProductList extends Component {
 
         return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                {/* <div className="row">
+                <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <section className="content">
                             <Message messageData={this.state.messageData} />
@@ -527,7 +527,7 @@ class ProductList extends Component {
                             </div>
                         </div>
                     </div>
-                </div> */}
+                </div>
             </div>
         );
     }
