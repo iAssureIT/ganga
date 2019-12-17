@@ -64,7 +64,10 @@ class ProductList extends Component {
         this.getVendorList();
         this.getSectionData();
         this.getCategoryData();
-
+        this.productCountByStatus();
+        
+    }  
+    productCountByStatus(){
         axios.get('/api/products/get/productCountByStatus')
             .then((response) => {
 
@@ -208,8 +211,9 @@ class ProductList extends Component {
                 console.log("error = ", error);
             })
     }
-    handleChangeFilter(event) {
-        this.setState({ messageData: {} })
+
+    handleChangeFilter(event){
+        this.setState({ messageData:{} })
         var currentSelection = event.element.getAttribute("id");
         var selector = this.state.selector;
 
@@ -317,6 +321,12 @@ class ProductList extends Component {
                 $('#bulkActionModalbtn, .confirmmsg').hide();
             }
         }
+        else{
+            $('#bulkActionModal').hide();
+        } 
+    }
+    closeModal(event){
+        $('#bulkActionModal').hide();
     }
     saveProductImages(productImage, productID, productImageArray) {
         var productImage = productImage;
@@ -438,10 +448,10 @@ class ProductList extends Component {
                                             </div>
                                         </div>
                                         <div className="searchProductFromList col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp NoPadding">
-                                            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent">
+                                            <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 bulkEmployeeContent">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Bulk Action</label>
-                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown" data-toggle="modal" data-target="#bulkActionModal" onChange={this.bulkActionChange.bind(this)} style={{ width: '200px' }} >
-                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" disabled selected>-- Select --</option>
+                                                <select className="form-control selectRole" ref="filterDropdown" name="filterDropdown"  onChange={this.bulkActionChange.bind(this)} style={{width:'200px'}} >
+                                                    <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" disabled selected>-- Select --</option>   
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Publish">Publish selected products</option>
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Draft">Draft selected products</option>
                                                     <option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" value="Unpublish">Unpublish selected products</option>
@@ -480,7 +490,6 @@ class ProductList extends Component {
                                                     <Inject services={[CheckBoxSelection]} />
                                                 </MultiSelectComponent>
                                             </div>
-                                            }
                                         </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -501,12 +510,13 @@ class ProductList extends Component {
                                 </div>
                             </div>
                         </section>
-                    </div>
-                    <div className="modal" id="bulkActionModal" role="dialog">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <button type="button" className="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div className="modal" id="bulkActionModal" role="dialog">
+                              <div className="modal-dialog">
+                                <div className="modal-content">
+                                  <div className="modal-header">
+                                    <button type="button" className="close" onClick={this.closeModal.bind(this)} data-dismiss="modal">&times;</button>
                                     <h3 className="modalTitle">Bulk Action</h3>
                                 </div>
                                 <div className="modal-body">
@@ -520,8 +530,8 @@ class ProductList extends Component {
                                 </div>
                                 <div className="modal-footer">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <a href="#" className="btn btn-warning" id="bulkActionModalbtn" data-dismiss="modal" onClick={this.productBulkAction.bind(this)} >Yes</a>
-                                        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+                                      <a href="#" className="btn btn-warning" id="bulkActionModalbtn" data-dismiss="modal" onClick={this.productBulkAction.bind(this)} >Yes</a>
+                                      <button type="button" className="btn btn-default" onClick={this.closeModal.bind(this)} data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>

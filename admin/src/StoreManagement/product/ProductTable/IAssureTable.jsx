@@ -537,11 +537,12 @@ class IAssureTable extends Component {
 	    }
     }
     showImageModal(event){
-    	$('#showImageModal').show();
-    	console.log(event.target.getAttribute('id'))
+    	//$('#showImageModal').show();
+    	//console.log(event.target.getAttribute('id'))
     	var productId = event.target.getAttribute('id');
     	this.getImageData(productId);
-    	this.setState({productID:productId})
+    	this.setState({productID:productId, productName:event.target.getAttribute('name').replace(/<br>/gi,', ')})
+
     }
     getImageData(id){
         // console.log('id',id);
@@ -677,6 +678,7 @@ class IAssureTable extends Component {
     	this.props.saveProductImages(this.state.productImage,this.state.productID,this.state.productImageArray)
     }
 	render(){
+		console.log('productImageArray',this.state.productImageArray)
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NoPadding">	
 		       	{
@@ -765,6 +767,7 @@ class IAssureTable extends Component {
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
+
 																if($.type(value1) == 'string'){
 																	var regex = new RegExp(/(<([^>]+)>)/ig);
 																	var value2 = value1 ? value1.replace(regex,'') : '';
@@ -812,7 +815,7 @@ class IAssureTable extends Component {
 	                                                            <i className="fa fa-eye" aria-hidden="true"></i>
 	                                                        </a>&nbsp; &nbsp;
 															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
-															<i className={"fa fa-image "} id={value._id} data-toggle="modal" title="Upload Product Image" data-target={"#productImageModal"} onClick={this.showImageModal.bind(this)}></i>&nbsp; &nbsp;
+															<i className={"fa fa-image "} id={value._id} name={value.productName} data-toggle="modal" title="Upload Product Image" data-target={"#productImageModal"} onClick={this.showImageModal.bind(this)}></i>&nbsp; &nbsp;
 														
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal-"+(value._id)}></i>}
 															</span>
@@ -908,17 +911,17 @@ class IAssureTable extends Component {
 		                    </div>
                       	<div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                       		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      			<div className="col-lg-2 col-md-2 col-sm-6 col-xs-4 input-group">
-		                        <br/>	<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Upload New Image</label>
+                      			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 input-group">
+		                        <br/>	<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">{this.state.productName}</label>
 		                        </div>
-		                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 input-group">
-		                                        
-		                            <span className="input-group-addon" id="basic-addon1"><i className="fa fa-file-image-o" aria-hidden="true"></i></span>
-		                            <div aria-describedby="basic-addon1">
-		                                <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" multiple onChange={this.uploadProductImage.bind(this)} />
-		                            </div>
+		                        <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 input-group" id="hideInput">
+		                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
+	                                    <img src= "/images/uploadimg.png" className="img-responsive imgStyle" />
+	                                      <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" multiple onChange={this.uploadProductImage.bind(this)}  name="upload-logo"/>
+	                                </div>            
+		                            
 		                        </div>
-	                        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+	                        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding ">
 	                            	<div className="row productImgWrapper">
 	                            	{this.state.productImageArray && this.state.productImageArray.length > 0?
 		                                this.state.productImageArray.map((imageData, index)=>{
