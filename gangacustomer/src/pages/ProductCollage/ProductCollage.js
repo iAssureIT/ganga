@@ -55,24 +55,37 @@ class ProductCollage extends Component {
   			selector.category_ID = this.props.match.params.categoryID;
         	selector.subCategory_ID = this.props.match.params.subcategoryID;
         	this.setState({selector: selector});
+        	var subcatArray = [];
+        	subcatArray.push(this.props.match.params.subcategoryID);
+        	this.getBrandsBySubcategories(subcatArray);
+        	this.getSizeBySubcategory(this.props.match.params.subcategoryID)
+  			this.getColorBySubategory(this.props.match.params.subcategoryID);
   			this.getProductsBySubCategory(this.props.match.params.categoryID, this.props.match.params.subcategoryID);
   		}
   		else if(this.props.match.params.categoryID){
   			selector.category_ID = this.props.match.params.categoryID;
         	this.setState({selector: selector});
+        	var catArray = [];
+        	catArray.push(this.props.match.params.categoryID);
+        	this.getBrandsByCategories(catArray);
+        	this.getSizeByCategory(this.props.match.params.categoryID);
+        	this.getColorByCategory(this.props.match.params.categoryID);
   			this.getProductsByCategory(this.props.match.params.categoryID);
   		}
   		else{
   			selector.section_ID = this.props.match.params.sectionID;
         	this.setState({selector: selector});
+        	this.getBrands();
+        	this.getSize();
+        	this.getColor();
   			this.getProductsBySection(this.props.match.params.sectionID);
   		}
   		this.getSectionDetails(this.props.match.params.sectionID);
   		// this.getCategoryDetails(this.props.match.params.categoryID);
   		
-  		this.getBrands();
-  		this.getSize();
-  		this.getColor();
+  		
+  		
+  		
   		this.getPriceLimits();
 
 		$('.dropdown-submenu a.test').on("click", function(e){
@@ -377,8 +390,67 @@ class ProductCollage extends Component {
 	            console.log('error', error);
 	      	})
 	}
+	getBrandsByCategories(categories){
+		var formValues = {
+			categories : categories
+		}
+		 
+		axios.post("/api/products/get/listBrandByCategories",formValues)
+
+	  	.then((response)=>{ 
+	      this.setState({
+	          brands : response.data
+	      })
+	  	})
+	  	.catch((error)=>{
+	        console.log('error', error);
+	  	})
+	}
+	getBrandsBySubcategories(subcategories){
+		var formValues = {
+			subcategories : subcategories
+		}
+		 
+		axios.post("/api/products/get/listBrandBySubcategories",formValues)
+
+	  	.then((response)=>{ 
+	      this.setState({
+	          brands : response.data
+	      })
+	  	})
+	  	.catch((error)=>{
+	        console.log('error', error);
+	  	})
+	}
+	
 	getSize(){
 		axios.get("/api/products/get/listSize/"+this.props.match.params.sectionID)
+
+	      	.then((response)=>{ 
+	      	
+	          this.setState({
+	              sizes : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
+	getSizeByCategory(categoryID){
+		axios.get("/api/products/get/listSizeByCategory/"+categoryID)
+
+	      	.then((response)=>{ 
+	      	
+	          this.setState({
+	              sizes : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
+	getSizeBySubcategory(subcategoryID){
+		axios.get("/api/products/get/listSizeBySubcategory/"+subcategoryID)
 
 	      	.then((response)=>{ 
 	      	
@@ -403,6 +475,33 @@ class ProductCollage extends Component {
 	            console.log('error', error);
 	      	})
 	}
+	getColorByCategory(categoryID){
+		axios.get("/api/products/get/listColorByCategory/"+categoryID)
+
+	      	.then((response)=>{ 
+	      	
+	          this.setState({
+	              colors : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
+	getColorBySubategory(subcategoryID){
+		axios.get("/api/products/get/listColorBySubcategory/"+subcategoryID)
+
+	      	.then((response)=>{ 
+	      	
+	          this.setState({
+	              colors : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
+	
 	handlePriceChange(event) {
 	      event.preventDefault();
 	      const target = event.target;

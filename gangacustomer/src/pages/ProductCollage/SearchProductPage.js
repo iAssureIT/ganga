@@ -119,7 +119,7 @@ class SearchProduct extends Component {
 			categories : categories
 		}
 		 
-		axios.post("/api/products/get/listBrandBySections",formValues)
+		axios.post("/api/products/get/listBrandByCategories",formValues)
 
 	  	.then((response)=>{ 
 	      this.setState({

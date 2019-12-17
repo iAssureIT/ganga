@@ -272,6 +272,7 @@ class ProductList extends Component {
         }
         axios.patch('/api/products/patch/productBulkAction', formValues)
             .then((response) => {
+                $('#bulkActionModal').hide();
                 this.setState({
                     messageData: {
                         "type": "outpage",
