@@ -54,12 +54,14 @@ class SearchProduct extends Component {
   			if (nextProps.searchCriteria.catArray) {
   				
   				nextProps.searchCriteria.catArray.map((data,index)=>{
-	  				catArray.push(data.category)
+  					
+	  				catArray.push(data.id)
 		        })
 		        this.getBrands(catArray);
   			}else{
   				nextProps.searchResult.map((data,index)=>{
-  					catArray.push(data.category)
+  					console.log('data',data);
+  					catArray.push(data.category_ID)
   				})
   				this.getBrands(catArray);
   			}
