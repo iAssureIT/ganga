@@ -431,16 +431,19 @@ export default class MyOrders extends Component {
                   this.state.orderData && this.state.orderData.length > 0 ?
                     this.state.orderData.map((data, index) => {
                       return (
-                        <div className="row" style={{marginBottom:"10px"}}>
-                          <div className={data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' ? "col-lg-12 cancelledorder" : "col-lg-12 orderIdborder"}  >
+                        <div style={{marginBottom:"10px"}} className={data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' ? "row cancelledorder" : "row"}>
+                          <div className="col-lg-12 orderIdborder"  >
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                               <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6 NOpadding">
                                 <div className="orderIdButton">{"OrderId: "+(data.orderID)}</div>
                               </div>  
                               <div className="col-lg-6 col-md-6 col-sm-4 col-xs-6 NOpadding">
                                 <div className="actionbtn NOpadding">
-                                  <a className="btn filterallalphab" target="_blank" href={"/view-order/" + data._id} title="View Order">
-                                  <span> Invoice</span></a>
+                                  { data.deliveryStatus[data.deliveryStatus.length - 1].status != 'Cancelled' ? 
+                                    <a className="btn filterallalphab" target="_blank" href={"/view-order/" + data._id} title="View Order">
+                                    <span> Invoice</span></a> : <div className="pull-right"><span className="cancelledtext"> Cancelled</span></div>
+                                  }   
+                                  
                                   {
                                     data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Cancelled' || data.deliveryStatus[data.deliveryStatus.length - 1].status == 'Returned' ? '' :
                                       data.deliveryStatus[data.deliveryStatus.length - 1].status == "New Order" || data.deliveryStatus[data.deliveryStatus.length - 1].status == "Verified"
@@ -451,9 +454,12 @@ export default class MyOrders extends Component {
                               </div>
                             </div> 
                           </div>
+                          { data.deliveryStatus[data.deliveryStatus.length - 1].status != 'Cancelled' ?
                           <div className="col-lg-12 orderIdborder">
                             <StepWizard data={data} />
-                          </div>
+                          </div> :null
+
+                          }
                           <div className="col-lg-12 orderbodyborder">
                             {
                             data.products && data.products.length > 0 ?

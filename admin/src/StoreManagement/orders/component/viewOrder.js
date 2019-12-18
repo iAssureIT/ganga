@@ -128,7 +128,7 @@ class viewOrder extends Component{
                     <div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding"><span>Total: </span></div>
                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 NOpadding text-right">
-                        <span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.totalAmount).toFixed(2) }</i></span>
+                        <span><i className={"fa fa-"+this.state.orderData.currency}> { parseInt(this.state.orderData.total).toFixed(2) }</i></span>
                       </div>
                     </div>
                   </div>

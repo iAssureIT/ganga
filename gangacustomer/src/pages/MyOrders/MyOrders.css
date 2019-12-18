@@ -138,11 +138,12 @@ table > tfoot > tr > td:last-of-type {
 	border-bottom: 1px solid #ccc;
 }
 .cancelledorder{
-	border:2px solid #ccc;
-	padding: 10px;
-	border-radius: 5px;
-	margin-bottom: 10px;
-	background: #eee;
+	background: #eeeeee6b;
+}
+.cancelledtext{
+	font-weight:600;
+	color: #ff2236;
+	margin-top: 10px;
 }
 .modalfooterborder{
 	border:none;

@@ -53,7 +53,7 @@ class BaOrdersList extends Component{
                   var userFullName = finaldata[i].userFullName;
                   var totalQuantity = finaldata[i].totalQuantity;
                   var currency = finaldata[i].currency;
-                  var totalAmount = finaldata[i].totalAmount;
+                  var totalAmount = finaldata[i].total;
                   var createdAt = moment(finaldata[i].createdAt).format("DD/MM/YYYY hh:mm a");
                   var status = finaldata[i].status;
                   var deliveryStatus = finaldata[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[finaldata[i].deliveryStatus.length-1].status;

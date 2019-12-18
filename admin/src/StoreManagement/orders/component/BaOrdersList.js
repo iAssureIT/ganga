@@ -289,8 +289,8 @@ class AdminOrdersList extends Component{
                                                                   {listData.totalQuantity }
                                                               </td>
                                                               <td className="col-lg-1 textAlignRight">
-                                                                 {/* R &nbsp;{listData.totalAmount } */}
-                                                                 <i className={"fa fa-"+listData.currency}>&nbsp;{(parseInt(listData.totalAmount)).toFixed(2)}</i>                                                              </td>
+                                                                 {/* R &nbsp;{listData.total } */}
+                                                                 <i className={"fa fa-"+listData.currency}>&nbsp;{(parseInt(listData.total)).toFixed(2)}</i>                                                              </td>
                                                               <td className="col-lg-1 textAlignCenter">
                                                                   { moment(listData.createdAt).format("MMM Do YY") }
                                                                   

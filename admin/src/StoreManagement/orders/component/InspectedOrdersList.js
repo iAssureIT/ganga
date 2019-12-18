@@ -33,7 +33,7 @@ export default class InspectedOrdersList extends Component{
                   var userFullName = response.data[i].userFullName;
                   var totalQuantity = response.data[i].totalQuantity;
                   var currency = response.data[i].currency;
-                  var totalAmount = response.data[i].totalAmount;
+                  var totalAmount = response.data[i].total;
                   var createdAt = moment(response.data[i].createdAt).format("DD/MM/YYYY hh:mm a");
                   var status = response.data[i].status;
                   var deliveryStatus = response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1].status == "Dispatch" ? 'Out for Delivery' : response.data[i].deliveryStatus[response.data[i].deliveryStatus.length-1].status;
