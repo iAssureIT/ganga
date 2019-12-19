@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-import jQuery from 'jquery';
-import axios from 'axios';
-import swal from 'sweetalert';
-import _ from 'underscore';
+import $                    from 'jquery';
+import jQuery               from 'jquery';
+import axios                from 'axios';
+import swal                 from 'sweetalert';
+import S3FileUpload         from 'react-s3';
+import _                    from 'underscore';
 import 'bootstrap/js/tab.js';
 import '../css/SupplierOnboardingForm.css'
 
@@ -151,34 +152,32 @@ class BasicInfo extends Component {
     this.getVendors();
     // console.log(new Date().getTime(), Math.round(new Date().getTime()/1000));
   }
-
   componentWillUnmount() {
     $("script[src='/js/adminLte.js']").remove();
     $("link[href='/css/dashboard.css']").remove();
   }
-
-
   constructor(props) {
     super(props);
     this.state = {
-      'vendorId': '',
-      'typeOptions': 'Local',
-      'companyName': '',
-      "emailId": '',
-      "mobileNumber": '',
-      'pan': '',
-      'tin': '',
-      'website': '',
-      'gstno': '',
-      'category': '-- Select --',
-      'coino': '',
-      'mfg': '',
-      'Evaluation': '',
-      'score': '',
+      'vendorId'        : '',
+      'typeOptions'     : 'Local',
+      'companyName'     : '',
+      "emailId"         : '',
+      "mobileNumber"    : '',
+      'pan'             : '',
+      'tin'             : '',
+      'website'         : '',
+      'gstno'           : '',
+      'category'        : '-- Select --',
+      'coino'           : '',
+      'mfg'             : '',
+      'Evaluation'      : '',
+      'score'           : '',
       'attachedDocuments': '',
-      'logo': '',
-      'vendorID' : 0,
-      'edit': props.routerId ? true : false,
+      'logo'            : '',
+      'vendorID'        : 0,
+      "logo"            : "",
+      'edit'            : props.routerId ? true : false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -232,7 +231,6 @@ class BasicInfo extends Component {
       console.log('error', error);
     })
   }
-
   getUploadFileAttachPercentage() {
     var uploadProgressPercent = localStorage.getItem("uploadUserImageProgressPercent");
     if (uploadProgressPercent) {
@@ -387,10 +385,8 @@ class BasicInfo extends Component {
   }
   supplier(event) {
     event.preventDefault();
-    console.log('owner_ID', localStorage.getItem('admin_ID'))
-    var suppliersID = this.props.match.params.id;
     if ($('#BasicInfo').valid()) {
-      
+      console.log(true);
       var userDetails = {
         "firstName": this.state.companyName,
         "lastName": this.state.companyName,
@@ -400,28 +396,144 @@ class BasicInfo extends Component {
         "status": "Active",
         "roles": "vendor"
       }
-      if(this.state.vendorRadio == 'new'){
-        axios.post('/api/users/vendor', userDetails)
-        .then((res) => {
+      if(this.props.match.params.vendor_ID){
+        console.log(this.props.match.params.vendor_ID);
+        if(this.state.vendorRadio == 'new'){
+          axios.post('/api/users/vendor', userDetails)
+          .then((res) => {
+            var formValues = {
+              'edit_ID'     : this.props.match.params.vendor_ID,
+              'typeOptions'   : this.state.typeOptions,
+              'companyName'   : this.state.companyName,
+              "emailId"       : this.state.emailId,
+              "mobileNumber"  : this.state.mobileNumber,
+              'pan'           : this.state.pan,
+              'tin'           : this.state.tin,
+              'website'       : this.state.website,
+              'gstno'         : this.state.gstno,
+              'category'      : this.state.category,
+              'coino'         : this.state.coino,
+              'mfg'           : this.state.mfg,
+              'Evaluation'    : this.state.Evaluation,
+              'score'         : this.state.score,
+              'vendorID'      : this.state.vendorID,
+              'owner_ID'      : localStorage.getItem('admin_ID'),
+              'user_ID'       : res.data.user_id,
+              "logo"          : this.state.logo,
+            }
+            
+            axios.patch('/api/vendors/patch', formValues)
+            .then((response) => {
+              console.log('response', response.data);
+              swal(response.data.message);
+              if(response.data.vendor_ID){
+                this.props.history.push('/location-details/' + response.data.vendor_ID);
+              }
+              
+            })
+            .catch((error) => {
+              console.log('error', error);
+            })
+            
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
+        }else{
           var formValues = {
-            'typeOptions': this.state.typeOptions,
-            'companyName': this.state.companyName,
-            "emailId": this.state.emailId,
-            "mobileNumber": this.state.mobileNumber,
-            'pan': this.state.pan,
-            'tin': this.state.tin,
-            'website': this.state.website,
-            'gstno': this.state.gstno,
-            'category': this.state.category,
-            'coino': this.state.coino,
-            'mfg': this.state.mfg,
-            'Evaluation': this.state.Evaluation,
-            'score': this.state.score,
-            'vendorID': this.state.vendorID,
-            'owner_ID': localStorage.getItem('admin_ID'),
-            'vendor_ID': res.data.user_id
+            'edit_ID'         : this.props.match.params.vendor_ID,
+            'typeOptions'     : this.state.typeOptions,
+            'companyName'     : this.state.companyName,
+            "emailId"         : this.state.emailId,
+            "mobileNumber"    : this.state.mobileNumber,
+            'pan'             : this.state.pan,
+            'tin'             : this.state.tin,
+            'website'         : this.state.website,
+            'gstno'           : this.state.gstno,
+            'category'        : this.state.category,
+            'coino'           : this.state.coino,
+            'mfg'             : this.state.mfg,
+            'Evaluation'      : this.state.Evaluation,
+            'score'           : this.state.score,
+            'vendorID'        : this.state.vendorID,
+            'owner_ID'        : localStorage.getItem('admin_ID'),
+            'user_ID'         : this.state.existingVendor.split('|')[1],
+            "logo"            : ""
           }
+          axios.patch('/api/vendors/patch', formValues)
+          .then((response) => {
+            console.log('response', response.data);
+            swal(response.data.message);
+            if(response.data.vendor_ID){
+              this.props.history.push('/location-details/' + response.data.vendor_ID);
+            }
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
           
+        }
+      }else{
+        if(this.state.vendorRadio == 'new'){
+          axios.post('/api/users/vendor', userDetails)
+          .then((res) => {
+            var formValues = {
+              'typeOptions'   : this.state.typeOptions,
+              'companyName'   : this.state.companyName,
+              "emailId"       : this.state.emailId,
+              "mobileNumber"  : this.state.mobileNumber,
+              'pan'           : this.state.pan,
+              'tin'           : this.state.tin,
+              'website'       : this.state.website,
+              'gstno'         : this.state.gstno,
+              'category'      : this.state.category,
+              'coino'         : this.state.coino,
+              'mfg'           : this.state.mfg,
+              'Evaluation'    : this.state.Evaluation,
+              'score'         : this.state.score,
+              'vendorID'      : this.state.vendorID,
+              'owner_ID'      : localStorage.getItem('admin_ID'),
+              'user_ID'       : res.data.user_id,
+              "logo"          : this.state.logo,
+            }
+            
+            axios.post('/api/vendors/post', formValues)
+            .then((response) => {
+              console.log('response', response.data);
+              swal(response.data.message);
+              if(response.data.vendor_ID){
+                this.props.history.push('/location-details/' + response.data.vendor_ID);
+              }
+              
+            })
+            .catch((error) => {
+              console.log('error', error);
+            })
+            
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
+        }else{
+          var formValues = {
+            'typeOptions'     : this.state.typeOptions,
+            'companyName'     : this.state.companyName,
+            "emailId"         : this.state.emailId,
+            "mobileNumber"    : this.state.mobileNumber,
+            'pan'             : this.state.pan,
+            'tin'             : this.state.tin,
+            'website'         : this.state.website,
+            'gstno'           : this.state.gstno,
+            'category'        : this.state.category,
+            'coino'           : this.state.coino,
+            'mfg'             : this.state.mfg,
+            'Evaluation'      : this.state.Evaluation,
+            'score'           : this.state.score,
+            'vendorID'        : this.state.vendorID,
+            'owner_ID'        : localStorage.getItem('admin_ID'),
+            'user_ID'         : this.state.existingVendor.split('|')[1],
+            "logo"            : ""
+          }
           axios.post('/api/vendors/post', formValues)
           .then((response) => {
             console.log('response', response.data);
@@ -429,73 +541,98 @@ class BasicInfo extends Component {
             if(response.data.vendor_ID){
               this.props.history.push('/location-details/' + response.data.vendor_ID);
             }
-            
           })
           .catch((error) => {
             console.log('error', error);
           })
           
-        })
-        .catch((error) => {
-          console.log('error', error);
-        })
-      }else{
-        var formValues = {
-          'typeOptions': this.state.typeOptions,
-          'companyName': this.state.companyName,
-          "emailId": this.state.emailId,
-          "mobileNumber": this.state.mobileNumber,
-          'pan': this.state.pan,
-          'tin': this.state.tin,
-          'website': this.state.website,
-          'gstno': this.state.gstno,
-          'category': this.state.category,
-          'coino': this.state.coino,
-          'mfg': this.state.mfg,
-          'Evaluation': this.state.Evaluation,
-          'score': this.state.score,
-          'vendorID': this.state.vendorID,
-          'owner_ID': localStorage.getItem('admin_ID'),
-          'vendor_ID': this.state.existingVendor.split('|')[1]
         }
-        
-        axios.post('/api/vendors/post', formValues)
-        .then((response) => {
-          console.log('response', response.data);
-          swal(response.data.message);
-          if(response.data.vendor_ID){
-            this.props.history.push('/location-details/' + response.data.vendor_ID);
-          }
-        })
-        .catch((error) => {
-          console.log('error', error);
-        })
-        
       }
-      
     } else {
       $(event.target).parent().parent().find('.inputText.error:first').focus();
     }
   }
 
-  imgBrowse(e) {
-    e.preventDefault();
-    // let self=this;      
-    //   if(e.currentTarget.files){
-    //   var file=e.currentTarget.files[0];
-    //   // // console.log('file=: ',file);
-    //   if(file){
-    //     var fileExt=e.currentTarget.files[0].name.split('.').pop();
-    //     if (fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'svg' || fileExt == 'png' ) {
-    //       attachSupplierLogoToS3Function(file,self);
-    //     }else{
-    //       swal({
-    //         title:'abc',
-    //         text:'Please upload only .jpg/.jpeg/.svg/.png files.'
-    //       });
-    //     }
-    //   }
-    // }           
+  imgBrowse(event) {
+    event.preventDefault();
+    var logo = "";
+    if (event.currentTarget.files && event.currentTarget.files[0]) {
+        // for(var i=0; i<event.currentTarget.files.length; i++){
+            var file = event.currentTarget.files[0];
+            if (file) {
+                var fileName  = file.name; 
+                var ext = fileName.split('.').pop();  
+                if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+                    if (file) {
+                        var objTitle = { fileInfo :file }
+                        logo = objTitle ;
+                        
+                    }else{          
+                        swal("Images not uploaded");  
+                    }//file
+                }else{ 
+                    swal("Allowed images formats are (jpg,png,jpeg)");   
+                }//file types
+            }//file
+        // }//for 
+
+        if(event.currentTarget.files){
+            this.setState({
+              logo : logo
+            });  
+            main().then(formValues=>{
+                this.setState({
+                  logo : formValues.logo
+                })
+            });
+            async function main(){
+                var config = await getConfig();
+                
+                var s3url = await s3upload(logo.fileInfo, config, this);
+
+
+                const formValues = {
+                    "logo"      : s3url,
+                    "status"            : "New"
+                };
+  
+                return Promise.resolve(formValues);
+            }
+            function s3upload(image,configuration){
+    
+                return new Promise(function(resolve,reject){
+                    S3FileUpload
+                        .uploadFile(image,configuration)
+                        .then((Data)=>{
+                            resolve(Data.location);
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                })
+            }   
+            function getConfig(){
+                return new Promise(function(resolve,reject){
+                    axios
+                        .get('/api/projectSettings/get/one/s3')
+                        .then((response)=>{
+                            const config = {
+                                bucketName      : response.data.bucket,
+                                dirName         : 'propertiesImages',
+                                region          : response.data.region,
+                                accessKeyId     : response.data.key,
+                                secretAccessKey : response.data.secret,
+                            }
+                            resolve(config);                           
+                        })
+                        .catch(function(error){
+                            console.log(error);
+                        })
+    
+                })
+            }        
+        }
+    }
   }
   docBrowse(e) {
     e.preventDefault();
@@ -672,6 +809,7 @@ class BasicInfo extends Component {
             'score': response.data.score,
             'vendorID': response.data.vendorID,
             'owner_ID': response.data.owner_ID,
+            "logo" : response.data.logo
           })
         })
         .catch((error) => {
@@ -856,37 +994,18 @@ class BasicInfo extends Component {
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addpicmr marginsBottom" id="hide">
                                 <label className="form-margin col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZeroo">Add Logo</label>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
-                                  {/* {this.props.post2.image?
-                                  <p className="ADDLogo"></p>
-                                  :
-                                  this.state.logo?
-                                  <p className="ADDLogo"></p>
-                                  :
-                                  <p className="ADDLogo">ADD LOGO</p>
-
-                                  } */}
-                                  {/* {this.props.post2.image?
-                                  <img src={this.props.post2.image} className="img-responsive logoStyle" />
-                                  :
-                                  this.state.logo?
+                                  
+                                  {
+                                  this.state.logo ?
                                   <img src={this.state.logo} className="img-responsive logoStyle" />
                                   :
-                                  <img src={this.props.post2.image} className="img-responsive logoStyle" />
+                                  <img src={""} className="img-responsive logoStyle" />
 
-                                  } */}
+                                  } 
 
-                                  {/* {
-                                  this.props.post2.image?
-                                  <div className="addlogoImg" title="Change Logo" onClick={this.imgBrowseOne.bind(this)}><i className="fa fa-camera fa-2x" aria-hidden="true" ></i></div>
-                                  :
-                                  this.state.logo?
-                                  <div className="addlogoImg" title="Change Logo" onClick={this.imgBrowseOne.bind(this)}><i className="fa fa-camera fa-2x" aria-hidden="true" ></i></div>
-                                  :
-                                  <div className="addlogoImg" title="Add Logo" onClick={this.imgBrowseTwo.bind(this)}><i className="fa fa-camera fa-2x" aria-hidden="true" ></i></div>
-
-                                  } */}
+                                  
                                   {/*<img src="/images/addPhptoBtn.png" className="img-responsive addlogoImg" />*/}
-                                  <input onChange={this.imgBrowse.bind(this)} id="LogoImageUp" type="file" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogo" title="" name="LogoImageUp" />
+                                  <input onChange={this.imgBrowse.bind(this)} id="LogoImageUp" type="file" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" title="" name="LogoImageUp" />
                                   {this.getUploadLogoPercentage()}
                                 </div>
                               </div>

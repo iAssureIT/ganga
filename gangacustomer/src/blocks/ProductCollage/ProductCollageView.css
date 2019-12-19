@@ -329,13 +329,18 @@
     width: 0;
     height: 0;
 }
+.collageSize{
+	margin-top: 5px;
+}
 .collageSize input:checked ~ .collageCheck {
     border-color: #2196F3;
     color: #2196F3;
 }
 .collageCheck {
     border: 1px solid #3333335e;
-    padding-top: 3px;
+	padding-top: 3px;
+	padding-left: 3px;
+	padding-right: 3px;
     padding-bottom: 3px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -351,4 +356,8 @@
     z-index: 100;
 	background: #fbfafa;
 	transition: all 0.2s ease-out;
+}
+.sizeCollage span{
+	font-size: 12px;
+	margin-bottom: 5px;
 }

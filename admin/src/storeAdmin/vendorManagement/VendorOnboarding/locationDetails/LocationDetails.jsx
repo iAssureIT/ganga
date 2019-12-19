@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import jQuery from 'jquery';
 import axios from 'axios';
-import ReactTable from "react-table";
 import swal from 'sweetalert';
 import _ from 'underscore';
 import 'bootstrap/js/tab.js';
-// import '../css/SupplierOnboardingForm.css'
 
 class LocationDetails extends Component {
 	constructor(props) {
@@ -27,6 +25,7 @@ class LocationDetails extends Component {
 			'locationTypeDisable': true,
 			'stateArray': [],
 			'districtArray': [],
+			'pincodeExists':true,
 			'openForm' : false,
 			'vendor_ID': this.props.match.params ? this.props.match.params.vendor_ID : '',
 			'location_ID': this.props.match.params ? this.props.match.params.location_ID : ''
@@ -90,6 +89,9 @@ class LocationDetails extends Component {
 					required: true,
 					regxAlphaNum: /^[a-zA-Z/\s,.'-/]*$|^$/,
 				},
+				pincode : {
+					required : true
+				}
 
 			},
 			errorPlacement: function(error, element) {
@@ -107,6 +109,9 @@ class LocationDetails extends Component {
 				}
 				if (element.attr("name") == "district"){
 					error.insertAfter("#district");
+				}
+				if (element.attr("name") == "pincode"){
+					error.insertAfter("#pincode");
 				}
 			}
 		})
@@ -250,9 +255,8 @@ class LocationDetails extends Component {
 	locationdetailsAdd(event) {
 		event.preventDefault();
 		var vendor_ID = this.props.match.params.vendor_ID;
-		var location_ID = this.props.match.params.location_ID;
 		console.log('ghgh', $('#locationsDetail').valid());
-		if($('#locationsDetail').valid()){
+		if($('#locationsDetail').valid() && this.state.pincodeExists){
 			var formValues = {
 				'locationType' 			: this.refs.locationType.value,
 				'addressLineone' 		: this.refs.addressLineone.value,
@@ -265,26 +269,25 @@ class LocationDetails extends Component {
 				'country' 				: this.refs.country.value,
 			}
 			axios.patch('/api/vendors/insert/location/'+vendor_ID, formValues)
-				.then((response) => {
-					$('.inputText').val('');
-					this.setState({
-						'locationType': '--Select Location Type--',
-						'addressLineone': '',
-						'city': '',
-						'states': '-- Select --',
-						'area': '',
-						'addressLinetwo': '',
-						'pincode': '',
-						'country': '-- Select --',
-					});
-					this.locationDetails();
-					swal(response.data.message);
-					$("#LocationsDetail").validate().resetForm();
-				})
-				.catch((error) => {
+			.then((response) => {
+				$('.inputText').val('');
+				this.setState({
+					'locationType': '--Select Location Type--',
+					'addressLineone': '',
+					'city': '',
+					'states': '-- Select --',
+					'area': '',
+					'addressLinetwo': '',
+					'pincode': '',
+					'country': '-- Select --',
+				});
+				this.locationDetails();
+				swal(response.data.message);
+				$("#locationsDetail").validate().resetForm();
+			})
+			.catch((error) => {
 
-				})
-
+			})
 		}
 	}
 
@@ -430,7 +433,7 @@ class LocationDetails extends Component {
 		event.preventDefault();
 		var vendor_ID = this.props.match.params.vendor_ID;
 		var location_ID = this.props.match.params.location_ID;
-		if ($('#LocationsDetail').valid()) {
+		if ($('#locationsDetail').valid() && this.state.pincodeExists) {
 			var formValues = {
 				'locationType': this.refs.locationType.value,
 				'addressLineone': this.refs.addressLineone.value,
@@ -443,32 +446,29 @@ class LocationDetails extends Component {
 				'country': this.refs.country.value,
 			}
 			axios.patch('/api/vendors/update/location/'+vendor_ID+"/"+location_ID, formValues)
-				.then((response) => {
-					this.setState({
-						'locationType': '--Select Location Type--',
-						'addressLineone': '',
-						'city': '',
-						'states': '-- Select --',
-						'area': '',
-						'addressLinetwo': '',
-						'pincode': '',
-						'country': '-- Select --',
-						'openForm' : false,
-						'location_ID' : ""
-					});
-					this.props.history.push('/location-details/'+vendor_ID);
-					this.locationDetails();
-					swal(response.data.message);
-					$("#LocationsDetail").validate().resetForm();
-				})
-				.catch((error) => {
+			.then((response) => {
+				this.setState({
+					'locationType': '--Select Location Type--',
+					'addressLineone': '',
+					'city': '',
+					'states': '-- Select --',
+					'area': '',
+					'addressLinetwo': '',
+					'pincode': '',
+					'country': '-- Select --',
+					'openForm' : false,
+					'location_ID' : ""
+				});
+				this.props.history.push('/location-details/'+vendor_ID);
+				this.locationDetails();
+				swal(response.data.message);
+				$("#locationsDetail").validate().resetForm();
+			})
+			.catch((error) => {
 
-				})
+			})
 
-		} else {
-			$(event.target).parent().parent().find('.inputText.error:first').focus();
-
-		}
+		} 
 	}
 	admin(event) {
 		event.preventDefault();
@@ -485,6 +485,37 @@ class LocationDetails extends Component {
 			console.log('error', error);
 		})
 	}
+	handlePincode(event){
+		console.log(event.target.value);
+        event.preventDefault();
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+        if (event.target.value != '') {
+            axios.get("https://api.postalpincode.in/pincode/" + event.target.value)
+            .then((response) => {
+                // console.log('valid', $("[name='modalpincode']").valid())
+                // console.log('pincodeExists', this.state.pincodeExists);
+
+                if ($("[name='pincode']").valid()) {
+
+                    if (response.data[0].Status == 'Success' ) {
+                        this.setState({pincodeExists : true})
+                    }else{
+                        this.setState({pincodeExists : false})
+                    }
+                }else{
+                    this.setState({pincodeExists : true})
+                }
+                
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+        }else{
+            this.setState({pincodeExists : true})
+        }
+    }
 	render(){
 		return (
 			<div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -649,9 +680,10 @@ class LocationDetails extends Component {
 																					<input type="text" id="area" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.area} ref="area" name="area" onChange={this.handleChange} />
 																				</div>
 																				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  marginsB" >
-																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode {this.props.typeOption == 'Local' ? <sup className="astrick">*</sup> : null}
+																					<label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Pincode <sup className="astrick">*</sup>
 																					</label>
-																					<input type="text" id="Pincodedata" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode} ref="pincode" name="pincode" onChange={this.handleChange} />
+																					<input maxLength="6" onChange={this.handlePincode.bind(this)}  type="text" id="pincode" className="form-control inputText inputTextTwo col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.pincode} ref="pincode" name="pincode" />
+																					{this.state.pincodeExists ? null : <label style={{color: "red", fontWeight: "100"}}>This pincode does not exists!</label>}
 																				</div>
 																			</div>
 																			<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7  marginsB">

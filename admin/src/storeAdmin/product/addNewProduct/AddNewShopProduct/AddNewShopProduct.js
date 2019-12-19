@@ -844,7 +844,7 @@ class AddNewShopProduct extends Component {
 
                           <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12 ">
                             <label>Size</label>
-                            <input onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control " placeholder="Size" aria-describedby="basic-addon1" ref="size" />
+                            <input maxLength="10" onChange={this.handleChange.bind(this)} value={this.state.size} id="size" name="size" type="text" className="form-control " placeholder="Size" aria-describedby="basic-addon1" ref="size" />
                           </div>
                           <div className=" col-lg-2 col-md-2 col-sm-12 col-xs-12   ">
                             <label>Color</label>

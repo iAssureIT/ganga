@@ -42,7 +42,10 @@ class ContactDetails extends Component {
     componentDidMount() {
 		this.getLocationType();
 		this.contactDetails();
-		this.edit();
+		if(this.props.match.params.contactDetails_ID){
+			this.edit();
+		}
+		
     	window.scrollTo(0, 0);
     	// $.validator.addMethod("regxA1", function(value, element, regexpr) {          
 		// 	return regexpr.test(value);
@@ -324,7 +327,7 @@ class ContactDetails extends Component {
     	var vendor_ID 			= this.state.vendor_ID;
 		var contactDetails_ID 	= this.state.contactDetails_ID;
 
-		if($('#contactDetail').valid()){
+		if($('#vendorContactDetail').valid()){
 			var formValues={
 				'Location'      	: this.state.Location,
 				'Designation'       : this.state.Designation,
@@ -366,13 +369,14 @@ class ContactDetails extends Component {
 		}
 	}
 	edit(){
-		var vendor_ID 			= this.state.vendor_ID;
-		var contactDetails_ID 	= this.state.contactDetails_ID;
+		var vendorID 			= this.props.match.params.vendor_ID;
+		var contactDetails_ID 	= this.props.match.params.contactDetails_ID;
 		if(contactDetails_ID){
-			axios.get('/api/vendors/get/one/'+vendor_ID)
+			axios.get('/api/vendors/get/one/'+vendorID)
 			.then((response)=>{
+				console.log(response.data);
 				var x = response.data.contactDetails;
-				var contactDetails = x.filter(a => a._id = contactDetails_ID);
+				var contactDetails = x.filter(a => a._id == contactDetails_ID);
 				this.setState({
 					openForm 		: true,
 					AltPhone 		: contactDetails[0].AltPhone,

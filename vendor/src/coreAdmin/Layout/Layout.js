@@ -66,13 +66,13 @@ import SignUp from '../systemSecurity/SignUp.js';
 import VerifyAccount from '../systemSecurity/VerifyAccount.js';
 
 //============ Vendor Management =============
-import VendorOnboardingForm from '../../storeAdmin/vendorManagement/VendorOnboarding/VendorOnboardingForm/VendorOnboardingForm.jsx';
-import BasicInfo from '../../storeAdmin/vendorManagement/VendorOnboarding/basicInfo/BasicInfo.jsx';
-import LocationDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/locationDetails/LocationDetails.jsx';
-import ContactDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/contactDetails/ContactDetails.jsx';
-import ListOfVendor from '../../storeAdmin/vendorManagement/listOfVendors/components/ListOfVendor.jsx';
-import VendorCategory from '../../storeAdmin/vendorManagement/MasterData/VendorCategory/VendorCategory.jsx';
-import VendorLocationType from '../../storeAdmin/vendorManagement/MasterData/VendorLocationType/VendorLocationType.jsx';
+// import VendorOnboardingForm from '../../storeAdmin/vendorManagement/VendorOnboarding/VendorOnboardingForm/VendorOnboardingForm.jsx';
+// import BasicInfo from '../../storeAdmin/vendorManagement/VendorOnboarding/basicInfo/BasicInfo.jsx';
+// import LocationDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/locationDetails/LocationDetails.jsx';
+// import ContactDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/contactDetails/ContactDetails.jsx';
+// import ListOfVendor from '../../storeAdmin/vendorManagement/listOfVendors/components/ListOfVendor.jsx';
+// import VendorCategory from '../../storeAdmin/vendorManagement/MasterData/VendorCategory/VendorCategory.jsx';
+// import VendorLocationType from '../../storeAdmin/vendorManagement/MasterData/VendorLocationType/VendorLocationType.jsx';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -190,7 +190,7 @@ class Layout extends Component {
                   <Route path="/image" exact strict component={ImageUpload} />
 
                   {/* Vendor Management */}
-                  <Route path="/vendor-onboarding" exact strict component={BasicInfo} />
+                  {/* <Route path="/vendor-onboarding" exact strict component={BasicInfo} />
                   <Route path="/vendor-onboarding/:vendor_ID" exact strict component={BasicInfo} />
                   <Route path="/location-details/:vendor_ID" exact strict component={LocationDetails} />
                   <Route path="/location-details/:vendor_ID/:location_ID" exact strict component={LocationDetails} />
@@ -200,7 +200,7 @@ class Layout extends Component {
                   <Route path="/vendor-category" exact strict component={VendorCategory} />
                   <Route path="/vendor-category/:vendorID" exact strict component={VendorCategory} />
                   <Route path="/vendor-location-type" exact strict component={VendorLocationType} />
-                  <Route path="/vendor-location-type/:locationTypeID" exact strict component={VendorLocationType} />
+                  <Route path="/vendor-location-type/:locationTypeID" exact strict component={VendorLocationType} /> */}
 
                   { /*Order List*/}
                   <Route path="/allorders" exact strict component={AllOrdersList} />

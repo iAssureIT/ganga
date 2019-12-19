@@ -330,18 +330,19 @@ class ProductCollageView extends Component {
                             {
                               this.state['sizeCollage' + data._id] == true ?
                                 <div className="sizeCollage col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                  <span className=" col-lg-12 col-md-12 col-sm-12 col-xs-12">Select Size</span>
                                   <i className="fa fa-times pull-right" id={data._id} onClick={this.closeSize.bind(this)}></i>
                                   {
                                     this.state['relatedProductArray' + data._id] && this.state['relatedProductArray' + data._id].length > 0 ?
                                       this.state['relatedProductArray' + data._id].map((a, i) => {
                                         if (a.size) {
                                           return (
-                                            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 NOpaddingLeft">
-                                              <label className="collageSize col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                            <span>
+                                              <label className="collageSize ">
                                                 <input title="Please select size first." currPro={data._id} availableQuantity={a.availableQuantity} onClick={this.submitCart.bind(this)} value={a.size} name="size" type="radio" id={a._id} />
-                                                <span title={a.size} className="collageCheck col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">{a.size}</span>
-                                              </label>
-                                            </div>
+                                                <span title={a.size} className="collageCheck ">{a.size}</span>
+                                              </label> &nbsp;
+                                            </span>
                                           );
                                         }
                                       })

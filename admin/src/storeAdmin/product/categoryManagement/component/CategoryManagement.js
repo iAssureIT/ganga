@@ -258,7 +258,7 @@ class CategoryManagement extends Component{
                 "addEditModeSubCategory"        : '',
                 "categoryDescription"           : '',
                 "subcatgArr"                    : [],
-                "categoryImage" : ""
+                "categoryImage"             : ""
               });
               $(':input').val('');
               this.getData(this.state.startRange, this.state.limitRange);
