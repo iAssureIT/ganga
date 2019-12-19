@@ -204,8 +204,7 @@ class CompanyInformation extends Component{
       // handle success
       console.log("this is response===>>>",response);
       swal({
-            title:"Good job!", 
-            text:"Company Information Submited!",
+            title:"Company Information Submited!", 
           });
       this.setState({
     
@@ -233,7 +232,6 @@ class CompanyInformation extends Component{
       console.log(error);
       swal({
             title:"Company Information submition failed!",
-            text :"Company Information submition failed!",
            });
 
     })
@@ -244,7 +242,6 @@ class CompanyInformation extends Component{
   }else{
     swal({
           title:"Please enter mandatory fields", 
-          text:"Please enter mandatory fields",
         });
     // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }
@@ -341,7 +338,7 @@ class CompanyInformation extends Component{
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
                  
 
-                  <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
+                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
                     <h4 className="basicinfotxt"><i className="fa fa-info-circle fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Basic Info</h4>
                   </div>
                   {/*<div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -370,7 +367,7 @@ class CompanyInformation extends Component{
                     </div>
                   </div>*/}
                 </div>
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="form-group">
                         <label className="control-label statelabel locationlabel" >

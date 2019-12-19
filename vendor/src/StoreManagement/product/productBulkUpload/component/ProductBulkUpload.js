@@ -1,59 +1,108 @@
-import React, { Component }   from 'react';
-import $                      from 'jquery';
-import axios                  from 'axios';
-import ReactTable             from "react-table";
-import swal                   from 'sweetalert';
-import XLSX                   from "xlsx";
-import _                      from 'underscore';
-import ProductList            from '../../productList/component/ProductList.js'; 
+import React, { Component } from 'react';
+import axios from 'axios';
+import _ from 'underscore';
+import { withRouter } from 'react-router-dom';
+import BulkUploadComponent from './BulkUploadComponent';
+import  '../css/productBulkUpload.css'
+import Message from '../../../../coreAdmin/common/message/Message.js';
 
-class AddNewBulkProduct extends Component{
+class AddNewBulkProduct extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            "currentProducts" : [],
-            "vendor"          : [],
-            "productData"     : [],
-            "file"            : props&&props.fileData&&props.fileData[0]?props.fileData[0].fileName:'',
-            "finalData"       : []
+            "currentProducts": [],
+            "productData": [],
+            "file": props && props.fileData && props.fileData[0] ? props.fileData[0].fileName : '',
         }
     }
-
     componentWillReceiveProps(nextProps) {
-        if(nextProps.productData){
+        if (nextProps.productData) {
             this.setState({
-                productData : nextProps.productData
-            },()=>{
+                productData: nextProps.productData
+            }, () => {
                 // console.log('productData', this.state.productData);
             });
         }
-        if(nextProps.fileData  && nextProps.fileData.length>0){
+        if (nextProps.fileData && nextProps.fileData.length > 0) {
             var file = nextProps.fileData[0].fileName;
             var productData = nextProps.productData;
 
             function checkAdult(data) {
-              return data.fileName == file;
+                return data.fileName == file;
             }
             var x = productData.filter(checkAdult);
             // console.log('x',x);
 
             this.setState({
-                productData : x
+                productData: x
             });
         }
     }
-
     componentDidMount() {
-        
+        this.getVendorList();
+        this.getSectionData();
+        // var dbdata = [];
+        // dbdata.push({name: "section", type: "string", label:"Section"})
+        // dbdata.push({name: "category", type: "string", label:"Category"})
+        // dbdata.push({name: "subCategory", type: "string", label:"Subcategory" })
+        // dbdata.push({name: "brand", type: "string", label:"Brand"})
+        // dbdata.push({name: "productCode", type: "string", label:"Product Code"})
+        // dbdata.push({name: "itemCode", type: "string", label:"Item Code"})
+        // dbdata.push({name: "productName", type: "string", label:"Product Name"})
+        // dbdata.push({name: "productDetails", type: "string", label:"Product Details"})
+        // dbdata.push({name: "shortDescription", type: "string", label:"Short Description"})
+        // dbdata.push({name: "featureList", type: "string", label:"Feature List"})
+        // dbdata.push({name: "currency", type: "string", label:"Currency"})
+        // dbdata.push({name: "originalPrice", type: "number", label:"Original Price"})
+        // dbdata.push({name: "discountPercent", type: "number", label:"Discount Percent"})
+        // dbdata.push({name: "discountedPrice", type: "number", label:"Discounted Price"})
+        // dbdata.push({name: "availableQuantity", type: "number", label:"Available Quantity"})
+        // dbdata.push({name: "unit", type: "string", label:"Unit"})
+        // dbdata.push({name: "size", type: "string", label:"Size"})
+        // dbdata.push({name: "color", type: "string", label:"Color"})
+        // dbdata.push({name: "exclusive", type: "string", label:"Does this product is Exclusive"})
+        // dbdata.push({name: "featured", type: "string", label:"Does this product Featured"})
+        // dbdata.push({name: "taxInclude", type: "string", label:"Does Tax Include"})
+        // dbdata.push({name: "taxRate", type: "string", label:"Tax Rate"})
+
+        // this.setState({
+        //   dbdata: dbdata
+        // })
+        //console.log('dbdata',this.state.dbdata);  
     }
-
-    componentWillUnmount() {
-
+    getSectionData() {
+        axios.get('/api/sections/get/list')
+          .then((response) => {
+            // console.log('getWebCategories', response.data);
+            this.setState({
+              sectionArray: response.data
+            })
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
     }
-
-
-
+    showRelevantCategories(event) {
+        var section = event.target.value;
+        this.setState({
+          section: event.target.value,
+          section_ID: event.target.value.split('|')[1],
+          messageData : {},
+          fileurl:null
+        })
+        axios.get('/api/category/get/list/' + event.target.value.split('|')[1])
+          .then((response) => {
+            this.setState({
+              categoryArray: response.data,
+              category: "Select Category",
+              subCategory: "Select Sub-Category",
+            })
+          })
+          .catch((error) => {
+            console.log('error', error);
+          })
+    }
     showProgressBar() {
         // var getPercernt = UserSession.get("progressbarSession",Meteor.userId());
         // var allPercernt = UserSession.get("allProgressbarSession",Meteor.userId());
@@ -98,395 +147,170 @@ class AddNewBulkProduct extends Component{
         //     );
         // }
     }
+    selectOption(event) {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: event.target.value,
+            messageData : {}
+        },()=>{
+            console.log(this.state.vendor);
+        });
+    }
+    getVendorList() {
+        axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('vendor_ID'))
+            .then((response) => {
+                this.setState({
+                    vendorArray: response.data
+                })
+            })
+            .catch((error) => {
 
-    uploadBulkProduct(event){
+            })
+    }
+    handleChangeCategory(event){
         event.preventDefault();
-      //   UserSession.delete("progressbarSession", Meteor.userId());
-      //   UserSession.delete("allProgressbarSession", Meteor.userId());
-
-      //   var file = event.target.files[0];
-      //   console.log('file',file.name);
-
-      //   Papa.parse( event.target.files[0], {
-        // header: true,
-        // complete( results) {
-      //           console.log('results',results);
-        //  Meteor.call( 'BulkShopProductCSVUpload', results.data, file.name, ( error, result ) => {
-      //            if ( error ){
-      //                   console.log('error',error);
-      //                   swal({
-      //                       type: 'warning',
-      //                       title: 'Please check csv file format ',
-      //                       text: 'Please check csv file format',
-      //                       showConfirmButton: true,
-      //                       // timer: 5000
-      //                   });
-      //          } else {
-      //                   // // console.log("result = " + result);
-      //                   if(result.indexOf("101")>=0){
-      //                       let errcode = result.split("-");
-      //                       if(errcode[0] == "101"){
-      //                           swal({
-      //                               position: 'top-right',
-      //                               type: 'warning',
-      //                               title: 'Please remove "-" from ProductCode of Product Serial Number ' + errcode[1].trim(),
-      //                               text: 'Please remove "-" from ProductCode of Product Serial Number ' + errcode[1].trim(),
-      //                               showConfirmButton: true,
-      //                               // timer: 5000
-      //                           });
-      //                           $(".adminBlkUpldBkg").val('');
-      //                           // setTimeout(()=>{ 
-      //                           //     UserSession.delete("progressbarSession", Meteor.userId());
-      //                           //     UserSession.delete("allProgressbarSession", Meteor.userId());
-      //                           // }, 8000);
-      //                       }                            
-      //                   }else{
-      //                       swal({
-      //                           position: 'top-right',
-      //                           type: 'success',
-      //                           title: 'Products Added Successfully',
-      //                           text: 'Products Added Successfully',
-      //                           showConfirmButton: false,
-      //                           timer: 1500
-      //                       });
-    
-      //                       $(".adminBlkUpldBkg").val('');
-      //                       setTimeout(()=>{ 
-      //                           UserSession.delete("progressbarSession", Meteor.userId());
-      //                           UserSession.delete("allProgressbarSession", Meteor.userId());
-      //                       }, 8000);
-      //                   }
-                       
-      //          }
-      //      });
-
-        // }
-      //   });
-
-
-    }
-    publishAllProducts(event){
-        event.preventDefault();        
-        // Meteor.call("publishAllShopProducts", (error, result)=>{
-        //     if(result){
-        //         swal({
-        //             position: 'top-right',
-        //             type: 'success',
-        //             title: 'All Products published successfully',
-        //             text: 'All Products published successfully',
-        //             showConfirmButton: false,
-        //             timer: 1500
-        //         });
-        //     }
-        // });
-    }
-    changeProductList(event){
-        var inputText = $(event.currentTarget).val();
-
-        // if(inputText){
-        //     Session.set("inputProductSearch",inputText);
-        // } else {
-        //     Session.set("inputProductSearch","");
-        // }
-    }
-
-    deleteProduct(event){
-        event.preventDefault();
-        // var id = $(event.currentTarget).attr("data-productId");
-        // if(id){
-        //     Meteor.call("deleteListShopProduct",id, (error, result)=> {
-        //         if(error){
-
-        //         } else {
-        //             swal({
-        //                 position: 'top-right',
-        //                 type: 'success',
-        //                 text: 'Product Deleted Successfully',
-        //                 title: 'Product Deleted Successfully',
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-        //             $('.modal-backdrop').hide();
-
-        //         }
-        //     });
-        // }
-    }
-
-    editUniqueProduct(event) {
-        // var prodId = $(event.currentTarget).attr('data-prodId');
-        // FlowRouter.go('/admin/products/AddNewShopProduct/' + prodId);
-        // browserHistory.replace(path);
-    }
-
-    changeFeatured(event){
-        event.preventDefault();
-        // var statusVal = $(event.currentTarget).attr('data-status');
-        // var prodVal  = $(event.currentTarget).attr('data-prodVal');
-
-
-        // if(prodVal){
-        //     if(statusVal=="true"){
-        //         statusVal = false;
-        //         Meteor.call('updateShopProductFeatured', prodVal, statusVal);
-        //     } else {
-        //         statusVal = true;
-        //         Meteor.call('updateShopProductFeatured', prodVal,statusVal);
-        //     }
-        // }
-    }
-
-    changeExclusive(event){
-        event.preventDefault();
-        // var statusVal = $(event.currentTarget).attr('data-status');
-        // var prodVal  = $(event.currentTarget).attr('data-prodVal');
-        // if(prodVal){
-        //     if(statusVal=="true"){
-        //         statusVal = false;
-        //         Meteor.call('updateShopProductExclusive', prodVal, statusVal);
-        //     } else {
-        //         statusVal = true;
-        //         Meteor.call('updateShopProductExclusive', prodVal, statusVal);
-        //     }
-        // }
-    }
-    
-    selectFile(event){
-        event.preventDefault();
-        // const target = event.target;
-        // const name   = target.name;
-        // this.setState({
-        //     [name]: event.target.value,
-        // });
-
-        
-        // var selectedFile = this.refs.file.value;
-        // // console.log('selectedFile',selectedFile);
-
-        // var productData = this.props.productData;
-        // var ages = [3, 10, 18, 20];
-
-        // function checkAdult(data) {
-        //   return data.fileName == selectedFile;
-        // }
-        // var x = productData.filter(checkAdult);
-        // // console.log('x',x);
-
-        // this.setState({
-        //     productData : x
-        // });
-
-    }
-    handleChange(e) {
-        const files = e.target.files;
-        if (files && files[0]) this.handleFile(files[0]);
-    }
-    handleFile(file) {
-    
-        const reader = new FileReader();
-        const rABS = !!reader.readAsBinaryString;
-        reader.onload = ({ target: { result } }) => {
-
-          const wb = XLSX.read(result, { type: rABS ? "binary" : "array" });
-          const wsname = wb.SheetNames[0];
-
-          const ws = wb.Sheets[wsname];
-          const data = XLSX.utils.sheet_to_json(ws, { header: 1 }); 
-
-            var documentObj = [];
-            let count = 0;    
-              this.setState({inputFileData:data},()=>{
-                /*var productCodeArray = [];
-                for (var j=1; j <= this.state.inputFileData.length; j++){
-                    var record = this.state.inputFileData[j];
-                    let header = this.state.inputFileData[0];
-                    if (record !== undefined) {
-                        productCodeArray.push(record[header.indexOf('productCode')]);
-                    }
-                } 
-                productCodeArray = productCodeArray.filter((item, i, ar) => ar.indexOf(item) === i);
-                console.log('productCodeArray',productCodeArray)*/
-
-                var featuresArray = [];  
-                var productCode = '';
-                
-                productCode = this.state.inputFileData[1][this.state.inputFileData[0].indexOf('productCode')];
-                // loop on all the records in sheet
-                for (var j=1; j <= this.state.inputFileData.length; j++){          
-                  var record = this.state.inputFileData[j];
-                  if (j==1) {
-                    var previousRecord = this.state.inputFileData[j];
-                  }else{
-                    var previousRecord = this.state.inputFileData[j-1];
-                  }
-                  
-                  let header = this.state.inputFileData[0];
-                  
-                    if (record !== undefined) {
-                        var k;
-                        // loop on header columns
-                        for(k in header){
-                            if (!documentObj.hasOwnProperty(count)) {
-                                if (header[k]=='featureList') {
-                                    
-                                }else{
-                                    documentObj.push({[header[k]]:record[k]});
-                                }
-                            }else{
-
-                                if (header[k].startsWith("featureList")) {
-                                    if (header[k]=='featureList1') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            //featuresArray ={ feature: record[k], index:0 };
-                                            featuresArray.push({ feature: record[k], index:0 });
-                                        }
-                                    }
-                                    if (header[k]=='featureList2') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            featuresArray.push({ feature: record[k], index:1 });
-                                        }
-                                    }
-                                    if (header[k]=='featureList3') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            featuresArray.push({ feature: record[k], index:2 });
-                                        }
-                                    }
-                                    if (header[k]=='featureList4') {
-                                        if (record[k] != undefined && record[k] != '') {
-                                            featuresArray.push({ feature: record[k], index:3 });
-                                        }
-                                    }
-                                    documentObj[count]['featureList'] = featuresArray;
-                                }
-                                else if(header[k]=='tags') {
-                                    if (record[k] != undefined) {
-                                        documentObj[count]['tags'] = record[k].split(','); 
-                                    }
-                                }
-                                
-                                else{
-                                    documentObj[count][header[k]] = record[k];
-                                }
-                                documentObj[count]['filename'] = file.name;
-                                documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
-                            }
+        this.setState({
+          category: event.target.value,
+          category_ID: event.target.value.split('|')[1],
+        })
+        axios.get('/api/bulkUploadTemplate/get/' + event.target.value.split('|')[1])
+          .then((response) => {
+            console.log(response.data);
+            if (response.data) {
+                this.setState({fileurl:response.data.templateUrl, messageData : {}})    
+            }else{
+                this.setState({
+                    fileurl:null,
+                        messageData : {
+                            "type" : "outpage",
+                            "icon" : "fa fa-exclamation",
+                            "message" : "Selected category does not have any template. Please upload template.",
+                            "class": "warning",
+                            "autoDismiss" : true
                         }
-                        
-                        featuresArray = [];
-                        count++;
-                         
-                    }
-                }
-                
-                this.setState({finalData:documentObj},()=>{
-                     console.log(this.state.finalData);
-                });
-            });
-        };
-        if (rABS) reader.readAsBinaryString(file);
-        else reader.readAsArrayBuffer(file);
-        //$('.submitBtn').prop('disabled',false);
-       
-    }
-
-    enableBulkUpload(){
-        $('.adminBlkUploadBtn').prop('disabled',false);
-    }
-    bulkUpload(){
-        
-        var formValues = this.state.finalData;
-        console.log('formValues',formValues);
-        axios.post('/api/products/post/bulkUploadProduct', formValues)
-        .then((response)=>{
-            window.location.reload();
-            swal({
-                    title : response.data.message,
-                    text  : response.data.message,
-                  });
-        })
-        .catch((error)=>{
+                    })
+            }
+            
+          })
+          .catch((error) => {
             console.log('error', error);
-        })
+          })
     }
-    render(){
+    render() {
         const SheetJSFT = [
-              "xlsx",
-              "xls"
+            "xlsx",
+            "xls"
         ]
-
-        return(
-            <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        console.log(this.state.vendor);
+        const requiredData = {vendor: this.state.vendor};
+        return (
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-right">
+            <section className="content">
+            <Message messageData={this.state.messageData} />
+            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                 <div className="row">
-                <section className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
-                    <div className="content col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="">
-                    <h4 className="weighttitle">Product Bulk Upload</h4>
-                    </div>
+                    <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
+                        <div className="box">
+                            <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-left" >
+                                <h4 className="NOpadding-right">Product Bulk Upload</h4>
+                                </div>
+                                {
+                            localStorage.getItem('role') == 'superAdmin' ? 
+                            <div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pull-right" >
+                                <a href="/template-management"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Template</button></a>
+                            </div>
+                            : null
+                        }
+                            </div>
 
-                    <div className="">
-                    <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding">
-                        <div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 NOpadding">
-                            <a className="videocard" href="/products.xlsx" title="Click to Download" download><div className="publishAllProductsClient">
-                            SAMPLE DATA FORMAT
-                            </div></a>
                         </div>
-                    <div className="addRolesInWrap col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 inputFields marginTopp">
+                            <label>Vendor <i className="redFont">*</i></label>
+                            <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
+                                <option disabled selected defaultValue="">Select Vendor</option>
+                                {this.state.vendorArray && this.state.vendorArray.length > 0 ?
+                                    this.state.vendorArray.map((data, index) => {
+                                        return (
+                                        <option key={index} value={data.companyName + '|' + data.user_ID + '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
+                                        );
+                                    })
+                                    :
+                                    <option disabled>{"No vendor added"}</option>
+                                }
+                            </select>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 inputFields marginTopp">
+                            <label>Section <i className="redFont">*</i></label>
+                            <select onChange={this.showRelevantCategories.bind(this)} value={this.state.section} name="section" className="form-control" aria-describedby="basic-addon1" id="section" ref="section">
+                                <option disabled selected defaultValue="">Select Section</option>
+                                {this.state.sectionArray && this.state.sectionArray.length > 0 ?
+                                    this.state.sectionArray.map((data, index) => {
+                                        return (
+                                            <option key={index} value={data.section + '|' + data._id} >{data.section}</option>
+                                        );
+                                    })
+                                    :
+                                    <option disabled>{"Section not available"}</option>
+                                }
+                            </select>
+                        </div>
+                        <div className="col-lg-4 col-md-4 col-sm-4 col-xs-6 inputFields marginTopp">
+                            <label>Category <i className="redFont">*</i></label>
+                            <select onChange={this.handleChangeCategory.bind(this)} value={this.state.section} name="category" value={this.state.category}  className="form-control" aria-describedby="basic-addon1" id="category" ref="category">
+                                <option disabled selected defaultValue="">Select Category</option>
+                                {this.state.categoryArray && this.state.sectionArray.length > 0 ?
+                                    this.state.categoryArray.map((data, index) => {
+                                        return (
+                                            <option key={index} value={data.category + '|' + data._id} >{data.category}</option>
+                                        );
+                                    })
+                                    :
+                                    <option disabled>{"Category not available"}</option>
+                                }
+                            </select>
+                        </div>
+                        {
 
-                    <div className="upldProdFileHere"> Upload Your Product File Here:</div>
-
-                    <div className="input-group">
-                    <span className="adminBlkUpldIcon input-group-addon" id="basic-addon1"><i className="fa fa-cloud-upload" aria-hidden="true"></i></span>
-                    <input className="adminBlkUpldBkg form-control adminBlkUploadBtn"
-                                                  ref={this.fileInput}
-                                                  type="file"
-                                                  accept={SheetJSFT}
-                                                  onChange={this.handleChange.bind(this)} 
-                                                />
-                    </div>
-
-                    <div className="upldProdFileInstPre"> 
-                    <strong className="upldProdFileInst">Instructions</strong>
-                    <ul> 
-                    <li> File Type must be CSV file - Comma Separated Values. CSV file can be edited in Excelsheets. </li>
-                    <li> Please make sure that Product Code should not have hyphen "-" in it. </li>
-                    </ul>
+                            /*<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 inputFields marginTopp">
+                                <label>Categroy <i className="redFont">*</i></label>
+                                <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
+                                    <option disabled selected defaultValue="">Select Category</option>
+                                    <option value={localStorage.getItem("vendor_ID")} >Admin</option>
+                                    {this.state.categoryArray && this.state.categoryArray.length > 0 ?
+                                        this.state.categoryArray.map((data, index) => {
+                                            return (
+                                                <option key={index} value={data._id}>{data.companyName} - ({data.vendorID})</option>
+                                            );
+                                        })
+                                        :
+                                        <option disabled>{"No vendor added"}</option>
+                                    }
+                                </select>
+                                {this.state.category ? null : <span>Please select category to export excel file template</span>}
+                            </div>*/
+                        }
+                        <br/>
                     </div>
                     {
-                        this.state.finalData.length > 0 ?
-                        <button className="submitBtnGo btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
-                        onClick={this.bulkUpload.bind(this)} >Submit</button>
-                        :
-                        <button className="submitBtn btn btnSubmit col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-offset-9" 
-                        disabled>Submit</button>
-                    
+                       this.state.vendor &&  this.state.fileurl ?
+                        <BulkUploadComponent url="/api/states/post/bulkinsert" 
+                            fileurl={this.state.fileurl}
+                            fileDetailUrl="/api/products/get/filedetails/"
+                            requiredData={requiredData}
+                            />   : null    
+                        
                     }
-                    
-                    </div>
-                    </div>
-                    <div className="col-lg-12">
-                    {this.showProgressBar(this)}
-                    </div>
-
-                    </div>
-                    <ProductList />
-                    </div>
-                    </div>
-
-                    </div>
-
-                    </div>
-                    </div>
-                </section>
                 </div>
             </div>
+        </section>
+      </div>
         );
     }
 }
-export default AddNewBulkProduct;
+export default withRouter(AddNewBulkProduct);
 
 // AddNewBulkProduct = withTracker(props => {
 //     var vendorData          = [];

@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import axios from 'axios';
-import swal from 'sweetalert';
 import _ from 'underscore';
-import ProductList from '../../productList/component/ProductList.js';
 import { withRouter } from 'react-router-dom';
 import BulkUploadComponent from './BulkUploadComponent';
-import XLSX from "xlsx";
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import  '../css/productBulkUpload.css'
 import Message from '../../../../coreAdmin/common/message/Message.js';
 
@@ -207,7 +202,6 @@ class AddNewBulkProduct extends Component {
           })
     }
     render() {
-        console.log('templateUrl',this.state.fileurl)
         const SheetJSFT = [
             "xlsx",
             "xls"
@@ -240,11 +234,10 @@ class AddNewBulkProduct extends Component {
                             <label>Vendor <i className="redFont">*</i></label>
                             <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                                 <option disabled selected defaultValue="">Select Vendor</option>
-                                <option value={localStorage.getItem("admin_ID")} >Admin</option>
                                 {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                                     this.state.vendorArray.map((data, index) => {
                                         return (
-                                            <option key={index} value={data.vendor_ID}>{data.companyName} - ({data.vendorID})</option>
+                                        <option key={index} value={data.companyName + '|' + data.user_ID + '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
                                         );
                                     })
                                     :

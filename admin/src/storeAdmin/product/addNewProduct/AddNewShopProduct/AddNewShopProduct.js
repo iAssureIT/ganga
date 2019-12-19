@@ -311,9 +311,8 @@ class AddNewShopProduct extends Component {
         this.getSubCategories(response.data.category_ID);
         console.log('attributes', response.data)
         this.setState({
-          // addrows: [1],
           showDiscount: response.data.discountedPrice ? false : true,
-          vendor: response.data.vendorName + '|' + response.data.vendor_ID,
+          vendor: response.data.vendorName + '|' +response.data.user_ID +'|'+ response.data.vendor_ID,
           section: response.data.section + '|' + response.data.section_ID,
           category: response.data.category + '|' + response.data.category_ID,
           subCategory: response.data.subCategory + '|' + response.data.subCategory_ID,
@@ -375,7 +374,8 @@ class AddNewShopProduct extends Component {
       }
     }
     var formValues = {
-      "vendor_ID": this.refs.vendor.value.split('|')[1],
+      "vendor_ID": this.refs.vendor.value.split('|')[2],
+      "user_ID": this.refs.vendor.value.split('|')[1],
       "vendorName": this.refs.vendor.value.split('|')[0],
       "section": this.refs.section.value.split('|')[0],
       "section_ID": this.refs.section.value.split('|')[1],
@@ -480,7 +480,8 @@ class AddNewShopProduct extends Component {
       }
     }
     var formValues = {
-      "vendor_ID": this.refs.vendor.value.split('|')[1],
+      "vendor_ID": this.refs.vendor.value.split('|')[2],
+      "user_ID": this.refs.vendor.value.split('|')[1],
       "vendorName": this.refs.vendor.value.split('|')[0],
       "section": this.refs.section.value.split('|')[0],
       "section_ID": this.refs.section.value.split('|')[1],
@@ -707,7 +708,7 @@ class AddNewShopProduct extends Component {
                         {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                           this.state.vendorArray.map((data, index) => {
                             return (
-                              <option key={index} value={data.companyName + '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
+                              <option key={index} value={data.companyName + '|' + data.user_ID + '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
                             );
                           })
                           :

@@ -1,9 +1,5 @@
 import React, { Component }   from 'react';
 import $                      from 'jquery';
-import jQuery                 from 'jquery';
-import axios                  from 'axios';
-import ReactTable             from "react-table";
-import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import 'bootstrap/js/tab.js';
 
@@ -11,7 +7,8 @@ export default class AddNewTableFeature extends Component{
     constructor(props) {
       super(props);
       this.state = {
-        ["feature"+props.index] : props.feature
+        ['attributeName'+props.index] : props.attributeName,
+        ['attributeValue'+props.index] : props.attributeValue
       };
     }
     deleteProductTableRow(event){
@@ -28,16 +25,18 @@ export default class AddNewTableFeature extends Component{
     }
     componentWillReceiveProps(nextProps) {
       this.setState({
-        ['feature'+nextProps.index] : nextProps.feature
-      },()=>{
-        // // console.log('feature', this.state);
+        ['attributeName'+nextProps.index] : nextProps.attributeName,
+        ['attributeValue'+nextProps.index] : nextProps.attributeValue
       });
     }
     render(){
         return(
             <tr>
-               <td className="col-lg-11">
-                  <input type="text" value={this.state['feature'+this.props.index]} name={"feature"+this.props.index} onChange={this.handleChange.bind(this)} className={"featuresRef"+this.props.index + " form-control featureRefMain"} ref={"featuresRef"+this.props.index} />
+               <td className="col-lg-5">
+                  <input type="text" value={this.state['attributeName'+this.props.index]} name={"attributeName"+this.props.index} onChange={this.handleChange.bind(this)} className={"attributeName"+this.props.index + " form-control attributeNameRef"} ref={"attributeName"+this.props.index} />
+               </td>
+               <td className="col-lg-5">
+                  <input type="text" value={this.state['attributeValue'+this.props.index]} name={"attributeValue"+this.props.index} onChange={this.handleChange.bind(this)} className={"attributeValue"+this.props.index + " form-control attributeValueRef"} ref={"attributeValue"+this.props.index} />
                </td>
                <td  className="col-lg-1">
                    <div className="delete-product-table-row" onClick={this.deleteProductTableRow.bind(this)} >

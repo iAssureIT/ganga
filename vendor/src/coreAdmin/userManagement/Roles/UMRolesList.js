@@ -137,7 +137,7 @@ export default class UMRolesList extends Component {
 													<tr>
 														<td className="textAlignLeft">{roleData.role}</td>		
 														<td className="roleTextCenter"> 						
-															<i className="fa fa-pencil editTcon editIcon"  data-toggle="modal" title="Delete" data-target={`#${roleData._id}-edit`} title="Edit Department Name" ></i>
+															{/*<i className="fa fa-pencil editTcon editIcon"  data-toggle="modal" title="Delete" data-target={`#${roleData._id}-edit`} title="Edit Department Name" ></i>*/}
 															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${roleData._id}-rm`} ></i>
 														</td>

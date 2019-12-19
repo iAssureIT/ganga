@@ -59,7 +59,7 @@ class SectionManagement extends Component {
     
     $.validator.addMethod("regxA1", function (value, element, regexpr) {
       return regexpr.test(value);
-    }, "Name should only contain letters and special characters like (@&()_+-)");
+    }, "Please enter valid section title");
 
     $.validator.setDefaults({
       debug: true,
@@ -71,9 +71,9 @@ class SectionManagement extends Component {
         
         section: {
           required: true,
-          regxA1: /^[A-Z@&()_+-]*$/i,
+          regxA1: /^[a-zA-Z0-9@&()_+-\s]*$/i,
         },
-
+        // /^[^-\s][a-zA-Z0-9_\s-]+$/
       },
       errorPlacement: function (error, element) {
         if (element.attr("name") == "section") {
@@ -119,7 +119,7 @@ class SectionManagement extends Component {
     //   if($('#sectionManagement').valid()){
     //     var formValues = {
     //         "section"                  : this.state.section,
-    //         "createdBy"                : localStorage.getItem("admin_ID")
+    //         "createdBy"                : localStorage.getItem("vendor_ID")
     //     }
     //     axios.post('/api/sections/post', formValues)
     //       .then((response)=>{
@@ -145,7 +145,7 @@ class SectionManagement extends Component {
     if ($('#sectionManagement').valid()) {
       var formValues = {
         "section": this.state.section,
-        "createdBy": localStorage.getItem("admin_ID")
+        "createdBy": localStorage.getItem("vendor_ID")
       }
       axios.post('/api/sections/post', formValues)
         .then((response) => {
@@ -230,8 +230,9 @@ class SectionManagement extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
         <div className="row">
+          <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
           <div className="formWrapper">
             <section className="content">
               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
@@ -252,7 +253,7 @@ class SectionManagement extends Component {
                       <div className="col-lg-5">
                         <div className="col-lg-12">
                           <label>Section URL <i className="redFont">*</i></label>
-                          <input disabled value={this.state.sectionUrl} onChange={this.handleChange.bind(this)} id="sectionUrl" name="sectionUrl" type="text" className="form-control sectionUrl" placeholder="section URL" ref="sectionUrl" />
+                          <input disabled value={this.state.sectionUrl} onChange={this.handleChange.bind(this)} id="sectionUrl" name="sectionUrl" type="text" className="form-control sectionUrl" placeholder="Section URL" ref="sectionUrl" />
                         </div>
                       </div>
                     
@@ -284,6 +285,7 @@ class SectionManagement extends Component {
                 </div>
               </div>
             </section>
+            </div>
           </div>
         </div>
       </div>

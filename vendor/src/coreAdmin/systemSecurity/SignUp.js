@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {browserHistory} from 'react-router';
 import swal from 'sweetalert';
 import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -89,29 +88,32 @@ class SignUp extends Component {
                 	axios
                 	 	.post('/api/users',auth)
 			            .then((response)=> {
-			                console.log("-------userData------>>",response);
-		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email ID and Mobile no");
-			                // this.props.history.push("/confirm-otp");
+			                swal({
+								title : "Information submitted successfully and OTP is sent to your registered Email ID and Mobile no"
+							});
 			                this.props.history.push("/login");
 			            })
 			            .catch(function (error) {
-			                console.log(error);
-        					swal("Unable to submit data.");
+							swal({
+								title : "Unable to submit data."
+							  });
 			            })
                 	)
                 :
 	                (
 		                document.getElementById("signUpBtn").value = 'Sign Up',
-		                swal("Password should be at least 6 Characters Long","Please try again or create an Account")       
+						swal({
+							title : "Please try again or create an Account"
+						  })
 	                )
                 
             } else {
                 document.getElementById("signUpBtn").value = 'Sign Up';
-		        return swal("Passwords does not match","Please Try Again")
+		        return swal("Please Try Again")
             }
             }else{
                 document.getElementById("signUpBtn").value = 'Sign Up';
-				swal("Please enter mandatory fields", "", "warning");
+				swal("Please enter mandatory fields");
 				console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
         

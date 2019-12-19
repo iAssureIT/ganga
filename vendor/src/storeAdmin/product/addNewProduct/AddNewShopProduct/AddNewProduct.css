@@ -325,7 +325,7 @@ padding: 0.87rem .85rem !important;
     border-left-width: 0 !important;
 }*/
 .marginTopp{
-    margin-top: 3%;
+    margin-top: 1%;
 }
 .img-progress{
     height: 25px;
@@ -336,14 +336,62 @@ padding: 0.87rem .85rem !important;
     font-weight: 600;
     font-size: 15px;
 }
-
-DIV.redBox{
-    box-sizing: border-box;
-    border: 1px solid red;
-    float: left;
-}
-DIV.greenBox{
-    box-sizing: border-box;
-    border: 1px solid green;
-    float: left;
-}
+.taxswitch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .taxswitch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .taxslider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .taxslider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .taxslider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .taxslider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .taxslider:before {
+    -webkit-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  
+  /* Rounded sliders */
+  .taxslider.taxround {
+    border-radius: 34px;
+  }
+  
+  .taxslider.taxround:before {
+    border-radius: 50%;
+  }

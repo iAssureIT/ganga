@@ -275,8 +275,15 @@ export default class BusinessAssociateList extends Component {
     getBlocks(districtName,stateCode,countryCode){
       axios.get("http://locationapi.iassureit.com/api/blocks/get/list/"+countryCode+"/"+stateCode+'/'+districtName)
             .then((response)=>{
+              var flags = [], output = [], l = response.data.length, i;
+              for( i=0; i<l; i++) {
+                  if( flags[response.data[i].blockName]) continue;
+                  flags[response.data[i].blockName] = true;
+                  output.push(response.data[i]);
+              }
+              
               this.setState({
-                blocksArray : response.data
+                blocksArray : output
               })
             })
             .catch((error)=>{
@@ -318,7 +325,7 @@ export default class BusinessAssociateList extends Component {
   
   render() {
     return (
-      <div>
+      <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
       <div className="content-wrapper">
         <div className="col-lg-12 col-md-12 hidden-sm hidden-xs secdiv"></div>
         <section className="content">
@@ -433,7 +440,7 @@ export default class BusinessAssociateList extends Component {
                                    onClick={this.ShowForm.bind(this)} name={index}  data-child={data._id+'-'+index} id={data._id}>
                                    { data.logo=="" ?
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 baLogoDiv">
-                                      <img src="images/defaultimg.jpg" className="supplierLogoImage"></img>
+                                      <img src="images/noimage.png" className="supplierLogoImage"></img>
                                     </div>
                                     :
                                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 baLogoDiv">

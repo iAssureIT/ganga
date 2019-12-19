@@ -231,7 +231,7 @@ constructor(props) {
                                         documentObj[count][header[k]] = record[k];
                                     }
                                     documentObj[count]['filename'] = file.name;
-                                    documentObj[count]['vendor_ID'] = this.props.requiredData.vendor;
+                                    documentObj[count]['vendor'] = this.props.requiredData.vendor;
                                     documentObj[count]['createdBy'] = localStorage.getItem('admin_ID');
                                 }
                             }

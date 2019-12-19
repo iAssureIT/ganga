@@ -28,7 +28,7 @@ export default class SupplierOnboardingForm extends TrackerReact(Component) {
     return (
 
     	<div>
-	        <div className="">
+	        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	               
 		        <section className="content viewContent">
 		            <div className="row">

@@ -76,7 +76,6 @@ class AdminOrdersList extends Component{
             if(status!="Done"){
                 swal({
                     title: 'Do you want to change status to '+status+ "?",
-                    text: 'Do you want to change status to '+status+ "?",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -87,7 +86,7 @@ class AdminOrdersList extends Component{
                         var formValues = {
                           "orderID" :  id,  
                           "status"  :  status,
-                          "userid"  :  localStorage.getItem('admin_ID')
+                          "userid"  :  localStorage.getItem('vendor_ID')
                         }
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
@@ -95,7 +94,6 @@ class AdminOrdersList extends Component{
                           console.log('response', response);
                           swal({
                             title : response.data.message,
-                            text  : response.data.message,
                           });
                         })
                         .catch((error)=>{
@@ -116,7 +114,6 @@ class AdminOrdersList extends Component{
         if(status!="Nothing"){
             swal({
                 title: 'Are you sure you want to change status to '+status+ " ?",
-                text: 'Are you sure you want to change status to '+status+ " ?",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -130,7 +127,7 @@ class AdminOrdersList extends Component{
                     var formValues = {
                           "orderID" :  id,  
                           "status"  :  status,
-                          "userid"  :  localStorage.getItem('admin_ID')
+                          "userid"  :  localStorage.getItem('vendor_ID')
                         }
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
@@ -138,7 +135,6 @@ class AdminOrdersList extends Component{
                           this.getOrders();
                           swal({
                             title : response.data.message,
-                            text  : response.data.message,
                           });
                         })
                         .catch((error)=>{
@@ -164,7 +160,7 @@ class AdminOrdersList extends Component{
         if(businessAssociate != '' ){
           var formValues = {
                           "orderID"             :  id,
-                          "userid"              :  localStorage.getItem('admin_ID'),
+                          "userid"              :  localStorage.getItem('vendor_ID'),
                           "businessAssociateId" : businessAssociate
                           }
           console.log(formValues);
@@ -174,14 +170,12 @@ class AdminOrdersList extends Component{
             console.log('response', response);
             swal({
               title : response.data.message,
-              text  : response.data.message,
             });
              if(response.status == 200){
                 //$('#dispatchDetails'+id).modal('hide');
                 
                     swal({
                         title: 'Order is dispatched Successflly',
-                        text: response.data.message,
                         showConfirmButton: false
                     });
                     this.getOrders();
@@ -196,10 +190,6 @@ class AdminOrdersList extends Component{
         }else{
             swal({
                 title: 'Please fill all fields',
-                text: "Please fill all fields",
-                type: 'error',
-                showConfirmButton: false,
-                timer: 1500
             });
         } 
   
@@ -299,8 +289,8 @@ class AdminOrdersList extends Component{
                                                                   {listData.totalQuantity }
                                                               </td>
                                                               <td className="col-lg-1 textAlignRight">
-                                                                 {/* R &nbsp;{listData.totalAmount } */}
-                                                                 <i className={"fa fa-"+listData.currency}>&nbsp;{(parseInt(listData.totalAmount)).toFixed(2)}</i>                                                              </td>
+                                                                 {/* R &nbsp;{listData.total } */}
+                                                                 <i className={"fa fa-"+listData.currency}>&nbsp;{(parseInt(listData.total)).toFixed(2)}</i>                                                              </td>
                                                               <td className="col-lg-1 textAlignCenter">
                                                                   { moment(listData.createdAt).format("MMM Do YY") }
                                                                   
@@ -339,7 +329,7 @@ class AdminOrdersList extends Component{
                                                                                 <button type="button" className="adminCloseButton" data-dismiss="modal" onClick={this.closeModal.bind(this)} data-target={"openSubCatgModal"}>&times;</button>
                                                                               </div>
                                                                               </div>
-                                                                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                                                                              <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                                               <form className="dispatchForm" onSubmit={this.addDispatchDetails.bind(this)} id={listData._id} data-id={listData._id}>
                                                                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                   

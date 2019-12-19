@@ -41,9 +41,10 @@ export default class AllSMSTemplateRow extends Component{
 		console.log('id',id);
 		axios.delete('/api/masternotifications/'+id)
 		.then((response)=> {
-			swal("Template deleted successfully","", "success");
-	    	console.log('delete response',response);
-	    	console.log("here response message",response.data.message);
+			
+			swal({
+				title : "Template deleted successfully",
+			  });
 	    	if(response.data.message=="Master notification deleted")
 	    	{
 	    	this.props.deleteData("SMS",id);

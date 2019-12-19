@@ -32,18 +32,18 @@ class VendorCategory extends Component {
         var editId = this.props.match.params.vendorID;
         console.log('ven', editId);
         this.getData(this.state.startRange, this.state.limitRange);
-        this.getDataCount();
+
         this.edit(editId);
         window.scrollTo(0, 0);
         $.validator.addMethod("regxA1", function(value, element, regexpr) {          
         return regexpr.test(value);
-        }, "Name should only contain letters & number.");
+        }, "Category Name should only contain letters & number.");
         
         jQuery.validator.setDefaults({
         debug: true,
         success: "valid"
         });
-        $("#BasicInfo").validate({
+        $("#vendorCategory").validate({
         rules: {
             categoryName: {
             required: true,
@@ -52,7 +52,7 @@ class VendorCategory extends Component {
         },
             errorPlacement: function(error, element) {
                 if (element.attr("name") == "categoryName"){
-                    error.insertAfter("#basicInfo1");
+                    error.insertAfter("#categoryName");
                 }
             }
         });
@@ -80,21 +80,19 @@ class VendorCategory extends Component {
         var formValues = {
             "categoryName" : this.refs.categoryName.value
         }
-        if(this.refs.categoryName.length>0){
-        axios.post('/api/vendorCategory/post', formValues)
-        .then((response)=>{
-            swal(response.data.message);
-            this.setState({
-                categoryName : ""
+        if($("#vendorCategory").valid()){
+            axios.post('/api/vendorCategory/post', formValues)
+            .then((response)=>{
+                this.getData(this.state.startRange, this.state.limitRange);
+                swal(response.data.message);
+                this.setState({
+                    categoryName : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
-        }else{
-          swal("Category cant be blank", "", "warning");
-         
-       } 
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     updateCategory(event){
         event.preventDefault();
@@ -102,18 +100,21 @@ class VendorCategory extends Component {
             "vendorCategoryID" : this.state.editId,
             "categoryName" : this.refs.categoryName.value
         }
-        axios.patch('/api/vendorCategory/patch', formValues)
-        .then((response)=>{
-            this.props.history.push('/vendor-category');
-            swal(response.data.message);
-            this.setState({
-                categoryName : "",
-                editId : ""
+        if($("#vendorCategory").valid()){
+            axios.patch('/api/vendorCategory/patch', formValues)
+            .then((response)=>{
+                this.props.history.push('/vendor-category');
+                swal(response.data.message);
+                this.getData(this.state.startRange, this.state.limitRange);
+                this.setState({
+                    categoryName : "",
+                    editId : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     getDataCount(){
         axios.get('/api/vendorCategory/get/count')
@@ -135,6 +136,7 @@ class VendorCategory extends Component {
 
     axios.get('/api/vendorCategory/get/list', data)
     .then((response)=>{
+        this.getDataCount();
         this.setState({
         tableData : response.data
         })
@@ -160,6 +162,7 @@ class VendorCategory extends Component {
         return (
             <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
                 <div className="row">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <section className="content">
                         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                             <div className="row">
@@ -201,6 +204,7 @@ class VendorCategory extends Component {
                             </div>
                         </div>
                     </section>
+                    </div>
                 </div> 
             </div> 
         );

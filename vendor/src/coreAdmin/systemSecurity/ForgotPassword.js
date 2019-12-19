@@ -80,7 +80,10 @@ class ForgotPassword extends Component {
         // // $('.NewForgotPasswordWrap').css('display','none');
 
       }else{
-        swal('Email Address not found',"Please enter valid Email Id","warning");                  
+        
+        swal({
+          title : "Please enter valid Email Id",
+        });                 
       }
     }
 

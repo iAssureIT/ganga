@@ -31,6 +31,7 @@
 .inputFields{
   height: 85px;
 }
+button:focus { outline: none !important ; }
 
 
 @keyframes App-logo-spin {
@@ -51,16 +52,23 @@
 
 .headereffect
 {
-    width: 94%!important;
+    /* width: 94%!important; */
   }
 
 .dashboardeffect
 {
-    width: 94.2%!important;
+  width: 98%!important;
+  margin-left: 4% !important;
 }
+.dashcontentBox{
+  margin-left: 14.8%;
+  width: 87%;
+  padding: 2%;
 
+}
 .leftsidebarbackgroundcolor{
   position: fixed!important;
+  top: 0;
   left: 15px;
 }
 
@@ -305,7 +313,7 @@ input, select{
 
 /*Page header bottom horizontal line*/
 .hr-head{
-  border:0.25px solid #999;
+  border:0.25px solid #ccc;
   width: 100%;
 }
 
@@ -627,4 +635,20 @@ margin-right: 12px;
 }
 .roleinputbox{
   border: 1px solid #ddd;
+}
+.form-margin{
+  margin-top: 15px;
+}
+.marginBottomCSS{
+  margin-bottom:55px;
+}
+.padding30{
+  padding: 30px;
+}
+
+.dash{
+  margin-top: 45px;
+}
+.dashcontentBox{
+  margin-top: 20px;
 }

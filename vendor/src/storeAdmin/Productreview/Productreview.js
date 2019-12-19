@@ -1,9 +1,6 @@
 import React, { Component }   from 'react';
-import $                      from 'jquery';
 import axios                  from 'axios';
-import ReactTable             from "react-table";
 import IAssureTable           from "./ProductReviewTable/IAssureTable.jsx";
-import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import "./Productreview.css";
 
@@ -129,7 +126,7 @@ class Productreview extends Component{
         return(
             <div className="container-fluid">
                 <div className="row">
-                
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <section className="content">
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                                 <div className="row">
@@ -186,6 +183,7 @@ class Productreview extends Component{
                                 </div>
                             </div>
                         </section>
+                        </div>
                     </div>
                 </div>
 

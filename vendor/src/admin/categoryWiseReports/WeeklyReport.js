@@ -23,6 +23,7 @@ export default class WeeklyReport extends Component{
           "tableObjects"        : {
             apiLink             : '/api/annualPlans/',
             editUrl             : '/Plan/',
+            paginationApply     : true,
           },
           "startRange"          : 0,
           "limitRange"          : 10,
@@ -37,7 +38,7 @@ export default class WeeklyReport extends Component{
     }
 
     componentDidMount(){
-        this.getCount();  
+        
         axios.get("/api/sections/get/list/")
         .then((response)=>{
           this.setState({ sections : response.data })
@@ -52,7 +53,17 @@ export default class WeeklyReport extends Component{
             endDate     : moment().year(moment().format('Y')).week(moment().format('W')).endOf('week').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null )    
+
+            var formValues={
+                "startTime" : this.state.startDate,
+                "endTime"   : this.state.endDate,
+                "section"   : null,
+                "category"  : null,
+                "subcategory" : null
+              }
+            this.setState({ formValues : formValues} ,()=>{ this.getCount();  });  
+ 
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null, null )    
         })
     }
     componentWillReceiveProps(nextProps){
@@ -63,24 +74,31 @@ export default class WeeklyReport extends Component{
         }
     }
     getCount(){
-        axios.get('/api/orders/get/count')
+        axios.post("/api/orders/get/category-wise-report-count", this.state.formValues)
         .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
+          this.setState({ 
+            dataCount : response.data.dataCount
+          })
         })
         .catch((error)=>{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange,category, subcategory){
+    getData(startDate,endDate, startRange,limitRange,section ,category, subcategory){
         var formValues={
               "startTime" : startDate,
               "endTime"   : endDate,
+              "section"   : section,
               "category"  : category,
               "subcategory" : subcategory
             }
-            axios.post("/api/orders/get/category-wise-report",formValues)
+        this.setState({formValues : formValues},()=>{
+
+            this.getTableData(startRange,limitRange);
+        });    
+    }
+    getTableData(startRange,limitRange){
+      axios.post("/api/orders/get/category-wise-report/"+startRange+'/'+limitRange,this.state.formValues)
             .then((response)=>{
               this.setState({ 
                 tableData : response.data
@@ -90,7 +108,6 @@ export default class WeeklyReport extends Component{
                 console.log('error', error);
             })
     }
-
 	previousWeek(event){
 		event.preventDefault();
         
@@ -102,7 +119,7 @@ export default class WeeklyReport extends Component{
             startDate       : startDate,
             endDate         : moment(startDate).add(1, "week").format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )   
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )   
         })
 	}
 	nextWeek(event){
@@ -116,7 +133,7 @@ export default class WeeklyReport extends Component{
             startDate       : startDate,
             endDate         : moment(startDate).add(1, "week").format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )   
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )   
         })
     }
     
@@ -136,6 +153,8 @@ export default class WeeklyReport extends Component{
         });
     }
     handleSection(event){
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, event.target.value, null, null);
+    
         axios.get("/api/category/get/list/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -147,7 +166,7 @@ export default class WeeklyReport extends Component{
         })
     }
     handleCategory(event){
-        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
         axios.get("/api/category/get/one/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -157,6 +176,10 @@ export default class WeeklyReport extends Component{
         .catch((error)=>{
             console.log('error', error);
         })
+    }
+    handleSubCategory(event){
+      event.preventDefault();
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
     }
     render(){
         if(!this.props.loading){
@@ -203,7 +226,7 @@ export default class WeeklyReport extends Component{
                         <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Subcategory 
                         </label>
                         <select id="subcategory" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" 
-                          ref="subcategory" name="subcategory" onChange={this.handleSection.bind(this)} >
+                          ref="subcategory" name="subcategory" onChange={this.handleSubCategory.bind(this)} >
                           <option selected={true} disabled={true}>-- Select --</option>
                           {
                             this.state.subcategories && this.state.subcategories.map((data,index)=>{
@@ -220,7 +243,7 @@ export default class WeeklyReport extends Component{
                                 twoLevelHeader={this.state.twoLevelHeader} 
                                 dataCount={this.state.dataCount}
                                 tableData={this.state.tableData}
-                                getData={this.getData.bind(this)}
+                                getData={this.getTableData.bind(this)}
                                 tableObjects={this.state.tableObjects}
                             />
                             }

@@ -2,11 +2,17 @@ import React, { Component }       	from 'react';
 import {Route, withRouter} 			from 'react-router-dom';
 import swal                     	from 'sweetalert';
 import axios 						from 'axios';
-import $ 							from 'jquery';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
+import 'font-awesome/css/font-awesome.min.css';
+import $ from "jquery";
 import jQuery 						from 'jquery';
 import './IAssureTable.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
+import _                      from 'underscore';
+import S3FileUpload           from 'react-s3';
 
 var sum = 0;
 class IAssureTable extends Component {
@@ -25,12 +31,16 @@ class IAssureTable extends Component {
 		    "activeClass" 				: 'activeCircle',
 		    "paginationArray" 			: [],
 		    "startRange" 				: 0,
-		    "limitRange" 				: 10,
+		    "limitRange" 				: 100,
 		    "activeClass" 				: 'activeCircle', 		    
 		    "normalData" 				: true,
 		    "callPage" 					: true,
 		    "pageCount" 				: 0,
-		    "valI" 						: 1
+		    "valI" 						: 1,
+		    allid :null,
+		    productImage          : [],
+            productImageArray     : [],
+            productTitle          : '',
 		}
 		this.delete = this.delete.bind(this);
 	}
@@ -52,7 +62,25 @@ class IAssureTable extends Component {
             tableData	    : nextProps.tableData,
             dataCount 		: nextProps.dataCount,
         })
-        
+        if(nextProps){
+	        this.setState({
+	            tableData     : nextProps.tableData,
+	            completeDataCount : nextProps.completeDataCount,
+	        },()=>{
+		        this.paginationFunction();
+		        if(nextProps.unCheckedUser&&this.state.tableData){
+			        $('.allSelector').prop('checked',false);
+			        this.state.tableData.map((a,i)=>{
+			        this.setState({
+			        [a._id] : false,
+			        allid : []
+			        },()=>{
+			        this.props.setunCheckedUser(false)
+			        })
+			        });
+		        }
+        	})
+		}
         
     }
 	edit(event){
@@ -74,7 +102,6 @@ class IAssureTable extends Component {
 	    	this.props.getData(this.state.startRange, this.state.limitRange);
 	        swal({
 	        	text : response.data.message,
-	        	title : response.data.message
 	        });
 	    }).catch(function (error) {
 	        console.log('error', error);
@@ -434,7 +461,6 @@ class IAssureTable extends Component {
         .then((response)=>{
         	this.props.getData(this.state.startRange, this.state.limitRange);
         	swal({
-                text: 'Product '+changingStat+'ed Successfully',
                 title: 'Product '+changingStat+'ed Successfully',
             });
         })
@@ -443,14 +469,222 @@ class IAssureTable extends Component {
         });
         
 	}
-	
+	selectedId(event){
+		var selectedProducts = this.state.allid?this.state.allid:[];
+		var data = event.target.id;
+		var value = event.target.checked;
+		console.log("data", data,value,selectedProducts);
+		this.setState({
+		[data] : value,
+		},()=>{
+		if(this.state[data] === true ){
+		selectedProducts.push(data);
+		this.setState({
+		allid : selectedProducts
+		},()=>{
+		// console.log('length',this.state.tableData.length,this.state.allid.length)
+		if(this.state.tableData.length===this.state.allid.length){
+		        $('.allSelector').prop('checked',true);
+		}
+		this.props.selectedProducts(this.state.allid);
+		})
+		}else{
+		$('.allSelector').prop('checked',false);
+		var indexVal = selectedProducts.findIndex(x=>x == data)
+		// console.log('indexVal',indexVal)
+		selectedProducts.splice(indexVal,1)
+		this.setState({
+		allid : selectedProducts
+		},()=>{
+		this.props.selectedProducts(this.state.allid);
+		})
+		}
+		})
+	}
+	checkAll(event) {
+      	// let allid =[];
+      	console.log('event.target.checked',event.target.checked)
+      	if(event.target.checked){
+      		var allid = []
+	        this.state.tableData.map((a,i)=>{
+	        allid.push(a._id)
+	        this.setState({
+	        	[a._id] : true,
+	        },()=>{
+		        	if(this.state.tableData.length===(i+1)){
+	      				this.setState({allid:allid},()=>{
+	      					console.log("here id true=======================",this.state.allid);
+    	this.props.selectedProducts(this.state.allid);
+	      				})
+		        	}
+		        })
+	        return a._id;
+	        });
+      	}else{
+		    this.state.tableData.map((a,i)=>{
+		        this.setState({
+		        	[a._id] : false,
+		        },()=>{
+		        	if(this.state.tableData.length===(i+1)){
+	      				this.setState({allid:[]},()=>{
+	      					console.log("here id=======================",this.state.allid);
+    	this.props.selectedProducts(this.state.allid);
+	      				})
+		        	}
+		        })
+		        return a._id;
+	        });
+	    }
+    }
+    showImageModal(event){
+    	//$('#showImageModal').show();
+    	//console.log(event.target.getAttribute('id'))
+    	var productId = event.target.getAttribute('id');
+    	this.getImageData(productId);
+    	this.setState({productID:productId, productName:event.target.getAttribute('name').replace(/<br>/gi,', ')})
+
+    }
+    getImageData(id){
+        // console.log('id',id);
+        axios.get('/api/products/get/one/'+id)
+        .then((response)=>{
+            // console.log('reas', response.data);
+            this.setState({
+                productImage : response.data.productImage && response.data.productImage.length>0 ? response.data.productImage : [],
+                productImageArray : response.data.productImage && response.data.productImage.length>0 ? response.data.productImage : [],
+                productTitle : response.data.productName
+            },()=>{
+                // console.log('productImage', this.state.productImage);
+            })
+        })
+        .catch((error)=>{
+            console.log('error', error);
+        })
+    }
+    uploadProductImage(event){
+        event.preventDefault();
+        var productImage = [];
+        if (event.currentTarget.files && event.currentTarget.files[0]) {
+            for(var i=0; i<event.currentTarget.files.length; i++){
+                var file = event.currentTarget.files[i];
+                if (file) {
+                    var fileName  = file.name; 
+                    var ext = fileName.split('.').pop();  
+                    if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+                        if (file) {
+                            var objTitle = { fileInfo :file }
+                            productImage.push(objTitle);
+                            
+                        }else{          
+                            swal("Images not uploaded");  
+                        }//file
+                    }else{ 
+                        swal("Allowed images formats are (jpg,png,jpeg)");   
+                    }//file types
+                }//file
+            }//for 
+
+            if(i >= event.currentTarget.files.length){
+                this.setState({
+                    productImage : productImage
+                },()=>{
+                    // console.log('productImage', this.state.productImage)
+                });  
+                main().then(formValues=>{
+                    // console.log('formValues.productImage', formValues.productImage);
+                    var newImages = this.state.productImageArray;
+                    newImages.push(formValues.productImage);
+                    this.setState({
+                        productImageArray : _.flatten(newImages)
+                    },()=>{
+                        // console.log('form', this.state.productImageArray);
+                    })
+                });
+                async function main(){
+                    var config = await getConfig();
+                    
+                    var s3urlArray = [];
+                    for (var i = 0; i<productImage.length; i++) {
+                        var s3url = await s3upload(productImage[i].fileInfo, config, this);
+                        s3urlArray.push(s3url);
+                    }
+                    // console.log('s3urlArray',s3urlArray);
+                    
+                    
+                    const formValues = {
+                        "product_ID"        : "fhfgf",
+                        "productImage"      : s3urlArray,
+                        "status"            : "New"
+                    };
+        
+                    // console.log("1 formValues = ",formValues);
+                    return Promise.resolve(formValues);
+                }
+                function s3upload(image,configuration){
+        
+                    return new Promise(function(resolve,reject){
+                        S3FileUpload
+                           .uploadFile(image,configuration)
+                           .then((Data)=>{
+                                // console.log("Data = ",Data);
+                                resolve(Data.location);
+                           })
+                           .catch((error)=>{
+                                console.log(error);
+                           })
+                    })
+                }   
+                function getConfig(){
+                    return new Promise(function(resolve,reject){
+                        axios
+                           .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
+                           .then((response)=>{
+                                // console.log("proj set res = ",response.data);
+                                const config = {
+                                    bucketName      : response.data.bucket,
+                                    dirName         : 'propertiesImages',
+                                    region          : response.data.region,
+                                    accessKeyId     : response.data.key,
+                                    secretAccessKey : response.data.secret,
+                                }
+                                resolve(config);                           
+                            })
+                           .catch(function(error){
+                                console.log(error);
+                           })
+        
+                    })
+                }        
+            }
+        }
+    }
+    
+	deleteProductImage(event){
+        // console.log('delete');
+        
+        var id = event.target.id;
+        var productImageArray = this.state.productImageArray;
+        // console.log('productImage', productImageArray, id);
+
+        productImageArray.splice(productImageArray.findIndex(v => v === id), 1);
+        this.setState({
+            productImageArray: productImageArray
+        },()=>{
+            // console.log('subcatgArr', this.state.subcatgArr);
+        });
+    }
+    saveImages(event){
+    	event.preventDefault();
+    	this.props.saveProductImages(this.state.productImage,this.state.productID,this.state.productImageArray)
+    }
 	render(){
+		console.log('productImageArray',this.state.productImageArray)
         return (
-	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
+	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NoPadding">	
 		       	{
 		       		this.state.tableObjects.paginationApply == true ?
-			       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-							<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
+			       		<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Show</label>
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
 								<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
 									<option value="Not Selected" disabled>Select Limit</option>
@@ -465,16 +699,17 @@ class IAssureTable extends Component {
 					:
 					null        
 		       	}
-				   <div className="col-lg-4 col-md-4 col-xs-12 col-sm-12 totalDataCount">Total Data : <b>{this.state.dataCount}</b>
-					   
-				   </div>
+				<div className="col-lg-3  col-md-3  col-xs-12 col-sm-12 text-center mt50">
+	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Filtered Products: <span >{this.state.dataCount}</span> </label>
+				</div>  
 				{
 		       		this.state.tableObjects.searchApply == true ? 
-			       		<div className="col-lg-4  col-md-4  col-xs-12 col-sm-12 marginTop17 NOpadding pull-right">
+			       		<div className="col-lg-6  col-md-6  col-xs-12 col-sm-12 marginTop17 pull-right">
 			        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
 			        		<div className="input-group">
-						        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
-						    	<span className="input-group-addon"><i className="fa fa-search"></i></span>
+						        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right form-control" 
+						        ref="tableSearch" id="tableSearch" name="tableSearch" placeholder="Search by Product Name, Brand, Section, Category, Item code"/>
+						    	<span className="input-group-addon" ><i className="fa fa-search"></i></span>
 						    </div>
 			        	</div>	
 		        	:
@@ -498,7 +733,12 @@ class IAssureTable extends Component {
 									}
 	                            </tr>
 	                            <tr className="">
-	                            <th className="umDynamicHeader srpadd textAlignLeft">Sr.No.</th>
+	                            <th className="umDynamicHeader srpadd textAlignLeft">
+									<div className="uMDetailContainer">
+										<input type="checkbox" className="allSelector col-lg-1 col-md-1 col-sm-3 col-xs-1" name="allSelector" onChange={this.checkAll.bind(this)}/>
+								    	<span className="uMDetailCheck"></span>
+								    </div>
+								</th>
 		                            { this.state.tableHeading ?
 										Object.entries(this.state.tableHeading).map( 
 											([key, value], i)=> {
@@ -512,8 +752,6 @@ class IAssureTable extends Component {
 									}
 									<th className="umDynamicHeader srpadd textAlignLeft">Featured</th>
 									<th className="umDynamicHeader srpadd textAlignLeft">Exclusive</th>
-									<th className="umDynamicHeader srpadd textAlignLeft">New Product</th>
-									<th className="umDynamicHeader srpadd textAlignLeft">Best Seller</th>
 									<th className="umDynamicHeader srpadd textAlignLeft">Status</th>
 									<th className="umDynamicHeader srpadd textAlignLeft">Action</th>
 	                            </tr>
@@ -524,10 +762,12 @@ class IAssureTable extends Component {
 										(value, i)=> {													
 											return(
 												<tr key={i} className="">
-													<td className="textAlignCenter">{this.state.startRange+1+i}</td>
+													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name={value._id} id={value._id} checked={this.state[value._id]} className="userCheckbox" onChange={this.selectedId.bind(this)} /></td>
+													
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
+
 																if($.type(value1) == 'string'){
 																	var regex = new RegExp(/(<([^>]+)>)/ig);
 																	var value2 = value1 ? value1.replace(regex,'') : '';
@@ -562,16 +802,12 @@ class IAssureTable extends Component {
                                                     <td className="col-lg-1 textAlignCenter">
                                                         <i onClick={this.changeAttribute.bind(this)} data-attribute="exclusive" data-ID={value._id} data-attributeValue={value.exclusive} title={( value.exclusive == true ? "Disable It" : "Enable It" )}  className={'fa fa-check-circle prodCheckboxDim ' + ( value.exclusive == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
                                                     </td>
-													<td className="col-lg-1 textAlignCenter">
-                                                        <i onClick={this.changeAttribute.bind(this)} data-attribute="newProduct" data-ID={value._id} data-attributeValue={value.newProduct} title={( value.newProduct == true ? "Disable It" : "Enable It" )}  className={'fa fa-check-circle prodCheckboxDim ' + ( value.newProduct == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
-                                                    </td>
-													<td className="col-lg-1 textAlignCenter">
-                                                        <i onClick={this.changeAttribute.bind(this)} data-attribute="bestSeller" data-ID={value._id} data-attributeValue={value.bestSeller} title={( value.bestSeller == true ? "Disable It" : "Enable It" )}  className={'fa fa-check-circle prodCheckboxDim ' + ( value.bestSeller == true ? "prodCheckboxDimSelected" : "prodCheckboxDimNotSelected" )} aria-hidden="true"></i>
-                                                    </td>
+													
                                                     <td className="col-lg-1">
-                                                        <div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
+                                                        <div className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )}>{value.status}</div>
+                                                        {/*<div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
                                                             {(value.status == ("Unpublish") ? ("Unpublished") : (value.status == ("Draft") ? ("Draft") : ("Published")))}
-                                                        </div>
+                                                        </div>*/}
                                                     </td>
 													<td className="textAlignCenter">
 														<span>
@@ -579,8 +815,10 @@ class IAssureTable extends Component {
 	                                                            <i className="fa fa-eye" aria-hidden="true"></i>
 	                                                        </a>&nbsp; &nbsp;
 															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
+															<i className={"fa fa-image "} id={value._id} name={value.productName} data-toggle="modal" title="Upload Product Image" data-target={"#productImageModal"} onClick={this.showImageModal.bind(this)}></i>&nbsp; &nbsp;
+														
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal-"+(value._id)}></i>}
-														</span>
+															</span>
 														<div className="modal fade" id={"showDeleteModal-"+(value._id)} role="dialog">
 	                                                        <div className=" adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
@@ -611,7 +849,7 @@ class IAssureTable extends Component {
 										}
 									) 	
 									:
-									<tr className="trAdmin"><td colSpan={9} className="noTempData textAlignCenter">No Record Found!</td></tr>               		
+									<tr className="trAdmin"><td colSpan={12} className="noTempData textAlignCenter">No Record Found!</td></tr>               		
 								}
 	                    	</tbody>
 	                    </table>
@@ -663,6 +901,76 @@ class IAssureTable extends Component {
 	                    
 	                </div>                        
 	            </div>
+
+	            <div className="modal" id="productImageModal" role="dialog">
+                  	<div className="modal-dialog modal-lg">
+                    	<div className="modal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                      		<div className="modal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		                        <button type="button" className="close" data-dismiss="modal">&times;</button>
+		                        <h3 className="modalTitle">Product Images</h3>
+		                    </div>
+                      	<div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+                      		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 input-group">
+		                        <br/>	<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">{this.state.productName}</label>
+		                        </div>
+		                        <div className="col-lg-2 col-md-2 col-sm-4 col-xs-4 input-group" id="hideInput">
+		                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
+	                                    <img src= "/images/uploadimg.png" className="img-responsive imgStyle" />
+	                                      <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" multiple onChange={this.uploadProductImage.bind(this)}  name="upload-logo"/>
+	                                </div>            
+		                            
+		                        </div>
+	                        	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NoPadding ">
+	                            	<div className="row productImgWrapper">
+	                            	{this.state.productImageArray && this.state.productImageArray.length > 0?
+		                                this.state.productImageArray.map((imageData, index)=>{
+		                                    return(
+		                                        <div className="col-lg-2 productImgCol" key={index}>
+		                                            <div className="prodModalImage">
+		                                                <div className="prodImageInner">
+		                                                    <span className="prodImageCross" title="Delete" data-imageUrl={imageData} id={imageData} onClick={this.deleteProductImage.bind(this)}>x</span>
+		                                                </div>
+		                                                <img aria-hidden="true" data-toggle="modal" data-target={"#openImageModal"+index} title="view Image" src={imageData} alt="Product Image" className="img-responsive" />
+		                                            </div>
+
+		                                            <div className="modal fade" id={"openImageModal"+index} role="dialog">
+		                                                <div className="modal-dialog">
+		                                                    <div className="modal-content">
+		                                                        <div className="modal-header">
+		                                                            <a href="#" data-dismiss="modal" aria-hidden="true" className="close pull-right"><i className="fa fa-times-circle-o fa-lg venClosePadd" aria-hidden="true"></i></a>
+		                                                            </div>
+		                                                        <div className="modal-body">
+		                                                            <div className="row">
+		                                                                <div className="col-lg-12 text-left productImageModallMarginBtm">
+		                                                                    <img src={imageData} alt="Product Image" className="img-responsive" />
+		                                                                </div>
+		                                                            </div>
+		                                                        </div>
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    );
+		                                })
+		                                :
+		                                null
+	                            	}
+                            	</div>
+                        	</div>
+                        </div>
+                      </div>
+                      <div className="modal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <a href="#" className="btn btn-warning" id="productImageModalbtn" data-dismiss="modal" onClick={this.saveImages.bind(this)} >Save</a>
+                          <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  	</div>
+                </div>
+	            
+
             </div>
 	    );
 		

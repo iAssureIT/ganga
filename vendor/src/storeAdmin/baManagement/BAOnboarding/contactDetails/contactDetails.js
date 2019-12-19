@@ -5,6 +5,7 @@ import swal         from 'sweetalert';
 import $            from 'jquery';
 import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
+import {Route, withRouter} from 'react-router-dom';
 
 class ContactDetails extends Component {
   constructor(props) {
@@ -55,47 +56,24 @@ class ContactDetails extends Component {
     });
     $("#ContactDetail").validate({
       rules: {
-        
-        MobileNo: {
-           regxA1:/^(\+\d{1,3}[- ]?)?\d{10}$/,
-           required: true,
-        },
-        Email: {
-          regxA2:/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
-            required: true,
-        },
         Name: {
           required: true,
         },
-        // Reportinmanager: {
-        //   required: true,
-        // },
-        altMobileNo: {
-          notEqual: $('input[name="Phones"]').val(),
-        //   regxA1:/^[0-9+]{10}*$/,          
-          required: false,
+        MobileNo: {
+          required: true,
+          regxA1:/^([7-9][0-9]{9})$/
         },
-        Landings: {
-        //   regxA3:/^[0-9+]{11}*$/,    
-          maxlength: 13,
-          required: false,
-        },
+        Email: {
+          required: true,
+        }
       },
       errorPlacement: function(error, element) {
-          if (element.attr("name") == "Location"){
-            error.insertAfter("#headoffice");
-          }
-          if (element.attr("name") == "Designation"){
-            error.insertAfter("#Designations");
-          }
-          if (element.attr("name") == "ContactLevel"){
-            error.insertAfter("#ContactLevel");
-          }
+          
           if (element.attr("name") == "MobileNo"){
             error.insertAfter("#MobileNo");
           }
           if (element.attr("name") == "Email"){
-            error.insertAfter("#Emails");
+            error.insertAfter("#Email");
           }
           if (element.attr("name") == "Name"){
             error.insertAfter("#Name");
@@ -103,12 +81,12 @@ class ContactDetails extends Component {
           // if (element.attr("name") == "Reportinmanager"){
           //   error.insertAfter("#Reportinmanagers");
           // }
-          if (element.attr("name") == "altMobileNo"){
-            error.insertAfter("#altMobileNo");
-          }
-          if (element.attr("name") == "Landing"){
-            error.insertAfter("#Landings");
-          }
+          // if (element.attr("name") == "altMobileNo"){
+          //   error.insertAfter("#altMobileNo");
+          // }
+          // if (element.attr("name") == "Landing"){
+          //   error.insertAfter("#Landings");
+          // }
         }
     });
     $(document).ready(function(){
@@ -230,7 +208,6 @@ class ContactDetails extends Component {
         event.preventDefault();
         if(this.state.Location != "--Select Location Type--" || this.state.Designation != '' || this.state.Phone != '' || this.state.Email != '' || this.state.Name != '' || this.state.Reportinmanager != '' || this.state.AltPhone != '' || this.state.Landing != ''){
       swal({
-        title: "abc",
         text: "It seem that you are trying to enter a location. Click 'Cancel' to continue entering location. Click 'Ok' to go to next page.But you may lose values allready entered in the location form",
         // type: "warning",
         buttons: {
@@ -298,7 +275,9 @@ class ContactDetails extends Component {
     }  
     contactdetailAddBtn(event){
       event.preventDefault();
+      console.log('valid',$('#ContactDetail').valid())
       if($('#ContactDetail').valid()){
+        $('.fullpageloader').show();
         var baId = this.props.baId;
         console.log('contact',baId);
           var formValues = {
@@ -311,13 +290,12 @@ class ContactDetails extends Component {
               'officeLandlineNo'  : this.refs.Landing.value,
             }]
           }
-          console.log(formValues);
+          //console.log(formValues);
           axios.patch("/api/businessassociates/patch/updateBaContact",formValues)
             .then((response)=>{
-              console.log(response);        
+              $('.fullpageloader').hide();      
               swal({
-                    title : 'Contact details are added successfully',
-                    text  : 'Contact details are added successfully'
+                    title : 'Contact details are added successfully'
                   });
               this.setState({
                 'MobileNo'             : '',
@@ -329,6 +307,8 @@ class ContactDetails extends Component {
               
               //$("#LocationsDetail").resetForm();
              this.levelOneContact();
+
+             this.props.history.push('/ba-list');
             })
             .catch((error)=>{
                 console.log('error', error);
@@ -389,6 +369,7 @@ class ContactDetails extends Component {
 
     updatecontactdetailAddBtn(event){
       event.preventDefault();
+      $('.fullpageloader').show();
       var baId = this.props.baId;
       var contactId = $(event.currentTarget).attr('data-id');
       var formValues = {
@@ -404,13 +385,12 @@ class ContactDetails extends Component {
                           }
                           ]
                       }
-       console.log(formValues);               
+                    
       axios.patch("/api/businessassociates/patch/updateOneBaContact",formValues)
             .then((response)=>{
-              console.log(response);        
+              $('.fullpageloader').hide();        
               swal({
-                    title : 'Contact details are updated successfully',
-                    text  : 'Contact details are updated successfully'
+                    title : 'Contact details are updated successfully'
                   });
               this.locationDetails();
               $(".addContactForm").hide();
@@ -423,6 +403,7 @@ class ContactDetails extends Component {
                 
               });
              
+             this.props.history.push('/ba-list');
             })
             .catch((error)=>{
                 console.log('error', error);
@@ -644,8 +625,7 @@ class ContactDetails extends Component {
             .then((response)=>{
               console.log(response);         
               swal({
-                    title : 'Contact is removed successfully',
-                    text  : 'Contact is removed successfully'
+                    title : 'Contact is removed successfully'
                   });
               //$("#LocationsDetail").reset();
               this.levelOneContact();
@@ -729,7 +709,6 @@ class ContactDetails extends Component {
                                <h4 className="MasterBudgetTitle"><i className="fa fa-phone" aria-hidden="true"></i> Contact Details</h4>
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-sm-6 ">
-                               <h4 className="noteSupplier">Note: Please start adding contacts from 1st point of contact to higher authority.</h4>
                             </div>
                             <div className="col-lg-3 col-md-6 col-sm-6 col-sm-6 contactDetailTitle">
                               <div className="button4  pull-right">
@@ -741,29 +720,28 @@ class ContactDetails extends Component {
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addContactForm">
                             <form id="ContactDetail">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contactForm">
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne" > 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Name <sup className="astrick">*</sup> 
                                 </label>
                                 <input id="Name" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Name} ref="Name" name="Name" onChange={this.handleChange} />
                               </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne"> 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields"> 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Mobile Number <sup className="astrick">*</sup> 
                                 </label>
-                                <input id="MobileNo" name="MobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.MobileNo} ref="MobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
-                      
-                                </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12  margin-bottomOne" > 
+                                <input id="MobileNo" name="MobileNo" type="text" maxLength="10" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.MobileNo} ref="MobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
+                              </div>
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Email <sup className="astrick">*</sup> 
                                 </label>
                                 <input id="Email" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.Email} ref="Email" name="Email" onChange={this.handleChange} />
                               </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne" > 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 inputFields" > 
                                 <label className="labelform col-lg-12 col-md-12 col-sm-12 col-xs-12">Alt. Mobile Number 
                                 </label>
-                                <input id="altMobileNo" name="altMobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.altMobileNo} ref="altMobileNo" onChange={this.handleChange} pattern="[0-9]+" required/>
+                                <input id="altMobileNo" name="altMobileNo" type="text" className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" value={this.state.altMobileNo} ref="altMobileNo" onChange={this.handleChange} pattern="[0-9]+" />
                       
                               </div>
-                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-bottomOne" > 
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12" > 
                                 <label className="labelform whitesp col-lg-12 col-md-12 col-sm-12 col-xs-12">Office Landline No. 
                                 </label>
                                 <input id="Landings" name="Landings" type="text" onKeyDown={this.keyPressNumber} className="form-control examDate col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText inputTextTwo" minLength="6" maxLength="13" value={this.state.Landing} ref="Landing" name="Landing" onChange={this.handleChange} />
@@ -786,9 +764,7 @@ class ContactDetails extends Component {
                       
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-sm-12 foothd">
-                             <h4 className="MasterBudgetTitle">Contacts</h4>
-                          </div>
+                          
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bxht pdcls">
                             {this.state.contactarray && this.state.contactarray.length?
                               this.state.contactarray.map((contactArr,index)=>{
@@ -843,4 +819,4 @@ class ContactDetails extends Component {
 
 }
 
-export default ContactDetails;
+export default withRouter(ContactDetails);

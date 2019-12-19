@@ -38,7 +38,7 @@ class VendorLocationType extends Component {
         window.scrollTo(0, 0);
         $.validator.addMethod("regxA1", function(value, element, regexpr) {          
             return regexpr.test(value);
-        }, "Name should only contain letters & number.");
+        }, "Location Type should only contain letters & number.");
 
         jQuery.validator.setDefaults({
             debug: true,
@@ -48,7 +48,7 @@ class VendorLocationType extends Component {
             rules: {
                 locationType: {
                 required: true,
-                regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
+                regxA1: /^[A-Za-z_0-9][A-Za-z\d_ ]*$/,
                 },
             },
             errorPlacement: function(error, element) {
@@ -80,18 +80,20 @@ class VendorLocationType extends Component {
         var formValues = {
             "locationType" : this.refs.locationType.value
         }
-        axios.post('/api/vendorLocationType/post', formValues)
-        .then((response)=>{
-            console.log('response', response);
-            this.getData(this.state.startRange, this.state.limitRange);
-            swal(response.data.message);
-            this.setState({
-                locationType : ""
+        if($('#vendorLocationType').valid()) {
+            axios.post('/api/vendorLocationType/post', formValues)
+            .then((response)=>{
+                console.log('response', response);
+                this.getData(this.state.startRange, this.state.limitRange);
+                swal(response.data.message);
+                this.setState({
+                    locationType : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     updateType(event){
         event.preventDefault();
@@ -99,18 +101,21 @@ class VendorLocationType extends Component {
             "vendorCategoryID" : this.state.editId,
             "locationType" : this.refs.locationType.value
         }
-        axios.patch('/api/vendorLocationType/patch', formValues)
-        .then((response)=>{
-            this.props.history.push('/vendor-location-type');
-            this.getData(this.state.startRange, this.state.limitRange);
-            swal(response.data.message);
-            this.setState({
-                locationType : ""
+        if($('#vendorLocationType').valid()) {
+            axios.patch('/api/vendorLocationType/patch', formValues)
+            .then((response)=>{
+                this.props.history.push('/vendor-location-type');
+                this.getData(this.state.startRange, this.state.limitRange);
+                swal(response.data.message);
+                this.setState({
+                    locationType : "",
+                    editId : ""
+                })
             })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+        }
     }
     getDataCount(){
         axios.get('/api/vendorLocationType/get/count')
@@ -132,6 +137,7 @@ class VendorLocationType extends Component {
 
     axios.post('/api/vendorLocationType/get/list', data)
     .then((response)=>{
+        this.getDataCount();
         this.setState({
         tableData : response.data
         })
@@ -157,23 +163,23 @@ class VendorLocationType extends Component {
 
     render() {
         return (
-            <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <div className="row">
-                    <section className="">
-                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12  minDivHeight">
-                            <div className="row">
-                                <div className="">
-                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 paddingZeroo">
-                                        <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
-                                            <h4 className="">Vendor Location Type</h4>
-                                        </div>
-                                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+              <section className="content col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
+                  <div className="row">
+                    <div className=" col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                    <div className="box">
+                      <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                        <h4 className="NOpadding-right">Vendor Location Type</h4>
+                      </div>
+                    </div>
+                                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                             <br/>
                                             <br/>
                                             <form className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="vendorLocationType">
                                                 <div className="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12 pdcls"> 
                                                     <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Location Type<i className="astrick">*</i></label>
-                                                    <input type="text" id="locationType" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.locationType}  ref="locationType" name="locationType" onChange={this.handleChange.bind(this)} placeholder="Enter category name.." required/>
+                                                    <input type="text" id="locationType" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.state.locationType}  ref="locationType" name="locationType" onChange={this.handleChange.bind(this)} placeholder="Enter location type.." required/>
                                                 </div>
                                                 <br/>
                                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -197,11 +203,11 @@ class VendorLocationType extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                 
+                    </div>
                     </section>
-                </div> 
-            </div> 
+                    </div>
+
         );
     } 
 }

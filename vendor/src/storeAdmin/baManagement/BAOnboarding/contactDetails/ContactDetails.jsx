@@ -377,8 +377,7 @@ class ContactDetails extends Component {
 	            }else{
 	              $('.inputText').val('');
 	              swal({
-	              	title:"abc",
-	              	text:'Contact Details added successfully.'
+	              	title:"Contact Details added successfully.",
 	              });
 	              $("#ContactDetail").validate().resetForm();
 	              this.setState({
@@ -452,8 +451,7 @@ class ContactDetails extends Component {
 		            $('.button2').attr('disabled',false);
 	     			$('.button1').attr('disabled',false);
               		swal({
-              			title:'abc',
-              			text:'Contact details updated successfully.'
+              			title:'Contact details updated successfully.'
               		});
 
               		if(location.pathname == '/ContactDetailsSTM/'+idRoute){
@@ -637,8 +635,7 @@ class ContactDetails extends Component {
 	            // console.log(error.reason);
 	          }else{
 	            swal({
-	            	title:'abc',
-	            	text:'Contact Details deleted successfully!'
+	            	title:'Contact Details deleted successfully!'
 	        	});
 	          }
 	      });

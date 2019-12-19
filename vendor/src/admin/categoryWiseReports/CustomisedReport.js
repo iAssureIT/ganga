@@ -23,6 +23,7 @@ export default class CustomisedReport extends Component{
           "tableObjects"        : {
             apiLink             : '/api/annualPlans/',
             editUrl             : '/Plan/',
+            paginationApply     : true,
           },
           "startRange"          : 0,
           "limitRange"          : 10,
@@ -39,12 +40,19 @@ export default class CustomisedReport extends Component{
     }
 
     componentDidMount(){
-        this.getCount();
         this.setState({
             startDate : moment().subtract(1, 'week').format('YYYY-MM-DD'),
             endDate   : moment().format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null )
+           var formValues={
+                "startTime" : this.state.startDate,
+                "endTime"   : this.state.endDate,
+                "section"   : null,
+                "category"  : null,
+                "subcategory" : null
+              }
+            this.setState({ formValues : formValues} ,()=>{ this.getCount();  }); 
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, null, null, null )
         })
         
     }
@@ -56,39 +64,45 @@ export default class CustomisedReport extends Component{
         }
     }
     getCount(){
-        axios.get('/api/orders/get/count')
-        .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
-    }
-    getData(startDate,endDate, startRange,limitRange, category, subcategory){
-        var formValues={
-          "startTime" : startDate,
-          "endTime"   : startDate,
-          "category"  : category,
-          "subcategory" : subcategory
-        }
-        axios.post("/api/orders/get/category-wise-report",formValues)
+        axios.post("/api/orders/get/category-wise-report-count", this.state.formValues)
         .then((response)=>{
           this.setState({ 
-            tableData : response.data
+            dataCount : response.data.dataCount
           })
         })
         .catch((error)=>{
             console.log('error', error);
         })
     }
+    getData(startDate,endDate, startRange,limitRange, section, category, subcategory){
+        var formValues={
+          "startTime" : startDate,
+          "endTime"   : endDate,
+          "section"   : section,
+          "category"  : category,
+          "subcategory" : subcategory
+        }
+        this.setState({formValues : formValues},()=>{
+            this.getTableData(startRange,limitRange);
+        }); 
+    }
+    getTableData(startRange,limitRange){
+      axios.post("/api/orders/get/category-wise-report/"+startRange+'/'+limitRange,this.state.formValues)
+            .then((response)=>{
+              this.setState({ 
+                tableData : response.data
+              })
+            })
+            .catch((error)=>{
+                console.log('error', error);
+            })
+    }
     handleFromChange(event){
     event.preventDefault();
        this.setState({
             startDate : moment(event.target.value).format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )
         })
     }
     handleToChange(event){
@@ -96,12 +110,13 @@ export default class CustomisedReport extends Component{
        this.setState({
             endDate : moment(event.target.value).format('YYYY-MM-DD')
         },()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#category').val(), $('#subcategory').val() )
+            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), $('#subcategory').val() )
         })
     }
 
    
     handleSection(event){
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, event.currentTarget.value, null, null )
         axios.get("/api/category/get/list/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -113,7 +128,7 @@ export default class CustomisedReport extends Component{
         })
     }
     handleCategory(event){
-        this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange, event.target.value, null);
+        this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), event.target.value, null);
         axios.get("/api/category/get/one/"+event.target.value)
         .then((response)=>{
           this.setState({ 
@@ -124,9 +139,11 @@ export default class CustomisedReport extends Component{
             console.log('error', error);
         })
     }
-   
+    handleSubCategory(event){ 
+      event.preventDefault();
+      this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange, $('#section').val(), $('#category').val(), event.target.value);
+    }
     getSearchText(searchText, startRange, limitRange){
-        console.log(searchText, startRange, limitRange);
         this.setState({
             tableData : []
         });
@@ -207,7 +224,7 @@ export default class CustomisedReport extends Component{
                             twoLevelHeader={this.state.twoLevelHeader} 
                             dataCount={this.state.dataCount}
                             tableData={this.state.tableData}
-                            getData={this.getData.bind(this)}
+                            getData={this.getTableData.bind(this)}
                             tableObjects={this.state.tableObjects}
                         />
                         </div>

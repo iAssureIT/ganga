@@ -7,6 +7,7 @@ import style        from '../css/BAOnboardingForm.css';
 import axios                from 'axios';
 import LocationDetails    from '../locationDetails/locationDetails.js';
 import S3FileUpload           from 'react-s3';
+import Loader from '../../../../coreAdmin/common/loader/Loader.js';
 
 class BasicInfo extends Component {
     
@@ -21,8 +22,6 @@ class BasicInfo extends Component {
       'tin'              : '',
       'website'          : '',
       'gstno'            : '',
-      'category'         : '-- Select --',
-      'coino'            : '',
       'mfg'              : '',
       'Evaluation'       : '',
       'score'            : '',
@@ -41,6 +40,7 @@ class BasicInfo extends Component {
     };
     
       this.handleChange = this.handleChange.bind(this);
+      this.checkBAExists = this.checkBAExists.bind(this);
       this.keyPress = this.keyPress.bind(this);
       this.handleOptionChange = this.handleOptionChange.bind(this);
       this.supplier = this.supplier.bind(this);
@@ -107,34 +107,31 @@ class BasicInfo extends Component {
     //     $("#upload-file").click();
     // });​
     window.scrollTo(0, 0);
+
+    $.validator.addMethod("regxmobileNumber", function (value, element, regexpr) {
+      return regexpr.test(value);
+    }, "Please enter valid mobile number.");
+
     $.validator.addMethod("regxA1", function(value, element, regexpr) {          
       return regexpr.test(value);
     }, "Name should only contain letters & number.");
-    // $.validator.addMethod("regxA2", function(value, element, regexpr) {          
-    //   return regexpr.test(value);
-    // }, "Please enter a valid PAN Number.");
-    $.validator.addMethod("regxA3", function(value, element, regexpr) {          
+
+    $.validator.addMethod("regxA2", function(value, element, regexpr) {          
       return regexpr.test(value);
-    }, "Please enter a valid TIN Number.");
+    }, "Please enter a valid PAN Number.");
+
     $.validator.addMethod("regxA4", function(value, element, regexpr) {          
       return regexpr.test(value);
     }, "It should be www.abcd.com");
-    // $.validator.addMethod("regxA5", function(value, element, regexpr) {          
-    //   return regexpr.test(value);
-    // }, "Please enter the valid GST number.");
 
-    $.validator.addMethod("regxA6", function(value, element, regexpr) {          
-      // // console.log('value: ',value + element);          
+    $.validator.addMethod("regxA3", function(value, element, regexpr) {          
       return regexpr.test(value);
-    }, "Please select category.");
-    $.validator.addMethod("regxA7", function(value, element, regexpr) {          
-      // // console.log('value: ',value + element);          
+    }, "Please enter a valid TIN Number.");
+
+    $.validator.addMethod("regxA5", function(value, element, regexpr) {          
       return regexpr.test(value);
-    }, "Please enter the valid COI No.");
-    // $.validator.addMethod("regxA8", function(value, element, regexpr) {          
-    //   // // console.log('value: ',value + element);          
-    //   return regexpr.test(value);
-    // }, "Please enter the valid MFG Pro.");
+    }, "Please enter the valid GST number.");
+
           
     $.validator.setDefaults({
       debug: true,
@@ -146,37 +143,26 @@ class BasicInfo extends Component {
           required: true,
           // regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
         },
-        // pan: {
-        //   required: true,
-        //   regxA2: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        // },
+        emailID: {
+          required: true,
+          // regxA1: /^[A-Za-z_0-9 ][A-Za-z\d_ ]*$/,
+        },
+        MobileNo: {
+          required: true,
+          regxmobileNumber: /^([7-9][0-9]{9})$/,
+        },
         website: {
           required: true,
           regxA4: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/,
         },
-        // gstno: {
-        //   required: true,
-        //   regxA5: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
-        // },
-        category: {
+        pan: {
           required: true,
-          // regxA1: /^[A-za-z']+( [A-Za-z']+)*$|^$/,
+          regxA2: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
         },
-        coino: {
-          required: false,
-          // regxA6: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        },
-        // mfg: {
-        //   required: false,
-        //   regxA8: /^[0-9]{2}[A-Za-z]{2}[0-9]{7}$/,
-
-        //   // regxA7: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
-        // },
-        // LogoImageUp:{
-        //   required: true,
-
-        // }
-
+        gstno: {
+          required: true,
+          regxA5: /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+        }
       },
         errorPlacement: function(error, element) {
               if (element.attr("name") == "companyname"){
@@ -188,6 +174,10 @@ class BasicInfo extends Component {
               if (element.attr("name") == "MobileNo"){
                 error.insertAfter("#basicInfo3");
               }
+              if (element.attr("name") == "website"){
+                error.insertAfter("#basicInfo4");
+              }
+              
               if (element.attr("name") == "pan"){
                 error.insertAfter("#basicInfo5");
               }
@@ -220,10 +210,13 @@ class BasicInfo extends Component {
       this.setState({
           [name]: event.target.value
       });  
+      if (name=='emailID') {
+        this.checkBAExists(event.target.value)
+      }
   }
-  checkBAExists(event){
-    if (event.target.value != '' ) {
-      axios.get('/api/businessassociates/get/checkBAExists/'+event.target.value)
+  checkBAExists(email){
+    if (email != '' ) {
+      axios.get('/api/businessassociates/get/checkBAExists/'+email)
              .then((response)=>{
                   if (response.data.length>0 ) {
                     $(".checkBAExistsError").show();
@@ -255,7 +248,7 @@ class BasicInfo extends Component {
       event.preventDefault();
       
       if($('#BasicInfo').valid() && !this.state.checkBAExists){
-
+          $('.fullpageloader').show();
           var userForm = {
             'companyName'      : this.state.companyname,
             'pwd'              : 'gangaexpress123',
@@ -266,7 +259,7 @@ class BasicInfo extends Component {
           }
           
 
-          var attachedDocuments = this.state.attachedDocuments;
+         var attachedDocuments = this.state.attachedDocuments;
           // if documents attached
           if (attachedDocuments.length>0) {
               main().then(docsUrl=>{
@@ -340,7 +333,7 @@ class BasicInfo extends Component {
                         'logo'             : this.state.logoUrl
                     }
               this.insertBA(userForm, formValues);
-          } 
+          }
       }
       else{
         // $('.inputText').addClass('addclas');
@@ -357,12 +350,11 @@ class BasicInfo extends Component {
 
           axios.post("/api/businessassociates/post",formValues)
                 .then((response)=>{
+                  $('.fullpageloader').hide();
                   this.setState({'basicInfoAdded':1, 'baId' : response.data.id, 'BAInfo':formValues});
                   swal({
-                        title : response.data.message,
-                        text  : response.data.message,
+                        text : 'Business Associate basic info is added successfully! You can also add location and contact details.',
                       });
-
                   // $("#BasicInfo").validate().reset();
                   // $('.inputText').removeClass('addclas');   
                 })
@@ -377,7 +369,7 @@ class BasicInfo extends Component {
   updateBA(event){
      event.preventDefault();
      if($('#BasicInfo').valid()){
-
+          $('.fullpageloader').show();
           var formValues = {
               'baID'             : this.state.baId,
               'companyName'      : this.state.companyname,
@@ -395,16 +387,22 @@ class BasicInfo extends Component {
               main().then(docsUrl=>{
               this.setState({docsUrl : docsUrl});
               formValues.documents  = docsUrl;
+              
               this.updateBAFunct(formValues);
               });
 
             async function main(){
               var config = await getConfig();
               var s3urlArray = [];
-
+              
               for (var i = 0; i < attachedDocuments.length; i++) {
+                if (attachedDocuments[i] instanceof File) {
                   var s3url = await s3upload(attachedDocuments[i], config, this);
                   s3urlArray.push(s3url);
+                }else{
+
+                  s3urlArray.push(attachedDocuments[i].name)
+                }
               }
               return Promise.resolve(s3urlArray);
             }
@@ -454,17 +452,15 @@ class BasicInfo extends Component {
   updateBAFunct(formValues){
      axios.patch("/api/businessassociates/patch",formValues)
           .then((response)=>{
+            $('.fullpageloader').hide();
             this.setState({'basicInfoAdded':1, 'baId' : this.state.baId, 'BAInfo':formValues});
             swal({
-                  title : response.data.message,
-                  text  : response.data.message,
+                  text  : "Business Associate basic info is updated.",
                 });
             
             $('.inputText').removeClass('addclas');
           })
           .catch((error)=>{
-            
-              console.log('error', error);
               swal({
                   title : 'No Information Modified!',
                 });
@@ -493,24 +489,7 @@ class BasicInfo extends Component {
       
   }
 
-  keyPressWeb = (e) => {
-    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13 ,190,110]) !== -1 ||
-           // Allow: Ctrl+A, Command+A
-          (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 86 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 190 && (e.ctrlKey === true || e.metaKey === true))||
-          (e.keyCode === 110 && (e.ctrlKey === true || e.metaKey === true))||
-           // Allow: home, end, left, right, down, up
-          (e.keyCode >= 35 && e.keyCode <= 40) || e.keyCode===189  || e.keyCode===32) {
-               // let it happen, don't do anything
-               return;
-      }
-      // Ensure that it is a number and stop the keypress
-      if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 90) ) && (e.keyCode < 96 || e.keyCode > 105  )) {
-          e.preventDefault();
-      }
-  }
+ 
     /*======== alphanumeric  =========*/
   keyPress = (e) => {
     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
@@ -653,8 +632,6 @@ class BasicInfo extends Component {
         tin                           : nextProps.post5.tin,         
         website                       : nextProps.post5.website,         
         gstno                         : nextProps.post5.gstno,         
-        category                      : nextProps.post5.category,                  
-        coino                         : nextProps.post5.coino,         
         mfg                           : nextProps.post5.mfg,         
         score                         : nextProps.post5.score,         
         Evaluation                    : nextProps.post5.Evaluation,         
@@ -676,8 +653,8 @@ class BasicInfo extends Component {
             {!this.state.basicInfoAdded && <div className="">
               <div className="col-lg-12 col-md-12 hidden-sm hidden-xs secdiv"></div>
                  <section className="content">
-                  <div className="">
-                 
+                  <Loader type="fullpageloader" />
+                  <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                         <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
                           <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
                             <h4 className="NOpadding-right">Add Business Associate</h4>
@@ -719,8 +696,9 @@ class BasicInfo extends Component {
                               
                             </ul>
                           </div>
-                          <section className="Content">
+                          <section className="Content col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div className="row">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <form id="BasicInfo">
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -739,17 +717,17 @@ class BasicInfo extends Component {
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Email Id <i className="astrick">*</i>
                                              <a title="Please enter valid Email Id" className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
-                                            <input type="text" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange} onBlur={this.checkBAExists.bind(this)}  required/>
+                                            <input type="email" id="basicInfo2" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.emailID} ref="emailID" name="emailID" onChange={this.handleChange}  required/>
                                             <p className="checkBAExistsError">Business Associate already exists!</p>
                                           </div>
                                           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
                                             <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Mobile No <i className="astrick">*</i>
                                              <a title="Please enter valid Mobile No" className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
-                                            <input type="text" id="basicInfo3" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
+                                            <input type="text" id="basicInfo3" maxLength="10" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.MobileNo} ref="MobileNo" name="MobileNo" pattern="[0-9]+" onChange={this.handleChange} required/>
                                           </div>
                                           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 inputFields" > 
-                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website 
+                                            <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">Website  <i className="astrick">*</i>
                                              <a title="Please enter valid Website(www.abc.xyz)." className="pull-right"> <i className="fa fa-question-circle"></i> </a>
                                             </label>
                                             <input type="text" id="basicInfo4" className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 inputText" value={this.state.website} ref="website" name="website" onChange={this.handleChange} />
@@ -772,8 +750,7 @@ class BasicInfo extends Component {
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addpicmr marginsBottom" id="hide">
                                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingZeroo"> {this.state.logoUrl != "" ? "Change Logo" : "Add Logo"} </label>
                                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 brdlogos" id="LogoImageUpOne">
-                                            
-                                            <img src={this.state.logoUrl} className="img-responsive logoStyle" />
+                                            <img src={this.state.logoUrl != '' ? this.state.logoUrl : "/images/uploadimg.png"} className="img-responsive logoStyle" />
                                               <input type="file" className="form-control commonFilesUpld" accept=".jpg,.jpeg,.png" onChange={this.uploadLogo.bind(this)}  name="upload-logo"/>
                                           </div>
                                         </div>
@@ -793,7 +770,7 @@ class BasicInfo extends Component {
                                         <input onChange={this.docBrowse.bind(this)} type="file" multiple className="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12 docAttach" id="upload-file" name="upload-file"/>
                                         <i className="fa fa-upload uploadlogo uploadlogoTwo col-lg-1 col-md-1 col-sm-1 col-xs-1 clickHere" aria-hidden="true" onClick={this.clicktoattach.bind(this)}></i>
                                         <div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 drag ">
-                                        {/*Drag and drop or <a href="" onChange={this.docBrowse.bind(this)}>browse</a> your files*/}
+                                       
                                         Drag and drop your Documents or  <a onClick={this.clicktoattach.bind(this)} className="clickHere">click here</a> to select files.Attach Document such as Technical Specification , Drawings,Designs,Images,Additional information, etc.
                                         </div>
                                       </div>
@@ -801,6 +778,8 @@ class BasicInfo extends Component {
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                                       {
                                         this.state.attachedDocuments.map((data,index)=>{
+                                          // console.log('attachedDocuments',data);
+
                                           return(
                                               <div className="panel-group" key={index}>
                                                 <div className="panel panel-default">
@@ -827,6 +806,7 @@ class BasicInfo extends Component {
                                 </form>
                               </div>
                             </div>
+                      </div>
                           </section> 
                         </div>
                   </div>

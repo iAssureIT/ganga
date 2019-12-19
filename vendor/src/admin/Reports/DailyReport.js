@@ -1,6 +1,5 @@
 import React, { Component }   from 'react';
 import axios                  from 'axios';
-import swal                   from 'sweetalert';
 import IAssureTable           from "../../coreAdmin/IAssureTable/IAssureTable.jsx";
 import moment from 'moment';
 import $ from 'jquery';
@@ -30,6 +29,7 @@ class DailyReport extends Component{
       "tableObjects"        : {
         apiLink             : '/api/annualPlans/',
         editUrl             : '/Plan/',
+        paginationApply     : true,
       },
       "startRange"          : 0,
       "limitRange"          : 10,
@@ -42,11 +42,19 @@ class DailyReport extends Component{
  
   getReport(event){
     event.preventDefault(); 
-    this.getData(event.currentTarget.value, this.state.startRange, this.state.limitRange);
+    this.setState({currentDate : event.currentTarget.value},()=>{
+      this.getData(this.state.startRange, this.state.limitRange);  
+    })
+    
   }
        
-  getData(startDate,startRange,limitRange){
-    axios.get("/api/orders/get/report/"+startDate+'/'+startDate+'/'+startRange+'/'+limitRange)
+  getData(startRange,limitRange){
+    var formvalues = {
+      startDate : this.state.currentDate,
+      endDate   : this.state.currentDate
+    }
+
+    axios.post("/api/orders/get/report/"+startRange+'/'+limitRange, formvalues)
     .then((response)=>{
       this.setState({ 
         tableData : response.data
@@ -59,11 +67,19 @@ class DailyReport extends Component{
     })
   }
   getCount(){
-        axios.get('/api/orders/get/count')
+        
+        var formvalues = {
+          startDate : this.state.currentDate,
+          endDate   : this.state.currentDate
+        }
+        console.log('formvalues', formvalues);
+
+        axios.post("/api/orders/get/report-count", formvalues)
         .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
+          this.setState({ 
+            dataCount : response.data.dataCount
+          },()=>{ 
+          })
         })
         .catch((error)=>{
             console.log('error', error);
@@ -74,11 +90,11 @@ class DailyReport extends Component{
   }
 
   componentDidMount() {
-    this.getCount();  
+    
     document.getElementsByClassName('reportsDateRef').value = moment().startOf('day').format("DD/MM/YYYY") ;
     this.setState({ currentDate:moment().startOf('day').format("YYYY-MM-DD") },()=>{
-     
-      this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
+      this.getCount();  
+      this.getData(this.state.startRange, this.state.limitRange);
     });
   }
 
@@ -89,7 +105,7 @@ class DailyReport extends Component{
     var selectedDate1 = $(".reportsDayRef").val();
 
     this.setState({currentDate: moment(selectedDate1).subtract(1, "days").format("YYYY-MM-DD")}, () => {
-        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
+        this.getData(this.state.startRange, this.state.limitRange);
     }) 
   }
   nextDate(event){
@@ -98,7 +114,7 @@ class DailyReport extends Component{
     var selectedDate1 = $(".reportsDayRef").val();
 
     this.setState({currentDate: moment(selectedDate1).add(1, "days").format("YYYY-MM-DD")}, () => {
-        this.getData(this.state.currentDate, this.state.startRange, this.state.limitRange);
+        this.getData(this.state.startRange, this.state.limitRange);
     }) 
   }
   

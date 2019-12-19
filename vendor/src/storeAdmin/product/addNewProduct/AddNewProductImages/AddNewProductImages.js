@@ -57,10 +57,10 @@ class AddNewProductImages extends Component{
                             productImage.push(objTitle);
                             
                         }else{          
-                            swal("Images not uploaded","Something went wrong","error");  
+                            swal("Images not uploaded");  
                         }//file
                     }else{ 
-                        swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                        swal("Allowed images formats are (jpg,png,jpeg)");   
                     }//file types
                 }//file
             }//for 
@@ -118,9 +118,9 @@ class AddNewProductImages extends Component{
                 function getConfig(){
                     return new Promise(function(resolve,reject){
                         axios
-                           .get('/api/projectSettings/get/one/s3')
+                           .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
                            .then((response)=>{
-                                // console.log("proj set res = ",response.data);
+                                console.log("proj set res = ",response.data);
                                 const config = {
                                     bucketName      : response.data.bucket,
                                     dirName         : 'propertiesImages',
@@ -161,7 +161,7 @@ class AddNewProductImages extends Component{
         function getConfig(){
             return new Promise(function(resolve,reject){
                 axios
-                   .get('/api/projectSettings/get/one/s3')
+                   .get('http://qagangaexpressapi.iassureit.com/api/projectSettings/get/one/s3')
                    .then((response)=>{
                         // console.log("proj set res = ",response.data);
                         const config = {
@@ -211,9 +211,9 @@ class AddNewProductImages extends Component{
                               <hr className="hr-head container-fluid row"/>
                             </div>
                             <div className="box-body">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <div className="addProdImgVidTitle">
+                                <div className="">
+                                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 addProdImgVidTitle">
                                             Product Name : {this.state.productTitle}
                                         </div>
                                     </div>

@@ -311,8 +311,8 @@ class LocationDetails extends TrackerReact(Component) {
 					$("#LocationsDetail").validate().resetForm();
 					
 					swal({
-						title:'abc',
-						text:'Location Details added successfully.'
+						
+						title:'Location Details added successfully.'
 					});
                 }
             });
@@ -327,7 +327,6 @@ class LocationDetails extends TrackerReact(Component) {
         if(this.state.locationType != "--Select Location Type--" || this.state.addressLineone != '' || this.state.city != '-- Select --' || this.state.states != '-- Select --' || this.state.area != '-- Select --' || this.state.addressLinetwo != '' || this.state.pincode != '' || this.state.country != '-- Select --'){
 			
 			swal({
-				title:'abc',
 				text: "It seem that you are trying to enter a location. Click 'Cancel' to continue entering location. Click 'Ok' to go to next page.But you may lose values if already entered in the location form",
 				buttons: {
 					    cancel: {
@@ -622,8 +621,8 @@ class LocationDetails extends TrackerReact(Component) {
 				// console.log(error.reason);
 			}else{
 				swal({
-					title:'abc',
-					text:'Location deleted successfully.'
+					
+					title:'Location deleted successfully.'
 				});
 			}
 	    });
@@ -707,8 +706,8 @@ class LocationDetails extends TrackerReact(Component) {
 					$('.button2').attr('disabled',false);
 	     			$('.button1').attr('disabled',false);
                   swal({
-                  	title:'abc',
-                  	text:'Updated added location details.'
+                  
+                  	title:'Updated added location details.'
                   });
 
                   if(location.pathname == '/LocationDetails/'+routerId){

@@ -320,13 +320,18 @@ class ViewTemplates extends Component{
 			console.log("here value of templatetype", this.state.templateType);
 			console.log("here value of templateName", this.state.templateName);
 			if( cketext === null || cketext == "" || templateType === '-- Select --' || templateName === '--Select Template Name--'){
-				swal("Please enter mandatory fields", "", "warning");
-          		// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				
+				  swal({
+					title : "Please enter mandatory fields",
+				  });
 			}else{	
 
 				if(templateType === 'Email' && (subject === null || subject == ""))
 				{
-					swal("Please enter mandatory fields", "", "warning");
+					
+					swal({
+						title : "Please enter mandatory fields",
+					  });
 				}else{
 
 					var formValues = {   
@@ -344,7 +349,10 @@ class ViewTemplates extends Component{
 							console.log('response here of add --------------',response);	
 								if(response.data.message== "Master Notification Template Name already exists")
 								{
-									swal("This template already exists","", "error");
+									
+									swal({
+										title : "This template already exists",
+									  });
 									 this.setState({
 									    	templateType 	: '-- Select --',
 									    	templateName 	: '--Select Template Name--',
@@ -352,7 +360,10 @@ class ViewTemplates extends Component{
 									    	content 		: null
 									    });   
 								}else{
-									swal("Template added successfully","", "success");
+									
+									swal({
+										title : "Template added successfully",
+									  });
 								}			
 									axios({
 										method: 'get',
@@ -393,8 +404,10 @@ class ViewTemplates extends Component{
 								})
 						}else
 						{
-						    swal("Please enter mandatory fields", "", "warning");
-						    // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+							
+							swal({
+								title : "Please enter mandatory fields",
+							});
 						}
 
 				}
@@ -470,16 +483,12 @@ class ViewTemplates extends Component{
 		  }
 		};
     return(
-   		<div>
-      <div className="">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 secdiv">
-            </div>
-               <section className="">
-                    <div className="">
-                      <div className="">
-                         <div className="">
-                                    
-                    <div className="">
+   	   	
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTopp">
+               <section className="marginTopp col-lg-12 col-md-12 col-xs-12 col-sm-12 marginBottomCSS">
+                   
+                       	             
+                    <div className="box">
 
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border mrgntop">
 
@@ -532,6 +541,8 @@ class ViewTemplates extends Component{
 													  <option value="Order Dispatched">Order Dispatched</option>
 													  <option value="Order Delivered">Order Delivered</option>
 													  <option value="Sign Up">Sign Up</option>
+													  <option value="Vendor New Registration">Vendor New Registration</option>
+													  <option value="BA New Registration">BA New Registration</option>
 													</select>
 												</div>	
 											</div>
@@ -654,13 +665,10 @@ class ViewTemplates extends Component{
 						</div>
 					</div>
 				</div>
-                   </div>
-              </div>
-                     
-                    </div>
+           
                </section>
           </div>
-      </div>
+ 
      	);
     }
 

@@ -31,10 +31,10 @@ componentDidMount(){
         </div>
           
           <li>
-              {/* <a href="#rightsidebar" data-toggle="collapse" aria-expanded="false">
+              <a href="#rightsidebar" data-toggle="collapse" aria-expanded="false">
                   
                   User Management
-              </a> */}
+              </a>
               <ul className="collapse list-unstyled" id="rightsidebar">
                   <li><a href="/umlistofusers">List of Users</a></li>
                 
@@ -43,7 +43,7 @@ componentDidMount(){
           </li>
           {/* <a href="ViewTemplates">NotificationManagement</a> */}
           <a href="/companysetting">Store Configuration System</a>
-          {/* <a href="/ViewTemplates">Notification Management</a> */}
+          <a href="/ViewTemplates">Notification Management</a>
       </div>
       </Router>
     );

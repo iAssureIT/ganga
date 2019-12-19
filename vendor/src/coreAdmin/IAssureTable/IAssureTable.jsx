@@ -54,20 +54,23 @@ class IAssureTable extends Component {
 		event.preventDefault();
 		$("html,body").scrollTop(0);
 		var tableObjects =  this.props.tableObjects;
-		var id = event.target.id;
+		var id = (event.target.id).replace(".", "/");;
 		this.props.history.push(tableObjects.editUrl+id);
 	}
     delete(e){
 	  	e.preventDefault();
 	  	var tableObjects =  this.props.tableObjects;
-		let id = e.target.id;
+		let id = (e.target.id).replace(".", "/");
+		console.log(id);
 		axios({
 	        method: tableObjects.deleteMethod,
 	        url: tableObjects.apiLink+'/delete/'+id
 	    }).then((response)=> {
 	    	this.props.getData(this.state.startRange, this.state.limitRange);
-	        swal(response.data.message);
-	    }).catch(function (error) {
+			swal({
+				title : response.data.message,
+			  });
+	    }).catch( (error)=> {
 	        console.log('error', error);
 	    });
     } 
@@ -381,7 +384,7 @@ class IAssureTable extends Component {
 		})
     }
 	render() {
-		console.log(this.state.limitRange +'>='+  this.state.dataLength);
+		// console.log(this.state.limitRange +'>='+  this.state.dataLength);
 		// var x = Object.keys(this.state.tableHeading).length ;
 		// var y = 4;
 		// var z = 2;
@@ -462,7 +465,7 @@ class IAssureTable extends Component {
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
-																console.log('value1', value1);
+																// console.log('value1', value1);
 																var regex = new RegExp(/(<([^>]+)>)/ig);
 																var value2 = value1 ? value1.replace(regex,'') : '';
 																var aN = value2.replace(this.state.reA, "");
@@ -492,10 +495,10 @@ class IAssureTable extends Component {
 													
 														<td className="textAlignCenter">
 															<span>
-																<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
-																{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value.id} id={value.id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal"+value._id}></i>}
+																{this.props.tableObjects.editUrl ? <i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>:null}&nbsp; &nbsp; 
+																{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value.id} id={value.id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal"+(value._id).replace(".", "")}></i>}
 															</span>
-															<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal"+value._id} role="dialog">
+															<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal"+(value._id).replace(".", "")} role="dialog">
 																<div className=" adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																<div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
 																	<div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">

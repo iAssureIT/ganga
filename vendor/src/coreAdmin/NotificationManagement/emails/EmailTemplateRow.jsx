@@ -51,10 +51,9 @@ class EmailTemplateRow extends Component{
 			data: null,
 		})
 		.then((response)=> {
-	    	console.log('delete response',response);
-	    	swal("Template deleted successfully","", "success"); 
-
-	    	console.log("here response message",response.data.message);
+			swal({
+				title : "Template deleted successfully"
+			  });
 	    	if(response.data.message=="Master notification deleted")
 	    	{
 	    	this.props.deleteData("Email",id);

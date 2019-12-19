@@ -65,15 +65,16 @@ class Reports extends Component{
     return( 
       <div className="container-fluid col-lg-12 col-md-12 col-xs-12 col-sm-12">
         <div className="row">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div className="formWrapper">
             <section className="content">
               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
                 <div className="row">
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact">
-                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 contactdeilsmg pageHeader">
-                     Category Reports          
-                    </div>
-                    <hr className="hr-head container-fluid row"/>
+                     <div className="box">
+                     <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <h4 className="NOpadding-right">Category Reports</h4>
+              </div>
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop11">
                     
@@ -110,9 +111,12 @@ class Reports extends Component{
                   </div>
                 </div>
               </div>
+              </div>
             </section>
+            </div>
           </div>
         </div>
+
       </div>        
     );
   }

@@ -44,10 +44,10 @@ class BulkProductImageUpload extends Component{
                             productImage.push(objTitle);
                             
                         }else{          
-                            swal("Images not uploaded","Something went wrong","error");  
+                            swal("Images not uploaded");  
                         }//file
                     }else{ 
-                        swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
+                        swal("Allowed images formats are (jpg,png,jpeg)");   
                     }//file types
                 }//file
             }//for 
@@ -120,7 +120,7 @@ class BulkProductImageUpload extends Component{
                 function getConfig(){
                     return new Promise(function(resolve,reject){
                         axios
-                           .get('http://qaapi.gangaexpress.in/api/projectSettings/get/one/s3')
+                           .get('/api/projectSettings/get/one/s3')
                            .then((response)=>{
                                 // console.log("proj set res = ",response.data);
                                 const config = {
@@ -198,8 +198,10 @@ class BulkProductImageUpload extends Component{
     
   render(){
     return( 
-      <div className="container-fluid">
+
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="row">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div className="formWrapper">
             <section className="content">
               <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent">
@@ -211,7 +213,7 @@ class BulkProductImageUpload extends Component{
                   </div>  
                   <form className="addRolesInWrap newTemplateForm">
                     <div className="">
-                      <div className="col-lg-4 col-lg-offset-3  col-md-4 col-md-offset-3 col-sm-12 col-xs-12">
+                      <div className="col-lg-4 col-lg-offset-3  col-md-4 col-md-offset-3 col-sm-12 col-xs-12 marginTopp">
                         <div className="form-group">
                           <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category imageuploadtitle">
                             Upload Product Images 
@@ -236,7 +238,7 @@ class BulkProductImageUpload extends Component{
                   </form>
                   <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12 col-sm-12 upldImgTextColor">
-                      Image name must be saved in format <span className="upldImgTextColor1">Your Product Code</span> - <span className="upldImgTextColor2">Image Number for that product. </span>
+                      Image name must be saved in format <span className="upldImgTextColor1">Your Item Code</span> - <span className="upldImgTextColor2">Image Number for that product. </span>
                       eg. ItemCode0-1, ItemCode0-2, ItemCode0-3, ... etc.
                     </div>
                     {
@@ -331,6 +333,7 @@ class BulkProductImageUpload extends Component{
                 </div>
               </div>
             </section>
+            </div>
           </div>
         </div>
       </div>           

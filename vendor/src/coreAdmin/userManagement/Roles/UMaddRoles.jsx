@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import swal                       from 'sweetalert';
 import './userManagement.css';
 
@@ -18,9 +17,9 @@ export default class UMaddRoles extends Component {
 
     axios.post('/api/roles', formValues)
       .then( (res)=>{
-          console.log("submit ");
-          swal("Role added successfully"
-           );
+          swal({
+            title : "Role added successfully"
+          });
           this.refs.role.value = '';        
           this.props.getdata();
       })

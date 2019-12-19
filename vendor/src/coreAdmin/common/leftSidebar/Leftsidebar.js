@@ -72,7 +72,7 @@ export default class Leftsidebar extends Component{
                 <strong><img className="slidlogo" src="/images/Logo.png"/></strong>
               </div>
               <ul className="list-unstyled components abc" style={{height:  sidebarHeight+"px"}} >
-                <li className="active sidebarMenuText add" onClick={this.eventclk1.bind(this)}>
+                <li className="active sidebarMenuText add">
                   <a href="/dashboard">
                     <i className="fa fa-dashboard"></i>
                     Dashboard
@@ -225,31 +225,7 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li> */}
-{/*                <li className="sidebarMenuText">
-                  <a href="/">
-                    <i className="fa fa-percent"></i>
-                    Discount Management
-                  </a>
-                </li>
-                <li className="sidebarMenuText">
-                  <a href="/">
-                    <i className="fa fa-star"></i>
-                    Product Rating System
-                  </a>
-                </li>
-                <li className="sidebarMenuText">
-                  <a href="/">
-                    <i className="fa fa-copyright"></i>
-                    Content Management
-                  </a>
-                </li>
-                <li className="sidebarMenuText">
-                  <a href="/">
-                    <i className="fa fa-file"></i>
-                    Agreement Management
-                  </a>
-                </li>*/}
-                
+
                 <li className="sidebarMenuText">
                   <a href="#Report" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-line-chart" />
@@ -271,7 +247,7 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li>
-                {/* <li className="sidebarMenuText">
+                <li className="sidebarMenuText">
                   <a href="#productreview" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Product Review
@@ -285,7 +261,7 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li> */}
+                </li>
                 {/* <li className="sidebarMenuText">
                   <a href="#MasterData" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-university" />
@@ -293,6 +269,18 @@ export default class Leftsidebar extends Component{
                     <i className="fa fa-sort-down pull-right"></i>
                   </a>
                   <ul className="collapse list-unstyled" id="MasterData">
+                    <li>
+                      <a href="/taxname">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Tax Master</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/taxrate">
+                        <i className="fa fa-circle-o" /> 
+                        <span className="sidebarMenuSubText">Tax Rate Master</span>
+                      </a>
+                    </li>
                     <li>
                       <a href="/vendor-category">
                         <i className="fa fa-circle-o" /> 
@@ -306,15 +294,15 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                     <li>
-                      <a href="/category-management">
-                        <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/section-management">
-                        <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Master</span>
-                      </a>
-                    </li>   
+                        <a href="/category-management">
+                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/section-management">
+                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Master</span>
+                        </a>
+                      </li>   
                   </ul>
                 </li>           */}
               </ul>

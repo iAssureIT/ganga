@@ -36,7 +36,6 @@ class EditUserProfile extends Component{
 				.then((response)=> {		
 					swal({
 						title:"User updated successfully",
-						text:"User updated successfully",
 					});		
 					 this.props.history.push('/umlistofusers');	
 					console.log('response --==',response);

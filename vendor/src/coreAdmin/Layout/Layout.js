@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import $ from "jquery";
 
 import Header from '../common/header/Header.js';
+import VendorSelector from '../common/VendorSelector/VendorSelector.js';
 import Footer from '../common/footer/Footer.js'
 import Dashboard from '../dashboard/Dashboard.js'
 import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
@@ -25,6 +26,8 @@ import SectionManagement from '../../storeAdmin/product/sectionManagement/compon
 
 
 import AddNewBulkProduct from '../../StoreManagement/product/productBulkUpload/component/ProductBulkUpload.js';
+import TemplateManagement from '../../StoreManagement/product/productBulkUpload/component/TemplateManagement.js';
+
 import ProductList from '../../StoreManagement/product/productList/component/ProductList.js';
 import BulkProductImageUpload from '../../storeAdmin/bulkimageUpload/BulkProductImageUpload.js'
 import FileWiseProductList from '../../StoreManagement/product/fileproductList/component/fileproductList.js';
@@ -54,7 +57,7 @@ import Reports from '../../admin/Reports/Reports.js';
 import CategoryWiseReports from '../../admin/categoryWiseReports/Reports.js';
 import Productreview from '../../storeAdmin/Productreview/Productreview.js';
 
-import ImageUpload from '../../ImageUpload/ImageUpload.js';
+// import ImageUpload from '../../ImageUpload/ImageUpload.js';
 
 
 // Section: 1 - SystemSecurity ******************************************************
@@ -66,14 +69,17 @@ import SignUp from '../systemSecurity/SignUp.js';
 import VerifyAccount from '../systemSecurity/VerifyAccount.js';
 
 //============ Vendor Management =============
-// import VendorOnboardingForm from '../../storeAdmin/vendorManagement/VendorOnboarding/VendorOnboardingForm/VendorOnboardingForm.jsx';
-// import BasicInfo from '../../storeAdmin/vendorManagement/VendorOnboarding/basicInfo/BasicInfo.jsx';
-// import LocationDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/locationDetails/LocationDetails.jsx';
-// import ContactDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/contactDetails/ContactDetails.jsx';
-// import ListOfVendor from '../../storeAdmin/vendorManagement/listOfVendors/components/ListOfVendor.jsx';
-// import VendorCategory from '../../storeAdmin/vendorManagement/MasterData/VendorCategory/VendorCategory.jsx';
-// import VendorLocationType from '../../storeAdmin/vendorManagement/MasterData/VendorLocationType/VendorLocationType.jsx';
+import VendorOnboardingForm from '../../storeAdmin/vendorManagement/VendorOnboarding/VendorOnboardingForm/VendorOnboardingForm.jsx';
+import BasicInfo from '../../storeAdmin/vendorManagement/VendorOnboarding/basicInfo/BasicInfo.jsx';
+import LocationDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/locationDetails/LocationDetails.jsx';
+import ContactDetails from '../../storeAdmin/vendorManagement/VendorOnboarding/contactDetails/ContactDetails.jsx';
+import ListOfVendor from '../../storeAdmin/vendorManagement/listOfVendors/components/ListOfVendor.jsx';
+import VendorCategory from '../../storeAdmin/vendorManagement/MasterData/VendorCategory/VendorCategory.jsx';
+import VendorLocationType from '../../storeAdmin/vendorManagement/MasterData/VendorLocationType/VendorLocationType.jsx';
 
+//============ Tax Master =============
+import TaxName from '../TaxName/TaxName.js';
+import TaxRate from '../TaxRate/TaxRate.js';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -97,6 +103,7 @@ class Layout extends Component {
     $(document).ready(function () {
       $('#sidebarCollapse').on('click', function () {
         $('#headerid').toggleClass('headereffect');
+        $('#sidebarCollapse').toggleClass('sidebarCollapse80');
       });
     });
     $(document).ready(function () {
@@ -106,7 +113,7 @@ class Layout extends Component {
     });
 
 
-    const token = localStorage.getItem("admin_ID");
+    const token = localStorage.getItem("vendor_ID");
     console.log("Dashboard Token = ", token);
     if (token !== null) {
       // console.log("*********===***********imin ",token);
@@ -120,7 +127,7 @@ class Layout extends Component {
   }
 
   logout() {
-    var token = localStorage.removeItem("admin_ID");
+    var token = localStorage.removeItem("vendor_ID");
     if (token !== null) {
       console.log("Header Token = ", token);
       this.setState({
@@ -159,8 +166,10 @@ class Layout extends Component {
               </div>
             </div>
 
-            <div id="dashbordid" className="col-lg-10 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 NOpadding">
-
+            <div id="dashbordid" className=" dashcontentBox">
+              <div className="">
+                <VendorSelector />
+              </div>
               <Router>
                 <Switch>
 
@@ -184,13 +193,15 @@ class Layout extends Component {
                   <Route path="/section-management" exact strict component={SectionManagement} />
                   <Route path="/section-management/:sectionID" exact strict component={SectionManagement} />
                   <Route path="/product-upload" exact strict component={AddNewBulkProduct} />
+                  <Route path="/template-management" exact strict component={TemplateManagement} />
+                  <Route path="/template-management/:template_ID" exact strict component={TemplateManagement} />
                   <Route path="/product-list" exact strict component={ProductList} />
                   <Route path="/product-image-bulk-upload" exact strict component={BulkProductImageUpload} />
                   <Route path="/file-wise-product-list" exact strict component={FileWiseProductList} />
-                  <Route path="/image" exact strict component={ImageUpload} />
+                  {/* <Route path="/image" exact strict component={ImageUpload} /> */}
 
                   {/* Vendor Management */}
-                  {/* <Route path="/vendor-onboarding" exact strict component={BasicInfo} />
+                  <Route path="/vendor-onboarding" exact strict component={BasicInfo} />
                   <Route path="/vendor-onboarding/:vendor_ID" exact strict component={BasicInfo} />
                   <Route path="/location-details/:vendor_ID" exact strict component={LocationDetails} />
                   <Route path="/location-details/:vendor_ID/:location_ID" exact strict component={LocationDetails} />
@@ -200,7 +211,7 @@ class Layout extends Component {
                   <Route path="/vendor-category" exact strict component={VendorCategory} />
                   <Route path="/vendor-category/:vendorID" exact strict component={VendorCategory} />
                   <Route path="/vendor-location-type" exact strict component={VendorLocationType} />
-                  <Route path="/vendor-location-type/:locationTypeID" exact strict component={VendorLocationType} /> */}
+                  <Route path="/vendor-location-type/:locationTypeID" exact strict component={VendorLocationType} />
 
                   { /*Order List*/}
                   <Route path="/allorders" exact strict component={AllOrdersList} />
@@ -232,10 +243,13 @@ class Layout extends Component {
                   <Route path="/category-wise-reports" exact strict component={CategoryWiseReports} />
 
                   <Route path="/productreview" exact strict component={Productreview} />
-
+                  <Route path="/taxname" exact strict component={TaxName} />
+                  <Route path="/taxname/:preferenceID" exact strict component={TaxName} />
+                  <Route path="/taxrate" exact strict component={TaxRate} />
+                  <Route path="/taxrate/:preferenceID/:taxRateID" exact strict component={TaxRate} />
+                  
                 </Switch>
               </Router>
-
               <div className="footerCSS col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                 <Footer />
               </div>

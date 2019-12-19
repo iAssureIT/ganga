@@ -2257,7 +2257,7 @@ a.article, a.article:hover {
   .info-box {
     display: block;
     /*min-height: 90px;*/
-    min-height: 105px;
+    min-height: 98px;
     background: #fff;
     width: 100%;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);

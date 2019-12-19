@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import InputMask from 'react-input-mask';
-import swal from 'sweetalert';
 import $ from "jquery";
 
 import 'font-awesome/css/font-awesome.min.css';

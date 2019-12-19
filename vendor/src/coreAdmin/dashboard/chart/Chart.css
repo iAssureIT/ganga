@@ -120,7 +120,7 @@ border-radius: 2px 0px 0px 2px;
 
 .box2{
     background-color: #ffffff;
-    border: 2px solid #ccc; 
+    border-top: 2px solid #ccc; 
     border-radius: 2px 2px 2px 2px;
     
 }
@@ -293,8 +293,8 @@ border-radius: 2px 0px 0px 2px;
 }
 
 #dashbordid{
-  position: absolute;
-  width: 82%;
+/*  position: absolute;
+  width: 82%;*/
   right: 0px;
   transition: all 0.8s;
   top:50px;
@@ -346,9 +346,42 @@ border-radius: 2px 0px 0px 2px;
     line-height: 90px;
     background: rgba(0,0,0,0.2);
 }
+.boxicon{
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+    display: block;
+    float: left;
+    height: 98px;
+    width: 105px;
+    text-align: center;
+    font-size: 45px;
+    line-height: 90px;
+    background: rgba(0,0,0,0.2);
+}
 .info-box-text{
-    font-size: 12px !important
+    font-size: 14px !important
+}
+.info-box{
+    padding:0px !important;
 }
 .info-box-number{
     font-size: 15px !important
 }
+.bg-redcolor{
+    background-color: #dd4b39 !important;
+    color: #fff;
+  }
+  .bg-green{
+    background-color: #00a65a !important;
+  }
+  .bg-yellow{
+    background-color: #f39c12 !important;
+  }
+  .NoPadding{
+    padding: 0
+  }
+  .boxcontent{
+    padding: 10px;
+  }

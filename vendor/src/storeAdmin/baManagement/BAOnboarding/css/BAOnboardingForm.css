@@ -3,7 +3,7 @@
   color: red
 }
 .basic-info-pillss{
-  padding: 7px 15px !important;
+  padding: 6px 15px !important;
 }
 /*.boxMinHeighttab{
   height: 2300px !important;
@@ -207,17 +207,17 @@
     top: 6em;
     left: 14.7em;
 }
-.logoStyle{
-    height: 100% !important;
+.logoStyle{ 
+    height: 200px !important;
     padding: 0;
     width: 100%;
+    border : 1px dashed #ddd;
 }
 .brdlogos{
     /*background-image: url(/images/CSLogo.png);*/
-    
     background-repeat: no-repeat;
     background: #ebebeb;
-    border: 1px dashed #ddd;
+    border: 0px dashed #ddd !important;
     
 }
 .camicon{
@@ -764,7 +764,7 @@ color:#FFFFFF;
       height: 0;
       border-top: 18px solid transparent;
       border-left: 22px solid #333;
-      border-bottom: 17px solid transparent;
+      border-bottom: 14px solid transparent;
 }
 
 #triangle-right1 {

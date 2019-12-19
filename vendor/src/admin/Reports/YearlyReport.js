@@ -23,6 +23,7 @@ export default class YearlyReport extends Component{
           "tableObjects"        : {
             apiLink             : '/api/annualPlans/',
             editUrl             : '/Plan/',
+            paginationApply     : true,
           },
           "startRange"          : 0,
           "limitRange"          : 10,
@@ -39,14 +40,15 @@ export default class YearlyReport extends Component{
     }
 
     componentDidMount(){
-        this.getCount();
+        
         this.setState({
             selectedYear : moment().format('Y'),
             startDate   : moment().startOf('year').format('YYYY-MM-DD'),
             endDate     : moment().endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getCount();
+            this.getData(this.state.startRange, this.state.limitRange )    
         }) 
         this.handleChange = this.handleChange.bind(this);
         
@@ -59,23 +61,33 @@ export default class YearlyReport extends Component{
         }
     }
     getCount(){
-        axios.get('/api/orders/get/count')
+        
+        var formvalues = {
+          startDate : this.state.startDate,
+          endDate   : this.state.endDate
+        }
+        axios.post("/api/orders/get/report-count", formvalues)
         .then((response)=>{
-            this.setState({
-                dataCount : response.data.dataCount
-            })
+          this.setState({ 
+            dataCount : response.data.dataCount
+          },()=>{ 
+          })
         })
         .catch((error)=>{
             console.log('error', error);
         })
     }
-    getData(startDate,endDate, startRange,limitRange){
-        axios.get("/api/orders/get/report/"+startDate+'/'+endDate+'/'+startRange+'/'+limitRange)
+    getData(startRange,limitRange){
+        var formvalues = {
+          startDate : this.state.startDate,
+          endDate   : this.state.endDate
+        }
+        axios.post("/api/orders/get/report/"+startRange+'/'+limitRange, formvalues)
         .then((response)=>{
           this.setState({ 
             tableData : response.data
           },()=>{ 
-            console.log("tableData",this.state.tableData);
+            //console.log("tableData",this.state.tableData);
           })
         })
         .catch((error)=>{
@@ -103,7 +115,7 @@ export default class YearlyReport extends Component{
             endDate     : moment(startDate).endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startRange, this.state.limitRange )    
     })
 	}
 
@@ -116,7 +128,7 @@ export default class YearlyReport extends Component{
             endDate     : moment(startDate).endOf('year').format('YYYY-MM-DD')
             },
             ()=>{
-            this.getData(this.state.startDate, this.state.endDate, this.state.startRange, this.state.limitRange )    
+            this.getData(this.state.startRange, this.state.limitRange )    
     })
     }
     

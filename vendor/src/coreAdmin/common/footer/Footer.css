@@ -2,8 +2,10 @@
 	color: #333;
 }
 .footerCSS{
-	/*margin-top: 48%;*/
-    z-index: 999;
+	
+    
+    /* position: fixed;
+    bottom: 0 */
 }
 .footerRightCss {
 	color: #333;
@@ -14,6 +16,7 @@
     color: #333;
     font-size: 13px;
     margin-top: 5px;
+    text-align: center;
 }
 .footerLeftCss a{
     font-size: 13px;
