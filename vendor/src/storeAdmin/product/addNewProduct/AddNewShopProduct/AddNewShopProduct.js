@@ -636,7 +636,7 @@ class AddNewShopProduct extends Component {
     }
   }
   getVendorList() {
-    axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('vendor_ID'))
+    axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('user_ID'))
       .then((response) => {
         console.log('res getVendorList', response);
         this.setState({

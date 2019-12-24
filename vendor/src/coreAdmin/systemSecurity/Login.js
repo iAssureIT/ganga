@@ -42,11 +42,12 @@ class Login extends Component {
         // });
         if (response.data.roles.indexOf("vendor") != -1 || response.data.roles.indexOf("superVendor") != -1) {
           localStorage.setItem("token",response.data.token);
-          localStorage.setItem("vendor_ID",response.data.user_ID);
+          localStorage.setItem("user_ID",response.data.user_ID);
+          
           localStorage.setItem("userName",response.data.firstName);
           localStorage.setItem("role",response.data.roles);
           
-          console.log("localStorage =",localStorage.getItem('vendor_ID'));
+          console.log("localStorage =",localStorage.getItem('user_ID'));
           this.props.history.push("/dashboard");
           window.location.reload();
 

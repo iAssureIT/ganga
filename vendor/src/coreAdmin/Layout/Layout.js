@@ -30,7 +30,7 @@ import TemplateManagement from '../../StoreManagement/product/productBulkUpload/
 
 import ProductList from '../../StoreManagement/product/productList/component/ProductList.js';
 import BulkProductImageUpload from '../../storeAdmin/bulkimageUpload/BulkProductImageUpload.js'
-import FileWiseProductList from '../../StoreManagement/product/fileproductList/component/fileproductList.js';
+import FileWiseProductList from '../../StoreManagement/product/fileproductList/component/FileWiseProductList.js';
 
 import AllOrdersList from '../../StoreManagement/orders/component/AllOrders.js';
 import NewOrdersList from '../../StoreManagement/orders/component/NewOrdersList.js';
@@ -113,7 +113,7 @@ class Layout extends Component {
     });
 
 
-    const token = localStorage.getItem("vendor_ID");
+    const token = localStorage.getItem("user_ID");
     console.log("Dashboard Token = ", token);
     if (token !== null) {
       // console.log("*********===***********imin ",token);
@@ -127,7 +127,7 @@ class Layout extends Component {
   }
 
   logout() {
-    var token = localStorage.removeItem("vendor_ID");
+    var token = localStorage.removeItem("user_ID");
     if (token !== null) {
       console.log("Header Token = ", token);
       this.setState({
@@ -202,11 +202,11 @@ class Layout extends Component {
 
                   {/* Vendor Management */}
                   <Route path="/vendor-onboarding" exact strict component={BasicInfo} />
-                  <Route path="/vendor-onboarding/:vendor_ID" exact strict component={BasicInfo} />
-                  <Route path="/location-details/:vendor_ID" exact strict component={LocationDetails} />
-                  <Route path="/location-details/:vendor_ID/:location_ID" exact strict component={LocationDetails} />
-                  <Route path="/contact-details/:vendor_ID" exact strict component={ContactDetails} />
-                  <Route path="/contact-details/:vendor_ID/:contactDetails_ID" exact strict component={ContactDetails} />
+                  <Route path="/vendor-onboarding/:user_ID" exact strict component={BasicInfo} />
+                  <Route path="/location-details/:user_ID" exact strict component={LocationDetails} />
+                  <Route path="/location-details/:user_ID/:location_ID" exact strict component={LocationDetails} />
+                  <Route path="/contact-details/:user_ID" exact strict component={ContactDetails} />
+                  <Route path="/contact-details/:user_ID/:contactDetails_ID" exact strict component={ContactDetails} />
                   <Route path="/vendor-list" exact strict component={ListOfVendor} />
                   <Route path="/vendor-category" exact strict component={VendorCategory} />
                   <Route path="/vendor-category/:vendorID" exact strict component={VendorCategory} />

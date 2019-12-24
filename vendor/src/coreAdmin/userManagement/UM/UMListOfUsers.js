@@ -82,7 +82,7 @@ class UMListOfUsers extends Component {
         })
     }
 	getUser(){
-		var userID = localStorage.getItem('vendor_ID');
+		var userID = localStorage.getItem('user_ID');
 		// console.log("userID =",userID);
         axios.get('/api/users/'+userID)
         .then((response)=>{

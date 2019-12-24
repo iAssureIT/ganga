@@ -158,7 +158,7 @@ class AddNewBulkProduct extends Component {
         });
     }
     getVendorList() {
-        axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('vendor_ID'))
+        axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('user_ID'))
             .then((response) => {
                 this.setState({
                     vendorArray: response.data
@@ -278,7 +278,7 @@ class AddNewBulkProduct extends Component {
                                 <label>Categroy <i className="redFont">*</i></label>
                                 <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                                     <option disabled selected defaultValue="">Select Category</option>
-                                    <option value={localStorage.getItem("vendor_ID")} >Admin</option>
+                                    <option value={localStorage.getItem("user_ID")} >Admin</option>
                                     {this.state.categoryArray && this.state.categoryArray.length > 0 ?
                                         this.state.categoryArray.map((data, index) => {
                                             return (

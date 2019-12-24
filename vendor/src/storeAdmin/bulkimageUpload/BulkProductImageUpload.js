@@ -4,6 +4,9 @@ import axios                  from 'axios';
 import swal                   from 'sweetalert';
 import _                      from 'underscore';
 import S3FileUpload           from 'react-s3';
+import { bindActionCreators } from 'redux';
+import {getProductImage} from '../../actions/index';
+import { connect }            from 'react-redux';
 class BulkProductImageUpload extends Component{
   constructor(props){
       super(props);
@@ -20,7 +23,7 @@ class BulkProductImageUpload extends Component{
   }
   componentWillReceiveProps(nextProps){
     this.setState({
-      'allshopproductimages':nextProps.productData,
+      'allshopproductimages':nextProps.productImage,
     });
   }
   bulkuplodaProductImages(event){
@@ -142,17 +145,18 @@ class BulkProductImageUpload extends Component{
         }
     
   }
-  getData(){
-    axios.get('/api/products/get/list')
-    .then((response)=>{
-        console.log('response', response.data)
+  async getData(){
+    await this.props.fetchproductsimage();
+    // axios.get('/api/products/get/list')
+    // .then((response)=>{
+    //     console.log('response', response.data)
         this.setState({
-          allshopproductimages : response.data
+          allshopproductimages : this.props.productImage
         })
-    })
-    .catch((error)=>{
-        console.log('error', error);
-    })
+    // })
+    // .catch((error)=>{
+    //     console.log('error', error);
+    // })
 }
   saveImages(event){
     event.preventDefault();
@@ -197,6 +201,7 @@ class BulkProductImageUpload extends Component{
   }
     
   render(){
+    console.log(this.props.productImage);
     return( 
 
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -292,8 +297,9 @@ class BulkProductImageUpload extends Component{
                               </tr>
                             </thead>
                             <tbody>
-                              {  
+                              {  this.state.allshopproductimages && this.state.allshopproductimages.length>0?
                                 this.state.allshopproductimages.map((data,index)=>{
+                                  console.log('data', data);
                                   return(
                                     <tr key ={index}>
                                       <td> {index+1}     </td>
@@ -301,7 +307,7 @@ class BulkProductImageUpload extends Component{
                                       <td> {data.productName}    </td>
                                       <td>
                                       {
-                                        data.productImage.length > 0 ? 
+                                        data.productImage && data.productImage.length > 0 ? 
                                           <div className="deleteimagewrapper bulkimagebg">  
                                             {  
                                               data.productImage.map((imgdata,index)=>{
@@ -323,6 +329,8 @@ class BulkProductImageUpload extends Component{
                                     </tr> 
                                   )
                                 })
+                                :
+                                null
                               }   
                             </tbody>
                           </table>
@@ -340,4 +348,14 @@ class BulkProductImageUpload extends Component{
     );
   }
 }
-export default BulkProductImageUpload ;
+const mapStateToProps = (state) => {
+  return {
+      recentProductData: state.recentProductData,
+      productCount : state.productCount,
+      productImage : state.productImage
+  }
+}
+const mapDispachToProps = (dispatch) => {
+  return bindActionCreators({ fetchproductsimage: getProductImage}, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(BulkProductImageUpload) ;

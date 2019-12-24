@@ -374,8 +374,8 @@ class AddNewBulkProduct extends Component {
                                         documentObj[count][header[k]] = record[k];
                                     }
                                     documentObj[count]['filename'] = file.name;
-                                    documentObj[count]['vendor_ID'] = this.state.vendor;
-                                    documentObj[count]['createdBy'] = localStorage.getItem('vendor_ID');
+                                    documentObj[count]['user_ID'] = this.state.vendor;
+                                    documentObj[count]['createdBy'] = localStorage.getItem('user_ID');
                                 }
                             }
                             //attributeArray = [];
@@ -465,7 +465,7 @@ class AddNewBulkProduct extends Component {
                                         <label>Vendor <i className="redFont">*</i></label>
                                         <select onChange={this.selectVendor.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                                             <option disabled selected defaultValue="">Select Vendor</option>
-                                            <option value={localStorage.getItem("vendor_ID")} >Admin</option>
+                                            <option value={localStorage.getItem("user_ID")} >Admin</option>
                                             {this.state.vendorArray && this.state.vendorArray.length > 0 ?
                                                 this.state.vendorArray.map((data, index) => {
                                                     return (

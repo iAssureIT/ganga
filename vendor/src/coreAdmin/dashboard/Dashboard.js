@@ -616,7 +616,7 @@ export default class Dashboard extends Component{
   render(){
     
     return(
-      <div className="col-lg-12 dash">
+      <div className="col-lg-12">
         <div className="row">
         <br/>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -2,6 +2,9 @@ import React, { Component }   from 'react';
 import axios                  from 'axios';
 import IAssureTable           from "../../../../coreAdmin/IAssureTable/IAssureTable.jsx";
 import _                      from 'underscore';
+import { bindActionCreators } from 'redux';
+import {getFile, getFileCount} from '../../../../actions/index';
+import { connect } from 'react-redux';
 class FileWiseProductList extends Component{
     constructor(props) {
       super(props);
@@ -38,43 +41,47 @@ class FileWiseProductList extends Component{
     getSearchText(event){
 
     }
-    getData(startRange, limitRange){
+    async getData(startRange, limitRange){
       var data = {
         startRange : startRange,
-        limitRange : limitRange
+        limitRange : limitRange,
+        vendor_ID  : localStorage.getItem("vendor_ID")
       }
-      axios.post('/api/products/get/files', data)
-      .then((response)=>{
-        console.log(response.data);
-        var tableData = response.data.map((a, i)=>{
-          return {
-            fileName: a.fileName != null ? a.fileName.replace(/\s+/, "")  : "-", 
-            productCount: a.productCount != NaN ? "<p>"+a.productCount+"</p>" : "a", 
-            _id: a._id != null ? a._id.replace(/\s+/, "")  : "-", 
-          }
-        })
-        console.log('tableData', tableData)
-        this.setState({
-          tableData : tableData
-        })
-      })
-      .catch((error)=>{
-        console.log('error', error);
-      })
+      await this.props.fetchfile(data);
+      // axios.post('/api/products/get/vendorfiles', data)
+      // .then((response)=>{
+      //   console.log(response.data);
+      //   var tableData = response.data.map((a, i)=>{
+      //     return {
+      //       fileName: a.fileName != null ? a.fileName.replace(/\s+/, "")  : "-", 
+      //       productCount: a.productCount != NaN ? "<p>"+a.productCount+"</p>" : "a", 
+      //       _id: a._id != null ? a._id.replace(/\s+/, "")  : "-", 
+      //     }
+      //   })
+      //   console.log('tableData', tableData)
+      //   this.setState({
+      //     tableData : tableData
+      //   })
+      // })
+      // .catch((error)=>{
+      //   console.log('error', error);
+      // })
     }
-    getCount(){
-      axios.get('/api/products/get/files/count')
-      .then((response)=>{
-        console.log(response.data)
+    async getCount(){
+      await this.props.fetchfilecount();
+      // axios.get('/api/products/get/files/count')
+      // .then((response)=>{
+      //   // console.log(response.data);
         this.setState({
-          dataCount : response.data
+          dataCount : this.props.fileCount
         })
-      })
-      .catch((error)=>{
-        console.log('error', error);
-      })
+      // })
+      // .catch((error)=>{
+      //   console.log('error', error);
+      // })
     }
     render(){
+      // console.log('f',this.props.fileCount, this.state.dataCount)
         return(
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="row">
@@ -93,7 +100,7 @@ class FileWiseProductList extends Component{
                             tableHeading={this.state.tableHeading}
                             twoLevelHeader={this.state.twoLevelHeader} 
                             dataCount={this.state.dataCount}
-                            tableData={this.state.tableData}
+                            tableData={this.props.fileData}
                             getData={this.getData.bind(this)}
                             tableObjects={this.state.tableObjects}
                             getSearchText={this.getSearchText.bind(this)}
@@ -109,4 +116,13 @@ class FileWiseProductList extends Component{
         );
     }
 }
-export default FileWiseProductList ;
+const mapStateToProps = (state) => {
+  return {
+    fileData: state.fileData,
+    fileCount: state.fileCount
+  }
+}
+const mapDispachToProps = (dispatch) => {
+  return bindActionCreators({ fetchfile: getFile, fetchfilecount : getFileCount}, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(FileWiseProductList);

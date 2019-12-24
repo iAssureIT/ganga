@@ -86,7 +86,7 @@ class AdminOrdersList extends Component{
                         var formValues = {
                           "orderID" :  id,  
                           "status"  :  status,
-                          "userid"  :  localStorage.getItem('vendor_ID')
+                          "userid"  :  localStorage.getItem('user_ID')
                         }
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
@@ -127,7 +127,7 @@ class AdminOrdersList extends Component{
                     var formValues = {
                           "orderID" :  id,  
                           "status"  :  status,
-                          "userid"  :  localStorage.getItem('vendor_ID')
+                          "userid"  :  localStorage.getItem('user_ID')
                         }
                         axios.patch('/api/orders/patch/updateDeliveryStatus', formValues)
                         .then((response)=>{
@@ -160,7 +160,7 @@ class AdminOrdersList extends Component{
         if(businessAssociate != '' ){
           var formValues = {
                           "orderID"             :  id,
-                          "userid"              :  localStorage.getItem('vendor_ID'),
+                          "userid"              :  localStorage.getItem('user_ID'),
                           "businessAssociateId" : businessAssociate
                           }
           console.log(formValues);

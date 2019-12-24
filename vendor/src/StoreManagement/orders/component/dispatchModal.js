@@ -40,7 +40,7 @@ class dispatchModal extends Component{
         if(businessAssociate != '' ){
           var formValues = {
                           "orderID"             :  id,
-                          "userid"              :  localStorage.getItem('vendor_ID'),
+                          "userid"              :  localStorage.getItem('user_ID'),
                           "businessAssociateId" : businessAssociate
                           }
           console.log(formValues);

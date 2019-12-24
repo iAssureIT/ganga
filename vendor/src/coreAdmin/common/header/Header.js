@@ -21,7 +21,7 @@ export default class Header extends Component {
     document.getElementById("mySidenav").style.width = "0";
   }
   logout() {
-    var token = localStorage.removeItem("vendor_ID");
+    var token = localStorage.removeItem("user_ID");
     if (token !== null) {
       this.setState({
         loggedIn: false

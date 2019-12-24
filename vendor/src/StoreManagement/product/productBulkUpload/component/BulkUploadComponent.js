@@ -232,7 +232,7 @@ constructor(props) {
                                     }
                                     documentObj[count]['filename'] = file.name;
                                     documentObj[count]['vendor'] = this.props.requiredData.vendor;
-                                    documentObj[count]['createdBy'] = localStorage.getItem('vendor_ID');
+                                    documentObj[count]['createdBy'] = localStorage.getItem('user_ID');
                                 }
                             }
                             //attributeArray = [];

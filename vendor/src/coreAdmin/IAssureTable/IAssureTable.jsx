@@ -61,7 +61,7 @@ class IAssureTable extends Component {
 	  	e.preventDefault();
 	  	var tableObjects =  this.props.tableObjects;
 		let id = (e.target.id).replace(".", "/");
-		console.log(id);
+		// console.log(id);
 		axios({
 	        method: tableObjects.deleteMethod,
 	        url: tableObjects.apiLink+'/delete/'+id
@@ -71,7 +71,7 @@ class IAssureTable extends Component {
 				title : response.data.message,
 			  });
 	    }).catch( (error)=> {
-	        console.log('error', error);
+	        // console.log('error', error);
 	    });
     } 
     sortNumber(key, tableData){

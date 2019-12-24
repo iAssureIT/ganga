@@ -119,7 +119,7 @@ class SectionManagement extends Component {
     //   if($('#sectionManagement').valid()){
     //     var formValues = {
     //         "section"                  : this.state.section,
-    //         "createdBy"                : localStorage.getItem("vendor_ID")
+    //         "createdBy"                : localStorage.getItem("user_ID")
     //     }
     //     axios.post('/api/sections/post', formValues)
     //       .then((response)=>{
@@ -145,7 +145,7 @@ class SectionManagement extends Component {
     if ($('#sectionManagement').valid()) {
       var formValues = {
         "section": this.state.section,
-        "createdBy": localStorage.getItem("vendor_ID")
+        "createdBy": localStorage.getItem("user_ID")
       }
       axios.post('/api/sections/post', formValues)
         .then((response) => {

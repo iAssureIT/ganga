@@ -31,7 +31,7 @@ class IAssureTable extends Component {
 		    "activeClass" 				: 'activeCircle',
 		    "paginationArray" 			: [],
 		    "startRange" 				: 0,
-		    "limitRange" 				: 100,
+		    "limitRange" 				: 10,
 		    "activeClass" 				: 'activeCircle', 		    
 		    "normalData" 				: true,
 		    "callPage" 					: true,
@@ -46,7 +46,7 @@ class IAssureTable extends Component {
 	}
 	componentDidMount() {
 	  $("html,body").scrollTop(0); 
-	  console.log('com');
+	//   console.log('com');
       this.setState({
       	tableHeading	: this.props.tableHeading,
       	tableData 		: this.props.tableData,
@@ -98,13 +98,13 @@ class IAssureTable extends Component {
 	        method: tableObjects.deleteMethod,
 	        url: tableObjects.apiLink+'/delete/'+id
 	    }).then((response)=> {
-			console.log(this.state.startRange, this.state.limitRange);
+			// console.log(this.state.startRange, this.state.limitRange);
 	    	this.props.getData(this.state.startRange, this.state.limitRange);
 	        swal({
 	        	text : response.data.message,
 	        });
 	    }).catch(function (error) {
-	        console.log('error', error);
+	        // console.log('error', error); 
 	    });
     } 
     sortNumber(key, tableData){
@@ -418,11 +418,11 @@ class IAssureTable extends Component {
     }
     changeAttribute(event){
 		event.preventDefault();
-		console.log('this', this.state.startRange, this.state.limitRange);
+		// console.log('this', this.state.startRange, this.state.limitRange);
 		var attribute = event.target.getAttribute('data-attribute');
     	var attributeValue = event.target.getAttribute('data-attributeValue');
         var product_ID  = event.currentTarget.getAttribute('data-ID');
-		console.log('attribute', attribute, attributeValue, product_ID);
+		// console.log('attribute', attribute, attributeValue, product_ID);
         if(product_ID){
             if(attributeValue=="true"){
                 attributeValue = false;
@@ -436,11 +436,11 @@ class IAssureTable extends Component {
 	        }
             axios.put('/api/products/attribute', data)
 			.then((response)=>{
-				console.log('this', this.state.startRange, this.state.limitRange);
+				// console.log('this', this.state.startRange, this.state.limitRange);
 			  this.props.getData(this.state.startRange, this.state.limitRange);
 			})
 			.catch((error)=>{
-			  console.log('error', error);
+			//   console.log('error', error);
 			})
         }
     }
@@ -473,7 +473,7 @@ class IAssureTable extends Component {
 		var selectedProducts = this.state.allid?this.state.allid:[];
 		var data = event.target.id;
 		var value = event.target.checked;
-		console.log("data", data,value,selectedProducts);
+		// console.log("data", data,value,selectedProducts);
 		this.setState({
 		[data] : value,
 		},()=>{
@@ -503,7 +503,7 @@ class IAssureTable extends Component {
 	}
 	checkAll(event) {
       	// let allid =[];
-      	console.log('event.target.checked',event.target.checked)
+      	// console.log('event.target.checked',event.target.checked)
       	if(event.target.checked){
       		var allid = []
 	        this.state.tableData.map((a,i)=>{
@@ -513,7 +513,7 @@ class IAssureTable extends Component {
 	        },()=>{
 		        	if(this.state.tableData.length===(i+1)){
 	      				this.setState({allid:allid},()=>{
-	      					console.log("here id true=======================",this.state.allid);
+	      					// console.log("here id true=======================",this.state.allid);
     	this.props.selectedProducts(this.state.allid);
 	      				})
 		        	}
@@ -527,7 +527,7 @@ class IAssureTable extends Component {
 		        },()=>{
 		        	if(this.state.tableData.length===(i+1)){
 	      				this.setState({allid:[]},()=>{
-	      					console.log("here id=======================",this.state.allid);
+	      					// console.log("here id=======================",this.state.allid);
     	this.props.selectedProducts(this.state.allid);
 	      				})
 		        	}
@@ -558,7 +558,7 @@ class IAssureTable extends Component {
             })
         })
         .catch((error)=>{
-            console.log('error', error);
+            // console.log('error', error);
         })
     }
     uploadProductImage(event){
@@ -630,7 +630,7 @@ class IAssureTable extends Component {
                                 resolve(Data.location);
                            })
                            .catch((error)=>{
-                                console.log(error);
+                                // console.log(error);
                            })
                     })
                 }   
@@ -678,7 +678,8 @@ class IAssureTable extends Component {
     	this.props.saveProductImages(this.state.productImage,this.state.productID,this.state.productImageArray)
     }
 	render(){
-		console.log('productImageArray',this.state.productImageArray)
+		console.log('dataCount Table',this.state.dataCount);
+		// console.log('productImageArray',this.state.productImageArray)
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NoPadding">	
 		       	{

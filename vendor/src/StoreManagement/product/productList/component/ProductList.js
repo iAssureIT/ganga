@@ -5,6 +5,9 @@ import swal from 'sweetalert';
 import _ from 'underscore';
 import '../css/productList.css';
 import Message from '../../../../coreAdmin/common/message/Message.js';
+import { bindActionCreators } from 'redux';
+import { getProductData, getProductCount} from '../../../../actions/index';
+import { connect } from 'react-redux';
 import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
@@ -37,7 +40,7 @@ class ProductList extends Component {
                 editUrl: '/add-product/'
             },
             startRange: 0,
-            limitRange: 100,
+            limitRange: 10,
             selector: {},
             unCheckedProducts: false
         };
@@ -46,7 +49,8 @@ class ProductList extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-
+    //     this.getCount();
+    //   this.getData(this.state.startRange, this.state.limitRange);
     }
 
 
@@ -134,35 +138,38 @@ class ProductList extends Component {
                 console.log('error', error);
             })
     }
-    getCount() {
-        axios.get('/api/products/get/count')
-            .then((response) => {
-                console.log('dataCount', response.data.dataCount);
-                this.setState({
-                    dataCount: response.data.dataCount
-                })
+    async getCount() {
+        await this.props.fetchproductcount();
+        // axios.get('/api/products/get/count')
+        // .then((response) => {
+        //     console.log('dataCount', response.data.dataCount);
+            this.setState({
+                dataCount: this.props.productCount
             })
-            .catch((error) => {
-                console.log('error', error);
-            })
+        // })
+        // .catch((error) => {
+        //     console.log('error', error);
+        // })
     }
-    getData(startRange, limitRange) {
+    async getData(startRange, limitRange) {
         this.setState({ messageData: {} })
         var data = {
             startRange: startRange,
-            limitRange: limitRange
+            limitRange: limitRange,
+            vendor_ID : localStorage.getItem("vendor_ID")
         }
         this.getCount();
-        axios.post('/api/products/get/list', data)
-            .then((response) => {
+        await this.props.fetchproducts(data);
+        // axios.post('/api/products/get/vendorwiselist', data)
+        // .then((response) => {
 
-                this.setState({
-                    tableData: response.data
-                })
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
+        //     this.setState({
+        //         tableData: response.data
+        //     })
+        // })
+        // .catch((error) => {
+        //     console.log('error', error);
+        // })
     }
 
     publishAllProducts(event) {
@@ -386,7 +393,7 @@ class ProductList extends Component {
         }
     }
     render() {
-
+        console.log('dataCount pl', this.state.dataCount);
         // maps the appropriate column to fields property
         const fields: object = { text: 'vendor', value: 'id' };
         const sectionfields: object = { text: 'section', value: 'id' };
@@ -498,7 +505,7 @@ class ProductList extends Component {
                                             tableHeading={this.state.tableHeading}
                                             twoLevelHeader={this.state.twoLevelHeader}
                                             dataCount={this.state.dataCount}
-                                            tableData={this.state.tableData}
+                                            tableData={this.props.recentProductData}
                                             getData={this.getData.bind(this)}
                                             tableObjects={this.state.tableObjects}
                                             selectedProducts={this.selectedProducts.bind(this)}
@@ -543,4 +550,13 @@ class ProductList extends Component {
         );
     }
 }
-export default ProductList;
+const mapStateToProps = (state) => {
+    return {
+        recentProductData: state.recentProductData,
+        productCount : state.productCount
+    }
+}
+const mapDispachToProps = (dispatch) => {
+    return bindActionCreators({ fetchproducts: getProductData, fetchproductcount:getProductCount }, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(ProductList);
