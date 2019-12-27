@@ -34,8 +34,8 @@ class ProductCollage extends Component {
       		color: '',
       		size : '',
       		selector:{},
-      		loading:true
-
+      		loading:true,
+      		toggleIcon : "fa fa-plus-circle"
       		//selector:{sectionID: this.props.match.params.sectionID, categoryID:'',subcategoryID:'',brands:[], size:'',color:'',price: { min: 10, max: 129999 } }
 	    };
 	    this.handlePriceChange = this.handlePriceChange.bind(this);  
@@ -45,10 +45,7 @@ class ProductCollage extends Component {
   	componentDidMount() {
 
 		this.getWishData();
-  		$('div[data-toggle="collapse"]').click( ()=> {
-  			$(this).find('i').toggleClass('fa fa-minus fa fa-plus');
-  		});
-
+  		
   		var selector = this.state.selector;
   		
   		if (this.props.match.params.categoryID && this.props.match.params.subcategoryID) {
@@ -61,6 +58,7 @@ class ProductCollage extends Component {
         	this.getSizeBySubcategory(this.props.match.params.subcategoryID)
   			this.getColorBySubategory(this.props.match.params.subcategoryID);
   			this.getProductsBySubCategory(this.props.match.params.categoryID, this.props.match.params.subcategoryID);
+  			this.getAttributesBySubcategory();
   		}
   		else if(this.props.match.params.categoryID){
   			selector.category_ID = this.props.match.params.categoryID;
@@ -71,6 +69,7 @@ class ProductCollage extends Component {
         	this.getSizeByCategory(this.props.match.params.categoryID);
         	this.getColorByCategory(this.props.match.params.categoryID);
   			this.getProductsByCategory(this.props.match.params.categoryID);
+  			this.getAttributesByCategory();
   		}
   		else{
   			selector.section_ID = this.props.match.params.sectionID;
@@ -78,6 +77,7 @@ class ProductCollage extends Component {
         	this.getBrands();
         	this.getSize();
         	this.getColor();
+        	this.getAttributes();
   			this.getProductsBySection(this.props.match.params.sectionID);
   		}
   		this.getSectionDetails(this.props.match.params.sectionID);
@@ -93,6 +93,15 @@ class ProductCollage extends Component {
 		    e.stopPropagation();
 		    e.preventDefault();
 		});
+  	}
+  	handleToggle(event){
+  		var currentIcon = $('.'+event.target.getAttribute('data-key')+"Icon").attr('class');
+  		console.log(currentIcon)
+  		if (currentIcon == "fa fa-plus-circle "+ event.target.getAttribute('data-key')+"Icon") {
+			this.setState({['toggleIcon'+event.target.getAttribute('data-key')]	:"fa fa-minus-circle "+event.target.getAttribute('data-key')+"Icon"},()=>{})
+		}else{
+			this.setState({['toggleIcon'+event.target.getAttribute('data-key')]: "fa fa-plus-circle "+event.target.getAttribute('data-key')+"Icon"},()=>{})
+		}
   	}
   	getSectionDetails(sectionID){
   		axios.get("/api/category/get/"+sectionID)
@@ -279,7 +288,6 @@ class ProductCollage extends Component {
 		if (filterType == 'color') {
 			$('.color-option').css('box-shadow','0px 0px 0px 0px #888888');
 			$(selecteditems.currentTarget).find('.color-option').css('box-shadow','0px 0px 1px 4px #888888');
-			console.log($(selecteditems.currentTarget).find('.color-option'))
 			var selector=this.state.selector;
 			selector.section_ID = this.props.match.params.sectionID;
 			selector.price = this.state.price;
@@ -313,10 +321,40 @@ class ProductCollage extends Component {
 				this.getFilteredProducts(this.state.selector);
 			})
 		}
+		if (filterType == 'attributes') {
+			var selector=this.state.selector;
+			var AttrArray = selector.attributes ? selector.attributes : [];
+			if (selecteditems.currentTarget.checked) {
+				AttrArray.push({
+					attributeName  : $(selecteditems.currentTarget).attr('name'),
+					attributeValue : $(selecteditems.currentTarget).val()
+				})
+			}else{
+				AttrArray = AttrArray.filter((item)=>{
+		    		return  item.attributeValue != $(selecteditems.currentTarget).val();
+		    	})
+			}
+			//console.log(AttrArray);
+			
+			selector.attributes = AttrArray;
+			selector.section_ID 	= this.props.match.params.sectionID;
+			selector.price 		= this.state.price;
+			
+			if (this.props.match.params.categoryID && !selector.category_ID) {
+				selector.category_ID = this.props.match.params.categoryID;
+			}
+			if (this.props.match.params.subcategoryID && !selector.subCategory_ID) {
+				selector.subCategory_ID = this.props.match.params.subcategoryID;
+			}
+
+			this.setState({	selector: selector },()=>{
+				this.getFilteredProducts(this.state.selector);
+			})
+		}
 	}
 	getFilteredProducts(selector){
 		
-		console.log('limitProducts',$('.limitProducts').val());
+		//console.log('limitProducts',$('.limitProducts').val());
 		if ($('.limitProducts').val()) {
 			selector.limit = $('.limitProducts').val();
 		}else{
@@ -501,7 +539,54 @@ class ProductCollage extends Component {
 	            console.log('error', error);
 	      	})
 	}
-	
+	getAttributes(){
+		axios.get("/api/products/get/attributes/"+this.props.match.params.sectionID)
+
+	      	.then((response)=>{ 
+	        var arr = [];
+		    Object.keys(response.data).forEach(function(key) {
+		      arr.push(response.data[key]);
+		    });			
+	          this.setState({
+	              attributesArray : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
+	getAttributesByCategory(){
+		axios.get("/api/products/get/attributesbycategory/"+this.props.match.params.categoryID)
+
+	      	.then((response)=>{ 
+	        var arr = [];
+		    Object.keys(response.data).forEach(function(key) {
+		      arr.push(response.data[key]);
+		    });			
+	          this.setState({
+	              attributesArray : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
+	getAttributesBySubcategory(){
+		axios.get("/api/products/get/attributesbysubcategory/"+this.props.match.params.subcategoryID)
+
+	      	.then((response)=>{ 
+	        var arr = [];
+		    Object.keys(response.data).forEach(function(key) {
+		      arr.push(response.data[key]);
+		    });			
+	          this.setState({
+	              attributesArray : response.data
+	          })
+	      	})
+	      	.catch((error)=>{
+	            console.log('error', error);
+	      	})
+	}
 	handlePriceChange(event) {
 	      event.preventDefault();
 	      const target = event.target;
@@ -644,6 +729,7 @@ class ProductCollage extends Component {
     	var tempdata = [1,2,3]
 		let minPrice = this.state.price.min;
 		let maxPrice = this.state.price.max;
+		//console.log('state',this.state["toggleIconcategory"])
 		return (
 	      	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb25" id="containerDiv">
 	     	 <div className="row"> 
@@ -781,14 +867,14 @@ class ProductCollage extends Component {
 			{
 			this.state.categoryDetails.length > 0	?		
               <div className="col-lg-3 col-md-3 hidden-sm hidden-xs">
-              		<div className="nb-brand">
+              		<div className="nb-brand col-lg-10 col-md-10 col-sm-12 col-xs-12 NoPadding">
 						<div className="accordion" id="accordionExample">
 						   <div className="card-header" id="headingOne">
-						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" >	
-						        <button className="btn btn-link" type="button" >
+						    <div className="pagefilter" data-toggle="collapse" data-target="#collapseOne" data-key="category"  onClick={this.handleToggle.bind(this)}>	
+						        <button className="btn btn-link" type="button" data-key="category"   >
 						          CATEGORY 
 						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
+						        <span className="expand"><i className={this.state["toggleIconcategory"] ? this.state["toggleIconcategory"] : "fa fa-plus-circle categoryIcon"} data-key="category"></i></span>
 						    </div>
 						   </div>
 						    <div id="collapseOne" className="collapse">
@@ -826,11 +912,11 @@ class ProductCollage extends Component {
 							{
 								this.state.categoryDetails[0] && this.state.categoryDetails[0].section != "Grocery" &&
 								<div className="card-header" id="headingTwo">
-						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" >	
-						        <button className="btn btn-link" type="button" >
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseTwo" data-key="color" onClick={this.handleToggle.bind(this)} >	
+						        <button className="btn btn-link" type="button" data-key="color">
 						          COLOR 
 						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
+						        <span className="expand"><i className={this.state["toggleIconcolor"] ? this.state["toggleIconcolor"] : "fa fa-plus-circle colorIcon"} data-key="color"></i></span>
 						     </div>
 						    </div>
 							}
@@ -854,11 +940,11 @@ class ProductCollage extends Component {
 							{
 					      	this.state.categoryDetails[0] && this.state.categoryDetails[0].section != "Grocery" &&
 						    <div className="card-header" id="headingFour">
-						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour" >	
-						        <button className="btn btn-link" type="button" >
+						      <div className="pagefilter" data-toggle="collapse" data-target="#collapseFour" data-key="size" onClick={this.handleToggle.bind(this)}>	
+						        <button className="btn btn-link" type="button" data-key="size">
 						          SIZE
 						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
+						        <span className="expand"><i className={this.state["toggleIconsize"] ? this.state["toggleIconsize"] : "fa fa-plus-circle sizeIcon"} data-key="size"></i></span>
 						      </div>
 						    </div>
 							}
@@ -878,11 +964,11 @@ class ProductCollage extends Component {
 						    </div>
 
 						    <div className="card-header" id="headingThree">
-						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree">	
-						        <button className="btn btn-link" type="button">
+						      <div className="pagefilter"  data-toggle="collapse" data-target="#collapseThree" data-key="price" onClick={this.handleToggle.bind(this)}>	
+						        <button className="btn btn-link" type="button" data-key="price">
 						          PRICE
 						        </button>
-						        <span className="expand"><i className="fa fa-plus"></i></span>
+						        <span className="expand"><i className={this.state["toggleIconprice"] ? this.state["toggleIconprice"] : "fa fa-plus-circle priceIcon"} data-key="price" ></i></span>
 						      </div>
 						    </div>
 						    <div id="collapseThree" className="collapse" >
@@ -897,10 +983,44 @@ class ProductCollage extends Component {
 							        <label>Max </label><input className="input-field max-value" type="text" maxLength="5" id="slider_max" name="slider_max" placeholder="To" value={this.state.price.max} onChange={this.handlePriceChange} />
 						      </div> 
 						    </div>
+						    {
+						    	this.state.attributesArray ? 
+						    	Object.entries(this.state.attributesArray).map(([key, value1], i)=>{
+						    		
+						    		return(
+						    		<div>	
+						    			<div className="card-header" id="headingThree">
+									      <div className="pagefilter"  data-toggle="collapse" data-target={"#collapse"+key.replace(/\s/g,'') } data-key={key.replace(/\s/g,'')} onClick={this.handleToggle.bind(this)}>	
+									        <button className="btn btn-link" type="button" data-key={key.replace(/\s/g,'')}>
+									          {key}
+									        </button>
+									        <span className="expand"><i className={this.state["toggleIcon"+key.replace(/\s/g,'')] ? this.state["toggleIcon"+key.replace(/\s/g,'')] : "fa fa-plus-circle "+key.replace(/\s/g,'')+"Icon"} data-key={key.replace(/\s/g,'')}></i></span>
+									      </div>
+									    </div>
+									    <div id={"collapse"+key.replace(/\s/g,'')} className="collapse" >
+									    	<div className="card-body">
+									    		{value1 && value1.length>0 ?
+									    			value1.map((attrvalue, ind)=>{
+									    				//console.log('attrvalue', attrvalue.attributeValue);
+									    				return(<div class="checkbox">
+																  <label><input type="checkbox" name={key} value={attrvalue.attributeValue} onClick={this.onSelectedItemsChange.bind(this,'attributes')} />{ attrvalue.attributeValue}</label>
+																</div>
+															);
+
+									    			})
+									    		 : null}
+							    			</div>
+									    </div>
+									</div>    		
+								    )
+								})
+								: null
+						    }
+
 						 </div>
               		</div>
               		<br/>
- 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nb-brand">
+ 					<div className="nb-brand col-lg-10 col-md-10 col-sm-12 col-xs-12 NoPadding">
 					 <div className="Featured-Brands-tittle">Featured Brands</div>	
 						{/*<ul className="Featured-Brands">
 																
