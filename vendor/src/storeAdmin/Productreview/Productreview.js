@@ -2,6 +2,9 @@ import React, { Component }   from 'react';
 import axios                  from 'axios';
 import IAssureTable           from "./ProductReviewTable/IAssureTable.jsx";
 import _                      from 'underscore';
+import { bindActionCreators } from 'redux';
+import { getReview, getReviewCount} from '../../actions/index';
+import { connect } from 'react-redux';
 import "./Productreview.css";
 
 
@@ -49,49 +52,52 @@ class Productreview extends Component{
         this.getData(this.state.startRange, this.state.limitRange);
 
     }
-    getCount(){
-        axios.get('/api/customerReview/get/count')
-        .then((response)=>{
-            console.log('dataCount', response.data.dataCount);
-            this.setState({
-                dataCount : response.data.dataCount
-            })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+    async getCount(){
+        await this.props.fetchreviewcount();
+        // axios.get('/api/customerReview/get/count')
+        // .then((response)=>{
+        //     console.log('dataCount', response.data.dataCount);
+        //     this.setState({
+        //         dataCount : response.data.dataCount
+        //     })
+        // })
+        // .catch((error)=>{
+        //     console.log('error', error);
+        // })
     }
-    getData(startRange, limitRange){
+    async getData(startRange, limitRange){
         var data = {
             startRange : startRange,
-            limitRange : limitRange
+            limitRange : limitRange,
+            vendorID   : localStorage.getItem('vendor_ID')
         }
         this.getCount();
-        axios.post('/api/customerReview/get/list', data)
-        .then((response)=>{
-            console.log('res  p', response.data);
-            var tableData = response.data.map((a, i)=>{
-              return{
-                "_id"           : a._id,
-                "productName"       : a.productDetails[0] ? (a.productDetails[0].productName+" "+"("+a.productDetails[0].productCode)+")" : "",
-                "productImages" : a.productDetails[0] ? a.productDetails[0].productImage : [],
-                "customerName"  : a.customerName,
-                "customerReview": a.customerReview,                
-                "adminComment"  : a.adminComment ? a.adminComment : "-",
-                "orderID"       : a.orderID,
-                "productID"     : a.productID,
-                "rating"        : a.rating,
-                "reviewlist"    : a.reviewlist,
-                "status"        : a.status
-              };
-            })
-            this.setState({
-                tableData : tableData
-            })
-        })
-        .catch((error)=>{
-            console.log('error', error);
-        })
+        await this.props.fetchreview(data);
+        // axios.post('/api/customerReview/get/list', data)
+        // .then((response)=>{
+        //     console.log('res  p', response.data);
+        //     var tableData = response.data.map((a, i)=>{
+        //       return{
+        //         "_id"           : a._id,
+        //         "productName"       : a.productDetails[0] ? (a.productDetails[0].productName+" "+"("+a.productDetails[0].productCode)+")" : "",
+        //         "productImages" : a.productDetails[0] ? a.productDetails[0].productImage : [],
+        //         "customerName"  : a.customerName,
+        //         "customerReview": a.customerReview,                
+        //         "adminComment"  : a.adminComment ? a.adminComment : "-",
+        //         "orderID"       : a.orderID,
+        //         "productID"     : a.productID,
+        //         "rating"        : a.rating,
+        //         "reviewlist"    : a.reviewlist,
+        //         "status"        : a.status
+        //       };
+        //     })
+        //     this.setState({
+        //         tableData : tableData
+        //     })
+        // })
+        // .catch((error)=>{
+        //     console.log('error', error);
+        // })
     }
     getSearchText(searchText, startRange, limitRange){
         console.log('searchText', searchText);
@@ -123,6 +129,7 @@ class Productreview extends Component{
         })
     }
     render(){
+        console.log(this.props.reviewCount);
         return(
             <div className="container-fluid">
                 <div className="row">
@@ -173,8 +180,8 @@ class Productreview extends Component{
                                         <IAssureTable 
                                         tableHeading={this.state.tableHeading}
                                         twoLevelHeader={this.state.twoLevelHeader} 
-                                        dataCount={this.state.dataCount}
-                                        tableData={this.state.tableData}
+                                        dataCount={this.props.reviewCount && this.props.reviewCount.length>0 ? this.props.reviewCount[0].dataCount : 0}
+                                        tableData={this.props.review}
                                         getData={this.getData.bind(this)}
                                         tableObjects={this.state.tableObjects}
                                         getSearchText = {this.getSearchText.bind(this)}
@@ -191,5 +198,13 @@ class Productreview extends Component{
             );
         }
     }
-export default Productreview ;
-
+const mapStateToProps = (state) => {
+    return {
+        review      : state.review,
+        reviewCount : state.reviewCount
+    }
+}
+const mapDispachToProps = (dispatch) => {
+    return bindActionCreators({ fetchreview: getReview, fetchreviewcount:getReviewCount }, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(Productreview);

@@ -37,6 +37,12 @@ const reducer = (state = initialState,action) => {
 	if(action.type === 'FETCH_ORDERS_STATUS_COUNT'){
 		newState.orderStatusCount = action.orderStatusCount;
 	}
+	if(action.type === 'FETCH_REVIEWS'){
+		newState.review = action.review;
+	}
+	if(action.type === 'FETCH_REVIEW_COUNT'){
+		newState.reviewCount = action.reviewCount;
+	}
 	return newState;
 }
 

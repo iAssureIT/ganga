@@ -113,6 +113,29 @@ export function getOrdersStatusCount(){
     })
   }
 }
+export function getReview(data){
+  return dispatch =>{
+    return axios.post('/api/customerReview/get/vendorwiselist', data)
+    .then((response)=>{
+      dispatch(fetchreview(response.data));
+    })
+    .catch((error)=>{
+      console.log('getReviewerror', error);
+    })
+  }
+}
+export function getReviewCount(){
+  const vendorid = localStorage.getItem('vendor_ID');
+  return dispatch =>{
+    return axios.get('/api/customerReview/get/vendorwisecount/'+vendorid)
+    .then((response)=>{
+      dispatch(fetchreviewcount(response.data));
+    })
+    .catch((error)=>{
+      console.log('getReviewCounterror', error);
+    })
+  }
+}
 export const fetchproducts = recentProductData => ({
   type: 'FETCH_PRODUCTS',
   recentProductData: recentProductData
@@ -148,4 +171,12 @@ export const fetchorderstatus = orderStatus => ({
 export const fetchorderstatuscount = orderStatusCount =>({
   type: 'FETCH_ORDERS_STATUS_COUNT',
   orderStatusCount : orderStatusCount
+});
+export const fetchreview = review =>({
+  type: 'FETCH_REVIEWS',
+  review : review
+});
+export const fetchreviewcount = reviewCount =>({
+  type: 'FETCH_REVIEW_COUNT',
+  reviewCount : reviewCount
 });

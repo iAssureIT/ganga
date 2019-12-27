@@ -64,10 +64,14 @@ class AllOrders extends Component{
 
                   <section className="content">
                     <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 pageContent marginBottomCSS">
-                    <br/>
                       <div className="row">
+                        <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-right">
+                          <h4 className="NOpadding-right"> All Orders</h4>
+                        </div>
+                        
                           <div className="admin-orders-SubTitleRow  row">
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <br/>
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                 <div className="admin-orders-listofColors">
                                     <span className="">

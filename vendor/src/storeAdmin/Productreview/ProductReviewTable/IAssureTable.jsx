@@ -549,8 +549,8 @@ class IAssureTable extends Component {
 										:
 										<th className="umDynamicHeader srpadd textAlignLeft"></th>
 									}
-									<th className="umDynamicHeader srpadd textAlignLeft">Status</th>
-									<th className="umDynamicHeader srpadd textAlignLeft">Action</th>
+									{/* <th className="umDynamicHeader srpadd textAlignLeft">Status</th> */}
+									{/* <th className="umDynamicHeader srpadd textAlignLeft">Action</th> */}
 	                            </tr>
 	                        </thead>
 	                        <tbody>
@@ -591,16 +591,16 @@ class IAssureTable extends Component {
 															}
 														)
 													}
-                                                    <td className="col-lg-1">
+                                                    {/* <td className="col-lg-1">
                                                         <div onClick={this.changeStatusOfProd.bind(this)} data-ID={value._id} className={( value.status == ("Unpublish") ? ("prodStatUnpublish") : (value.status == ("Publish") ? ("prodStatPublish") : ("prodStatDraft")) )} data-status={value.status} >
                                                             {(value.status == ("Unpublish") ? ("Unpublished") : (value.status == ("Draft") ? ("Draft") : ("Published")))}
                                                         </div>
-                                                    </td>
-													<td className="textAlignCenter">
+                                                    </td> */}
+													{/* <td className="textAlignCenter">
 														<span>
 															<i className="fa fa-reply" data-toggle="modal" title="Comment" data-target={"#showCommentModal-"+(value._id)} id={value._id}></i>&nbsp; &nbsp; 
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal-"+(value._id)}></i>}
-														</span>
+														</span> 
 														<div className="modal fade" id={"showCommentModal-"+(value._id)} role="dialog">
 	                                                        <div className=" adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
@@ -612,7 +612,7 @@ class IAssureTable extends Component {
 	                                                            </div>
 	                                                            <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                                                              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12 prodImg">
-																	  <img src={value.productImages[0]} className="img-responsive" />
+																	  <img src={value.productImages && value.productImages.length>0 ? value.productImages[0] : ''} className="img-responsive" />
 																  </div>
 																  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12 textAlignLeft">
 																	  <h4>{value.productName}</h4>
@@ -672,7 +672,7 @@ class IAssureTable extends Component {
 	                                                          </div>
 	                                                        </div>
 	                                                    </div>
-													</td>
+													</td> */}
 												</tr>
 											);										
 										}
