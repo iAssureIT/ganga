@@ -175,12 +175,12 @@ export default class Leftsidebar extends Component{
                         <span className="sidebarMenuSubText">Delivered Order List</span>
                       </a>
                     </li>
-                    <li>
+                    {/* <li>
                       <a href="/returned-products">
                         <i className="fa fa-circle-o" /> 
                         <span className="sidebarMenuSubText">Returned Products</span>
                       </a>
-                    </li>
+                    </li> */}
                   </ul>
                 </li> 
                 {/* <li className="sidebarMenuText">
