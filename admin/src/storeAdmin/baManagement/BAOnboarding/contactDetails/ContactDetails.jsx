@@ -268,7 +268,7 @@ class ContactDetails extends Component {
 		event.preventDefault();
 		var routerId   = FlowRouter.getParam("id");
 		if(location.pathname == '/ContactDetails/'+routerId){
-			FlowRouter.go("/LocationDetails/"+routerId);
+			FlowRouter.go("/location-details/"+routerId);
 		}else if(location.pathname == '/ContactDetailsSTL/'+routerId){
 			FlowRouter.go("/LocationDetailsSTL/"+routerId);
 		}else{

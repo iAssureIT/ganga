@@ -25,7 +25,18 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "FETCH_PRODUCTS_IMAGE"){
 		newState.productImage = action.productImage;
 	}
-
+	if(action.type === "FETCH_ALL_ORDERS"){
+		newState.allOrders = action.allOrders;
+	}
+	if(action.type === 'FETCH_ALL_ORDERS_COUNT'){
+		newState.allOrdersCount = action.allOrdersCount;
+	}
+	if(action.type === "FETCH_ORDERS_STATUS"){
+		newState.orderStatus = action.orderStatus;
+	}
+	if(action.type === 'FETCH_ORDERS_STATUS_COUNT'){
+		newState.orderStatusCount = action.orderStatusCount;
+	}
 	return newState;
 }
 

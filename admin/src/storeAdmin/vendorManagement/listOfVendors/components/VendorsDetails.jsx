@@ -263,11 +263,11 @@ class VendorsDetails extends Component {
     	// 			if(location.pathname == '/ListOfSupplierSTM'){
     	// 				FlowRouter.go("/LocationDetailsSTM/"+id+'-'+i);
     	// 			// }else if(location.pathname == '/LocationDetailsSTL'){
-    	// 			// 	FlowRouter.go("/LocationDetails/"+id+'-'+i);
+    	// 			// 	FlowRouter.go("/location-details/"+id+'-'+i);
     	// 			}else if(location.pathname == '/ListOfSupplierSTL'){
 		// 	    		FlowRouter.go("/SupplierOnboardingFormSTL/"+id+'-'+i);
 		// 	    	}else{
-    	// 				FlowRouter.go("/LocationDetails/"+id+'-'+i);
+    	// 				FlowRouter.go("/location-details/"+id+'-'+i);
     	// 			}
     	// 			$(".addLocationForm").show();
     	// 		}else{

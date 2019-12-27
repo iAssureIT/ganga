@@ -669,6 +669,7 @@ class Checkout extends Component {
                             "category"          : a.productDetail.category,
                             "subCategory_ID"    : a.productDetail.subCategory_ID,
                             "subCategory"       : a.productDetail.subCategory,
+                            "vendor_ID"         : a.productDetail.vendor_ID
                         }
                     })
                     var orderData = {

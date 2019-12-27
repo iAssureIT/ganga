@@ -649,3 +649,10 @@ margin-right: 12px;
 .dashcontentBox{
   margin-top: 20px;
 }
+.ororiginalPrice{
+  text-decoration: line-through!important;
+  color: #878787;
+}
+.orPercent{
+  color: #388e3c;
+}

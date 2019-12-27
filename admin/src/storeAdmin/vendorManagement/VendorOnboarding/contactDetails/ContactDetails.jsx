@@ -188,7 +188,7 @@ class ContactDetails extends Component {
 		event.preventDefault();
 		var routerId   = this.props.match.params.vendor_ID;
 		if(window.location.pathname == '/ContactDetails/'+routerId){
-			this.props.history.push("/LocationDetails/"+routerId);
+			this.props.history.push("/location-details/"+routerId);
 		}else if(window.location.pathname == '/ContactDetailsSTL/'+routerId){
 			this.props.history.push("/LocationDetailsSTL/"+routerId);
 		}else{

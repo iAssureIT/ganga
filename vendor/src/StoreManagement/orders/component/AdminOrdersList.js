@@ -21,7 +21,6 @@ class AdminOrdersList extends Component{
             this.state = {
                 "orderData":[],
                 "orderId": ''
-                // "notificationData" :Meteor.subscribe("notificationTemplate"),
             };
         } else{
             this.state = {
@@ -33,20 +32,10 @@ class AdminOrdersList extends Component{
     }
 
     componentDidMount() {
-        this.getBA();
+
     }
     
-    getBA(){
-      axios.get("/api/businessassociates/get/list")
-            .then((response)=>{
-              this.setState({
-                  baList : response.data
-              })
-            })
-            .catch((error)=>{
-                console.log('error', error);
-            })  
-    }
+    
     componentWillReceiveProps(nextProps){
         if(nextProps){
             this.setState({
@@ -148,7 +137,7 @@ class AdminOrdersList extends Component{
     
     render(){
       const data = this.state.data;
-
+      console.log('data', data);
       const options = {
        
         print: false, 
@@ -161,6 +150,7 @@ class AdminOrdersList extends Component{
       const columns = [
           { name:"Order Id" },
           { name:"Customer Name" }, 
+          { name:"Products" },
           { name:"Total Items" },
           { name:"Total Price" },
           { name:"Order Date" },
@@ -269,14 +259,14 @@ class AdminOrdersList extends Component{
                         </div>
                         <br/>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <MUIDataTable
                             title={this.props.tableTitle ? this.props.tableTitle : 'Order List'}
                             options={options}
                             data={data}
                             columns={columns}
                             />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

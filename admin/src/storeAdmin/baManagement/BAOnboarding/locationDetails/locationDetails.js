@@ -235,7 +235,7 @@ export default class LocationDetails extends Component{
     locationdetailBack(event){
       event.preventDefault();
       /*var id = FlowRouter.getParam('id');
-      if(location.pathname == '/LocationDetails/'+id){
+      if(location.pathname == '/location-details/'+id){
           FlowRouter.go("/SupplierOnboardingForm/"+id);
         }else if(location.pathname == '/LocationDetailsSTL/'+id){
           FlowRouter.go("/SupplierOnboardingFormSTL/"+id);

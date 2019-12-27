@@ -465,14 +465,15 @@ class IAssureTable extends Component {
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
-																// console.log('value1', value1);
 																var regex = new RegExp(/(<([^>]+)>)/ig);
-																var value2 = value1 ? value1.replace(regex,'') : '';
+																// console.log(typeof(value1));
+																var value2 = typeof(value1) == "string" ? value1.replace(regex,'') : '';
+																// console.log('value2',value2, value1);
 																var aN = value2.replace(this.state.reA, "");
 																if(aN && $.type( aN ) == 'string'){
 																	var textAlign = 'textAlignLeft';
 																}else{
-																	var bN = value1 ? parseInt(value1.replace(this.state.reN, ""), 10) : '';
+																	var bN = value1 ? parseInt(typeof(value1) == "string" ? (value1.replace(this.state.reN, ""), 10): 0 ) : '';
 																	if(bN){
 																		var textAlign = 'textAlignRight';
 																	}else{
