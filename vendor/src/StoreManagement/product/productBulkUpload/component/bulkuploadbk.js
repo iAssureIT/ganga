@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import axios from 'axios';
-import ReactTable from "react-table";
 import swal from 'sweetalert';
 import XLSX from "xlsx";
 import _ from 'underscore';
-import ProductList from '../../productList/component/ProductList.js';
 import Loader from '../../../../coreAdmin/common/loader/Loader.js';
 import { withRouter } from 'react-router-dom';
 
@@ -432,15 +430,17 @@ class AddNewBulkProduct extends Component {
         });
     }
     getVendorList() {
-        axios.get('http://qagangaexpressapi.iassureit.com/api/vendors/get/list')
-            .then((response) => {
-                this.setState({
-                    vendorArray: response.data
-                })
+        axios.get('/api/vendors/get/one/'+localStorage.getItem('vendor_ID'))
+        .then((response) => {
+            console.log('getVendorList', response.data);
+            this.setState({
+                vendorArray: response.data,
+                vendor: response.data.vendorName + '|' +response.data.user_ID +'|'+ response.data.vendor_ID,
             })
-            .catch((error) => {
+        })
+        .catch((error) => {
 
-            })
+        })
     }
     render() {
 

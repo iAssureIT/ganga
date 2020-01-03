@@ -27,8 +27,8 @@ class FileWiseProductList extends Component{
       window.scrollTo(0, 0);
     }
     componentWillReceiveProps(nextProps) {
-      this.getCount();
-      this.getData(this.state.startRange, this.state.limitRange);
+      // this.getCount();
+      // this.getData(this.state.startRange, this.state.limitRange);
     }
     componentDidMount() {
       this.getCount();

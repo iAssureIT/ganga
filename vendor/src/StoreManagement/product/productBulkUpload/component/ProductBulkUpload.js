@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'underscore';
-import { withRouter } from 'react-router-dom';
 import BulkUploadComponent from './BulkUploadComponent';
 import  '../css/productBulkUpload.css'
 import Message from '../../../../coreAdmin/common/message/Message.js';
-
+import { bindActionCreators } from 'redux';
+import { getProductData, getProductCount, getVendor} from '../../../../actions/index';
+import { connect } from 'react-redux';
 class AddNewBulkProduct extends Component {
     constructor(props) {
         super(props);
@@ -20,8 +21,6 @@ class AddNewBulkProduct extends Component {
         if (nextProps.productData) {
             this.setState({
                 productData: nextProps.productData
-            }, () => {
-                // console.log('productData', this.state.productData);
             });
         }
         if (nextProps.fileData && nextProps.fileData.length > 0) {
@@ -32,7 +31,6 @@ class AddNewBulkProduct extends Component {
                 return data.fileName == file;
             }
             var x = productData.filter(checkAdult);
-            // console.log('x',x);
 
             this.setState({
                 productData: x
@@ -42,39 +40,12 @@ class AddNewBulkProduct extends Component {
     componentDidMount() {
         this.getVendorList();
         this.getSectionData();
-        // var dbdata = [];
-        // dbdata.push({name: "section", type: "string", label:"Section"})
-        // dbdata.push({name: "category", type: "string", label:"Category"})
-        // dbdata.push({name: "subCategory", type: "string", label:"Subcategory" })
-        // dbdata.push({name: "brand", type: "string", label:"Brand"})
-        // dbdata.push({name: "productCode", type: "string", label:"Product Code"})
-        // dbdata.push({name: "itemCode", type: "string", label:"Item Code"})
-        // dbdata.push({name: "productName", type: "string", label:"Product Name"})
-        // dbdata.push({name: "productDetails", type: "string", label:"Product Details"})
-        // dbdata.push({name: "shortDescription", type: "string", label:"Short Description"})
-        // dbdata.push({name: "featureList", type: "string", label:"Feature List"})
-        // dbdata.push({name: "currency", type: "string", label:"Currency"})
-        // dbdata.push({name: "originalPrice", type: "number", label:"Original Price"})
-        // dbdata.push({name: "discountPercent", type: "number", label:"Discount Percent"})
-        // dbdata.push({name: "discountedPrice", type: "number", label:"Discounted Price"})
-        // dbdata.push({name: "availableQuantity", type: "number", label:"Available Quantity"})
-        // dbdata.push({name: "unit", type: "string", label:"Unit"})
-        // dbdata.push({name: "size", type: "string", label:"Size"})
-        // dbdata.push({name: "color", type: "string", label:"Color"})
-        // dbdata.push({name: "exclusive", type: "string", label:"Does this product is Exclusive"})
-        // dbdata.push({name: "featured", type: "string", label:"Does this product Featured"})
-        // dbdata.push({name: "taxInclude", type: "string", label:"Does Tax Include"})
-        // dbdata.push({name: "taxRate", type: "string", label:"Tax Rate"})
-
-        // this.setState({
-        //   dbdata: dbdata
-        // })
-        //console.log('dbdata',this.state.dbdata);  
-    }
+        this.props.fetchvendor()
+;    }
     getSectionData() {
         axios.get('/api/sections/get/list')
           .then((response) => {
-            // console.log('getWebCategories', response.data);
+              
             this.setState({
               sectionArray: response.data
             })
@@ -153,20 +124,10 @@ class AddNewBulkProduct extends Component {
         this.setState({
             [name]: event.target.value,
             messageData : {}
-        },()=>{
-            console.log(this.state.vendor);
         });
     }
-    getVendorList() {
-        axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('user_ID'))
-            .then((response) => {
-                this.setState({
-                    vendorArray: response.data
-                })
-            })
-            .catch((error) => {
-
-            })
+    async getVendorList() {
+        // await this.props.fetchvendor();
     }
     handleChangeCategory(event){
         event.preventDefault();
@@ -176,7 +137,7 @@ class AddNewBulkProduct extends Component {
         })
         axios.get('/api/bulkUploadTemplate/get/' + event.target.value.split('|')[1])
           .then((response) => {
-            console.log(response.data);
+              
             if (response.data) {
                 this.setState({fileurl:response.data.templateUrl, messageData : {}})    
             }else{
@@ -202,7 +163,6 @@ class AddNewBulkProduct extends Component {
             "xlsx",
             "xls"
         ]
-        console.log(this.state.vendor);
         const requiredData = {vendor: this.state.vendor};
         return (
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-right">
@@ -212,7 +172,7 @@ class AddNewBulkProduct extends Component {
                 <div className="row">
                     <div className="addNewProductWrap col-lg-12 col-md-12 col-sm-12 col-xs-12 add-new-productCol">
                         <div className="box">
-                            <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div className="box-header with-border col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpading">
                                 <div className="col-lg-4 col-md-4 col-sm-4 col-xs-12 pull-left" >
                                 <h4 className="NOpadding-right">Product Bulk Upload</h4>
                                 </div>
@@ -231,12 +191,9 @@ class AddNewBulkProduct extends Component {
                             <label>Vendor <i className="redFont">*</i></label>
                             <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                                 <option disabled selected defaultValue="">Select Vendor</option>
-                                {this.state.vendorArray && this.state.vendorArray.length > 0 ?
-                                    this.state.vendorArray.map((data, index) => {
-                                        return (
-                                        <option key={index} value={data.companyName + '|' + data.user_ID + '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
-                                        );
-                                    })
+                                {
+                                    this.props.vendor ?
+                                        <option value={this.props.vendor.companyName + '|' + this.props.vendor.user_ID + '|' + this.props.vendor._id}>{this.props.vendor.companyName} - ({this.props.vendor.vendorID})</option>
                                     :
                                     <option disabled>{"No vendor added"}</option>
                                 }
@@ -272,26 +229,6 @@ class AddNewBulkProduct extends Component {
                                 }
                             </select>
                         </div>
-                        {
-
-                            /*<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 inputFields marginTopp">
-                                <label>Categroy <i className="redFont">*</i></label>
-                                <select onChange={this.selectOption.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
-                                    <option disabled selected defaultValue="">Select Category</option>
-                                    <option value={localStorage.getItem("user_ID")} >Admin</option>
-                                    {this.state.categoryArray && this.state.categoryArray.length > 0 ?
-                                        this.state.categoryArray.map((data, index) => {
-                                            return (
-                                                <option key={index} value={data._id}>{data.companyName} - ({data.vendorID})</option>
-                                            );
-                                        })
-                                        :
-                                        <option disabled>{"No vendor added"}</option>
-                                    }
-                                </select>
-                                {this.state.category ? null : <span>Please select category to export excel file template</span>}
-                            </div>*/
-                        }
                         <br/>
                     </div>
                     {
@@ -310,33 +247,12 @@ class AddNewBulkProduct extends Component {
         );
     }
 }
-export default withRouter(AddNewBulkProduct);
-
-// AddNewBulkProduct = withTracker(props => {
-//     var vendorData          = [];
-//     const productHandle     = Meteor.subscribe("productShopPublish");
-//     const productData       = ProductShop.find({},{sort: {dateAdded: -1}}).fetch();
-//     const fileDatas         = ProductShop.find({},{sort: {dateAdded: -1}},{fields:{"fileName" : 1}}).fetch();
-//     const loading1          = !productHandle.ready();
-
-//     var fileData = Array.from(new Set(fileDatas.map(x => x.fileName))).map(
-//     fileName =>{
-//         return{
-//             fileName: fileName,
-//             _id     : fileDatas.find(s => s.fileName === fileName)._id
-//         };
-//     });
-//     console.log('fileData',fileData);
-//     const vendorHandle      = Meteor.subscribe("allSupplierList");
-//     if(Roles.userIsInRole(Meteor.userId(), ['Vendor'])){
-//         vendorData        = Suppliers.find({"OwnerId":Meteor.userId()}).fetch();
-//     }else{
-//         vendorData        = Suppliers.find({}).fetch();
-//     }
-//     const loading2          = !vendorHandle.ready();
-//     return {
-//         productData,
-//         vendorData,
-//         fileData
-//     };    
-// })(AddNewBulkProduct);
+const mapStateToProps = (state) => {
+    return {
+        vendor: state.vendor,
+    }
+}
+const mapDispachToProps = (dispatch) => {
+    return bindActionCreators({ fetchproducts: getProductData, fetchproductcount:getProductCount,fetchvendor:getVendor }, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(AddNewBulkProduct);

@@ -5,6 +5,9 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import _ from 'underscore';
 import AddNewTableFeature from '../addNewTableFeature/addNewTableFeature.js';
+import { bindActionCreators } from 'redux';
+import { getVendor} from '../../../../actions/index';
+import { connect } from 'react-redux';
 import 'bootstrap/js/tab.js';
 import "./AddNewProduct.css";
 import CKEditor from "react-ckeditor-component";
@@ -59,7 +62,7 @@ class AddNewShopProduct extends Component {
     });
   }
   componentDidMount() {
-
+    this.props.fetchvendor();
     if (this.state.editId) {
       this.edit(this.state.editId);
     }
@@ -232,7 +235,6 @@ class AddNewShopProduct extends Component {
   getSectionData() {
     axios.get('/api/sections/get/list')
       .then((response) => {
-        // console.log('getWebCategories', response.data);
         this.setState({
           sectionArray: response.data
         })
@@ -309,7 +311,6 @@ class AddNewShopProduct extends Component {
 
         this.getCategories();
         this.getSubCategories(response.data.category_ID);
-        console.log('attributes', response.data)
         this.setState({
           // addrows: [1],
           showDiscount: response.data.discountedPrice ? false : true,
@@ -337,9 +338,6 @@ class AddNewShopProduct extends Component {
           availableQuantity: response.data.availableQuantity,
           currency: response.data.currency,
           status: response.data.status,
-        }, () => {
-          console.log('this', this.state.showDiscount);
-
         })
 
       })
@@ -566,7 +564,6 @@ class AddNewShopProduct extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    // console.log('discountPercent', event.target.value);
     if (event.target.value > 100) {
       this.setState({
         discountPercentError: "Discount Percent should be less than 100."
@@ -636,16 +633,16 @@ class AddNewShopProduct extends Component {
     }
   }
   getVendorList() {
-    axios.get('/api/vendors/get/listbyuserid/'+localStorage.getItem('user_ID'))
-      .then((response) => {
-        console.log('res getVendorList', response);
-        this.setState({
-          vendorArray: response.data
-        })
+    axios.get('/api/vendors/get/one/'+localStorage.getItem('vendor_ID'))
+    .then((response) => {
+      this.setState({
+        vendorArray: response.data,
+        vendor: response.data.vendorName + '|' +response.data.user_ID +'|'+ response.data.vendor_ID,
       })
-      .catch((error) => {
+    })
+    .catch((error) => {
 
-      })
+    })
   }
   onClickCkEditor(evt) {
     this.setState({
@@ -706,12 +703,9 @@ class AddNewShopProduct extends Component {
                       <label>Vendor <i className="redFont">*</i></label>
                       <select onChange={this.showRelevantSubCategories.bind(this)} value={this.state.vendor} name="vendor" className="form-control allProductCategories" aria-describedby="basic-addon1" id="vendor" ref="vendor">
                         <option disabled selected defaultValue="">Select Vendor</option>
-                        {this.state.vendorArray && this.state.vendorArray.length > 0 ?
-                          this.state.vendorArray.map((data, index) => {
-                            return (
-                              <option key={index} value={data.companyName + '|' + data.user_ID + '|' + data._id}>{data.companyName} - ({data.vendorID})</option>
-                            );
-                          })
+                        {
+                          this.props.vendor ?
+                            <option value={this.props.vendor.companyName + '|' + this.props.vendor.user_ID + '|' + this.props.vendor._id}>{this.props.vendor.companyName} - ({this.props.vendor.vendorID})</option>
                           :
                           <option disabled>{"No vendor added"}</option>
                         }
@@ -988,5 +982,12 @@ class AddNewShopProduct extends Component {
     );
   }
 }
-
-export default AddNewShopProduct;
+const mapStateToProps = (state) => {
+  return {
+    vendor: state.vendor,
+  }
+}
+const mapDispachToProps = (dispatch) => {
+  return bindActionCreators({ fetchvendor:getVendor }, dispatch)
+}
+export default connect(mapStateToProps, mapDispachToProps)(AddNewShopProduct);

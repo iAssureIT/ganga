@@ -69,7 +69,7 @@ class Productreview extends Component{
         var data = {
             startRange : startRange,
             limitRange : limitRange,
-            vendorID   : localStorage.getItem('vendor_ID')
+            vendor_ID   : localStorage.getItem('vendor_ID')
         }
         this.getCount();
         await this.props.fetchreview(data);

@@ -13,7 +13,13 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "FETCH_PRODUCTS"){
 		newState.recentProductData = action.recentProductData;
 	}
+	if(action.type === "FETCH_SEARCH_PRODUCTS"){
+		newState.recentProductData = action.recentProductData;
+	}
 	if(action.type === "FETCH_PRODUCTS_COUNT"){
+		newState.productCount = action.productCount;
+	}
+	if(action.type === "FETCH_SEARCH_PRODUCTS_COUNT"){
 		newState.productCount = action.productCount;
 	}
 	if(action.type === "FETCH_FILE"){
@@ -42,6 +48,12 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === 'FETCH_REVIEW_COUNT'){
 		newState.reviewCount = action.reviewCount;
+	}
+	if(action.type === 'FETCH_VENDOR'){
+		newState.vendor = action.vendor;
+	}
+	if(action.type === 'FETCH_VENDOR_PRODUCT_COUNT'){
+		newState.vendorProdCount = action.vendorProdCount
 	}
 	return newState;
 }

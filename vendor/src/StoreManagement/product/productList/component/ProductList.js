@@ -6,7 +6,7 @@ import _ from 'underscore';
 import '../css/productList.css';
 import Message from '../../../../coreAdmin/common/message/Message.js';
 import { bindActionCreators } from 'redux';
-import { getProductData, getProductCount} from '../../../../actions/index';
+import { getProductData, getProductCount, getVendorProductCount, getVendor, getSearchProductData, getSearchProductCount} from '../../../../actions/index';
 import { connect } from 'react-redux';
 import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -46,14 +46,6 @@ class ProductList extends Component {
         };
         window.scrollTo(0, 0);
     }
-
-
-    componentWillReceiveProps(nextProps) {
-    //     this.getCount();
-    //   this.getData(this.state.startRange, this.state.limitRange);
-    }
-
-
     handleChange(event) {
         const target = event.target;
         const name = target.name;
@@ -63,13 +55,13 @@ class ProductList extends Component {
     }
 
     componentDidMount() {
-        this.getCount();
         this.getData(this.state.startRange, this.state.limitRange);
         this.getVendorList();
         this.getSectionData();
         this.getCategoryData();
         this.productCountByStatus();
-        
+        this.props.fetchvendorproductcount();
+        this.props.fetchvendor();
     }  
     productCountByStatus(){
         axios.get('/api/products/get/productCountByStatus')
@@ -90,8 +82,9 @@ class ProductList extends Component {
 
                 var vendorArray = [];
                 response.data.map((data, ind) => {
-                    vendorArray.push({ id: data.vendor_ID, vendor: data.companyName })
+                    vendorArray.push({ id: data.user_ID, vendor: data.companyName })
                 });
+                console.log('vendorArray hmg', vendorArray);
                 this.setState({
                     vendorArray: vendorArray,
                     messageData: {}
@@ -140,16 +133,9 @@ class ProductList extends Component {
     }
     async getCount() {
         await this.props.fetchproductcount();
-        // axios.get('/api/products/get/count')
-        // .then((response) => {
-        //     console.log('dataCount', response.data.dataCount);
-            this.setState({
-                dataCount: this.props.productCount
-            })
-        // })
-        // .catch((error) => {
-        //     console.log('error', error);
-        // })
+        this.setState({
+            dataCount: this.props.productCount
+        })
     }
     async getData(startRange, limitRange) {
         this.setState({ messageData: {} })
@@ -160,16 +146,6 @@ class ProductList extends Component {
         }
         this.getCount();
         await this.props.fetchproducts(data);
-        // axios.post('/api/products/get/vendorwiselist', data)
-        // .then((response) => {
-
-        //     this.setState({
-        //         tableData: response.data
-        //     })
-        // })
-        // .catch((error) => {
-        //     console.log('error', error);
-        // })
     }
 
     publishAllProducts(event) {
@@ -192,18 +168,24 @@ class ProductList extends Component {
             });
         this.getData(this.state.startRange, this.state.limitRange);
     }
-    getSearchText(searchText) {
-
-        axios.get("/api/products/get/adminsearch/" + searchText)
-            .then((response) => {
-                this.setState({
-                    tableData: response.data,
-                    dataCount: response.data.length
-                });
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
+    async getSearchText(searchText) {
+        var data = {
+            searchText : searchText,
+            startRange : this.state.startRange,
+            limitRange : this.state.limitRange
+        }
+        this.props.fetchsearchcount(data);
+        await this.props.fetchsearchproducts(data);
+        // axios.get("/api/products/get/search/" + searchText+'/'+localStorage.getItem('vendor_ID'))
+        //     .then((response) => {
+        //         this.setState({
+        //             tableData: response.data,
+        //             dataCount: response.data.length
+        //         });
+        //     })
+        //     .catch((error) => {
+        //         console.log('error', error);
+        //     })
     }
 
     filterProductCount(formValues) {
@@ -315,7 +297,6 @@ class ProductList extends Component {
             })
     }
     bulkActionChange(event) {
-        console.log(event.target.value);
         if (event.target.value) {
             this.setState({ unCheckedProducts: false, selectedAction: event.target.value, messageData: {} })
             $('#bulkActionModal').show();
@@ -393,17 +374,16 @@ class ProductList extends Component {
         }
     }
     render() {
-        console.log('dataCount pl', this.state.dataCount);
-        // maps the appropriate column to fields property
-        const fields: object = { text: 'vendor', value: 'id' };
+        const fields: object = { text: 'companyName', value: '_id' };
         const sectionfields: object = { text: 'section', value: 'id' };
         const categoryfields: object = { text: 'category', value: 'id' };
-
+        const vendorArray = [];
+        vendorArray.push(this.props.vendor);
+        
         const statusArray = [];
-        statusArray.push({ status: "Publish" })
-        statusArray.push({ status: "Draft" })
-        statusArray.push({ status: "Unpublish" })
-
+        statusArray.push({ status: "Publish" });
+        statusArray.push({ status: "Draft" });
+        statusArray.push({ status: "Unpublish" });
         const statusfields: object = { text: 'status', value: 'status' };
 
         return (
@@ -424,7 +404,7 @@ class ProductList extends Component {
                                                 <span className="publishedBoxIcon bg-aqua"><i className="fa fa-shopping-cart"></i></span>
                                                 <div className="publishedBoxContent">
                                                     <span className="publishedBoxtext">Total Products</span><br />
-                                                    <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].total : 0}</span>
+                                                    <span className="publishedBoxNumber">{this.props.vendorProdCount && this.props.vendorProdCount.length>0 ? this.props.vendorProdCount[0].total : 0}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -433,7 +413,7 @@ class ProductList extends Component {
                                                 <span className="publishedBoxIcon bg-green"><i className="fa fa-shopping-cart"></i></span>
                                                 <div className="publishedBoxContent">
                                                     <span className="publishedBoxtext">Published Products</span><br />
-                                                    <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].totalPublish : 0}</span>
+                                                    <span className="publishedBoxNumber">{this.props.vendorProdCount && this.props.vendorProdCount.length>0 ? this.props.vendorProdCount[0].totalPublish : 0}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -442,7 +422,7 @@ class ProductList extends Component {
                                                 <span className="publishedBoxIcon bg-redcolor"><i className="fa fa-shopping-cart"></i></span>
                                                 <div className="publishedBoxContent">
                                                     <span className="publishedBoxtext">Unpublished Products</span><br />
-                                                    <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].totalUnpublish : 0}</span>
+                                                    <span className="publishedBoxNumber">{this.props.vendorProdCount && this.props.vendorProdCount.length>0 ? this.props.vendorProdCount[0].totalUnpublish : 0}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -451,7 +431,7 @@ class ProductList extends Component {
                                                 <span className="publishedBoxIcon bg-yellow"><i className="fa fa-shopping-cart"></i></span>
                                                 <div className="publishedBoxContent">
                                                     <span className="publishedBoxtext">Draft Products</span><br />
-                                                    <span className="publishedBoxNumber">{this.state.productCountByStatus ? this.state.productCountByStatus[0].totalDraft : 0}</span>
+                                                    <span className="publishedBoxNumber">{this.props.vendorProdCount && this.props.vendorProdCount.length>0 ? this.props.vendorProdCount[0].totalDraft : 0}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -468,7 +448,7 @@ class ProductList extends Component {
                                             </div>
                                             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 mt">
                                                 <label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Vendor</label>
-                                                <MultiSelectComponent id="vendorChange" dataSource={this.state.vendorArray}
+                                                <MultiSelectComponent id="vendorChange" dataSource={vendorArray}
                                                     change={this.handleChangeFilter.bind(this)}
                                                     fields={fields} placeholder="Select Vendor" mode="CheckBox" selectAllText="Select All" unSelectAllText="Unselect All" showSelectAll={true}>
                                                     <Inject services={[CheckBoxSelection]} />
@@ -518,7 +498,6 @@ class ProductList extends Component {
                                 </div>
                             </div>
                         </section>
-
                             </div>
                             <div className="modal" id="bulkActionModal" role="dialog">
                               <div className="modal-dialog">
@@ -553,10 +532,12 @@ class ProductList extends Component {
 const mapStateToProps = (state) => {
     return {
         recentProductData: state.recentProductData,
-        productCount : state.productCount
+        productCount : state.productCount,
+        vendorProdCount : state.vendorProdCount,
+        vendor: state.vendor,
     }
 }
 const mapDispachToProps = (dispatch) => {
-    return bindActionCreators({ fetchproducts: getProductData, fetchproductcount:getProductCount }, dispatch)
+    return bindActionCreators({ fetchproducts: getProductData, fetchproductcount:getProductCount, fetchvendorproductcount:getVendorProductCount,fetchvendor:getVendor, fetchsearchproducts:getSearchProductData, fetchsearchcount:getSearchProductCount  }, dispatch)
 }
 export default connect(mapStateToProps, mapDispachToProps)(ProductList);

@@ -114,7 +114,7 @@ class Layout extends Component {
 
 
     const token = localStorage.getItem("user_ID");
-    console.log("Dashboard Token = ", token);
+    // console.log("Dashboard Token = ", token);
     if (token !== null) {
       // console.log("*********===***********imin ",token);
       this.setState({
@@ -129,7 +129,7 @@ class Layout extends Component {
   logout() {
     var token = localStorage.removeItem("user_ID");
     if (token !== null) {
-      console.log("Header Token = ", token);
+      // console.log("Header Token = ", token);
       this.setState({
         loggedIn: false
       })
@@ -264,7 +264,7 @@ class Layout extends Component {
         </div>
       );
     } else {
-      console.log('else');
+      // console.log('else');
       return (
         <div>
           <Router>

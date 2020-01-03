@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
-import { getProductData, getProductCount, getFile, getProductImage,getAllOrders, getAllOrderCount, getOrdersStatus, getOrdersStatusCount, getReview, getReviewCount } from '../../../actions/index';
+import { getProductData, getProductCount, getFile, getProductImage,getAllOrders, getAllOrderCount, getOrdersStatus, getOrdersStatusCount, getReview, getReviewCount, getVendor, getVendorProductCount } from '../../../actions/index';
 import { connect } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -70,7 +70,8 @@ class VendorSelector extends Component {
     var data = {
       startRange : 0,
       limitRange : 100,
-      vendorID  : localStorage.getItem("vendor_ID"),
+      // vendorID  : localStorage.getItem("vendor_ID"),
+      vendor_ID  : localStorage.getItem("vendor_ID"),
       status     : status
     }
     this.props.fetchproducts(data);
@@ -83,6 +84,8 @@ class VendorSelector extends Component {
     this.props.fetchorderstatuscount();
     this.props.fetchreview(data);
     this.props.fetchreviewcount();
+    this.props.fetchvendor();
+    this.props.fetchvendorproductcount();
     this.setState({
       vendor_ID : localStorage.getItem("vendor_ID")
     })
@@ -119,6 +122,6 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispachToProps = (dispatch) => {
-  return bindActionCreators({ fetchproducts: getProductData , fetchproductcount:getProductCount, fetchfile: getFile, fetchproductsimage: getProductImage, fetchallorders: getAllOrders, fetchordercount:getAllOrderCount, fetchorderstatus: getOrdersStatus, fetchorderstatuscount:getOrdersStatusCount, fetchreview: getReview, fetchreviewcount:getReviewCount}, dispatch)
+  return bindActionCreators({ fetchproducts: getProductData , fetchproductcount:getProductCount, fetchfile: getFile, fetchproductsimage: getProductImage, fetchallorders: getAllOrders, fetchordercount:getAllOrderCount, fetchorderstatus: getOrdersStatus, fetchorderstatuscount:getOrdersStatusCount, fetchreview: getReview, fetchreviewcount:getReviewCount, fetchvendor:getVendor, fetchvendorproductcount:getVendorProductCount }, dispatch)
 }
 export default connect(mapStateToProps, mapDispachToProps)(VendorSelector);

@@ -678,7 +678,7 @@ class IAssureTable extends Component {
     	this.props.saveProductImages(this.state.productImage,this.state.productID,this.state.productImageArray)
     }
 	render(){
-		console.log('dataCount Table',this.state.dataCount);
+		// console.log('dataCount Table',this.state.dataCount);
 		// console.log('productImageArray',this.state.productImageArray)
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NoPadding">	

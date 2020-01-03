@@ -10,6 +10,28 @@ export function getProductData(data) {
     })
   }  
 }
+export function getSearchProductData(data) {
+	return dispatch =>{
+    return axios.get("/api/products/get/search/"+data.searchText+'/'+localStorage.getItem('vendor_ID'))
+    .then((response)=>{
+        dispatch(fetchsearchproducts(response.data));
+    })
+    .catch((error)=>{
+          console.log('error', error);
+    })
+  }  
+}
+export function getSearchProductCount(data) {
+	return dispatch =>{
+    return axios.get("/api/products/get/searchcount/"+data.searchText+'/'+localStorage.getItem('vendor_ID'))
+    .then((response)=>{
+        dispatch(fetchsearchcount(response.data));
+    })
+    .catch((error)=>{
+          console.log('error', error);
+    })
+  }  
+}
 export function getProductCount() {
 	return dispatch =>{
     const vendorid = localStorage.getItem('vendor_ID');
@@ -136,9 +158,41 @@ export function getReviewCount(){
     })
   }
 }
+export function getVendor(data){
+  return dispatch =>{
+    const vendorid = localStorage.getItem('vendor_ID');
+    return axios.get('/api/vendors/get/one/'+vendorid)
+    .then((response)=>{
+      dispatch(fetchvendor(response.data));
+    })
+    .catch((error)=>{
+      console.log('getReviewerror', error);
+    })
+  }
+}
+export function getVendorProductCount(){
+  return dispatch =>{
+    const vendorid = localStorage.getItem('vendor_ID');
+    return axios.get('/api/products/get/vendorProductCount/'+vendorid)
+    .then((response)=>{
+      dispatch(fetchvendorproductcount(response.data));
+    })
+    .catch((error)=>{
+      console.log('getVendorProductCount', error);
+    })
+  }
+}
 export const fetchproducts = recentProductData => ({
   type: 'FETCH_PRODUCTS',
   recentProductData: recentProductData
+});
+export const fetchsearchproducts = recentProductData => ({
+  type: 'FETCH_SEARCH_PRODUCTS',
+  recentProductData: recentProductData
+});
+export const fetchsearchcount = productCount => ({
+  type: 'FETCH_SEARCH_PRODUCTS_COUNT',
+  productCount: productCount
 });
 export const fetchproductcount = productCount => ({
   type: 'FETCH_PRODUCTS_COUNT',
@@ -179,4 +233,12 @@ export const fetchreview = review =>({
 export const fetchreviewcount = reviewCount =>({
   type: 'FETCH_REVIEW_COUNT',
   reviewCount : reviewCount
+});
+export const fetchvendor = vendor =>({
+  type: 'FETCH_VENDOR',
+  vendor : vendor
+});
+export const fetchvendorproductcount = vendorProdCount =>({
+  type: 'FETCH_VENDOR_PRODUCT_COUNT',
+  vendorProdCount : vendorProdCount
 });

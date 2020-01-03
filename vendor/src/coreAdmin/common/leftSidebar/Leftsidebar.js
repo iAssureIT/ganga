@@ -51,7 +51,7 @@ export default class Leftsidebar extends Component{
 
   clickTree(event){
       event.preventDefault();
-      console.log('$(event.currentTarget)',$(event.currentTarget));
+      // console.log('$(event.currentTarget)',$(event.currentTarget));
       $(event.currentTarget).addClass('activetree');
       $(event.currentTarget).siblings('li').removeClass('activetree');
       $(event.currentTarget).siblings('li').removeClass('menu-open');
@@ -60,7 +60,7 @@ export default class Leftsidebar extends Component{
   }   
 
   render(){
-    console.log('nkhjh',  window.screen.height );  
+    // console.log('nkhjh',  window.screen.height );   
     var sidebarHeight = window.screen.height - 225;
     return(
       <div>
@@ -175,58 +175,10 @@ export default class Leftsidebar extends Component{
                         <span className="sidebarMenuSubText">Delivered Order List</span>
                       </a>
                     </li>
-                    {/* <li>
-                      <a href="/returned-products">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Returned Products</span>
-                      </a>
-                    </li> */}
                   </ul>
                 </li> 
+                
                 {/* <li className="sidebarMenuText">
-                  <a href="#baData" data-toggle="collapse" aria-expanded="false">
-                    <i className="glyphicon glyphicon-briefcase" />
-                    Business Associates
-                     <i className="fa fa-sort-down pull-right"></i>
-                  </a>
-                  <ul className="collapse list-unstyled" id="baData">
-                    <li>
-                      <a href="/addNewBA">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Add Business Associate</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/ba-list">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Business Associates List</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li> */}
-                {/* <li className="sidebarMenuText">
-                  <a href="#vendors" data-toggle="collapse" aria-expanded="false">
-                    <i className="fa fa-industry" />
-                    Vendor Management
-                     <i className="fa fa-sort-down pull-right"></i>
-                  </a>
-                  <ul className="collapse list-unstyled" id="vendors">
-                    <li>
-                      <a href="/vendor-onboarding">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Add Vendor</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/vendor-list">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Vendor List</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li> */}
-
-                <li className="sidebarMenuText">
                   <a href="#Report" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-line-chart" />
                     Reports
@@ -246,7 +198,7 @@ export default class Leftsidebar extends Component{
                       </a>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li className="sidebarMenuText">
                   <a href="#productreview" data-toggle="collapse" aria-expanded="false">
                     <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -262,49 +214,7 @@ export default class Leftsidebar extends Component{
                     </li>
                   </ul>
                 </li>
-                {/* <li className="sidebarMenuText">
-                  <a href="#MasterData" data-toggle="collapse" aria-expanded="false">
-                    <i className="fa fa-university" />
-                    Master Data
-                    <i className="fa fa-sort-down pull-right"></i>
-                  </a>
-                  <ul className="collapse list-unstyled" id="MasterData">
-                    <li>
-                      <a href="/taxname">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Tax Master</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/taxrate">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Tax Rate Master</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/vendor-category">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Vendor Category</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/vendor-location-type">
-                        <i className="fa fa-circle-o" /> 
-                        <span className="sidebarMenuSubText">Vendor Location Type</span>
-                      </a>
-                    </li>
-                    <li>
-                        <a href="/category-management">
-                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Category Master</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/section-management">
-                          <i className="fa fa-circle-o" /> <span className="sidebarMenuSubText">Section Master</span>
-                        </a>
-                      </li>   
-                  </ul>
-                </li>           */}
+                
               </ul>
             </nav>
           </div>
