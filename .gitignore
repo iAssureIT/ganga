@@ -9,3 +9,7 @@ ba/.env
 vendor/.env
 
 admin/src/coreAdmin/dashboard
+
+mobileapp/android
+mobileapp/ios
+mobileapp/node_modules
